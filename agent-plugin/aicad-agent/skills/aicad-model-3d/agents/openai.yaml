@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI CAD 3D建模"
+  short_description: "逐特征数学约束建模并验证 SolidWorks 零件"
+  default_prompt: "Use $aicad-model-3d to build this part feature by feature in SolidWorks with mathematical constraints and verification."

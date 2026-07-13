@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+build/
+out/
+jobs/
+research/paper/experiments/
+release/
+.tmp/
+*.dwg
+*.SLDPRT
+*.step
+*.log
+acad.err
+

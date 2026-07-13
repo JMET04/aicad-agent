@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad-plan.schema.json",
+  "title": "AI CAD origin-anchored constraint plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "drawing", "steps"],
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "drawing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "units", "origin", "tolerance"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "units": {"enum": ["mm", "inch"]},
+        "origin": {"const": [0, 0]},
+        "tolerance": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.1}
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5000,
+      "items": {"oneOf": [{"$ref": "#/$defs/line"}, {"$ref": "#/$defs/circle"}, {"$ref": "#/$defs/arc"}]}
+    }
+  },
+  "$defs": {
+    "point": {
+      "type": "array",
+      "prefixItems": [{"type": "number"}, {"type": "number"}],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "anchor": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["ref"], "properties": {"ref": {"type": "string", "minLength": 1}}},
+        {"type": "object", "additionalProperties": false, "required": ["point"], "properties": {"point": {"$ref": "#/$defs/point"}}}
+      ]
+    },
+    "construction": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["kind", "target"], "properties": {"kind": {"const": "to_point"}, "target": {"$ref": "#/$defs/anchor"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "dx", "dy"], "properties": {"kind": {"const": "vector"}, "dx": {"type": "number"}, "dy": {"type": "number"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "length", "angle_deg"], "properties": {"kind": {"const": "polar"}, "length": {"type": "number", "exclusiveMinimum": 0}, "angle_deg": {"type": "number"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "to", "length", "direction"], "properties": {"kind": {"const": "parallel"}, "to": {"type": "string"}, "length": {"type": "number", "exclusiveMinimum": 0}, "direction": {"enum": ["same", "opposite"]}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "to", "length", "turn"], "properties": {"kind": {"const": "perpendicular"}, "to": {"type": "string"}, "length": {"type": "number", "exclusiveMinimum": 0}, "turn": {"enum": ["left", "right"]}}}
+      ]
+    },
+    "constraint": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"enum": ["horizontal", "vertical"]}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"enum": ["length", "radius", "diameter", "start_angle", "end_angle"]}, "value": {"type": "number"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "target"], "properties": {"kind": {"enum": ["parallel", "perpendicular", "start_coincident", "end_coincident", "center_coincident"]}, "target": {"type": "string"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "target", "dx", "dy"], "properties": {"kind": {"enum": ["start_offset", "center_offset"]}, "target": {"type": "string"}, "dx": {"type": "number"}, "dy": {"type": "number"}}}
+      ]
+    },
+    "common": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+        "purpose": {"type": "string", "minLength": 1},
+        "reasoning": {"type": "string", "minLength": 1},
+        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}}
+      }
+    },
+    "line": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "purpose", "reasoning", "start", "construction", "constraints"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "type": {"const": "line"},
+        "purpose": {"type": "string", "minLength": 1}, "reasoning": {"type": "string", "minLength": 1},
+        "start": {"$ref": "#/$defs/anchor"}, "construction": {"$ref": "#/$defs/construction"},
+        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}}
+      }
+    },
+    "circle": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "purpose", "reasoning", "center", "radius", "constraints"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "type": {"const": "circle"},
+        "purpose": {"type": "string", "minLength": 1}, "reasoning": {"type": "string", "minLength": 1},
+        "center": {"$ref": "#/$defs/anchor"}, "radius": {"type": "number", "exclusiveMinimum": 0},
+        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}}
+      }
+    },
+    "arc": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "purpose", "reasoning", "center", "radius", "start_angle_deg", "end_angle_deg", "constraints"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "type": {"const": "arc"},
+        "purpose": {"type": "string", "minLength": 1}, "reasoning": {"type": "string", "minLength": 1},
+        "center": {"$ref": "#/$defs/anchor"}, "radius": {"type": "number", "exclusiveMinimum": 0},
+        "start_angle_deg": {"type": "number"}, "end_angle_deg": {"type": "number"},
+        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}}
+      }
+    }
+  }
+}

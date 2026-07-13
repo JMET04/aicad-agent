@@ -1,0 +1,12 @@
+(setvar "FILEDIA" 0)
+(princ "\nAICAD_PROBE_BEGIN")
+(princ (strcat "\nACADVER=" (getvar "ACADVER")))
+(princ (strcat "\nPRODUCT=" (getvar "PRODUCT")))
+(princ (strcat "\nLISPSYS=" (itoa (getvar "LISPSYS"))))
+(princ (strcat "\nSECURELOAD=" (itoa (getvar "SECURELOAD"))))
+(princ (strcat "\nAPPAUTOLOAD=" (itoa (getvar "APPAUTOLOAD"))))
+(princ (strcat "\nTRUSTEDPATHS=" (getvar "TRUSTEDPATHS")))
+(princ (strcat "\nPLUGIN_AUTOLOADED=" (if (member "C:AICAD_DRAW" (atoms-family 1)) "YES" "NO")))
+(princ "\nAICAD_PROBE_END\n")
+_.QUIT
+_Y

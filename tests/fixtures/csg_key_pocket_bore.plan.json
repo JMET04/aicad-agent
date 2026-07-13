@@ -1,0 +1,233 @@
+{
+  "schema_version": "1.0",
+  "part": {
+    "name": "main_3d_10",
+    "units": "mm",
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "tolerance": 0.001
+  },
+  "features": [
+    {
+      "id": "F001",
+      "type": "base_extrude",
+      "purpose": "heavy fixture base",
+      "reasoning": "This feature is dimensioned from the global origin and committed only after its support and declared profile constraints are validated.",
+      "depends_on": [],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          0,
+          0
+        ],
+        "width": 170,
+        "height": 110
+      },
+      "depth": 15,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "width",
+          "value": 170
+        },
+        {
+          "kind": "height",
+          "value": 110
+        },
+        {
+          "kind": "depth",
+          "value": 15
+        }
+      ]
+    },
+    {
+      "id": "F002",
+      "type": "cut_extrude",
+      "purpose": "six-hole mounting pattern",
+      "reasoning": "This feature is dimensioned from the global origin and committed only after its support and declared profile constraints are validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle_pattern",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 4.5,
+        "count": 6,
+        "bolt_circle_radius": 58,
+        "start_angle_deg": 0
+      },
+      "depth": 15,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 4.5
+        },
+        {
+          "kind": "pattern_count",
+          "value": 6
+        },
+        {
+          "kind": "bolt_circle_radius",
+          "value": 58
+        },
+        {
+          "kind": "depth",
+          "value": 15
+        }
+      ],
+      "support_feature": "F001"
+    },
+    {
+      "id": "F003",
+      "type": "boss_extrude",
+      "purpose": "central locating boss",
+      "reasoning": "This feature is dimensioned from the global origin and committed only after its support and declared profile constraints are validated.",
+      "depends_on": [
+        "F001",
+        "F002"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 24
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 24
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "support_feature": "F001"
+    },
+    {
+      "id": "F004",
+      "type": "cut_extrude",
+      "purpose": "blind key pocket in boss",
+      "reasoning": "This feature is dimensioned from the global origin and committed only after its support and declared profile constraints are validated.",
+      "depends_on": [
+        "F001",
+        "F003"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          0,
+          0
+        ],
+        "width": 20,
+        "height": 10
+      },
+      "depth": 5,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F003"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "width",
+          "value": 20
+        },
+        {
+          "kind": "height",
+          "value": 10
+        },
+        {
+          "kind": "depth",
+          "value": 5
+        }
+      ],
+      "support_feature": "F003"
+    },
+    {
+      "id": "F005",
+      "type": "cut_extrude",
+      "purpose": "central through bore",
+      "reasoning": "This feature is dimensioned from the global origin and committed only after its support and declared profile constraints are validated.",
+      "depends_on": [
+        "F001",
+        "F003",
+        "F004"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 7
+      },
+      "depth": 25,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F003"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 7
+        },
+        {
+          "kind": "depth",
+          "value": 25
+        }
+      ],
+      "support_feature": "F003"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "part": {
+    "name": "mounting_plate_with_boss",
+    "units": "mm",
+    "origin": [0, 0, 0],
+    "tolerance": 0.001
+  },
+  "features": [
+    {
+      "id": "F001",
+      "type": "base_extrude",
+      "purpose": "rectangular mounting plate datum body",
+      "reasoning": "The first feature is centered on the global origin and establishes the XY footprint and positive Z material direction.",
+      "depends_on": [],
+      "profile": {"kind": "center_rectangle", "center": [0, 0], "width": 120, "height": 80},
+      "depth": 12,
+      "end_condition": "blind",
+      "constraints": [
+        {"kind": "center_offset", "target": "origin", "dx": 0, "dy": 0},
+        {"kind": "width", "value": 120},
+        {"kind": "height", "value": 80},
+        {"kind": "depth", "value": 12}
+      ]
+    },
+    {
+      "id": "F002",
+      "type": "cut_extrude",
+      "purpose": "four through mounting holes",
+      "reasoning": "The hole centers form a four-fold pattern on a 90 mm pitch circle and are fully contained by the plate footprint.",
+      "depends_on": ["F001"],
+      "support_feature": "F001",
+      "profile": {"kind": "circle_pattern", "center": [0, 0], "radius": 5, "count": 4, "bolt_circle_radius": 45, "start_angle_deg": 45},
+      "depth": 12,
+      "end_condition": "through_all",
+      "constraints": [
+        {"kind": "support_coincident", "target": "F001"},
+        {"kind": "center_offset", "target": "origin", "dx": 0, "dy": 0},
+        {"kind": "radius", "value": 5},
+        {"kind": "pattern_count", "value": 4},
+        {"kind": "bolt_circle_radius", "value": 45},
+        {"kind": "depth", "value": 12}
+      ]
+    },
+    {
+      "id": "F003",
+      "type": "boss_extrude",
+      "purpose": "central locating boss",
+      "reasoning": "The boss is concentric with the global origin, sits on the plate top face, and remains within the plate footprint so it merges into one solid.",
+      "depends_on": ["F001", "F002"],
+      "support_feature": "F001",
+      "profile": {"kind": "circle", "center": [0, 0], "radius": 15},
+      "depth": 8,
+      "end_condition": "blind",
+      "constraints": [
+        {"kind": "support_coincident", "target": "F001"},
+        {"kind": "center_offset", "target": "origin", "dx": 0, "dy": 0},
+        {"kind": "radius", "value": 15},
+        {"kind": "depth", "value": 8}
+      ]
+    },
+    {
+      "id": "F004",
+      "type": "cut_extrude",
+      "purpose": "central through bore",
+      "reasoning": "The bore is concentric with the locating boss and cuts through both the boss and the base plate while preserving a positive annular wall.",
+      "depends_on": ["F001", "F003"],
+      "support_feature": "F003",
+      "profile": {"kind": "circle", "center": [0, 0], "radius": 5},
+      "depth": 20,
+      "end_condition": "through_all",
+      "constraints": [
+        {"kind": "support_coincident", "target": "F003"},
+        {"kind": "center_offset", "target": "origin", "dx": 0, "dy": 0},
+        {"kind": "radius", "value": 5},
+        {"kind": "depth", "value": 20}
+      ]
+    }
+  ]
+}

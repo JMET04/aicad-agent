@@ -1,0 +1,493 @@
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import sys
+import uuid
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Callable
+
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="strict")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="backslashreplace")
+
+
+PLUGIN_ROOT = Path(__file__).resolve().parents[1]
+RUNTIME_CANDIDATES = [
+    PLUGIN_ROOT / "runtime" / "src",
+    PLUGIN_ROOT.parents[1] / "src",
+]
+for candidate in RUNTIME_CANDIDATES:
+    if (candidate / "aicad" / "engine.py").is_file():
+        sys.path.insert(0, str(candidate))
+        break
+
+try:
+    from aicad.engine import PlanError, compile_plan
+    from aicad.exporters import export_all
+    from aicad.provider import ProviderError, generate_plan
+    from aicad.solidworks3d import compile_3d_plan, solidworks_doctor, validate_3d_plan
+except ImportError as exc:  # pragma: no cover - exercised by packaged smoke test
+    raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
+
+
+AGENT_API_VERSION = "1.2.0"
+SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
+
+
+def _runtime_file(*parts: str) -> Path:
+    packaged = PLUGIN_ROOT / "runtime" / Path(*parts)
+    if packaged.exists():
+        return packaged
+    return PLUGIN_ROOT.parents[1] / Path(*parts)
+
+
+def _job_root() -> Path:
+    base = Path(os.environ.get("LOCALAPPDATA", Path.home() / ".local" / "share"))
+    return base / "AiCadConstraint" / "agent-jobs"
+
+
+def _new_job_dir() -> Path:
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return _job_root() / f"{stamp}-{uuid.uuid4().hex[:8]}"
+
+
+def _safe_name(value: str | None) -> str:
+    name = SAFE_NAME.sub("-", (value or "drawing").strip()).strip("-_")
+    return name[:64] or "drawing"
+
+
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + f".{uuid.uuid4().hex}.tmp")
+    try:
+        temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def _load_plan(value: Any) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return value
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            raise PlanError("plan is empty")
+        candidate = Path(text)
+        if len(text) < 1024 and candidate.is_file():
+            text = candidate.read_text(encoding="utf-8")
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise PlanError(f"plan must be a JSON object or a path to a UTF-8 JSON file: {exc}") from exc
+        if isinstance(parsed, dict):
+            return parsed
+    raise PlanError("plan must be a JSON object, JSON string, or plan file path")
+
+
+def capabilities() -> dict[str, Any]:
+    return {
+        "ok": True,
+        "api_version": AGENT_API_VERSION,
+        "purpose": "Convert 2D/3D CAD intent into deterministic, origin-anchored, audited geometry and SolidWorks parts.",
+        "entities": ["line", "circle", "arc"],
+        "units": ["mm", "inch"],
+        "constraints": [
+            "horizontal", "vertical", "length", "parallel", "perpendicular",
+            "start_coincident", "end_coincident", "start_offset", "radius", "diameter",
+            "center_coincident", "center_offset", "start_angle", "end_angle",
+        ],
+        "artifacts": ["plan.json", "aicad", "scr", "dxf", "audit.md", "manifest.json"],
+        "agent_native": {
+            "default": True,
+            "api_key_required": False,
+            "workflow": ["get_plan_schema", "author_plan_in_current_agent", "validate_plan", "compile_plan"],
+            "compiler_provider": "caller-plan",
+        },
+        "generation": {
+            "offline": ["rectangle", "circle", "arc", "rectangular plate with one centered hole"],
+            "arbitrary_2d": "Submit a schema_version 2.0 plan with aicad_compile_plan.",
+            "optional_provider": "openai",
+        },
+        "invariants": [
+            "drawing origin is [0,0]",
+            "first entity anchor is origin",
+            "every entity has purpose, reasoning, and mathematical constraints",
+            "AutoCAD execution channel is ASCII and accepts only LINE/CIRCLE/ARC records",
+        ],
+        "packaging_dieline_qa": {
+            "available": True,
+            "script": str((PLUGIN_ROOT / "scripts" / "aicad_packaging_qa.py").resolve()),
+            "rules": str((PLUGIN_ROOT / "rules" / "packaging_dieline_rules.json").resolve()),
+            "workflow": [
+                "detect defect",
+                "explain root cause",
+                "repair locally",
+                "encode prevention rule",
+                "run regression test",
+            ],
+            "review_only": True,
+        },
+        "schema_path": str(_runtime_file("schema", "aicad-plan.schema.json").resolve()),
+        "solidworks_3d": {
+            "features": ["base_extrude", "boss_extrude", "cut_extrude"],
+            "profiles": ["center_rectangle", "circle", "circle_pattern"],
+            "artifacts": ["SLDPRT", "STEP", "3d.audit.md", "solidworks-report.json", "3d.manifest.json"],
+            "invariants": [
+                "part origin is [0,0,0]",
+                "each feature declares purpose, reasoning, dependencies, support, and mathematical constraints",
+                "each sketch must be fully constrained before its feature is accepted",
+                "feature error, body faults, body count, volume, bounding box, and persistent references are read back",
+                "a failing feature transaction does not save a partial part",
+            ],
+            "schema_path": str(_runtime_file("schema", "aicad-3d-plan.schema.json").resolve()),
+        },
+    }
+
+
+def validate_plan_value(value: Any) -> dict[str, Any]:
+    data = _load_plan(value)
+    plan = compile_plan(data)
+    return {
+        "ok": True,
+        "valid": True,
+        "name": plan.name,
+        "schema_version": plan.schema_version,
+        "units": plan.units,
+        "origin": list(plan.origin),
+        "tolerance": plan.tolerance,
+        "source_sha256": plan.source_hash,
+        "entity_count": len(plan.entities),
+        "entities": [{"index": index, "id": entity.id, "type": entity.type} for index, entity in enumerate(plan.entities, 1)],
+    }
+
+
+def _compile_data(data: dict[str, Any], output_dir: str | None, name: str | None) -> dict[str, Any]:
+    plan = compile_plan(data)
+    directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
+    stem = _safe_name(name or plan.name)
+    directory.mkdir(parents=True, exist_ok=True)
+    source = directory / f"{stem}.plan.json"
+    _write_json(source, data)
+    artifacts = export_all(plan, directory, stem)
+    return {
+        "ok": True,
+        "name": plan.name,
+        "schema_version": plan.schema_version,
+        "provider": "caller-plan",
+        "source_sha256": plan.source_hash,
+        "entity_count": len(plan.entities),
+        "entities": [{"index": index, "id": entity.id, "type": entity.type} for index, entity in enumerate(plan.entities, 1)],
+        "output_dir": str(directory),
+        "plan": str(source),
+        "execution": str(directory / f"{stem}.aicad"),
+        "script": str(directory / f"{stem}.scr"),
+        "dxf": str(directory / f"{stem}.dxf"),
+        "audit": str(directory / f"{stem}.audit.md"),
+        "manifest": str(directory / f"{stem}.manifest.json"),
+        "artifacts": [str(path.resolve()) for path in artifacts],
+    }
+
+
+def compile_plan_value(value: Any, output_dir: str | None = None, name: str | None = None) -> dict[str, Any]:
+    return _compile_data(_load_plan(value), output_dir, name)
+
+
+def generate(request: str, output_dir: str | None = None, name: str | None = None, provider: str = "offline") -> dict[str, Any]:
+    if not isinstance(request, str) or not request.strip():
+        raise PlanError("request must be a non-empty string")
+    data, used_provider = generate_plan(request.strip(), provider)
+    result = _compile_data(data, output_dir, name)
+    result["provider"] = used_provider
+    result["request_interpreted"] = True
+    return result
+
+
+def get_schema() -> dict[str, Any]:
+    path = _runtime_file("schema", "aicad-plan.schema.json")
+    return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
+def get_3d_schema() -> dict[str, Any]:
+    path = _runtime_file("schema", "aicad-3d-plan.schema.json")
+    return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
+def validate_3d_plan_value(value: Any) -> dict[str, Any]:
+    return validate_3d_plan(_load_plan(value))
+
+
+def build_solidworks_part(
+    value: Any,
+    output_dir: str | None = None,
+    name: str | None = None,
+    execute: bool = True,
+    timeout_seconds: int = 300,
+) -> dict[str, Any]:
+    directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
+    return compile_3d_plan(_load_plan(value), directory, name, execute, timeout_seconds)
+
+
+TOOLS: list[dict[str, Any]] = [
+    {
+        "name": "aicad_capabilities",
+        "description": "Discover supported CAD entities, constraints, artifacts, providers, and hard invariants before planning.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_plan_schema",
+        "description": "Return the complete schema_version 2.0 JSON Schema for arbitrary caller-authored CAD plans.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_generate",
+        "description": "Generate and compile common 2D geometry from natural language. Defaults to deterministic offline interpretation.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["request"],
+            "properties": {
+                "request": {"type": "string", "minLength": 1},
+                "output_dir": {"type": "string"}, "name": {"type": "string"},
+                "provider": {"type": "string", "enum": ["offline", "auto", "openai"], "default": "offline"},
+            },
+        },
+    },
+    {
+        "name": "aicad_validate_plan",
+        "description": "Validate an origin-anchored plan without writing CAD artifacts.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["plan"],
+            "properties": {"plan": {"description": "Plan object, JSON string, or UTF-8 plan file path"}},
+        },
+    },
+    {
+        "name": "aicad_compile_plan",
+        "description": "Validate a caller-authored plan and produce AICAD, SCR, DXF, audit, and manifest artifacts.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["plan"],
+            "properties": {
+                "plan": {"description": "Plan object, JSON string, or UTF-8 plan file path"},
+                "output_dir": {"type": "string"}, "name": {"type": "string"},
+            },
+        },
+    },
+    {
+        "name": "aicad_solidworks_doctor",
+        "description": "Check whether SolidWorks, its part template, and the typed AICAD host are ready for real 3D execution.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_3d_plan_schema",
+        "description": "Return the complete schema_version 1.0 JSON Schema for feature-by-feature SolidWorks plans.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_validate_3d_plan",
+        "description": "Validate a feature graph and all declared mathematical constraints without opening SolidWorks or writing artifacts.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["plan"],
+            "properties": {"plan": {"description": "3D plan object, JSON string, or UTF-8 plan file path"}},
+        },
+    },
+    {
+        "name": "aicad_build_solidworks_part",
+        "description": "Build a SolidWorks part one validated feature transaction at a time and export SLDPRT, STEP, audit, and readback report.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["plan"],
+            "properties": {
+                "plan": {"description": "3D plan object, JSON string, or UTF-8 plan file path"},
+                "output_dir": {"type": "string"}, "name": {"type": "string"},
+                "execute": {"type": "boolean", "default": True},
+                "timeout_seconds": {"type": "integer", "minimum": 30, "maximum": 1800, "default": 300},
+            },
+        },
+    },
+]
+
+
+def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+    if name == "aicad_capabilities":
+        return capabilities()
+    if name == "aicad_get_plan_schema":
+        return get_schema()
+    if name == "aicad_generate":
+        return generate(arguments.get("request", ""), arguments.get("output_dir"), arguments.get("name"), arguments.get("provider", "offline"))
+    if name == "aicad_validate_plan":
+        return validate_plan_value(arguments.get("plan"))
+    if name == "aicad_compile_plan":
+        return compile_plan_value(arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"))
+    if name == "aicad_solidworks_doctor":
+        return solidworks_doctor()
+    if name == "aicad_get_3d_plan_schema":
+        return get_3d_schema()
+    if name == "aicad_validate_3d_plan":
+        return validate_3d_plan_value(arguments.get("plan"))
+    if name == "aicad_build_solidworks_part":
+        return build_solidworks_part(
+            arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"),
+            arguments.get("execute", True), arguments.get("timeout_seconds", 300),
+        )
+    raise PlanError(f"Unknown tool '{name}'")
+
+
+def _error_payload(exc: Exception) -> dict[str, Any]:
+    if isinstance(exc, ProviderError):
+        code = "PROVIDER_ERROR"
+    elif isinstance(exc, PlanError):
+        code = "PLAN_INVALID"
+    elif isinstance(exc, (OSError, UnicodeError)):
+        code = "IO_ERROR"
+    else:
+        code = "INTERNAL_ERROR"
+    return {"ok": False, "error": {"code": code, "message": str(exc)}}
+
+
+def _mcp_result(payload: dict[str, Any], is_error: bool = False) -> dict[str, Any]:
+    result: dict[str, Any] = {
+        "content": [{"type": "text", "text": json.dumps(payload, ensure_ascii=False)}],
+        "structuredContent": payload,
+    }
+    if is_error:
+        result["isError"] = True
+    return result
+
+
+def _handle_mcp(message: dict[str, Any]) -> dict[str, Any] | None:
+    method = message.get("method")
+    request_id = message.get("id")
+    if request_id is None:
+        return None
+    response: dict[str, Any] = {"jsonrpc": "2.0", "id": request_id}
+    try:
+        if method == "initialize":
+            requested = message.get("params", {}).get("protocolVersion")
+            response["result"] = {
+                "protocolVersion": requested or "2025-03-26",
+                "capabilities": {"tools": {"listChanged": False}, "resources": {"subscribe": False, "listChanged": False}},
+                "serverInfo": {"name": "aicad-agent", "version": AGENT_API_VERSION},
+            }
+        elif method == "ping":
+            response["result"] = {}
+        elif method == "tools/list":
+            response["result"] = {"tools": TOOLS}
+        elif method == "tools/call":
+            params = message.get("params") or {}
+            arguments = params.get("arguments") or {}
+            if not isinstance(arguments, dict):
+                raise PlanError("tool arguments must be an object")
+            try:
+                response["result"] = _mcp_result(_dispatch_tool(str(params.get("name", "")), arguments))
+            except Exception as exc:
+                response["result"] = _mcp_result(_error_payload(exc), True)
+        elif method == "resources/list":
+            response["result"] = {"resources": [
+                {"uri": "aicad://plan-schema", "name": "AICAD Plan Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://3d-plan-schema", "name": "AICAD 3D Plan Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://capabilities", "name": "AICAD Capabilities", "mimeType": "application/json"},
+            ]}
+        elif method == "resources/read":
+            uri = (message.get("params") or {}).get("uri")
+            if uri == "aicad://plan-schema":
+                payload = get_schema()["schema"]
+            elif uri == "aicad://3d-plan-schema":
+                payload = get_3d_schema()["schema"]
+            elif uri == "aicad://capabilities":
+                payload = capabilities()
+            else:
+                raise PlanError(f"Unknown resource '{uri}'")
+            response["result"] = {"contents": [{"uri": uri, "mimeType": "application/json", "text": json.dumps(payload, ensure_ascii=False)}]}
+        else:
+            response["error"] = {"code": -32601, "message": f"Method not found: {method}"}
+    except Exception as exc:
+        response["error"] = {"code": -32603, "message": str(exc)}
+    return response
+
+
+def serve_mcp() -> int:
+    for raw in sys.stdin.buffer:
+        try:
+            message = json.loads(raw.decode("utf-8"))
+            if not isinstance(message, dict):
+                raise ValueError("message must be an object")
+            response = _handle_mcp(message)
+            if response is not None:
+                encoded = (json.dumps(response, ensure_ascii=False, separators=(",", ":")) + "\n").encode("utf-8")
+                sys.stdout.buffer.write(encoded)
+                sys.stdout.buffer.flush()
+        except Exception as exc:
+            error = {"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": str(exc)}}
+            sys.stdout.buffer.write((json.dumps(error, ensure_ascii=False) + "\n").encode("utf-8"))
+            sys.stdout.buffer.flush()
+    return 0
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="aicad-agent", description="Agent-facing API for deterministic 2D CAD and SolidWorks 3D generation")
+    parser.add_argument("--version", action="version", version=AGENT_API_VERSION)
+    commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("capabilities")
+    commands.add_parser("schema")
+    commands.add_parser("schema3d")
+    commands.add_parser("solidworks-doctor")
+    commands.add_parser("mcp")
+    generate_parser = commands.add_parser("generate")
+    request_group = generate_parser.add_mutually_exclusive_group(required=True)
+    request_group.add_argument("--request")
+    request_group.add_argument("--request-file", type=Path, help="UTF-8 text file, recommended for non-ASCII requests")
+    generate_parser.add_argument("--out")
+    generate_parser.add_argument("--name")
+    generate_parser.add_argument("--provider", choices=["offline", "auto", "openai"], default="offline")
+    validate_parser = commands.add_parser("validate")
+    validate_parser.add_argument("--plan", required=True)
+    compile_parser = commands.add_parser("compile")
+    compile_parser.add_argument("--plan", required=True)
+    compile_parser.add_argument("--out")
+    compile_parser.add_argument("--name")
+    validate3d_parser = commands.add_parser("validate3d")
+    validate3d_parser.add_argument("--plan", required=True)
+    build3d_parser = commands.add_parser("build3d")
+    build3d_parser.add_argument("--plan", required=True)
+    build3d_parser.add_argument("--out")
+    build3d_parser.add_argument("--name")
+    build3d_parser.add_argument("--no-execute", action="store_true")
+    build3d_parser.add_argument("--timeout", type=int, default=300)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parser().parse_args(argv)
+    if args.command == "mcp":
+        return serve_mcp()
+    def generate_action() -> dict[str, Any]:
+        request = args.request
+        if args.request_file is not None:
+            request = args.request_file.read_text(encoding="utf-8")
+        return generate(request, args.out, args.name, args.provider)
+
+    actions: dict[str, Callable[[], dict[str, Any]]] = {
+        "capabilities": capabilities,
+        "schema": get_schema,
+        "schema3d": get_3d_schema,
+        "solidworks-doctor": solidworks_doctor,
+        "generate": generate_action,
+        "validate": lambda: validate_plan_value(args.plan),
+        "compile": lambda: compile_plan_value(args.plan, args.out, args.name),
+        "validate3d": lambda: validate_3d_plan_value(args.plan),
+        "build3d": lambda: build_solidworks_part(args.plan, args.out, args.name, not args.no_execute, args.timeout),
+    }
+    try:
+        payload = actions[args.command]()
+        print(json.dumps(payload, ensure_ascii=False))
+        return 0
+    except Exception as exc:
+        print(json.dumps(_error_payload(exc), ensure_ascii=False), file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

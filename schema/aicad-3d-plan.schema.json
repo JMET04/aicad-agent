@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad-3d-plan.schema.json",
+  "title": "AICAD feature-by-feature constrained SolidWorks part plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "part", "features"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "part": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "units", "origin", "tolerance"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "units": {"const": "mm"},
+        "origin": {"const": [0, 0, 0]},
+        "tolerance": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.1}
+      }
+    },
+    "features": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 500,
+      "items": {"$ref": "#/$defs/feature"}
+    }
+  },
+  "$defs": {
+    "point2": {
+      "type": "array",
+      "prefixItems": [{"type": "number"}, {"type": "number"}],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "profile": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "center", "width", "height"],
+          "properties": {
+            "kind": {"const": "center_rectangle"}, "center": {"$ref": "#/$defs/point2"},
+            "width": {"type": "number", "exclusiveMinimum": 0}, "height": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "center", "radius"],
+          "properties": {
+            "kind": {"const": "circle"}, "center": {"$ref": "#/$defs/point2"},
+            "radius": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "center", "radius", "count", "bolt_circle_radius", "start_angle_deg"],
+          "properties": {
+            "kind": {"const": "circle_pattern"}, "center": {"$ref": "#/$defs/point2"},
+            "radius": {"type": "number", "exclusiveMinimum": 0},
+            "count": {"type": "integer", "minimum": 2, "maximum": 100},
+            "bolt_circle_radius": {"type": "number", "exclusiveMinimum": 0},
+            "start_angle_deg": {"type": "number"}
+          }
+        }
+      ]
+    },
+    "constraint": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"enum": ["depth", "width", "height", "radius", "bolt_circle_radius"]}, "value": {"type": "number"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"const": "pattern_count"}, "value": {"type": "integer"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "target"], "properties": {"kind": {"const": "support_coincident"}, "target": {"type": "string"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "target", "dx", "dy"], "properties": {"kind": {"const": "center_offset"}, "target": {"const": "origin"}, "dx": {"type": "number"}, "dy": {"type": "number"}}}
+      ]
+    },
+    "feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "purpose", "reasoning", "depends_on", "profile", "depth", "end_condition", "constraints"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+        "type": {"enum": ["base_extrude", "boss_extrude", "cut_extrude"]},
+        "purpose": {"type": "string", "minLength": 1},
+        "reasoning": {"type": "string", "minLength": 1},
+        "depends_on": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "support_feature": {"type": "string"},
+        "profile": {"$ref": "#/$defs/profile"},
+        "depth": {"type": "number", "exclusiveMinimum": 0},
+        "end_condition": {"enum": ["blind", "through_all"]},
+        "constraints": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/constraint"}}
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+(load (strcat (getenv "AICAD_TEST_ROOT") "/v2_test.lsp"))
+(aicad-v2:run)
+_.QUIT
+_Y

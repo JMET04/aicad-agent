@@ -1,0 +1,5 @@
+(load (strcat (vl-string-translate "\\" "/" (getenv "AICAD_TEST_ROOT")) "/integration_test.lsp"))
+(aicad-integration-run)
+_.QUIT
+_Y
+

@@ -1,0 +1,4 @@
+(load (strcat (getenv "AICAD_TEST_ROOT") "/agent_plugin_test.lsp"))
+(aicad-agent-test:run)
+_.QUIT
+_Y

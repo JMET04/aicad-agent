@@ -1,0 +1,258 @@
+{
+  "schema": "aicad_packaging_dieline_rules_v1",
+  "profile": "FEFCO_RSC_dimension_locked",
+  "principles": [
+    "Reference images provide topology and shape semantics only; explicit dimensions and approved engineering data provide all coordinates.",
+    "A drawing is not accepted merely because every requested entity exists; contour continuity, tangency, manufacturability and annotation clearance are independent gates.",
+    "Every failed rule must emit phenomenon, root cause, corrective action and a persistent prevention rule."
+  ],
+  "rules": [
+    {
+      "id": "PKG-G001",
+      "name": "closed_single_contour",
+      "requirement": "CUT and SLOT edges form one connected closed ring; every contour node has degree 2.",
+      "failure_cause": "An edge was omitted, referenced before its endpoint existed, or rounded geometry used inconsistent tangent points.",
+      "prevention": "Build an endpoint graph before compilation and reject any connected-component count other than 1 or any node degree other than 2."
+    },
+    {
+      "id": "PKG-G002",
+      "name": "line_arc_g1_tangency",
+      "requirement": "Every line-to-arc contour join is coincident within 1e-6 mm and tangent within 0.001 degree.",
+      "failure_cause": "A visual quarter-circle approximation was used instead of solving the exact fillet from the two incident rays.",
+      "prevention": "Compute tangent distance R/tan(theta/2), center distance R/sin(theta/2), and reject endpoint-only joins."
+    },
+    {
+      "id": "PKG-G003",
+      "name": "no_duplicate_zero_or_self_intersection",
+      "requirement": "No duplicate entities, zero-length entities, gaps, or non-adjacent self-intersections are permitted.",
+      "failure_cause": "Independent per-edge generation did not run a global topology pass.",
+      "prevention": "Canonicalize geometry, sample arcs, merge the ring and require is_ring=true and is_simple=true."
+    },
+    {
+      "id": "PKG-G004",
+      "name": "v_slot_pair_symmetry",
+      "requirement": "Each internal V slot consists of two mirrored sloped edges sharing the exact fold-line apex.",
+      "failure_cause": "Slots were represented as a single vertical line or two unrelated cuts.",
+      "prevention": "Generate both sides from one boundary station and one board-thickness-derived slot parameter; compare mirrored tangent points."
+    },
+    {
+      "id": "PKG-G005",
+      "name": "dimension_source_separation",
+      "requirement": "Pixel coordinates and apparent image scale never drive CAD dimensions.",
+      "failure_cause": "Visual tracing conflated illustrative proportions with engineering dimensions.",
+      "prevention": "Store trusted numeric sources, visual-only semantics and derived review-only tooling parameters as separate fields in every job."
+    },
+    {
+      "id": "PKG-G006",
+      "name": "dimension_chain_and_bbox",
+      "requirement": "Panel chain, flap depth, body height, closure formula and blank bounding box all reconcile exactly.",
+      "failure_cause": "Local feature edits changed global dimensions or used the misnamed inner-dimension field.",
+      "prevention": "Recompute global equations from final geometry after every contour change; design_result overrides misnamed geometry fields."
+    },
+    {
+      "id": "PKG-G007",
+      "name": "annotation_clearance",
+      "requirement": "Required text remains readable and does not cross production geometry; header/callout text stays outside the blank unless it is a face label.",
+      "failure_cause": "Text was placed from fixed coordinates without checking its rendered bounding box.",
+      "prevention": "Approximate or render text extents, buffer production lines by 2 mm, and reject unintended intersections."
+    },
+    {
+      "id": "PKG-G008",
+      "name": "autocad_normalization",
+      "requirement": "Equivalent circular angles such as 0 and 360 compare modulo 360; MTEXT newlines use \\P; execution files stay ASCII.",
+      "failure_cause": "The verifier compared serialized representations rather than geometric equivalence, or emitted invalid Unicode command sequences.",
+      "prevention": "Normalize angles modulo 360 and normalize command-channel text before launching AutoCAD."
+    },
+    {
+      "id": "PKG-G009",
+      "name": "save_reopen_persistence",
+      "requirement": "Layers, coordinates, arcs, Chinese MTEXT and AICAD XData survive a real AutoCAD save/reopen cycle.",
+      "failure_cause": "Portable DXF validation was incorrectly treated as proof of native DWG persistence.",
+      "prevention": "Run accoreconsole build, save, reopen and ID-by-ID verification as a mandatory final gate."
+    },
+    {
+      "id": "PKG-G010",
+      "name": "semantic_reference_layer_separation",
+      "requirement": "Glue application geometry and tape-center reference geometry use different layers, colors and plot behavior.",
+      "failure_cause": "Two green centerlines reused GLUE merely because both features related to sealing, making their manufacturing meaning ambiguous.",
+      "prevention": "Map every auxiliary entity to a single manufacturing action; keep GLUE green and move non-production tape centerlines to gray non-plot TAPE_REFERENCE."
+    },
+    {
+      "id": "PKG-G011",
+      "name": "frame_scale_space_separation",
+      "requirement": "Production geometry remains 1:1 in model space; the measured paper frame remains 1:1 in paper space; fitting is performed only by a locked viewport scale.",
+      "failure_cause": "Physically scaling the dieline to fit a frame would invalidate production coordinates, constraints and AICAD XData verification.",
+      "prevention": "Reject any framed delivery whose model-space production bounding box changes; require an explicit paper size, viewport ratio and locked viewport."
+    },
+    {
+      "id": "PKG-G012",
+      "name": "single_viewport_and_full_coverage",
+      "requirement": "Each delivery layout contains exactly one active model viewport; its scale, lock, target/view center and visible model window cover the complete annotated drawing with margin.",
+      "failure_cause": "A layout template auto-created a viewport and MVIEW created another; later Target was added to an existing ViewCenter, shifting and cropping half the drawing although the numeric scale was correct.",
+      "prevention": "Delete duplicate model viewports, verify viewport count=1, compute the model-space visible rectangle from paper size/scale/center, require it to contain annotation extents, and perform an actual AutoCAD layout screenshot check."
+    },
+    {
+      "id": "PKG-G013",
+      "name": "reference_frame_dimensional_match",
+      "requirement": "A user-supplied frame is measured from CAD entities and reproduced by exact outer, inner-margin and title-grid coordinates rather than visual approximation.",
+      "failure_cause": "The first generic A3 draft assumed left 20 mm and other margins 10 mm, while the supplied reference actually used left 25 mm and other margins 5 mm.",
+      "prevention": "Extract the reference DWG entity extents and title-line coordinates, persist them in a frame config, and compare every reproduced frame segment within 1e-6 mm."
+    },
+    {
+      "id": "PKG-G014",
+      "name": "native_dimension_entities_and_methods",
+      "requirement": "Every displayed engineering size is carried by a native AutoCAD DIMENSION entity of the correct subtype and a named plot-scale dimension style; manual line-plus-text dimensions and numeric text overrides are forbidden.",
+      "failure_cause": "The drawing used native dimensions for only the outer chain while radius and manufacturing explanations remained ordinary MTEXT, so the sheet still looked manually annotated and could not be dimension-audited as one system.",
+      "prevention": "Require AcDbRotatedDimension for linear sizes and AcDbRadialDimension for radii, a named scale style, empty TextOverride, exact Measurement values, dimension XData IDs, and a DWG save/reopen subtype audit."
+    },
+    {
+      "id": "PKG-G015",
+      "name": "title_block_semantic_fields_and_cell_fit",
+      "requirement": "Title-block cells contain drawing-relevant metadata, use the intended row/column semantics, and keep centered text extents inside their owning cells.",
+      "failure_cause": "Fields such as class, major, grade and student ID were copied from the reference example even though they were not metadata for this packaging drawing.",
+      "prevention": "Define a title-block field map before drawing; reject reference-example fields not requested by the user; verify required school/name/title/number/scale/date/unit/status/sheet/review values and rendered cell clearance."
+    },
+    {
+      "id": "PKG-G016",
+      "name": "technical_notes_inside_frame",
+      "requirement": "General technical explanations live in a dedicated paper-space requirements panel inside the frame; model space retains only local face/flap labels that identify geometry.",
+      "failure_cause": "Header, process and review notes were scattered above, beside and below the model, expanding extents and making the drawing look like an annotated screenshot rather than a controlled sheet.",
+      "prevention": "Classify text as local geometry label, native dimension or general note; require all general notes in a bounded paper-space panel and require zero general-note MTEXT outside the frame."
+    },
+    {
+      "id": "PKG-G017",
+      "name": "native_layout_plot_state",
+      "requirement": "The clean review preview is plotted from the named paper-space layout with TILEMODE=0, the expected A3 media and an opaque white rasterization.",
+      "failure_cause": "A test plot was launched after editing model space without switching TILEMODE back to paper space, producing a black and incomplete preview even though the DWG layout itself was correct.",
+      "prevention": "Before PlotToFile set TILEMODE=0 and CTAB explicitly, delete stale output, verify A3 page size, RGB white background and complete frame/title/model visibility."
+    },
+    {
+      "id": "PKG-G018",
+      "name": "tuck_lock_closure_equations",
+      "requirement": "For a straight tuck-end carton, main-flap depth equals box width, dust-flap depth equals half the box width, the tongue has a positive insertion depth, and paired root reliefs separate the main and dust flaps.",
+      "failure_cause": "A visually plausible flap set can still jam, overrun the receiving panel or tear at a shared sharp root if closure equations are not checked globally.",
+      "prevention": "Compute and verify main_depth=W, dust_depth=W/2, tongue_depth>0, mirrored relief width and fold order before compiling any tuck-lock plan; reject geometric-only approximations."
+    },
+    {
+      "id": "PKG-G019",
+      "name": "xdata_id_to_layer_persistence",
+      "requirement": "Every plugin entity maps from its AICAD XData ID to one literal manufacturing-layer pair, and the same mapping survives native DWG save/reopen.",
+      "failure_cause": "An AutoLISP association table was quoted as unevaluated CONS forms, so all entities kept the generic AICAD_GEOMETRY layer although their XData remained valid.",
+      "prevention": "Generate literal dotted pairs or an evaluated list, verify every ID resolves before SAVEAS, then reopen and compare exact per-layer counts plus ID-to-layer assignments."
+    },
+    {
+      "id": "PKG-G020",
+      "name": "autocad_host_capability_compatibility",
+      "requirement": "Build scripts use only functions and ActiveX properties confirmed on the target AutoCAD host, with a command-based fallback for view centering and layout creation.",
+      "failure_cause": "Core Console lacked layoutlist and the AutoCAD 2025 viewport ActiveX object did not expose a writable ViewCenter property.",
+      "prevention": "Run a host capability probe, create isolated layouts deterministically, center views with MSPACE/ZOOM when necessary, and treat unsupported API members as a preflight failure rather than retrying blindly."
+    },
+    {
+      "id": "PKG-G021",
+      "name": "preview_visual_hygiene",
+      "requirement": "The final opaque preview shows the full sheet with readable Chinese, dashed creases, no UCS/grid artifacts, no critical annotation overlap and no cropped production geometry.",
+      "failure_cause": "A numerically correct viewport can still expose UCS icons, use continuous-looking crease lines or place labels too close to auxiliary geometry.",
+      "prevention": "Disable viewport UCS/grid/snap, enforce plot linetype scaling, rasterize the actual named layout to white RGB and require an original-resolution visual inspection before status can pass."
+    }
+  ],
+  "historical_errors": [
+    {
+      "id": "LESSON-001",
+      "symptom": "All flaps appeared as rigid rectangles and slots as vertical single lines.",
+      "root_cause": "The old 40-edge catalog was treated as complete visual truth even though it was a simplified coordinate catalog.",
+      "fix": "Use image2 for topology semantics while retaining only explicit numeric dimensions from engineering data.",
+      "new_rule": "PKG-G004 and PKG-G005"
+    },
+    {
+      "id": "LESSON-002",
+      "symptom": "Rounded corners touched adjacent lines but had a small directional kink.",
+      "root_cause": "Quarter-circle centers were offset by R in X/Y without solving tangency to the sloped slot edge.",
+      "fix": "Replace approximate corners with exact two-ray fillet mathematics.",
+      "new_rule": "PKG-G002"
+    },
+    {
+      "id": "LESSON-003",
+      "symptom": "A correct reopened arc failed because AutoCAD stored 360 degrees as 0 degrees.",
+      "root_cause": "The verifier compared serialization literally instead of modulo 360 geometric equivalence.",
+      "fix": "Normalize all angular comparisons modulo 360.",
+      "new_rule": "PKG-G008"
+    },
+    {
+      "id": "LESSON-004",
+      "symptom": "An early preview had a transparent background and missing Chinese text.",
+      "root_cause": "The preview path converted text to unsupported output and did not force an opaque canvas.",
+      "fix": "Require RGB white PNG plus SVG native text and perform an original-resolution visual check.",
+      "new_rule": "PKG-G007"
+    },
+    {
+      "id": "LESSON-005",
+      "symptom": "AutoCAD could not load a generated build LISP.",
+      "root_cause": "Generated MTEXT contained U+000A and one nested IF lacked a closing parenthesis.",
+      "fix": "Normalize MTEXT line breaks to \\P, require ASCII, and balance parentheses before launch.",
+      "new_rule": "PKG-G008"
+    },
+    {
+      "id": "LESSON-006",
+      "symptom": "The actual glue zone and two tape-center reference lines were all green, so their purposes were indistinguishable.",
+      "root_cause": "Layer assignment grouped entities by a broad sealing theme instead of by manufacturing action.",
+      "fix": "Keep only the adhesive application rectangle on GLUE and move the two tape centers to gray non-plot TAPE_REFERENCE.",
+      "new_rule": "PKG-G010"
+    },
+    {
+      "id": "LESSON-007",
+      "symptom": "The initial generic A3 frame did not match the user's DWG margins and title-grid divisions.",
+      "root_cause": "A standard template was assumed before the actual reference drawing was available and measured.",
+      "fix": "Measure the reference as 420x297 mm, inner margins 25/5/5/5 mm, and a 180x40 mm title block with its exact row/column grid.",
+      "new_rule": "PKG-G013"
+    },
+    {
+      "id": "LESSON-008",
+      "symptom": "The framed layout contained duplicate viewports and then displayed only half of the dieline even though the viewport scale reported 1:5.",
+      "root_cause": "The layout template supplied a viewport, MVIEW added another, and Target was combined with a retained ViewCenter.",
+      "fix": "Keep one viewport, lock it at 1:5, set Target to the origin, verify full annotated extents and inspect the real AutoCAD layout.",
+      "new_rule": "PKG-G011 and PKG-G012"
+    },
+    {
+      "id": "LESSON-009",
+      "symptom": "The drawing contained dimension numbers but still looked manually annotated.",
+      "root_cause": "Only the main width/height chain used DIMENSION entities; radius and manufacturing explanations remained ordinary text without a unified dimension style.",
+      "fix": "Rebuild the sheet with ten native linear dimensions and one native radial dimension, exact measurements, no text overrides and AICAD_DIM IDs.",
+      "new_rule": "PKG-G014"
+    },
+    {
+      "id": "LESSON-010",
+      "symptom": "The title block was dimensionally correct but contained class, major, grade and student-ID example content.",
+      "root_cause": "The reference title block was treated as content to copy rather than a grid whose cells needed project-specific semantics.",
+      "fix": "Replace example content with school, category, drawing number, scale, name, unit, status, date, sheet and review fields; center each value in its cell.",
+      "new_rule": "PKG-G015"
+    },
+    {
+      "id": "LESSON-011",
+      "symptom": "Technical explanations were scattered around model space and some sat outside the production blank.",
+      "root_cause": "All text was handled as free annotations without distinguishing local labels from sheet-level technical requirements.",
+      "fix": "Keep only panel/flap labels in model space and move all general notes into a dedicated bounded technical-requirements panel inside the A3 frame.",
+      "new_rule": "PKG-G016"
+    },
+    {
+      "id": "LESSON-012",
+      "symptom": "One generated PDF preview was black and incomplete after a correct visual sheet had already been produced.",
+      "root_cause": "The plot was launched while TILEMODE still selected model space, so the named paper layout was not actually the plotted context.",
+      "fix": "Explicitly activate paper space and the named layout before every plot, remove stale outputs, then inspect the resulting full-page PNG.",
+      "new_rule": "PKG-G017"
+    },
+    {
+      "id": "LESSON-013",
+      "symptom": "Plugin entities reopened with valid AICAD XData but all remained on AICAD_GEOMETRY instead of CUT, SLOT, CREASE and GLUE.",
+      "root_cause": "The generated AutoLISP layer table quoted CONS expressions instead of storing evaluated ID-to-layer pairs.",
+      "fix": "Emit literal dotted pairs and make reopened per-ID layer reconciliation mandatory.",
+      "new_rule": "PKG-G019"
+    },
+    {
+      "id": "LESSON-014",
+      "symptom": "The first AutoCAD build stopped at layoutlist and a later layout pass failed on the unavailable ViewCenter property.",
+      "root_cause": "GUI-oriented helpers and assumed ActiveX members were used without probing the AutoCAD Core Console 2025 host.",
+      "fix": "Create the isolated layout directly and set the model view with MSPACE/ZOOM before applying supported scale and lock properties.",
+      "new_rule": "PKG-G020"
+    }
+  ]
+}

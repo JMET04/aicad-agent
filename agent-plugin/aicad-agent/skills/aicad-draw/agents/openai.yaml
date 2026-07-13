@@ -1,0 +1,6 @@
+interface:
+  display_name: "AI CAD Constraint"
+  short_description: "Generate mathematically validated and auditable 2D CAD"
+  default_prompt: "Use $aicad-draw to turn my 2D CAD request into validated CAD artifacts."
+policy:
+  allow_implicit_invocation: true

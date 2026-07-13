@@ -1,0 +1,47 @@
+{
+    "name":  "aicad-agent",
+    "version":  "1.2.0",
+    "description":  "Agent-native tools for deterministic, origin-anchored 2D CAD and transactional SolidWorks 3D modeling.",
+    "author":  {
+                   "name":  "AI CAD Constraint Project"
+               },
+    "license":  "MIT",
+    "keywords":  [
+                     "cad",
+                     "autocad",
+                     "solidworks",
+                     "step",
+                     "dxf",
+                     "geometry",
+                     "constraints",
+                     "agent-tools"
+                 ],
+    "skills":  "./skills/",
+    "mcpServers":  "./.mcp.json",
+    "interface":  {
+                      "displayName":  "AI CAD Constraint Agent",
+                      "shortDescription":  "Generate validated 2D CAD and transactional SolidWorks 3D parts.",
+                      "longDescription":  "Turns structured CAD intent into deterministic 2D geometry or feature-by-feature SolidWorks parts. Every 3D feature is origin-anchored, mathematically constrained, rebuilt, read back, audited, and rejected fail-closed if its geometry or topology does not match intent.",
+                      "developerName":  "AI CAD Constraint Project",
+                      "category":  "Developer Tools",
+                      "capabilities":  [
+                                           "MCP tools",
+                                           "Local CLI",
+                                           "2D constraint validation",
+                                           "DXF export",
+                                           "Packaging dieline QA",
+                                           "SolidWorks SLDPRT",
+                                           "STEP export",
+                                           "Per-feature readback",
+                                           "Audit manifests"
+                                       ],
+                      "defaultPrompt":  [
+                                            "Use the plugin to draw a 120x80 mm plate with a centered 20 mm hole.",
+                                            "Compile this 2D CAD requirement into validated DXF and AutoCAD artifacts.",
+                                            "Validate my AICAD plan and explain any broken geometric relation."
+                                        ],
+                      "brandColor":  "#2563EB"
+                  },
+    "homepage":  "https://github.com/JMET04/aicad-agent",
+    "repository":  "https://github.com/JMET04/aicad-agent"
+}

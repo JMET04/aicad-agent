@@ -1,0 +1,14 @@
+[project]
+name = "aicad-constraint"
+version = "1.0.0"
+description = "Natural-language, origin-anchored, mathematically constrained CAD compiler"
+requires-python = ">=3.10"
+
+[project.scripts]
+aicad = "aicad.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,65 @@
+[CmdletBinding()]
+param(
+    [string]$SourceDirectory
+)
+
+$ErrorActionPreference = 'Stop'
+if (-not $SourceDirectory) {
+    $SourceDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) 'release\aicad-agent'
+}
+$source = [IO.Path]::GetFullPath($SourceDirectory)
+$pluginsRoot = [IO.Path]::GetFullPath((Join-Path $HOME 'plugins'))
+$destination = Join-Path $pluginsRoot 'aicad-agent'
+$marketplacePath = [IO.Path]::GetFullPath((Join-Path $HOME '.agents\plugins\marketplace.json'))
+
+if (-not (Test-Path -LiteralPath (Join-Path $source '.codex-plugin\plugin.json') -PathType Leaf)) {
+    throw "Built aicad-agent plugin was not found: $source"
+}
+$python = Get-Command python -ErrorAction SilentlyContinue
+if (-not $python) { throw 'Python 3.10+ must be available as the python command for the MCP server.' }
+& $python.Source -c "import sys; raise SystemExit(0 if sys.version_info >= (3, 10) else 1)"
+if ($LASTEXITCODE -ne 0) { throw 'aicad-agent requires Python 3.10 or newer.' }
+New-Item -ItemType Directory -Path $pluginsRoot -Force | Out-Null
+if (Test-Path -LiteralPath $destination) {
+    $resolved = (Resolve-Path -LiteralPath $destination).Path
+    if (-not $resolved.StartsWith($pluginsRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Refusing to replace plugin outside personal plugins: $resolved"
+    }
+    Remove-Item -LiteralPath $resolved -Recurse -Force
+}
+New-Item -ItemType Directory -Path $destination -Force | Out-Null
+Get-ChildItem -LiteralPath $source -Force | ForEach-Object {
+    Copy-Item -LiteralPath $_.FullName -Destination $destination -Recurse -Force
+}
+
+$installedManifestPath = Join-Path $destination '.codex-plugin\plugin.json'
+$installedManifest = Get-Content -LiteralPath $installedManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$baseVersion = ([string]$installedManifest.version).Split('+')[0]
+$installedManifest.version = "$baseVersion+codex.$([DateTime]::UtcNow.ToString('yyyyMMddHHmmss'))"
+$manifestJson = $installedManifest | ConvertTo-Json -Depth 20
+[IO.File]::WriteAllText($installedManifestPath, $manifestJson + [Environment]::NewLine, [Text.UTF8Encoding]::new($false))
+
+$marketplaceDirectory = Split-Path -Parent $marketplacePath
+New-Item -ItemType Directory -Path $marketplaceDirectory -Force | Out-Null
+if (Test-Path -LiteralPath $marketplacePath -PathType Leaf) {
+    $marketplace = Get-Content -LiteralPath $marketplacePath -Raw -Encoding UTF8 | ConvertFrom-Json
+    if (-not $marketplace.name) { throw 'Existing personal marketplace has no name.' }
+    if (-not $marketplace.interface) { $marketplace | Add-Member -NotePropertyName interface -NotePropertyValue ([pscustomobject]@{ displayName = 'Personal' }) }
+    if (-not $marketplace.plugins) { $marketplace | Add-Member -NotePropertyName plugins -NotePropertyValue @() }
+} else {
+    $marketplace = [pscustomobject]@{ name = 'personal'; interface = [pscustomobject]@{ displayName = 'Personal' }; plugins = @() }
+}
+$entry = [pscustomobject]@{
+    name = 'aicad-agent'
+    source = [pscustomobject]@{ source = 'local'; path = './plugins/aicad-agent' }
+    policy = [pscustomobject]@{ installation = 'AVAILABLE'; authentication = 'ON_INSTALL' }
+    category = 'Developer Tools'
+}
+$marketplace.plugins = @($marketplace.plugins | Where-Object name -ne 'aicad-agent') + @($entry)
+$json = $marketplace | ConvertTo-Json -Depth 20
+[IO.File]::WriteAllText($marketplacePath, $json + [Environment]::NewLine, [Text.UTF8Encoding]::new($false))
+
+Write-Host "Installed agent plugin source: $destination"
+Write-Host "Installed plugin version: $($installedManifest.version)"
+Write-Host "Updated personal marketplace: $marketplacePath"
+Write-Host 'Open the plugin in Codex and install it, then start a new task to load its skill and MCP tools.'
