@@ -128,9 +128,15 @@ def compile_3d_plan(
     plan = compile_plan3d(data)
     stem = _safe_name(name, plan.name)
     output_dir = output_dir.expanduser().resolve()
-    template = find_solidworks_template()
-    if template is None:
-        raise SolidWorksHostError("SolidWorks 2026 part template was not found")
+    template = None
+    host = None
+    if execute:
+        template = find_solidworks_template()
+        if template is None:
+            raise SolidWorksHostError("SolidWorks 2026 part template was not found")
+        host = find_solidworks_host()
+        if host is None:
+            raise SolidWorksHostError("AiCad.SolidWorksHost.exe is not installed; run build-solidworks-host.ps1")
     paths = export_plan3d(plan, output_dir, stem, template)
     _write_json(paths["source"], data)
     result: dict[str, Any] = {
@@ -148,10 +154,8 @@ def compile_3d_plan(
         "reopen_report": str(paths["reopen_report"].resolve()),
     }
     if not execute:
+        result["host_requirements_deferred"] = True
         return result
-    host = find_solidworks_host()
-    if host is None:
-        raise SolidWorksHostError("AiCad.SolidWorksHost.exe is not installed; run build-solidworks-host.ps1")
     try:
         completed = subprocess.run(
             [str(host), str(paths["execution"]), str(paths["host_report"])],

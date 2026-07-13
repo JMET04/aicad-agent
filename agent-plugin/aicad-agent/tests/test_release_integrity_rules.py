@@ -15,7 +15,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         )
         self.assertEqual(payload["schema"], "aicad_release_integrity_rules_v1")
         rules = {item["id"]: item for item in payload["rules"]}
-        self.assertEqual(set(rules), {"REL-G001", "REL-G002", "REL-G003", "REL-G004", "REL-G005"})
+        self.assertEqual(set(rules), {"REL-G001", "REL-G002", "REL-G003", "REL-G004", "REL-G005", "REL-G006"})
         for rule in rules.values():
             self.assertTrue(rule["symptom"])
             self.assertTrue(rule["root_cause"])

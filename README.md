@@ -51,7 +51,7 @@ powershell -ExecutionPolicy Bypass -File scripts/build-agent-plugin.ps1
 powershell -ExecutionPolicy Bypass -File scripts/install-agent-plugin.ps1
 ```
 
-发布包：`release/aicad-agent-1.2.0.zip`。安装脚本会把插件注册到个人 Codex marketplace；安装或更新后新建任务以加载新的技能和 MCP 工具。1.2.0 新增包装刀版整体细节核验、错误根因记录和预防规则回归闭环。默认发布包不再分发 SolidWorks 专有互操作程序集；已安装 SolidWorks SDK 的机器可用构建脚本生成本地宿主。
+发布包：`release/aicad-agent-1.2.1.zip`。安装脚本会把插件注册到个人 Codex marketplace；安装或更新后新建任务以加载新的技能和 MCP 工具。1.2.0 新增包装刀版整体细节核验、错误根因记录和预防规则回归闭环；1.2.1 修复无 SolidWorks 环境下的 3D 纯编译降级。默认发布包不再分发 SolidWorks 专有互操作程序集；已安装 SolidWorks SDK 的机器可用构建脚本生成本地宿主。
 
 ## 验证
 

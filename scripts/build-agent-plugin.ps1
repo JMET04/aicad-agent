@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.2.0',
+    [string]$Version = '1.2.1',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -85,7 +85,7 @@ $releaseManifest = [ordered]@{
     name = 'aicad-agent'
     version = $Version
     componentVersions = [ordered]@{
-        agentPlugin = '1.2.0'
+        agentPlugin = $Version
         pythonConstraintCompiler = '1.0.0'
         autocadBundle = '1.0.0'
         plan2dSchema = '2.0'

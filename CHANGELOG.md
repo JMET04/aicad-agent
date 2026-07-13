@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1 - 2026-07-14
+
+- Deferred SolidWorks template and host discovery until `execute=true`.
+- Made 3D validation and compile-only artifact generation work on clean machines without SolidWorks.
+- Added a regression test that explicitly masks both the SolidWorks template and host.
+- Added REL-G006 after GitHub Actions exposed the local-environment coupling.
 ## 1.2.0 - 2026-07-14
 
 - Added packaging-dieline global QA and 21 persistent prevention rules.

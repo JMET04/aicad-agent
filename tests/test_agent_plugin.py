@@ -32,7 +32,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.2.0")
+        self.assertEqual(manifest["version"], "1.2.1")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         mcp = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
@@ -143,8 +143,11 @@ class AgentPluginTests(unittest.TestCase):
         self.assertTrue(validated["valid"])
         self.assertEqual(validated["feature_count"], 4)
         with tempfile.TemporaryDirectory() as directory:
-            compiled = self.agent.build_solidworks_part(str(plan_path), directory, "mcp-part", False)
+            with patch("aicad.solidworks3d.find_solidworks_template", return_value=None), \
+                 patch("aicad.solidworks3d.find_solidworks_host", return_value=None):
+                compiled = self.agent.build_solidworks_part(str(plan_path), directory, "mcp-part", False)
             self.assertFalse(compiled["executed"])
+            self.assertTrue(compiled["host_requirements_deferred"])
             self.assertTrue(Path(compiled["solidworks_plan"]).is_file())
             self.assertTrue(Path(compiled["audit"]).is_file())
             self.assertFalse(Path(compiled["sldprt"]).exists())

@@ -1,41 +1,47 @@
 {
-  "schema": "aicad_release_integrity_rules_v1",
-  "rules": [
-    {
-      "id": "REL-G001",
-      "name": "version_and_payload_coherence",
-      "symptom": "The old 1.1.0 archive did not contain the latest packaging QA script and prevention rules.",
-      "root_cause": "The archive was treated as the source of truth even though development continued after it was built.",
-      "prevention": "Build only from current source, require one release version across plugin/API/build script, and verify every staged file through integration-manifest.json and SHA256SUMS."
-    },
-    {
-      "id": "REL-G002",
-      "name": "self_contained_test_fixtures",
-      "symptom": "Clean-source tests failed because they read plans from jobs and research experiment directories.",
-      "root_cause": "Regression inputs were referenced by convenient workspace paths instead of being owned by the test suite.",
-      "prevention": "Every release test must use a minimal sanitized fixture under its own tests/fixtures directory; jobs and research/experiments are forbidden dependencies."
-    },
-    {
-      "id": "REL-G003",
-      "name": "preview_acceptance_matches_delivery_contract",
-      "symptom": "A valid white PNG with manually verified Chinese text was rejected because an optional pathized SVG had no native text elements.",
-      "root_cause": "The validator required every supplied preview format to pass a format-specific text check instead of applying the at-least-one delivery contract.",
-      "prevention": "Accept at least one structurally viewable preview plus a recorded original-resolution visual inspection; treat pathized SVG as optional auxiliary evidence."
-    },
-    {
-      "id": "REL-G004",
-      "name": "verification_must_not_pollute_release",
-      "symptom": "Running Python tests after staging created __pycache__ files in the verification directory.",
-      "root_cause": "The verification command used Python's default bytecode-writing behavior inside the release tree.",
-      "prevention": "Run packaged tests with python -B or PYTHONDONTWRITEBYTECODE=1, then verify cache absence and hashes without mutating the archive."
-    },
-    {
-      "id": "REL-G005",
-      "name": "proprietary_host_binaries_are_local_only",
-      "symptom": "A complete local SolidWorks host bundle included vendor interop DLLs whose redistribution rights were not established.",
-      "root_cause": "Installability and distributability were treated as the same property.",
-      "prevention": "Publish host source and build instructions by default; exclude SolidWorks interop DLLs and executables unless an explicit redistribution license is recorded."
-    }
-  ]
+    "schema":  "aicad_release_integrity_rules_v1",
+    "rules":  [
+                  {
+                      "id":  "REL-G001",
+                      "name":  "version_and_payload_coherence",
+                      "symptom":  "The old 1.1.0 archive did not contain the latest packaging QA script and prevention rules.",
+                      "root_cause":  "The archive was treated as the source of truth even though development continued after it was built.",
+                      "prevention":  "Build only from current source, require one release version across plugin/API/build script, and verify every staged file through integration-manifest.json and SHA256SUMS."
+                  },
+                  {
+                      "id":  "REL-G002",
+                      "name":  "self_contained_test_fixtures",
+                      "symptom":  "Clean-source tests failed because they read plans from jobs and research experiment directories.",
+                      "root_cause":  "Regression inputs were referenced by convenient workspace paths instead of being owned by the test suite.",
+                      "prevention":  "Every release test must use a minimal sanitized fixture under its own tests/fixtures directory; jobs and research/experiments are forbidden dependencies."
+                  },
+                  {
+                      "id":  "REL-G003",
+                      "name":  "preview_acceptance_matches_delivery_contract",
+                      "symptom":  "A valid white PNG with manually verified Chinese text was rejected because an optional pathized SVG had no native text elements.",
+                      "root_cause":  "The validator required every supplied preview format to pass a format-specific text check instead of applying the at-least-one delivery contract.",
+                      "prevention":  "Accept at least one structurally viewable preview plus a recorded original-resolution visual inspection; treat pathized SVG as optional auxiliary evidence."
+                  },
+                  {
+                      "id":  "REL-G004",
+                      "name":  "verification_must_not_pollute_release",
+                      "symptom":  "Running Python tests after staging created __pycache__ files in the verification directory.",
+                      "root_cause":  "The verification command used Python\u0027s default bytecode-writing behavior inside the release tree.",
+                      "prevention":  "Run packaged tests with python -B or PYTHONDONTWRITEBYTECODE=1, then verify cache absence and hashes without mutating the archive."
+                  },
+                  {
+                      "id":  "REL-G005",
+                      "name":  "proprietary_host_binaries_are_local_only",
+                      "symptom":  "A complete local SolidWorks host bundle included vendor interop DLLs whose redistribution rights were not established.",
+                      "root_cause":  "Installability and distributability were treated as the same property.",
+                      "prevention":  "Publish host source and build instructions by default; exclude SolidWorks interop DLLs and executables unless an explicit redistribution license is recorded."
+                  },
+                  {
+                      "id":  "REL-G006",
+                      "name":  "host_discovery_is_execution_only",
+                      "symptom":  "GitHub Actions could not compile a 3D plan with execute=false because the runner had no SolidWorks template.",
+                      "root_cause":  "Host template discovery ran before the execute flag was honored, and the developer workstation masked the coupling.",
+                      "prevention":  "Pure validation and compile-only paths must not probe native hosts; discover templates and executables only inside execute=true, and test with both probes forced to None."
+                  }
+              ]
 }
-

@@ -23,14 +23,14 @@ def _profile_payload(feature: ResolvedFeature3D) -> dict[str, Any]:
     }
 
 
-def host_payload(plan: CompiledPlan3D, output_sldprt: Path, output_step: Path, template_path: Path) -> dict[str, Any]:
+def host_payload(plan: CompiledPlan3D, output_sldprt: Path, output_step: Path, template_path: Path | None) -> dict[str, Any]:
     return {
         "protocol": "AICAD_SOLIDWORKS_1",
         "source_sha256": plan.source_hash,
         "part_name": plan.name,
         "units": plan.units,
         "tolerance_mm": plan.tolerance,
-        "template_path": str(template_path.resolve()),
+        "template_path": str(template_path.resolve()) if template_path else None,
         "output_sldprt": str(output_sldprt.resolve()),
         "output_step": str(output_step.resolve()),
         "features": [
@@ -84,7 +84,7 @@ def write_3d_audit(plan: CompiledPlan3D, path: Path) -> None:
     path.write_text("\n".join(rows) + "\n", encoding="utf-8")
 
 
-def export_plan3d(plan: CompiledPlan3D, output_dir: Path, stem: str, template_path: Path) -> dict[str, Path]:
+def export_plan3d(plan: CompiledPlan3D, output_dir: Path, stem: str, template_path: Path | None) -> dict[str, Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     paths = {
         "source": output_dir / f"{stem}.aicad3d.plan.json",
