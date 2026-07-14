@@ -173,12 +173,12 @@
                   {
                       "path":  "dist/aicad-agent-1.2.1.zip",
                       "size":  100979,
-                      "sha256":  "7e3da62afd740235c7102201675cb6ac6218a7365e23614328437dea33214602"
+                      "sha256":  "01767d4fd96f1fcd243e27927311f593b75dbff0131bbaffa709a26583001ace"
                   },
                   {
                       "path":  "dist/SHA256SUMS",
                       "size":  88,
-                      "sha256":  "04491a07a8b1f977e73f5ed87f38a843172ef967186127afe393ec90912f6362"
+                      "sha256":  "f1c9ca6e93f7f20d24f9026791d133b8269aa193ac7c6458ffe5e5f5d27d8761"
                   },
                   {
                       "path":  "docs/agent-plugin.md",
