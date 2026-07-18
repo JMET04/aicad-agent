@@ -8,7 +8,7 @@
 
 ## 版本口径
 
-本仓库的发布版本是 Agent 插件/API `1.2.0`。内嵌组件保持各自兼容版本：Python 2D 编译器与 AutoCAD bundle 为 `1.0.0`，2D 计划 Schema 为 `2.0`，3D 计划 Schema 为 `1.0`。组件版本不等同于发布包版本，具体绑定以 `integration-manifest.json` 为准。
+本仓库的发布版本是 Agent 插件/API `1.2.2`。内嵌组件保持各自兼容版本：Python 2D 编译器与 AutoCAD bundle 为 `1.0.0`，2D 计划 Schema 为 `2.0`，3D 计划 Schema 为 `1.0`。组件版本不等同于发布包版本，具体绑定以 `integration-manifest.json` 为准。
 ## 3D SolidWorks 工作流
 
 每个特征都是一个失败即停的交易：
@@ -51,7 +51,7 @@ powershell -ExecutionPolicy Bypass -File scripts/build-agent-plugin.ps1
 powershell -ExecutionPolicy Bypass -File scripts/install-agent-plugin.ps1
 ```
 
-发布包：`release/aicad-agent-1.2.1.zip`。安装脚本会把插件注册到个人 Codex marketplace；安装或更新后新建任务以加载新的技能和 MCP 工具。1.2.0 新增包装刀版整体细节核验、错误根因记录和预防规则回归闭环；1.2.1 修复无 SolidWorks 环境下的 3D 纯编译降级。默认发布包不再分发 SolidWorks 专有互操作程序集；已安装 SolidWorks SDK 的机器可用构建脚本生成本地宿主。
+发布包：`release/v1.2.2/aicad-agent-1.2.2.zip`。安装脚本会把插件注册到个人 Codex marketplace；安装或更新后新建任务以加载新的技能和 MCP 工具。1.2.0 新增包装刀版整体细节核验、错误根因记录和预防规则回归闭环；1.2.1 修复无 SolidWorks 环境下的 3D 纯编译降级；1.2.2 增加发布前行为、远端基线和不可变制品门禁。默认发布包不再分发 SolidWorks 专有互操作程序集；已安装 SolidWorks SDK 的机器可用构建脚本生成本地宿主。
 
 ## 验证
 

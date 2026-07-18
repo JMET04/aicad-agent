@@ -1,4 +1,4 @@
-# aicad-agent 1.2.1
+# aicad-agent 1.2.2
 
 `aicad-agent` is a local-first Codex/MCP plugin for deterministic 2D CAD, packaging-dieline review, and transactional SolidWorks part generation.
 

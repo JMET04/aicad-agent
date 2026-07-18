@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.2.1',
+    [string]$Version = '1.2.2',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -91,7 +91,7 @@ $releaseManifest = [ordered]@{
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
     }
-    releaseDate = '2026-07-14'
+    releaseDate = '2026-07-18'
     license = 'MIT'
     repository = 'https://github.com/JMET04/aicad-agent'
     apiKeyRequired = $false
