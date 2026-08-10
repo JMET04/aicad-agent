@@ -8,4 +8,3 @@
 - Packaging rules remain review-only until separately accepted by a responsible reviewer.
 
 Do not commit API keys, CAD customer files, personal paths, temporary jobs, or native-host credentials.
-

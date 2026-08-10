@@ -1,0 +1,1168 @@
+{
+    "schema":  "case01_image2_dimension_locked_geometry_v2",
+    "reference":  {
+                      "path":  "fixtures/fefco0201_reference_semantics.png",
+                      "sha256":  "3f0a2ddaece48e2ec01050d68240ae6be84d099c0399c80ee539451a0d2b0cbd",
+                      "role":  "shape semantics and visual topology only; pixel coordinates and apparent scale are explicitly untrusted"
+                  },
+    "trusted_numeric_sources":  {
+                                    "design_result":  "fixture:design_result.json",
+                                    "manufacturing_mm":  [
+                                                             435.0,
+                                                             335.0,
+                                                             262.0
+                                                         ],
+                                    "true_inner_mm":  [
+                                                          428.0,
+                                                          328.0,
+                                                          248.0
+                                                      ],
+                                    "joint_mm":  35.0,
+                                    "flap_depth_mm":  167.5,
+                                    "blank_mm":  [
+                                                     1575.0,
+                                                     597.0
+                                                 ],
+                                    "panel_chain_mm":  [
+                                                           35.0,
+                                                           335.0,
+                                                           435.0,
+                                                           335.0,
+                                                           435.0
+                                                       ]
+                                },
+    "derived_tooling_parameters":  {
+                                       "board_thickness_mm":  7.0,
+                                       "corner_radius_mm":  7.0,
+                                       "slot_mouth_total_mm":  14.0,
+                                       "derivation":  "R=t and slot mouth=2t; visible in image2 but not dimensioned there, therefore review-only tooling parameters"
+                                   },
+    "visual_semantics":  {
+                             "body_only_joint_tab":  true,
+                             "rounded_flap_outer_corners":  16,
+                             "v_notches_between_panels":  6,
+                             "alternating_panel_widths":  [
+                                                              335.0,
+                                                              435.0,
+                                                              335.0,
+                                                              435.0
+                                                          ],
+                             "continuous_body_band":  true,
+                             "rectangular_flap_simplification_forbidden":  true
+                         },
+    "counts":  {
+                   "structure_physical_entities":  56,
+                   "CUT":  28,
+                   "CREASE":  12,
+                   "SLOT":  16,
+                   "lines":  40,
+                   "arcs":  16,
+                   "temporary_origin_entities":  1
+               },
+    "bbox_mm":  [
+                    0.0,
+                    0.0,
+                    1575.0,
+                    597.0
+                ],
+    "entities":  [
+                     {
+                         "id":  "ORIGIN_BOOTSTRAP",
+                         "type":  "line",
+                         "layer":  "TEMP",
+                         "purpose":  "临时原点协议启动线",
+                         "reasoning":  "插件规定首实体必须从(0,0)开始；image2正确轮廓在原点没有实体端点，因此本线仅用于执行协议，进入生产DWG前删除。",
+                         "feature":  "ORIGIN_PROTOCOL",
+                         "start":  [
+                                       0.0,
+                                       0.0
+                                   ],
+                         "end":  [
+                                     35.0,
+                                     0.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_JOINT_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "35mm糊口舌外侧切线",
+                         "reasoning":  "image2中糊口舌只位于箱身高度范围，不延伸到摇盖外缘；长度=262mm等于制造高度。",
+                         "feature":  "JOINT_FLAP",
+                         "start":  [
+                                       0.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     0.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_JOINT_TOP",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "糊口舌上端水平切线",
+                         "reasoning":  "将糊口舌在上压线处分离；宽度严格为标注35mm，替代旧图错误的跨摇盖长斜线。",
+                         "feature":  "JOINT_FLAP",
+                         "start":  [
+                                       0.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     35.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_JOINT_BOTTOM",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "糊口舌下端水平切线",
+                         "reasoning":  "与上端切线平行且相距262mm，使糊口舌成为image2所示的箱身侧搭接舌。",
+                         "feature":  "JOINT_FLAP",
+                         "start":  [
+                                       0.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     35.0,
+                                     167.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_BODY_RIGHT",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板4右侧箱身外切线",
+                         "reasoning":  "闭合箱身带右端；x=1575mm来自下料总长，端点分别位于上下压线。",
+                         "feature":  "BODY_RIGHT",
+                         "start":  [
+                                       1575.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     1575.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "ARC_T_P1_L",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板1上摇盖左侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P1",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        48.713572739924196,
+                                        590.0
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  90.0,
+                         "end_angle_deg":  177.60694201639316
+                     },
+                     {
+                         "id":  "ARC_T_P1_R",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板1上摇盖右侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P1",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        356.2864272600758,
+                                        590.0
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  2.3930579836068615,
+                         "end_angle_deg":  90.0
+                     },
+                     {
+                         "id":  "SLOT_T_P1_L",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板1上摇盖左侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P1",
+                         "start":  [
+                                       35.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     41.719677464682086,
+                                     590.2922821906071
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "SLOT_T_P1_R",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板1上摇盖右侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P1",
+                         "start":  [
+                                       370.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     363.2803225353179,
+                                     590.2922821906071
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_T_P1_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板1上摇盖自由端切线",
+                         "reasoning":  "y=597，两端均为R7圆弧的水平切点；到折线距离严格为167.5mm。",
+                         "feature":  "T_FLAP_P1",
+                         "start":  [
+                                       48.713572739924196,
+                                       597.0
+                                   ],
+                         "end":  [
+                                     356.2864272600758,
+                                     597.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "ARC_T_P2_L",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板2上摇盖左侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P2",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        383.7135727399242,
+                                        590.0
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  90.0,
+                         "end_angle_deg":  177.60694201639316
+                     },
+                     {
+                         "id":  "ARC_T_P2_R",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板2上摇盖右侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P2",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        791.2864272600758,
+                                        590.0
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  2.393057983606842,
+                         "end_angle_deg":  90.0
+                     },
+                     {
+                         "id":  "SLOT_T_P2_L",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板2上摇盖左侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P2",
+                         "start":  [
+                                       370.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     376.7196774646821,
+                                     590.2922821906071
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "SLOT_T_P2_R",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板2上摇盖右侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P2",
+                         "start":  [
+                                       805.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     798.280322535318,
+                                     590.2922821906071
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_T_P2_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板2上摇盖自由端切线",
+                         "reasoning":  "y=597，两端均为R7圆弧的水平切点；到折线距离严格为167.5mm。",
+                         "feature":  "T_FLAP_P2",
+                         "start":  [
+                                       383.7135727399242,
+                                       597.0
+                                   ],
+                         "end":  [
+                                     791.2864272600758,
+                                     597.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "ARC_T_P3_L",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板3上摇盖左侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P3",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        818.7135727399242,
+                                        590.0
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  90.0,
+                         "end_angle_deg":  177.60694201639316
+                     },
+                     {
+                         "id":  "ARC_T_P3_R",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板3上摇盖右侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P3",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        1126.2864272600757,
+                                        590.0
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  2.393057983606803,
+                         "end_angle_deg":  90.0
+                     },
+                     {
+                         "id":  "SLOT_T_P3_L",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板3上摇盖左侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P3",
+                         "start":  [
+                                       805.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     811.719677464682,
+                                     590.2922821906071
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "SLOT_T_P3_R",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板3上摇盖右侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P3",
+                         "start":  [
+                                       1140.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     1133.280322535318,
+                                     590.2922821906071
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_T_P3_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板3上摇盖自由端切线",
+                         "reasoning":  "y=597，两端均为R7圆弧的水平切点；到折线距离严格为167.5mm。",
+                         "feature":  "T_FLAP_P3",
+                         "start":  [
+                                       818.7135727399242,
+                                       597.0
+                                   ],
+                         "end":  [
+                                     1126.2864272600757,
+                                     597.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "ARC_T_P4_L",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板4上摇盖左侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P4",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        1153.7135727399243,
+                                        590.0
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  90.0,
+                         "end_angle_deg":  177.6069420163932
+                     },
+                     {
+                         "id":  "ARC_T_P4_R",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板4上摇盖右侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P4",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        1561.2864272600757,
+                                        590.0
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  2.393057983606803,
+                         "end_angle_deg":  90.0
+                     },
+                     {
+                         "id":  "SLOT_T_P4_L",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板4上摇盖左侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P4",
+                         "start":  [
+                                       1140.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     1146.719677464682,
+                                     590.2922821906071
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "SLOT_T_P4_R",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板4上摇盖右侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "T_FLAP_P4",
+                         "start":  [
+                                       1575.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     1568.280322535318,
+                                     590.2922821906071
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_T_P4_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板4上摇盖自由端切线",
+                         "reasoning":  "y=597，两端均为R7圆弧的水平切点；到折线距离严格为167.5mm。",
+                         "feature":  "T_FLAP_P4",
+                         "start":  [
+                                       1153.7135727399243,
+                                       597.0
+                                   ],
+                         "end":  [
+                                     1561.2864272600757,
+                                     597.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "ARC_B_P1_L",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板1下摇盖左侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P1",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        48.713572739924196,
+                                        7.000000000000001
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  182.39305798360692,
+                         "end_angle_deg":  270.0
+                     },
+                     {
+                         "id":  "ARC_B_P1_R",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板1下摇盖右侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P1",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        356.2864272600758,
+                                        7.000000000000001
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  270.0,
+                         "end_angle_deg":  357.6069420163931
+                     },
+                     {
+                         "id":  "SLOT_B_P1_L",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板1下摇盖左侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P1",
+                         "start":  [
+                                       35.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     41.719677464682086,
+                                     6.707717809392868
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "SLOT_B_P1_R",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板1下摇盖右侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P1",
+                         "start":  [
+                                       370.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     363.2803225353179,
+                                     6.707717809392868
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_B_P1_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板1下摇盖自由端切线",
+                         "reasoning":  "y=0，两端均为R7圆弧的水平切点；到折线距离严格为167.5mm。",
+                         "feature":  "B_FLAP_P1",
+                         "start":  [
+                                       48.713572739924196,
+                                       0.0
+                                   ],
+                         "end":  [
+                                     356.2864272600758,
+                                     0.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "ARC_B_P2_L",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板2下摇盖左侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P2",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        383.7135727399242,
+                                        7.000000000000001
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  182.39305798360692,
+                         "end_angle_deg":  270.0
+                     },
+                     {
+                         "id":  "ARC_B_P2_R",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板2下摇盖右侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P2",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        791.2864272600758,
+                                        7.000000000000001
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  270.0,
+                         "end_angle_deg":  357.6069420163931
+                     },
+                     {
+                         "id":  "SLOT_B_P2_L",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板2下摇盖左侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P2",
+                         "start":  [
+                                       370.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     376.7196774646821,
+                                     6.707717809392868
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "SLOT_B_P2_R",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板2下摇盖右侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P2",
+                         "start":  [
+                                       805.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     798.280322535318,
+                                     6.707717809392868
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_B_P2_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板2下摇盖自由端切线",
+                         "reasoning":  "y=0，两端均为R7圆弧的水平切点；到折线距离严格为167.5mm。",
+                         "feature":  "B_FLAP_P2",
+                         "start":  [
+                                       383.7135727399242,
+                                       0.0
+                                   ],
+                         "end":  [
+                                     791.2864272600758,
+                                     0.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "ARC_B_P3_L",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板3下摇盖左侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P3",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        818.7135727399242,
+                                        7.000000000000001
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  182.3930579836069,
+                         "end_angle_deg":  270.0
+                     },
+                     {
+                         "id":  "ARC_B_P3_R",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板3下摇盖右侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P3",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        1126.2864272600757,
+                                        7.000000000000001
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  270.0,
+                         "end_angle_deg":  357.60694201639313
+                     },
+                     {
+                         "id":  "SLOT_B_P3_L",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板3下摇盖左侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P3",
+                         "start":  [
+                                       805.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     811.719677464682,
+                                     6.707717809392868
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "SLOT_B_P3_R",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板3下摇盖右侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P3",
+                         "start":  [
+                                       1140.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     1133.280322535318,
+                                     6.707717809392868
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_B_P3_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板3下摇盖自由端切线",
+                         "reasoning":  "y=0，两端均为R7圆弧的水平切点；到折线距离严格为167.5mm。",
+                         "feature":  "B_FLAP_P3",
+                         "start":  [
+                                       818.7135727399242,
+                                       0.0
+                                   ],
+                         "end":  [
+                                     1126.2864272600757,
+                                     0.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "ARC_B_P4_L",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板4下摇盖左侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P4",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        1153.7135727399243,
+                                        7.000000000000001
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  182.39305798360687,
+                         "end_angle_deg":  270.0
+                     },
+                     {
+                         "id":  "ARC_B_P4_R",
+                         "type":  "arc",
+                         "layer":  "CUT",
+                         "purpose":  "面板4下摇盖右侧精确相切圆角 R7",
+                         "reasoning":  "未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P4",
+                         "start":  null,
+                         "end":  null,
+                         "center":  [
+                                        1561.2864272600757,
+                                        7.000000000000001
+                                    ],
+                         "radius":  7.0,
+                         "start_angle_deg":  270.0,
+                         "end_angle_deg":  357.60694201639313
+                     },
+                     {
+                         "id":  "SLOT_B_P4_L",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板4下摇盖左侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P4",
+                         "start":  [
+                                       1140.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     1146.719677464682,
+                                     6.707717809392868
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "SLOT_B_P4_R",
+                         "type":  "line",
+                         "layer":  "SLOT",
+                         "purpose":  "面板4下摇盖右侧斜切/开槽边",
+                         "reasoning":  "从折线端点延伸到R7圆弧的精确切点；未倒圆理论交点相对折线退让t=7mm；圆角R=t=7mm。切点按两射线夹角的标准内切圆公式求解，保证斜槽边和自由端均与圆弧一阶相切。",
+                         "feature":  "B_FLAP_P4",
+                         "start":  [
+                                       1575.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     1568.280322535318,
+                                     6.707717809392868
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CUT_B_P4_OUTER",
+                         "type":  "line",
+                         "layer":  "CUT",
+                         "purpose":  "面板4下摇盖自由端切线",
+                         "reasoning":  "y=0，两端均为R7圆弧的水平切点；到折线距离严格为167.5mm。",
+                         "feature":  "B_FLAP_P4",
+                         "start":  [
+                                       1153.7135727399243,
+                                       0.0
+                                   ],
+                         "end":  [
+                                     1561.2864272600757,
+                                     0.0
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_T_P1",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板1上摇盖压痕",
+                         "reasoning":  "水平压痕位于y=429.5；与下压痕间距262mm，决定制造箱高262mm。",
+                         "feature":  "BODY_PANEL_P1",
+                         "start":  [
+                                       35.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     370.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_B_P1",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板1下摇盖压痕",
+                         "reasoning":  "水平压痕位于y=167.5；到下自由端距离167.5mm。",
+                         "feature":  "BODY_PANEL_P1",
+                         "start":  [
+                                       35.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     370.0,
+                                     167.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_T_P2",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板2上摇盖压痕",
+                         "reasoning":  "水平压痕位于y=429.5；与下压痕间距262mm，决定制造箱高262mm。",
+                         "feature":  "BODY_PANEL_P2",
+                         "start":  [
+                                       370.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     805.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_B_P2",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板2下摇盖压痕",
+                         "reasoning":  "水平压痕位于y=167.5；到下自由端距离167.5mm。",
+                         "feature":  "BODY_PANEL_P2",
+                         "start":  [
+                                       370.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     805.0,
+                                     167.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_T_P3",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板3上摇盖压痕",
+                         "reasoning":  "水平压痕位于y=429.5；与下压痕间距262mm，决定制造箱高262mm。",
+                         "feature":  "BODY_PANEL_P3",
+                         "start":  [
+                                       805.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     1140.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_B_P3",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板3下摇盖压痕",
+                         "reasoning":  "水平压痕位于y=167.5；到下自由端距离167.5mm。",
+                         "feature":  "BODY_PANEL_P3",
+                         "start":  [
+                                       805.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     1140.0,
+                                     167.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_T_P4",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板4上摇盖压痕",
+                         "reasoning":  "水平压痕位于y=429.5；与下压痕间距262mm，决定制造箱高262mm。",
+                         "feature":  "BODY_PANEL_P4",
+                         "start":  [
+                                       1140.0,
+                                       429.5
+                                   ],
+                         "end":  [
+                                     1575.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_B_P4",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板4下摇盖压痕",
+                         "reasoning":  "水平压痕位于y=167.5；到下自由端距离167.5mm。",
+                         "feature":  "BODY_PANEL_P4",
+                         "start":  [
+                                       1140.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     1575.0,
+                                     167.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_V_1",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "糊口舌/面板1竖向压痕",
+                         "reasoning":  "竖向压痕x=35连接上下箱身压线，长度262mm；相邻竖线间距按35/335/435/335/435的标注链确定。",
+                         "feature":  "BODY_FOLD_CHAIN",
+                         "start":  [
+                                       35.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     35.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_V_2",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板1/面板2竖向压痕",
+                         "reasoning":  "竖向压痕x=370连接上下箱身压线，长度262mm；相邻竖线间距按35/335/435/335/435的标注链确定。",
+                         "feature":  "BODY_FOLD_CHAIN",
+                         "start":  [
+                                       370.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     370.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_V_3",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板2/面板3竖向压痕",
+                         "reasoning":  "竖向压痕x=805连接上下箱身压线，长度262mm；相邻竖线间距按35/335/435/335/435的标注链确定。",
+                         "feature":  "BODY_FOLD_CHAIN",
+                         "start":  [
+                                       805.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     805.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     },
+                     {
+                         "id":  "CREASE_V_4",
+                         "type":  "line",
+                         "layer":  "CREASE",
+                         "purpose":  "面板3/面板4竖向压痕",
+                         "reasoning":  "竖向压痕x=1140连接上下箱身压线，长度262mm；相邻竖线间距按35/335/435/335/435的标注链确定。",
+                         "feature":  "BODY_FOLD_CHAIN",
+                         "start":  [
+                                       1140.0,
+                                       167.5
+                                   ],
+                         "end":  [
+                                     1140.0,
+                                     429.5
+                                 ],
+                         "center":  null,
+                         "radius":  null,
+                         "start_angle_deg":  null,
+                         "end_angle_deg":  null
+                     }
+                 ],
+    "review_state":  {
+                         "reviewOnly":  true,
+                         "accepted":  false,
+                         "ruleEnabled":  false,
+                         "packagingGated":  true
+                     }
+}

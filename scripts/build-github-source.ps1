@@ -1,8 +1,8 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.2.2\github-repository',
-    [string]$Version = '1.2.2',
-    [string]$PluginArchive = 'release\v1.2.2\aicad-agent-1.2.2.zip'
+    [string]$OutputDirectory = 'release\v1.3.1\github-repository',
+    [string]$Version = '1.3.1',
+    [string]$PluginArchive = 'release\v1.3.1\aicad-agent-1.3.1.zip'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -30,8 +30,14 @@ foreach ($item in @('CHANGELOG.md', 'THIRD_PARTY_NOTICES.md', 'SECURITY.md')) {
 }
 Copy-Item -LiteralPath (Join-Path $root 'agent-plugin\aicad-agent\LICENSE') -Destination $target -Force
 
-foreach ($item in @('.github', 'src', 'schema', 'examples', 'prompts', 'docs', 'plugin', 'agent-plugin', 'scripts', 'tests', 'tools')) {
+foreach ($item in @('.github', '.agents', 'src', 'schema', 'examples', 'prompts', 'docs', 'plugin', 'agent-plugin', 'scripts', 'tests', 'tools')) {
     Copy-Item -LiteralPath (Join-Path $root $item) -Destination $target -Recurse -Force
+}
+
+$marketplacePlugin = Join-Path $target 'plugins\aicad-agent'
+New-Item -ItemType Directory -Path $marketplacePlugin -Force | Out-Null
+Get-ChildItem -LiteralPath (Join-Path $root 'agent-plugin\aicad-agent') -Force | ForEach-Object {
+    Copy-Item -LiteralPath $_.FullName -Destination $marketplacePlugin -Recurse -Force
 }
 
 $solidWorksTarget = Join-Path $target 'solidworks-host\AiCad.SolidWorksHost'
@@ -87,6 +93,19 @@ $manifest = [ordered]@{
     releaseStatus = 'engineering-candidate'
     apiKeyRequired = $false
     proprietaryDependenciesRedistributed = $false
+    install = [ordered]@{
+        marketplace = 'codex plugin marketplace add JMET04/aicad-agent --ref v1.3.1'
+        plugin = 'codex plugin add aicad-agent@aicad-agent'
+    }
+    capabilities = @(
+        'whole user-requirement contract and controlled actualBinding',
+        'non-skippable whole-intent, detail-normality and hashed-build gates',
+        'origin-anchored deterministic 2D AICAD compilation',
+        'bounded independent-rank and packaging dieline normality proof',
+        'aligned interactive edge/corner/face review surface',
+        'optional AutoCAD and SolidWorks native hosts',
+        'root-cause, correction and persistent prevention-rule audit'
+    )
     safetyLocks = [ordered]@{
         reviewOnly = $true
         accepted = $false

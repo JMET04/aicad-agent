@@ -1,0 +1,54 @@
+{
+    "schema":  "case01_native_sheet_v1",
+    "input":  "fixtures/input_layout.dwg",
+    "output":  "fixtures/output_native_sheet.dwg",
+    "dimensioning":  {
+                         "native_entity_types":  {
+                                                     "linear":  "AcDbRotatedDimension",
+                                                     "radius":  "AcDbRadialDimension"
+                                                 },
+                         "counts":  {
+                                        "linear":  10,
+                                        "radius":  1,
+                                        "total":  11
+                                    },
+                         "style":  "AICAD_ISO_1_5",
+                         "dimassoc":  2,
+                         "paper_text_height_mm":  3.5,
+                         "paper_arrow_size_mm":  2.5,
+                         "layout_scale":  "1:5",
+                         "text_override_allowed":  false
+                     },
+    "title_block":  {
+                        "school":  "STU",
+                        "name":  "明明",
+                        "fields":  [
+                                       "学校",
+                                       "类别",
+                                       "图号",
+                                       "比例",
+                                       "姓名",
+                                       "单位",
+                                       "状态",
+                                       "日期",
+                                       "图幅",
+                                       "复核"
+                                   ],
+                        "removed_reference_examples":  [
+                                                           "班级",
+                                                           "专业",
+                                                           "成绩",
+                                                           "学号"
+                                                       ]
+                    },
+    "technical_requirements":  {
+                                   "location":  "paper space inside frame, x=25..235, y=5..45",
+                                   "line_count":  6
+                               },
+    "review_state":  {
+                         "reviewOnly":  true,
+                         "accepted":  false,
+                         "ruleEnabled":  false,
+                         "packagingGated":  true
+                     }
+}

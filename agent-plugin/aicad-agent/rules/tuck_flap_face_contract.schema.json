@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad/tuck-flap-face-contract.schema.json",
+  "title": "AICAD straight-tuck main-flap face contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "style", "toleranceMm", "originBootstrap", "parameters", "flaps", "locks"],
+  "properties": {
+    "schema": {"const": "aicad_tuck_flap_face_contract_v1"},
+    "style": {"const": "straight_tuck_end"},
+    "toleranceMm": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.1},
+    "originBootstrap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "production"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+        "production": {"const": false}
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "panelLengthMm", "panelWidthMm", "rootReliefWidthMm", "usableRootWidthMm",
+        "mainFlapDepthMm", "mainFlapTaperEachSideMm", "tongueDepthMm",
+        "tongueTaperEachSideMm", "tongueRootWidthMm", "tongueFreeWidthMm"
+      ],
+      "properties": {
+        "panelLengthMm": {"type": "number", "exclusiveMinimum": 0},
+        "panelWidthMm": {"type": "number", "exclusiveMinimum": 0},
+        "rootReliefWidthMm": {"type": "number", "minimum": 0},
+        "usableRootWidthMm": {"type": "number", "exclusiveMinimum": 0},
+        "mainFlapDepthMm": {"type": "number", "exclusiveMinimum": 0},
+        "mainFlapTaperEachSideMm": {"type": "number", "minimum": 0},
+        "tongueDepthMm": {"type": "number", "exclusiveMinimum": 0},
+        "tongueTaperEachSideMm": {"type": "number", "exclusiveMinimum": 0},
+        "tongueRootWidthMm": {"type": "number", "exclusiveMinimum": 0},
+        "tongueFreeWidthMm": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "flaps": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "position", "outwardSign", "rootFoldId", "mainLeftEdgeId", "mainRightEdgeId",
+          "tongueFoldId", "tongueLeftBevelId", "tongueRightBevelId", "tongueFreeEdgeId"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+          "position": {"enum": ["top", "bottom"]},
+          "outwardSign": {"enum": [-1, 1]},
+          "rootFoldId": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+          "mainLeftEdgeId": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+          "mainRightEdgeId": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+          "tongueFoldId": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+          "tongueLeftBevelId": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+          "tongueRightBevelId": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+          "tongueFreeEdgeId": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}
+        }
+      }
+    },
+    "locks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true}
+      }
+    }
+  }
+}

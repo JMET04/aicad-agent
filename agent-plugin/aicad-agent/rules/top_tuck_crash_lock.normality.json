@@ -1,0 +1,1651 @@
+{
+  "schema": "aicad_normality_template_v1",
+  "profileId": "ECMA_A60_20_TOP_TUCK_CRASH_LOCK",
+  "profileVersion": "1.0.0",
+  "productType": "folding_carton_lock_box",
+  "majorFeatures": [
+    "four_panel_body",
+    "top_tuck",
+    "automatic_crash_lock_bottom",
+    "side_glue_seam",
+    "crash_pre_glue_regions"
+  ],
+  "structureName": "ECMA A60.20.00.03 top tuck-in / bottom automatic 2P-glued crash lock",
+  "closureSystem": {
+    "top": "tuck_in",
+    "bottom": "automatic_2p_glued_crash_lock",
+    "asymmetric": true,
+    "standard": "ECMA A60.20.00.03"
+  },
+  "toleranceMm": 1e-06,
+  "parameters": [
+    {
+      "id": "A",
+      "role": "independent",
+      "unit": "mm",
+      "default": 200.0,
+      "min": 100,
+      "max": 600,
+      "purpose": "box length"
+    },
+    {
+      "id": "B",
+      "role": "independent",
+      "unit": "mm",
+      "default": 120.0,
+      "min": 80,
+      "max": 300,
+      "purpose": "box width"
+    },
+    {
+      "id": "H",
+      "role": "independent",
+      "unit": "mm",
+      "default": 60.0,
+      "min": 50,
+      "max": 300,
+      "purpose": "box height"
+    },
+    {
+      "id": "GL",
+      "role": "independent",
+      "unit": "mm",
+      "default": 20.0,
+      "min": 20,
+      "max": 50,
+      "purpose": "side glue flap width"
+    },
+    {
+      "id": "TEH",
+      "role": "independent",
+      "unit": "mm",
+      "default": 15.0,
+      "min": 10,
+      "max": 30,
+      "purpose": "top insertion tongue depth"
+    },
+    {
+      "id": "TT",
+      "role": "independent",
+      "unit": "mm",
+      "default": 5.0,
+      "min": 3,
+      "max": 8,
+      "purpose": "top tongue taper per side"
+    },
+    {
+      "id": "DT",
+      "role": "independent",
+      "unit": "mm",
+      "default": 5.0,
+      "min": 3,
+      "max": 8,
+      "purpose": "top dust-flap taper per side"
+    },
+    {
+      "id": "RR",
+      "role": "independent",
+      "unit": "mm",
+      "default": 3.0,
+      "min": 2,
+      "max": 6,
+      "purpose": "top root relief width"
+    },
+    {
+      "id": "CB",
+      "role": "independent",
+      "unit": "mm",
+      "default": 12.0,
+      "min": 8,
+      "max": 16,
+      "purpose": "automatic-bottom cut-back"
+    },
+    {
+      "id": "EXT",
+      "role": "independent",
+      "unit": "mm",
+      "default": 13.0,
+      "min": 10,
+      "max": 25,
+      "purpose": "automatic-bottom lock-notch extension"
+    },
+    {
+      "id": "GI",
+      "role": "independent",
+      "unit": "mm",
+      "default": 5.0,
+      "min": 4,
+      "max": 7,
+      "purpose": "side glue inset"
+    },
+    {
+      "id": "CGI",
+      "role": "independent",
+      "unit": "mm",
+      "default": 2.0,
+      "min": 1,
+      "max": 3,
+      "purpose": "crash-lock pre-glue inset"
+    },
+    {
+      "id": "CRASH_DEPTH",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "B/2",
+      "purpose": "automatic-bottom major-flap depth"
+    },
+    {
+      "id": "TOP_MAIN_DEPTH",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "B",
+      "purpose": "top tuck main-flap depth"
+    },
+    {
+      "id": "TOP_DUST_DEPTH",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "B/2",
+      "purpose": "top dust-flap depth"
+    },
+    {
+      "id": "BODY_Y0",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "CRASH_DEPTH",
+      "purpose": "body lower fold station"
+    },
+    {
+      "id": "BODY_Y1",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "BODY_Y0+H",
+      "purpose": "body upper fold station"
+    },
+    {
+      "id": "TOP_TONGUE_Y",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "BODY_Y1+TOP_MAIN_DEPTH",
+      "purpose": "top tongue fold station"
+    },
+    {
+      "id": "MAX_Y",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "TOP_TONGUE_Y+TEH",
+      "purpose": "blank maximum Y"
+    },
+    {
+      "id": "X1",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "A",
+      "purpose": "panel 1/2 fold station"
+    },
+    {
+      "id": "X2",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "A+B",
+      "purpose": "panel 2/3 fold station"
+    },
+    {
+      "id": "X3",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "2*A+B",
+      "purpose": "panel 3/4 fold station"
+    },
+    {
+      "id": "X4",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "2*A+2*B",
+      "purpose": "panel 4/glue fold station"
+    },
+    {
+      "id": "MAX_X",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "X4+GL",
+      "purpose": "blank maximum X"
+    }
+  ],
+  "excludedEntityIds": [
+    "ORIGIN_BOOTSTRAP"
+  ],
+  "productionEntityIds": [
+    "CUT_P1_OUTER_1",
+    "CUT_P1_NOTCH_L",
+    "CUT_P1_NOTCH_BRIDGE",
+    "CUT_P1_NOTCH_R",
+    "CUT_P1_OUTER_2",
+    "CUT_P1_RIGHT",
+    "CUT_P1_TO_P2",
+    "CUT_P2_LEFT",
+    "CUT_P2_SLOPE_L",
+    "CUT_P2_FREE",
+    "CUT_P2_SLOPE_R",
+    "CUT_P3_LEFT",
+    "CUT_P3_LEFT_SIDE",
+    "CUT_P3_OUTER_1",
+    "CUT_P3_NOTCH_L",
+    "CUT_P3_NOTCH_BRIDGE",
+    "CUT_P3_NOTCH_R",
+    "CUT_P3_OUTER_2",
+    "CUT_P3_RIGHT",
+    "CUT_P3_TO_P4",
+    "CUT_P4_LEFT",
+    "CUT_P4_SLOPE_L",
+    "CUT_P4_FREE",
+    "CUT_P4_SLOPE_R",
+    "CUT_P4_TO_ROOT",
+    "CUT_GLUE_BOTTOM_CHAMFER",
+    "CUT_GLUE_OUTER",
+    "CUT_GLUE_TOP_CHAMFER",
+    "CUT_TOP_DUST4_RIGHT",
+    "CUT_TOP_DUST4_FREE",
+    "CUT_TOP_DUST4_LEFT",
+    "SLOT_TOP_RELIEF_3_4",
+    "SLOT_TOP_MAIN_RIGHT",
+    "CUT_TOP_TONGUE_RIGHT",
+    "CUT_TOP_TONGUE_FREE",
+    "CUT_TOP_TONGUE_LEFT",
+    "SLOT_TOP_MAIN_LEFT",
+    "SLOT_TOP_RELIEF_2_3",
+    "CUT_TOP_DUST2_RIGHT",
+    "CUT_TOP_DUST2_FREE",
+    "CUT_TOP_DUST2_LEFT",
+    "SLOT_TOP_RELIEF_1_2",
+    "CUT_PANEL1_TOP",
+    "CUT_BODY_LEFT",
+    "CUT_P1_LEFT",
+    "CUT_P1_LEFT_BEVEL",
+    "CREASE_PANEL_1_2",
+    "CREASE_PANEL_2_3",
+    "CREASE_PANEL_3_4",
+    "CREASE_GLUE_ROOT",
+    "CREASE_BOTTOM_P1_ROOT",
+    "CREASE_BOTTOM_P2_ROOT",
+    "CREASE_BOTTOM_P3_ROOT",
+    "CREASE_BOTTOM_P4_ROOT",
+    "CREASE_CRASH_P1_DIAGONAL",
+    "CREASE_CRASH_P3_DIAGONAL",
+    "CREASE_TOP_DUST2_ROOT",
+    "CREASE_TOP_MAIN_ROOT",
+    "CREASE_TOP_DUST4_ROOT",
+    "CREASE_TOP_TONGUE",
+    "GLUE_SIDE_BOTTOM",
+    "GLUE_SIDE_RIGHT",
+    "GLUE_SIDE_TOP",
+    "GLUE_SIDE_LEFT",
+    "GLUE_CRASH_P1_BASE",
+    "GLUE_CRASH_P1_SIDE",
+    "GLUE_CRASH_P1_DIAGONAL",
+    "GLUE_CRASH_P3_BASE",
+    "GLUE_CRASH_P3_SIDE",
+    "GLUE_CRASH_P3_DIAGONAL"
+  ],
+  "expectedLayerCounts": {
+    "CUT": 41,
+    "SLOT": 5,
+    "CREASE": 14,
+    "GLUE": 10
+  },
+  "vertices": [
+    {
+      "id": "P1_OUTER_LEFT",
+      "purpose": "panel 1 crash-lock outer-left bevel endpoint",
+      "x": "CB",
+      "y": "0",
+      "refs": [
+        "CUT_P1_OUTER_1.start",
+        "CUT_P1_LEFT_BEVEL.end"
+      ]
+    },
+    {
+      "id": "P1_NOTCH_LEFT_OUTER",
+      "purpose": "panel 1 outer edge before lock notch",
+      "x": "A/2-CB",
+      "y": "0",
+      "refs": [
+        "CUT_P1_OUTER_1.end",
+        "CUT_P1_NOTCH_L.start"
+      ]
+    },
+    {
+      "id": "P1_NOTCH_LEFT",
+      "purpose": "panel 1 lock-notch left shoulder",
+      "x": "A/2",
+      "y": "CB",
+      "refs": [
+        "CUT_P1_NOTCH_L.end",
+        "CUT_P1_NOTCH_BRIDGE.start"
+      ]
+    },
+    {
+      "id": "P1_NOTCH_RIGHT",
+      "purpose": "panel 1 lock-notch right shoulder",
+      "x": "A/2+EXT",
+      "y": "CB",
+      "refs": [
+        "CUT_P1_NOTCH_BRIDGE.end",
+        "CUT_P1_NOTCH_R.start"
+      ]
+    },
+    {
+      "id": "P1_NOTCH_RIGHT_OUTER",
+      "purpose": "panel 1 outer edge after lock notch",
+      "x": "A/2+EXT+CB",
+      "y": "0",
+      "refs": [
+        "CUT_P1_NOTCH_R.end",
+        "CUT_P1_OUTER_2.start"
+      ]
+    },
+    {
+      "id": "P1_RIGHT_OUTER",
+      "purpose": "panel 1 crash-lock right outer corner",
+      "x": "A-CB",
+      "y": "0",
+      "refs": [
+        "CUT_P1_OUTER_2.end",
+        "CUT_P1_RIGHT.start"
+      ]
+    },
+    {
+      "id": "P1_RIGHT_BEVEL",
+      "purpose": "panel 1 crash-lock right cut-back point",
+      "x": "A-CB",
+      "y": "CRASH_DEPTH-CB",
+      "refs": [
+        "CUT_P1_RIGHT.end",
+        "CUT_P1_TO_P2.start",
+        "CREASE_CRASH_P1_DIAGONAL.end"
+      ]
+    },
+    {
+      "id": "P1_ROOT_RIGHT",
+      "purpose": "panel 1 crash-lock root right",
+      "x": "X1",
+      "y": "BODY_Y0",
+      "refs": [
+        "CUT_P1_TO_P2.end",
+        "CUT_P2_LEFT.start",
+        "CREASE_PANEL_1_2.start",
+        "CREASE_BOTTOM_P1_ROOT.end",
+        "CREASE_BOTTOM_P2_ROOT.start"
+      ]
+    },
+    {
+      "id": "P2_LEFT_BEVEL",
+      "purpose": "panel 2 pull flap left cut-back point",
+      "x": "X1+CB",
+      "y": "CRASH_DEPTH-CB",
+      "refs": [
+        "CUT_P2_LEFT.end",
+        "CUT_P2_SLOPE_L.start"
+      ]
+    },
+    {
+      "id": "P2_FREE_LEFT",
+      "purpose": "panel 2 pull flap free-left point",
+      "x": "X1+B/2-CB",
+      "y": "CB",
+      "refs": [
+        "CUT_P2_SLOPE_L.end",
+        "CUT_P2_FREE.start"
+      ]
+    },
+    {
+      "id": "P2_FREE_RIGHT",
+      "purpose": "panel 2 pull flap free-right point",
+      "x": "X1+B/2+CB",
+      "y": "CB",
+      "refs": [
+        "CUT_P2_FREE.end",
+        "CUT_P2_SLOPE_R.start"
+      ]
+    },
+    {
+      "id": "P2_ROOT_RIGHT",
+      "purpose": "panel 2 pull flap root right",
+      "x": "X2",
+      "y": "BODY_Y0",
+      "refs": [
+        "CUT_P2_SLOPE_R.end",
+        "CUT_P3_LEFT.start",
+        "CREASE_PANEL_2_3.start",
+        "CREASE_BOTTOM_P2_ROOT.end",
+        "CREASE_BOTTOM_P3_ROOT.start"
+      ]
+    },
+    {
+      "id": "P3_LEFT_BEVEL",
+      "purpose": "panel 3 crash-lock left cut-back point",
+      "x": "X2+CB",
+      "y": "CRASH_DEPTH-CB",
+      "refs": [
+        "CUT_P3_LEFT.end",
+        "CUT_P3_LEFT_SIDE.start"
+      ]
+    },
+    {
+      "id": "P3_LEFT_OUTER",
+      "purpose": "panel 3 crash-lock left outer corner",
+      "x": "X2+CB",
+      "y": "0",
+      "refs": [
+        "CUT_P3_LEFT_SIDE.end",
+        "CUT_P3_OUTER_1.start"
+      ]
+    },
+    {
+      "id": "P3_NOTCH_LEFT_OUTER",
+      "purpose": "panel 3 outer edge before lock notch",
+      "x": "X2+A/2-CB",
+      "y": "0",
+      "refs": [
+        "CUT_P3_OUTER_1.end",
+        "CUT_P3_NOTCH_L.start"
+      ]
+    },
+    {
+      "id": "P3_NOTCH_LEFT",
+      "purpose": "panel 3 lock-notch left shoulder",
+      "x": "X2+A/2",
+      "y": "CB",
+      "refs": [
+        "CUT_P3_NOTCH_L.end",
+        "CUT_P3_NOTCH_BRIDGE.start"
+      ]
+    },
+    {
+      "id": "P3_NOTCH_RIGHT",
+      "purpose": "panel 3 lock-notch right shoulder",
+      "x": "X2+A/2+EXT",
+      "y": "CB",
+      "refs": [
+        "CUT_P3_NOTCH_BRIDGE.end",
+        "CUT_P3_NOTCH_R.start"
+      ]
+    },
+    {
+      "id": "P3_NOTCH_RIGHT_OUTER",
+      "purpose": "panel 3 outer edge after lock notch",
+      "x": "X2+A/2+EXT+CB",
+      "y": "0",
+      "refs": [
+        "CUT_P3_NOTCH_R.end",
+        "CUT_P3_OUTER_2.start"
+      ]
+    },
+    {
+      "id": "P3_RIGHT_OUTER",
+      "purpose": "panel 3 crash-lock right outer corner",
+      "x": "X3-CB",
+      "y": "0",
+      "refs": [
+        "CUT_P3_OUTER_2.end",
+        "CUT_P3_RIGHT.start"
+      ]
+    },
+    {
+      "id": "P3_RIGHT_BEVEL",
+      "purpose": "panel 3 crash-lock right cut-back point",
+      "x": "X3-CB",
+      "y": "CRASH_DEPTH-CB",
+      "refs": [
+        "CUT_P3_RIGHT.end",
+        "CUT_P3_TO_P4.start",
+        "CREASE_CRASH_P3_DIAGONAL.end"
+      ]
+    },
+    {
+      "id": "P3_ROOT_RIGHT",
+      "purpose": "panel 3 crash-lock root right",
+      "x": "X3",
+      "y": "BODY_Y0",
+      "refs": [
+        "CUT_P3_TO_P4.end",
+        "CUT_P4_LEFT.start",
+        "CREASE_PANEL_3_4.start",
+        "CREASE_BOTTOM_P3_ROOT.end",
+        "CREASE_BOTTOM_P4_ROOT.start"
+      ]
+    },
+    {
+      "id": "P4_LEFT_BEVEL",
+      "purpose": "panel 4 pull flap left cut-back point",
+      "x": "X3+CB",
+      "y": "CRASH_DEPTH-CB",
+      "refs": [
+        "CUT_P4_LEFT.end",
+        "CUT_P4_SLOPE_L.start"
+      ]
+    },
+    {
+      "id": "P4_FREE_LEFT",
+      "purpose": "panel 4 pull flap free-left point",
+      "x": "X3+B/2-CB",
+      "y": "CB",
+      "refs": [
+        "CUT_P4_SLOPE_L.end",
+        "CUT_P4_FREE.start"
+      ]
+    },
+    {
+      "id": "P4_FREE_RIGHT",
+      "purpose": "panel 4 pull flap free-right point",
+      "x": "X3+B/2+CB",
+      "y": "CB",
+      "refs": [
+        "CUT_P4_FREE.end",
+        "CUT_P4_SLOPE_R.start"
+      ]
+    },
+    {
+      "id": "P4_RIGHT_BEVEL",
+      "purpose": "panel 4 pull flap right cut-back point",
+      "x": "X4-CB",
+      "y": "CRASH_DEPTH-CB",
+      "refs": [
+        "CUT_P4_SLOPE_R.end",
+        "CUT_P4_TO_ROOT.start"
+      ]
+    },
+    {
+      "id": "P4_ROOT_RIGHT",
+      "purpose": "panel 4 pull flap root right",
+      "x": "X4",
+      "y": "BODY_Y0",
+      "refs": [
+        "CUT_P4_TO_ROOT.end",
+        "CUT_GLUE_BOTTOM_CHAMFER.start",
+        "CREASE_GLUE_ROOT.start",
+        "CREASE_BOTTOM_P4_ROOT.end"
+      ]
+    },
+    {
+      "id": "GLUE_BOTTOM_OUTER",
+      "purpose": "side seam lower chamfer outer point",
+      "x": "MAX_X",
+      "y": "BODY_Y0+10",
+      "refs": [
+        "CUT_GLUE_BOTTOM_CHAMFER.end",
+        "CUT_GLUE_OUTER.start"
+      ]
+    },
+    {
+      "id": "GLUE_TOP_OUTER",
+      "purpose": "side seam upper chamfer outer point",
+      "x": "MAX_X",
+      "y": "BODY_Y1-10",
+      "refs": [
+        "CUT_GLUE_OUTER.end",
+        "CUT_GLUE_TOP_CHAMFER.start"
+      ]
+    },
+    {
+      "id": "P4_TOP_ROOT_RIGHT",
+      "purpose": "panel 4 top root right",
+      "x": "X4",
+      "y": "BODY_Y1",
+      "refs": [
+        "CUT_GLUE_TOP_CHAMFER.end",
+        "CUT_TOP_DUST4_RIGHT.start",
+        "CREASE_GLUE_ROOT.end",
+        "CREASE_TOP_DUST4_ROOT.end"
+      ]
+    },
+    {
+      "id": "TOP_DUST4_FREE_RIGHT",
+      "purpose": "panel 4 top dust free-right point",
+      "x": "X4-DT",
+      "y": "BODY_Y1+TOP_DUST_DEPTH",
+      "refs": [
+        "CUT_TOP_DUST4_RIGHT.end",
+        "CUT_TOP_DUST4_FREE.start"
+      ]
+    },
+    {
+      "id": "TOP_DUST4_FREE_LEFT",
+      "purpose": "panel 4 top dust free-left point",
+      "x": "X3+RR/2+DT",
+      "y": "BODY_Y1+TOP_DUST_DEPTH",
+      "refs": [
+        "CUT_TOP_DUST4_FREE.end",
+        "CUT_TOP_DUST4_LEFT.start"
+      ]
+    },
+    {
+      "id": "TOP_DUST4_ROOT_LEFT",
+      "purpose": "panel 4 top dust root left after relief",
+      "x": "X3+RR/2",
+      "y": "BODY_Y1",
+      "refs": [
+        "CUT_TOP_DUST4_LEFT.end",
+        "SLOT_TOP_RELIEF_3_4.start",
+        "CREASE_TOP_DUST4_ROOT.start"
+      ]
+    },
+    {
+      "id": "TOP_MAIN_ROOT_RIGHT",
+      "purpose": "top tuck main root right before relief",
+      "x": "X3-RR/2",
+      "y": "BODY_Y1",
+      "refs": [
+        "SLOT_TOP_RELIEF_3_4.end",
+        "SLOT_TOP_MAIN_RIGHT.start",
+        "CREASE_TOP_MAIN_ROOT.end"
+      ]
+    },
+    {
+      "id": "TOP_MAIN_TONGUE_RIGHT",
+      "purpose": "top main flap right tongue-root point",
+      "x": "X3-RR/2",
+      "y": "TOP_TONGUE_Y",
+      "refs": [
+        "SLOT_TOP_MAIN_RIGHT.end",
+        "CUT_TOP_TONGUE_RIGHT.start",
+        "CREASE_TOP_TONGUE.end"
+      ]
+    },
+    {
+      "id": "TOP_MAIN_FREE_RIGHT",
+      "purpose": "top tuck tongue free-right point",
+      "x": "X3-RR/2-TT",
+      "y": "MAX_Y",
+      "refs": [
+        "CUT_TOP_TONGUE_RIGHT.end",
+        "CUT_TOP_TONGUE_FREE.start"
+      ]
+    },
+    {
+      "id": "TOP_MAIN_FREE_LEFT",
+      "purpose": "top tuck tongue free-left point",
+      "x": "X2+RR/2+TT",
+      "y": "MAX_Y",
+      "refs": [
+        "CUT_TOP_TONGUE_FREE.end",
+        "CUT_TOP_TONGUE_LEFT.start"
+      ]
+    },
+    {
+      "id": "TOP_MAIN_TONGUE_LEFT",
+      "purpose": "top main flap left tongue-root point",
+      "x": "X2+RR/2",
+      "y": "TOP_TONGUE_Y",
+      "refs": [
+        "CUT_TOP_TONGUE_LEFT.end",
+        "SLOT_TOP_MAIN_LEFT.start",
+        "CREASE_TOP_TONGUE.start"
+      ]
+    },
+    {
+      "id": "TOP_MAIN_ROOT_LEFT",
+      "purpose": "top tuck main root left after relief",
+      "x": "X2+RR/2",
+      "y": "BODY_Y1",
+      "refs": [
+        "SLOT_TOP_MAIN_LEFT.end",
+        "SLOT_TOP_RELIEF_2_3.start",
+        "CREASE_TOP_MAIN_ROOT.start"
+      ]
+    },
+    {
+      "id": "TOP_DUST2_ROOT_RIGHT",
+      "purpose": "panel 2 top dust root right before relief",
+      "x": "X2-RR/2",
+      "y": "BODY_Y1",
+      "refs": [
+        "SLOT_TOP_RELIEF_2_3.end",
+        "CUT_TOP_DUST2_RIGHT.start",
+        "CREASE_TOP_DUST2_ROOT.end"
+      ]
+    },
+    {
+      "id": "TOP_DUST2_FREE_RIGHT",
+      "purpose": "panel 2 top dust free-right point",
+      "x": "X2-RR/2-DT",
+      "y": "BODY_Y1+TOP_DUST_DEPTH",
+      "refs": [
+        "CUT_TOP_DUST2_RIGHT.end",
+        "CUT_TOP_DUST2_FREE.start"
+      ]
+    },
+    {
+      "id": "TOP_DUST2_FREE_LEFT",
+      "purpose": "panel 2 top dust free-left point",
+      "x": "X1+RR/2+DT",
+      "y": "BODY_Y1+TOP_DUST_DEPTH",
+      "refs": [
+        "CUT_TOP_DUST2_FREE.end",
+        "CUT_TOP_DUST2_LEFT.start"
+      ]
+    },
+    {
+      "id": "TOP_DUST2_ROOT_LEFT",
+      "purpose": "panel 2 top dust root left after relief",
+      "x": "X1+RR/2",
+      "y": "BODY_Y1",
+      "refs": [
+        "CUT_TOP_DUST2_LEFT.end",
+        "SLOT_TOP_RELIEF_1_2.start",
+        "CREASE_TOP_DUST2_ROOT.start"
+      ]
+    },
+    {
+      "id": "PANEL1_TOP_RIGHT",
+      "purpose": "panel 1 top cut edge right",
+      "x": "X1",
+      "y": "BODY_Y1",
+      "refs": [
+        "SLOT_TOP_RELIEF_1_2.end",
+        "CUT_PANEL1_TOP.start",
+        "CREASE_PANEL_1_2.end"
+      ]
+    },
+    {
+      "id": "BODY_LEFT_TOP",
+      "purpose": "panel 1 body top-left",
+      "x": "0",
+      "y": "BODY_Y1",
+      "refs": [
+        "CUT_PANEL1_TOP.end",
+        "CUT_BODY_LEFT.start"
+      ]
+    },
+    {
+      "id": "BODY_LEFT_BOTTOM",
+      "purpose": "panel 1 body bottom-left",
+      "x": "0",
+      "y": "BODY_Y0",
+      "refs": [
+        "CUT_BODY_LEFT.end",
+        "CUT_P1_LEFT.start",
+        "CREASE_BOTTOM_P1_ROOT.start"
+      ]
+    },
+    {
+      "id": "P1_LEFT_BEVEL",
+      "purpose": "panel 1 crash-lock left cut-back point",
+      "x": "0",
+      "y": "CB",
+      "refs": [
+        "CUT_P1_LEFT.end",
+        "CUT_P1_LEFT_BEVEL.start"
+      ]
+    },
+    {
+      "id": "BODY_X2_TOP",
+      "purpose": "panel 2/panel 3 upper body-fold endpoint",
+      "x": "X2",
+      "y": "BODY_Y1",
+      "refs": [
+        "CREASE_PANEL_2_3.end"
+      ]
+    },
+    {
+      "id": "BODY_X3_TOP",
+      "purpose": "panel 3/panel 4 upper body-fold endpoint",
+      "x": "X3",
+      "y": "BODY_Y1",
+      "refs": [
+        "CREASE_PANEL_3_4.end"
+      ]
+    },
+    {
+      "id": "P1_DIAG_LOW",
+      "purpose": "P1 45-degree crash-lock fold lower point",
+      "x": "A-CRASH_DEPTH+CB",
+      "y": "CB",
+      "refs": [
+        "CREASE_CRASH_P1_DIAGONAL.start"
+      ]
+    },
+    {
+      "id": "P1_GLUE_LOW_LEFT",
+      "purpose": "P1 crash glue lower-left inset after the lock notch",
+      "x": "A/2+EXT+CB+CGI",
+      "y": "CGI",
+      "refs": [
+        "GLUE_CRASH_P1_BASE.start",
+        "GLUE_CRASH_P1_DIAGONAL.end"
+      ]
+    },
+    {
+      "id": "P1_GLUE_LOW_RIGHT",
+      "purpose": "P1 crash glue lower-right inset",
+      "x": "A-CB-CGI",
+      "y": "CGI",
+      "refs": [
+        "GLUE_CRASH_P1_BASE.end",
+        "GLUE_CRASH_P1_SIDE.start"
+      ]
+    },
+    {
+      "id": "P1_GLUE_HIGH",
+      "purpose": "P1 crash glue upper inset",
+      "x": "A-CB-CGI",
+      "y": "CRASH_DEPTH-CB-CGI",
+      "refs": [
+        "GLUE_CRASH_P1_SIDE.end",
+        "GLUE_CRASH_P1_DIAGONAL.start"
+      ]
+    },
+    {
+      "id": "P3_DIAG_LOW",
+      "purpose": "P3 45-degree crash-lock fold lower point",
+      "x": "X2+A-CRASH_DEPTH+CB",
+      "y": "CB",
+      "refs": [
+        "CREASE_CRASH_P3_DIAGONAL.start"
+      ]
+    },
+    {
+      "id": "P3_GLUE_LOW_LEFT",
+      "purpose": "P3 crash glue lower-left inset after the lock notch",
+      "x": "X2+A/2+EXT+CB+CGI",
+      "y": "CGI",
+      "refs": [
+        "GLUE_CRASH_P3_BASE.start",
+        "GLUE_CRASH_P3_DIAGONAL.end"
+      ]
+    },
+    {
+      "id": "P3_GLUE_LOW_RIGHT",
+      "purpose": "P3 crash glue lower-right inset",
+      "x": "X2+A-CB-CGI",
+      "y": "CGI",
+      "refs": [
+        "GLUE_CRASH_P3_BASE.end",
+        "GLUE_CRASH_P3_SIDE.start"
+      ]
+    },
+    {
+      "id": "P3_GLUE_HIGH",
+      "purpose": "P3 crash glue upper inset",
+      "x": "X2+A-CB-CGI",
+      "y": "CRASH_DEPTH-CB-CGI",
+      "refs": [
+        "GLUE_CRASH_P3_SIDE.end",
+        "GLUE_CRASH_P3_DIAGONAL.start"
+      ]
+    },
+    {
+      "id": "SIDE_GLUE_BL",
+      "purpose": "side glue bl",
+      "x": "X4+GI",
+      "y": "BODY_Y0+15",
+      "refs": [
+        "GLUE_SIDE_BOTTOM.start",
+        "GLUE_SIDE_LEFT.end"
+      ]
+    },
+    {
+      "id": "SIDE_GLUE_BR",
+      "purpose": "side glue br",
+      "x": "MAX_X-GI",
+      "y": "BODY_Y0+15",
+      "refs": [
+        "GLUE_SIDE_BOTTOM.end",
+        "GLUE_SIDE_RIGHT.start"
+      ]
+    },
+    {
+      "id": "SIDE_GLUE_TR",
+      "purpose": "side glue tr",
+      "x": "MAX_X-GI",
+      "y": "BODY_Y1-15",
+      "refs": [
+        "GLUE_SIDE_RIGHT.end",
+        "GLUE_SIDE_TOP.start"
+      ]
+    },
+    {
+      "id": "SIDE_GLUE_TL",
+      "purpose": "side glue tl",
+      "x": "X4+GI",
+      "y": "BODY_Y1-15",
+      "refs": [
+        "GLUE_SIDE_TOP.end",
+        "GLUE_SIDE_LEFT.start"
+      ]
+    }
+  ],
+  "outerContour": [
+    "CUT_P1_OUTER_1",
+    "CUT_P1_NOTCH_L",
+    "CUT_P1_NOTCH_BRIDGE",
+    "CUT_P1_NOTCH_R",
+    "CUT_P1_OUTER_2",
+    "CUT_P1_RIGHT",
+    "CUT_P1_TO_P2",
+    "CUT_P2_LEFT",
+    "CUT_P2_SLOPE_L",
+    "CUT_P2_FREE",
+    "CUT_P2_SLOPE_R",
+    "CUT_P3_LEFT",
+    "CUT_P3_LEFT_SIDE",
+    "CUT_P3_OUTER_1",
+    "CUT_P3_NOTCH_L",
+    "CUT_P3_NOTCH_BRIDGE",
+    "CUT_P3_NOTCH_R",
+    "CUT_P3_OUTER_2",
+    "CUT_P3_RIGHT",
+    "CUT_P3_TO_P4",
+    "CUT_P4_LEFT",
+    "CUT_P4_SLOPE_L",
+    "CUT_P4_FREE",
+    "CUT_P4_SLOPE_R",
+    "CUT_P4_TO_ROOT",
+    "CUT_GLUE_BOTTOM_CHAMFER",
+    "CUT_GLUE_OUTER",
+    "CUT_GLUE_TOP_CHAMFER",
+    "CUT_TOP_DUST4_RIGHT",
+    "CUT_TOP_DUST4_FREE",
+    "CUT_TOP_DUST4_LEFT",
+    "SLOT_TOP_RELIEF_3_4",
+    "SLOT_TOP_MAIN_RIGHT",
+    "CUT_TOP_TONGUE_RIGHT",
+    "CUT_TOP_TONGUE_FREE",
+    "CUT_TOP_TONGUE_LEFT",
+    "SLOT_TOP_MAIN_LEFT",
+    "SLOT_TOP_RELIEF_2_3",
+    "CUT_TOP_DUST2_RIGHT",
+    "CUT_TOP_DUST2_FREE",
+    "CUT_TOP_DUST2_LEFT",
+    "SLOT_TOP_RELIEF_1_2",
+    "CUT_PANEL1_TOP",
+    "CUT_BODY_LEFT",
+    "CUT_P1_LEFT",
+    "CUT_P1_LEFT_BEVEL"
+  ],
+  "features": [
+    {
+      "id": "BODY_PANEL_1",
+      "kind": "face",
+      "purpose": "body panel 1",
+      "countsAsFace": true,
+      "entityIds": [
+        "CUT_BODY_LEFT",
+        "CUT_PANEL1_TOP",
+        "CREASE_PANEL_1_2",
+        "CREASE_BOTTOM_P1_ROOT"
+      ],
+      "polygonVertexIds": [
+        "BODY_LEFT_BOTTOM",
+        "P1_ROOT_RIGHT",
+        "PANEL1_TOP_RIGHT",
+        "BODY_LEFT_TOP"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "BODY_PANEL_2",
+      "kind": "face",
+      "purpose": "body panel 2",
+      "countsAsFace": true,
+      "entityIds": [
+        "CREASE_PANEL_1_2",
+        "CREASE_PANEL_2_3",
+        "CREASE_BOTTOM_P2_ROOT",
+        "CREASE_TOP_DUST2_ROOT"
+      ],
+      "polygonVertexIds": [
+        "P1_ROOT_RIGHT",
+        "P2_ROOT_RIGHT",
+        "BODY_X2_TOP",
+        "PANEL1_TOP_RIGHT"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "BODY_PANEL_3",
+      "kind": "face",
+      "purpose": "body panel 3",
+      "countsAsFace": true,
+      "entityIds": [
+        "CREASE_PANEL_2_3",
+        "CREASE_PANEL_3_4",
+        "CREASE_BOTTOM_P3_ROOT",
+        "CREASE_TOP_MAIN_ROOT"
+      ],
+      "polygonVertexIds": [
+        "P2_ROOT_RIGHT",
+        "P3_ROOT_RIGHT",
+        "BODY_X3_TOP",
+        "BODY_X2_TOP"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "BODY_PANEL_4",
+      "kind": "face",
+      "purpose": "body panel 4",
+      "countsAsFace": true,
+      "entityIds": [
+        "CREASE_PANEL_3_4",
+        "CREASE_GLUE_ROOT",
+        "CREASE_BOTTOM_P4_ROOT",
+        "CREASE_TOP_DUST4_ROOT"
+      ],
+      "polygonVertexIds": [
+        "P3_ROOT_RIGHT",
+        "P4_ROOT_RIGHT",
+        "P4_TOP_ROOT_RIGHT",
+        "BODY_X3_TOP"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "BOTTOM_CRASH_P1",
+      "kind": "face",
+      "purpose": "major automatic-bottom flap on panel 1",
+      "countsAsFace": true,
+      "entityIds": [
+        "CREASE_BOTTOM_P1_ROOT",
+        "CUT_P1_LEFT",
+        "CUT_P1_LEFT_BEVEL",
+        "CUT_P1_OUTER_1",
+        "CUT_P1_NOTCH_L",
+        "CUT_P1_NOTCH_BRIDGE",
+        "CUT_P1_NOTCH_R",
+        "CUT_P1_OUTER_2",
+        "CUT_P1_RIGHT",
+        "CUT_P1_TO_P2",
+        "CREASE_CRASH_P1_DIAGONAL"
+      ],
+      "polygonVertexIds": [
+        "BODY_LEFT_BOTTOM",
+        "P1_ROOT_RIGHT",
+        "P1_RIGHT_BEVEL",
+        "P1_RIGHT_OUTER",
+        "P1_NOTCH_RIGHT_OUTER",
+        "P1_NOTCH_RIGHT",
+        "P1_NOTCH_LEFT",
+        "P1_NOTCH_LEFT_OUTER",
+        "P1_OUTER_LEFT",
+        "P1_LEFT_BEVEL"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": false,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "BOTTOM_CRASH_P2",
+      "kind": "face",
+      "purpose": "minor automatic-bottom pull flap on panel 2",
+      "countsAsFace": true,
+      "entityIds": [
+        "CREASE_BOTTOM_P2_ROOT",
+        "CUT_P2_LEFT",
+        "CUT_P2_SLOPE_L",
+        "CUT_P2_FREE",
+        "CUT_P2_SLOPE_R"
+      ],
+      "polygonVertexIds": [
+        "P1_ROOT_RIGHT",
+        "P2_ROOT_RIGHT",
+        "P2_FREE_RIGHT",
+        "P2_FREE_LEFT",
+        "P2_LEFT_BEVEL"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "BOTTOM_CRASH_P3",
+      "kind": "face",
+      "purpose": "major automatic-bottom flap on panel 3",
+      "countsAsFace": true,
+      "entityIds": [
+        "CREASE_BOTTOM_P3_ROOT",
+        "CUT_P3_LEFT",
+        "CUT_P3_LEFT_SIDE",
+        "CUT_P3_OUTER_1",
+        "CUT_P3_NOTCH_L",
+        "CUT_P3_NOTCH_BRIDGE",
+        "CUT_P3_NOTCH_R",
+        "CUT_P3_OUTER_2",
+        "CUT_P3_RIGHT",
+        "CUT_P3_TO_P4",
+        "CREASE_CRASH_P3_DIAGONAL"
+      ],
+      "polygonVertexIds": [
+        "P2_ROOT_RIGHT",
+        "P3_ROOT_RIGHT",
+        "P3_RIGHT_BEVEL",
+        "P3_RIGHT_OUTER",
+        "P3_NOTCH_RIGHT_OUTER",
+        "P3_NOTCH_RIGHT",
+        "P3_NOTCH_LEFT",
+        "P3_NOTCH_LEFT_OUTER",
+        "P3_LEFT_OUTER",
+        "P3_LEFT_BEVEL"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": false,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "BOTTOM_CRASH_P4",
+      "kind": "face",
+      "purpose": "minor automatic-bottom pull flap on panel 4",
+      "countsAsFace": true,
+      "entityIds": [
+        "CREASE_BOTTOM_P4_ROOT",
+        "CUT_P4_LEFT",
+        "CUT_P4_SLOPE_L",
+        "CUT_P4_FREE",
+        "CUT_P4_SLOPE_R",
+        "CUT_P4_TO_ROOT"
+      ],
+      "polygonVertexIds": [
+        "P3_ROOT_RIGHT",
+        "P4_ROOT_RIGHT",
+        "P4_RIGHT_BEVEL",
+        "P4_FREE_RIGHT",
+        "P4_FREE_LEFT",
+        "P4_LEFT_BEVEL"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "TOP_DUST_PANEL_2",
+      "kind": "face",
+      "purpose": "top dust flap on panel 2",
+      "countsAsFace": true,
+      "entityIds": [
+        "SLOT_TOP_RELIEF_1_2",
+        "CUT_TOP_DUST2_LEFT",
+        "CUT_TOP_DUST2_FREE",
+        "CUT_TOP_DUST2_RIGHT",
+        "CREASE_TOP_DUST2_ROOT"
+      ],
+      "polygonVertexIds": [
+        "TOP_DUST2_ROOT_LEFT",
+        "TOP_DUST2_ROOT_RIGHT",
+        "TOP_DUST2_FREE_RIGHT",
+        "TOP_DUST2_FREE_LEFT"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "TOP_TUCK_PANEL_3",
+      "kind": "face",
+      "purpose": "complete top main flap and insertion tongue on panel 3",
+      "countsAsFace": true,
+      "entityIds": [
+        "SLOT_TOP_RELIEF_2_3",
+        "SLOT_TOP_MAIN_LEFT",
+        "CUT_TOP_TONGUE_LEFT",
+        "CUT_TOP_TONGUE_FREE",
+        "CUT_TOP_TONGUE_RIGHT",
+        "SLOT_TOP_MAIN_RIGHT",
+        "CREASE_TOP_MAIN_ROOT",
+        "CREASE_TOP_TONGUE"
+      ],
+      "polygonVertexIds": [
+        "TOP_MAIN_ROOT_LEFT",
+        "TOP_MAIN_ROOT_RIGHT",
+        "TOP_MAIN_TONGUE_RIGHT",
+        "TOP_MAIN_FREE_RIGHT",
+        "TOP_MAIN_FREE_LEFT",
+        "TOP_MAIN_TONGUE_LEFT"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "TOP_DUST_PANEL_4",
+      "kind": "face",
+      "purpose": "top dust flap on panel 4",
+      "countsAsFace": true,
+      "entityIds": [
+        "SLOT_TOP_RELIEF_3_4",
+        "CUT_TOP_DUST4_LEFT",
+        "CUT_TOP_DUST4_FREE",
+        "CUT_TOP_DUST4_RIGHT",
+        "CREASE_TOP_DUST4_ROOT"
+      ],
+      "polygonVertexIds": [
+        "TOP_DUST4_ROOT_LEFT",
+        "P4_TOP_ROOT_RIGHT",
+        "TOP_DUST4_FREE_RIGHT",
+        "TOP_DUST4_FREE_LEFT"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "SIDE_GLUE_FLAP",
+      "kind": "face",
+      "purpose": "longitudinal side-seam flap",
+      "countsAsFace": true,
+      "entityIds": [
+        "CREASE_GLUE_ROOT",
+        "CUT_GLUE_BOTTOM_CHAMFER",
+        "CUT_GLUE_OUTER",
+        "CUT_GLUE_TOP_CHAMFER"
+      ],
+      "polygonVertexIds": [
+        "P4_ROOT_RIGHT",
+        "GLUE_BOTTOM_OUTER",
+        "GLUE_TOP_OUTER",
+        "P4_TOP_ROOT_RIGHT"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 100
+      }
+    },
+    {
+      "id": "SIDE_GLUE_ZONE",
+      "kind": "region",
+      "purpose": "side-seam adhesive application region",
+      "countsAsFace": false,
+      "entityIds": [
+        "GLUE_SIDE_BOTTOM",
+        "GLUE_SIDE_RIGHT",
+        "GLUE_SIDE_TOP",
+        "GLUE_SIDE_LEFT"
+      ],
+      "polygonVertexIds": [
+        "SIDE_GLUE_BL",
+        "SIDE_GLUE_BR",
+        "SIDE_GLUE_TR",
+        "SIDE_GLUE_TL"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 10
+      },
+      "containedIn": "SIDE_GLUE_FLAP",
+      "minBoundaryClearanceMm": 4.0
+    },
+    {
+      "id": "CRASH_GLUE_ZONE_P1",
+      "kind": "region",
+      "purpose": "automatic-bottom pre-glue region on P1",
+      "countsAsFace": false,
+      "entityIds": [
+        "GLUE_CRASH_P1_BASE",
+        "GLUE_CRASH_P1_SIDE",
+        "GLUE_CRASH_P1_DIAGONAL"
+      ],
+      "polygonVertexIds": [
+        "P1_GLUE_LOW_LEFT",
+        "P1_GLUE_LOW_RIGHT",
+        "P1_GLUE_HIGH"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 5
+      },
+      "containedIn": "BOTTOM_CRASH_P1",
+      "minBoundaryClearanceMm": 1.0
+    },
+    {
+      "id": "CRASH_GLUE_ZONE_P3",
+      "kind": "region",
+      "purpose": "automatic-bottom pre-glue region on P3",
+      "countsAsFace": false,
+      "entityIds": [
+        "GLUE_CRASH_P3_BASE",
+        "GLUE_CRASH_P3_SIDE",
+        "GLUE_CRASH_P3_DIAGONAL"
+      ],
+      "polygonVertexIds": [
+        "P3_GLUE_LOW_LEFT",
+        "P3_GLUE_LOW_RIGHT",
+        "P3_GLUE_HIGH"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 5
+      },
+      "containedIn": "BOTTOM_CRASH_P3",
+      "minBoundaryClearanceMm": 1.0
+    }
+  ],
+  "measurements": [
+    {
+      "id": "TOP_MAIN_DEPTH_ACTUAL",
+      "kind": "abs_dy",
+      "a": "TOP_MAIN_ROOT_LEFT",
+      "b": "TOP_MAIN_TONGUE_LEFT"
+    },
+    {
+      "id": "TOP_TONGUE_DEPTH_ACTUAL",
+      "kind": "abs_dy",
+      "a": "TOP_MAIN_TONGUE_LEFT",
+      "b": "TOP_MAIN_FREE_LEFT"
+    },
+    {
+      "id": "TOP_MAIN_LEFT_TAPER",
+      "kind": "signed_dx",
+      "a": "TOP_MAIN_ROOT_LEFT",
+      "b": "TOP_MAIN_TONGUE_LEFT"
+    },
+    {
+      "id": "TOP_MAIN_RIGHT_TAPER",
+      "kind": "signed_dx",
+      "a": "TOP_MAIN_TONGUE_RIGHT",
+      "b": "TOP_MAIN_ROOT_RIGHT"
+    },
+    {
+      "id": "TOP_TONGUE_LEFT_TAPER",
+      "kind": "signed_dx",
+      "a": "TOP_MAIN_TONGUE_LEFT",
+      "b": "TOP_MAIN_FREE_LEFT"
+    },
+    {
+      "id": "TOP_TONGUE_RIGHT_TAPER",
+      "kind": "signed_dx",
+      "a": "TOP_MAIN_FREE_RIGHT",
+      "b": "TOP_MAIN_TONGUE_RIGHT"
+    },
+    {
+      "id": "BOTTOM_P1_DEPTH",
+      "kind": "abs_dy",
+      "a": "BODY_LEFT_BOTTOM",
+      "b": "P1_OUTER_LEFT"
+    },
+    {
+      "id": "BOTTOM_P3_DEPTH",
+      "kind": "abs_dy",
+      "a": "P2_ROOT_RIGHT",
+      "b": "P3_LEFT_OUTER"
+    },
+    {
+      "id": "CRASH_P1_DIAG_DX",
+      "kind": "abs_dx",
+      "a": "P1_DIAG_LOW",
+      "b": "P1_RIGHT_BEVEL"
+    },
+    {
+      "id": "CRASH_P1_DIAG_DY",
+      "kind": "abs_dy",
+      "a": "P1_DIAG_LOW",
+      "b": "P1_RIGHT_BEVEL"
+    },
+    {
+      "id": "CRASH_P3_DIAG_DX",
+      "kind": "abs_dx",
+      "a": "P3_DIAG_LOW",
+      "b": "P3_RIGHT_BEVEL"
+    },
+    {
+      "id": "CRASH_P3_DIAG_DY",
+      "kind": "abs_dy",
+      "a": "P3_DIAG_LOW",
+      "b": "P3_RIGHT_BEVEL"
+    },
+    {
+      "id": "CRASH_GLUE_P1_AREA",
+      "kind": "feature_area",
+      "featureId": "CRASH_GLUE_ZONE_P1"
+    },
+    {
+      "id": "CRASH_GLUE_P3_AREA",
+      "kind": "feature_area",
+      "featureId": "CRASH_GLUE_ZONE_P3"
+    }
+  ],
+  "domainAssertions": [
+    {
+      "id": "DOMAIN_LENGTH_EXCEEDS_WIDTH",
+      "purpose": "the major crash-lock flap must not cross the blank origin",
+      "lhs": "A",
+      "operator": ">",
+      "rhs": "B"
+    },
+    {
+      "id": "DOMAIN_MAJOR_NOTCH_POINT_ORDER",
+      "purpose": "the lock notch and crash pre-glue triangle must finish before the cut-back edge without overlapping",
+      "lhs": "A/2",
+      "operator": ">",
+      "rhs": "EXT+2*CB+2*CGI"
+    },
+    {
+      "id": "DOMAIN_CRASH_DIAGONAL_POSITIVE",
+      "purpose": "the 45-degree crash-lock fold must have positive travel",
+      "lhs": "B/2",
+      "operator": ">",
+      "rhs": "2*CB+2*CGI"
+    },
+    {
+      "id": "DOMAIN_SIDE_GLUE_POSITIVE",
+      "purpose": "the side glue region must retain positive width after both insets",
+      "lhs": "GL",
+      "operator": ">",
+      "rhs": "2*GI"
+    },
+    {
+      "id": "DOMAIN_TOP_TONGUE_POSITIVE",
+      "purpose": "the top tongue free edge must remain positive",
+      "lhs": "A-RR",
+      "operator": ">",
+      "rhs": "2*TT"
+    },
+    {
+      "id": "DOMAIN_DUST_FREE_EDGE_POSITIVE",
+      "purpose": "both top dust free edges must remain positive",
+      "lhs": "B-RR",
+      "operator": ">",
+      "rhs": "2*DT"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "TOP_MAIN_DEPTH_EQUALS_B",
+      "purpose": "top main flap closes across the box width",
+      "lhs": "TOP_MAIN_DEPTH_ACTUAL",
+      "operator": "==",
+      "rhs": "B"
+    },
+    {
+      "id": "TOP_TONGUE_DEPTH_EQUALS_TEH",
+      "purpose": "top insertion depth is explicit",
+      "lhs": "TOP_TONGUE_DEPTH_ACTUAL",
+      "operator": "==",
+      "rhs": "TEH"
+    },
+    {
+      "id": "TOP_MAIN_LEFT_UNTAPERED",
+      "purpose": "top main flap has no inward waist",
+      "lhs": "TOP_MAIN_LEFT_TAPER",
+      "operator": "==",
+      "rhs": "0"
+    },
+    {
+      "id": "TOP_MAIN_RIGHT_UNTAPERED",
+      "purpose": "top main flap has no inward waist",
+      "lhs": "TOP_MAIN_RIGHT_TAPER",
+      "operator": "==",
+      "rhs": "0"
+    },
+    {
+      "id": "TOP_TONGUE_LEFT_TAPERS_INWARD",
+      "purpose": "top insertion tongue narrows inward on the left",
+      "lhs": "TOP_TONGUE_LEFT_TAPER",
+      "operator": "==",
+      "rhs": "TT"
+    },
+    {
+      "id": "TOP_TONGUE_RIGHT_TAPERS_INWARD",
+      "purpose": "top insertion tongue narrows inward on the right",
+      "lhs": "TOP_TONGUE_RIGHT_TAPER",
+      "operator": "==",
+      "rhs": "TT"
+    },
+    {
+      "id": "BOTTOM_P1_DEPTH_EQUALS_HALF_B",
+      "purpose": "first major crash-lock flap uses ECMA CLPH=B/2",
+      "lhs": "BOTTOM_P1_DEPTH",
+      "operator": "==",
+      "rhs": "B/2"
+    },
+    {
+      "id": "BOTTOM_P3_DEPTH_EQUALS_HALF_B",
+      "purpose": "second major crash-lock flap uses ECMA CLPH=B/2",
+      "lhs": "BOTTOM_P3_DEPTH",
+      "operator": "==",
+      "rhs": "B/2"
+    },
+    {
+      "id": "CRASH_P1_DIAGONAL_IS_45_DEG",
+      "purpose": "first pre-glue erection fold has equal X/Y travel",
+      "lhs": "CRASH_P1_DIAG_DX",
+      "operator": "==",
+      "rhs": "CRASH_P1_DIAG_DY"
+    },
+    {
+      "id": "CRASH_P3_DIAGONAL_IS_45_DEG",
+      "purpose": "second pre-glue erection fold has equal X/Y travel",
+      "lhs": "CRASH_P3_DIAG_DX",
+      "operator": "==",
+      "rhs": "CRASH_P3_DIAG_DY"
+    },
+    {
+      "id": "TWO_CRASH_GLUE_ZONES_HAVE_EQUAL_AREA",
+      "purpose": "paired pre-glue actions are balanced",
+      "lhs": "CRASH_GLUE_P1_AREA",
+      "operator": "==",
+      "rhs": "CRASH_GLUE_P3_AREA"
+    },
+    {
+      "id": "CRASH_GLUE_AREA_POSITIVE",
+      "purpose": "automatic bottom has a real pre-glue application area",
+      "lhs": "CRASH_GLUE_P1_AREA",
+      "operator": ">",
+      "rhs": "0"
+    },
+    {
+      "id": "BLANK_WIDTH_MATCHES_PANEL_CHAIN",
+      "purpose": "blank width equals A+B+A+B+GL",
+      "lhs": "ACTUAL_BBOX_WIDTH",
+      "operator": "==",
+      "rhs": "2*A+2*B+GL"
+    },
+    {
+      "id": "BLANK_HEIGHT_MATCHES_ASYMMETRIC_CLOSURES",
+      "purpose": "blank height equals crash bottom plus body plus top main plus tongue",
+      "lhs": "ACTUAL_BBOX_HEIGHT",
+      "operator": "==",
+      "rhs": "B/2+H+B+TEH"
+    }
+  ],
+  "expectedBBox": {
+    "minX": "0",
+    "minY": "0",
+    "maxX": "MAX_X",
+    "maxY": "MAX_Y"
+  },
+  "sampling": {
+    "randomSeed": 20260810,
+    "randomCases": 250,
+    "explicitCases": [
+      {
+        "id": "LOW_ENVELOPE",
+        "values": {
+          "A": 120,
+          "B": 90,
+          "H": 60,
+          "GL": 22,
+          "TEH": 10,
+          "TT": 3,
+          "DT": 3,
+          "RR": 2,
+          "CB": 8,
+          "EXT": 10,
+          "GI": 4,
+          "CGI": 1
+        }
+      },
+      {
+        "id": "HIGH_ENVELOPE",
+        "values": {
+          "A": 500,
+          "B": 260,
+          "H": 260,
+          "GL": 45,
+          "TEH": 28,
+          "TT": 8,
+          "DT": 8,
+          "RR": 6,
+          "CB": 16,
+          "EXT": 25,
+          "GI": 7,
+          "CGI": 3
+        }
+      },
+      {
+        "id": "TALL_NARROW",
+        "values": {
+          "A": 160,
+          "B": 90,
+          "H": 280
+        }
+      },
+      {
+        "id": "WIDE_SHALLOW",
+        "values": {
+          "A": 500,
+          "B": 260,
+          "H": 55
+        }
+      }
+    ]
+  },
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

@@ -1,0 +1,59 @@
+{
+    "schema":  "case01_reference_frame_v1",
+    "status":  "reference_matched_ready_for_autocad",
+    "reference":  "fixtures/reference_frame.dwg",
+    "reference_measurements_mm":  {
+                                      "outer":  [
+                                                    420,
+                                                    297
+                                                ],
+                                      "inner_margins":  {
+                                                            "left":  25,
+                                                            "top":  5,
+                                                            "right":  5,
+                                                            "bottom":  5
+                                                        },
+                                      "title_block":  [
+                                                          180,
+                                                          40
+                                                      ],
+                                      "title_grid_x_local":  [
+                                                                 0,
+                                                                 15,
+                                                                 45,
+                                                                 70,
+                                                                 90,
+                                                                 140,
+                                                                 155,
+                                                                 180
+                                                             ],
+                                      "title_grid_y_local":  [
+                                                                 0,
+                                                                 8,
+                                                                 16,
+                                                                 24,
+                                                                 32,
+                                                                 40
+                                                             ]
+                                  },
+    "implementation":  {
+                           "model_space":  "1:1 unchanged",
+                           "paper_space":  "A3 frame 1:1",
+                           "locked_viewport_scale":  "1:5",
+                           "reason":  "Do not destroy production coordinates or AICAD XData geometry by physically scaling the model."
+                       },
+    "title_fields":  {
+                         "school":  "STU",
+                         "name":  "明明"
+                     },
+    "green_line_resolution":  {
+                                  "glue_zone":  "remains GLUE green",
+                                  "tape_centerlines":  "gray non-plot TAPE_REFERENCE"
+                              },
+    "review_state":  {
+                         "reviewOnly":  true,
+                         "accepted":  false,
+                         "ruleEnabled":  false,
+                         "packagingGated":  true
+                     }
+}

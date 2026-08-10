@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/aicad/drawing_requirement_trace.schema.json",
+  "title": "AICAD drawing requirement evidence trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "contractId",
+    "contractSha256",
+    "designIdentity",
+    "requirementEvidence",
+    "declaredMajorFeatures",
+    "dimensionSources",
+    "outputsPlanned",
+    "locks"
+  ],
+  "properties": {
+    "schema": {"const": "aicad_drawing_requirement_trace_v1"},
+    "contractId": {"type": "string"},
+    "contractSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "designIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["productType", "structureFamily", "standard", "topClosure", "bottomClosure", "units"],
+      "properties": {
+        "productType": {"type": "string", "minLength": 1},
+        "structureFamily": {"type": "string", "minLength": 1},
+        "standard": {"type": "string", "minLength": 1},
+        "topClosure": {"type": "string", "minLength": 1},
+        "bottomClosure": {"type": "string", "minLength": 1},
+        "units": {"enum": ["mm", "inch"]}
+      }
+    },
+    "requirementEvidence": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/evidenceRow"}
+    },
+    "declaredMajorFeatures": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"}
+    },
+    "dimensionSources": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/dimensionSource"}
+    },
+    "outputsPlanned": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"enum": ["plan.json", "aicad", "scr", "dxf", "audit.md", "manifest.json"]}
+    },
+    "locks": {"$ref": "#/$defs/locks"}
+  },
+  "$defs": {
+    "evidenceRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirementId", "status", "observed", "actualBinding", "evidence"],
+      "properties": {
+        "requirementId": {"type": "string"},
+        "status": {"enum": ["satisfied", "failed", "not_evaluated"]},
+        "observed": {},
+        "actualBinding": {"$ref": "#/$defs/actualBinding"},
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["method", "sourcePath", "note"],
+            "properties": {
+              "method": {"enum": ["exact_value", "typed_identity", "formula", "entity_query", "artifact_inventory", "human_confirmation"]},
+              "sourcePath": {"type": "string", "minLength": 1},
+              "note": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "actualBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "transform"],
+      "properties": {
+        "source": {"enum": ["contract", "normality_template", "normality_instance"]},
+        "transform": {"enum": ["identity", "contains", "all_review_locks_closed", "normality_parameters"]},
+        "jsonPointer": {"type": "string", "pattern": "^/"},
+        "containsValue": {},
+        "parameterIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]{0,63}$"}
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"transform": {"enum": ["identity", "contains", "all_review_locks_closed"]}}},
+          "then": {"required": ["jsonPointer"]}
+        },
+        {
+          "if": {"properties": {"transform": {"const": "contains"}}},
+          "then": {"required": ["containsValue"]}
+        },
+        {
+          "if": {"properties": {"transform": {"const": "normality_parameters"}}},
+          "then": {"required": ["parameterIds"]}
+        }
+      ]
+    },
+    "dimensionSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dimensionId", "sourceId", "derivedFromImagePixels"],
+      "properties": {
+        "dimensionId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"},
+        "sourceId": {"type": "string"},
+        "derivedFromImagePixels": {"const": false}
+      }
+    },
+    "locks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true}
+      }
+    }
+  }
+}

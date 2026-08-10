@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad/normality-contract.schema.json",
+  "title": "AICAD bounded CAD normality template and instance",
+  "oneOf": [
+    {"$ref": "#/$defs/template"},
+    {"$ref": "#/$defs/instance"}
+  ],
+  "$defs": {
+    "asciiId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$"},
+    "expression": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9_+*/(). -]+$"},
+    "locks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true}
+      }
+    },
+    "independentParameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "unit", "default", "min", "max", "purpose"],
+      "properties": {
+        "id": {"$ref": "#/$defs/asciiId"},
+        "role": {"const": "independent"},
+        "unit": {"enum": ["mm", "deg", "ratio"]},
+        "default": {"type": "number"},
+        "min": {"type": "number"},
+        "max": {"type": "number"},
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    },
+    "derivedParameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "unit", "formula", "purpose"],
+      "properties": {
+        "id": {"$ref": "#/$defs/asciiId"},
+        "role": {"const": "derived"},
+        "unit": {"enum": ["mm", "deg", "ratio"]},
+        "formula": {"$ref": "#/$defs/expression"},
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    },
+    "vertex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "purpose", "x", "y", "refs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/asciiId"},
+        "purpose": {"type": "string", "minLength": 1},
+        "x": {"$ref": "#/$defs/expression"},
+        "y": {"$ref": "#/$defs/expression"},
+        "refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[A-Za-z0-9_]+\\.(start|end)$"}
+        }
+      }
+    },
+    "feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "purpose", "countsAsFace", "entityIds", "polygonVertexIds", "rules"],
+      "properties": {
+        "id": {"$ref": "#/$defs/asciiId"},
+        "kind": {"enum": ["face", "region"]},
+        "purpose": {"type": "string", "minLength": 1},
+        "countsAsFace": {"type": "boolean"},
+        "entityIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/asciiId"}},
+        "polygonVertexIds": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/asciiId"}},
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["simple", "convex", "minAreaMm2"],
+          "properties": {
+            "simple": {"type": "boolean"},
+            "convex": {"type": "boolean"},
+            "minAreaMm2": {"type": "number", "minimum": 0}
+          }
+        },
+        "containedIn": {"$ref": "#/$defs/asciiId"},
+        "minBoundaryClearanceMm": {"type": "number", "minimum": 0}
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": {"$ref": "#/$defs/asciiId"},
+        "kind": {"enum": ["distance", "signed_dx", "signed_dy", "abs_dx", "abs_dy", "feature_area"]},
+        "a": {"$ref": "#/$defs/asciiId"},
+        "b": {"$ref": "#/$defs/asciiId"},
+        "featureId": {"$ref": "#/$defs/asciiId"}
+      }
+    },
+    "assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "purpose", "lhs", "operator", "rhs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/asciiId"},
+        "purpose": {"type": "string", "minLength": 1},
+        "lhs": {"$ref": "#/$defs/expression"},
+        "operator": {"enum": ["==", ">", ">=", "<", "<="]},
+        "rhs": {"$ref": "#/$defs/expression"}
+      }
+    },
+    "template": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema", "profileId", "profileVersion", "productType", "majorFeatures", "structureName", "closureSystem", "toleranceMm", "parameters",
+        "excludedEntityIds", "productionEntityIds", "expectedLayerCounts", "vertices", "outerContour",
+        "features", "measurements", "domainAssertions", "assertions", "expectedBBox", "sampling", "locks"
+      ],
+      "properties": {
+        "schema": {"const": "aicad_normality_template_v1"},
+        "profileId": {"$ref": "#/$defs/asciiId"},
+        "profileVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "productType": {"$ref": "#/$defs/asciiId"},
+        "majorFeatures": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/asciiId"}
+        },
+        "structureName": {"type": "string", "minLength": 1},
+        "closureSystem": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["top", "bottom", "asymmetric", "standard"],
+          "properties": {
+            "top": {"$ref": "#/$defs/asciiId"},
+            "bottom": {"$ref": "#/$defs/asciiId"},
+            "asymmetric": {"type": "boolean"},
+            "standard": {"type": "string", "minLength": 1}
+          }
+        },
+        "toleranceMm": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.1},
+        "parameters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"oneOf": [{"$ref": "#/$defs/independentParameter"}, {"$ref": "#/$defs/derivedParameter"}]}
+        },
+        "excludedEntityIds": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/asciiId"}},
+        "productionEntityIds": {"type": "array", "minItems": 3, "uniqueItems": true, "items": {"$ref": "#/$defs/asciiId"}},
+        "expectedLayerCounts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 1}},
+        "vertices": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/vertex"}},
+        "outerContour": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "oneOf": [
+              {"$ref": "#/$defs/asciiId"},
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["entityId", "direction"],
+                "properties": {"entityId": {"$ref": "#/$defs/asciiId"}, "direction": {"enum": ["forward", "reverse"]}}
+              }
+            ]
+          }
+        },
+        "features": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/feature"}},
+        "measurements": {"type": "array", "items": {"$ref": "#/$defs/measurement"}},
+        "domainAssertions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/assertion"}},
+        "assertions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/assertion"}},
+        "expectedBBox": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minX", "minY", "maxX", "maxY"],
+          "properties": {
+            "minX": {"$ref": "#/$defs/expression"},
+            "minY": {"$ref": "#/$defs/expression"},
+            "maxX": {"$ref": "#/$defs/expression"},
+            "maxY": {"$ref": "#/$defs/expression"}
+          }
+        },
+        "sampling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["randomSeed", "randomCases", "explicitCases"],
+          "properties": {
+            "randomSeed": {"type": "integer"},
+            "randomCases": {"type": "integer", "minimum": 0, "maximum": 10000},
+            "explicitCases": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "values"],
+                "properties": {"id": {"$ref": "#/$defs/asciiId"}, "values": {"type": "object", "additionalProperties": {"type": "number"}}}
+              }
+            }
+          }
+        },
+        "locks": {"$ref": "#/$defs/locks"}
+      }
+    },
+    "instance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "profileId", "profileVersion", "values", "locks"],
+      "properties": {
+        "schema": {"const": "aicad_normality_instance_v1"},
+        "profileId": {"$ref": "#/$defs/asciiId"},
+        "profileVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "values": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "number"}},
+        "locks": {"$ref": "#/$defs/locks"}
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "aicad-agent": {
+      "command": "python",
+      "args": ["./plugins/aicad-agent/scripts/aicad_agent.py", "mcp"],
+      "note": "Local deterministic 2D CAD and transactional SolidWorks 3D planning, validation, and artifact generation tools."
+    }
+  }
+}

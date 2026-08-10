@@ -1,35 +1,32 @@
 # Changelog
 
-## 1.2.2 - 2026-07-18
+## 1.3.1 - 2026-08-10
 
-- Revalidated runtime packaging-QA discovery and fail-closed visual-review acceptance against the packaged payload.
-- Added REL-G007 and REL-G008 to prevent manifest/runtime drift and block uploads until behavioral tests pass.
-- Added REL-G009 and an API-version regression assertion after remote-baseline comparison caught a stale local release source.
-- Added REL-G010 to prevent mutable hashes under an already published version.
-- Rebuilt the installable archive under a new immutable patch version.
+- Added detailed Chinese feature, installation and release documentation with an interaction-review screenshot.
+- Added machine-readable whole-drawing requirement-contract and evidence-trace schemas.
+- Added independent macro conformance checks for user intent, source authority, high-impact assumptions, conflicts, typed product/closure identity, major features, dimensions and required outputs.
+- Bound every hard observed value to the selected structure template, actual parameter instance or contract, and require boundActual == observed == expected; a 120 self-report against an actual 121 instance is a blocking regression.
+- Added a non-skippable guarded pipeline: whole intent, detail normality, then isolated deterministic artifact build and hash audit.
+- Added PKG-G024/PKG-G025, LESSON-017/LESSON-018 and eleven executable red/green regressions.
+- Verified the default top-tuck/automatic-bottom case with 12/12 hard requirements before its existing 144/144 detail proof and six-artifact guarded build.
 
-## 1.2.1 - 2026-07-14
+## 1.3.0 - 2026-08-10
 
-- Deferred SolidWorks template and host discovery until `execute=true`.
-- Made 3D validation and compile-only artifact generation work on clean machines without SolidWorks.
-- Added a regression test that explicitly masks both the SolidWorks template and host.
-- Added REL-G006 after GitHub Actions exposed the local-environment coupling.
+- Added the versioned bounded-normality contract, JSON Schema and independent Jacobian-rank prover.
+- Added typed top/bottom closure selection and the ECMA A60.20.00.03 top-tuck/bottom-auto-lock default.
+- Added complete face/process-region, endpoint ownership, contour, bounding-box and coupled parameter-domain gates.
+- Added red/green regressions proving that full rank alone cannot catch an inward flap waist or the wrong mirrored closure family.
+- Added PKG-G023, LESSON-016, EFC-PREVENT-154, EFC-TEST-015 and EFC-PIPELINE-137.
 
-## 1.2.0 - 2026-07-14
+## 1.2.0 - 2026-07-12
 
-- Added packaging-dieline global QA and 21 persistent prevention rules.
-- Added closed-loop defect reporting: symptom, root cause, repair, prevention rule, regression test.
-- Made packaging regression fixtures self-contained and removed personal-path dependencies.
-- Declared the no-key Agent-first path explicitly in machine-readable capabilities.
-- Added AutoCAD source bundle to the installable plugin.
-- Changed the default SolidWorks distribution to source-only to avoid redistributing proprietary interop assemblies.
-- Preserved fail-closed 2D origin anchoring, per-entity reasoning, and transactional 3D feature verification.
+- Rebuilt from latest source because 1.1.0 omitted packaging rules/QA/tests and AutoCAD integration assets.
+- Added PKG-G001 through PKG-G021 packaging prevention rules and self-contained regression fixtures.
+- Parameterized dimension-chain QA; removed case-specific dimensional constants.
+- Added honest no-host status and true SolidWorks `--no-execute` offline plan export.
+- Unified component version metadata and removed personal SolidWorks SDK path.
+- Added strict AI Apprentice request/result contracts, adapters, hashes and safety locks.
 
-## 1.1.0 - 2026-07-11
+## 1.1.0
 
-- Added typed SolidWorks 3D planning, per-feature rebuild/readback, SLDPRT/STEP output, and reopen verification.
-
-## 1.0.0 - 2026-07-11
-
-- Initial Agent-native 2D constraint compiler, AutoCAD bundle, DXF/SCR/AICAD outputs, XData, and audit manifests.
-
+- Added Codex MCP surface and SolidWorks 3D transaction host.

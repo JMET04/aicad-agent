@@ -53,6 +53,15 @@ class EngineTests(unittest.TestCase):
         with self.assertRaisesRegex(PlanError, "duplicates L001"):
             compile_plan(data)
 
+    def test_rejects_forward_reference(self) -> None:
+        data = copy.deepcopy(self.data)
+        data["steps"][0]["construction"] = {
+            "kind": "to_point",
+            "target": {"ref": "L002.end"},
+        }
+        with self.assertRaisesRegex(PlanError, "has not been drawn"):
+            compile_plan(data)
+
     def test_false_coincident_relation_is_rejected(self) -> None:
         data = copy.deepcopy(self.data)
         data["steps"][1]["start"] = {"point": [999, 999]}
@@ -138,7 +147,7 @@ class EngineTests(unittest.TestCase):
 
     def test_bundle_manifest_lisp_and_installer_are_production_version(self) -> None:
         manifest = ET.parse(ROOT / "plugin" / "AiCadConstraint.bundle" / "PackageContents.xml")
-        self.assertEqual(manifest.getroot().attrib["AppVersion"], "1.0.0")
+        self.assertEqual(manifest.getroot().attrib["AppVersion"], "1.3.1")
         source = (ROOT / "plugin" / "AiCadConstraint.bundle" / "Contents" / "AiCadConstraint.lsp").read_bytes()
         text = source.decode("ascii")
         depth, in_string, escaped, in_comment = 0, False, False, False
@@ -161,7 +170,7 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(depth, 0)
         self.assertIn("(defun c:AICAD_AI", text)
         self.assertIn("(defun c:AICAD_DOCTOR", text)
-        self.assertIn('(setq aicad:*version* "1.0.0")', text)
+        self.assertIn('(setq aicad:*version* "1.3.1")', text)
         self.assertNotIn('(command "_.UNDO"', text)
         installer = (ROOT / "scripts" / "install.ps1").read_text(encoding="utf-8")
         self.assertIn("AICAD_RUNNER", installer)

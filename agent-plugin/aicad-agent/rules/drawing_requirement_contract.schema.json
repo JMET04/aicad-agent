@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/aicad/drawing_requirement_contract.schema.json",
+  "title": "AICAD drawing requirement contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "contractId",
+    "revision",
+    "requestSummary",
+    "productType",
+    "useCase",
+    "units",
+    "sources",
+    "authorityOrder",
+    "requirements",
+    "assumptions",
+    "conflicts",
+    "requiredMajorFeatures",
+    "allowedMajorFeatures",
+    "forbiddenMajorFeatures",
+    "requiredOutputs",
+    "locks"
+  ],
+  "properties": {
+    "schema": {"const": "aicad_drawing_requirement_contract_v1"},
+    "contractId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
+    "revision": {"type": "integer", "minimum": 1},
+    "requestSummary": {"type": "string", "minLength": 1},
+    "productType": {"type": "string", "minLength": 1},
+    "useCase": {"type": "string", "minLength": 1},
+    "units": {"enum": ["mm", "inch"]},
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "authorityOrder": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"}
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/requirement"}
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/assumption"}
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/conflict"}
+    },
+    "allowedMajorFeatures": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"}
+    },
+    "requiredMajorFeatures": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"}
+    },
+    "forbiddenMajorFeatures": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"}
+    },
+    "requiredOutputs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["plan.json", "aicad", "scr", "dxf", "audit.md", "manifest.json"]}
+    },
+    "locks": {"$ref": "#/$defs/locks"}
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "description", "dimensionalAuthority"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"},
+        "kind": {
+          "enum": [
+            "user_explicit_numeric",
+            "user_explicit_semantic",
+            "approved_engineering_input",
+            "selected_standard",
+            "reference_cad",
+            "reference_image",
+            "inferred_assumption"
+          ]
+        },
+        "description": {"type": "string", "minLength": 1},
+        "path": {"type": "string"},
+        "dimensionalAuthority": {"type": "boolean"}
+      }
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "statement", "priority", "sourceIds", "mustConfirm", "expected"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
+        "category": {
+          "enum": [
+            "overall_shape",
+            "dimensions",
+            "structure_family",
+            "top_closure",
+            "bottom_closure",
+            "material",
+            "process",
+            "layer",
+            "annotation",
+            "forbidden_feature",
+            "output",
+            "safety"
+          ]
+        },
+        "statement": {"type": "string", "minLength": 1},
+        "priority": {"enum": ["hard", "preference"]},
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string"}
+        },
+        "mustConfirm": {"type": "boolean"},
+        "expected": {"$ref": "#/$defs/expected"}
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["exact", "one_of", "present", "absent", "set_contains", "range"]},
+        "value": {},
+        "values": {"type": "array", "minItems": 1},
+        "minimum": {"type": "number"},
+        "maximum": {"type": "number"},
+        "tolerance": {"type": "number", "minimum": 0}
+      },
+      "allOf": [
+        {"if": {"properties": {"kind": {"const": "exact"}}}, "then": {"required": ["value"]}},
+        {"if": {"properties": {"kind": {"enum": ["one_of", "set_contains"]}}}, "then": {"required": ["values"]}},
+        {"if": {"properties": {"kind": {"const": "range"}}}, "then": {"required": ["minimum", "maximum"]}}
+      ]
+    },
+    "assumption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "impact", "status", "sourceIds"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
+        "statement": {"type": "string", "minLength": 1},
+        "impact": {"enum": ["low", "medium", "high"]},
+        "status": {"enum": ["disclosed", "confirmed", "rejected"]},
+        "sourceIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "sourceIds", "status"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
+        "statement": {"type": "string", "minLength": 1},
+        "sourceIds": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string"}},
+        "status": {"enum": ["resolved", "unresolved"]},
+        "resolution": {"type": "string"},
+        "resolvedRequirementId": {"type": "string"}
+      }
+    },
+    "locks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true}
+      }
+    }
+  }
+}

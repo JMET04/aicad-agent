@@ -14,4 +14,3 @@ Optional native hosts:
 - SolidWorks is a product of Dassault Systèmes. The default release does not include SolidWorks interop assemblies or other proprietary binaries. Users build the host locally against their licensed installation.
 
 The package does not grant licenses for AutoCAD, SolidWorks, or their SDKs.
-

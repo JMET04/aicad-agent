@@ -1,0 +1,75 @@
+{
+    "schema":  "aicad_release_integrity_rules_v1",
+    "rules":  [
+                  {
+                      "id":  "REL-G001",
+                      "name":  "version_and_payload_coherence",
+                      "symptom":  "The old 1.1.0 archive did not contain the latest packaging QA script and prevention rules.",
+                      "root_cause":  "The archive was treated as the source of truth even though development continued after it was built.",
+                      "prevention":  "Build only from current source, require one release version across plugin/API/build script, and verify every staged file through integration-manifest.json and SHA256SUMS."
+                  },
+                  {
+                      "id":  "REL-G002",
+                      "name":  "self_contained_test_fixtures",
+                      "symptom":  "Clean-source tests failed because they read plans from jobs and research experiment directories.",
+                      "root_cause":  "Regression inputs were referenced by convenient workspace paths instead of being owned by the test suite.",
+                      "prevention":  "Every release test must use a minimal sanitized fixture under its own tests/fixtures directory; jobs and research/experiments are forbidden dependencies."
+                  },
+                  {
+                      "id":  "REL-G003",
+                      "name":  "preview_acceptance_matches_delivery_contract",
+                      "symptom":  "A valid white PNG with manually verified Chinese text was rejected because an optional pathized SVG had no native text elements.",
+                      "root_cause":  "The validator required every supplied preview format to pass a format-specific text check instead of applying the at-least-one delivery contract.",
+                      "prevention":  "Accept at least one structurally viewable preview plus a recorded original-resolution visual inspection; treat pathized SVG as optional auxiliary evidence."
+                  },
+                  {
+                      "id":  "REL-G004",
+                      "name":  "verification_must_not_pollute_release",
+                      "symptom":  "Running Python tests after staging created __pycache__ files in the verification directory.",
+                      "root_cause":  "The verification command used Python\u0027s default bytecode-writing behavior inside the release tree.",
+                      "prevention":  "Set PYTHONDONTWRITEBYTECODE=1 for the entire verification process tree because python -B does not propagate to child interpreters; then verify cache absence and hashes without mutating the archive."
+                  },
+                  {
+                      "id":  "REL-G005",
+                      "name":  "proprietary_host_binaries_are_local_only",
+                      "symptom":  "A complete local SolidWorks host bundle included vendor interop DLLs whose redistribution rights were not established.",
+                      "root_cause":  "Installability and distributability were treated as the same property.",
+                      "prevention":  "Publish host source and build instructions by default; exclude SolidWorks interop DLLs and executables unless an explicit redistribution license is recorded."
+                  },
+                  {
+                      "id":  "REL-G006",
+                      "name":  "host_discovery_is_execution_only",
+                      "symptom":  "GitHub Actions could not compile a 3D plan with execute=false because the runner had no SolidWorks template.",
+                      "root_cause":  "Host template discovery ran before the execute flag was honored, and the developer workstation masked the coupling.",
+                      "prevention":  "Pure validation and compile-only paths must not probe native hosts; discover templates and executables only inside execute=true, and test with both probes forced to None."
+                  },
+                  {
+                      "id":  "REL-G007",
+                      "name":  "runtime_capabilities_match_packaged_payload",
+                      "symptom":  "The integration manifest listed packaging dieline QA, but the runtime capabilities response omitted that capability.",
+                      "root_cause":  "Static release metadata and the callable runtime capability surface were updated independently.",
+                      "prevention":  "Cross-test every advertised tool and capability against files in the packaged payload and fail the release when either side is missing."
+                  },
+                  {
+                      "id":  "REL-G008",
+                      "name":  "behavioral_tests_gate_repository_upload",
+                      "symptom":  "Manifest and SHA256 verification passed while four runtime behavior tests still failed.",
+                      "root_cause":  "Structural package integrity was treated as sufficient evidence of functional readiness.",
+                      "prevention":  "Require the core suite, plugin regression suite, Codex manifest validation and release hash verification to all pass before source staging, commit, tag or upload."
+                  },
+                  {
+                      "id":  "REL-G009",
+                      "name":  "remote_baseline_preflight",
+                      "symptom":  "A locally rebuilt package would have lowered the Agent API version and removed compatibility fields that were already present on the remote main branch.",
+                      "root_cause":  "The release source tree was staged before fetching and comparing the existing remote default branch.",
+                      "prevention":  "Fetch and diff the remote default branch before packaging; fail when a candidate lowers versions, removes capability fields or changes public CLI flags without an explicit reviewed migration."
+                  },
+                  {
+                      "id":  "REL-G010",
+                      "name":  "immutable_versioned_release_artifacts",
+                      "symptom":  "The candidate changed the SHA256 of the already published 1.2.1 ZIP while keeping the same versioned filename.",
+                      "root_cause":  "Patch-level QA and release-rule changes were packaged without advancing the release version.",
+                      "prevention":  "If a versioned artifact or tag already exists remotely, any byte change requires the next semantic version and a new tag; never replace a published version with a different hash."
+                  }
+              ]
+}

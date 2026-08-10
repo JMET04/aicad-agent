@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.2.2',
+    [string]$Version = '1.3.1',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -86,12 +86,12 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.0.0'
-        autocadBundle = '1.0.0'
+        pythonConstraintCompiler = '1.3.1'
+        autocadBundle = '1.3.1'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
     }
-    releaseDate = '2026-07-18'
+    releaseDate = '2026-08-10'
     license = 'MIT'
     repository = 'https://github.com/JMET04/aicad-agent'
     apiKeyRequired = $false
@@ -106,11 +106,14 @@ $releaseManifest = [ordered]@{
         'aicad_capabilities', 'aicad_get_plan_schema', 'aicad_generate',
         'aicad_validate_plan', 'aicad_compile_plan', 'aicad_solidworks_doctor',
         'aicad_get_3d_plan_schema', 'aicad_validate_3d_plan', 'aicad_build_solidworks_part',
-        'scripts/aicad_packaging_qa.py'
+        'scripts/aicad_packaging_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
+        'scripts/aicad_requirement_conformance.py', 'scripts/aicad_guarded_delivery.py'
     )
     capabilities = @(
         'origin-anchored 2D constraints', 'ASCII AICAD compilation', 'DXF/SCR/audit/manifest output',
-        'packaging dieline global QA and prevention rules', 'transactional SolidWorks feature planning',
+        'packaging dieline global QA and prevention rules', 'bounded CAD normality proof and typed top/bottom closure families',
+        'whole user-requirement conformance before geometry', 'non-skippable whole-intent detail-proof and hashed candidate-build order',
+        'aligned direct-selection review surface with edge/corner/face labels', 'transactional SolidWorks feature planning',
         'optional native host save/reopen verification'
     )
     externalDependencies = @(
