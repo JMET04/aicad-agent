@@ -1,6 +1,6 @@
 [project]
 name = "aicad-constraint"
-version = "1.3.3"
+version = "1.3.4"
 description = "Natural-language, origin-anchored, mathematically constrained CAD compiler"
 requires-python = ">=3.10"
 

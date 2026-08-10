@@ -84,6 +84,13 @@
                       "symptom":  "A real Windows Git marketplace install passed behavior tests but every text-file manifest hash failed after LF was normalized to CRLF.",
                       "root_cause":  "The repository published byte-level release hashes without a .gitattributes policy fixing text line endings across checkout environments.",
                       "prevention":  "Canonicalize every assembled text file to LF before hashing, publish .gitattributes with text files fixed to LF and binary overrides, then require release-hash verification inside a real remote-tag installation before publishing."
+                  },
+                  {
+                      "id":  "REL-G013",
+                      "name":  "clean_environment_dependency_closure",
+                      "symptom":  "GitHub Actions passed core tests but plugin schema tests failed with ModuleNotFoundError for jsonschema.",
+                      "root_cause":  "A directly imported third-party package was absent from the release requirements, while the developer machine supplied it implicitly and masked the missing dependency.",
+                      "prevention":  "Declare every non-standard-library import in the appropriate release requirements and third-party notices, install only those declarations in a clean environment, and require the complete suite to pass there before build, tag or upload."
                   }
               ]
 }

@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.3.3',
+    [string]$Version = '1.3.4',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -104,8 +104,8 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.3.3'
-        autocadBundle = '1.3.3'
+        pythonConstraintCompiler = '1.3.4'
+        autocadBundle = '1.3.4'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
     }
@@ -136,6 +136,7 @@ $releaseManifest = [ordered]@{
     )
     externalDependencies = @(
         [ordered]@{name='ezdxf'; requirement='>=1.4,<2'; purpose='optional packaging DXF QA'; license='MIT'},
+        [ordered]@{name='jsonschema'; requirement='>=4.23,<5'; purpose='normality and requirement-contract schema validation'; license='MIT'},
         [ordered]@{name='Pillow'; requirement='>=11,<12'; purpose='optional preview QA'; license='HPND'},
         [ordered]@{name='Shapely'; requirement='>=2.1,<3'; purpose='optional topology QA'; license='BSD-3-Clause'}
     )

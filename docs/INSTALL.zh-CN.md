@@ -7,7 +7,7 @@
 安装固定版本：
 
 ```powershell
-codex plugin marketplace add JMET04/aicad-agent --ref v1.3.3
+codex plugin marketplace add JMET04/aicad-agent --ref v1.3.4
 codex plugin add aicad-agent@aicad-agent
 ```
 
@@ -34,17 +34,17 @@ codex plugin remove aicad-agent
 
 ## Release 压缩包
 
-从 GitHub Releases 下载 `aicad-agent-1.3.3.zip` 和 `SHA256SUMS`，先核对 SHA-256，再解压。
+从 GitHub Releases 下载 `aicad-agent-1.3.4.zip` 和 `SHA256SUMS`，先核对 SHA-256，再解压。
 
 ```powershell
-Get-FileHash .\aicad-agent-1.3.3.zip -Algorithm SHA256
+Get-FileHash .\aicad-agent-1.3.4.zip -Algorithm SHA256
 ```
 
 压缩包顶层目录为 `aicad-agent`，包含插件清单、MCP、技能、规则、脚本、测试、AutoCAD bundle 源和可选 SolidWorks 宿主源。
 
 ## Python 依赖
 
-基础 2D 编译只需要 Python 标准库。包装 DXF、预览和拓扑 QA 使用可选依赖：
+基础 2D 编译只需要 Python 标准库。结构合同验证使用 `jsonschema`；包装 DXF、预览和拓扑 QA 还使用 `ezdxf`、`Pillow` 与 `Shapely`。统一安装命令：
 
 ```powershell
 python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
@@ -75,7 +75,7 @@ git clone https://github.com/JMET04/aicad-agent.git
 cd aicad-agent
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-./scripts/build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.3.3
+./scripts/build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.3.4
 python -B scripts/verify_release_package.py release-ci/aicad-agent
 ```
 

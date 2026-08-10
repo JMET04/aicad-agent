@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.4 - 2026-08-10
+
+- Declared `jsonschema>=4.23,<5`, which is directly required by the normality and whole-requirement schema gates.
+- Added REL-G013 and a clean-environment dependency-closure regression after GitHub Actions exposed the developer machine's ambient dependency.
+- Updated third-party notices, release manifests and documentation so runtime imports and install declarations remain coherent.
+
 ## 1.3.3 - 2026-08-10
 
 - Added a repository-wide `.gitattributes` policy that fixes text files to LF and marks release binaries as binary.

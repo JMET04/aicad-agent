@@ -1,6 +1,6 @@
 {
     "name":  "aicad-agent",
-    "version":  "1.3.3",
+    "version":  "1.3.4",
     "description":  "Agent-native tools for whole-intent-gated, deterministic 2D CAD and transactional SolidWorks 3D modeling.",
     "author":  {
                    "name":  "AI CAD Constraint Project"

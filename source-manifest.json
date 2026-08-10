@@ -1,14 +1,14 @@
 {
     "schema":  "aicad_agent_source_release_v1",
     "name":  "aicad-agent",
-    "version":  "1.3.3",
+    "version":  "1.3.4",
     "repository":  "https://github.com/JMET04/aicad-agent",
     "visibilityDefault":  "private",
     "releaseStatus":  "engineering-candidate",
     "apiKeyRequired":  false,
     "proprietaryDependenciesRedistributed":  false,
     "install":  {
-                    "marketplace":  "codex plugin marketplace add JMET04/aicad-agent --ref v1.3.3",
+                    "marketplace":  "codex plugin marketplace add JMET04/aicad-agent --ref v1.3.4",
                     "plugin":  "codex plugin add aicad-agent@aicad-agent"
                 },
     "capabilities":  [
@@ -51,7 +51,7 @@
                   {
                       "path":  ".github/workflows/ci.yml",
                       "size":  1057,
-                      "sha256":  "8c3b4d1c21a8bd4fa2c99da62eba5edf34a30867f66549eb90b38478361b9dc1"
+                      "sha256":  "dccdcdfb29b685addf06977a9e59ab7c9f7d27874286b34cd4be504b43df8744"
                   },
                   {
                       "path":  ".gitignore",
@@ -61,7 +61,7 @@
                   {
                       "path":  "agent-plugin/aicad-agent/.codex-plugin/plugin.json",
                       "size":  2972,
-                      "sha256":  "1ec935302dc3d4d7a1f882e9960abf03155fd39a740586882d0d87b3307b9927"
+                      "sha256":  "e9bd8bc88d4c076ae1fd41be3e8c1c8ee82a283b8ba311d7dbcfe06d378575ea"
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/.mcp.json",
@@ -70,8 +70,8 @@
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/CHANGELOG.md",
-                      "size":  3088,
-                      "sha256":  "71584c5ade740b36c5141472d33c68d775b1f831638ecf2704f627ac83bbbf72"
+                      "size":  3498,
+                      "sha256":  "fa87c106bc6104b1e293372eb63b0376c9b8528e3343fef92d33ccdba4bd8215"
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/docs/FUNCTIONS.zh-CN.md",
@@ -85,8 +85,8 @@
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/docs/INSTALL.zh-CN.md",
-                      "size":  3378,
-                      "sha256":  "2342c1548e1a4196ca6a324f8435f423389e87a8649bdab4fbd7a1b5e05fdb40"
+                      "size":  3463,
+                      "sha256":  "e55ac07cfc72d21884d03aa90cb87feac24ef1a5b06ef1b56f24ec2b0562540f"
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/LICENSE",
@@ -96,12 +96,12 @@
                   {
                       "path":  "agent-plugin/aicad-agent/README.md",
                       "size":  2825,
-                      "sha256":  "2862078111f43fd20f283a8190eead09353ce4232a91761e35a0c5961d157282"
+                      "sha256":  "991b30359db7dbaca433c40818bdd45d0937554c92443b4714552c5f507be721"
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/requirements-packaging.txt",
-                      "size":  45,
-                      "sha256":  "772014a91bb2eb51fed962611606cfd9ca3c9dfeedb83299b8cba44f2f385590"
+                      "size":  65,
+                      "sha256":  "18891f3084710f301195a1e8d4d9df8e1d5971f3763ac767b473108503eaf3d5"
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/rules/drawing_requirement_contract.schema.json",
@@ -125,8 +125,8 @@
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/rules/release_integrity_rules.json",
-                      "size":  8232,
-                      "sha256":  "9a47646dfea4338b65c05b60550ce474e1a5e6762fdee7ebbf90296a3690a482"
+                      "size":  9011,
+                      "sha256":  "9e804fcfc44c705a65f62db9731fa86e208faff736189f8e8f2c6c7fea025a86"
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/rules/top_tuck_crash_lock.normality.json",
@@ -146,7 +146,7 @@
                   {
                       "path":  "agent-plugin/aicad-agent/scripts/aicad_agent.py",
                       "size":  21383,
-                      "sha256":  "61e58869614218d8ac4a9dd02a1b0c569bb25b6df1b8d165b6f435434fed910c"
+                      "sha256":  "bf1695edd667353dab34fa1ea9fa361b0958e91b2e54b46ed9b9f5966a3a6a6e"
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/scripts/aicad_guarded_delivery.py",
@@ -260,8 +260,8 @@
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/tests/test_release_integrity_rules.py",
-                      "size":  2153,
-                      "sha256":  "d43349da7daa90d2a8e047ae70f8bee0b6beb05c6b72be1444582f6959f52a5c"
+                      "size":  2792,
+                      "sha256":  "c56d3c50e0b1c060b95c187c33dcc1fd2129ebe1f3f57aeaad34fdf9e2549311"
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/tests/test_requirement_conformance.py",
@@ -275,23 +275,23 @@
                   },
                   {
                       "path":  "agent-plugin/aicad-agent/THIRD_PARTY_NOTICES.md",
-                      "size":  639,
-                      "sha256":  "c0f392ddff01ecd8df5d96120910da77a2c0b0525de35c2e140eacc8568f37cf"
+                      "size":  668,
+                      "sha256":  "1ca479536a62c4a029b65610d1ddeb9dd0532c3b52f48f1818e3a14c6c77ed25"
                   },
                   {
                       "path":  "CHANGELOG.md",
-                      "size":  3088,
-                      "sha256":  "71584c5ade740b36c5141472d33c68d775b1f831638ecf2704f627ac83bbbf72"
+                      "size":  3498,
+                      "sha256":  "fa87c106bc6104b1e293372eb63b0376c9b8528e3343fef92d33ccdba4bd8215"
                   },
                   {
-                      "path":  "dist/aicad-agent-1.3.3.zip",
-                      "size":  350617,
-                      "sha256":  "fabe9be8a0c7d11b7516032bb334d0302329abc85f4e37af6df077f013db8916"
+                      "path":  "dist/aicad-agent-1.3.4.zip",
+                      "size":  351273,
+                      "sha256":  "e12d44b3b533603ba38ed416b4f3b625314fa1a998fc36a00527ab3004a3a5f2"
                   },
                   {
                       "path":  "dist/SHA256SUMS",
                       "size":  88,
-                      "sha256":  "5b353d668e5a37cbee9f243f09be623e8dc859bc673b0319fb623140050e2978"
+                      "sha256":  "d3c5a118eeb602727c55be59152bdbb07f55a8ec9a2960568f0322e0dd75c1a9"
                   },
                   {
                       "path":  "docs/agent-plugin.md",
@@ -315,8 +315,8 @@
                   },
                   {
                       "path":  "docs/INSTALL.zh-CN.md",
-                      "size":  3378,
-                      "sha256":  "2342c1548e1a4196ca6a324f8435f423389e87a8649bdab4fbd7a1b5e05fdb40"
+                      "size":  3463,
+                      "sha256":  "e55ac07cfc72d21884d03aa90cb87feac24ef1a5b06ef1b56f24ec2b0562540f"
                   },
                   {
                       "path":  "docs/protocol.md",
@@ -342,6 +342,11 @@
                       "path":  "docs/RELEASE_NOTES_v1.3.3.md",
                       "size":  1293,
                       "sha256":  "f24061bae292a23c2797ea9f86cf8324f491f5f6b5dcb417594f19e5d8a0ccb9"
+                  },
+                  {
+                      "path":  "docs/RELEASE_NOTES_v1.3.4.md",
+                      "size":  1271,
+                      "sha256":  "f4541b76b16dfeb1a26c6c80f0eca73d8c4494b7eaa425fba96dc2a4f719f27f"
                   },
                   {
                       "path":  "docs/release-packaging-lessons.md",
@@ -381,17 +386,17 @@
                   {
                       "path":  "plugin/AiCadConstraint.bundle/Contents/AiCadConstraint.lsp",
                       "size":  17143,
-                      "sha256":  "19e263d1efac56500c177067d1d260e8add8d2431df0f15b913964e203f3b0af"
+                      "sha256":  "e426822e4a85e04a64c3b291dbad60194593deacb02394d52da24ce6152e62bf"
                   },
                   {
                       "path":  "plugin/AiCadConstraint.bundle/PackageContents.xml",
                       "size":  632,
-                      "sha256":  "1fb0a7bc844ad961adfd87b6e86549cf784002bc9f8ab76884bca9661ec8098f"
+                      "sha256":  "d2a6c912583814ef0be487c614c29d94ee702818d7a92f5a24630046fbf5b770"
                   },
                   {
                       "path":  "plugins/aicad-agent/.codex-plugin/plugin.json",
                       "size":  2972,
-                      "sha256":  "1ec935302dc3d4d7a1f882e9960abf03155fd39a740586882d0d87b3307b9927"
+                      "sha256":  "e9bd8bc88d4c076ae1fd41be3e8c1c8ee82a283b8ba311d7dbcfe06d378575ea"
                   },
                   {
                       "path":  "plugins/aicad-agent/.mcp.json",
@@ -400,8 +405,8 @@
                   },
                   {
                       "path":  "plugins/aicad-agent/CHANGELOG.md",
-                      "size":  3088,
-                      "sha256":  "71584c5ade740b36c5141472d33c68d775b1f831638ecf2704f627ac83bbbf72"
+                      "size":  3498,
+                      "sha256":  "fa87c106bc6104b1e293372eb63b0376c9b8528e3343fef92d33ccdba4bd8215"
                   },
                   {
                       "path":  "plugins/aicad-agent/docs/FUNCTIONS.zh-CN.md",
@@ -415,13 +420,13 @@
                   },
                   {
                       "path":  "plugins/aicad-agent/docs/INSTALL.zh-CN.md",
-                      "size":  3378,
-                      "sha256":  "2342c1548e1a4196ca6a324f8435f423389e87a8649bdab4fbd7a1b5e05fdb40"
+                      "size":  3463,
+                      "sha256":  "e55ac07cfc72d21884d03aa90cb87feac24ef1a5b06ef1b56f24ec2b0562540f"
                   },
                   {
                       "path":  "plugins/aicad-agent/integration-manifest.json",
-                      "size":  21036,
-                      "sha256":  "77394ef67e89160e850df417f161bdfad99c9b2bf3be614b0a25cdadabee24e2"
+                      "size":  21403,
+                      "sha256":  "f2c16d795a26abe745464f2a7d3cfca331fc41bb8dc3810f3163e43d5d47ff00"
                   },
                   {
                       "path":  "plugins/aicad-agent/LICENSE",
@@ -431,12 +436,12 @@
                   {
                       "path":  "plugins/aicad-agent/README.md",
                       "size":  2825,
-                      "sha256":  "2862078111f43fd20f283a8190eead09353ce4232a91761e35a0c5961d157282"
+                      "sha256":  "991b30359db7dbaca433c40818bdd45d0937554c92443b4714552c5f507be721"
                   },
                   {
                       "path":  "plugins/aicad-agent/requirements-packaging.txt",
-                      "size":  45,
-                      "sha256":  "772014a91bb2eb51fed962611606cfd9ca3c9dfeedb83299b8cba44f2f385590"
+                      "size":  65,
+                      "sha256":  "18891f3084710f301195a1e8d4d9df8e1d5971f3763ac767b473108503eaf3d5"
                   },
                   {
                       "path":  "plugins/aicad-agent/rules/drawing_requirement_contract.schema.json",
@@ -460,8 +465,8 @@
                   },
                   {
                       "path":  "plugins/aicad-agent/rules/release_integrity_rules.json",
-                      "size":  8232,
-                      "sha256":  "9a47646dfea4338b65c05b60550ce474e1a5e6762fdee7ebbf90296a3690a482"
+                      "size":  9011,
+                      "sha256":  "9e804fcfc44c705a65f62db9731fa86e208faff736189f8e8f2c6c7fea025a86"
                   },
                   {
                       "path":  "plugins/aicad-agent/rules/top_tuck_crash_lock.normality.json",
@@ -476,12 +481,12 @@
                   {
                       "path":  "plugins/aicad-agent/runtime/autocad/Contents/AiCadConstraint.lsp",
                       "size":  17143,
-                      "sha256":  "19e263d1efac56500c177067d1d260e8add8d2431df0f15b913964e203f3b0af"
+                      "sha256":  "e426822e4a85e04a64c3b291dbad60194593deacb02394d52da24ce6152e62bf"
                   },
                   {
                       "path":  "plugins/aicad-agent/runtime/autocad/PackageContents.xml",
                       "size":  632,
-                      "sha256":  "1fb0a7bc844ad961adfd87b6e86549cf784002bc9f8ab76884bca9661ec8098f"
+                      "sha256":  "d2a6c912583814ef0be487c614c29d94ee702818d7a92f5a24630046fbf5b770"
                   },
                   {
                       "path":  "plugins/aicad-agent/runtime/examples/agent-request-zh.txt",
@@ -541,7 +546,7 @@
                   {
                       "path":  "plugins/aicad-agent/runtime/src/aicad/cli.py",
                       "size":  9459,
-                      "sha256":  "d37719ccb456ce896af14ca03f106bd08a0a53523bfa4e702ee6ec7b974cd026"
+                      "sha256":  "d78119f382d969aea2595a747b54596335acf1013289851a7f7df3406c368b85"
                   },
                   {
                       "path":  "plugins/aicad-agent/runtime/src/aicad/engine.py",
@@ -586,7 +591,7 @@
                   {
                       "path":  "plugins/aicad-agent/scripts/aicad_agent.py",
                       "size":  21383,
-                      "sha256":  "61e58869614218d8ac4a9dd02a1b0c569bb25b6df1b8d165b6f435434fed910c"
+                      "sha256":  "bf1695edd667353dab34fa1ea9fa361b0958e91b2e54b46ed9b9f5966a3a6a6e"
                   },
                   {
                       "path":  "plugins/aicad-agent/scripts/aicad_guarded_delivery.py",
@@ -631,7 +636,7 @@
                   {
                       "path":  "plugins/aicad-agent/SHA256SUMS",
                       "size":  6707,
-                      "sha256":  "89c849c2524b457a39b4cffcd25a6f3230db0e2864ba079d83d318756cd02cab"
+                      "sha256":  "32d48c3b8cae89e34b1735e2a24ee0917cf6f0481914f1307d89e5dc030cea30"
                   },
                   {
                       "path":  "plugins/aicad-agent/skills/aicad-draw/agents/openai.yaml",
@@ -710,8 +715,8 @@
                   },
                   {
                       "path":  "plugins/aicad-agent/tests/test_release_integrity_rules.py",
-                      "size":  2153,
-                      "sha256":  "d43349da7daa90d2a8e047ae70f8bee0b6beb05c6b72be1444582f6959f52a5c"
+                      "size":  2792,
+                      "sha256":  "c56d3c50e0b1c060b95c187c33dcc1fd2129ebe1f3f57aeaad34fdf9e2549311"
                   },
                   {
                       "path":  "plugins/aicad-agent/tests/test_requirement_conformance.py",
@@ -725,8 +730,8 @@
                   },
                   {
                       "path":  "plugins/aicad-agent/THIRD_PARTY_NOTICES.md",
-                      "size":  639,
-                      "sha256":  "c0f392ddff01ecd8df5d96120910da77a2c0b0525de35c2e140eacc8568f37cf"
+                      "size":  668,
+                      "sha256":  "1ca479536a62c4a029b65610d1ddeb9dd0532c3b52f48f1818e3a14c6c77ed25"
                   },
                   {
                       "path":  "prompts/constraint-drawing-prompt.md",
@@ -736,12 +741,12 @@
                   {
                       "path":  "pyproject.toml",
                       "size":  311,
-                      "sha256":  "5ac902eb815710c2404fde11221d9eca175f9fe694d236437bd63ca71ff56d63"
+                      "sha256":  "6c187333e699d6c9ff2afd697d9cf571ee9b0de18b884b758b1784bbaa00e055"
                   },
                   {
                       "path":  "README.md",
-                      "size":  7609,
-                      "sha256":  "ee31af0919835a888fbf0704b41f7129d1e13bf50e4aa4ac6b7579c4d592efd9"
+                      "size":  7686,
+                      "sha256":  "4f16396ca3f5e1de594a27292df457550b1909915153707e57d2c9cc0d2a344b"
                   },
                   {
                       "path":  "schema/aicad-3d-plan.schema.json",
@@ -760,13 +765,13 @@
                   },
                   {
                       "path":  "scripts/build-agent-plugin.ps1",
-                      "size":  9908,
-                      "sha256":  "7f623250273c8d3f8d526cf75767412f63ac932871b809d61217c8aa96d5de30"
+                      "size":  10051,
+                      "sha256":  "6cc3402932e50c7875b2c92d00cc54f58918b01f529635b24388f139070ba495"
                   },
                   {
                       "path":  "scripts/build-github-source.ps1",
                       "size":  7748,
-                      "sha256":  "81a1a95b36a64ebcc2dfd5e3c952579b1900f4c8b798f088d216de7aebd653bc"
+                      "sha256":  "78fe05544490941df213f672b5963844d85f1737a8e6caee722564707b911a86"
                   },
                   {
                       "path":  "scripts/build-release.ps1",
@@ -831,7 +836,7 @@
                   {
                       "path":  "src/aicad/cli.py",
                       "size":  9459,
-                      "sha256":  "d37719ccb456ce896af14ca03f106bd08a0a53523bfa4e702ee6ec7b974cd026"
+                      "sha256":  "d78119f382d969aea2595a747b54596335acf1013289851a7f7df3406c368b85"
                   },
                   {
                       "path":  "src/aicad/engine.py",
@@ -926,12 +931,12 @@
                   {
                       "path":  "tests/test_agent_plugin.py",
                       "size":  9630,
-                      "sha256":  "ab5e2db5d902dc10edd7e8da9ce3f87b104b321695c4a26203387f6802da1c89"
+                      "sha256":  "c4ad051b8344a2f3773eb197b1461d662ebef38dfa52fe7a41f1903948dc1cdc"
                   },
                   {
                       "path":  "tests/test_engine.py",
                       "size":  9065,
-                      "sha256":  "3f9464e5eb189f851c74a03447544cf05311a029de602d63cc6595b954632ab4"
+                      "sha256":  "1a9d8a3a91f3032fffc7fcde4543d01d1ea647ecff4aabefcadee59381b8f2b7"
                   },
                   {
                       "path":  "tests/test_engine3d.py",
@@ -940,8 +945,8 @@
                   },
                   {
                       "path":  "THIRD_PARTY_NOTICES.md",
-                      "size":  639,
-                      "sha256":  "c0f392ddff01ecd8df5d96120910da77a2c0b0525de35c2e140eacc8568f37cf"
+                      "size":  668,
+                      "sha256":  "1ca479536a62c4a029b65610d1ddeb9dd0532c3b52f48f1818e3a14c6c77ed25"
                   },
                   {
                       "path":  "tools/aicad.py",

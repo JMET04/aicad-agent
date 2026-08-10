@@ -20,7 +20,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
-                "REL-G011", "REL-G012",
+                "REL-G011", "REL-G012", "REL-G013",
             },
         )
         for rule in rules.values():
@@ -46,6 +46,17 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         self.assertIn(".gitattributes", rule["prevention"])
         self.assertIn("fixed to LF", rule["prevention"])
         self.assertIn("real remote-tag installation", rule["prevention"])
+
+    def test_clean_environment_rule_declares_jsonschema(self) -> None:
+        payload = json.loads(
+            (PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8")
+        )
+        rule = next(item for item in payload["rules"] if item["id"] == "REL-G013")
+        requirements = (PLUGIN / "requirements-packaging.txt").read_text(encoding="utf-8")
+        notices = (PLUGIN / "THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8")
+        self.assertIn("jsonschema>=4.23,<5", requirements)
+        self.assertIn("jsonschema", notices)
+        self.assertIn("clean environment", rule["prevention"])
 
 
 if __name__ == "__main__":

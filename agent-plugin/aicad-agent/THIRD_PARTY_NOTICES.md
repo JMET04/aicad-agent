@@ -5,6 +5,7 @@ The core Python runtime uses the Python standard library and is distributed unde
 Optional packaging QA dependencies:
 
 - ezdxf — MIT License
+- jsonschema — MIT License
 - Pillow — HPND License
 - Shapely — BSD 3-Clause License
 
