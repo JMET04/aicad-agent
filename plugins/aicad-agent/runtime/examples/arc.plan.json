@@ -1,0 +1,27 @@
+{
+  "schema_version": "2.0",
+  "drawing": {
+    "name": "quarter_arc",
+    "units": "mm",
+    "origin": [0, 0],
+    "tolerance": 0.000001
+  },
+  "steps": [
+    {
+      "id": "A001",
+      "type": "arc",
+      "purpose": "quarter-circle profile",
+      "reasoning": "The center is fixed at the origin and the angular limits define a counter-clockwise quarter arc.",
+      "center": {"ref": "origin"},
+      "radius": 25,
+      "start_angle_deg": 0,
+      "end_angle_deg": 90,
+      "constraints": [
+        {"kind": "center_coincident", "target": "origin"},
+        {"kind": "radius", "value": 25},
+        {"kind": "start_angle", "value": 0},
+        {"kind": "end_angle", "value": 90}
+      ]
+    }
+  ]
+}

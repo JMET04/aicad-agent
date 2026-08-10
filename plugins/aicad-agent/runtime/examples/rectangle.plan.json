@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "drawing": {
+    "name": "原点基准矩形示例",
+    "units": "mm",
+    "origin": [0, 0],
+    "tolerance": 0.000001
+  },
+  "steps": [
+    {
+      "id": "L001",
+      "type": "line",
+      "purpose": "矩形下边，建立全图的水平基准",
+      "reasoning": "第一条线必须从原点出发；120 mm 长度定义总宽度，水平方向定义后续平行与垂直关系的基准。",
+      "start": {"ref": "origin"},
+      "construction": {"kind": "vector", "dx": 120, "dy": 0},
+      "constraints": [
+        {"kind": "horizontal"},
+        {"kind": "length", "value": 120}
+      ]
+    },
+    {
+      "id": "L002",
+      "type": "line",
+      "purpose": "矩形右边，定义总高度",
+      "reasoning": "从 L001 终点连续起画，相对 L001 左转 90 度并保持 80 mm，保证右下角无断点且为直角。",
+      "start": {"ref": "L001.end"},
+      "construction": {"kind": "perpendicular", "to": "L001", "length": 80, "turn": "left"},
+      "constraints": [
+        {"kind": "start_coincident", "target": "L001.end"},
+        {"kind": "vertical"},
+        {"kind": "perpendicular", "target": "L001"},
+        {"kind": "length", "value": 80}
+      ]
+    },
+    {
+      "id": "L003",
+      "type": "line",
+      "purpose": "矩形上边，与下边平行且等长",
+      "reasoning": "从 L002 终点沿 L001 反方向画 120 mm，使上下边严格平行等长。",
+      "start": {"ref": "L002.end"},
+      "construction": {"kind": "parallel", "to": "L001", "length": 120, "direction": "opposite"},
+      "constraints": [
+        {"kind": "start_coincident", "target": "L002.end"},
+        {"kind": "horizontal"},
+        {"kind": "parallel", "target": "L001"},
+        {"kind": "length", "value": 120}
+      ]
+    },
+    {
+      "id": "L004",
+      "type": "line",
+      "purpose": "矩形左边，闭合轮廓回到原点",
+      "reasoning": "从 L003 终点相对 L001 右转 90 度并画 80 mm，终点必须与原点重合，形成闭合轮廓。",
+      "start": {"ref": "L003.end"},
+      "construction": {"kind": "perpendicular", "to": "L001", "length": 80, "turn": "right"},
+      "constraints": [
+        {"kind": "start_coincident", "target": "L003.end"},
+        {"kind": "vertical"},
+        {"kind": "perpendicular", "target": "L001"},
+        {"kind": "length", "value": 80},
+        {"kind": "end_coincident", "target": "origin"}
+      ]
+    }
+  ]
+}

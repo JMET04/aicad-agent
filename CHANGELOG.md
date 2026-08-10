@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.2 - 2026-08-10
+
+- Fixed Git marketplace packaging so it installs the fully assembled, hash-verified runtime instead of the source template.
+- Added REL-G011 and CI coverage requiring the isolated marketplace copy to contain `runtime/src/aicad` and pass the complete plugin regression suite without repository source paths.
+- Added real remote-tag installation and post-install behavior verification to the release checklist.
+
 ## 1.3.1 - 2026-08-10
 
 - Added detailed Chinese feature, installation and release documentation with an interaction-review screenshot.

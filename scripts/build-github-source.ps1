@@ -1,8 +1,9 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.3.1\github-repository',
-    [string]$Version = '1.3.1',
-    [string]$PluginArchive = 'release\v1.3.1\aicad-agent-1.3.1.zip'
+    [string]$OutputDirectory = 'release\v1.3.2\github-repository',
+    [string]$Version = '1.3.2',
+    [string]$PluginArchive = 'release\v1.3.2\aicad-agent-1.3.2.zip',
+    [string]$PluginDirectory = 'release\v1.3.2\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -34,9 +35,22 @@ foreach ($item in @('.github', '.agents', 'src', 'schema', 'examples', 'prompts'
     Copy-Item -LiteralPath (Join-Path $root $item) -Destination $target -Recurse -Force
 }
 
+$assembledPlugin = [IO.Path]::GetFullPath((Join-Path $root $PluginDirectory))
+if (-not $assembledPlugin.StartsWith($releaseRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+    throw "Marketplace plugin directory must stay inside release: $assembledPlugin"
+}
+foreach ($required in @('.codex-plugin\plugin.json', 'integration-manifest.json', 'SHA256SUMS', 'runtime\src\aicad\engine.py')) {
+    if (-not (Test-Path -LiteralPath (Join-Path $assembledPlugin $required) -PathType Leaf)) {
+        throw "Assembled marketplace plugin is incomplete; missing $required"
+    }
+}
+$assembledManifest = Get-Content -Raw -Encoding UTF8 -LiteralPath (Join-Path $assembledPlugin '.codex-plugin\plugin.json') | ConvertFrom-Json
+if ([string]$assembledManifest.version -ne $Version) {
+    throw "Assembled marketplace plugin version $($assembledManifest.version) does not match source version $Version."
+}
 $marketplacePlugin = Join-Path $target 'plugins\aicad-agent'
 New-Item -ItemType Directory -Path $marketplacePlugin -Force | Out-Null
-Get-ChildItem -LiteralPath (Join-Path $root 'agent-plugin\aicad-agent') -Force | ForEach-Object {
+Get-ChildItem -LiteralPath $assembledPlugin -Force | ForEach-Object {
     Copy-Item -LiteralPath $_.FullName -Destination $marketplacePlugin -Recurse -Force
 }
 
@@ -94,7 +108,7 @@ $manifest = [ordered]@{
     apiKeyRequired = $false
     proprietaryDependenciesRedistributed = $false
     install = [ordered]@{
-        marketplace = 'codex plugin marketplace add JMET04/aicad-agent --ref v1.3.1'
+        marketplace = "codex plugin marketplace add JMET04/aicad-agent --ref v$Version"
         plugin = 'codex plugin add aicad-agent@aicad-agent'
     }
     capabilities = @(

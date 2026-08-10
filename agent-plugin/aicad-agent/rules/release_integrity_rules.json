@@ -70,6 +70,13 @@
                       "symptom":  "The candidate changed the SHA256 of the already published 1.2.1 ZIP while keeping the same versioned filename.",
                       "root_cause":  "Patch-level QA and release-rule changes were packaged without advancing the release version.",
                       "prevention":  "If a versioned artifact or tag already exists remotely, any byte change requires the next semantic version and a new tag; never replace a published version with a different hash."
+                  },
+                  {
+                      "id":  "REL-G011",
+                      "name":  "marketplace_install_is_runtime_self_contained",
+                      "symptom":  "A Git marketplace install passed manifest validation but isolated behavior tests failed because the installed plugin had no runtime/src/aicad package.",
+                      "root_cause":  "The ZIP builder assembled the core runtime, while the Git marketplace builder copied the unassembled source template; the two distribution paths were not behaviorally equivalent.",
+                      "prevention":  "Populate the Git marketplace from the fully assembled and hash-verified release directory, require runtime/src/aicad/engine.py plus release manifests, and run the complete plugin suite from a real remote-tag installation without repository src on sys.path before publishing."
                   }
               ]
 }

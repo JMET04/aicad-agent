@@ -147,7 +147,7 @@ class EngineTests(unittest.TestCase):
 
     def test_bundle_manifest_lisp_and_installer_are_production_version(self) -> None:
         manifest = ET.parse(ROOT / "plugin" / "AiCadConstraint.bundle" / "PackageContents.xml")
-        self.assertEqual(manifest.getroot().attrib["AppVersion"], "1.3.1")
+        self.assertEqual(manifest.getroot().attrib["AppVersion"], "1.3.2")
         source = (ROOT / "plugin" / "AiCadConstraint.bundle" / "Contents" / "AiCadConstraint.lsp").read_bytes()
         text = source.decode("ascii")
         depth, in_string, escaped, in_comment = 0, False, False, False
@@ -170,7 +170,7 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(depth, 0)
         self.assertIn("(defun c:AICAD_AI", text)
         self.assertIn("(defun c:AICAD_DOCTOR", text)
-        self.assertIn('(setq aicad:*version* "1.3.1")', text)
+        self.assertIn('(setq aicad:*version* "1.3.2")', text)
         self.assertNotIn('(command "_.UNDO"', text)
         installer = (ROOT / "scripts" / "install.ps1").read_text(encoding="utf-8")
         self.assertIn("AICAD_RUNNER", installer)

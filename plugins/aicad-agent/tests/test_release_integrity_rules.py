@@ -20,12 +20,22 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
+                "REL-G011",
             },
         )
         for rule in rules.values():
             self.assertTrue(rule["symptom"])
             self.assertTrue(rule["root_cause"])
             self.assertTrue(rule["prevention"])
+
+    def test_marketplace_runtime_rule_requires_isolated_behavior(self) -> None:
+        payload = json.loads(
+            (PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8")
+        )
+        rule = next(item for item in payload["rules"] if item["id"] == "REL-G011")
+        self.assertIn("runtime/src/aicad/engine.py", rule["prevention"])
+        self.assertIn("real remote-tag installation", rule["prevention"])
+        self.assertIn("without repository src on sys.path", rule["prevention"])
 
 
 if __name__ == "__main__":
