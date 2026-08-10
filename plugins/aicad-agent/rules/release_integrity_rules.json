@@ -77,6 +77,13 @@
                       "symptom":  "A Git marketplace install passed manifest validation but isolated behavior tests failed because the installed plugin had no runtime/src/aicad package.",
                       "root_cause":  "The ZIP builder assembled the core runtime, while the Git marketplace builder copied the unassembled source template; the two distribution paths were not behaviorally equivalent.",
                       "prevention":  "Populate the Git marketplace from the fully assembled and hash-verified release directory, require runtime/src/aicad/engine.py plus release manifests, and run the complete plugin suite from a real remote-tag installation without repository src on sys.path before publishing."
+                  },
+                  {
+                      "id":  "REL-G012",
+                      "name":  "git_checkout_preserves_manifest_bytes",
+                      "symptom":  "A real Windows Git marketplace install passed behavior tests but every text-file manifest hash failed after LF was normalized to CRLF.",
+                      "root_cause":  "The repository published byte-level release hashes without a .gitattributes policy fixing text line endings across checkout environments.",
+                      "prevention":  "Canonicalize every assembled text file to LF before hashing, publish .gitattributes with text files fixed to LF and binary overrides, then require release-hash verification inside a real remote-tag installation before publishing."
                   }
               ]
 }

@@ -1,11 +1,27 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.3.2',
+    [string]$Version = '1.3.3',
     [switch]$IncludeSolidWorksInterop
 )
 
 $ErrorActionPreference = 'Stop'
+
+function Convert-TreeTextToLf {
+    param([Parameter(Mandatory = $true)][string]$TreeRoot)
+    $textExtensions = @('.aicad', '.cs', '.csproj', '.dxf', '.json', '.lsp', '.md', '.ps1', '.py', '.scr', '.toml', '.txt', '.xml', '.yaml', '.yml')
+    $textNames = @('.gitattributes', '.gitignore', 'LICENSE', 'SHA256SUMS')
+    Get-ChildItem -LiteralPath $TreeRoot -Recurse -Force -File | ForEach-Object {
+        if ($textExtensions -contains $_.Extension.ToLowerInvariant() -or $textNames -contains $_.Name) {
+            $text = [IO.File]::ReadAllText($_.FullName, [Text.Encoding]::UTF8)
+            $lf = $text.Replace("`r`n", "`n").Replace("`r", "`n")
+            if ($lf -cne $text) {
+                [IO.File]::WriteAllText($_.FullName, $lf, [Text.UTF8Encoding]::new($false))
+            }
+        }
+    }
+}
+
 $root = Split-Path -Parent $PSScriptRoot
 $output = [IO.Path]::GetFullPath((Join-Path $root $OutputDirectory))
 $template = Join-Path $root 'agent-plugin\aicad-agent'
@@ -55,6 +71,8 @@ if ($IncludeSolidWorksInterop) {
 }
 Copy-Item -LiteralPath (Join-Path $root 'plugin\AiCadConstraint.bundle') -Destination (Join-Path $runtime 'autocad') -Recurse -Force
 
+Convert-TreeTextToLf -TreeRoot $stage
+
 $resolvedStage = (Resolve-Path -LiteralPath $stage).Path
 Get-ChildItem -LiteralPath $stage -Directory -Recurse -Force |
     Where-Object Name -eq '__pycache__' |
@@ -86,8 +104,8 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.3.2'
-        autocadBundle = '1.3.2'
+        pythonConstraintCompiler = '1.3.3'
+        autocadBundle = '1.3.3'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
     }
@@ -140,8 +158,8 @@ $releaseManifest = [ordered]@{
     )
     files = $fileEntries
 }
-$releaseManifestJson = $releaseManifest | ConvertTo-Json -Depth 20
-[IO.File]::WriteAllText((Join-Path $stage 'integration-manifest.json'), $releaseManifestJson + [Environment]::NewLine, [Text.UTF8Encoding]::new($false))
+$releaseManifestJson = ($releaseManifest | ConvertTo-Json -Depth 20).Replace("`r`n", "`n").Replace("`r", "`n")
+[IO.File]::WriteAllText((Join-Path $stage 'integration-manifest.json'), $releaseManifestJson + "`n", [Text.UTF8Encoding]::new($false))
 $sumFiles = @(Get-ChildItem -LiteralPath $stage -Recurse -File | Where-Object Name -ne 'SHA256SUMS')
 $sumLines = @($sumFiles | Sort-Object FullName | ForEach-Object {
     $relative = $_.FullName.Substring($resolvedStage.Length).TrimStart('\').Replace('\', '/')

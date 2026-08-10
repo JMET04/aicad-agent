@@ -20,7 +20,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
-                "REL-G011",
+                "REL-G011", "REL-G012",
             },
         )
         for rule in rules.values():
@@ -36,6 +36,16 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         self.assertIn("runtime/src/aicad/engine.py", rule["prevention"])
         self.assertIn("real remote-tag installation", rule["prevention"])
         self.assertIn("without repository src on sys.path", rule["prevention"])
+
+    def test_git_checkout_rule_pins_line_endings_before_hash_verification(self) -> None:
+        payload = json.loads(
+            (PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8")
+        )
+        rule = next(item for item in payload["rules"] if item["id"] == "REL-G012")
+        self.assertIn("Canonicalize every assembled text file", rule["prevention"])
+        self.assertIn(".gitattributes", rule["prevention"])
+        self.assertIn("fixed to LF", rule["prevention"])
+        self.assertIn("real remote-tag installation", rule["prevention"])
 
 
 if __name__ == "__main__":

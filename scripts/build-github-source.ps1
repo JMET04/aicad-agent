@@ -1,12 +1,28 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.3.2\github-repository',
-    [string]$Version = '1.3.2',
-    [string]$PluginArchive = 'release\v1.3.2\aicad-agent-1.3.2.zip',
-    [string]$PluginDirectory = 'release\v1.3.2\aicad-agent'
+    [string]$OutputDirectory = 'release\v1.3.3\github-repository',
+    [string]$Version = '1.3.3',
+    [string]$PluginArchive = 'release\v1.3.3\aicad-agent-1.3.3.zip',
+    [string]$PluginDirectory = 'release\v1.3.3\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'
+
+function Convert-TreeTextToLf {
+    param([Parameter(Mandatory = $true)][string]$TreeRoot)
+    $textExtensions = @('.aicad', '.cs', '.csproj', '.dxf', '.json', '.lsp', '.md', '.ps1', '.py', '.scr', '.toml', '.txt', '.xml', '.yaml', '.yml')
+    $textNames = @('.gitattributes', '.gitignore', 'LICENSE', 'SHA256SUMS')
+    Get-ChildItem -LiteralPath $TreeRoot -Recurse -Force -File | ForEach-Object {
+        if ($textExtensions -contains $_.Extension.ToLowerInvariant() -or $textNames -contains $_.Name) {
+            $text = [IO.File]::ReadAllText($_.FullName, [Text.Encoding]::UTF8)
+            $lf = $text.Replace("`r`n", "`n").Replace("`r", "`n")
+            if ($lf -cne $text) {
+                [IO.File]::WriteAllText($_.FullName, $lf, [Text.UTF8Encoding]::new($false))
+            }
+        }
+    }
+}
+
 $root = Split-Path -Parent $PSScriptRoot
 $releaseRoot = [IO.Path]::GetFullPath((Join-Path $root 'release'))
 $target = [IO.Path]::GetFullPath((Join-Path $root $OutputDirectory))
@@ -22,7 +38,7 @@ if (Test-Path -LiteralPath $target) {
 }
 New-Item -ItemType Directory -Path $target -Force | Out-Null
 
-$rootFiles = @('README.md', 'pyproject.toml', '.gitignore')
+$rootFiles = @('README.md', 'pyproject.toml', '.gitignore', '.gitattributes')
 foreach ($item in $rootFiles) {
     Copy-Item -LiteralPath (Join-Path $root $item) -Destination $target -Force
 }
@@ -66,6 +82,8 @@ if (-not (Test-Path -LiteralPath $archive -PathType Leaf)) {
     throw "Plugin archive is missing: $archive"
 }
 Copy-Item -LiteralPath $archive -Destination $dist -Force
+
+Convert-TreeTextToLf -TreeRoot $target
 
 $resolvedTarget = (Resolve-Path -LiteralPath $target).Path
 Get-ChildItem -LiteralPath $target -Directory -Recurse -Force |
@@ -132,7 +150,7 @@ $manifest = [ordered]@{
 }
 [IO.File]::WriteAllText(
     (Join-Path $target 'source-manifest.json'),
-    ($manifest | ConvertTo-Json -Depth 20) + [Environment]::NewLine,
+    (($manifest | ConvertTo-Json -Depth 20).Replace("`r`n", "`n").Replace("`r", "`n")) + "`n",
     [Text.UTF8Encoding]::new($false)
 )
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.3 - 2026-08-10
+
+- Added a repository-wide `.gitattributes` policy that fixes text files to LF and marks release binaries as binary.
+- Added REL-G012 and a dedicated regression proving that byte-level release manifests must survive a real Windows Git marketplace checkout.
+- Extended the release gate to require both isolated behavior tests and installed-cache hash verification from the remote tag.
+
 ## 1.3.2 - 2026-08-10
 
 - Fixed Git marketplace packaging so it installs the fully assembled, hash-verified runtime instead of the source template.

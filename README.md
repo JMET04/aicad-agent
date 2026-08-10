@@ -1,4 +1,4 @@
-# aicad-agent 1.3.2
+# aicad-agent 1.3.3
 
 一个面向 Agent 的确定性 CAD 约束插件。它先证明生成目标与用户的整体要求一致，再证明逐线几何和产品结构可靠，最后才允许输出候选 CAD 文件。
 
@@ -69,13 +69,13 @@ flowchart LR
 推荐通过 Git marketplace 安装固定版本：
 
 ```powershell
-codex plugin marketplace add JMET04/aicad-agent --ref v1.3.2
+codex plugin marketplace add JMET04/aicad-agent --ref v1.3.3
 codex plugin add aicad-agent@aicad-agent
 ```
 
 安装完成后新建一个 Codex 任务，使技能和 MCP 工具从干净上下文加载。普通 Agent 调用不需要 `OPENAI_API_KEY`。
 
-也可以在 [Releases](https://github.com/JMET04/aicad-agent/releases) 下载 `aicad-agent-1.3.2.zip` 和 `SHA256SUMS`。
+也可以在 [Releases](https://github.com/JMET04/aicad-agent/releases) 下载 `aicad-agent-1.3.3.zip` 和 `SHA256SUMS`。
 
 ## 快速使用
 
@@ -129,7 +129,7 @@ python agent-plugin/aicad-agent/scripts/aicad_guarded_delivery.py --contract req
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-./scripts/build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.3.2
+./scripts/build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.3.3
 python -B scripts/verify_release_package.py release-ci/aicad-agent
 ```
 
