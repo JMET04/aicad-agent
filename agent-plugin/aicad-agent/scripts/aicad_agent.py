@@ -18,6 +18,9 @@ if hasattr(sys.stderr, "reconfigure"):
 
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_ROOT = Path(__file__).resolve().parent
+if str(SCRIPT_ROOT) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_ROOT))
 RUNTIME_CANDIDATES = [
     PLUGIN_ROOT / "runtime" / "src",
     PLUGIN_ROOT.parents[1] / "src",
@@ -42,7 +45,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.8.3"
+AGENT_API_VERSION = "1.8.4"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -141,6 +144,15 @@ def capabilities() -> dict[str, Any]:
             "rules": str((PLUGIN_ROOT / "rules" / "architectural_drafting_rules.json").resolve()),
             "complete_axis_groups": True,
             "annotation_completeness_matrix": True,
+            "review_only": True,
+        },
+        "architectural_detail_contract": {
+            "available": True,
+            "script": str((PLUGIN_ROOT / "scripts" / "aicad_architecture_detail_qa.py").resolve()),
+            "schema": str((PLUGIN_ROOT / "rules" / "architectural_detail_contract.schema.json").resolve()),
+            "gates": ["complete axis identity groups", "room equipment matrix", "semantic interior layers", "four-purpose dimension chains", "door host-opening-sweep topology", "stage authority"],
+            "precompile_required": True,
+            "failure_disposition": "blocker_report_only",
             "review_only": True,
         },
         "production_readiness_qa": {
@@ -258,9 +270,11 @@ def capabilities() -> dict[str, Any]:
 def validate_plan_value(value: Any) -> dict[str, Any]:
     data = _load_plan(value)
     plan = compile_plan(data)
+    architecture_detail = _require_architecture_detail_contract(data, plan)
     return {
         "ok": True,
         "valid": True,
+        "architecture_detail_validation": architecture_detail,
         "name": plan.name,
         "schema_version": plan.schema_version,
         "units": plan.units,
@@ -274,6 +288,7 @@ def validate_plan_value(value: Any) -> dict[str, Any]:
 
 def _compile_data(data: dict[str, Any], output_dir: str | None, name: str | None) -> dict[str, Any]:
     plan = compile_plan(data)
+    architecture_detail = _require_architecture_detail_contract(data, plan)
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
     stem = _safe_name(name or plan.name)
     directory.mkdir(parents=True, exist_ok=True)
@@ -296,6 +311,7 @@ def _compile_data(data: dict[str, Any], output_dir: str | None, name: str | None
         "audit": str(directory / f"{stem}.audit.md"),
         "manifest": str(directory / f"{stem}.manifest.json"),
         "artifacts": [str(path.resolve()) for path in artifacts],
+        "architecture_detail_validation": architecture_detail,
     }
 
 
@@ -344,6 +360,32 @@ def get_schema() -> dict[str, Any]:
 def get_3d_schema() -> dict[str, Any]:
     path = _runtime_file("schema", "aicad-3d-plan.schema.json")
     return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
+def get_architecture_detail_schema() -> dict[str, Any]:
+    path = PLUGIN_ROOT / "rules" / "architectural_detail_contract.schema.json"
+    return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
+def validate_architecture_detail_contract_value(value: Any, plan_value: Any) -> dict[str, Any]:
+    from aicad_architecture_detail_qa import evaluate, normalize_resolved_entities
+    plan = compile_plan(_load_plan(plan_value))
+    report = evaluate(_load_plan(value), normalize_resolved_entities(plan))
+    return {"ok": report["status"] == "pass", **report}
+
+
+def _require_architecture_detail_contract(data: dict[str, Any], plan: Any) -> dict[str, Any] | None:
+    if str(data.get("drawing", {}).get("domain", "general")) != "architecture":
+        return None
+    contract = data.get("architecture_detail_contract")
+    if not isinstance(contract, dict):
+        raise PlanError("architecture plans require an embedded architecture_detail_contract before validation or compilation")
+    from aicad_architecture_detail_qa import evaluate, normalize_resolved_entities
+    report = evaluate(contract, normalize_resolved_entities(plan))
+    if report["status"] != "pass":
+        failed = [name for name, item in report["checks"].items() if not item["pass"]]
+        raise PlanError("architectural detail precompile gate failed; blocker_report_only: " + ", ".join(failed))
+    return report
 
 
 def get_aux_schema(name: str) -> dict[str, Any]:
@@ -439,6 +481,22 @@ TOOLS: list[dict[str, Any]] = [
         "name": "aicad_get_plan_schema",
         "description": "Return the complete schema_version 2.0 JSON Schema for arbitrary caller-authored CAD plans.",
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_architecture_detail_contract_schema",
+        "description": "Return the precompile architectural contract for complete axes, room equipment, dimension purposes and door host topology.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_validate_architecture_detail_contract",
+        "description": "Fail closed before CAD compilation when architectural axes, detail completeness, dimension purposes, door topology or stage authority is unproved.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["contract", "plan"],
+            "properties": {
+                "contract": {"description": "Architectural detail contract object, JSON string, or UTF-8 file path"},
+                "plan": {"description": "AICAD architecture plan object, JSON string, or UTF-8 file path"},
+            },
+        },
     },
     {
         "name": "aicad_generate",
@@ -624,6 +682,10 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         return capabilities()
     if name == "aicad_get_plan_schema":
         return get_schema()
+    if name == "aicad_get_architecture_detail_contract_schema":
+        return get_architecture_detail_schema()
+    if name == "aicad_validate_architecture_detail_contract":
+        return validate_architecture_detail_contract_value(arguments.get("contract"), arguments.get("plan"))
     if name == "aicad_generate":
         return generate(arguments.get("request", ""), arguments.get("output_dir"), arguments.get("name"), arguments.get("provider", "offline"), arguments.get("review_launch", "auto"))
     if name == "aicad_validate_plan":
@@ -788,6 +850,10 @@ def _parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("capabilities")
     commands.add_parser("schema")
+    commands.add_parser("architecture-detail-schema")
+    architecture_detail_parser = commands.add_parser("architecture-detail-validate")
+    architecture_detail_parser.add_argument("--contract", required=True)
+    architecture_detail_parser.add_argument("--plan", required=True)
     commands.add_parser("schema3d")
     commands.add_parser("semantic-schema")
     commands.add_parser("correction-schema")
@@ -871,6 +937,8 @@ def main(argv: list[str] | None = None) -> int:
     actions: dict[str, Callable[[], dict[str, Any]]] = {
         "capabilities": capabilities,
         "schema": get_schema,
+        "architecture-detail-schema": get_architecture_detail_schema,
+        "architecture-detail-validate": lambda: validate_architecture_detail_contract_value(args.contract, args.plan),
         "schema3d": get_3d_schema,
         "semantic-schema": lambda: get_aux_schema("semantic"),
         "correction-schema": lambda: get_aux_schema("correction"),

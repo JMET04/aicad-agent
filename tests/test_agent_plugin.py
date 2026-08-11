@@ -32,7 +32,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.8.3")
+        self.assertEqual(manifest["version"], "1.8.4")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         mcp = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
@@ -49,7 +49,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.8.3")
+        self.assertEqual(payload["api_version"], "1.8.4")
         self.assertEqual(payload["entities"], ["line", "circle", "arc"])
         self.assertTrue(Path(payload["schema_path"]).is_file())
         self.assertTrue(payload["agent_native"]["default"])
@@ -58,6 +58,10 @@ class AgentPluginTests(unittest.TestCase):
         self.assertTrue(payload["architectural_drafting_qa"]["available"])
         self.assertTrue(Path(payload["architectural_drafting_qa"]["script"]).is_file())
         self.assertTrue(payload["architectural_drafting_qa"]["complete_axis_groups"])
+        self.assertTrue(payload["architectural_detail_contract"]["available"])
+        self.assertTrue(Path(payload["architectural_detail_contract"]["script"]).is_file())
+        self.assertTrue(Path(payload["architectural_detail_contract"]["schema"]).is_file())
+        self.assertEqual(payload["architectural_detail_contract"]["failure_disposition"], "blocker_report_only")
         self.assertTrue(payload["report_quality_qa"]["available"])
         self.assertTrue(Path(payload["report_quality_qa"]["script"]).is_file())
         self.assertTrue(payload["report_quality_qa"]["unique_prevention_rule_ids"])
@@ -73,6 +77,27 @@ class AgentPluginTests(unittest.TestCase):
         self.assertTrue(payload["reference_reconstruction"]["available"])
         self.assertTrue(Path(payload["reference_reconstruction"]["schema_path"]).is_file())
         self.assertIn("mojibake", payload["reference_reconstruction"]["gates"])
+
+    def test_architecture_compile_without_detail_contract_is_blocked_before_artifacts(self) -> None:
+        plan = {
+            "schema_version": "2.0",
+            "drawing": {
+                "name": "blocked architecture", "units": "mm", "origin": [0, 0], "tolerance": 1e-6,
+                "domain": "architecture",
+                "review_policy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "domainGated": True},
+            },
+            "steps": [{
+                "id": "L001", "type": "line", "purpose": "origin wall", "reasoning": "test precompile gate",
+                "start": {"ref": "origin"}, "construction": {"kind": "vector", "dx": 1000, "dy": 0},
+                "constraints": [{"kind": "horizontal"}, {"kind": "length", "value": 1000}],
+                "layer": "WALL", "role": "wall",
+            }],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "must-not-exist"
+            with self.assertRaisesRegex(self.agent.PlanError, "architecture_detail_contract"):
+                self.agent.compile_plan_value(plan, str(output), "blocked")
+            self.assertFalse(output.exists())
 
     def test_generate_creates_complete_artifact_contract(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -111,7 +136,9 @@ class AgentPluginTests(unittest.TestCase):
         listing = self.agent._handle_mcp({"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}})
         names = {tool["name"] for tool in listing["result"]["tools"]}
         self.assertEqual(names, {
-            "aicad_capabilities", "aicad_get_plan_schema", "aicad_generate",
+            "aicad_capabilities", "aicad_get_plan_schema",
+            "aicad_get_architecture_detail_contract_schema", "aicad_validate_architecture_detail_contract",
+            "aicad_generate",
             "aicad_validate_plan", "aicad_compile_plan", "aicad_solidworks_doctor",
             "aicad_get_3d_plan_schema", "aicad_validate_3d_plan", "aicad_build_solidworks_part",
             "aicad_get_semantic_schema", "aicad_get_correction_schema", "aicad_get_view_package_schema",

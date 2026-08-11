@@ -1,0 +1,582 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/aicad/architectural-detail-contract.schema.json",
+  "title": "AICAD architectural detail contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "projectId",
+    "stage",
+    "units",
+    "toleranceMm",
+    "axisGrid",
+    "walls",
+    "openings",
+    "doors",
+    "rooms",
+    "equipment",
+    "dimensionChains",
+    "annotations",
+    "authority",
+    "safetyLocks"
+  ],
+  "properties": {
+    "schema": {
+      "const": "aicad_architectural_detail_contract_v1"
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "stage": {
+      "enum": [
+        "concept_review",
+        "design_development",
+        "construction_candidate",
+        "production"
+      ]
+    },
+    "units": {
+      "const": "mm"
+    },
+    "toleranceMm": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 0.01
+    },
+    "axisGrid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conventionDeclared",
+        "verticalIdentifierPattern",
+        "horizontalIdentifierPattern",
+        "structuralCoverageBounds",
+        "axes",
+        "exceptions"
+      ],
+      "properties": {
+        "conventionDeclared": {
+          "const": true
+        },
+        "verticalIdentifierPattern": {
+          "const": "positive_integer"
+        },
+        "horizontalIdentifierPattern": {
+          "const": "uppercase_latin"
+        },
+        "structuralCoverageBounds": {
+          "$ref": "#/$defs/bbox"
+        },
+        "axes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "direction",
+              "coordinate",
+              "lineEntityId",
+              "bubbleEntityIds",
+              "identifierEntityIds"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "direction": {
+                "enum": [
+                  "vertical",
+                  "horizontal"
+                ]
+              },
+              "coordinate": {
+                "type": "number"
+              },
+              "lineEntityId": {
+                "$ref": "#/$defs/asciiId"
+              },
+              "bubbleEntityIds": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/asciiId"
+                }
+              },
+              "identifierEntityIds": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/asciiId"
+                }
+              }
+            }
+          }
+        },
+        "exceptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "objectId",
+              "reason"
+            ],
+            "properties": {
+              "objectId": {
+                "$ref": "#/$defs/asciiId"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 8
+              }
+            }
+          }
+        }
+      }
+    },
+    "walls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "start",
+          "end",
+          "segments",
+          "openingIds"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "start": {
+            "$ref": "#/$defs/point"
+          },
+          "end": {
+            "$ref": "#/$defs/point"
+          },
+          "segments": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "entityId",
+                "start",
+                "end"
+              ],
+              "properties": {
+                "entityId": {
+                  "$ref": "#/$defs/asciiId"
+                },
+                "start": {
+                  "$ref": "#/$defs/point"
+                },
+                "end": {
+                  "$ref": "#/$defs/point"
+                }
+              }
+            }
+          },
+          "openingIds": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/asciiId"
+            }
+          }
+        }
+      }
+    },
+    "openings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "hostWallId",
+          "start",
+          "end",
+          "widthMm"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "hostWallId": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "start": {
+            "$ref": "#/$defs/point"
+          },
+          "end": {
+            "$ref": "#/$defs/point"
+          },
+          "widthMm": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        }
+      }
+    },
+    "doors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "hostWallId",
+          "openingId",
+          "hinge",
+          "leafEnd",
+          "widthMm",
+          "arcStartDeg",
+          "arcEndDeg",
+          "requiredSweepDeg",
+          "clearanceMm",
+          "leafEntityId",
+          "arcEntityId"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "hostWallId": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "openingId": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "hinge": {
+            "$ref": "#/$defs/point"
+          },
+          "leafEnd": {
+            "$ref": "#/$defs/point"
+          },
+          "widthMm": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "arcStartDeg": {
+            "type": "number"
+          },
+          "arcEndDeg": {
+            "type": "number"
+          },
+          "requiredSweepDeg": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 180
+          },
+          "clearanceMm": {
+            "type": "number",
+            "minimum": 0
+          },
+          "leafEntityId": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "arcEntityId": {
+            "$ref": "#/$defs/asciiId"
+          }
+        }
+      }
+    },
+    "rooms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "category",
+          "boundary",
+          "requiredEquipmentTypes"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "enum": [
+              "living",
+              "dining",
+              "kitchen",
+              "bedroom",
+              "bathroom",
+              "laundry",
+              "office",
+              "wardrobe",
+              "garage",
+              "fitness",
+              "spa",
+              "media",
+              "service",
+              "circulation",
+              "other"
+            ]
+          },
+          "boundary": {
+            "type": "array",
+            "minItems": 3,
+            "items": {
+              "$ref": "#/$defs/point"
+            }
+          },
+          "requiredEquipmentTypes": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "roomId",
+          "type",
+          "layer",
+          "bbox",
+          "componentEntityIds"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "roomId": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "layer": {
+            "enum": [
+              "FURNITURE",
+              "CASEWORK",
+              "SANITARY",
+              "APPLIANCE"
+            ]
+          },
+          "bbox": {
+            "$ref": "#/$defs/bbox"
+          },
+          "componentEntityIds": {
+            "type": "array",
+            "minItems": 2,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/asciiId"
+            }
+          }
+        }
+      }
+    },
+    "dimensionChains": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "purpose",
+          "entityIds"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "purpose": {
+            "enum": [
+              "overall",
+              "grid",
+              "partition",
+              "opening"
+            ]
+          },
+          "entityIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/asciiId"
+            }
+          }
+        }
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requiredClasses",
+        "providedClasses"
+      ],
+      "properties": {
+        "requiredClasses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "providedClasses": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dimensionalSurvey",
+        "jurisdictionCode",
+        "geotechnical",
+        "structural",
+        "fireLifeSafety",
+        "mep",
+        "accessibility",
+        "licensedReview",
+        "signedRelease"
+      ],
+      "properties": {
+        "dimensionalSurvey": {
+          "$ref": "#/$defs/authorityReference"
+        },
+        "jurisdictionCode": {
+          "$ref": "#/$defs/authorityReference"
+        },
+        "geotechnical": {
+          "$ref": "#/$defs/authorityReference"
+        },
+        "structural": {
+          "$ref": "#/$defs/authorityReference"
+        },
+        "fireLifeSafety": {
+          "$ref": "#/$defs/authorityReference"
+        },
+        "mep": {
+          "$ref": "#/$defs/authorityReference"
+        },
+        "accessibility": {
+          "$ref": "#/$defs/authorityReference"
+        },
+        "licensedReview": {
+          "$ref": "#/$defs/authorityReference"
+        },
+        "signedRelease": {
+          "$ref": "#/$defs/authorityReference"
+        }
+      }
+    },
+    "safetyLocks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewOnly",
+        "accepted",
+        "ruleEnabled",
+        "packagingGated"
+      ],
+      "properties": {
+        "reviewOnly": {
+          "const": true
+        },
+        "accepted": {
+          "const": false
+        },
+        "ruleEnabled": {
+          "const": false
+        },
+        "packagingGated": {
+          "const": true
+        }
+      }
+    }
+  },
+  "$defs": {
+    "asciiId": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+    },
+    "point": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "number"
+      }
+    },
+    "bbox": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false
+    },
+    "authorityReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "available",
+        "reference"
+      ],
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "reference": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

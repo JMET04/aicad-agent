@@ -1,13 +1,13 @@
-# aicad-agent 1.8.3
+# aicad-agent 1.8.4
 
 ## 1:1 webpage and image reference reconstruction
 
-Version 1.8.3 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
+Version 1.8.4 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
 
 Portable output includes annotated DXF, native-text SVG/HTML, validation, manifest, and browser-backed PNG evidence. Native AutoCAD DIMENSION objects and DWG save/reopen remain an explicit host post-process gate.
 ## 建筑平面制图语义
 
-建筑图不再使用统一线条。插件按对象语义区分剖切柱/墙粗实线、门窗与可见投影中实线、家具和标注细实线、交通/上方构件虚线以及轴网中心线；原生 DIMENSION 使用持久命名 DIMSTYLE。最终 DXF 可由 `scripts/aicad_architecture_qa.py` 检查，二维修改器也会继承每个对象的 `cad_layer`，不再抹平真实 CAD 的线宽层级。详见 [建筑制图不变量](docs/ARCHITECTURAL_DRAFTING.md)。验证报告也必须通过稳定规则 ID、完整根因记录和重复运行幂等门禁；可使用 scripts/aicad_report_qa.py 独立复核。
+建筑图不再使用统一线条。插件按对象语义区分剖切柱/墙粗实线、门窗与可见投影中实线、家具/柜体/洁具/家电和标注细实线、交通/上方构件虚线以及轴网中心线；原生 DIMENSION 使用持久命名 DIMSTYLE。编译前必须通过 `aicad_architectural_detail_contract_v1`，证明完整轴线+双轴圈+双轴号、总/轴网/分隔/洞口四类尺寸链、逐房间设备矩阵和门-墙-洞口-开启弧拓扑；失败仅输出阻断报告。最终 DXF 再由 `scripts/aicad_architecture_qa.py` 检查，二维修改器也会继承每个对象的 `cad_layer`。详见 [建筑制图不变量](docs/ARCHITECTURAL_DRAFTING.md)。验证报告也必须通过稳定规则 ID、完整根因记录和重复运行幂等门禁；可使用 scripts/aicad_report_qa.py 独立复核。
 
 ## 生产就绪门禁
 
@@ -21,7 +21,7 @@ Portable output includes annotated DXF, native-text SVG/HTML, validation, manife
 
 The multiview selector addresses individual lines, circles, and faces with stable semantic keys. Corrections are bound to a source hash, explicit preservation policy, shared-pattern fanout, and full downstream dependency replay. Thin visible strokes are separate from the larger click target, so precision and usability do not conflict.
 
-On a licensed SolidWorks 2026 host, version 1.8.3 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
+On a licensed SolidWorks 2026 host, version 1.8.4 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
 
 确定性、原点锚定、面向 Agent 的 CAD 约束插件。它把 2D AICAD 计划编译为 AICAD/SCR/DXF/审计工件，提供包装刀版正常性证明与交互修改器，并通过可选 Windows 宿主支持 AutoCAD 和 SolidWorks。
 

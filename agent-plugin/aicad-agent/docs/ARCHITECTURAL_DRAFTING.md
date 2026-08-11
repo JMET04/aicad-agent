@@ -9,7 +9,7 @@ This profile prevents a geometrically valid plan from becoming an unreadable dra
 | Plan-cut column | COLUMN | 0.70 mm | Continuous |
 | Plan-cut wall | WALL | 0.60 mm | Continuous |
 | Door/window and visible projection | OPENING / ROOM / STAIR | 0.30 / 0.25 mm | Continuous |
-| Furniture and annotation | FURNITURE / DIMENSION / TEXT | 0.18 mm | Continuous |
+| Furniture, casework, sanitary fixtures, appliances and annotation | FURNITURE / CASEWORK / SANITARY / APPLIANCE / DIMENSION / TEXT | 0.18 mm | Continuous |
 | Hidden, overhead and circulation | OVERHEAD / ROUTE | 0.18 mm | Dashed |
 | Grid/datum | GRID | 0.13 mm | Center |
 
@@ -40,11 +40,27 @@ The stage profile is also non-compensatory. A concept architectural plan must ac
 
 Keep full-content, structural-axis and annotation envelopes separate. Remote equipment, bridges, routes and notes do not stretch the primary grid unless the axis coverage contract explicitly includes them. Reserve space in this order: model content, axis bubbles, chain dimensions, overall dimensions, then sheet notes. Resolve bubble size, text height, lineweight and dash cadence from the declared plot scale. Run geometry-binding and collision checks after every edit, not only at initial generation.
 
+## Precompile architectural detail contract
+
+Do not wait for a rendered drawing to discover missing axes, empty rooms or disconnected door symbols. Before compiling CAD, author `aicad_architectural_detail_contract_v1` from `rules/architectural_detail_contract.schema.json` and run `scripts/aicad_architecture_detail_qa.py`.
+
+The contract treats the following as one dependency graph:
+
+- every axis is a line plus two tangent bubbles and two identical identifiers inside a declared structural coverage scope;
+- overall, grid, partition and opening dimensions are four distinct native-purpose chains;
+- every room has a functional category and the required typed equipment families;
+- movable furniture, fixed casework, sanitary fixtures and appliances stay on separate semantic layers with selectable component linework;
+- every door binds to one host wall and one wall opening; the host wall is segmented around the opening; hinge, opening endpoint, leaf length, arc endpoint, sweep and clearance agree mathematically;
+- construction/production stages carry the required annotation and authority evidence.
+
+The contract is non-compensatory. A failure produces `artifactDisposition=blocker_report_only`; the generator must not compile, launch or label a review/production drawing. Any wall, opening, door, equipment or dimension edit replays the affected checks.
+
 ## Mandatory QA
 
 Run:
 
 ```powershell
+python scripts/aicad_architecture_detail_qa.py drawing.architecture-detail.json --plan drawing.plan.json --output drawing.architecture-detail-qa.json --markdown drawing.architecture-detail-qa.md
 python scripts/aicad_architecture_qa.py drawing.dxf --output drawing.architecture-qa.json
 ```
 

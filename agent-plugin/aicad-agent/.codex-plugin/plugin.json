@@ -1,6 +1,6 @@
 {
   "name": "aicad-agent",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "Agent-native tools for deterministic 2D/3D CAD, calibrated reference reconstruction, and audited host workflows.",
   "author": {
     "name": "AI CAD Constraint Project"
@@ -53,7 +53,8 @@
       "Automatic post-build review launch with safe headless fallback",
       "Fail-closed production-readiness contract",
       "Construction-stage axis, sheet and furniture component gates",
-      "Non-ASCII Windows review-path compatibility staging"
+      "Non-ASCII Windows review-path compatibility staging",
+      "Precompile architectural axes, room equipment, dimension-purpose and door-topology contract"
     ],
     "defaultPrompt": [
       "Open the CAD modifier so I can click a line, point, or circle and inspect its exact model values.",

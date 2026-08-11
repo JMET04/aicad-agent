@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.4 - 2026-08-12
+
+- Added a fail-closed architectural detail contract before validate/compile artifact exposure.
+- Added complete axis identity, room equipment, interior semantic layer, four-purpose native dimension and door host/opening/sweep gates.
+- Bound contract geometry back to resolved AICAD entity IDs and coordinates; added blocker-only failures and regression tests.
+- Added dimension-purpose AICAD XData verification and fixed duplicate model-space entity counting in architectural DXF QA.
+
 ## 1.8.3 - 2026-08-11
 
 - Adds a non-compensatory, fail-closed production-readiness contract and machine/Chinese blocker reports.

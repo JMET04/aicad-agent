@@ -8,7 +8,7 @@ if (-not $SourceDirectory) {
     $repositoryRoot = Split-Path -Parent $PSScriptRoot
     $candidates = @(
         (Join-Path $repositoryRoot 'plugins\aicad-agent'),
-        (Join-Path $repositoryRoot 'release\v1.8.3\aicad-agent'),
+        (Join-Path $repositoryRoot 'release\v1.8.4\aicad-agent'),
         (Join-Path $repositoryRoot 'agent-plugin\aicad-agent')
     )
     $SourceDirectory = $candidates | Where-Object { Test-Path -LiteralPath (Join-Path $_ '.codex-plugin\plugin.json') -PathType Leaf } | Select-Object -First 1

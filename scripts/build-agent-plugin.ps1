@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.8.3',
+    [string]$Version = '1.8.4',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -104,13 +104,13 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.8.3'
+        pythonConstraintCompiler = '1.8.4'
         autocadBundle = '1.4.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
         viewPackageSchema = '1.1'
     }
-    releaseDate = '2026-08-11'
+    releaseDate = '2026-08-12'
     license = 'MIT'
     repository = 'https://github.com/JMET04/aicad-agent'
     apiKeyRequired = $false
@@ -122,7 +122,8 @@ $releaseManifest = [ordered]@{
         solidworks = 'optional; source/build helper included; SolidWorks 2026 evidence exists'
     }
     tools = @(
-        'aicad_capabilities', 'aicad_get_plan_schema', 'aicad_generate',
+        'aicad_capabilities', 'aicad_get_plan_schema',
+        'aicad_get_architecture_detail_contract_schema', 'aicad_validate_architecture_detail_contract', 'aicad_generate',
         'aicad_validate_plan', 'aicad_compile_plan',
         'aicad_get_semantic_schema', 'aicad_get_correction_schema', 'aicad_get_view_package_schema',
         'aicad_describe_plan', 'aicad_preview_correction', 'aicad_apply_correction', 'aicad_build_multiview_review',
@@ -130,7 +131,7 @@ $releaseManifest = [ordered]@{
         'aicad_get_reference_rebuild_schema', 'aicad_validate_reference_rebuild', 'aicad_build_reference_reconstruction',
         'aicad_solidworks_doctor',
         'aicad_get_3d_plan_schema', 'aicad_validate_3d_plan', 'aicad_build_solidworks_part',
-        'scripts/aicad_packaging_qa.py', 'scripts/aicad_architecture_qa.py', 'scripts/aicad_production_readiness_qa.py', 'scripts/aicad_report_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
+        'scripts/aicad_packaging_qa.py', 'scripts/aicad_architecture_detail_qa.py', 'scripts/aicad_architecture_qa.py', 'scripts/aicad_production_readiness_qa.py', 'scripts/aicad_report_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
         'scripts/aicad_requirement_conformance.py', 'scripts/aicad_guarded_delivery.py', 'scripts/aicad_modifier_ui_qa.cjs',
         'scripts/aicad_modifier_measurement_qa.cjs'
     )
