@@ -1,0 +1,474 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad-correction.schema.json",
+  "title": "AICAD bounded 2D/3D correction transaction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "correction",
+    "review_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "space",
+        "selected_ids",
+        "operations"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "space": {
+          "enum": [
+            "2d",
+            "3d"
+          ]
+        },
+        "selected_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "selected_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/selected_ref"
+          }
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/operation"
+          }
+        }
+      }
+    },
+    "locks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "change_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_direct_objects": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_affected_objects": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "root_cause": {
+      "type": "object"
+    },
+    "prevention_rule": {
+      "type": "object"
+    },
+    "review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewOnly",
+        "accepted",
+        "ruleEnabled"
+      ],
+      "properties": {
+        "reviewOnly": {
+          "const": true
+        },
+        "accepted": {
+          "const": false
+        },
+        "ruleEnabled": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "selected_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference_key",
+        "source_object_id",
+        "source_subobject",
+        "geometry_type"
+      ],
+      "properties": {
+        "reference_key": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+\\|.+$"
+        },
+        "source_object_id": {
+          "type": "string"
+        },
+        "source_subobject": {
+          "type": "string"
+        },
+        "geometry_type": {
+          "enum": [
+            "line",
+            "circle",
+            "face",
+            "point"
+          ]
+        },
+        "edit_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "scope": {
+      "enum": [
+        "subobject",
+        "feature",
+        "shared_parameter_group",
+        "detached_instance"
+      ]
+    },
+    "preserve_policy": {
+      "enum": [
+        "keep_center",
+        "keep_opposite",
+        "keep_size",
+        "keep_support"
+      ]
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "target",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set_parameter"
+            },
+            "target": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            },
+            "value": {}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "target",
+            "constraint"
+          ],
+          "properties": {
+            "op": {
+              "const": "add_constraint"
+            },
+            "target": {
+              "type": "string"
+            },
+            "constraint": {
+              "type": "object"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "target",
+            "kind"
+          ],
+          "properties": {
+            "op": {
+              "const": "remove_constraint"
+            },
+            "target": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "target_ref": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "relation",
+            "members"
+          ],
+          "properties": {
+            "op": {
+              "const": "add_relation"
+            },
+            "relation": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "target",
+            "old",
+            "new"
+          ],
+          "properties": {
+            "op": {
+              "const": "replace_dependency"
+            },
+            "target": {
+              "type": "string"
+            },
+            "old": {
+              "type": "string"
+            },
+            "new": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "object"
+          ],
+          "properties": {
+            "op": {
+              "const": "insert_object"
+            },
+            "object": {
+              "type": "object"
+            },
+            "after": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "target"
+          ],
+          "properties": {
+            "op": {
+              "const": "remove_object"
+            },
+            "target": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "reference_key",
+            "path",
+            "value",
+            "scope",
+            "expected_affected_instance_count"
+          ],
+          "properties": {
+            "op": {
+              "const": "set_subobject_parameter"
+            },
+            "reference_key": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            },
+            "value": {},
+            "scope": {
+              "$ref": "#/$defs/scope"
+            },
+            "preserve_policy": {
+              "$ref": "#/$defs/preserve_policy"
+            },
+            "expected_affected_instance_count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "expected_shared_parameter_groups": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "reference_key",
+            "axis",
+            "value",
+            "value_mode",
+            "preserve_policy",
+            "scope",
+            "expected_affected_instance_count"
+          ],
+          "properties": {
+            "op": {
+              "const": "move_subobject"
+            },
+            "reference_key": {
+              "type": "string"
+            },
+            "axis": {
+              "enum": [
+                "x",
+                "y",
+                "z"
+              ]
+            },
+            "value": {
+              "type": "number"
+            },
+            "value_mode": {
+              "enum": [
+                "absolute",
+                "delta"
+              ]
+            },
+            "preserve_policy": {
+              "$ref": "#/$defs/preserve_policy"
+            },
+            "scope": {
+              "$ref": "#/$defs/scope"
+            },
+            "expected_affected_instance_count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "expected_shared_parameter_groups": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "relation",
+            "members",
+            "scope",
+            "expected_affected_instance_count"
+          ],
+          "properties": {
+            "op": {
+              "const": "add_subobject_relation"
+            },
+            "relation": {
+              "enum": [
+                "parallel",
+                "perpendicular",
+                "collinear",
+                "equal_length",
+                "concentric",
+                "equal_radius",
+                "coincident",
+                "offset"
+              ]
+            },
+            "members": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "string"
+              }
+            },
+            "preserve_policy": {
+              "$ref": "#/$defs/preserve_policy"
+            },
+            "offset": {
+              "type": "number"
+            },
+            "scope": {
+              "$ref": "#/$defs/scope"
+            },
+            "expected_affected_instance_count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "expected_shared_parameter_groups": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

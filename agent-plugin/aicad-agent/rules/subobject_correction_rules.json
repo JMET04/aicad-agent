@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "id": "AICAD_SUBOBJECT_CORRECTION_RULES",
+  "title": "Exact 3D subobject, parameter and free-section correction invariants",
+  "review_policy": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "domainGated": true
+  },
+  "rules": [
+    {
+      "id": "SUB-G001",
+      "requirement": "Every subobject operation must bind to the current plan source SHA-256 and an exact feature_id|semantic_subobject reference.",
+      "failure_mode": "A stale view can otherwise edit a different topology after rebuild.",
+      "enforcement": "reject_missing_or_stale_source_hash_and_reference"
+    },
+    {
+      "id": "SUB-G002",
+      "requirement": "Every view carrying the same reference_key must expose identical edit paths, edit scope, shared groups, affected count, preserve-policy flag, and detach support.",
+      "failure_mode": "A projection may otherwise authorize broader edits than the native semantic selector.",
+      "enforcement": "canonical_cross_view_reference_metadata"
+    },
+    {
+      "id": "SUB-G003",
+      "requirement": "Moving a parameterized rectangle boundary must declare keep_center, keep_opposite, or keep_size; moving an extrusion end plane must declare keep_support.",
+      "failure_mode": "An edge move is underdetermined without an explicit invariant to preserve.",
+      "enforcement": "reject_ambiguous_preserve_policy"
+    },
+    {
+      "id": "SUB-G004",
+      "requirement": "A shared pattern instance may change only through scope=shared_parameter_group with the exact current affected instance count and shared parameter groups.",
+      "failure_mode": "Editing one visible hole can silently change every pattern member or detach one instance.",
+      "enforcement": "reject_implicit_pattern_scope_or_detach"
+    },
+    {
+      "id": "SUB-G005",
+      "requirement": "Every candidate must recompile the complete ordered feature graph and report direct, downstream affected, and preserved objects.",
+      "failure_mode": "A locally valid change can invalidate containment, support, volume, or later features.",
+      "enforcement": "full_dependency_replay_before_artifact_write"
+    },
+    {
+      "id": "SUB-G006",
+      "requirement": "The global datum feature must remain origin anchored after every boundary correction.",
+      "failure_mode": "Keeping one opposite edge can translate the base and destroy the coordinate datum.",
+      "enforcement": "compile_time_origin_anchor_gate"
+    },
+    {
+      "id": "SUB-G007",
+      "requirement": "A cut supported by a circular boss must retain positive radial wall greater than the plan tolerance.",
+      "failure_mode": "Equal-radius or offset corrections can mathematically compile while removing the functional boss.",
+      "enforcement": "positive_residual_wall_gate"
+    },
+    {
+      "id": "SUB-G008",
+      "requirement": "A relation already satisfied by the profile parameterization must be audited as already_satisfied with no changed paths.",
+      "failure_mode": "Fake changes obscure review scope and can create meaningless int-to-float diffs.",
+      "enforcement": "no_fake_geometry_change"
+    },
+    {
+      "id": "SUB-G009",
+      "requirement": "Plan-derived exact references must never be represented as native CAD persistent topology authority.",
+      "failure_mode": "Semantic edge labels do not prove that SolidWorks or AutoCAD persisted the same BREP subentity after rebuild.",
+      "enforcement": "honest_topology_authority_boundary"
+    },
+    {
+      "id": "SUB-G010",
+      "requirement": "The review UI must preserve UTF-8 Chinese, thin precision strokes, independent hit tolerance, no horizontal overflow, and a browser-verified formal transaction draft.",
+      "failure_mode": "Code-page corruption or oversized JSON can make the correction interface unreadable even when geometry is valid.",
+      "enforcement": "real_browser_visual_and_interaction_gate"
+    },
+    {
+      "id": "SUB-G011",
+      "requirement": "The user-facing reviewer must expose one modification list; natural-language instructions and direct numeric edits may differ internally but must not require two user workflows.",
+      "failure_mode": "Exposing candidate intent and executable transaction as separate primary flows creates duplicate controls and avoidable technical burden.",
+      "enforcement": "single_visible_modification_flow_with_collapsed_exact_evidence"
+    },
+    {
+      "id": "SUB-G012",
+      "requirement": "Every 3D reviewer must accept a finite nonzero plane normal plus a finite point, with axis equations treated only as shortcuts, and calculate sections from compiled feature operations rather than pixels.",
+      "failure_mode": "A fixed X=0/Y=0 view catalog cannot inspect arbitrary internal structure and image-derived sections have no dimensional authority.",
+      "enforcement": "normalized_free_section_plane_and_feature_intersection_gate"
+    },
+    {
+      "id": "SUB-G013",
+      "requirement": "Centers, axes, pitch circles and interface edges must have stable semantic references, remain hidden by default, reveal on hover/focus, and be independently selectable.",
+      "failure_mode": "Always-visible construction geometry clutters the drawing, while absent hit geometry makes critical relations impossible to select.",
+      "enforcement": "hidden_key_geometry_hover_and_exact_selection_gate"
+    },
+    {
+      "id": "SUB-G014",
+      "requirement": "The right panel must derive and display every independent core parameter from the compiled feature and clicking a value must select its exact controller and prefill the editor.",
+      "failure_mode": "A raw parameter-path dropdown hides important dimensions and allows feature parameters to be omitted from review.",
+      "enforcement": "compiled_core_parameter_catalog_and_click_to_edit_gate"
+    },
+    {
+      "id": "SUB-G015",
+      "requirement": "Release QA must exercise hidden-geometry hover, parameter prefill/edit, axis and oblique sections, section selection, point relations, UTF-8, overflow and review locks in a real browser.",
+      "failure_mode": "Static HTML inspection cannot prove pointer hit testing, canvas section interaction or responsive layout.",
+      "enforcement": "real_browser_modifier_v2_interaction_gate"
+    },
+    {
+      "id": "SUB-G016",
+      "requirement": "Every selectable line, point, circle and face must carry a typed measurement derived from the compiled model coordinate system: line length and endpoints, point XYZ, circle center/radius/diameter, or face area; projection-only values must be explicitly labeled and screen pixels are forbidden as dimension authority.",
+      "failure_mode": "A parameter catalog can exist while the selected object still shows no direct value, and projected pixels can be mistaken for model dimensions.",
+      "enforcement": "compiled_typed_selection_measurement_and_click_to_edit_gate"
+    },
+    {
+      "id": "SUB-G017",
+      "requirement": "Every review view must expose the right-handed MODEL_XYZ datum and a single visible switch must hide or restore SVG axes, origin markers and the rotating 3D XYZ triad together.",
+      "failure_mode": "Coordinates are ambiguous without a visible datum, while an always-on coordinate overlay can obstruct detailed geometry review.",
+      "enforcement": "synchronized_coordinate_system_visibility_gate"
+    }
+  ]
+}

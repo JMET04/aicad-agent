@@ -32,7 +32,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.3.4")
+        self.assertEqual(manifest["version"], "1.7.0")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         mcp = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
@@ -49,7 +49,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.3.4")
+        self.assertEqual(payload["api_version"], "1.7.0")
         self.assertEqual(payload["entities"], ["line", "circle", "arc"])
         self.assertTrue(Path(payload["schema_path"]).is_file())
         self.assertTrue(payload["agent_native"]["default"])
@@ -60,6 +60,13 @@ class AgentPluginTests(unittest.TestCase):
         self.assertTrue(Path(payload["packaging_dieline_qa"]["rules"]).is_file())
         self.assertTrue(payload["packaging_dieline_qa"]["review_only"])
         self.assertTrue(Path(payload["solidworks_3d"]["schema_path"]).is_file())
+        self.assertTrue(payload["universal_cad"]["core_is_domain_agnostic"])
+        self.assertIn("mechanical", payload["universal_cad"]["domain_profiles"])
+        self.assertIn("electronics", payload["universal_cad"]["domain_profiles"])
+        self.assertIn("point", payload["universal_cad"]["exact_subobject_correction"]["geometry_types"])
+        self.assertTrue(payload["reference_reconstruction"]["available"])
+        self.assertTrue(Path(payload["reference_reconstruction"]["schema_path"]).is_file())
+        self.assertIn("mojibake", payload["reference_reconstruction"]["gates"])
 
     def test_generate_creates_complete_artifact_contract(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -101,12 +108,51 @@ class AgentPluginTests(unittest.TestCase):
             "aicad_capabilities", "aicad_get_plan_schema", "aicad_generate",
             "aicad_validate_plan", "aicad_compile_plan", "aicad_solidworks_doctor",
             "aicad_get_3d_plan_schema", "aicad_validate_3d_plan", "aicad_build_solidworks_part",
+            "aicad_get_semantic_schema", "aicad_get_correction_schema", "aicad_get_view_package_schema",
+            "aicad_describe_plan", "aicad_preview_correction", "aicad_apply_correction",
+            "aicad_build_multiview_review",
+            "aicad_get_domain_validation_schema", "aicad_validate_domain_plan",
+            "aicad_get_reference_rebuild_schema", "aicad_validate_reference_rebuild",
+            "aicad_build_reference_reconstruction",
         })
         call = self.agent._handle_mcp({
             "jsonrpc": "2.0", "id": 3, "method": "tools/call",
             "params": {"name": "aicad_capabilities", "arguments": {}},
         })
         self.assertTrue(call["result"]["structuredContent"]["ok"])
+
+    def test_universal_semantic_correction_and_multiview_tools(self) -> None:
+        plan = json.loads((ROOT / "examples" / "mounting_plate_3d.plan.json").read_text(encoding="utf-8"))
+        described = self.agent._handle_mcp({
+            "jsonrpc": "2.0", "id": 80, "method": "tools/call",
+            "params": {"name": "aicad_describe_plan", "arguments": {"plan": plan, "space": "3d", "domain": "electronics"}},
+        })["result"]["structuredContent"]
+        self.assertTrue(described["ok"])
+        self.assertEqual(described["document"]["domain"], "electronics")
+        self.assertEqual(len(described["objects"]), 4)
+        correction = {
+            "schema_version": "1.0",
+            "correction": {
+                "id": "CORR001", "description": "increase bore", "space": "3d", "selected_ids": ["F004"],
+                "operations": [{"op": "set_parameter", "target": "F004", "path": "profile.radius", "value": 6}],
+            },
+            "review_policy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False},
+        }
+        preview = self.agent._handle_mcp({
+            "jsonrpc": "2.0", "id": 81, "method": "tools/call",
+            "params": {"name": "aicad_preview_correction", "arguments": {"plan": plan, "correction": correction, "domain": "mechanical"}},
+        })["result"]["structuredContent"]
+        self.assertEqual(preview["status"], "pass")
+        self.assertEqual(preview["directly_changed_ids"], ["F004"])
+        with tempfile.TemporaryDirectory() as directory:
+            review = self.agent._handle_mcp({
+                "jsonrpc": "2.0", "id": 82, "method": "tools/call",
+                "params": {"name": "aicad_build_multiview_review", "arguments": {
+                    "plan": plan, "space": "3d", "domain": "mechanical", "output_dir": directory, "name": "part",
+                }},
+            })["result"]["structuredContent"]
+            self.assertEqual(review["view_count"], 6)
+            self.assertTrue(Path(review["artifacts"]["review_html"]).is_file())
 
     def test_agent_authored_plan_compile_never_calls_provider_or_api(self) -> None:
         plan = json.loads((ROOT / "examples" / "arc.plan.json").read_text(encoding="utf-8"))

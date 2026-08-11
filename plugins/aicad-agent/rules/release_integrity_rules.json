@@ -91,6 +91,20 @@
                       "symptom":  "GitHub Actions passed core tests but plugin schema tests failed with ModuleNotFoundError for jsonschema.",
                       "root_cause":  "A directly imported third-party package was absent from the release requirements, while the developer machine supplied it implicitly and masked the missing dependency.",
                       "prevention":  "Declare every non-standard-library import in the appropriate release requirements and third-party notices, install only those declarations in a clean environment, and require the complete suite to pass there before build, tag or upload."
+                  },
+                  {
+                      "id":  "REL-G014",
+                      "name":  "reference_preview_encoding_and_layout_are_browser_verified",
+                      "symptom":  "A mathematically correct preview shipped with mojibake, a distorted SVG aspect ratio, or labels overlapping after real font rendering.",
+                      "root_cause":  "Source UTF-8 validity, SVG coordinate geometry, and browser font metrics were treated as one inferred property instead of independent gates.",
+                      "prevention":  "Reject UTF-8 replacement/private-use characters in release text; preserve SVG viewBox aspect ratio; require source text/position/rotation evidence, bounded collision offsets, and a real-browser opaque-background, Chinese-visibility, overlap, mojibake, and console-error report before presenting a reference preview."
+                  },
+                  {
+                      "id":  "REL-G015",
+                      "name":  "host_test_resolves_command_to_executable_path",
+                      "symptom":  "The real AutoCAD host test compiled its plans but stopped before launching AutoCAD because Resolve-Path treated the command name python as a literal file in the workspace.",
+                      "root_cause":  "Get-Command had already resolved the executable, but the harness discarded that result and attempted filesystem resolution on the original command token.",
+                      "prevention":  "When a host harness accepts either an executable path or a PATH command, use Resolve-Path only for an existing file and otherwise use the Source returned by Get-Command; exercise the default command-name path in the real-host regression."
                   }
               ]
 }

@@ -1,16 +1,16 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.3.4\github-repository',
-    [string]$Version = '1.3.4',
-    [string]$PluginArchive = 'release\v1.3.4\aicad-agent-1.3.4.zip',
-    [string]$PluginDirectory = 'release\v1.3.4\aicad-agent'
+    [string]$OutputDirectory = 'release\v1.7.0\github-repository',
+    [string]$Version = '1.7.0',
+    [string]$PluginArchive = 'release\v1.7.0\aicad-agent-1.7.0.zip',
+    [string]$PluginDirectory = 'release\v1.7.0\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'
 
 function Convert-TreeTextToLf {
     param([Parameter(Mandatory = $true)][string]$TreeRoot)
-    $textExtensions = @('.aicad', '.cs', '.csproj', '.dxf', '.json', '.lsp', '.md', '.ps1', '.py', '.scr', '.toml', '.txt', '.xml', '.yaml', '.yml')
+    $textExtensions = @('.aicad', '.cjs', '.cs', '.csproj', '.css', '.dxf', '.html', '.js', '.json', '.lsp', '.md', '.mjs', '.ps1', '.py', '.scr', '.svg', '.toml', '.txt', '.xml', '.yaml', '.yml')
     $textNames = @('.gitattributes', '.gitignore', 'LICENSE', 'SHA256SUMS')
     Get-ChildItem -LiteralPath $TreeRoot -Recurse -Force -File | ForEach-Object {
         if ($textExtensions -contains $_.Extension.ToLowerInvariant() -or $textNames -contains $_.Name) {
@@ -135,6 +135,9 @@ $manifest = [ordered]@{
         'origin-anchored deterministic 2D AICAD compilation',
         'bounded independent-rank and packaging dieline normality proof',
         'aligned interactive edge/corner/face review surface',
+        'typed selected line/point/circle/face measurements from compiled model geometry',
+        'one synchronized MODEL_XYZ switch across 2D origins and rotating 3D axes',
+        'exact source-bound subobject correction and arbitrary semantic sections',
         'optional AutoCAD and SolidWorks native hosts',
         'root-cause, correction and persistent prevention-rule audit'
     )
@@ -146,6 +149,12 @@ $manifest = [ordered]@{
         comparativeSuperiorityClaimAllowed = $false
     }
     excluded = @('jobs', 'research/paper/experiments', 'build outputs', 'native customer drawings', 'personal paths', 'credentials', 'caches', 'SolidWorks interop binaries')
+    validationCommands = @(
+        'python -B -m unittest discover -s tests -v',
+        'python -B -m unittest discover -s agent-plugin/aicad-agent/tests -v',
+        'python -B scripts/verify_release_package.py plugins/aicad-agent',
+        'python -B scripts/verify_github_source.py .'
+    )
     files = $entries
 }
 [IO.File]::WriteAllText(

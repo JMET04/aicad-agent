@@ -1,5 +1,36 @@
 # Changelog
 
+## 1.7.0 - 2026-08-11
+
+- Added typed compiled-model measurements for every selectable line, point, circle and face.
+- Added right-handed MODEL_XYZ axes, per-view origin markers and one synchronized visibility switch across SVG and rotating 3D views.
+- Added click-to-prefill from selected length, coordinates and radius values.
+- Corrected horizontal/vertical rectangle edge mapping to width/height controllers.
+- Added SUB-G016/SUB-G017 plus real-Chrome line/point/circle and coordinate-toggle regression coverage.
+
+## 1.6.0 - 2026-08-11
+
+- Unified natural-language and exact numeric corrections into one visible modification list while preserving source-bound transactions in collapsed advanced evidence.
+- Added arbitrary semantic section planes with selectable feature intersections.
+- Added hover-discovered centers, center axes, pitch circles and interface edges with independent hit tolerance.
+- Added clickable core feature parameters and point-coincident relation support.
+- Added SUB-G011 through SUB-G015 and real-Chrome regression coverage for the new interaction contract.
+
+## 1.5.0 - 2026-08-11
+
+- Added formal exact line/circle/face correction transactions with source-hash binding, preserve policies, shared-pattern fanout protection, and full dependency replay.
+- Added product-level positive residual-wall validation to prevent a corrected bore or pocket from deleting its supporting boss.
+- Added a real-browser multiview transaction gate with thin precision strokes, independent hit targets, ambiguity blocking, UTF-8 checks, and exported correction evidence.
+- Added native SolidWorks persistent references for ordered sketch primitives and uniquely classified BREP edges/faces.
+- Embedded the topology catalog in SLDPRT custom properties and added real save/reopen per-record resolution plus exact key-set equality checks.
+- Encoded COM-wrapper lifetime and custom-property prefix failures as SW-N008/SW-N009 prevention rules.
+## 1.4.0 - 2026-08-11
+
+- Added calibrated webpage/SVG/image reference reconstruction with direct DOM object evidence and source hash pinning.
+- Added exact geometry, dimension, annotation text/position/rotation, style hierarchy, mojibake, and controlled layout-offset gates.
+- Added aspect-ratio-preserving SVG/HTML previews and a real-browser visual QA script that records PNG/report hashes in the manifest.
+- Added MCP resources/tools and CLI commands for reference schema, validation, and artifact builds.
+- Added precision 3D subobject selector mappings with thin visible strokes, independent hit targets, and explicit shared-parameter edit scope.
 ## 1.3.4 - 2026-08-10
 
 - Declared `jsonschema>=4.23,<5`, which is directly required by the normality and whole-requirement schema gates.

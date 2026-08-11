@@ -15,3 +15,7 @@ Optional native hosts:
 - SolidWorks is a product of Dassault Systèmes. The default release does not include SolidWorks interop assemblies or other proprietary binaries. Users build the host locally against their licensed installation.
 
 The package does not grant licenses for AutoCAD, SolidWorks, or their SDKs.
+
+## Optional visual QA runtime
+
+Playwright (Apache-2.0) may be supplied externally to run the real-browser reference-preview QA script. It is not redistributed in the default plugin archive. The script can use an installed Chrome or Edge executable.

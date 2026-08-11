@@ -1,0 +1,406 @@
+{
+    "schema_version":  "1.0",
+    "reference":  {
+                      "id":  "WEBREF_PLATE_001",
+                      "kind":  "webpage_svg",
+                      "locator":  "web_reference_plate.html",
+                      "content_sha256":  "86e82b04b53919a3c9cc390e0b6b181019115c8e1d4619e0f63da48e8c0be503",
+                      "axis_orientation":  "y_down",
+                      "capture":  {
+                                      "width_px":  900,
+                                      "height_px":  650,
+                                      "device_scale_factor":  1,
+                                      "viewport_locked":  true
+                                  }
+                  },
+    "dimension_authority":  {
+                                "units":  "mm",
+                                "mode":  "calibrated_anchors",
+                                "pixel_is_dimension_truth":  false,
+                                "max_rms_error_mm":  0.000001,
+                                "max_point_error_mm":  0.000001,
+                                "anchors":  [
+                                                {
+                                                    "id":  "CAL001",
+                                                    "source":  [
+                                                                   30,
+                                                                   105
+                                                               ],
+                                                    "cad":  [
+                                                                0,
+                                                                0
+                                                            ],
+                                                    "authority":  "explicit_dimension",
+                                                    "evidence":  "Bottom-left endpoint plus the visible 120 mm and 80 mm dimension chain."
+                                                },
+                                                {
+                                                    "id":  "CAL002",
+                                                    "source":  [
+                                                                   150,
+                                                                   105
+                                                               ],
+                                                    "cad":  [
+                                                                120,
+                                                                0
+                                                            ],
+                                                    "authority":  "explicit_dimension",
+                                                    "evidence":  "Visible horizontal dimension text is 120 mm."
+                                                },
+                                                {
+                                                    "id":  "CAL003",
+                                                    "source":  [
+                                                                   30,
+                                                                   25
+                                                               ],
+                                                    "cad":  [
+                                                                0,
+                                                                80
+                                                            ],
+                                                    "authority":  "explicit_dimension",
+                                                    "evidence":  "Visible vertical dimension text is 80 mm."
+                                                }
+                                            ]
+                            },
+    "coverage":  {
+                     "mode":  "one_to_one",
+                     "required_target_ids":  [
+                                                 "L001",
+                                                 "L002",
+                                                 "L003",
+                                                 "L004",
+                                                 "C001"
+                                             ],
+                     "required_annotation_ids":  [
+                                                     "TXT_TITLE",
+                                                     "DIM_WIDTH",
+                                                     "DIM_HEIGHT",
+                                                     "DIM_HOLE",
+                                                     "TXT_STATUS"
+                                                 ]
+                 },
+    "geometry_bindings":  [
+                              {
+                                  "id":  "BIND001",
+                                  "reference_object_id":  "REF_L001",
+                                  "target_object_id":  "L001",
+                                  "source_geometry":  {
+                                                          "type":  "line",
+                                                          "start":  [
+                                                                        30,
+                                                                        105
+                                                                    ],
+                                                          "end":  [
+                                                                      150,
+                                                                      105
+                                                                  ]
+                                                      },
+                                  "authority":  "vector_path",
+                                  "tolerance_mm":  0.000001,
+                                  "source_tolerance":  1E-09
+                              },
+                              {
+                                  "id":  "BIND002",
+                                  "reference_object_id":  "REF_L002",
+                                  "target_object_id":  "L002",
+                                  "source_geometry":  {
+                                                          "type":  "line",
+                                                          "start":  [
+                                                                        150,
+                                                                        105
+                                                                    ],
+                                                          "end":  [
+                                                                      150,
+                                                                      25
+                                                                  ]
+                                                      },
+                                  "authority":  "vector_path",
+                                  "tolerance_mm":  0.000001,
+                                  "source_tolerance":  1E-09
+                              },
+                              {
+                                  "id":  "BIND003",
+                                  "reference_object_id":  "REF_L003",
+                                  "target_object_id":  "L003",
+                                  "source_geometry":  {
+                                                          "type":  "line",
+                                                          "start":  [
+                                                                        150,
+                                                                        25
+                                                                    ],
+                                                          "end":  [
+                                                                      30,
+                                                                      25
+                                                                  ]
+                                                      },
+                                  "authority":  "vector_path",
+                                  "tolerance_mm":  0.000001,
+                                  "source_tolerance":  1E-09
+                              },
+                              {
+                                  "id":  "BIND004",
+                                  "reference_object_id":  "REF_L004",
+                                  "target_object_id":  "L004",
+                                  "source_geometry":  {
+                                                          "type":  "line",
+                                                          "start":  [
+                                                                        30,
+                                                                        25
+                                                                    ],
+                                                          "end":  [
+                                                                      30,
+                                                                      105
+                                                                  ]
+                                                      },
+                                  "authority":  "vector_path",
+                                  "tolerance_mm":  0.000001,
+                                  "source_tolerance":  1E-09
+                              },
+                              {
+                                  "id":  "BIND005",
+                                  "reference_object_id":  "REF_C001",
+                                  "target_object_id":  "C001",
+                                  "source_geometry":  {
+                                                          "type":  "circle",
+                                                          "center":  [
+                                                                         90,
+                                                                         65
+                                                                     ],
+                                                          "radius":  10
+                                                      },
+                                  "authority":  "vector_path",
+                                  "tolerance_mm":  0.000001,
+                                  "source_tolerance":  1E-09
+                              }
+                          ],
+    "presentation":  {
+                         "sheet":  {
+                                       "width_mm":  420,
+                                       "height_mm":  297,
+                                       "margin_mm":  10,
+                                       "scale_denominator":  1,
+                                       "title_block":  true
+                                   },
+                         "styles":  {
+                                        "layers":  {
+                                                       "OUTLINE":  {
+                                                                       "color":  7,
+                                                                       "lineweight_mm":  0.35,
+                                                                       "linetype":  "CONTINUOUS"
+                                                                   },
+                                                       "HOLE":  {
+                                                                    "color":  1,
+                                                                    "lineweight_mm":  0.25,
+                                                                    "linetype":  "CONTINUOUS"
+                                                                },
+                                                       "DIMENSION":  {
+                                                                         "color":  3,
+                                                                         "lineweight_mm":  0.18,
+                                                                         "linetype":  "CONTINUOUS"
+                                                                     },
+                                                       "TEXT":  {
+                                                                    "color":  7,
+                                                                    "lineweight_mm":  0.18,
+                                                                    "linetype":  "CONTINUOUS"
+                                                                },
+                                                       "FRAME":  {
+                                                                     "color":  8,
+                                                                     "lineweight_mm":  0.35,
+                                                                     "linetype":  "CONTINUOUS"
+                                                                 }
+                                                   },
+                                        "text":  {
+                                                     "font":  "Microsoft YaHei",
+                                                     "height_mm":  3.5
+                                                 },
+                                        "dimension":  {
+                                                          "text_height_mm":  3.5,
+                                                          "arrow_size_mm":  2.5,
+                                                          "extension_gap_mm":  1
+                                                      }
+                                    },
+                         "annotations":  [
+                                             {
+                                                 "id":  "TXT_TITLE",
+                                                 "type":  "text",
+                                                 "text":  "机械安装板参考图（毫米）",
+                                                 "position":  [
+                                                                  60,
+                                                                  93
+                                                              ],
+                                                 "height_mm":  7,
+                                                 "width_mm":  120,
+                                                 "layer":  "TEXT",
+                                                 "layout_tolerance_mm":  1E-06,
+                                                 "source_tolerance":  1E-09,
+                                                 "source_position":  [
+                                                                         90,
+                                                                         12
+                                                                     ],
+                                                 "reference_object_id":  "REF_TXT_TITLE",
+                                                 "reference_text":  "机械安装板参考图（毫米）",
+                                                 "source_rotation_deg":  0,
+                                                 "rotation_deg":  0,
+                                                 "rotation_tolerance_deg":  1E-06,
+                                                 "layout_mode":  "source_exact",
+                                                 "layout_offset_mm":  [
+                                                                          0,
+                                                                          0
+                                                                      ],
+                                                 "max_layout_offset_mm":  0,
+                                                 "layout_offset_reason":  "source_exact"
+                                             },
+                                             {
+                                                 "id":  "DIM_WIDTH",
+                                                 "type":  "linear_dimension",
+                                                 "from":  {
+                                                              "target":  "L001",
+                                                              "point":  "start"
+                                                          },
+                                                 "to":  {
+                                                            "target":  "L001",
+                                                            "point":  "end"
+                                                        },
+                                                 "placement":  [
+                                                                   60,
+                                                                   -15
+                                                               ],
+                                                 "axis":  "horizontal",
+                                                 "expected_value":  120,
+                                                 "tolerance_mm":  0.000001,
+                                                 "suffix":  "",
+                                                 "precision":  0,
+                                                 "layer":  "DIMENSION",
+                                                 "layout_tolerance_mm":  1E-06,
+                                                 "source_tolerance":  1E-09,
+                                                 "source_position":  [
+                                                                         90,
+                                                                         120
+                                                                     ],
+                                                 "reference_object_id":  "REF_DIM_WIDTH_TEXT",
+                                                 "reference_text":  "120",
+                                                 "text_height_mm":  5,
+                                                 "source_rotation_deg":  0,
+                                                 "rotation_deg":  0,
+                                                 "rotation_tolerance_deg":  1E-06,
+                                                 "layout_mode":  "source_exact",
+                                                 "layout_offset_mm":  [
+                                                                          0,
+                                                                          0
+                                                                      ],
+                                                 "max_layout_offset_mm":  0,
+                                                 "layout_offset_reason":  "source_exact"
+                                             },
+                                             {
+                                                 "id":  "DIM_HEIGHT",
+                                                 "type":  "linear_dimension",
+                                                 "from":  {
+                                                              "target":  "L004",
+                                                              "point":  "end"
+                                                          },
+                                                 "to":  {
+                                                            "target":  "L004",
+                                                            "point":  "start"
+                                                        },
+                                                 "placement":  [
+                                                                   -18,
+                                                                   38
+                                                               ],
+                                                 "axis":  "vertical",
+                                                 "expected_value":  80,
+                                                 "tolerance_mm":  0.000001,
+                                                 "suffix":  "",
+                                                 "precision":  0,
+                                                 "layer":  "DIMENSION",
+                                                 "layout_tolerance_mm":  1E-06,
+                                                 "source_tolerance":  1E-09,
+                                                 "source_position":  [
+                                                                         12,
+                                                                         67
+                                                                     ],
+                                                 "reference_object_id":  "REF_DIM_HEIGHT_TEXT",
+                                                 "reference_text":  "80",
+                                                 "text_height_mm":  5,
+                                                 "source_rotation_deg":  -90,
+                                                 "rotation_deg":  90,
+                                                 "rotation_tolerance_deg":  1E-06,
+                                                 "layout_mode":  "source_exact",
+                                                 "layout_offset_mm":  [
+                                                                          0,
+                                                                          0
+                                                                      ],
+                                                 "max_layout_offset_mm":  0,
+                                                 "layout_offset_reason":  "source_exact"
+                                             },
+                                             {
+                                                 "id":  "DIM_HOLE",
+                                                 "type":  "diameter_dimension",
+                                                 "target":  "C001",
+                                                 "placement":  [
+                                                                   105,
+                                                                   67
+                                                               ],
+                                                 "expected_value":  20,
+                                                 "tolerance_mm":  0.000001,
+                                                 "prefix":  "⌀",
+                                                 "suffix":  " 通孔",
+                                                 "precision":  0,
+                                                 "layer":  "DIMENSION",
+                                                 "layout_tolerance_mm":  1E-06,
+                                                 "source_tolerance":  1E-09,
+                                                 "source_position":  [
+                                                                         135,
+                                                                         38
+                                                                     ],
+                                                 "reference_object_id":  "REF_DIM_HOLE_TEXT",
+                                                 "reference_text":  "⌀20 通孔",
+                                                 "text_height_mm":  5,
+                                                 "source_rotation_deg":  0,
+                                                 "rotation_deg":  0,
+                                                 "rotation_tolerance_deg":  1E-06,
+                                                 "layout_mode":  "source_exact",
+                                                 "layout_offset_mm":  [
+                                                                          0,
+                                                                          0
+                                                                      ],
+                                                 "max_layout_offset_mm":  0,
+                                                 "layout_offset_reason":  "source_exact"
+                                             },
+                                             {
+                                                 "id":  "TXT_STATUS",
+                                                 "type":  "text",
+                                                 "text":  "比例 1:1 · 网页仅作结构与版式参考，尺寸由标注校准",
+                                                 "position":  [
+                                                                  60,
+                                                                  -23
+                                                              ],
+                                                 "height_mm":  5,
+                                                 "width_mm":  150,
+                                                 "layer":  "TEXT",
+                                                 "layout_tolerance_mm":  1E-06,
+                                                 "source_tolerance":  1E-09,
+                                                 "source_position":  [
+                                                                         90,
+                                                                         126
+                                                                     ],
+                                                 "reference_object_id":  "REF_TXT_STATUS",
+                                                 "reference_text":  "比例 1:1 · 网页仅作结构与版式参考，尺寸由标注校准",
+                                                 "source_rotation_deg":  0,
+                                                 "rotation_deg":  0,
+                                                 "rotation_tolerance_deg":  1E-06,
+                                                 "layout_mode":  "optimized_offset",
+                                                 "layout_offset_mm":  [
+                                                                          0,
+                                                                          -2
+                                                                      ],
+                                                 "max_layout_offset_mm":  2,
+                                                 "layout_offset_reason":  "font_metric_collision_avoidance"
+                                             }
+                                         ]
+                     },
+    "review_policy":  {
+                          "reviewOnly":  true,
+                          "accepted":  false,
+                          "ruleEnabled":  false,
+                          "domainGated":  true
+                      }
+}

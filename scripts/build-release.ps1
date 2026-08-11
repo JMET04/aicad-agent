@@ -1,12 +1,13 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release'
+    [string]$OutputDirectory = 'release',
+    [string]$Version = '1.7.0'
 )
 
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $output = Join-Path $root $OutputDirectory
-$version = '1.0.0'
+$version = $Version
 $stage = Join-Path $output "AiCadConstraint-$version"
 $archive = Join-Path $output "AiCadConstraint-$version.zip"
 

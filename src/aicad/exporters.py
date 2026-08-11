@@ -40,7 +40,11 @@ def write_execution(plan: CompiledPlan, path: Path) -> None:
 
 def write_script(plan: CompiledPlan, path: Path) -> None:
     lines = ["_.UNDO", "_Begin"]
+    current_layer: str | None = None
     for entity in plan.entities:
+        if entity.layer != current_layer:
+            lines.extend(["_.-LAYER", "_Make", entity.layer, ""])
+            current_layer = entity.layer
         if isinstance(entity, ResolvedLine):
             lines.extend(["_.LINE", f"{_fmt(entity.start[0])},{_fmt(entity.start[1])}", f"{_fmt(entity.end[0])},{_fmt(entity.end[1])}", ""])
         elif isinstance(entity, ResolvedCircle):
@@ -60,10 +64,14 @@ def _dxf_pair(code: int, value: str | int | float) -> str:
 
 
 def write_dxf(plan: CompiledPlan, path: Path) -> None:
+    layers = sorted({entity.layer for entity in plan.entities})
     content = [_dxf_pair(0, "SECTION"), _dxf_pair(2, "HEADER"), _dxf_pair(0, "ENDSEC")]
-    content.extend([_dxf_pair(0, "SECTION"), _dxf_pair(2, "ENTITIES")])
+    content.extend([_dxf_pair(0, "SECTION"), _dxf_pair(2, "TABLES"), _dxf_pair(0, "TABLE"), _dxf_pair(2, "LAYER"), _dxf_pair(70, len(layers))])
+    for layer in layers:
+        content.extend([_dxf_pair(0, "LAYER"), _dxf_pair(2, layer), _dxf_pair(70, 0), _dxf_pair(62, 7), _dxf_pair(6, "CONTINUOUS")])
+    content.extend([_dxf_pair(0, "ENDTAB"), _dxf_pair(0, "ENDSEC"), _dxf_pair(0, "SECTION"), _dxf_pair(2, "ENTITIES")])
     for entity in plan.entities:
-        common = [_dxf_pair(8, "AICAD_GEOMETRY")]
+        common = [_dxf_pair(8, entity.layer)]
         if isinstance(entity, ResolvedLine):
             content.extend([
                 _dxf_pair(0, "LINE"), *common,
@@ -111,16 +119,17 @@ def _geometry(entity: ResolvedEntity) -> str:
 
 def write_audit(plan: CompiledPlan, path: Path) -> None:
     rows = [
-        f"# {plan.name} - AI CAD audit", "", f"- Schema: `{plan.schema_version}`", f"- Units: `{plan.units}`",
+        f"# {plan.name} - AI CAD audit", "", f"- Schema: `{plan.schema_version}`", f"- Domain: `{plan.domain}`", f"- Units: `{plan.units}`",
         "- Origin: `(0, 0)`", f"- Tolerance: `{plan.tolerance:g}`", f"- Source SHA-256: `{plan.source_hash}`",
         f"- Entity count: `{len(plan.entities)}`", "",
-        "| # | ID | Type | Purpose | Geometry | Constraints | Reasoning |",
-        "|---:|---|---|---|---|---|---|",
+        "| # | ID | Type | Layer | Roles | Depends on | Editable | Purpose | Geometry | Constraints | Reasoning |",
+        "|---:|---|---|---|---|---|---|---|---|---|---|",
     ]
     clean = lambda text: text.replace("|", "\\|").replace("\n", " ")
     for index, entity in enumerate(plan.entities, 1):
         rows.append(
-            f"| {index} | `{entity.id}` | `{entity.type}` | {clean(entity.purpose)} | `{_geometry(entity)}` | "
+            f"| {index} | `{entity.id}` | `{entity.type}` | `{entity.layer}` | {clean(', '.join(entity.roles) or '-')} | "
+            f"{clean(', '.join(entity.depends_on) or 'origin')} | `{str(entity.editable).lower()}` | {clean(entity.purpose)} | `{_geometry(entity)}` | "
             f"{clean(_constraint_summary(entity))} | {clean(entity.reasoning)} |"
         )
     path.write_text("\n".join(rows) + "\n", encoding="utf-8")
@@ -128,10 +137,14 @@ def write_audit(plan: CompiledPlan, path: Path) -> None:
 
 def write_manifest(plan: CompiledPlan, output_dir: Path, stem: str) -> None:
     payload = {
-        "schema_version": plan.schema_version, "name": plan.name, "source_sha256": plan.source_hash,
+        "schema_version": plan.schema_version, "name": plan.name, "domain": plan.domain, "source_sha256": plan.source_hash,
         "units": plan.units, "origin": list(plan.origin), "tolerance": plan.tolerance,
         "entity_count": len(plan.entities),
         "entity_types": {kind: sum(entity.type == kind for entity in plan.entities) for kind in ("line", "circle", "arc")},
+        "layers": {layer: sum(entity.layer == layer for entity in plan.entities) for layer in sorted({entity.layer for entity in plan.entities})},
+        "roles": {role: sum(role in entity.roles for entity in plan.entities) for role in sorted({role for entity in plan.entities for role in entity.roles})},
+        "editable_entities": sum(entity.editable for entity in plan.entities),
+        "dependency_edges": sum(len(entity.depends_on) for entity in plan.entities),
         "artifacts": [f"{stem}.aicad", f"{stem}.scr", f"{stem}.dxf", f"{stem}.audit.md"],
     }
     (output_dir / f"{stem}.manifest.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

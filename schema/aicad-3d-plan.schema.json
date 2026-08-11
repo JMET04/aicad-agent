@@ -15,7 +15,17 @@
         "name": {"type": "string", "minLength": 1},
         "units": {"const": "mm"},
         "origin": {"const": [0, 0, 0]},
-        "tolerance": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.1}
+        "tolerance": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.1},
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+        "domain": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$", "default": "general"},
+        "locks": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "review_policy": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "reviewOnly": {"const": true}, "accepted": {"const": false},
+            "ruleEnabled": {"const": false}, "domainGated": {"const": true}
+          }
+        }
       }
     },
     "features": {
@@ -85,7 +95,10 @@
         "profile": {"$ref": "#/$defs/profile"},
         "depth": {"type": "number", "exclusiveMinimum": 0},
         "end_condition": {"enum": ["blind", "through_all"]},
-        "constraints": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/constraint"}}
+        "constraints": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/constraint"}},
+        "role": {"type": "string", "minLength": 1},
+        "roles": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "editable": {"type": "boolean", "default": true}
       }
     }
   }

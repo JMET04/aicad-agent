@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.3.4',
+    [string]$Version = '1.7.0',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -9,7 +9,7 @@ $ErrorActionPreference = 'Stop'
 
 function Convert-TreeTextToLf {
     param([Parameter(Mandatory = $true)][string]$TreeRoot)
-    $textExtensions = @('.aicad', '.cs', '.csproj', '.dxf', '.json', '.lsp', '.md', '.ps1', '.py', '.scr', '.toml', '.txt', '.xml', '.yaml', '.yml')
+    $textExtensions = @('.aicad', '.cjs', '.cs', '.csproj', '.css', '.dxf', '.html', '.js', '.json', '.lsp', '.md', '.mjs', '.ps1', '.py', '.scr', '.svg', '.toml', '.txt', '.xml', '.yaml', '.yml')
     $textNames = @('.gitattributes', '.gitignore', 'LICENSE', 'SHA256SUMS')
     Get-ChildItem -LiteralPath $TreeRoot -Recurse -Force -File | ForEach-Object {
         if ($textExtensions -contains $_.Extension.ToLowerInvariant() -or $textNames -contains $_.Name) {
@@ -104,12 +104,13 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.3.4'
-        autocadBundle = '1.3.4'
+        pythonConstraintCompiler = '1.7.0'
+        autocadBundle = '1.4.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
+        viewPackageSchema = '1.1'
     }
-    releaseDate = '2026-08-10'
+    releaseDate = '2026-08-11'
     license = 'MIT'
     repository = 'https://github.com/JMET04/aicad-agent'
     apiKeyRequired = $false
@@ -122,23 +123,36 @@ $releaseManifest = [ordered]@{
     }
     tools = @(
         'aicad_capabilities', 'aicad_get_plan_schema', 'aicad_generate',
-        'aicad_validate_plan', 'aicad_compile_plan', 'aicad_solidworks_doctor',
+        'aicad_validate_plan', 'aicad_compile_plan',
+        'aicad_get_semantic_schema', 'aicad_get_correction_schema', 'aicad_get_view_package_schema',
+        'aicad_describe_plan', 'aicad_preview_correction', 'aicad_apply_correction', 'aicad_build_multiview_review',
+        'aicad_get_domain_validation_schema', 'aicad_validate_domain_plan',
+        'aicad_get_reference_rebuild_schema', 'aicad_validate_reference_rebuild', 'aicad_build_reference_reconstruction',
+        'aicad_solidworks_doctor',
         'aicad_get_3d_plan_schema', 'aicad_validate_3d_plan', 'aicad_build_solidworks_part',
         'scripts/aicad_packaging_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
-        'scripts/aicad_requirement_conformance.py', 'scripts/aicad_guarded_delivery.py'
+        'scripts/aicad_requirement_conformance.py', 'scripts/aicad_guarded_delivery.py', 'scripts/aicad_modifier_ui_qa.cjs',
+        'scripts/aicad_modifier_measurement_qa.cjs'
     )
     capabilities = @(
         'origin-anchored 2D constraints', 'ASCII AICAD compilation', 'DXF/SCR/audit/manifest output',
+        'calibrated webpage/SVG/image reference reconstruction', 'direct DOM object evidence and browser-backed annotation QA',
         'packaging dieline global QA and prevention rules', 'bounded CAD normality proof and typed top/bottom closure families',
         'whole user-requirement conformance before geometry', 'non-skippable whole-intent detail-proof and hashed candidate-build order',
-        'aligned direct-selection review surface with edge/corner/face labels', 'transactional SolidWorks feature planning',
-        'optional native host save/reopen verification'
+        'aligned direct-selection review surface with edge/corner/face labels', 'exact edge/circle/face correction transactions with preserve policies',
+        'shared-pattern fanout protection and full dependency replay', 'positive residual-wall product invariant',
+        'single-flow CAD modifier with clickable core parameters', 'arbitrary semantic section planes and selectable section curves',
+        'hover-discovered centers, axes, pitch circles and interface edges',
+        'typed line/point/circle/face measurements in right-handed MODEL_XYZ',
+        'synchronized coordinate-system visibility across SVG and rotating 3D views', 'transactional SolidWorks feature planning',
+        'native SolidWorks sketch/BREP persistent-reference catalog', 'native SLDPRT save/reopen per-reference verification'
     )
     externalDependencies = @(
         [ordered]@{name='ezdxf'; requirement='>=1.4,<2'; purpose='optional packaging DXF QA'; license='MIT'},
         [ordered]@{name='jsonschema'; requirement='>=4.23,<5'; purpose='normality and requirement-contract schema validation'; license='MIT'},
         [ordered]@{name='Pillow'; requirement='>=11,<12'; purpose='optional preview QA'; license='HPND'},
-        [ordered]@{name='Shapely'; requirement='>=2.1,<3'; purpose='optional topology QA'; license='BSD-3-Clause'}
+        [ordered]@{name='Shapely'; requirement='>=2.1,<3'; purpose='optional topology QA'; license='BSD-3-Clause'},
+        [ordered]@{name='Playwright'; requirement='optional external runtime'; purpose='real-browser reference and multiview transaction QA'; license='Apache-2.0'}
     )
     proprietaryDependenciesRedistributed = $false
     safetyLocks = [ordered]@{
@@ -149,13 +163,17 @@ $releaseManifest = [ordered]@{
         comparativeSuperiorityClaimAllowed = $false
     }
     knownLimitations = @(
-        'native DWG requires AutoCAD', 'native SLDPRT/STEP host execution requires a licensed SolidWorks installation',
-        'default package excludes SolidWorks interop binaries', 'packaging QA remains engineering-review evidence, not manufacturing acceptance'
+        'native DWG requires AutoCAD', 'native SLDPRT/STEP and native topology authority require a licensed SolidWorks installation',
+        'default package excludes SolidWorks interop binaries', 'raw webpage/image pixels are never dimensional authority',
+        'native AutoCAD DIMENSION/DWG output remains a host post-process', 'packaging QA remains engineering-review evidence, not manufacturing acceptance'
     )
     validationCommands = @(
         'python -m unittest discover -s tests -v',
         'python -m unittest discover -s agent-plugin/aicad-agent/tests -v',
-        'python agent-plugin/aicad-agent/scripts/aicad_agent.py capabilities'
+        'python agent-plugin/aicad-agent/scripts/aicad_agent.py capabilities',
+        'node agent-plugin/aicad-agent/scripts/aicad_reference_visual_qa.cjs --help-or-preview-arguments',
+        'node agent-plugin/aicad-agent/scripts/aicad_modifier_ui_qa.cjs <review.html> <report.json> <screenshot.png>',
+        'node agent-plugin/aicad-agent/scripts/aicad_modifier_measurement_qa.cjs <review.html> <report.json> <screenshot.png>'
     )
     files = $fileEntries
 }
@@ -179,4 +197,10 @@ try {
 } finally {
     $zip.Dispose()
 }
+$archiveHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $archive).Hash.ToLowerInvariant()
+[IO.File]::WriteAllText(
+    (Join-Path $output 'SHA256SUMS'),
+    "$archiveHash  $([IO.Path]::GetFileName($archive))`n",
+    [Text.UTF8Encoding]::new($false)
+)
 Write-Host "Agent plugin created: $archive"

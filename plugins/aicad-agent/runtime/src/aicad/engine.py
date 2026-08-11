@@ -15,6 +15,8 @@ class PlanError(ValueError):
 
 Point = tuple[float, float]
 ID_PATTERN = re.compile(r"^[A-Za-z0-9_]+$")
+LAYER_PATTERN = re.compile(r"^[A-Za-z0-9_.-]+$")
+DOMAIN_PATTERN = re.compile(r"^[a-z][a-z0-9_-]*$")
 MAX_COORDINATE = 1_000_000_000.0
 
 
@@ -27,6 +29,10 @@ class ResolvedLine:
     end: Point
     constraints: tuple[dict[str, Any], ...]
     type: str = "line"
+    layer: str = "AICAD_GEOMETRY"
+    roles: tuple[str, ...] = ()
+    editable: bool = True
+    depends_on: tuple[str, ...] = ()
 
     @property
     def vector(self) -> Point:
@@ -51,6 +57,10 @@ class ResolvedCircle:
     radius: float
     constraints: tuple[dict[str, Any], ...]
     type: str = "circle"
+    layer: str = "AICAD_GEOMETRY"
+    roles: tuple[str, ...] = ()
+    editable: bool = True
+    depends_on: tuple[str, ...] = ()
 
     @property
     def anchor(self) -> Point:
@@ -68,6 +78,10 @@ class ResolvedArc:
     end_angle_deg: float
     constraints: tuple[dict[str, Any], ...]
     type: str = "arc"
+    layer: str = "AICAD_GEOMETRY"
+    roles: tuple[str, ...] = ()
+    editable: bool = True
+    depends_on: tuple[str, ...] = ()
 
     @property
     def start(self) -> Point:
@@ -96,6 +110,7 @@ class CompiledPlan:
     entities: tuple[ResolvedEntity, ...]
     source_hash: str
     schema_version: str
+    domain: str = "general"
 
     @property
     def lines(self) -> tuple[ResolvedLine, ...]:
@@ -229,6 +244,14 @@ def _perpendicular(a: ResolvedLine, b: ResolvedLine, tolerance: float) -> bool:
     return abs(ax * bx + ay * by) <= tolerance * max(a.length * b.length, 1.0)
 
 
+def _collinear(a: ResolvedLine, b: ResolvedLine, tolerance: float) -> bool:
+    if not _parallel(a, b, tolerance):
+        return False
+    bx, by = b.vector
+    offset_x, offset_y = a.start[0] - b.start[0], a.start[1] - b.start[1]
+    return abs(bx * offset_y - by * offset_x) <= tolerance * max(b.length, 1.0)
+
+
 def _validate_offset(anchor: Point, constraint: dict[str, Any], entities: dict[str, ResolvedEntity], origin: Point, tolerance: float, label: str) -> None:
     target = constraint.get("target")
     if not isinstance(target, str):
@@ -255,9 +278,9 @@ def _validate_line_constraints(line: ResolvedLine, entities: dict[str, ResolvedE
             expected = _positive(constraint.get("value"), f"{line.id}.length.value")
             if abs(line.length - expected) > tolerance:
                 raise PlanError(f"{line.id} length is {line.length:g}, expected {expected:g}")
-        elif kind in {"parallel", "perpendicular"}:
+        elif kind in {"parallel", "perpendicular", "collinear"}:
             target = _line_by_id(entities, constraint.get("target"), f"{line.id}.{kind}.target")
-            valid = _parallel(line, target, tolerance) if kind == "parallel" else _perpendicular(line, target, tolerance)
+            valid = {"parallel": _parallel, "perpendicular": _perpendicular, "collinear": _collinear}[kind](line, target, tolerance)
             if not valid:
                 raise PlanError(f"{line.id} violates {kind} constraint to {target.id}")
         elif kind in {"start_coincident", "end_coincident"}:
@@ -325,6 +348,33 @@ def _is_duplicate(candidate: ResolvedEntity, prior: ResolvedEntity, tolerance: f
     return False
 
 
+def _referenced_entity_ids(value: Any) -> tuple[str, ...]:
+    result: list[str] = []
+
+    def visit(item: Any) -> None:
+        if isinstance(item, str):
+            candidate = item.split(".", 1)[0]
+            if candidate != "origin" and ID_PATTERN.fullmatch(candidate) and candidate not in result:
+                result.append(candidate)
+        elif isinstance(item, dict):
+            for child in item.values():
+                visit(child)
+        elif isinstance(item, list):
+            for child in item:
+                visit(child)
+
+    visit(value)
+    return tuple(result)
+
+
+def _inferred_dependencies(step: dict[str, Any], known: set[str]) -> tuple[str, ...]:
+    result: list[str] = []
+    for field in ("start", "center", "construction", "constraints"):
+        for candidate in _referenced_entity_ids(step.get(field)):
+            if candidate in known and candidate not in result:
+                result.append(candidate)
+    return tuple(result)
+
 def _common_step(step: dict[str, Any], label: str, resolved: dict[str, ResolvedEntity]) -> tuple[str, str, str, tuple[dict[str, Any], ...]]:
     entity_id = step.get("id")
     if not isinstance(entity_id, str) or not ID_PATTERN.fullmatch(entity_id):
@@ -351,6 +401,9 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
     name = drawing.get("name")
     if not isinstance(name, str) or not name.strip():
         raise PlanError("drawing.name is required")
+    domain = drawing.get("domain", "general")
+    if not isinstance(domain, str) or not DOMAIN_PATTERN.fullmatch(domain):
+        raise PlanError("drawing.domain must be a lower-case ASCII identifier")
     units = drawing.get("units", "mm")
     if units not in {"mm", "inch"}:
         raise PlanError("drawing.units must be mm or inch")
@@ -377,17 +430,38 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
         if step_type not in {"line", "circle", "arc"}:
             raise PlanError(f"{label}.type must be line, circle, or arc")
         entity_id, purpose, reasoning, constraints = _common_step(raw_step, label, resolved)
+        layer = raw_step.get("layer", "AICAD_GEOMETRY")
+        if not isinstance(layer, str) or not LAYER_PATTERN.fullmatch(layer):
+            raise PlanError(f"{entity_id}.layer must be an ASCII CAD layer name")
+        role = raw_step.get("role")
+        roles_raw = raw_step.get("roles")
+        if roles_raw is None:
+            roles_raw = [role] if isinstance(role, str) and role else []
+        if not isinstance(roles_raw, list) or not all(isinstance(value, str) and value for value in roles_raw):
+            raise PlanError(f"{entity_id}.roles must be an array of non-empty strings")
+        roles = tuple(dict.fromkeys(roles_raw))
+        editable = raw_step.get("editable", True)
+        if not isinstance(editable, bool):
+            raise PlanError(f"{entity_id}.editable must be boolean")
+        depends_raw = raw_step.get("depends_on", [])
+        if not isinstance(depends_raw, list) or not all(isinstance(value, str) and ID_PATTERN.fullmatch(value) for value in depends_raw):
+            raise PlanError(f"{entity_id}.depends_on must be an array of earlier entity IDs")
+        depends_on = tuple(dict.fromkeys(depends_raw))
+        unknown_dependencies = [value for value in depends_on if value not in resolved]
+        if unknown_dependencies:
+            raise PlanError(f"{entity_id}.depends_on may only reference earlier entities: {unknown_dependencies}")
+        depends_on = tuple(dict.fromkeys([*depends_on, *_inferred_dependencies(raw_step, set(resolved))]))
 
         if step_type == "line":
             start = _resolve_anchor(raw_step.get("start"), resolved, origin, f"{entity_id}.start")
             end = _resolve_end(raw_step.get("construction"), start, resolved, origin, f"{entity_id}.construction")
-            entity: ResolvedEntity = ResolvedLine(entity_id, purpose, reasoning, start, end, constraints)
+            entity: ResolvedEntity = ResolvedLine(entity_id, purpose, reasoning, start, end, constraints, layer=layer, roles=roles, editable=editable, depends_on=depends_on)
             if entity.length <= tolerance:
                 raise PlanError(f"{entity_id} is zero-length within tolerance")
             has_relation = _validate_line_constraints(entity, resolved, origin, tolerance)
         elif step_type == "circle":
             center = _resolve_anchor(raw_step.get("center"), resolved, origin, f"{entity_id}.center")
-            entity = ResolvedCircle(entity_id, purpose, reasoning, center, _positive(raw_step.get("radius"), f"{entity_id}.radius"), constraints)
+            entity = ResolvedCircle(entity_id, purpose, reasoning, center, _positive(raw_step.get("radius"), f"{entity_id}.radius"), constraints, layer=layer, roles=roles, editable=editable, depends_on=depends_on)
             has_relation = _validate_radial_constraints(entity, resolved, origin, tolerance)
         else:
             center = _resolve_anchor(raw_step.get("center"), resolved, origin, f"{entity_id}.center")
@@ -396,7 +470,7 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
             end_angle = _number(raw_step.get("end_angle_deg"), f"{entity_id}.end_angle_deg")
             if abs(((end_angle - start_angle) % 360)) <= tolerance:
                 raise PlanError(f"{entity_id} arc sweep must be between 0 and 360 degrees")
-            entity = ResolvedArc(entity_id, purpose, reasoning, center, radius, start_angle, end_angle, constraints)
+            entity = ResolvedArc(entity_id, purpose, reasoning, center, radius, start_angle, end_angle, constraints, layer=layer, roles=roles, editable=editable, depends_on=depends_on)
             has_relation = _validate_radial_constraints(entity, resolved, origin, tolerance)
 
         if index == 0 and not _close(entity.anchor, origin, tolerance):
@@ -411,7 +485,7 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
         known_points.extend(_entity_points(entity))
 
     canonical = json.dumps(data, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    return CompiledPlan(name.strip(), units, origin, tolerance, tuple(ordered), hashlib.sha256(canonical).hexdigest(), schema_version)
+    return CompiledPlan(name.strip(), units, origin, tolerance, tuple(ordered), hashlib.sha256(canonical).hexdigest(), schema_version, domain)
 
 
 def load_and_compile(path: Path) -> CompiledPlan:

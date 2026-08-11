@@ -5,7 +5,14 @@ param(
 
 $ErrorActionPreference = 'Stop'
 if (-not $SourceDirectory) {
-    $SourceDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) 'release\aicad-agent'
+    $repositoryRoot = Split-Path -Parent $PSScriptRoot
+    $candidates = @(
+        (Join-Path $repositoryRoot 'plugins\aicad-agent'),
+        (Join-Path $repositoryRoot 'release\v1.7.0\aicad-agent'),
+        (Join-Path $repositoryRoot 'agent-plugin\aicad-agent')
+    )
+    $SourceDirectory = $candidates | Where-Object { Test-Path -LiteralPath (Join-Path $_ '.codex-plugin\plugin.json') -PathType Leaf } | Select-Object -First 1
+    if (-not $SourceDirectory) { throw 'No built or source aicad-agent plugin directory was found.' }
 }
 $source = [IO.Path]::GetFullPath($SourceDirectory)
 $pluginsRoot = [IO.Path]::GetFullPath((Join-Path $HOME 'plugins'))

@@ -15,7 +15,17 @@
         "name": {"type": "string", "minLength": 1},
         "units": {"enum": ["mm", "inch"]},
         "origin": {"const": [0, 0]},
-        "tolerance": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.1}
+        "tolerance": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.1},
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+        "domain": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$", "default": "general"},
+        "locks": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "review_policy": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "reviewOnly": {"const": true}, "accepted": {"const": false},
+            "ruleEnabled": {"const": false}, "domainGated": {"const": true}
+          }
+        }
       }
     },
     "steps": {
@@ -51,7 +61,7 @@
       "oneOf": [
         {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"enum": ["horizontal", "vertical"]}}},
         {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"enum": ["length", "radius", "diameter", "start_angle", "end_angle"]}, "value": {"type": "number"}}},
-        {"type": "object", "additionalProperties": false, "required": ["kind", "target"], "properties": {"kind": {"enum": ["parallel", "perpendicular", "start_coincident", "end_coincident", "center_coincident"]}, "target": {"type": "string"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "target"], "properties": {"kind": {"enum": ["parallel", "perpendicular", "collinear", "start_coincident", "end_coincident", "center_coincident"]}, "target": {"type": "string"}}},
         {"type": "object", "additionalProperties": false, "required": ["kind", "target", "dx", "dy"], "properties": {"kind": {"enum": ["start_offset", "center_offset"]}, "target": {"type": "string"}, "dx": {"type": "number"}, "dy": {"type": "number"}}}
       ]
     },
@@ -61,7 +71,12 @@
         "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
         "purpose": {"type": "string", "minLength": 1},
         "reasoning": {"type": "string", "minLength": 1},
-        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}}
+        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}},
+        "layer": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$", "default": "AICAD_GEOMETRY"},
+        "role": {"type": "string", "minLength": 1},
+        "roles": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "editable": {"type": "boolean", "default": true},
+        "depends_on": {"type": "array", "items": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "uniqueItems": true}
       }
     },
     "line": {
@@ -71,7 +86,12 @@
         "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "type": {"const": "line"},
         "purpose": {"type": "string", "minLength": 1}, "reasoning": {"type": "string", "minLength": 1},
         "start": {"$ref": "#/$defs/anchor"}, "construction": {"$ref": "#/$defs/construction"},
-        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}}
+        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}},
+        "layer": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$", "default": "AICAD_GEOMETRY"},
+        "role": {"type": "string", "minLength": 1},
+        "roles": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "editable": {"type": "boolean", "default": true},
+        "depends_on": {"type": "array", "items": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "uniqueItems": true}
       }
     },
     "circle": {
@@ -81,7 +101,12 @@
         "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "type": {"const": "circle"},
         "purpose": {"type": "string", "minLength": 1}, "reasoning": {"type": "string", "minLength": 1},
         "center": {"$ref": "#/$defs/anchor"}, "radius": {"type": "number", "exclusiveMinimum": 0},
-        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}}
+        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}},
+        "layer": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$", "default": "AICAD_GEOMETRY"},
+        "role": {"type": "string", "minLength": 1},
+        "roles": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "editable": {"type": "boolean", "default": true},
+        "depends_on": {"type": "array", "items": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "uniqueItems": true}
       }
     },
     "arc": {
@@ -92,7 +117,12 @@
         "purpose": {"type": "string", "minLength": 1}, "reasoning": {"type": "string", "minLength": 1},
         "center": {"$ref": "#/$defs/anchor"}, "radius": {"type": "number", "exclusiveMinimum": 0},
         "start_angle_deg": {"type": "number"}, "end_angle_deg": {"type": "number"},
-        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}}
+        "constraints": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/constraint"}},
+        "layer": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$", "default": "AICAD_GEOMETRY"},
+        "role": {"type": "string", "minLength": 1},
+        "roles": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "editable": {"type": "boolean", "default": true},
+        "depends_on": {"type": "array", "items": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "uniqueItems": true}
       }
     }
   }

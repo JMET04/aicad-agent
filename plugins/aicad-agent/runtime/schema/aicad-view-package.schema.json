@@ -1,0 +1,674 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad-view-package.schema.json",
+  "title": "AICAD synchronized 2D/3D semantic review views",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "space",
+    "domain",
+    "source_sha256",
+    "review_policy",
+    "semantic_document",
+    "coordinate_system",
+    "views",
+    "selection_map",
+    "selector_3d",
+    "limits"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "space": {
+      "enum": [
+        "2d",
+        "3d"
+      ]
+    },
+    "domain": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "review_policy": {
+      "type": "object"
+    },
+    "semantic_document": {
+      "type": "object"
+    },
+    "views": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/view"
+      }
+    },
+    "selection_map": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/selection_ref"
+      }
+    },
+    "selector_3d": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/selector_3d"
+        }
+      ]
+    },
+    "limits": {
+      "type": "object"
+    },
+    "coordinate_system": {
+      "$ref": "#/$defs/coordinate_system"
+    }
+  },
+  "$defs": {
+    "selection_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "view_id",
+        "view_entity_id",
+        "source_object_id",
+        "source_subobject",
+        "reference_key",
+        "geometry_type",
+        "role",
+        "derived",
+        "edit_paths",
+        "back_projection",
+        "measurement"
+      ],
+      "properties": {
+        "view_id": {
+          "type": "string"
+        },
+        "view_entity_id": {
+          "type": "string"
+        },
+        "source_object_id": {
+          "type": "string"
+        },
+        "source_subobject": {
+          "type": "string"
+        },
+        "reference_key": {
+          "type": "string"
+        },
+        "geometry_type": {
+          "enum": [
+            "line",
+            "circle",
+            "face",
+            "point"
+          ]
+        },
+        "role": {
+          "type": "string"
+        },
+        "derived": {
+          "type": "boolean"
+        },
+        "edit_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "back_projection": {
+          "type": "object"
+        },
+        "edit_scope": {
+          "enum": [
+            "subobject_parameterized",
+            "feature_parameter",
+            "shared_pattern_parameter",
+            "derived_parameter_proxy"
+          ]
+        },
+        "shared_parameter_groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "affected_instance_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requires_preserve_policy": {
+          "type": "boolean"
+        },
+        "detach_supported": {
+          "type": "boolean"
+        },
+        "key_geometry": {
+          "type": "boolean"
+        },
+        "relation_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "key_kind": {
+          "type": "string"
+        },
+        "measurement": {
+          "$ref": "#/$defs/measurement"
+        }
+      }
+    },
+    "selector_subobject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_object_id",
+        "source_subobject",
+        "geometry_type",
+        "role",
+        "derived",
+        "selectable",
+        "edit_paths",
+        "reference_key",
+        "edit_scope",
+        "shared_parameter_groups",
+        "affected_instance_count",
+        "requires_preserve_policy",
+        "detach_supported",
+        "key_geometry",
+        "relation_capabilities",
+        "measurement"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "source_object_id": {
+          "type": "string"
+        },
+        "source_subobject": {
+          "type": "string"
+        },
+        "geometry_type": {
+          "enum": [
+            "line",
+            "circle",
+            "face",
+            "point"
+          ]
+        },
+        "role": {
+          "type": "string"
+        },
+        "derived": {
+          "type": "boolean"
+        },
+        "selectable": {
+          "const": true
+        },
+        "edit_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reference_key": {
+          "type": "string"
+        },
+        "edit_scope": {
+          "enum": [
+            "subobject_parameterized",
+            "feature_parameter",
+            "shared_pattern_parameter",
+            "derived_parameter_proxy"
+          ]
+        },
+        "shared_parameter_groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "affected_instance_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requires_preserve_policy": {
+          "type": "boolean"
+        },
+        "detach_supported": {
+          "type": "boolean"
+        },
+        "key_geometry": {
+          "type": "boolean"
+        },
+        "relation_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "measurement": {
+          "$ref": "#/$defs/measurement"
+        }
+      }
+    },
+    "selector_3d": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "topology_authority",
+        "topology_stability",
+        "objects"
+      ],
+      "properties": {
+        "mode": {
+          "const": "semantic_subobject"
+        },
+        "topology_authority": {
+          "const": false
+        },
+        "topology_stability": {
+          "const": "plan_derived_not_native_persistent_name"
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_object_id",
+              "feature_type",
+              "role",
+              "z_min",
+              "z_max",
+              "sketch_z",
+              "profile",
+              "subobjects",
+              "core_parameters"
+            ],
+            "properties": {
+              "source_object_id": {
+                "type": "string"
+              },
+              "feature_type": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "z_min": {
+                "type": "number"
+              },
+              "z_max": {
+                "type": "number"
+              },
+              "sketch_z": {
+                "type": "number"
+              },
+              "profile": {
+                "type": "object"
+              },
+              "subobjects": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/selector_subobject"
+                }
+              },
+              "core_parameters": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "kind",
+        "axes",
+        "lost_axis",
+        "plane",
+        "geometry_scope",
+        "entities",
+        "manufacturing_authority",
+        "back_projection"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "axes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lost_axis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plane": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "geometry_scope": {
+          "type": "string"
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/view_entity"
+          }
+        },
+        "manufacturing_authority": {
+          "const": false
+        },
+        "back_projection": {
+          "type": "object"
+        }
+      }
+    },
+    "view_entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "view_id",
+        "source_object_id",
+        "source_subobject",
+        "geometry",
+        "role",
+        "derived",
+        "selectable",
+        "edit_paths"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "view_id": {
+          "type": "string"
+        },
+        "source_object_id": {
+          "type": "string"
+        },
+        "source_subobject": {
+          "type": "string"
+        },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "line",
+                "circle",
+                "point"
+              ]
+            }
+          }
+        },
+        "role": {
+          "type": "string"
+        },
+        "derived": {
+          "type": "boolean"
+        },
+        "selectable": {
+          "type": "boolean"
+        },
+        "edit_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "key_geometry": {
+          "type": "boolean"
+        },
+        "key_kind": {
+          "type": "string"
+        }
+      }
+    },
+    "point3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": [
+          "number",
+          "null"
+        ]
+      }
+    },
+    "coordinate_system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "handedness",
+        "origin",
+        "axes",
+        "unit"
+      ],
+      "properties": {
+        "id": {
+          "const": "MODEL_XYZ"
+        },
+        "type": {
+          "const": "cartesian"
+        },
+        "handedness": {
+          "const": "right"
+        },
+        "origin": {
+          "$ref": "#/$defs/point3"
+        },
+        "axes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "properties": {
+            "x": {
+              "$ref": "#/$defs/point3"
+            },
+            "y": {
+              "$ref": "#/$defs/point3"
+            },
+            "z": {
+              "$ref": "#/$defs/point3"
+            }
+          }
+        },
+        "unit": {
+          "const": "mm"
+        }
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "authority",
+        "coordinate_system_id",
+        "unit"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "line",
+            "circle",
+            "point",
+            "face"
+          ]
+        },
+        "authority": {
+          "enum": [
+            "model_semantic",
+            "authoritative_2d",
+            "orthographic_projection",
+            "isometric_projection"
+          ]
+        },
+        "coordinate_system_id": {
+          "const": "MODEL_XYZ"
+        },
+        "unit": {
+          "const": "mm"
+        },
+        "start": {
+          "$ref": "#/$defs/point3"
+        },
+        "end": {
+          "$ref": "#/$defs/point3"
+        },
+        "coordinates": {
+          "$ref": "#/$defs/point3"
+        },
+        "center": {
+          "$ref": "#/$defs/point3"
+        },
+        "length_mm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "radius_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "diameter_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "area_mm2": {
+          "type": "number",
+          "minimum": 0
+        },
+        "controller_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "controller_value": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number"
+              }
+            }
+          ]
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "line"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "start",
+              "end",
+              "length_mm"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "circle"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "center",
+              "radius_mm",
+              "diameter_mm"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "point"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "coordinates"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "face"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "center",
+              "area_mm2"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

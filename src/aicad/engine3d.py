@@ -11,6 +11,7 @@ from .engine import PlanError
 
 
 ID_PATTERN = re.compile(r"^[A-Za-z0-9_]+$")
+DOMAIN_PATTERN = re.compile(r"^[a-z][a-z0-9_-]*$")
 Point2 = tuple[float, float]
 BBox3 = tuple[float, float, float, float, float, float]
 
@@ -83,6 +84,8 @@ class ResolvedFeature3D:
     expected_bbox: BBox3
     expected_body_count: int
     constraints: tuple[dict[str, Any], ...]
+    roles: tuple[str, ...] = ()
+    editable: bool = True
 
 
 @dataclass(frozen=True)
@@ -101,6 +104,7 @@ class CompiledPlan3D:
     tolerance: float
     features: tuple[ResolvedFeature3D, ...]
     source_hash: str
+    domain: str = "general"
 
 
 def _number(value: Any, label: str) -> float:
@@ -393,6 +397,9 @@ def compile_plan3d(data: dict[str, Any]) -> CompiledPlan3D:
     name = part.get("name")
     if not isinstance(name, str) or not name.strip():
         raise PlanError("part.name is required")
+    domain = part.get("domain", "general")
+    if not isinstance(domain, str) or not DOMAIN_PATTERN.fullmatch(domain):
+        raise PlanError("part.domain must be a lower-case ASCII identifier")
     units = part.get("units", "mm")
     if units != "mm":
         raise PlanError("3D version 1.0 currently requires mm units")
@@ -429,6 +436,16 @@ def compile_plan3d(data: dict[str, Any]) -> CompiledPlan3D:
         purpose, reasoning = step.get("purpose"), step.get("reasoning")
         if not isinstance(purpose, str) or not purpose.strip() or not isinstance(reasoning, str) or not reasoning.strip():
             raise PlanError(f"{feature_id} requires non-empty purpose and reasoning")
+        roles_raw = step.get("roles")
+        role = step.get("role")
+        if roles_raw is None:
+            roles_raw = [role] if isinstance(role, str) and role else []
+        if not isinstance(roles_raw, list) or not all(isinstance(value, str) and value for value in roles_raw):
+            raise PlanError(f"{feature_id}.roles must be an array of non-empty strings")
+        roles = tuple(dict.fromkeys(roles_raw))
+        editable = step.get("editable", True)
+        if not isinstance(editable, bool):
+            raise PlanError(f"{feature_id}.editable must be boolean")
         dependencies = step.get("depends_on", [])
         if not isinstance(dependencies, list) or not all(isinstance(item, str) for item in dependencies):
             raise PlanError(f"{feature_id}.depends_on must be an array of earlier feature IDs")
@@ -464,6 +481,27 @@ def compile_plan3d(data: dict[str, Any]) -> CompiledPlan3D:
                 raise PlanError(f"{feature_id} support must be an additive feature")
             if not _contains(support.profile, profile, tolerance):
                 raise PlanError(f"{feature_id} profile is not contained in support {support_feature}")
+            if feature_type == "cut_extrude" and support.type == "boss_extrude" and support.profile.kind == "circle":
+                assert support.profile.radius is not None
+                if profile.kind == "center_rectangle":
+                    left, bottom, right, top = profile.bounds
+                    farthest_corner = max(
+                        math.hypot(x - support.profile.center[0], y - support.profile.center[1])
+                        for x, y in ((left, bottom), (left, top), (right, bottom), (right, top))
+                    )
+                    radial_walls = [support.profile.radius - farthest_corner]
+                else:
+                    radial_walls = [
+                        support.profile.radius
+                        - math.hypot(circle.center[0] - support.profile.center[0], circle.center[1] - support.profile.center[1])
+                        - circle.radius
+                        for circle in profile.primitives
+                    ]
+                if min(radial_walls) <= tolerance:
+                    raise PlanError(
+                        f"{feature_id} cut would remove supporting boss {support_feature}; "
+                        "a positive residual wall is required"
+                    )
             support_top_z = support.resulting_top_z
 
         if feature_type != "cut_extrude" and end_condition != "blind":
@@ -497,6 +535,7 @@ def compile_plan3d(data: dict[str, Any]) -> CompiledPlan3D:
         feature = ResolvedFeature3D(
             feature_id, feature_type, purpose.strip(), reasoning.strip(), tuple(dependencies), support_feature,
             profile, depth, end_condition, support_top_z, resulting_top, before, after, delta, bbox, 1, constraints,
+            roles=roles, editable=editable,
         )
         _validate_declared_constraints(feature, tolerance)
         resolved[feature_id] = feature
@@ -504,4 +543,4 @@ def compile_plan3d(data: dict[str, Any]) -> CompiledPlan3D:
         volume = after
 
     canonical = json.dumps(data, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    return CompiledPlan3D(name.strip(), units, origin, tolerance, tuple(ordered), hashlib.sha256(canonical).hexdigest())
+    return CompiledPlan3D(name.strip(), units, origin, tolerance, tuple(ordered), hashlib.sha256(canonical).hexdigest(), domain)

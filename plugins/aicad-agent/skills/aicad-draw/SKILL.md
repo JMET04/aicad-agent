@@ -23,6 +23,18 @@ Use this order. Do not skip or rearrange it:
 
 For a trivial rectangle, circle, arc, or rectangular plate with one centered hole, `aicad_generate` remains available as a low-risk shortcut. A caller-supplied low-risk schema 2.0 plan can still use `aicad_compile_plan`. Do not use either shortcut for packaging, closure systems, multi-face products, fit-critical parts or any request with reference material and conflicting sources.
 
+## Webpage and image reference reconstruction
+
+When the request is to reproduce a drawing from a webpage, SVG, PDF, screenshot, or image:
+
+1. Call `aicad_get_reference_rebuild_schema` and read [WEB_REFERENCE_REBUILD.md](../../docs/WEB_REFERENCE_REBUILD.md).
+2. Never treat pixel distance as a physical dimension. Use explicit dimension labels, a user baseline, or native vector units as calibration authority.
+3. For webpage SVG sources, pin the source hash and bind the actual DOM IDs for geometry and text. Do not validate a manually copied contract against itself.
+4. Require one reference object per CAD target, exact text evidence, calibrated position, transformed rotation, drafting hierarchy, and complete annotation coverage.
+5. Keep `source_exact` layout by default. Permit `optimized_offset` only for a measured collision, with an explicit reason and maximum displacement budget.
+6. Run `aicad_validate_reference_rebuild`, then `aicad_build_reference_reconstruction`.
+7. Run `scripts/aicad_reference_visual_qa.cjs` in a real browser and require every visual gate to pass before presenting the preview.
+8. State that the portable DXF uses editable MTEXT and deterministic dimension graphics. Native AutoCAD DIMENSION objects, DWG layouts, XData persistence, and save/reopen remain host gates.
 ## Plan every entity mathematically
 
 For each entity, determine before submitting the plan:
@@ -74,6 +86,9 @@ python scripts/aicad_agent.py generate --request "120x80 plate with centered dia
 python scripts/aicad_agent.py generate --request-file request-utf8.txt --out build/job
 python scripts/aicad_agent.py validate --plan drawing.plan.json
 python scripts/aicad_agent.py compile --plan drawing.plan.json --out build/job
+python scripts/aicad_agent.py reference-validate --plan drawing.plan.json --reference drawing.reference.json
+python scripts/aicad_agent.py reference-build --plan drawing.plan.json --reference drawing.reference.json --out build/reference --name drawing
+node scripts/aicad_reference_visual_qa.cjs build/reference/drawing.preview.html build/reference/drawing.visual-validation.json build/reference/drawing.preview.png
 python scripts/aicad_requirement_conformance.py --contract requirement-contract.json --trace requirement-trace.json --normality-template structure.normality.json --normality-instance drawing.instance.json --out-json build/reports/requirement.json --out-md build/reports/requirement.md
 python scripts/aicad_guarded_delivery.py --contract requirement-contract.json --trace requirement-trace.json --plan drawing.plan.json --geometry geometry.json --template structure.normality.json --instance instance.json --out build/candidate --report-dir build/reports --name drawing
 ```

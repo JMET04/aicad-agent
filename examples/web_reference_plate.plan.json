@@ -1,0 +1,43 @@
+{
+  "schema_version": "2.0",
+  "drawing": {
+    "name": "web_reference_plate",
+    "units": "mm",
+    "origin": [0, 0],
+    "tolerance": 0.000001,
+    "domain": "mechanical",
+    "review_policy": {"reviewOnly": true, "accepted": false, "ruleEnabled": false, "domainGated": true}
+  },
+  "steps": [
+    {
+      "id": "L001", "type": "line", "purpose": "bottom datum edge", "reasoning": "Anchors the plate at the global origin and establishes the authoritative 120 mm width.",
+      "start": {"ref": "origin"}, "construction": {"kind": "vector", "dx": 120, "dy": 0},
+      "constraints": [{"kind": "horizontal"}, {"kind": "length", "value": 120}, {"kind": "start_coincident", "target": "origin"}],
+      "layer": "OUTLINE", "roles": ["datum", "outline"]
+    },
+    {
+      "id": "L002", "type": "line", "purpose": "right plate edge", "reasoning": "Starts at the datum endpoint and fixes the authoritative 80 mm height perpendicular to L001.",
+      "start": {"ref": "L001.end"}, "construction": {"kind": "perpendicular", "to": "L001", "length": 80, "turn": "left"},
+      "constraints": [{"kind": "vertical"}, {"kind": "length", "value": 80}, {"kind": "perpendicular", "target": "L001"}, {"kind": "start_coincident", "target": "L001.end"}],
+      "layer": "OUTLINE", "roles": ["outline"], "depends_on": ["L001"]
+    },
+    {
+      "id": "L003", "type": "line", "purpose": "top plate edge", "reasoning": "Closes the upper width with a parallel opposite 120 mm edge.",
+      "start": {"ref": "L002.end"}, "construction": {"kind": "parallel", "to": "L001", "length": 120, "direction": "opposite"},
+      "constraints": [{"kind": "horizontal"}, {"kind": "length", "value": 120}, {"kind": "parallel", "target": "L001"}, {"kind": "start_coincident", "target": "L002.end"}],
+      "layer": "OUTLINE", "roles": ["outline"], "depends_on": ["L001", "L002"]
+    },
+    {
+      "id": "L004", "type": "line", "purpose": "left plate edge and contour closure", "reasoning": "Returns from L003 to the origin and proves a closed rectangular contour.",
+      "start": {"ref": "L003.end"}, "construction": {"kind": "to_point", "target": {"ref": "origin"}},
+      "constraints": [{"kind": "vertical"}, {"kind": "length", "value": 80}, {"kind": "parallel", "target": "L002"}, {"kind": "start_coincident", "target": "L003.end"}, {"kind": "end_coincident", "target": "origin"}],
+      "layer": "OUTLINE", "roles": ["outline", "closure"], "depends_on": ["L001", "L002", "L003"]
+    },
+    {
+      "id": "C001", "type": "circle", "purpose": "center through hole", "reasoning": "The hole center is fixed by half-width and half-height offsets and its diameter is authoritative at 20 mm.",
+      "center": {"point": [60, 40]}, "radius": 10,
+      "constraints": [{"kind": "diameter", "value": 20}, {"kind": "center_offset", "target": "origin", "dx": 60, "dy": 40}],
+      "layer": "HOLE", "roles": ["hole", "interface"], "depends_on": ["L001", "L002"]
+    }
+  ]
+}

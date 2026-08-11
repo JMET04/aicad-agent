@@ -56,6 +56,22 @@ def main() -> int:
         sums_path,
         root / "LICENSE",
         root / "runtime" / "src" / "aicad" / "engine.py",
+        root / "runtime" / "src" / "aicad" / "reference_rebuild.py",
+        root / "runtime" / "src" / "aicad" / "subobject_correction.py",
+        root / "runtime" / "schema" / "aicad-correction.schema.json",
+        root / "rules" / "subobject_correction_rules.json",
+        root / "rules" / "native_solidworks_topology_rules.json",
+        root / "docs" / "NATIVE_SOLIDWORKS_TOPOLOGY.md",
+        root / "skills" / "aicad-model-3d" / "references" / "native-topology.md",
+        root / "runtime" / "solidworks-host-source" / "Program.cs",
+        root / "tests" / "test_native_solidworks_topology_rules.py",
+        root / "docs" / "EXACT_SUBOBJECT_CORRECTION.md",
+        root / "runtime" / "schema" / "aicad-reference-rebuild.schema.json",
+        root / "runtime" / "examples" / "web_reference_plate.html",
+        root / "scripts" / "aicad_reference_visual_qa.cjs",
+        root / "scripts" / "aicad_multiview_visual_qa.cjs",
+        root / "tests" / "test_subobject_correction_rules.py",
+        root / "tests" / "test_reference_rebuild_release.py",
     ):
         if not required.is_file():
             errors.append(f"missing:{required.relative_to(root)}")
@@ -88,6 +104,8 @@ def main() -> int:
             text = path.read_text(encoding="utf-8")
         except (UnicodeDecodeError, OSError):
             continue
+        if "\ufffd" in text or any(0xE000 <= ord(character) <= 0xF8FF for character in text):
+            errors.append(f"mojibake-codepoint:{path.relative_to(root).as_posix()}")
         for pattern in FORBIDDEN_TEXT:
             if pattern.search(text):
                 errors.append(f"forbidden-text:{path.relative_to(root).as_posix()}:{pattern.pattern}")

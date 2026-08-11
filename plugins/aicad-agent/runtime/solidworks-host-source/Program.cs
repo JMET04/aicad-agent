@@ -87,6 +87,21 @@ namespace AiCad.SolidWorksHost
     }
 
     [DataContract]
+    internal sealed class NativeTopologyReference
+    {
+        [DataMember] public string reference_key;
+        [DataMember] public string semantic_geometry_type;
+        [DataMember] public string native_object_type;
+        [DataMember] public string classification;
+        [DataMember] public string persistent_reference_base64;
+        [DataMember] public int persistent_reference_status;
+        [DataMember] public bool persistent_reference_resolved;
+        [DataMember] public bool required;
+        [DataMember] public double[] signature_mm;
+        [DataMember] public string custom_property_name;
+    }
+
+    [DataContract]
     internal sealed class FeatureReport
     {
         [DataMember] public string id;
@@ -108,6 +123,7 @@ namespace AiCad.SolidWorksHost
         [DataMember] public string persistent_reference_base64;
         [DataMember] public int persistent_reference_status;
         [DataMember] public bool persistent_reference_resolved;
+        [DataMember] public List<NativeTopologyReference> native_topology = new List<NativeTopologyReference>();
         [DataMember] public ModelSnapshot before;
         [DataMember] public ModelSnapshot after;
         [DataMember] public double expected_volume_after_mm3;
@@ -130,6 +146,9 @@ namespace AiCad.SolidWorksHost
         [DataMember] public int step_save_errors;
         [DataMember] public int step_save_warnings;
         [DataMember] public List<FeatureReport> features = new List<FeatureReport>();
+        [DataMember] public int native_topology_reference_count;
+        [DataMember] public int required_native_topology_reference_count;
+        [DataMember] public int unresolved_required_native_topology_reference_count;
         [DataMember] public ModelSnapshot final_state;
         [DataMember] public List<string> errors = new List<string>();
     }
@@ -146,6 +165,10 @@ namespace AiCad.SolidWorksHost
         [DataMember] public int aicad_feature_count;
         [DataMember] public List<string> aicad_feature_names = new List<string>();
         [DataMember] public List<string> feature_errors = new List<string>();
+        [DataMember] public int native_topology_reference_count;
+        [DataMember] public int required_native_topology_reference_count;
+        [DataMember] public int unresolved_required_native_topology_reference_count;
+        [DataMember] public List<NativeTopologyReference> native_topology = new List<NativeTopologyReference>();
         [DataMember] public ModelSnapshot final_state;
         [DataMember] public List<string> errors = new List<string>();
     }
@@ -172,7 +195,7 @@ namespace AiCad.SolidWorksHost
 
             string planPath = Path.GetFullPath(args[0]);
             string reportPath = Path.GetFullPath(args[1]);
-            HostReport report = new HostReport { protocol = "AICAD_SOLIDWORKS_REPORT_1", status = "failed" };
+            HostReport report = new HostReport { protocol = "AICAD_SOLIDWORKS_REPORT_2", status = "failed" };
             SldWorks app = null;
             ModelDoc2 model = null;
             bool createdApplication = false;
@@ -211,6 +234,7 @@ namespace AiCad.SolidWorksHost
                 }
 
                 report.final_state = CaptureSnapshot(model);
+                PersistNativeTopologyCatalog(model, report);
                 SaveOutputs(app, model, plan, report);
                 if (!File.Exists(plan.output_sldprt) || new FileInfo(plan.output_sldprt).Length == 0)
                 {
@@ -262,7 +286,7 @@ namespace AiCad.SolidWorksHost
         {
             var report = new ReopenReport
             {
-                protocol = "AICAD_SOLIDWORKS_REOPEN_REPORT_1",
+                protocol = "AICAD_SOLIDWORKS_REOPEN_REPORT_2",
                 status = "failed",
                 input_sldprt = partPath,
             };
@@ -300,9 +324,14 @@ namespace AiCad.SolidWorksHost
                     current = (Feature)current.GetNextFeature();
                 }
                 report.aicad_feature_count = report.aicad_feature_names.Count;
+                ReadAndResolveNativeTopologyCatalog(model, report);
                 report.final_state = CaptureSnapshot(model);
                 if (report.aicad_feature_count == 0) throw new InvalidOperationException("Saved part contains no AICAD features.");
                 if (report.feature_errors.Count != 0) throw new InvalidOperationException("Saved part contains feature errors after reopen.");
+                if (report.native_topology_reference_count == 0)
+                    throw new InvalidOperationException("Saved part contains no AICAD native topology references.");
+                if (report.unresolved_required_native_topology_reference_count != 0)
+                    throw new InvalidOperationException("Saved part contains unresolved required AICAD native topology references.");
                 if (report.final_state.solid_body_count != 1 || report.final_state.body_fault_count != 0)
                     throw new InvalidOperationException("Saved part body is invalid after reopen.");
                 report.status = "passed";
@@ -466,6 +495,7 @@ namespace AiCad.SolidWorksHost
             Feature sketchFeature = (Feature)sketch;
             sketchFeature.Name = "AICAD_SKETCH_" + featurePlan.id;
             report.sketch_name = sketchFeature.Name;
+            CaptureSketchTopology(model, featurePlan, profileSegments, report.native_topology);
             sketchManager.InsertSketch(true);
             model.ClearSelection2(true);
             sketchFeature.Select2(false, 0);
@@ -502,6 +532,8 @@ namespace AiCad.SolidWorksHost
             model.ShowFeatureErrorDialog = previousDialog;
             report.feature_error_code = feature.GetErrorCode2(out bool warning);
             report.feature_warning = warning;
+            CaptureFeatureTopology(model, featurePlan, feature, report.native_topology);
+            RefreshNativeTopology(model, report.native_topology);
 
             if (!string.IsNullOrEmpty(report.persistent_reference_base64))
             {
@@ -560,6 +592,12 @@ namespace AiCad.SolidWorksHost
                 report.checks.Add("PASS:persistent_reference");
             else
                 report.checks.Add("FAIL:persistent_reference");
+            int requiredNative = report.native_topology.Count(item => item.required);
+            int unresolvedRequiredNative = report.native_topology.Count(item => item.required && !item.persistent_reference_resolved);
+            if (requiredNative > 0 && unresolvedRequiredNative == 0)
+                report.checks.Add("PASS:native_topology_required_refs");
+            else
+                report.checks.Add("FAIL:native_topology_required_refs required=" + requiredNative + " unresolved=" + unresolvedRequiredNative);
         }
 
         private static double VolumeTolerance(double expected, double linearTolerance)
@@ -639,8 +677,22 @@ namespace AiCad.SolidWorksHost
                 double halfHeightMm = profile.height_mm.Value / 2.0;
                 double[] corner = ModelPointToSketch(
                     app, sketch, profile.center_x_mm + halfWidthMm, profile.center_y_mm + halfHeightMm, supportTopZmm);
-                object result = manager.CreateCenterRectangle(center[0], center[1], 0.0, corner[0], corner[1], 0.0);
-                if (result == null) throw new InvalidOperationException("SolidWorks failed to create center rectangle.");
+                double[] opposite = ModelPointToSketch(
+                    app, sketch, profile.center_x_mm - halfWidthMm, profile.center_y_mm - halfHeightMm, supportTopZmm);
+                var points = new[] {
+                    new[] { opposite[0], opposite[1] },
+                    new[] { corner[0], opposite[1] },
+                    new[] { corner[0], corner[1] },
+                    new[] { opposite[0], corner[1] },
+                };
+                for (int index = 0; index < 4; index++)
+                {
+                    double[] start = points[index];
+                    double[] end = points[(index + 1) % 4];
+                    SketchSegment segment = manager.CreateLine(start[0], start[1], 0.0, end[0], end[1], 0.0);
+                    if (segment == null) throw new InvalidOperationException("SolidWorks failed to create rectangle edge " + (index + 1) + ".");
+                    segments.Add(segment);
+                }
                 return segments;
             }
             if (profile.circles == null || profile.circles.Count == 0)
@@ -821,6 +873,371 @@ namespace AiCad.SolidWorksHost
             if (!first.Select4(false, null) || !second.Select4(true, null))
                 throw new InvalidOperationException("SolidWorks could not select points for " + purpose + ".");
         }
+        private static NativeTopologyReference CapturePersistentReference(
+            ModelDoc2 model, object nativeObject, string referenceKey, string semanticGeometryType,
+            string nativeObjectType, string classification, bool required, double[] signatureMm)
+        {
+            if (nativeObject == null) return null;
+            byte[] bytes = model.Extension.GetPersistReference3(nativeObject) as byte[];
+            if (bytes == null || bytes.Length == 0)
+            {
+                if (required) throw new InvalidOperationException("Could not create required persistent reference " + referenceKey + ".");
+                return null;
+            }
+            object resolved = model.Extension.GetObjectByPersistReference3(bytes, out int status);
+            bool isResolved = resolved != null && status == (int)swPersistReferencedObjectStates_e.swPersistReferencedObject_Ok;
+            // Do not FinalReleaseComObject here: SolidWorks can return the same RCW as
+            // nativeObject, and disconnecting it would invalidate the caller's face/edge.
+            if (required && !isResolved)
+                throw new InvalidOperationException("Required persistent reference did not resolve: " + referenceKey + "; status=" + status);
+            return new NativeTopologyReference
+            {
+                reference_key = referenceKey,
+                semantic_geometry_type = semanticGeometryType,
+                native_object_type = nativeObjectType,
+                classification = classification,
+                persistent_reference_base64 = Convert.ToBase64String(bytes),
+                persistent_reference_status = status,
+                persistent_reference_resolved = isResolved,
+                required = required,
+                signature_mm = signatureMm,
+            };
+        }
+
+        private static void AddNativeTopology(ICollection<NativeTopologyReference> target, NativeTopologyReference item)
+        {
+            if (item == null) return;
+            NativeTopologyReference existing = target.FirstOrDefault(value => value.reference_key == item.reference_key);
+            if (existing == null)
+            {
+                target.Add(item);
+                return;
+            }
+            if (existing.persistent_reference_base64 != item.persistent_reference_base64)
+                throw new InvalidOperationException("Native topology classification is ambiguous for " + item.reference_key + ".");
+        }
+
+        private static void CaptureSketchTopology(
+            ModelDoc2 model, FeaturePlan plan, IList<SketchSegment> segments, ICollection<NativeTopologyReference> target)
+        {
+            if (segments == null) throw new InvalidOperationException(plan.id + " has no sketch segments for native topology capture.");
+            if (plan.profile.kind == "center_rectangle")
+            {
+                if (segments.Count != 4) throw new InvalidOperationException(plan.id + " rectangle must contain exactly four ordered edges.");
+                double left = plan.profile.center_x_mm - plan.profile.width_mm.Value / 2.0;
+                double right = plan.profile.center_x_mm + plan.profile.width_mm.Value / 2.0;
+                double bottom = plan.profile.center_y_mm - plan.profile.height_mm.Value / 2.0;
+                double top = plan.profile.center_y_mm + plan.profile.height_mm.Value / 2.0;
+                double[][] signatures = {
+                    new[] { left, bottom, right, bottom, plan.support_top_z_mm },
+                    new[] { right, bottom, right, top, plan.support_top_z_mm },
+                    new[] { right, top, left, top, plan.support_top_z_mm },
+                    new[] { left, top, left, bottom, plan.support_top_z_mm },
+                };
+                for (int index = 0; index < 4; index++)
+                    AddNativeTopology(target, CapturePersistentReference(
+                        model, segments[index], plan.id + "|profile.edge." + (index + 1), "line", "SketchSegment",
+                        "ordered_rectangle_profile_edge", true, signatures[index]));
+                return;
+            }
+            if (plan.profile.circles == null || segments.Count != plan.profile.circles.Count)
+                throw new InvalidOperationException(plan.id + " circle segment count does not match its semantic profile.");
+            for (int index = 0; index < segments.Count; index++)
+            {
+                CirclePlan circle = plan.profile.circles[index];
+                AddNativeTopology(target, CapturePersistentReference(
+                    model, segments[index], plan.id + "|profile.circle." + (index + 1), "circle", "SketchSegment",
+                    "ordered_profile_circle", true,
+                    new[] { circle.x_mm, circle.y_mm, plan.support_top_z_mm, circle.radius_mm }));
+            }
+        }
+
+        private static void RefreshNativeTopology(ModelDoc2 model, IEnumerable<NativeTopologyReference> references)
+        {
+            foreach (NativeTopologyReference item in references)
+            {
+                byte[] bytes = Convert.FromBase64String(item.persistent_reference_base64);
+                object resolved = model.Extension.GetObjectByPersistReference3(bytes, out int status);
+                item.persistent_reference_status = status;
+                item.persistent_reference_resolved = resolved != null && status == (int)swPersistReferencedObjectStates_e.swPersistReferencedObject_Ok;
+                ReleaseCom(resolved);
+                if (item.required && !item.persistent_reference_resolved)
+                    throw new InvalidOperationException("Required native topology reference became unresolved: " + item.reference_key + ".");
+            }
+        }
+
+        private static bool Near(double first, double second, double toleranceMm = 0.001)
+        {
+            return Math.Abs(first - second) <= toleranceMm;
+        }
+
+        private static double[] BoxMm(Face2 face)
+        {
+            double[] box = face == null ? null : face.GetBox() as double[];
+            return box == null ? null : box.Select(value => value * MillimetersPerMeter).ToArray();
+        }
+
+        private static void CaptureFeatureTopology(
+            ModelDoc2 model, FeaturePlan plan, Feature feature, ICollection<NativeTopologyReference> target)
+        {
+            Array faces = feature.GetFaces() as Array;
+            if (faces == null) return;
+            var faceValues = new List<Face2>();
+            foreach (object raw in faces)
+            {
+                Face2 face = raw as Face2;
+                if (face != null) faceValues.Add(face);
+            }
+            if (plan.profile.kind == "center_rectangle")
+                CaptureRectangleFeatureTopology(model, plan, faceValues, target);
+            else
+                CaptureCircularFeatureTopology(model, plan, faceValues, target);
+        }
+
+        private static void CaptureRectangleFeatureTopology(
+            ModelDoc2 model, FeaturePlan plan, IEnumerable<Face2> faces, ICollection<NativeTopologyReference> target)
+        {
+            double left = plan.profile.center_x_mm - plan.profile.width_mm.Value / 2.0;
+            double right = plan.profile.center_x_mm + plan.profile.width_mm.Value / 2.0;
+            double bottom = plan.profile.center_y_mm - plan.profile.height_mm.Value / 2.0;
+            double top = plan.profile.center_y_mm + plan.profile.height_mm.Value / 2.0;
+            double oppositeZ = plan.type == "cut_extrude"
+                ? (plan.end_condition == "through_all" ? 0.0 : plan.support_top_z_mm - plan.depth_mm)
+                : plan.resulting_top_z_mm;
+            foreach (Face2 face in faces)
+            {
+                Surface surface = face.GetSurface() as Surface;
+                double[] box = BoxMm(face);
+                bool planar = surface != null && surface.IsPlane();
+                ReleaseCom(surface);
+                if (!planar || box == null || box.Length < 6) continue;
+                string key = null;
+                string classification = null;
+                if (Near(box[2], box[5]) && Near(box[2], oppositeZ))
+                {
+                    key = plan.id + "|feature.face.opposite";
+                    classification = "opposite_planar_face";
+                }
+                else if (Near(box[1], box[4]) && Near(box[1], bottom))
+                {
+                    key = plan.id + "|feature.face.side.1";
+                    classification = "rectangle_side_bottom";
+                }
+                else if (Near(box[0], box[3]) && Near(box[0], right))
+                {
+                    key = plan.id + "|feature.face.side.2";
+                    classification = "rectangle_side_right";
+                }
+                else if (Near(box[1], box[4]) && Near(box[1], top))
+                {
+                    key = plan.id + "|feature.face.side.3";
+                    classification = "rectangle_side_top";
+                }
+                else if (Near(box[0], box[3]) && Near(box[0], left))
+                {
+                    key = plan.id + "|feature.face.side.4";
+                    classification = "rectangle_side_left";
+                }
+                if (key != null)
+                    AddNativeTopology(target, CapturePersistentReference(
+                        model, face, key, "face", "Face2", classification, false, box));
+            }
+            CaptureRectangleEdges(model, plan, faces, target, left, bottom, right, top, oppositeZ);
+        }
+
+        private static void CaptureRectangleEdges(
+            ModelDoc2 model, FeaturePlan plan, IEnumerable<Face2> faces, ICollection<NativeTopologyReference> target,
+            double left, double bottom, double right, double top, double oppositeZ)
+        {
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            foreach (Face2 face in faces)
+            {
+                Array edges = face.GetEdges() as Array;
+                if (edges == null) continue;
+                foreach (object raw in edges)
+                {
+                    Edge edge = raw as Edge;
+                    if (edge == null) continue;
+                    byte[] dedupeBytes = model.Extension.GetPersistReference3(edge) as byte[];
+                    if (dedupeBytes == null || !seen.Add(Convert.ToBase64String(dedupeBytes))) continue;
+                    Vertex start = edge.GetStartVertex() as Vertex;
+                    Vertex end = edge.GetEndVertex() as Vertex;
+                    double[] a = start == null ? null : start.GetPoint() as double[];
+                    double[] b = end == null ? null : end.GetPoint() as double[];
+                    ReleaseCom(start);
+                    ReleaseCom(end);
+                    if (a == null || b == null) continue;
+                    double[] p = a.Concat(b).Select(value => value * MillimetersPerMeter).ToArray();
+                    string key = null;
+                    string classification = null;
+                    bool sameZ = Near(p[2], p[5]);
+                    if (sameZ && Near(p[2], oppositeZ))
+                    {
+                        key = RectangleBoundaryKey(plan.id + "|feature.edge.opposite.", p, left, bottom, right, top);
+                        classification = "opposite_rectangle_edge";
+                    }
+                    else if (Near(p[0], p[3]) && Near(p[1], p[4]) && !sameZ)
+                    {
+                        key = RectangleCornerKey(plan.id + "|feature.edge.vertical.", p[0], p[1], left, bottom, right, top);
+                        classification = "vertical_rectangle_edge";
+                    }
+                    if (key != null)
+                        AddNativeTopology(target, CapturePersistentReference(
+                            model, edge, key, "line", "Edge", classification, false, p));
+                }
+            }
+        }
+
+        private static string RectangleBoundaryKey(string prefix, double[] p, double left, double bottom, double right, double top)
+        {
+            if (Near(p[1], bottom) && Near(p[4], bottom)) return prefix + "1";
+            if (Near(p[0], right) && Near(p[3], right)) return prefix + "2";
+            if (Near(p[1], top) && Near(p[4], top)) return prefix + "3";
+            if (Near(p[0], left) && Near(p[3], left)) return prefix + "4";
+            return null;
+        }
+
+        private static string RectangleCornerKey(string prefix, double x, double y, double left, double bottom, double right, double top)
+        {
+            if (Near(x, left) && Near(y, bottom)) return prefix + "1";
+            if (Near(x, right) && Near(y, bottom)) return prefix + "2";
+            if (Near(x, right) && Near(y, top)) return prefix + "3";
+            if (Near(x, left) && Near(y, top)) return prefix + "4";
+            return null;
+        }
+
+        private static void CaptureCircularFeatureTopology(
+            ModelDoc2 model, FeaturePlan plan, IEnumerable<Face2> faces, ICollection<NativeTopologyReference> target)
+        {
+            if (plan.profile.circles == null) return;
+            double oppositeZ = plan.type == "cut_extrude"
+                ? (plan.end_condition == "through_all" ? 0.0 : plan.support_top_z_mm - plan.depth_mm)
+                : plan.resulting_top_z_mm;
+            var seenEdges = new HashSet<string>(StringComparer.Ordinal);
+            foreach (Face2 face in faces)
+            {
+                Surface surface = face.GetSurface() as Surface;
+                double[] box = BoxMm(face);
+                bool cylindrical = surface != null && surface.IsCylinder();
+                bool planar = surface != null && surface.IsPlane();
+                ReleaseCom(surface);
+                if (box == null || box.Length < 6) continue;
+                for (int index = 0; index < plan.profile.circles.Count; index++)
+                {
+                    CirclePlan circle = plan.profile.circles[index];
+                    bool xyMatch = Near((box[0] + box[3]) / 2.0, circle.x_mm) &&
+                        Near((box[1] + box[4]) / 2.0, circle.y_mm) &&
+                        Near((box[3] - box[0]) / 2.0, circle.radius_mm) &&
+                        Near((box[4] - box[1]) / 2.0, circle.radius_mm);
+                    if (!xyMatch) continue;
+                    if (cylindrical)
+                        AddNativeTopology(target, CapturePersistentReference(
+                            model, face, plan.id + "|feature.face.cylindrical." + (index + 1), "face", "Face2",
+                            "cylindrical_face", false, box));
+                    else if (planar && Near(box[2], box[5]) && Near(box[2], oppositeZ))
+                        AddNativeTopology(target, CapturePersistentReference(
+                            model, face, plan.id + "|feature.face.opposite." + (index + 1), "face", "Face2",
+                            "opposite_circular_face", false, box));
+                }
+                Array edges = face.GetEdges() as Array;
+                if (edges == null) continue;
+                foreach (object raw in edges)
+                {
+                    Edge edge = raw as Edge;
+                    if (edge == null) continue;
+                    byte[] dedupeBytes = model.Extension.GetPersistReference3(edge) as byte[];
+                    if (dedupeBytes == null || !seenEdges.Add(Convert.ToBase64String(dedupeBytes))) continue;
+                    Curve curve = edge.GetCurve() as Curve;
+                    if (curve == null || !curve.IsCircle()) { ReleaseCom(curve); continue; }
+                    double[] parameters = curve.CircleParams as double[];
+                    ReleaseCom(curve);
+                    if (parameters == null || parameters.Length < 7) continue;
+                    double centerX = parameters[0] * MillimetersPerMeter;
+                    double centerY = parameters[1] * MillimetersPerMeter;
+                    double centerZ = parameters[2] * MillimetersPerMeter;
+                    double radius = parameters[6] * MillimetersPerMeter;
+                    for (int index = 0; index < plan.profile.circles.Count; index++)
+                    {
+                        CirclePlan circle = plan.profile.circles[index];
+                        if (Near(centerX, circle.x_mm) && Near(centerY, circle.y_mm) &&
+                            Near(centerZ, oppositeZ) && Near(radius, circle.radius_mm))
+                            AddNativeTopology(target, CapturePersistentReference(
+                                model, edge, plan.id + "|feature.circle.opposite." + (index + 1), "circle", "Edge",
+                                "opposite_circular_edge", false, new[] { centerX, centerY, centerZ, radius }));
+                    }
+                }
+            }
+        }
+
+        private static void PersistNativeTopologyCatalog(ModelDoc2 model, HostReport report)
+        {
+            List<NativeTopologyReference> catalog = report.features.SelectMany(item => item.native_topology).ToList();
+            RefreshNativeTopology(model, catalog);
+            if (catalog.Select(item => item.reference_key).Distinct(StringComparer.Ordinal).Count() != catalog.Count)
+                throw new InvalidOperationException("Native topology catalog contains duplicate semantic reference keys.");
+            CustomPropertyManager properties = model.Extension.CustomPropertyManager[""];
+            if (properties == null) throw new InvalidOperationException("SolidWorks document custom-property manager is unavailable.");
+            int ordinal = 0;
+            foreach (NativeTopologyReference item in catalog.Where(value => value.persistent_reference_resolved))
+            {
+                ordinal++;
+                string name = "AICAD_REF_" + ordinal.ToString("D4", CultureInfo.InvariantCulture);
+                string value = string.Join("\t", new[] {
+                    item.reference_key, item.semantic_geometry_type, item.native_object_type,
+                    item.classification ?? "", item.required ? "1" : "0", item.persistent_reference_base64
+                });
+                properties.Add3(name, (int)swCustomInfoType_e.swCustomInfoText, value,
+                    (int)swCustomPropertyAddOption_e.swCustomPropertyReplaceValue);
+                item.custom_property_name = name;
+            }
+            properties.Add3("AICAD_SOURCE_SHA256", (int)swCustomInfoType_e.swCustomInfoText,
+                report.source_sha256 ?? "", (int)swCustomPropertyAddOption_e.swCustomPropertyReplaceValue);
+            properties.Add3("AICAD_REF_COUNT", (int)swCustomInfoType_e.swCustomInfoText,
+                ordinal.ToString(CultureInfo.InvariantCulture), (int)swCustomPropertyAddOption_e.swCustomPropertyReplaceValue);
+            report.native_topology_reference_count = catalog.Count;
+            report.required_native_topology_reference_count = catalog.Count(item => item.required);
+            report.unresolved_required_native_topology_reference_count = catalog.Count(item => item.required && !item.persistent_reference_resolved);
+            if (report.required_native_topology_reference_count == 0 || report.unresolved_required_native_topology_reference_count != 0)
+                throw new InvalidOperationException("Native topology catalog does not contain a complete set of resolvable required references.");
+        }
+
+        private static void ReadAndResolveNativeTopologyCatalog(ModelDoc2 model, ReopenReport report)
+        {
+            CustomPropertyManager properties = model.Extension.CustomPropertyManager[""];
+            if (properties == null) throw new InvalidOperationException("SolidWorks document custom-property manager is unavailable after reopen.");
+            Array names = properties.GetNames() as Array;
+            if (names != null)
+            {
+                foreach (object rawName in names)
+                {
+                    string name = rawName as string;
+                    if (string.IsNullOrEmpty(name) || name.Length != 14 ||
+                        !name.StartsWith("AICAD_REF_", StringComparison.Ordinal) ||
+                        !name.Substring(10).All(char.IsDigit)) continue;
+                    properties.Get6(name, false, out string rawValue, out string resolvedValue, out bool wasResolved, out bool linked);
+                    string value = string.IsNullOrEmpty(rawValue) ? resolvedValue : rawValue;
+                    string[] fields = (value ?? "").Split('\t');
+                    if (fields.Length != 6) throw new InvalidDataException("Malformed native topology custom property " + name + ".");
+                    byte[] bytes = Convert.FromBase64String(fields[5]);
+                    object resolved = model.Extension.GetObjectByPersistReference3(bytes, out int status);
+                    bool isResolved = resolved != null && status == (int)swPersistReferencedObjectStates_e.swPersistReferencedObject_Ok;
+                    ReleaseCom(resolved);
+                    report.native_topology.Add(new NativeTopologyReference {
+                        reference_key = fields[0], semantic_geometry_type = fields[1], native_object_type = fields[2],
+                        classification = fields[3], required = fields[4] == "1",
+                        persistent_reference_base64 = fields[5], persistent_reference_status = status,
+                        persistent_reference_resolved = isResolved, custom_property_name = name,
+                    });
+                }
+            }
+            report.native_topology = report.native_topology.OrderBy(item => item.custom_property_name, StringComparer.Ordinal).ToList();
+            if (report.native_topology.Select(item => item.reference_key).Distinct(StringComparer.Ordinal).Count() != report.native_topology.Count)
+                throw new InvalidDataException("Reopened native topology catalog contains duplicate semantic reference keys.");
+            report.native_topology_reference_count = report.native_topology.Count;
+            report.required_native_topology_reference_count = report.native_topology.Count(item => item.required);
+            report.unresolved_required_native_topology_reference_count = report.native_topology.Count(item => item.required && !item.persistent_reference_resolved);
+        }
+
         private static ModelSnapshot CaptureSnapshot(ModelDoc2 model)
         {
             if (model == null) return new ModelSnapshot { bbox_mm = null };

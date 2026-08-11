@@ -1,0 +1,70 @@
+{
+  "schema": "aicad_native_solidworks_topology_rules_v1",
+  "version": "1.0.0",
+  "reviewOnly": true,
+  "accepted": false,
+  "ruleEnabled": false,
+  "packagingGated": true,
+  "rules": [
+    {
+      "id": "SW-N001",
+      "title": "Every editable sketch primitive has a required persistent reference",
+      "requirement": "Each ordered rectangle edge and each ordered circle primitive must be captured with GetPersistReference3 under its exact feature-id plus semantic-subobject key.",
+      "failure": "Block host delivery when any required sketch reference is absent or cannot be resolved immediately."
+    },
+    {
+      "id": "SW-N002",
+      "title": "Semantic keys are unique",
+      "requirement": "The native topology catalog must contain one unambiguous persistent reference per reference_key.",
+      "failure": "Block on duplicate keys, conflicting persistent bytes, or unordered profile primitives."
+    },
+    {
+      "id": "SW-N003",
+      "title": "BREP classification is mathematical",
+      "requirement": "Faces and edges are classified from exact profile parameters, endpoint coordinates, analytic surface type, radius, and extrusion depth; projected pixels and volatile feature-tree names are not topology truth.",
+      "failure": "Ambiguous or missing derived BREP candidates stay non-authoritative instead of being guessed."
+    },
+    {
+      "id": "SW-N004",
+      "title": "Catalog is embedded before native save",
+      "requirement": "Every resolvable persistent reference must be stored in deterministic AICAD_REF_0001-style document properties together with semantic type, native type, classification, required flag, and reference bytes.",
+      "failure": "A transient in-memory report is insufficient evidence."
+    },
+    {
+      "id": "SW-N005",
+      "title": "Save and reopen are separate gates",
+      "requirement": "After SLDPRT save, reopen the native file, enumerate only ordinal AICAD_REF_NNNN properties, decode each reference, and call GetObjectByPersistReference3.",
+      "failure": "Block if the catalog is empty or any required reference is unresolved."
+    },
+    {
+      "id": "SW-N006",
+      "title": "Catalog identity survives reopen",
+      "requirement": "The Python adapter must compare the exact saved and reopened reference-key sets and reject missing, unexpected, or duplicate keys.",
+      "failure": "A matching feature count, volume, or bounding box cannot substitute for topology identity."
+    },
+    {
+      "id": "SW-N007",
+      "title": "Native authority is evidence-bound",
+      "requirement": "native_topology_authority may be true only after real SolidWorks execution, native save, reopen, key-set equality, and zero unresolved required references.",
+      "failure": "Offline plans and semantic multiview projections must continue to declare native topology authority false."
+    },
+    {
+      "id": "SW-N008",
+      "title": "COM wrapper lifetime is protected",
+      "requirement": "Do not FinalReleaseComObject on an object returned by persistent-reference readback while the caller may still hold the same runtime callable wrapper.",
+      "rootCausePrevented": "SolidWorks can return the same RCW for the original face or edge and the resolved reference; final release disconnects both handles."
+    },
+    {
+      "id": "SW-N009",
+      "title": "Metadata properties cannot masquerade as reference records",
+      "requirement": "The reopen reader accepts only AICAD_REF_ followed by exactly four decimal digits.",
+      "rootCausePrevented": "A broad prefix match also consumes AICAD_REF_COUNT and produces a malformed-record failure."
+    },
+    {
+      "id": "SW-N010",
+      "title": "Geometry and safety locks remain independently verified",
+      "requirement": "Body count, body faults, volume, bounding box, fully constrained sketches, feature errors, source hash, and review locks remain mandatory alongside topology readback.",
+      "failure": "Topology persistence alone never constitutes engineering or manufacturing acceptance."
+    }
+  ]
+}

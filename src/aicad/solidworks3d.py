@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -78,6 +79,14 @@ def solidworks_doctor() -> dict[str, Any]:
 def _safe_name(value: str | None, fallback: str) -> str:
     name = SAFE_NAME.sub("-", (value or fallback).strip()).strip("-_")
     return name[:64] or "part"
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -200,6 +209,40 @@ def compile_3d_plan(
     if reopened.returncode != 0 or not isinstance(reopen_report, dict) or reopen_report.get("status") != "passed":
         detail = reopened.stderr.decode("utf-8", "replace").strip() or reopened.stdout.decode("utf-8", "replace").strip() or "no reopen report"
         raise SolidWorksHostError(f"Saved SLDPRT failed reopen verification: {detail[:1000]}")
+    saved_native = [
+        item
+        for feature_report in report.get("features", [])
+        for item in feature_report.get("native_topology", [])
+        if isinstance(item, dict) and item.get("persistent_reference_resolved")
+    ]
+    reopened_native = [
+        item for item in reopen_report.get("native_topology", [])
+        if isinstance(item, dict)
+    ]
+    saved_keys = [str(item.get("reference_key")) for item in saved_native]
+    reopened_keys = [str(item.get("reference_key")) for item in reopened_native]
+    if not saved_keys or len(saved_keys) != len(set(saved_keys)):
+        raise SolidWorksHostError("SolidWorks save report has no unique native topology catalog")
+    if not reopened_keys or len(reopened_keys) != len(set(reopened_keys)):
+        raise SolidWorksHostError("Reopened SLDPRT has no unique native topology catalog")
+    if set(saved_keys) != set(reopened_keys):
+        missing = sorted(set(saved_keys) - set(reopened_keys))
+        unexpected = sorted(set(reopened_keys) - set(saved_keys))
+        raise SolidWorksHostError(
+            f"Reopened native topology catalog changed; missing={missing}, unexpected={unexpected}"
+        )
+    if int(reopen_report.get("required_native_topology_reference_count", 0)) <= 0:
+        raise SolidWorksHostError("Reopened SLDPRT contains no required native topology references")
+    if int(reopen_report.get("unresolved_required_native_topology_reference_count", -1)) != 0:
+        raise SolidWorksHostError("Reopened SLDPRT contains unresolved required native topology references")
+    unresolved = [item.get("reference_key") for item in reopened_native if not item.get("persistent_reference_resolved")]
+    if unresolved:
+        raise SolidWorksHostError(f"Reopened SLDPRT contains unresolved stored topology references: {unresolved}")
+    required_saved = {item["reference_key"] for item in saved_native if item.get("required")}
+    required_reopened = {item["reference_key"] for item in reopened_native if item.get("required")}
+    if required_saved != required_reopened:
+        raise SolidWorksHostError("Required native topology reference set changed after reopen")
+
     expected = plan.features[-1]
     actual = reopen_report.get("final_state") or {}
     actual_bbox = actual.get("bbox_mm")
@@ -214,6 +257,13 @@ def compile_3d_plan(
     result["host_status"] = report.get("status")
     result["reopen_status"] = reopen_report.get("status")
     result["reopened_aicad_feature_count"] = reopen_report.get("aicad_feature_count")
+    result["native_topology_authority"] = True
+    result["native_topology_stability"] = "solidworks_persist_reference_save_reopen_verified"
+    result["native_topology_reference_count"] = len(saved_native)
+    result["required_native_topology_reference_count"] = len(required_saved)
+    result["reopened_native_topology_reference_count"] = len(reopened_native)
+    result["unresolved_required_native_topology_reference_count"] = 0
+    result["native_topology_reference_keys"] = sorted(reopened_keys)
     result["actual_final_state"] = report.get("final_state")
     result["feature_transactions"] = [
         {
@@ -222,8 +272,56 @@ def compile_3d_plan(
             "sketch_constraint_status": item.get("sketch_constraint_status"),
             "feature_error_code": item.get("feature_error_code"),
             "persistent_reference_resolved": item.get("persistent_reference_resolved"),
+            "native_topology_reference_count": len(item.get("native_topology", [])),
+            "required_native_topology_reference_count": sum(
+                1 for reference in item.get("native_topology", []) if reference.get("required")
+            ),
+            "native_topology_reference_keys": [
+                reference.get("reference_key") for reference in item.get("native_topology", [])
+            ],
             "checks": item.get("checks"),
         }
         for item in report.get("features", [])
     ]
+    evidence_files = {
+        "sldprt": paths["sldprt"],
+        "step": paths["step"],
+        "solidworks_report": paths["host_report"],
+        "reopen_report": paths["reopen_report"],
+    }
+    result["file_sha256"] = {name: _sha256(path) for name, path in evidence_files.items()}
+    manifest = json.loads(paths["manifest"].read_text(encoding="utf-8"))
+    manifest["native_host_validation"] = {
+        "status": "passed",
+        "solidworks_revision": report.get("solidworks_revision"),
+        "host_protocol": report.get("protocol"),
+        "reopen_protocol": reopen_report.get("protocol"),
+        "native_topology_authority": True,
+        "native_topology_stability": result["native_topology_stability"],
+        "saved_reference_count": len(saved_native),
+        "reopened_reference_count": len(reopened_native),
+        "required_reference_count": len(required_saved),
+        "unresolved_required_reference_count": 0,
+        "reference_keys": sorted(reopened_keys),
+        "file_sha256": result["file_sha256"],
+        "reviewOnly": True,
+        "accepted": False,
+        "ruleEnabled": False,
+        "packagingGated": True,
+    }
+    _write_json(paths["manifest"], manifest)
+    result["manifest_sha256"] = _sha256(paths["manifest"])
+    with paths["audit"].open("a", encoding="utf-8", newline="\n") as stream:
+        stream.write(
+            "\n## Native SolidWorks topology save/reopen verification\n\n"
+            f"- SolidWorks revision: `{report.get('solidworks_revision')}`\n"
+            "- Native topology authority: `true`\n"
+            f"- Stored and reopened references: `{len(reopened_native)}`\n"
+            f"- Required sketch references: `{len(required_saved)}`\n"
+            "- Unresolved required references: `0`\n"
+            "- Exact saved/reopened semantic-key set equality: `PASS`\n"
+            "- Body/volume/bounding-box reopen checks: `PASS`\n"
+            "- Safety locks: `reviewOnly=true`, `accepted=false`, `ruleEnabled=false`, `packagingGated=true`\n"
+        )
+    result["audit_sha256"] = _sha256(paths["audit"])
     return result

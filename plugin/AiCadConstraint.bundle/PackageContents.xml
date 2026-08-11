@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ApplicationPackage
   SchemaVersion="1.0"
-  AppVersion="1.3.4"
+  AppVersion="1.4.0"
   ProductCode="{357DAFA2-E252-4C36-A94F-5DB9F79DA469}"
   UpgradeCode="{DD512765-F083-4E84-AC83-BF0D4BE91F86}"
   Name="AI CAD Constraint Drawer"

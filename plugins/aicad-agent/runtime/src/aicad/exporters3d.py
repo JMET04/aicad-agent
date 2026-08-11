@@ -39,6 +39,8 @@ def host_payload(plan: CompiledPlan3D, output_sldprt: Path, output_step: Path, t
                 "type": feature.type,
                 "purpose": feature.purpose,
                 "reasoning": feature.reasoning,
+                "roles": list(feature.roles),
+                "editable": feature.editable,
                 "depends_on": list(feature.depends_on),
                 "support_feature": feature.support_feature,
                 "support_top_z_mm": feature.support_top_z,
@@ -61,11 +63,11 @@ def host_payload(plan: CompiledPlan3D, output_sldprt: Path, output_step: Path, t
 
 def write_3d_audit(plan: CompiledPlan3D, path: Path) -> None:
     rows = [
-        f"# {plan.name} - AICAD 3D feature audit", "", f"- Source SHA-256: `{plan.source_hash}`",
+        f"# {plan.name} - AICAD 3D feature audit", "", f"- Domain: `{plan.domain}`", f"- Source SHA-256: `{plan.source_hash}`",
         f"- Origin: `(0,0,0)`", f"- Units: `{plan.units}`", f"- Tolerance: `{plan.tolerance:g} mm`",
         f"- Feature count: `{len(plan.features)}`", "",
-        "| # | ID | Type | Purpose | Dependency | Profile | Depth/end | Expected volume delta | Reasoning |",
-        "|---:|---|---|---|---|---|---|---:|---|",
+        "| # | ID | Type | Roles | Editable | Purpose | Dependency | Profile | Depth/end | Expected volume delta | Reasoning |",
+        "|---:|---|---|---|---|---|---|---|---|---:|---|",
     ]
     clean = lambda value: str(value).replace("|", "\\|").replace("\n", " ")
     for index, feature in enumerate(plan.features, 1):
@@ -77,7 +79,7 @@ def write_3d_audit(plan: CompiledPlan3D, path: Path) -> None:
         else:
             profile_text = f"{profile.count}x R{profile.radius:g} on PCD {2 * float(profile.bolt_circle_radius):g}"
         rows.append(
-            f"| {index} | `{feature.id}` | `{feature.type}` | {clean(feature.purpose)} | "
+            f"| {index} | `{feature.id}` | `{feature.type}` | {clean(', '.join(feature.roles) or '-')} | `{str(feature.editable).lower()}` | {clean(feature.purpose)} | "
             f"`{feature.support_feature or 'principal_plane'}` | {profile_text} | {feature.depth:g} / {feature.end_condition} | "
             f"{feature.expected_volume_delta:g} mm3 | {clean(feature.reasoning)} |"
         )
@@ -100,8 +102,10 @@ def export_plan3d(plan: CompiledPlan3D, output_dir: Path, stem: str, template_pa
     paths["execution"].write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     write_3d_audit(plan, paths["audit"])
     manifest = {
-        "schema_version": "1.0", "name": plan.name, "source_sha256": plan.source_hash,
+        "schema_version": "1.0", "name": plan.name, "domain": plan.domain, "source_sha256": plan.source_hash,
         "feature_count": len(plan.features), "feature_types": {kind: sum(feature.type == kind for feature in plan.features) for kind in ("base_extrude", "boss_extrude", "cut_extrude")},
+        "roles": {role: sum(role in feature.roles for feature in plan.features) for role in sorted({role for feature in plan.features for role in feature.roles})},
+        "editable_features": sum(feature.editable for feature in plan.features),
         "expected_final_volume_mm3": plan.features[-1].expected_volume_after,
         "expected_final_bbox_mm": list(plan.features[-1].expected_bbox),
         "artifacts": {key: str(value.resolve()) for key, value in paths.items() if key != "manifest"},

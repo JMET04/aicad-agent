@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad-domain-validation.schema.json",
+  "title": "AICAD cross-domain validation report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "space", "domain", "source_sha256", "summary", "checks", "manual_review_queue", "capability_boundary", "review_policy"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "status": {"enum": ["passed", "passed_with_warnings", "failed"]},
+    "space": {"enum": ["2d", "3d"]},
+    "domain": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$"},
+    "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["checks", "failures", "warnings", "manual_review_required"],
+      "properties": {
+        "checks": {"type": "integer", "minimum": 1}, "failures": {"type": "integer", "minimum": 0},
+        "warnings": {"type": "integer", "minimum": 0}, "manual_review_required": {"const": true}
+      }
+    },
+    "checks": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "status", "severity", "message", "object_ids", "evidence"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Z0-9_.-]+$"},
+          "status": {"enum": ["pass", "warning", "fail"]}, "severity": {"enum": ["hard", "advisory"]},
+          "message": {"type": "string", "minLength": 1}, "object_ids": {"type": "array", "items": {"type": "string"}},
+          "evidence": {"type": "object"}, "root_cause": {"type": "string"},
+          "prevention_rule_candidate": {
+            "type": "object", "additionalProperties": false, "required": ["status", "ruleEnabled", "requirement"],
+            "properties": {"status": {"const": "candidate"}, "ruleEnabled": {"const": false}, "requirement": {"type": "string", "minLength": 1}}
+          }
+        }
+      }
+    },
+    "manual_review_queue": {"type": "array", "items": {"type": "string"}},
+    "capability_boundary": {"type": "object"},
+    "review_policy": {
+      "type": "object", "additionalProperties": false, "required": ["reviewOnly", "accepted", "ruleEnabled", "domainGated"],
+      "properties": {"reviewOnly": {"const": true}, "accepted": {"const": false}, "ruleEnabled": {"const": false}, "domainGated": {"const": true}}
+    }
+  }
+}

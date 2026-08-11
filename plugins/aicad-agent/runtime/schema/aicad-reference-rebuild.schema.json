@@ -1,0 +1,870 @@
+{
+    "$schema":  "https://json-schema.org/draft/2020-12/schema",
+    "$id":  "https://example.local/aicad-reference-rebuild.schema.json",
+    "title":  "AICAD webpage/image reference reconstruction contract",
+    "type":  "object",
+    "additionalProperties":  false,
+    "required":  [
+                     "schema_version",
+                     "reference",
+                     "dimension_authority",
+                     "coverage",
+                     "geometry_bindings",
+                     "presentation",
+                     "review_policy"
+                 ],
+    "properties":  {
+                       "schema_version":  {
+                                              "const":  "1.0"
+                                          },
+                       "reference":  {
+                                         "type":  "object",
+                                         "additionalProperties":  false,
+                                         "required":  [
+                                                          "id",
+                                                          "kind",
+                                                          "locator",
+                                                          "content_sha256",
+                                                          "axis_orientation"
+                                                      ],
+                                         "properties":  {
+                                                            "id":  {
+                                                                       "type":  "string",
+                                                                       "pattern":  "^[A-Za-z0-9_]+$"
+                                                                   },
+                                                            "kind":  {
+                                                                         "enum":  [
+                                                                                      "webpage_svg",
+                                                                                      "webpage_capture",
+                                                                                      "svg",
+                                                                                      "raster",
+                                                                                      "pdf"
+                                                                                  ]
+                                                                     },
+                                                            "locator":  {
+                                                                            "type":  "string",
+                                                                            "minLength":  1
+                                                                        },
+                                                            "content_sha256":  {
+                                                                                   "type":  "string",
+                                                                                   "pattern":  "^[0-9a-f]{64}$"
+                                                                               },
+                                                            "axis_orientation":  {
+                                                                                     "enum":  [
+                                                                                                  "y_up",
+                                                                                                  "y_down"
+                                                                                              ]
+                                                                                 },
+                                                            "capture":  {
+                                                                            "type":  "object",
+                                                                            "additionalProperties":  false,
+                                                                            "required":  [
+                                                                                             "width_px",
+                                                                                             "height_px"
+                                                                                         ],
+                                                                            "properties":  {
+                                                                                               "width_px":  {
+                                                                                                                "type":  "integer",
+                                                                                                                "minimum":  1
+                                                                                                            },
+                                                                                               "height_px":  {
+                                                                                                                 "type":  "integer",
+                                                                                                                 "minimum":  1
+                                                                                                             },
+                                                                                               "device_scale_factor":  {
+                                                                                                                           "type":  "number",
+                                                                                                                           "exclusiveMinimum":  0
+                                                                                                                       },
+                                                                                               "viewport_locked":  {
+                                                                                                                       "type":  "boolean"
+                                                                                                                   }
+                                                                                           }
+                                                                        }
+                                                        }
+                                     },
+                       "dimension_authority":  {
+                                                   "type":  "object",
+                                                   "additionalProperties":  false,
+                                                   "required":  [
+                                                                    "units",
+                                                                    "mode",
+                                                                    "pixel_is_dimension_truth",
+                                                                    "anchors",
+                                                                    "max_rms_error_mm",
+                                                                    "max_point_error_mm"
+                                                                ],
+                                                   "properties":  {
+                                                                      "units":  {
+                                                                                    "enum":  [
+                                                                                                 "mm",
+                                                                                                 "inch"
+                                                                                             ]
+                                                                                },
+                                                                      "mode":  {
+                                                                                   "enum":  [
+                                                                                                "calibrated_anchors",
+                                                                                                "native_vector_units"
+                                                                                            ]
+                                                                               },
+                                                                      "pixel_is_dimension_truth":  {
+                                                                                                       "const":  false
+                                                                                                   },
+                                                                      "max_rms_error_mm":  {
+                                                                                               "type":  "number",
+                                                                                               "minimum":  0
+                                                                                           },
+                                                                      "max_point_error_mm":  {
+                                                                                                 "type":  "number",
+                                                                                                 "minimum":  0
+                                                                                             },
+                                                                      "anchors":  {
+                                                                                      "type":  "array",
+                                                                                      "minItems":  2,
+                                                                                      "items":  {
+                                                                                                    "type":  "object",
+                                                                                                    "additionalProperties":  false,
+                                                                                                    "required":  [
+                                                                                                                     "id",
+                                                                                                                     "source",
+                                                                                                                     "cad",
+                                                                                                                     "authority",
+                                                                                                                     "evidence"
+                                                                                                                 ],
+                                                                                                    "properties":  {
+                                                                                                                       "id":  {
+                                                                                                                                  "type":  "string",
+                                                                                                                                  "pattern":  "^[A-Za-z0-9_]+$"
+                                                                                                                              },
+                                                                                                                       "source":  {
+                                                                                                                                      "$ref":  "#/$defs/point"
+                                                                                                                                  },
+                                                                                                                       "cad":  {
+                                                                                                                                   "$ref":  "#/$defs/point"
+                                                                                                                               },
+                                                                                                                       "authority":  {
+                                                                                                                                         "enum":  [
+                                                                                                                                                      "explicit_dimension",
+                                                                                                                                                      "user_baseline",
+                                                                                                                                                      "native_vector_unit"
+                                                                                                                                                  ]
+                                                                                                                                     },
+                                                                                                                       "evidence":  {
+                                                                                                                                        "type":  "string",
+                                                                                                                                        "minLength":  1
+                                                                                                                                    }
+                                                                                                                   }
+                                                                                                }
+                                                                                  }
+                                                                  }
+                                               },
+                       "coverage":  {
+                                        "type":  "object",
+                                        "additionalProperties":  false,
+                                        "required":  [
+                                                         "mode",
+                                                         "required_target_ids",
+                                                         "required_annotation_ids"
+                                                     ],
+                                        "properties":  {
+                                                           "mode":  {
+                                                                        "enum":  [
+                                                                                     "one_to_one",
+                                                                                     "partial_review"
+                                                                                 ]
+                                                                    },
+                                                           "required_target_ids":  {
+                                                                                       "type":  "array",
+                                                                                       "items":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                       "uniqueItems":  true
+                                                                                   },
+                                                           "required_annotation_ids":  {
+                                                                                           "type":  "array",
+                                                                                           "items":  {
+                                                                                                         "type":  "string"
+                                                                                                     },
+                                                                                           "uniqueItems":  true
+                                                                                       }
+                                                       }
+                                    },
+                       "geometry_bindings":  {
+                                                 "type":  "array",
+                                                 "minItems":  1,
+                                                 "items":  {
+                                                               "type":  "object",
+                                                               "additionalProperties":  false,
+                                                               "required":  [
+                                                                                "id",
+                                                                                "reference_object_id",
+                                                                                "target_object_id",
+                                                                                "source_geometry",
+                                                                                "authority",
+                                                                                "tolerance_mm"
+                                                                            ],
+                                                               "properties":  {
+                                                                                  "id":  {
+                                                                                             "type":  "string",
+                                                                                             "pattern":  "^[A-Za-z0-9_]+$"
+                                                                                         },
+                                                                                  "reference_object_id":  {
+                                                                                                              "type":  "string",
+                                                                                                              "minLength":  1
+                                                                                                          },
+                                                                                  "target_object_id":  {
+                                                                                                           "type":  "string",
+                                                                                                           "pattern":  "^[A-Za-z0-9_]+$"
+                                                                                                       },
+                                                                                  "source_geometry":  {
+                                                                                                          "$ref":  "#/$defs/source_geometry"
+                                                                                                      },
+                                                                                  "authority":  {
+                                                                                                    "enum":  [
+                                                                                                                 "vector_path",
+                                                                                                                 "dimension_bound_trace",
+                                                                                                                 "reviewed_object_catalog"
+                                                                                                             ]
+                                                                                                },
+                                                                                  "tolerance_mm":  {
+                                                                                                       "type":  "number",
+                                                                                                       "minimum":  0
+                                                                                                   },
+                                                                                  "angle_tolerance_deg":  {
+                                                                                                              "type":  "number",
+                                                                                                              "minimum":  0
+                                                                                                          },
+                                                                                  "source_tolerance":  {
+                                                                                                           "type":  "number",
+                                                                                                           "minimum":  0
+                                                                                                       }
+                                                                              }
+                                                           }
+                                             },
+                       "presentation":  {
+                                            "type":  "object",
+                                            "additionalProperties":  false,
+                                            "required":  [
+                                                             "sheet",
+                                                             "styles",
+                                                             "annotations"
+                                                         ],
+                                            "properties":  {
+                                                               "sheet":  {
+                                                                             "type":  "object",
+                                                                             "additionalProperties":  false,
+                                                                             "required":  [
+                                                                                              "width_mm",
+                                                                                              "height_mm",
+                                                                                              "margin_mm",
+                                                                                              "scale_denominator"
+                                                                                          ],
+                                                                             "properties":  {
+                                                                                                "width_mm":  {
+                                                                                                                 "type":  "number",
+                                                                                                                 "exclusiveMinimum":  0
+                                                                                                             },
+                                                                                                "height_mm":  {
+                                                                                                                  "type":  "number",
+                                                                                                                  "exclusiveMinimum":  0
+                                                                                                              },
+                                                                                                "margin_mm":  {
+                                                                                                                  "type":  "number",
+                                                                                                                  "minimum":  0
+                                                                                                              },
+                                                                                                "scale_denominator":  {
+                                                                                                                          "type":  "number",
+                                                                                                                          "exclusiveMinimum":  0
+                                                                                                                      },
+                                                                                                "title_block":  {
+                                                                                                                    "type":  "boolean"
+                                                                                                                }
+                                                                                            }
+                                                                         },
+                                                               "styles":  {
+                                                                              "type":  "object",
+                                                                              "additionalProperties":  false,
+                                                                              "required":  [
+                                                                                               "layers",
+                                                                                               "text",
+                                                                                               "dimension"
+                                                                                           ],
+                                                                              "properties":  {
+                                                                                                 "layers":  {
+                                                                                                                "type":  "object",
+                                                                                                                "additionalProperties":  {
+                                                                                                                                             "type":  "object",
+                                                                                                                                             "additionalProperties":  false,
+                                                                                                                                             "required":  [
+                                                                                                                                                              "color",
+                                                                                                                                                              "lineweight_mm",
+                                                                                                                                                              "linetype"
+                                                                                                                                                          ],
+                                                                                                                                             "properties":  {
+                                                                                                                                                                "color":  {
+                                                                                                                                                                              "type":  "integer",
+                                                                                                                                                                              "minimum":  1,
+                                                                                                                                                                              "maximum":  255
+                                                                                                                                                                          },
+                                                                                                                                                                "lineweight_mm":  {
+                                                                                                                                                                                      "type":  "number",
+                                                                                                                                                                                      "exclusiveMinimum":  0,
+                                                                                                                                                                                      "maximum":  2.11
+                                                                                                                                                                                  },
+                                                                                                                                                                "linetype":  {
+                                                                                                                                                                                 "type":  "string",
+                                                                                                                                                                                 "pattern":  "^[A-Za-z0-9_.-]+$"
+                                                                                                                                                                             }
+                                                                                                                                                            }
+                                                                                                                                         }
+                                                                                                            },
+                                                                                                 "text":  {
+                                                                                                              "type":  "object",
+                                                                                                              "additionalProperties":  false,
+                                                                                                              "required":  [
+                                                                                                                               "font",
+                                                                                                                               "height_mm"
+                                                                                                                           ],
+                                                                                                              "properties":  {
+                                                                                                                                 "font":  {
+                                                                                                                                              "type":  "string",
+                                                                                                                                              "minLength":  1
+                                                                                                                                          },
+                                                                                                                                 "height_mm":  {
+                                                                                                                                                   "type":  "number",
+                                                                                                                                                   "exclusiveMinimum":  0
+                                                                                                                                               }
+                                                                                                                             }
+                                                                                                          },
+                                                                                                 "dimension":  {
+                                                                                                                   "type":  "object",
+                                                                                                                   "additionalProperties":  false,
+                                                                                                                   "required":  [
+                                                                                                                                    "text_height_mm",
+                                                                                                                                    "arrow_size_mm",
+                                                                                                                                    "extension_gap_mm"
+                                                                                                                                ],
+                                                                                                                   "properties":  {
+                                                                                                                                      "text_height_mm":  {
+                                                                                                                                                             "type":  "number",
+                                                                                                                                                             "exclusiveMinimum":  0
+                                                                                                                                                         },
+                                                                                                                                      "arrow_size_mm":  {
+                                                                                                                                                            "type":  "number",
+                                                                                                                                                            "exclusiveMinimum":  0
+                                                                                                                                                        },
+                                                                                                                                      "extension_gap_mm":  {
+                                                                                                                                                               "type":  "number",
+                                                                                                                                                               "minimum":  0
+                                                                                                                                                           }
+                                                                                                                                  }
+                                                                                                               }
+                                                                                             }
+                                                                          },
+                                                               "annotations":  {
+                                                                                   "type":  "array",
+                                                                                   "minItems":  1,
+                                                                                   "items":  {
+                                                                                                 "$ref":  "#/$defs/annotation"
+                                                                                             }
+                                                                               }
+                                                           }
+                                        },
+                       "review_policy":  {
+                                             "type":  "object",
+                                             "additionalProperties":  false,
+                                             "required":  [
+                                                              "reviewOnly",
+                                                              "accepted",
+                                                              "ruleEnabled",
+                                                              "domainGated"
+                                                          ],
+                                             "properties":  {
+                                                                "reviewOnly":  {
+                                                                                   "const":  true
+                                                                               },
+                                                                "accepted":  {
+                                                                                 "const":  false
+                                                                             },
+                                                                "ruleEnabled":  {
+                                                                                    "const":  false
+                                                                                },
+                                                                "domainGated":  {
+                                                                                    "const":  true
+                                                                                }
+                                                            }
+                                         }
+                   },
+    "$defs":  {
+                  "point":  {
+                                "type":  "array",
+                                "prefixItems":  [
+                                                    {
+                                                        "type":  "number"
+                                                    },
+                                                    {
+                                                        "type":  "number"
+                                                    }
+                                                ],
+                                "minItems":  2,
+                                "maxItems":  2
+                            },
+                  "point_ref":  {
+                                    "oneOf":  [
+                                                  {
+                                                      "$ref":  "#/$defs/point"
+                                                  },
+                                                  {
+                                                      "type":  "object",
+                                                      "additionalProperties":  false,
+                                                      "required":  [
+                                                                       "target",
+                                                                       "point"
+                                                                   ],
+                                                      "properties":  {
+                                                                         "target":  {
+                                                                                        "type":  "string"
+                                                                                    },
+                                                                         "point":  {
+                                                                                       "enum":  [
+                                                                                                    "start",
+                                                                                                    "end",
+                                                                                                    "midpoint",
+                                                                                                    "center"
+                                                                                                ]
+                                                                                   }
+                                                                     }
+                                                  }
+                                              ]
+                                },
+                  "source_geometry":  {
+                                          "oneOf":  [
+                                                        {
+                                                            "type":  "object",
+                                                            "additionalProperties":  false,
+                                                            "required":  [
+                                                                             "type",
+                                                                             "start",
+                                                                             "end"
+                                                                         ],
+                                                            "properties":  {
+                                                                               "type":  {
+                                                                                            "const":  "line"
+                                                                                        },
+                                                                               "start":  {
+                                                                                             "$ref":  "#/$defs/point"
+                                                                                         },
+                                                                               "end":  {
+                                                                                           "$ref":  "#/$defs/point"
+                                                                                       }
+                                                                           }
+                                                        },
+                                                        {
+                                                            "type":  "object",
+                                                            "additionalProperties":  false,
+                                                            "required":  [
+                                                                             "type",
+                                                                             "center",
+                                                                             "radius"
+                                                                         ],
+                                                            "properties":  {
+                                                                               "type":  {
+                                                                                            "const":  "circle"
+                                                                                        },
+                                                                               "center":  {
+                                                                                              "$ref":  "#/$defs/point"
+                                                                                          },
+                                                                               "radius":  {
+                                                                                              "type":  "number",
+                                                                                              "exclusiveMinimum":  0
+                                                                                          }
+                                                                           }
+                                                        },
+                                                        {
+                                                            "type":  "object",
+                                                            "additionalProperties":  false,
+                                                            "required":  [
+                                                                             "type",
+                                                                             "center",
+                                                                             "radius",
+                                                                             "start_angle_deg",
+                                                                             "end_angle_deg"
+                                                                         ],
+                                                            "properties":  {
+                                                                               "type":  {
+                                                                                            "const":  "arc"
+                                                                                        },
+                                                                               "center":  {
+                                                                                              "$ref":  "#/$defs/point"
+                                                                                          },
+                                                                               "radius":  {
+                                                                                              "type":  "number",
+                                                                                              "exclusiveMinimum":  0
+                                                                                          },
+                                                                               "start_angle_deg":  {
+                                                                                                       "type":  "number"
+                                                                                                   },
+                                                                               "end_angle_deg":  {
+                                                                                                     "type":  "number"
+                                                                                                 }
+                                                                           }
+                                                        }
+                                                    ]
+                                      },
+                  "annotation_common":  {
+                                            "type":  "object",
+                                            "properties":  {
+                                                               "id":  {
+                                                                          "type":  "string",
+                                                                          "pattern":  "^[A-Za-z0-9_]+$"
+                                                                      },
+                                                               "layer":  {
+                                                                             "type":  "string",
+                                                                             "pattern":  "^[A-Za-z0-9_.-]+$"
+                                                                         },
+                                                               "allow_overlap":  {
+                                                                                     "type":  "boolean"
+                                                                                 }
+                                                           }
+                                        },
+                  "annotation":  {
+                                     "oneOf":  [
+                                                   {
+                                                       "type":  "object",
+                                                       "additionalProperties":  false,
+                                                       "required":  [
+                                                                        "id",
+                                                                        "type",
+                                                                        "text",
+                                                                        "position",
+                                                                        "source_position",
+                                                                        "layout_tolerance_mm",
+                                                                        "layer",
+                                                                        "reference_object_id",
+                                                                        "reference_text",
+                                                                        "source_rotation_deg",
+                                                                        "rotation_deg",
+                                                                        "rotation_tolerance_deg",
+                                                                        "layout_mode",
+                                                                        "layout_offset_mm",
+                                                                        "max_layout_offset_mm",
+                                                                        "layout_offset_reason"
+                                                                    ],
+                                                       "properties":  {
+                                                                          "id":  {
+                                                                                     "type":  "string",
+                                                                                     "pattern":  "^[A-Za-z0-9_]+$"
+                                                                                 },
+                                                                          "type":  {
+                                                                                       "const":  "text"
+                                                                                   },
+                                                                          "text":  {
+                                                                                       "type":  "string",
+                                                                                       "minLength":  1
+                                                                                   },
+                                                                          "position":  {
+                                                                                           "$ref":  "#/$defs/point"
+                                                                                       },
+                                                                          "source_position":  {
+                                                                                                  "$ref":  "#/$defs/point"
+                                                                                              },
+                                                                          "layout_tolerance_mm":  {
+                                                                                                      "type":  "number",
+                                                                                                      "minimum":  0
+                                                                                                  },
+                                                                          "layer":  {
+                                                                                        "type":  "string"
+                                                                                    },
+                                                                          "height_mm":  {
+                                                                                            "type":  "number",
+                                                                                            "exclusiveMinimum":  0
+                                                                                        },
+                                                                          "width_mm":  {
+                                                                                           "type":  "number",
+                                                                                           "exclusiveMinimum":  0
+                                                                                       },
+                                                                          "attachment":  {
+                                                                                             "type":  "integer",
+                                                                                             "minimum":  1,
+                                                                                             "maximum":  9
+                                                                                         },
+                                                                          "allow_overlap":  {
+                                                                                                "type":  "boolean"
+                                                                                            },
+                                                                          "reference_object_id":  {
+                                                                                                      "type":  "string",
+                                                                                                      "minLength":  1
+                                                                                                  },
+                                                                          "reference_text":  {
+                                                                                                 "type":  "string"
+                                                                                             },
+                                                                          "source_tolerance":  {
+                                                                                                   "type":  "number",
+                                                                                                   "minimum":  0
+                                                                                               },
+                                                                          "source_rotation_deg":  {
+                                                                                                      "type":  "number"
+                                                                                                  },
+                                                                          "rotation_deg":  {
+                                                                                               "type":  "number"
+                                                                                           },
+                                                                          "rotation_tolerance_deg":  {
+                                                                                                         "type":  "number",
+                                                                                                         "minimum":  0
+                                                                                                     },
+                                                                          "layout_mode":  {
+                                                                                              "enum":  [
+                                                                                                           "source_exact",
+                                                                                                           "optimized_offset"
+                                                                                                       ]
+                                                                                          },
+                                                                          "layout_offset_mm":  {
+                                                                                                   "$ref":  "#/$defs/point"
+                                                                                               },
+                                                                          "max_layout_offset_mm":  {
+                                                                                                       "type":  "number",
+                                                                                                       "minimum":  0
+                                                                                                   },
+                                                                          "layout_offset_reason":  {
+                                                                                                       "type":  "string",
+                                                                                                       "minLength":  1
+                                                                                                   }
+                                                                      }
+                                                   },
+                                                   {
+                                                       "type":  "object",
+                                                       "additionalProperties":  false,
+                                                       "required":  [
+                                                                        "id",
+                                                                        "type",
+                                                                        "from",
+                                                                        "to",
+                                                                        "placement",
+                                                                        "source_position",
+                                                                        "layout_tolerance_mm",
+                                                                        "axis",
+                                                                        "expected_value",
+                                                                        "layer",
+                                                                        "reference_object_id",
+                                                                        "reference_text",
+                                                                        "source_rotation_deg",
+                                                                        "rotation_deg",
+                                                                        "rotation_tolerance_deg",
+                                                                        "layout_mode",
+                                                                        "layout_offset_mm",
+                                                                        "max_layout_offset_mm",
+                                                                        "layout_offset_reason"
+                                                                    ],
+                                                       "properties":  {
+                                                                          "id":  {
+                                                                                     "type":  "string",
+                                                                                     "pattern":  "^[A-Za-z0-9_]+$"
+                                                                                 },
+                                                                          "type":  {
+                                                                                       "const":  "linear_dimension"
+                                                                                   },
+                                                                          "from":  {
+                                                                                       "$ref":  "#/$defs/point_ref"
+                                                                                   },
+                                                                          "to":  {
+                                                                                     "$ref":  "#/$defs/point_ref"
+                                                                                 },
+                                                                          "placement":  {
+                                                                                            "$ref":  "#/$defs/point"
+                                                                                        },
+                                                                          "source_position":  {
+                                                                                                  "$ref":  "#/$defs/point"
+                                                                                              },
+                                                                          "layout_tolerance_mm":  {
+                                                                                                      "type":  "number",
+                                                                                                      "minimum":  0
+                                                                                                  },
+                                                                          "axis":  {
+                                                                                       "enum":  [
+                                                                                                    "horizontal",
+                                                                                                    "vertical"
+                                                                                                ]
+                                                                                   },
+                                                                          "expected_value":  {
+                                                                                                 "type":  "number"
+                                                                                             },
+                                                                          "tolerance_mm":  {
+                                                                                               "type":  "number",
+                                                                                               "minimum":  0
+                                                                                           },
+                                                                          "prefix":  {
+                                                                                         "type":  "string"
+                                                                                     },
+                                                                          "suffix":  {
+                                                                                         "type":  "string"
+                                                                                     },
+                                                                          "precision":  {
+                                                                                            "type":  "integer",
+                                                                                            "minimum":  0,
+                                                                                            "maximum":  6
+                                                                                        },
+                                                                          "text_height_mm":  {
+                                                                                                 "type":  "number",
+                                                                                                 "exclusiveMinimum":  0
+                                                                                             },
+                                                                          "layer":  {
+                                                                                        "type":  "string"
+                                                                                    },
+                                                                          "allow_overlap":  {
+                                                                                                "type":  "boolean"
+                                                                                            },
+                                                                          "reference_object_id":  {
+                                                                                                      "type":  "string",
+                                                                                                      "minLength":  1
+                                                                                                  },
+                                                                          "reference_text":  {
+                                                                                                 "type":  "string"
+                                                                                             },
+                                                                          "source_tolerance":  {
+                                                                                                   "type":  "number",
+                                                                                                   "minimum":  0
+                                                                                               },
+                                                                          "source_rotation_deg":  {
+                                                                                                      "type":  "number"
+                                                                                                  },
+                                                                          "rotation_deg":  {
+                                                                                               "type":  "number"
+                                                                                           },
+                                                                          "rotation_tolerance_deg":  {
+                                                                                                         "type":  "number",
+                                                                                                         "minimum":  0
+                                                                                                     },
+                                                                          "layout_mode":  {
+                                                                                              "enum":  [
+                                                                                                           "source_exact",
+                                                                                                           "optimized_offset"
+                                                                                                       ]
+                                                                                          },
+                                                                          "layout_offset_mm":  {
+                                                                                                   "$ref":  "#/$defs/point"
+                                                                                               },
+                                                                          "max_layout_offset_mm":  {
+                                                                                                       "type":  "number",
+                                                                                                       "minimum":  0
+                                                                                                   },
+                                                                          "layout_offset_reason":  {
+                                                                                                       "type":  "string",
+                                                                                                       "minLength":  1
+                                                                                                   }
+                                                                      }
+                                                   },
+                                                   {
+                                                       "type":  "object",
+                                                       "additionalProperties":  false,
+                                                       "required":  [
+                                                                        "id",
+                                                                        "type",
+                                                                        "target",
+                                                                        "placement",
+                                                                        "source_position",
+                                                                        "layout_tolerance_mm",
+                                                                        "expected_value",
+                                                                        "layer",
+                                                                        "reference_object_id",
+                                                                        "reference_text",
+                                                                        "source_rotation_deg",
+                                                                        "rotation_deg",
+                                                                        "rotation_tolerance_deg",
+                                                                        "layout_mode",
+                                                                        "layout_offset_mm",
+                                                                        "max_layout_offset_mm",
+                                                                        "layout_offset_reason"
+                                                                    ],
+                                                       "properties":  {
+                                                                          "id":  {
+                                                                                     "type":  "string",
+                                                                                     "pattern":  "^[A-Za-z0-9_]+$"
+                                                                                 },
+                                                                          "type":  {
+                                                                                       "const":  "diameter_dimension"
+                                                                                   },
+                                                                          "target":  {
+                                                                                         "type":  "string"
+                                                                                     },
+                                                                          "placement":  {
+                                                                                            "$ref":  "#/$defs/point"
+                                                                                        },
+                                                                          "source_position":  {
+                                                                                                  "$ref":  "#/$defs/point"
+                                                                                              },
+                                                                          "layout_tolerance_mm":  {
+                                                                                                      "type":  "number",
+                                                                                                      "minimum":  0
+                                                                                                  },
+                                                                          "expected_value":  {
+                                                                                                 "type":  "number",
+                                                                                                 "exclusiveMinimum":  0
+                                                                                             },
+                                                                          "tolerance_mm":  {
+                                                                                               "type":  "number",
+                                                                                               "minimum":  0
+                                                                                           },
+                                                                          "prefix":  {
+                                                                                         "type":  "string"
+                                                                                     },
+                                                                          "suffix":  {
+                                                                                         "type":  "string"
+                                                                                     },
+                                                                          "precision":  {
+                                                                                            "type":  "integer",
+                                                                                            "minimum":  0,
+                                                                                            "maximum":  6
+                                                                                        },
+                                                                          "text_height_mm":  {
+                                                                                                 "type":  "number",
+                                                                                                 "exclusiveMinimum":  0
+                                                                                             },
+                                                                          "layer":  {
+                                                                                        "type":  "string"
+                                                                                    },
+                                                                          "allow_overlap":  {
+                                                                                                "type":  "boolean"
+                                                                                            },
+                                                                          "reference_object_id":  {
+                                                                                                      "type":  "string",
+                                                                                                      "minLength":  1
+                                                                                                  },
+                                                                          "reference_text":  {
+                                                                                                 "type":  "string"
+                                                                                             },
+                                                                          "source_tolerance":  {
+                                                                                                   "type":  "number",
+                                                                                                   "minimum":  0
+                                                                                               },
+                                                                          "source_rotation_deg":  {
+                                                                                                      "type":  "number"
+                                                                                                  },
+                                                                          "rotation_deg":  {
+                                                                                               "type":  "number"
+                                                                                           },
+                                                                          "rotation_tolerance_deg":  {
+                                                                                                         "type":  "number",
+                                                                                                         "minimum":  0
+                                                                                                     },
+                                                                          "layout_mode":  {
+                                                                                              "enum":  [
+                                                                                                           "source_exact",
+                                                                                                           "optimized_offset"
+                                                                                                       ]
+                                                                                          },
+                                                                          "layout_offset_mm":  {
+                                                                                                   "$ref":  "#/$defs/point"
+                                                                                               },
+                                                                          "max_layout_offset_mm":  {
+                                                                                                       "type":  "number",
+                                                                                                       "minimum":  0
+                                                                                                   },
+                                                                          "layout_offset_reason":  {
+                                                                                                       "type":  "string",
+                                                                                                       "minLength":  1
+                                                                                                   }
+                                                                      }
+                                                   }
+                                               ]
+                                 }
+              }
+}

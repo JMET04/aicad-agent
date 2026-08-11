@@ -1,8 +1,27 @@
-# aicad-agent 1.3.4
+# aicad-agent 1.7.0
+
+## 1:1 webpage and image reference reconstruction
+
+Version 1.7.0 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
+
+Portable output includes annotated DXF, native-text SVG/HTML, validation, manifest, and browser-backed PNG evidence. Native AutoCAD DIMENSION objects and DWG save/reopen remain an explicit host post-process gate.
+## Exact 3D subobject correction and native topology
+
+The multiview selector addresses individual lines, circles, and faces with stable semantic keys. Corrections are bound to a source hash, explicit preservation policy, shared-pattern fanout, and full downstream dependency replay. Thin visible strokes are separate from the larger click target, so precision and usability do not conflict.
+
+On a licensed SolidWorks 2026 host, version 1.7.0 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
 
 确定性、原点锚定、面向 Agent 的 CAD 约束插件。它把 2D AICAD 计划编译为 AICAD/SCR/DXF/审计工件，提供包装刀版正常性证明与交互修改器，并通过可选 Windows 宿主支持 AutoCAD 和 SolidWorks。
 
 ![包装刀版交互审查界面](docs/images/packaging-review.png)
+
+## Selected geometry measurements and MODEL_XYZ
+
+Clicking a line now shows its compiled-model length and XYZ endpoints; clicking a point shows XYZ; clicking a circle shows radius, diameter and XYZ center. Editable values can prefill the exact controller in the right panel. A right-handed `MODEL_XYZ` triad is visible in every review view, and one top-bar switch hides or restores SVG axes, model origins and the rotating 3D triad together. See [the selection measurement contract](docs/SELECTION_MEASUREMENT_UI_V3.md).
+
+## Single-flow CAD modifier and free sections
+
+The reviewer now exposes one modification list instead of separate user-facing intent and transaction stages. Every compiled 3D feature publishes clickable core parameters; geometric centers, center axes, pitch circles and interface edges remain hidden until hover or selection. The free-section workbench accepts axis planes and arbitrary `normal + point` planes, renders feature-operation intersections, and maps a clicked section curve back to an exact semantic parameter controller. See [CAD modifier interaction contract](docs/MODIFIER_UI_V2.md).
 
 ## 不可跳过的三级门禁
 

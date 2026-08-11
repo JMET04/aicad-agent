@@ -110,7 +110,11 @@ foreach ($name in @('AICAD_TEST_ROOT', 'AICAD_PYTHON', 'AICAD_PYTHONW', 'AICAD_R
 }
 try {
     $env:AICAD_TEST_ROOT = $testRootResolved
-    $env:AICAD_PYTHON = (Resolve-Path -LiteralPath $PythonExe).Path
+    $env:AICAD_PYTHON = if (Test-Path -LiteralPath $PythonExe -PathType Leaf) {
+        (Resolve-Path -LiteralPath $PythonExe).Path
+    } else {
+        $pythonCommand.Source
+    }
     $env:AICAD_PYTHONW = $env:AICAD_PYTHON
     $env:AICAD_RUNNER = Join-Path $root 'tools\aicad.py'
     $env:AICAD_JOBS = $testRootResolved

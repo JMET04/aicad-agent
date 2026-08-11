@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad-semantic-document.schema.json",
+  "title": "AICAD domain-agnostic 2D/3D semantic object graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "document", "domain_profile", "objects", "relations", "invariants"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "space", "domain", "units", "origin", "tolerance", "source_sha256", "locks", "review_policy"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "space": {"enum": ["2d", "3d"]},
+        "domain": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$"},
+        "units": {"type": "string", "minLength": 1},
+        "origin": {"type": "array", "minItems": 2, "maxItems": 3, "items": {"type": "number"}},
+        "tolerance": {"type": "number", "exclusiveMinimum": 0},
+        "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "locks": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "review_policy": {"$ref": "#/$defs/review_policy"}
+      }
+    },
+    "domain_profile": {
+      "type": "object",
+      "required": ["id", "label", "dimensions", "object_roles", "review_groups", "built_in"],
+      "properties": {
+        "id": {"type": "string"}, "label": {"type": "string"},
+        "dimensions": {"type": "array", "items": {"enum": ["2d", "3d"]}},
+        "object_roles": {"type": "array", "items": {"type": "string"}},
+        "review_groups": {"type": "array", "items": {"type": "string"}},
+        "built_in": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "objects": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/object"}},
+    "relations": {"type": "array", "items": {"$ref": "#/$defs/relation"}},
+    "invariants": {"type": "object", "additionalProperties": {"type": "boolean"}},
+    "validation": {"type": "object"}
+  },
+  "$defs": {
+    "review_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "domainGated"],
+      "properties": {
+        "reviewOnly": {"const": true}, "accepted": {"const": false},
+        "ruleEnabled": {"const": false}, "domainGated": {"const": true}
+      }
+    },
+    "object": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "space", "purpose", "reasoning", "depends_on", "anchor", "parameters", "source", "roles", "editable"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+        "kind": {"type": "string", "minLength": 1}, "space": {"enum": ["2d", "3d"]},
+        "purpose": {"type": "string", "minLength": 1}, "reasoning": {"type": "string", "minLength": 1},
+        "depends_on": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "anchor": {"type": "array", "minItems": 2, "maxItems": 3, "items": {"type": "number"}},
+        "parameters": {"type": "object"}, "source": {"type": "object"},
+        "roles": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "editable": {"type": "boolean"}
+      }
+    },
+    "relation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "members", "purpose", "hard", "value", "tolerance", "source"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"}, "kind": {"type": "string", "minLength": 1},
+        "members": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "purpose": {"type": "string", "minLength": 1}, "hard": {"type": "boolean"},
+        "value": {}, "tolerance": {"type": ["number", "null"]}, "source": {"type": "object"}
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-; AI CAD Constraint Drawer 1.3.4
+; AI CAD Constraint Drawer 1.4.0
 ; Intentionally ASCII-only. UTF-8 is used only for user request/result files.
 ; Commands: AICAD_AI, AICAD_DRAW, AICAD_VALIDATE, AICAD_INFO, AICAD_SETUP, AICAD_DOCTOR
 
@@ -6,7 +6,7 @@
 
 (setq aicad:*layer* "AICAD_GEOMETRY")
 (setq aicad:*regapp* "AICAD")
-(setq aicad:*version* "1.3.4")
+(setq aicad:*version* "1.4.0")
 
 (defun aicad:split (text delimiter / position result)
   (setq result '())

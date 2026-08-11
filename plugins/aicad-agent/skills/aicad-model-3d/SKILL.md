@@ -21,8 +21,9 @@ Model slowly and transactionally: reason about one feature, validate it, execute
 4. Call `aicad_get_3d_plan_schema`, then author a schema `1.0` plan. Read [plan-schema.md](references/plan-schema.md) when creating or editing the plan.
 5. Call `aicad_validate_3d_plan`. Correct the first reported invariant violation before execution.
 6. Call `aicad_build_solidworks_part` with `execute=true`.
-7. Accept a feature only when its report passes all gates: fully constrained sketch, feature error code zero, fault-free single body, expected volume/delta/bounds, and persistent support reference resolution.
-8. Deliver the SLDPRT, STEP, audit, manifest, and SolidWorks report together. Summarize the feature-to-feature reasoning.
+7. Accept a feature only when its report passes all gates: fully constrained sketch, feature error code zero, fault-free single body, expected volume/delta/bounds, persistent support resolution, and all required native sketch references resolved.
+8. Require native save/reopen topology verification before claiming native topology authority. Read [native-topology.md](references/native-topology.md).
+9. Deliver the SLDPRT, STEP, audit, manifest, host report, and reopen report together. Summarize the feature-to-feature reasoning.
 
 ## Hard rules
 
@@ -34,5 +35,10 @@ Model slowly and transactionally: reason about one feature, validate it, execute
 - Treat a non-null feature object as insufficient evidence of success.
 - Keep identifiers and the SolidWorks execution channel ASCII-safe; keep human explanations in UTF-8 plan/audit fields.
 - Do not save a partial SLDPRT when any gate fails.
+- In selectable review output, show typed compiled-model measurements for the current line, point, circle, or face; do not substitute the global parameter catalog.
+- Bind displayed coordinates to right-handed `MODEL_XYZ` and provide one synchronized visibility switch for all 2D/3D coordinate overlays.
 
 Read [failure-recovery.md](references/failure-recovery.md) when execution fails.
+## Exact subobject correction
+
+When the user selects a specific edge, circle, or face, read [subobject-correction.md](references/subobject-correction.md) before drafting a change. Bind the transaction to the current source hash and exact semantic reference, require an explicit preserve policy and shared-pattern scope where applicable, replay all downstream dependencies, and fail closed on any product-level invariant. Do not claim native persistent BREP authority without host readback evidence.
