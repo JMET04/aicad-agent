@@ -1,4 +1,4 @@
-# aicad-agent 1.8.0
+# aicad-agent 1.8.1
 
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
@@ -17,6 +17,7 @@
 | 能力 | 用户看到的结果 | 插件内部保证 |
 |---|---|---|
 | 自然语言画 2D CAD | DXF、SCR、AICAD、审计和清单 | 每条线都有 ID、用途、推理、依赖和数学约束 |
+| 建筑平面专业制图 | 剖切粗实线、投影中实线、隐藏虚线、轴网中心线、原生尺寸 | 自动校验语义线宽顺序、有效线型、DIMSTYLE 与修改器显示一致性 |
 | 包装刀版设计与复核 | 切割/压痕/开槽/胶区分层图、白底预览、对象编号 | 先核对整体结构，再检查轮廓、闭合、槽口、胶区、公式和参数域 |
 | 点击修改 2D/3D | 点线看长度和端点，点点看 XYZ，点圆看半径/直径/圆心 | 数值来自编译模型，不来自屏幕像素 |
 | 多对象关系修改 | 选择两条线后直接提供平行、垂直、共线、等长等选项 | 修改绑定源对象、保留策略和依赖重放 |
@@ -51,7 +52,7 @@ flowchart LR
 准备：Codex CLI 或 Codex 桌面版、Git、Python 3.10+。
 
 ```powershell
-codex plugin marketplace add JMET04/aicad-agent --ref v1.8.0
+codex plugin marketplace add JMET04/aicad-agent --ref v1.8.1
 codex plugin add aicad-agent@aicad-agent
 codex plugin list
 ```
@@ -75,13 +76,13 @@ codex plugin remove aicad-agent
 
 从 [GitHub Releases](https://github.com/JMET04/aicad-agent/releases) 或仓库的 [`dist`](dist/) 目录下载：
 
-- `aicad-agent-1.8.0.zip`
+- `aicad-agent-1.8.1.zip`
 - `SHA256SUMS`
 
 先核对哈希：
 
 ```powershell
-Get-FileHash .\aicad-agent-1.8.0.zip -Algorithm SHA256
+Get-FileHash .\aicad-agent-1.8.1.zip -Algorithm SHA256
 Get-Content .\SHA256SUMS
 ```
 
@@ -286,17 +287,17 @@ python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-.\scripts\build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.8.0
+.\scripts\build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.8.1
 python -B scripts/verify_release_package.py release-ci/aicad-agent
 .\scripts\build-github-source.ps1 `
   -OutputDirectory release-ci/github-repository `
-  -Version 1.8.0 `
-  -PluginArchive release-ci/aicad-agent-1.8.0.zip `
+  -Version 1.8.1 `
+  -PluginArchive release-ci/aicad-agent-1.8.1.zip `
   -PluginDirectory release-ci/aicad-agent
 python -B scripts/verify_github_source.py release-ci/github-repository
 ```
 
-当前 1.8.0 本地门禁已经覆盖：源码 110 项、插件/发布包各 48 项，并包含自动打开审核、线/点/圆模型测量、坐标系同步隐藏/开启与重开持久化，以及安装后哈希不变门禁。CI 会在每次 push 和 pull request 中重新构建并验证发布源。
+当前 1.8.1 本地门禁已经覆盖：源码 110 项、插件/发布包各 48 项，并包含自动打开审核、线/点/圆模型测量、坐标系同步隐藏/开启与重开持久化，以及安装后哈希不变门禁。CI 会在每次 push 和 pull request 中重新构建并验证发布源。
 
 ## 文档索引
 
@@ -314,3 +315,5 @@ python -B scripts/verify_github_source.py release-ci/github-repository
 ## 许可证
 
 项目采用 [MIT License](LICENSE)。SolidWorks 专有互操作程序集不会随仓库或默认发布包分发。
+
+- Architectural QA now treats complete axis groups and the stage-specific annotation matrix as mandatory, not as optional presentation polish.

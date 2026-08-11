@@ -11,6 +11,7 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from aicad.domain_rules import evaluate_domain_plan
 from aicad.engine import PlanError, compile_plan
 from aicad.exporters import export_all
 from aicad.semantic import describe_plan
@@ -122,6 +123,19 @@ class MultiDomain2DTests(unittest.TestCase):
         bad_layer["steps"][0]["layer"] = "墙体"
         with self.assertRaisesRegex(PlanError, "ASCII CAD layer"):
             compile_plan(bad_layer)
+
+    def test_architecture_grid_bubble_is_a_strict_circle_role(self) -> None:
+        source = domain_plan("architecture")
+        bubble = source["steps"][2]
+        bubble["layer"] = "GRID_BUBBLE"
+        bubble["roles"] = ["grid_bubble"]
+        result = evaluate_domain_plan(source, "2d", "architecture")
+        self.assertIn(result["status"], {"passed", "passed_with_warnings"})
+        self.assertFalse(any(check["id"] in {"DOMAIN.G003", "DOMAIN.2D.001"} and check["status"] == "fail" for check in result["checks"]))
+        bubble["layer"] = "GRID"
+        rejected = evaluate_domain_plan(source, "2d", "architecture")
+        self.assertEqual(rejected["status"], "failed")
+        self.assertTrue(any(check["id"] == "DOMAIN.2D.001" and check["status"] == "fail" for check in rejected["checks"]))
 
     def test_legacy_plan_defaults_remain_stable(self) -> None:
         source = json.loads((ROOT / "examples" / "rectangle.plan.json").read_text(encoding="utf-8"))

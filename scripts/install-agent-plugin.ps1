@@ -8,7 +8,7 @@ if (-not $SourceDirectory) {
     $repositoryRoot = Split-Path -Parent $PSScriptRoot
     $candidates = @(
         (Join-Path $repositoryRoot 'plugins\aicad-agent'),
-        (Join-Path $repositoryRoot 'release\v1.8.0\aicad-agent'),
+        (Join-Path $repositoryRoot 'release\v1.8.1\aicad-agent'),
         (Join-Path $repositoryRoot 'agent-plugin\aicad-agent')
     )
     $SourceDirectory = $candidates | Where-Object { Test-Path -LiteralPath (Join-Path $_ '.codex-plugin\plugin.json') -PathType Leaf } | Select-Object -First 1
@@ -34,9 +34,35 @@ if (Test-Path -LiteralPath $destination) {
     }
     Remove-Item -LiteralPath $resolved -Recurse -Force
 }
+$sourceIntegrityPath = Join-Path $source 'integration-manifest.json'
+if (-not (Test-Path -LiteralPath $sourceIntegrityPath -PathType Leaf)) {
+    throw "Verified integration manifest was not found: $sourceIntegrityPath"
+}
+$sourceIntegrity = Get-Content -LiteralPath $sourceIntegrityPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$declaredFiles = @($sourceIntegrity.files)
+if ($declaredFiles.Count -eq 0) { throw 'Integration manifest declares no payload files.' }
+
 New-Item -ItemType Directory -Path $destination -Force | Out-Null
-Get-ChildItem -LiteralPath $source -Force | ForEach-Object {
-    Copy-Item -LiteralPath $_.FullName -Destination $destination -Recurse -Force
+foreach ($item in $declaredFiles) {
+    $relative = [string]$item.path
+    $normalizedRelative = $relative.Replace('\\', '/')
+    if ([IO.Path]::IsPathRooted($relative) -or $normalizedRelative.Split('/') -contains '..') {
+        throw "Unsafe integration-manifest path: $relative"
+    }
+    $sourceFile = [IO.Path]::GetFullPath((Join-Path $source $normalizedRelative))
+    $destinationFile = [IO.Path]::GetFullPath((Join-Path $destination $normalizedRelative))
+    if (-not $sourceFile.StartsWith($source + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Source payload escaped plugin root: $relative"
+    }
+    if (-not $destinationFile.StartsWith($destination + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Installed payload escaped plugin root: $relative"
+    }
+    if (-not (Test-Path -LiteralPath $sourceFile -PathType Leaf)) { throw "Manifest payload is missing: $relative" }
+    New-Item -ItemType Directory -Path (Split-Path -Parent $destinationFile) -Force | Out-Null
+    Copy-Item -LiteralPath $sourceFile -Destination $destinationFile -Force
+}
+foreach ($supplemental in @('integration-manifest.json', 'SHA256SUMS')) {
+    Copy-Item -LiteralPath (Join-Path $source $supplemental) -Destination (Join-Path $destination $supplemental) -Force
 }
 
 $installedManifestPath = Join-Path $destination '.codex-plugin\plugin.json'

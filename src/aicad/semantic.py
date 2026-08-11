@@ -42,7 +42,7 @@ CORE_DOMAIN_PROFILES: dict[str, dict[str, Any]] = {
     "architecture": {
         "label": "建筑与空间平面",
         "dimensions": ["2d", "3d"],
-        "object_roles": ["grid", "wall", "opening", "room", "column", "stair", "equipment", "route"],
+        "object_roles": ["grid", "grid_bubble", "wall", "opening", "room", "column", "stair", "equipment", "route"],
         "review_groups": ["grid", "closure", "clearance", "egress", "accessibility", "coordination"],
     },
     "packaging": {

@@ -1,0 +1,235 @@
+{
+  "schema": "aicad_architectural_drafting_rules_v2",
+  "version": "2.0.0",
+  "status": "candidate",
+  "scope": "architectural_plan_2d",
+  "rules": [
+    {
+      "id": "ARCH-D001",
+      "name": "semantic_lineweight_hierarchy",
+      "requirement": "Plan-cut walls and columns shall plot heavier than visible projections; visible projections shall plot heavier than furniture, grids, routes and dimensions.",
+      "failureCause": "Layer membership or color alone was treated as drafting semantics, so every object rendered with one stroke width.",
+      "prevention": "Resolve lineweight from typed object role before DXF and preview generation and fail when cut > projection > annotation is not provable."
+    },
+    {
+      "id": "ARCH-D002",
+      "name": "semantic_linetype_hierarchy",
+      "requirement": "Cut and visible projection geometry shall be continuous, hidden or overhead geometry shall be dashed, and grids shall use a center pattern.",
+      "failureCause": "All layers inherited Continuous because the linetype table and model-space scale were never configured.",
+      "prevention": "Install standard linetypes, assign them BYLAYER, validate effective entity linetypes, and verify a visible dash cadence at the intended scale."
+    },
+    {
+      "id": "ARCH-D003",
+      "name": "native_dimension_style",
+      "requirement": "Dimensions shall remain native DIMENSION entities using a named millimetre architectural DIMSTYLE with integer precision, extension gaps, extension overshoot and architectural ticks.",
+      "failureCause": "Per-entity temporary overrides hid an unconfigured default DIMSTYLE and made reopen behaviour host-dependent.",
+      "prevention": "Persist every required DIMSTYLE variable in the table and reject exploded dimension text or geometry."
+    },
+    {
+      "id": "ARCH-D004",
+      "name": "dimension_layout",
+      "requirement": "Chain dimensions shall be closest to the plan, overall dimensions shall be farther out, and annotation shall not overlap model geometry or other labels.",
+      "failureCause": "Dimensions were added after geometry without a dedicated annotation envelope or collision check.",
+      "prevention": "Reserve an annotation band, order chain/overall levels mathematically, and run bounding-box collision checks before delivery."
+    },
+    {
+      "id": "ARCH-D005",
+      "name": "cross_renderer_parity",
+      "requirement": "DWG/DXF, raster preview and interactive reviewer shall preserve the same semantic lineweight and linetype hierarchy.",
+      "failureCause": "The interactive reviewer used one hard-coded SVG stroke width even though the DXF layers carried different lineweights.",
+      "prevention": "Propagate cad_layer to each selectable SVG entity and regression-test layer classes, dash patterns and widths."
+    },
+    {
+      "id": "ARCH-D006",
+      "name": "whole_drawing_review",
+      "requirement": "Automated delivery review shall inspect layer tables, effective entity styles, DIMSTYLE, annotation layout and a real rendered view before opening the candidate.",
+      "failureCause": "Geometry validity was accepted as drawing quality, so drafting defects escaped coordinate and topology checks.",
+      "prevention": "Gate delivery on structural, drafting-data and visual checks; record the root cause and candidate prevention rule for every failure."
+    },
+    {
+      "id": "ARCH-D007",
+      "name": "complete_axis_grid_object_group",
+      "requirement": "Every architectural plan axis shall be delivered as one typed group containing a center-pattern axis line, two tangent axis bubbles and two centered identical identifiers.",
+      "failureCause": "GRID was modelled only as a linetype, so the drawing contained centerlines but no visible axis identity.",
+      "prevention": "Generate line, bubbles and identifiers from one axis record; reject missing pairs, off-centre labels, non-tangent endpoints or orphan members."
+    },
+    {
+      "id": "ARCH-D008",
+      "name": "cross_floor_axis_identity",
+      "requirement": "The same global X or Y datum shall retain the same axis identifier across all storeys, while different global datums shall not share an identifier in one direction.",
+      "failureCause": "Each floor restarted local numbering and ignored storey transforms, allowing one structural datum to change names between plans.",
+      "prevention": "Build the axis catalogue in global coordinates before any floor plan, then validate local coordinate plus floor transform against that catalogue."
+    },
+    {
+      "id": "ARCH-D009",
+      "name": "discipline_annotation_completeness_matrix",
+      "requirement": "Before delivery, architectural plan outputs shall satisfy the stage-appropriate matrix for axes, room names, dimensions, door/window tags, stair direction, level datum, north indicator, section/elevation references and sheet/scale data; omissions must be declared, never silently ignored.",
+      "failureCause": "Geometry checks proved that objects existed but did not prove that a human reviewer could identify or navigate them.",
+      "prevention": "Select a discipline and drawing-stage profile at plan time, expand its required annotation set, and fail the completeness gate for every missing required class."
+    },
+    {
+      "id": "ARCH-D010",
+      "name": "symbol_and_tag_geometry_binding",
+      "requirement": "Door, window, stair, level, north and section/elevation symbols shall bind to the geometry they describe and preserve identifier uniqueness and legibility.",
+      "failureCause": "Labels were emitted as free text with no association to source geometry, so later edits could leave misleading annotations behind.",
+      "prevention": "Assign stable semantic IDs, store source references/XData, derive tag positions from geometry and re-run binding checks after every modification."
+    },
+    {
+      "id": "ARCH-D011",
+      "name": "typography_collision_and_plot_scale",
+      "requirement": "Text height, axis bubble size, dimension offsets, lineweight and dash cadence shall be resolved from the declared plot scale and pass collision/readability checks in CAD, raster/PDF and the interactive reviewer.",
+      "failureCause": "Model-space coordinates were correct but fixed display styling created overlapping, tiny or visually uniform output at another renderer or scale.",
+      "prevention": "Use one scale-aware drafting profile and reserve annotation envelopes before rendering; compare semantic classes across all output backends."
+    },
+    {
+      "id": "ARCH-D012",
+      "name": "failure_learning_feedback",
+      "requirement": "Every failed drafting gate shall emit the symptom, root cause, correction and a candidate prevention rule with a reproducible regression fixture.",
+      "failureCause": "One-off visual repairs corrected a drawing without changing the generator, so the same low-level error returned in later jobs.",
+      "prevention": "Convert confirmed defects into rule IDs, executable checks and tests; keep new rules disabled for automatic acceptance until reviewed."
+    },
+    {
+      "id": "ARCH-D013",
+      "name": "structural_axis_coverage_scope",
+      "requirement": "Axis extents shall come from a declared structural coverage scope, not from the undifferentiated bounding box of every visible equipment, bridge, route or note.",
+      "failureCause": "The generator reused the whole-drawing content envelope for datum geometry, so one remote appendage stretched every axis across empty space.",
+      "prevention": "Maintain separate full-content, structural-axis and annotation envelopes; require each remote appendage to declare whether it participates in the primary grid."
+    }
+  ],
+  "defaultLayerProfile": {
+    "WALL": {
+      "category": "cut",
+      "lineweightMm": 0.6,
+      "linetype": "Continuous"
+    },
+    "COLUMN": {
+      "category": "cut",
+      "lineweightMm": 0.7,
+      "linetype": "Continuous"
+    },
+    "OPENING": {
+      "category": "projection",
+      "lineweightMm": 0.3,
+      "linetype": "Continuous"
+    },
+    "ROOM": {
+      "category": "projection",
+      "lineweightMm": 0.25,
+      "linetype": "Continuous"
+    },
+    "STAIR": {
+      "category": "projection",
+      "lineweightMm": 0.25,
+      "linetype": "Continuous"
+    },
+    "FURNITURE": {
+      "category": "secondary",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
+    },
+    "ROUTE": {
+      "category": "symbolic",
+      "lineweightMm": 0.18,
+      "linetype": "DASHED"
+    },
+    "GRID": {
+      "category": "datum",
+      "lineweightMm": 0.13,
+      "linetype": "CENTER2"
+    },
+    "DIMENSION": {
+      "category": "annotation",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
+    },
+    "TEXT": {
+      "category": "annotation",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
+    },
+    "OVERHEAD": {
+      "category": "hidden",
+      "lineweightMm": 0.18,
+      "linetype": "DASHED2"
+    },
+    "GRID_BUBBLE": {
+      "category": "datum",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
+    },
+    "GRID_TEXT": {
+      "category": "annotation",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
+    },
+    "TAG_TEXT": {
+      "category": "annotation",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
+    }
+  },
+  "reviewPolicy": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  },
+  "annotationCompletenessProfile": {
+    "architectural_concept_plan": {
+      "required": [
+        "axis_line",
+        "axis_bubble",
+        "axis_identifier",
+        "room_name",
+        "overall_dimension",
+        "chain_dimension",
+        "door_tag",
+        "window_tag",
+        "stair_direction",
+        "level_datum",
+        "north_indicator",
+        "drawing_title",
+        "units",
+        "review_status"
+      ],
+      "conditional": [
+        "section_reference",
+        "elevation_reference",
+        "area_schedule",
+        "fire_egress_note"
+      ],
+      "forbiddenSilentOmissions": true
+    },
+    "architectural_construction_plan": {
+      "inherits": "architectural_concept_plan",
+      "requiredAdditional": [
+        "section_reference",
+        "elevation_reference",
+        "wall_type_tag",
+        "opening_schedule_reference",
+        "detail_reference",
+        "sheet_number",
+        "plot_scale"
+      ]
+    }
+  },
+  "axisCoverageContract": {
+    "requiredEnvelopes": [
+      "fullContentBounds",
+      "structuralAxisCoverageBounds",
+      "annotationBounds"
+    ],
+    "remoteAppendagePolicy": "explicit_include_or_exclude",
+    "defaultExcludedClasses": [
+      "equipment",
+      "route",
+      "annotation",
+      "external_bridge"
+    ],
+    "defaultIncludedClasses": [
+      "primary_building_envelope",
+      "structural_terrace",
+      "structural_water_edge"
+    ]
+  }
+}

@@ -20,7 +20,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
-                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016",
+                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017",
             },
         )
         for rule in rules.values():
@@ -83,6 +83,14 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         self.assertEqual(rule["name"], "installed_package_integrity_is_immutable")
         self.assertIn("byte-for-byte", rule["prevention"])
         self.assertIn("SHA256SUMS", rule["root_cause"])
+    def test_installer_payload_is_manifest_allowlisted(self) -> None:
+        data = json.loads((PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8"))
+        rule = next(item for item in data["rules"] if item["id"] == "REL-G017")
+        self.assertEqual(rule["name"], "installed_payload_is_manifest_allowlisted")
+        self.assertIn("integration-manifest.json", rule["root_cause"])
+        self.assertIn("Install only files declared", rule["prevention"])
+        self.assertIn("caches and temporary files", rule["prevention"])
+
 
 if __name__ == "__main__":
     unittest.main()

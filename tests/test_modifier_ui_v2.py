@@ -96,6 +96,48 @@ class ModifierUiV2Tests(unittest.TestCase):
         result = preview_correction(plan, transaction, "mechanical")
         self.assertEqual(result["candidate_plan"]["features"][2]["profile"]["center"], [0.0, 0.0])
 
+    def test_architecture_2d_uses_semantic_lineweights_and_linetypes(self) -> None:
+        plan = json.loads((ROOT / "examples" / "rectangle.plan.json").read_text(encoding="utf-8"))
+        plan["schema_version"] = "2.0"
+        plan["drawing"].update({
+            "id": "ARCH_UI_TEST",
+            "domain": "architecture",
+            "locks": ["MODEL_XY"],
+            "review_policy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "domainGated": True},
+        })
+        for step, layer in zip(plan["steps"], ("WALL", "COLUMN", "ROUTE", "GRID"), strict=True):
+            step["layer"] = layer
+            step["role"] = layer.lower()
+        plan["steps"].append({
+            "id": "C001",
+            "type": "circle",
+            "purpose": "轴号 1 竖向 下端轴圈",
+            "reasoning": "轴圈与轴线身份绑定，用于交互视图轴号可见性回归。",
+            "center": {"point": [60, -20]},
+            "radius": 10,
+            "constraints": [
+                {"kind": "center_offset", "target": "origin", "dx": 60, "dy": -20},
+                {"kind": "radius", "value": 10},
+            ],
+            "layer": "GRID_BUBBLE",
+            "role": "grid_bubble",
+            "depends_on": ["L001"],
+        })
+        page = render_review_html(generate_view_package(plan, "2d", "architecture"))
+        self.assertIn('data-cad-layer="WALL"', page)
+        self.assertIn("layer-wall", page)
+        self.assertIn("layer-column", page)
+        self.assertIn("layer-route", page)
+        self.assertIn("layer-grid", page)
+        self.assertIn(".view-entity.layer-wall{stroke:#18232d;stroke-width:1.8}", page)
+        self.assertIn(".view-entity.layer-column{stroke:#7f1d1d;stroke-width:2}", page)
+        self.assertIn(".view-entity.layer-route,.view-entity.layer-overhead{stroke:#70428c;stroke-width:.65;stroke-dasharray:7 4}", page)
+        self.assertIn(".view-entity.layer-grid{stroke:#7b8790;stroke-width:.5;stroke-dasharray:12 4 2 4}", page)
+        self.assertIn('data-cad-layer="GRID_BUBBLE"', page)
+        self.assertIn("layer-grid-bubble", page)
+        self.assertIn("axis-bubble-label", page)
+        self.assertIn(">1</text>", page)
+
 
 if __name__ == "__main__":
     unittest.main()

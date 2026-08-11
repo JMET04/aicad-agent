@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.8.1 - 2026-08-11
+
+- Added architectural drafting semantics for plan-cut, projection, hidden/overhead, route, datum, furniture and annotation objects.
+- Propagated `source.cad_layer` into every selectable 2D reviewer entity so wall/column weights, dashed routes and centerline grids remain visible.
+- Added `ARCH-D001` through `ARCH-D006`, a machine-readable rule pack and `aicad_architecture_qa.py` for DXF layer, effective linetype and native DIMSTYLE gates.
+- Recorded the root cause: valid geometry had been mistaken for complete drafting quality, while the reviewer erased real DXF lineweight differences with one hard-coded stroke.
+- Added positive and negative regression tests so all-continuous routes or a uniform semantic renderer fail before delivery.
+- Changed production installation to copy only integration-manifest allowlisted files; REL-G017 blocks test caches and temporary files from entering the installed plugin.
+
 ## 1.8.0 - 2026-08-11
 
 - Added automatic source-bound review HTML generation and desktop launch after interactive 2D/3D builds.

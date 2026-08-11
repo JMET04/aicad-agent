@@ -3,6 +3,7 @@ from __future__ import annotations
 import html
 import json
 import math
+import re
 from typing import Any
 
 
@@ -84,7 +85,7 @@ def _coordinate_triad_svg(view: dict[str, Any], left: float, bottom: float, widt
     )
 
 
-def _svg(view: dict[str, Any]) -> str:
+def _svg(view: dict[str, Any], source_layers: dict[str, str], source_purposes: dict[str, str]) -> str:
     left, bottom, right, top = _bounds(view["entities"])
     width, height = right - left, top - bottom
     pad = max(width, height) * 0.012
@@ -94,13 +95,18 @@ def _svg(view: dict[str, Any]) -> str:
         classes = ["entity-pair"]
         if entity.get("key_geometry"):
             classes.append("key-geometry")
+        source_id = entity["source_object_id"]
+        source_layer = str(source_layers.get(source_id, "0")).upper()
+        source_purpose = str(source_purposes.get(source_id, ""))
+        layer_token = re.sub(r"[^A-Z0-9_-]+", "-", source_layer).strip("-").lower() or "0"
         attrs = (
             f'data-view-entity-id="{html.escape(entity["id"])}" '
             f'data-source-id="{html.escape(entity["source_object_id"])}" '
-            f'data-source-subobject="{html.escape(entity["source_subobject"])}"'
+            f'data-source-subobject="{html.escape(entity["source_subobject"])}" '
+            f'data-cad-layer="{html.escape(source_layer)}"'
         )
         role = html.escape(entity["role"])
-        visible_class = f'view-entity role-{role}' + (" derived" if entity["derived"] else "")
+        visible_class = f'view-entity role-{role} layer-{layer_token}' + (" derived" if entity["derived"] else "")
         kind = geometry["type"]
         if kind == "line":
             x1, y1 = geometry["start"]
@@ -112,6 +118,14 @@ def _svg(view: dict[str, Any]) -> str:
             radius = geometry["radius"]
             hit = f'<circle class="view-hit" cx="{cx}" cy="{cy}" r="{radius}" {attrs}/>'
             visible = f'<circle class="{visible_class}" cx="{cx}" cy="{cy}" r="{radius}"/>'
+            if source_layer == "GRID_BUBBLE":
+                match = re.search(r"轴号\s+([A-Z0-9]+)", source_purpose)
+                if match:
+                    font_size = max(width, height) * 0.012
+                    visible += (
+                        f'<text class="axis-bubble-label" x="{cx}" y="{-cy}" '
+                        f'transform="scale(1,-1)" font-size="{font_size:.9g}">{html.escape(match.group(1))}</text>'
+                    )
         else:
             cx, cy = geometry["point"]
             size = max(width, height) * 0.018
@@ -279,13 +293,21 @@ function initFreeSection(){
 
 def render_review_html_v2(package: dict[str, Any], selector_script: str = "") -> str:
     payload = json.dumps(package, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    source_layers = {
+        str(item["id"]): str(item.get("source", {}).get("cad_layer", "0"))
+        for item in package.get("semantic_document", {}).get("objects", [])
+    }
+    source_purposes = {
+        str(item["id"]): str(item.get("purpose", ""))
+        for item in package.get("semantic_document", {}).get("objects", [])
+    }
     selector_card = ""
     section_card = ""
     if package["space"] == "3d":
         selector_card = '''<section class="view-card selector-card"><div class="view-heading"><div><span class="eyebrow">3D SELECT</span><h2>可旋转三维选择器</h2></div><span class="hint">拖动旋转 · 滚轮缩放 · 悬停发现隐藏几何</span></div><canvas id="aicad3d-selector" aria-label="可旋转三维特征选择器"></canvas></section>'''
         section_card = '''<section class="view-card section-card"><div class="view-heading"><div><span class="eyebrow">FREE SECTION</span><h2>自由截面</h2></div><span class="hint">告诉 AI 截面位置，截面线可直接点选</span></div><div class="section-command"><input id="sectionRequest" placeholder="例如：看 X=10 截面；或 法向 1,1,0 过原点"><button id="makeSection" class="accent">生成截面</button></div><details class="plane-fields"><summary>精确平面</summary><div class="plane-grid"><label>法向 X<input id="sectionNx" type="number" step="0.1"></label><label>法向 Y<input id="sectionNy" type="number" step="0.1"></label><label>法向 Z<input id="sectionNz" type="number" step="0.1"></label><label>过点 X<input id="sectionPx" type="number" step="0.1"></label><label>过点 Y<input id="sectionPy" type="number" step="0.1"></label><label>过点 Z<input id="sectionPz" type="number" step="0.1"></label></div><button id="applyPlaneFields">按数值更新</button></details><canvas id="freeSectionCanvas" aria-label="自由截面选择视图"></canvas><p class="authority-note">截面来自受约束特征运算，可用于定位和修改参数；制造结论仍需宿主 CAD 的最终 BREP 复核。</p></section>'''
     cards = selector_card + section_card + "".join(
-        f'<section class="view-card"><div class="view-heading"><div><span class="eyebrow">{html.escape(view["id"])}</span><h2>{html.escape(view["label"])}</h2></div><span class="hint">{html.escape(_SCOPE_LABELS.get(view["geometry_scope"], view["geometry_scope"]))}</span></div>{_svg(view)}</section>'
+        f'<section class="view-card"><div class="view-heading"><div><span class="eyebrow">{html.escape(view["id"])}</span><h2>{html.escape(view["label"])}</h2></div><span class="hint">{html.escape(_SCOPE_LABELS.get(view["geometry_scope"], view["geometry_scope"]))}</span></div>{_svg(view, source_layers, source_purposes)}</section>'
         for view in package["views"]
     )
     interaction = _interaction_script()
@@ -299,7 +321,9 @@ def render_review_html_v2(package: dict[str, Any], selector_script: str = "") ->
 button,input,select,textarea{{font:inherit}}button{{cursor:pointer}}.topbar{{height:66px;padding:0 22px;background:#132433;color:#fff;display:flex;align-items:center;justify-content:space-between;border-bottom:4px solid var(--orange)}}.title-lockup{{display:flex;gap:14px;align-items:center}}.mark{{width:34px;height:34px;border:1px solid #fff8;display:grid;place-items:center;font:700 13px Consolas}}.topbar h1{{font-size:17px;margin:0;letter-spacing:.04em}}.topbar p{{font-size:11px;margin:3px 0 0;color:#b9c6d0}}.top-actions{{display:flex;align-items:center;gap:16px}}.safety{{font:11px Consolas;color:#d9e3ea}}.coordinate-toggle{{display:flex;align-items:center;gap:7px;font-size:11px;cursor:pointer;user-select:none}}.coordinate-toggle input{{position:absolute;opacity:0;pointer-events:none}}.switch-track{{width:31px;height:16px;border:1px solid #ffffff88;background:#07131d;position:relative}}.switch-track:after{{content:"";position:absolute;width:10px;height:10px;top:2px;left:2px;background:#9baab5;transition:.16s}}.coordinate-toggle input:checked+.switch-track:after{{left:17px;background:var(--orange)}}
 main{{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:14px;padding:14px;align-items:start}}.workspace{{display:grid;grid-template-columns:repeat(2,minmax(320px,1fr));gap:12px}}.view-card,.inspector{{background:var(--panel);border:1px solid var(--line);box-shadow:3px 3px 0 #27374618}}.view-card{{min-height:292px;padding:12px}}.selector-card,.section-card{{grid-column:span 2}}.view-heading{{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:9px;border-bottom:1px solid #d9d5ca;padding-bottom:7px}}.view-heading h2{{margin:1px 0 0;font-size:15px}}.eyebrow{{font:700 9px Consolas;color:var(--orange);letter-spacing:.12em}}.hint{{font-size:11px;color:var(--muted);text-align:right}}
 .cad-view,#aicad3d-selector,#freeSectionCanvas{{display:block;width:100%;height:250px;border:1px solid #d6d1c6;background:#fbfaf6}}#aicad3d-selector{{height:340px;cursor:grab}}#aicad3d-selector:active{{cursor:grabbing}}#freeSectionCanvas{{height:300px;cursor:crosshair}}
-.view-entity{{fill:none;stroke:#34495a;stroke-width:.8;vector-effect:non-scaling-stroke;pointer-events:none}}.view-entity.derived{{stroke-dasharray:5 3;opacity:.56}}.role-additive{{stroke:var(--navy)}}.role-subtractive{{stroke:var(--red)}}.view-hit{{fill:rgba(0,0,0,.001);stroke:rgba(0,0,0,.001);stroke-width:12;vector-effect:non-scaling-stroke;pointer-events:all;cursor:pointer}}.entity-pair.key-geometry .view-entity{{opacity:0}}.entity-pair.key-geometry:hover .view-entity,.entity-pair.key-geometry.selected .view-entity{{opacity:1;stroke:var(--orange);stroke-width:1.3;stroke-dasharray:4 2}}.entity-pair:not(.key-geometry):hover .view-entity,.entity-pair.selected .view-entity{{stroke:var(--orange);stroke-width:1.8;opacity:1}}.entity-pair.context-selected .view-entity{{stroke:#4b86ad;opacity:.62}}.point-mark line,.point-mark circle{{fill:none;stroke:inherit;vector-effect:non-scaling-stroke}}.view-coordinate-triad,.model-origin-marker{{pointer-events:none}}.view-coordinate-triad line{{stroke-width:1.2;vector-effect:non-scaling-stroke}}.view-coordinate-triad text{{font:700 9px Consolas;text-anchor:middle;dominant-baseline:middle;paint-order:stroke;stroke:#fff;stroke-width:2px;vector-effect:non-scaling-stroke}}.view-coordinate-triad .triad-origin{{fill:#132433}}.model-origin-marker{{stroke:#e97428;fill:#fff;stroke-width:1;vector-effect:non-scaling-stroke;opacity:.88}}.coordinates-hidden .view-coordinate-triad,.coordinates-hidden .model-origin-marker{{display:none}}
+.view-entity{{fill:none;stroke:#34495a;stroke-width:.8;vector-effect:non-scaling-stroke;pointer-events:none}}
+.view-entity.layer-wall{{stroke:#18232d;stroke-width:1.8}}.view-entity.layer-column{{stroke:#7f1d1d;stroke-width:2}}.view-entity.layer-opening{{stroke:#16697a;stroke-width:1.05}}.view-entity.layer-room,.view-entity.layer-stair{{stroke-width:.75}}.view-entity.layer-furniture{{stroke:#68727a;stroke-width:.52}}.view-entity.layer-route,.view-entity.layer-overhead{{stroke:#70428c;stroke-width:.65;stroke-dasharray:7 4}}.view-entity.layer-grid{{stroke:#7b8790;stroke-width:.5;stroke-dasharray:12 4 2 4}}.view-entity.layer-grid-bubble{{stroke:#4c5862;stroke-width:.72;fill:#fbfaf6}}.axis-bubble-label{{fill:#17232d;stroke:none;text-anchor:middle;dominant-baseline:central;font-weight:700;pointer-events:none}}.view-entity.layer-dimension,.view-entity.layer-text,.view-entity.layer-grid-text{{stroke-width:.5}}
+.view-entity.derived{{stroke-dasharray:5 3;opacity:.56}}.role-additive{{stroke:var(--navy)}}.role-subtractive{{stroke:var(--red)}}.view-hit{{fill:rgba(0,0,0,.001);stroke:rgba(0,0,0,.001);stroke-width:12;vector-effect:non-scaling-stroke;pointer-events:all;cursor:pointer}}.entity-pair.key-geometry .view-entity{{opacity:0}}.entity-pair.key-geometry:hover .view-entity,.entity-pair.key-geometry.selected .view-entity{{opacity:1;stroke:var(--orange);stroke-width:1.3;stroke-dasharray:4 2}}.entity-pair:not(.key-geometry):hover .view-entity,.entity-pair.selected .view-entity{{stroke:var(--orange);stroke-width:1.8;opacity:1}}.entity-pair.context-selected .view-entity{{stroke:#4b86ad;opacity:.62}}.point-mark line,.point-mark circle{{fill:none;stroke:inherit;vector-effect:non-scaling-stroke}}.view-coordinate-triad,.model-origin-marker{{pointer-events:none}}.view-coordinate-triad line{{stroke-width:1.2;vector-effect:non-scaling-stroke}}.view-coordinate-triad text{{font:700 9px Consolas;text-anchor:middle;dominant-baseline:middle;paint-order:stroke;stroke:#fff;stroke-width:2px;vector-effect:non-scaling-stroke}}.view-coordinate-triad .triad-origin{{fill:#132433}}.model-origin-marker{{stroke:#e97428;fill:#fff;stroke-width:1;vector-effect:non-scaling-stroke;opacity:.88}}.coordinates-hidden .view-coordinate-triad,.coordinates-hidden .model-origin-marker{{display:none}}
 .section-command{{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:8px}}input,select,textarea{{border:1px solid #aaa59a;background:#fffefa;color:var(--ink);padding:8px 9px;border-radius:2px;min-width:0}}button{{border:1px solid #8c8a83;background:#fffefa;color:var(--ink);padding:8px 10px;border-radius:2px}}button:hover{{border-color:var(--orange);color:#b34b14}}button.accent,.primary{{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700}}.plane-fields{{font-size:11px;margin:5px 0 9px;color:var(--muted)}}.plane-grid{{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:7px 0}}.plane-grid label{{display:grid;gap:3px}}.authority-note{{font-size:10px;color:var(--muted);margin:7px 0 0}}
 .inspector{{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}}.inspector-head{{padding:14px 15px 11px;background:#e8e4d9;border-bottom:1px solid var(--line)}}.inspector-head h2{{font-size:16px;margin:0}}.inspector-head p{{font-size:11px;color:var(--muted);margin:5px 0 0}}.panel-section{{padding:12px 14px;border-bottom:1px solid #d9d5ca}}.panel-section h3{{font-size:12px;margin:0 0 9px;text-transform:uppercase;letter-spacing:.06em}}.selection-chip{{display:grid;grid-template-columns:52px 1fr;gap:4px 7px;border-left:3px solid var(--orange);padding:7px 8px;background:#f6efe8;margin:5px 0;font-size:11px}}.selection-chip small{{grid-column:1/-1;color:var(--muted)}}.muted{{font-size:11px;color:var(--muted)}}.measurement-card{{border:1px solid #cfc9bc;background:#fffefa;margin:7px 0;box-shadow:2px 2px 0 #173f5f12}}.measurement-card header{{display:flex;justify-content:space-between;gap:8px;padding:7px 8px;background:#e8edf0;border-bottom:1px solid #d4d9dc;font-size:10px}}.measurement-card header span{{color:var(--green)}}.metric-primary{{display:flex;width:100%;align-items:baseline;justify-content:space-between;border:0;border-bottom:1px solid #e5dfd3;background:transparent;padding:9px 8px;text-align:left}}button.metric-primary:hover{{background:#fff3e7}}.metric-primary>span{{font-size:11px;color:var(--muted)}}.metric-primary>strong{{font:700 20px "Cascadia Mono",Consolas;color:var(--navy)}}.metric-primary i{{font:normal 10px "Microsoft YaHei"}}.metric-secondary{{display:flex;justify-content:space-between;padding:6px 8px;border-bottom:1px solid #e5dfd3;font-size:11px}}.coordinate-label{{padding:6px 8px 3px;color:var(--muted);font-size:9px}}.coordinate-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;padding:0 7px 7px}}.coordinate-grid span{{display:grid;grid-template-columns:auto 1fr auto;gap:3px;align-items:baseline;background:#f1eee7;padding:5px}}.coordinate-grid b{{font:700 10px Consolas;color:var(--orange)}}.coordinate-grid strong{{font:700 11px Consolas;text-align:right}}.coordinate-grid i{{font:normal 8px "Microsoft YaHei";color:var(--muted)}}.measurement-card p{{margin:0;padding:6px 8px;color:var(--muted);font-size:9px}}
 .parameter-group{{border:1px solid #d5d0c5;margin:6px 0;background:#fbfaf6}}.parameter-group.active{{border-color:var(--orange)}}.parameter-group header{{display:flex;justify-content:space-between;padding:6px 8px;background:#ece8df;font-size:10px}}.parameter-row{{display:flex;width:100%;justify-content:space-between;border:0;border-top:1px solid #e6e1d7;padding:6px 8px;background:transparent;font-size:11px;text-align:left}}.parameter-row strong{{font:700 11px "Cascadia Mono",Consolas}}.parameter-row i{{font:normal 9px "Microsoft YaHei";color:var(--muted)}}.form-grid{{display:grid;grid-template-columns:1fr 1fr;gap:7px}}.form-grid .wide{{grid-column:1/-1}}.label{{display:grid;gap:3px;font-size:10px;color:var(--muted)}}.attention{{animation:attention .65s}}@keyframes attention{{50%{{background:#fff0dd}}}}

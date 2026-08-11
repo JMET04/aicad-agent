@@ -59,14 +59,14 @@ DOMAIN_RULE_PACKS: dict[str, dict[str, Any]] = {
     },
     "architecture": {
         "role_kinds_2d": {
-            "grid": ["line"], "wall": ["line", "arc"], "opening": ["line", "arc"],
+            "grid": ["line"], "grid_bubble": ["circle"], "wall": ["line", "arc"], "opening": ["line", "arc"],
             "room": ["line", "arc"], "column": ["circle", "line", "arc"], "route": ["line", "arc"],
         },
         "role_types_3d": {
             "slab": ["base_extrude", "boss_extrude"], "wall": ["base_extrude", "boss_extrude"],
             "column": ["boss_extrude"], "opening": ["cut_extrude"],
         },
-        "canonical_layers": {"grid": ["GRID"], "wall": ["WALL"], "opening": ["OPENING"], "room": ["ROOM"], "column": ["COLUMN"], "route": ["ROUTE"]},
+        "canonical_layers": {"grid": ["GRID"], "grid_bubble": ["GRID_BUBBLE"], "wall": ["WALL"], "opening": ["OPENING"], "room": ["ROOM"], "column": ["COLUMN"], "route": ["ROUTE"]},
         "closed_roles": ["room"],
         "manual_reviews": ["egress", "accessibility", "fire_separation", "coordination", "code_compliance"],
     },
