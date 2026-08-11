@@ -126,6 +126,20 @@
       "symptom": "Release verification rejected a runtime compatibility fallback because it embedded a C:\\Users\\... absolute path pattern.",
       "root_cause": "A portable public-directory fallback was implemented as a literal Windows absolute path instead of deriving it from the runtime environment.",
       "prevention": "Resolve platform fallbacks from environment variables or system-root path components, scan every release text file for personal absolute-path patterns, and fail before packaging."
+    },
+    {
+      "id": "REL-G019",
+      "name": "migration_outputs_must_compile",
+      "symptom": "A syntactically valid migration script generated an exporter with unterminated string literals because escaped newlines were interpreted one layer too early.",
+      "root_cause": "Only the migration program was compiled; its generated target files were not immediately compiled before the broader test suite.",
+      "prevention": "After every source migration, compile or parse every changed target file before tests, packaging or artifact generation; the migration program compiling is not evidence that its outputs are valid."
+    },
+    {
+      "id": "REL-G020",
+      "name": "declared_dxf_capability_and_native_parser_parity",
+      "symptom": "A DXF declared as an unspecified legacy format contained modern layer lineweight group 370, passed text-level tests, and was rejected by AutoCAD with an unknown-group error.",
+      "root_cause": "The exporter added a modern group code without advancing the declared DXF version and supplying the mandatory modern table structure; no real-host import gate covered the new group.",
+      "prevention": "Generate standards-valid DXF through a version-aware writer; every new DXF entity, table field, linetype, lineweight or group code must be legal for the declared ACADVER and must pass real AutoCAD import, save, close, reopen and semantic persistence verification before release."
     }
   ]
 }

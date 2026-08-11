@@ -19,6 +19,9 @@ EXPECTED_LAYERS: dict[str, tuple[int, str]] = {
     "ROOM": (25, "CONTINUOUS"),
     "STAIR": (25, "CONTINUOUS"),
     "FURNITURE": (18, "CONTINUOUS"),
+    "CASEWORK": (18, "CONTINUOUS"),
+    "SANITARY": (18, "CONTINUOUS"),
+    "APPLIANCE": (18, "CONTINUOUS"),
     "ROUTE": (18, "DASHED"),
     "GRID": (13, "CENTER2"),
     "GRID_BUBBLE": (18, "CONTINUOUS"),
@@ -27,7 +30,7 @@ EXPECTED_LAYERS: dict[str, tuple[int, str]] = {
     "DIMENSION": (18, "CONTINUOUS"),
     "TEXT": (18, "CONTINUOUS"),
 }
-REQUIRED_ENTITY_LAYERS = {"WALL", "COLUMN", "OPENING", "FURNITURE", "ROUTE", "GRID", "GRID_BUBBLE", "GRID_TEXT", "TAG_TEXT", "DIMENSION"}
+REQUIRED_ENTITY_LAYERS = {"WALL", "COLUMN", "OPENING", "FURNITURE", "CASEWORK", "SANITARY", "APPLIANCE", "ROUTE", "GRID", "GRID_BUBBLE", "GRID_TEXT", "TAG_TEXT", "DIMENSION"}
 TOL = 1e-6
 
 
@@ -42,6 +45,8 @@ def _sha256(path: Path) -> str:
 def _all_entities(doc: ezdxf.document.Drawing) -> list[Any]:
     entities = list(doc.modelspace())
     for block in doc.blocks:
+        if str(block.name).upper().startswith(("*MODEL_SPACE", "*PAPER_SPACE")):
+            continue
         entities.extend(list(block))
     return entities
 
@@ -53,6 +58,12 @@ def _effective_linetype(doc: ezdxf.document.Drawing, entity: Any) -> str:
         if layer_name in doc.layers:
             name = str(doc.layers.get(layer_name).dxf.linetype).upper()
     return name
+
+
+def _aicad_strings(entity: Any) -> list[str]:
+    if not entity.has_xdata("AICAD"):
+        return []
+    return [str(value) for code, value in entity.get_xdata("AICAD") if code == 1000]
 
 
 def _text_value(entity: Any) -> str:
@@ -163,7 +174,7 @@ def audit_dxf(path: str | Path) -> dict[str, Any]:
     hierarchy_ok = (
         min(weights.get("WALL", -999), weights.get("COLUMN", -999))
         > max(weights.get("OPENING", 999), weights.get("ROOM", 999), weights.get("STAIR", 999))
-        > max(weights.get("FURNITURE", 999), weights.get("ROUTE", 999), weights.get("GRID", 999), weights.get("DIMENSION", 999))
+        > max(weights.get("FURNITURE", 999), weights.get("CASEWORK", 999), weights.get("SANITARY", 999), weights.get("APPLIANCE", 999), weights.get("ROUTE", 999), weights.get("GRID", 999), weights.get("DIMENSION", 999))
     )
     effective_distinction = (
         effective_types.get("CONTINUOUS", 0) > 0
@@ -173,6 +184,17 @@ def audit_dxf(path: str | Path) -> dict[str, Any]:
 
     dimensions = [entity for entity in entities if entity.dxftype() == "DIMENSION" and entity.dxf.layer == "DIMENSION"]
     dimension_text_native = all(str(entity.dxf.get("text", "<>")) in {"", "<>"} for entity in dimensions)
+    dimension_purposes = Counter()
+    dimension_purpose_rows: list[dict[str, Any]] = []
+    for entity in dimensions:
+        tokens = _aicad_strings(entity)
+        purpose_tokens = [token.split(":", 1)[1] for token in tokens if token.startswith("DIM_PURPOSE:")]
+        purpose = purpose_tokens[0] if len(purpose_tokens) == 1 else ""
+        if purpose:
+            dimension_purposes[purpose] += 1
+        dimension_purpose_rows.append({"handle": str(entity.dxf.handle), "purpose": purpose, "aicadStrings": tokens})
+    required_dimension_purposes = {"overall", "grid", "partition", "opening"}
+    dimension_purpose_matrix_ok = required_dimension_purposes.issubset(dimension_purposes) and all(row["purpose"] in required_dimension_purposes for row in dimension_purpose_rows)
     dimstyle_ok = False
     dimstyle_values: dict[str, Any] = {}
     if "AICAD_ARCH" in doc.dimstyles:
@@ -215,6 +237,7 @@ def audit_dxf(path: str | Path) -> dict[str, Any]:
         "effective_solid_dashed_center_distinction": effective_distinction,
         "native_dimensions_present": len(dimensions) > 0,
         "native_dimension_text_not_overridden": dimension_text_native,
+        "native_dimension_purpose_matrix": dimension_purpose_matrix_ok,
         "architectural_dimstyle_persisted": dimstyle_ok,
         "millimetre_units_and_visible_linetype_scale": header["measurement"] == 1 and header["insunits"] == 4 and 1.0 <= header["ltscale"] <= 1000.0,
         **axis_checks,
@@ -222,7 +245,7 @@ def audit_dxf(path: str | Path) -> dict[str, Any]:
     }
     status = "pass" if all(checks.values()) else "failed"
     return {
-        "schema": "aicad_architectural_drafting_validation_v2",
+        "schema": "aicad_architectural_drafting_validation_v3",
         "status": status,
         "source": {"path": str(source), "sha256": _sha256(source)},
         "checks": checks,
@@ -230,18 +253,19 @@ def audit_dxf(path: str | Path) -> dict[str, Any]:
         "entityCounts": dict(sorted(counts.items())),
         "effectiveLinetypes": dict(sorted(effective_types.items())),
         "nativeDimensionCount": len(dimensions),
+        "nativeDimensionPurposes": {"counts": dict(sorted(dimension_purposes.items())), "entities": dimension_purpose_rows},
         "dimensionStyle": {"name": "AICAD_ARCH", "values": dimstyle_values},
         "axisGrid": axis_details,
         "annotationCompleteness": {"classes": annotation_classes, "tagValues": tag_values},
         "header": header,
         "rootCause": {
             "causeClass": "drafting_semantics_or_annotation_identity_not_propagated",
-            "explanation": "Valid geometry is insufficient when linetype, lineweight, DIMSTYLE or complete axis identity groups are absent from any output renderer.",
+            "explanation": "Valid geometry is insufficient when drafting hierarchy, complete axis identity, room-detail layers or purpose-bound native dimensions are absent from any output renderer.",
         },
         "preventionRule": {
             "status": "candidate",
             "ruleEnabled": False,
-            "rules": [f"ARCH-D{i:03d}" for i in range(1, 21)],
+            "rules": [f"ARCH-D{i:03d}" for i in range(1, 26)],
         },
         "reviewPolicy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
     }

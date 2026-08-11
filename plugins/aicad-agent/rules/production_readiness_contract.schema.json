@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aicad.local/schema/production-readiness-contract-v1.json",
-  "title": "AICAD production readiness contract",
+  "title": "Legacy AICAD production readiness contract v1",
   "type": "object",
   "required": [
     "schema",
@@ -163,5 +163,7 @@
       }
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "deprecated": true,
+  "$comment": "Deprecated in 1.9.0 because it accepts self-reported Boolean evidence; use production_readiness_contract_v2.schema.json."
 }

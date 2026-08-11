@@ -7,6 +7,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
+
+import ezdxf
+from ezdxf.enums import TextEntityAlignment
 from contextlib import redirect_stdout
 from io import StringIO
 from pathlib import Path
@@ -15,8 +18,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from aicad.cli import main
-from aicad.engine import PlanError, ResolvedArc, ResolvedCircle, compile_plan
-from aicad.exporters import export_all
+from aicad.engine import PlanError, ResolvedArc, ResolvedCircle, ResolvedText, compile_plan
+from aicad.exporters import _layer_style, export_all
 from aicad.natural import UnsupportedRequest, draft_to_plan, offline_plan
 from aicad import provider as provider_module
 from aicad.settings import DEFAULT_CONFIG
@@ -115,11 +118,12 @@ class EngineTests(unittest.TestCase):
             paths = export_all(plan, output, "plate")
             execution = (output / "plate.aicad").read_bytes()
             execution.decode("ascii")
-            self.assertTrue(execution.startswith(b"AICAD|2|"))
+            self.assertTrue(execution.startswith(b"AICAD|3|"))
             self.assertEqual(execution.count(b"\nLINE|"), 4)
             self.assertEqual(execution.count(b"\nCIRCLE|"), 1)
             circle_record = next(line for line in execution.decode().splitlines() if line.startswith("CIRCLE|"))
-            self.assertEqual(len(circle_record.split("|")), 11)
+            self.assertEqual(len(circle_record.split("|")), 12)
+            self.assertEqual(circle_record.split("|")[2], "AICAD_GEOMETRY")
             dxf = (output / "plate.dxf").read_text(encoding="ascii")
             self.assertEqual(dxf.count("\nLINE\n"), 4)
             self.assertEqual(dxf.count("\nCIRCLE\n"), 1)
@@ -130,6 +134,53 @@ class EngineTests(unittest.TestCase):
             self.assertEqual(script.count(b"_.CIRCLE\n"), 1)
             self.assertTrue(script.endswith(b"\n"))
             self.assertEqual(len(paths), 5)
+
+    def test_architecture_layer_styles_match_normative_profile(self) -> None:
+        profile = json.loads((ROOT / "agent-plugin" / "aicad-agent" / "rules" / "architectural_drafting_rules.json").read_text(encoding="utf-8"))["defaultLayerProfile"]
+        for layer, expected in profile.items():
+            style = _layer_style(layer)
+            self.assertEqual(style["lineweight"], round(float(expected["lineweightMm"]) * 100), layer)
+            self.assertEqual(str(style["linetype"]).upper(), str(expected["linetype"]).upper(), layer)
+
+    def test_constrained_text_is_real_ascii_transport_and_semantic_layer_entity(self) -> None:
+        data = {
+            "schema_version": "2.0",
+            "drawing": {"name": "axis", "domain": "architecture", "units": "mm", "origin": [0, 0], "tolerance": 1e-6},
+            "steps": [
+                {"id": "AX1", "type": "line", "purpose": "vertical axis", "reasoning": "datum begins at origin", "start": {"ref": "origin"}, "construction": {"kind": "vector", "dx": 0, "dy": 1000}, "constraints": [{"kind": "vertical"}, {"kind": "length", "value": 1000}], "layer": "GRID"},
+                {"id": "AX1B", "type": "circle", "purpose": "axis bubble", "reasoning": "bubble is offset from the axis origin", "center": {"point": [0, 1200]}, "radius": 100, "constraints": [{"kind": "center_offset", "target": "AX1.start", "dx": 0, "dy": 1200}, {"kind": "radius", "value": 100}], "layer": "GRID_BUBBLE", "depends_on": ["AX1"]},
+                {"id": "AX1T", "type": "text", "purpose": "axis identifier", "reasoning": "identifier is centered in its bubble", "insert": {"ref": "AX1B.center"}, "value": "轴1", "height": 80, "rotation_deg": 0, "constraints": [{"kind": "position_coincident", "target": "AX1B.center"}, {"kind": "text_height", "value": 80}, {"kind": "rotation", "value": 0}], "layer": "GRID_TEXT", "depends_on": ["AX1B"]},
+            ],
+        }
+        plan = compile_plan(data)
+        self.assertIsInstance(plan.entities[-1], ResolvedText)
+        self.assertEqual(plan.entities[-1].depends_on, ("AX1B",))
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            export_all(plan, output, "axis")
+            execution = (output / "axis.aicad").read_bytes()
+            execution.decode("ascii")
+            text_record = next(line for line in execution.decode("ascii").splitlines() if line.startswith("TEXT|"))
+            fields = text_record.split("|")
+            self.assertEqual(len(fields), 14)
+            self.assertEqual(fields[2], "GRID_TEXT")
+            self.assertEqual(fields[7], "\\U+8F741")
+            dxf_path = output / "axis.dxf"
+            dxf = dxf_path.read_text(encoding="ascii")
+            document = ezdxf.readfile(dxf_path)
+            grid = document.layers.get("GRID")
+            self.assertEqual(document.dxfversion, "AC1018")
+            self.assertEqual(grid.dxf.linetype, "CENTER2")
+            self.assertEqual(grid.dxf.lineweight, 13)
+            text_entities = list(document.modelspace().query('TEXT[layer=="GRID_TEXT"]'))
+            self.assertEqual(len(text_entities), 1)
+            self.assertEqual(text_entities[0].dxf.text, "\\U+8F741")
+            self.assertEqual(text_entities[0].get_placement()[0], TextEntityAlignment.MIDDLE_CENTER)
+            self.assertIn("\\U+8F741", dxf)
+            script = (output / "axis.scr").read_text(encoding="ascii")
+            self.assertIn("_.-TEXT", script)
+            manifest = json.loads((output / "axis.manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["entity_types"]["text"], 1)
 
     def test_natural_cli_writes_plan_execution_and_result_contract(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -147,7 +198,7 @@ class EngineTests(unittest.TestCase):
 
     def test_bundle_manifest_lisp_and_installer_are_production_version(self) -> None:
         manifest = ET.parse(ROOT / "plugin" / "AiCadConstraint.bundle" / "PackageContents.xml")
-        self.assertEqual(manifest.getroot().attrib["AppVersion"], "1.4.0")
+        self.assertEqual(manifest.getroot().attrib["AppVersion"], "1.5.0")
         source = (ROOT / "plugin" / "AiCadConstraint.bundle" / "Contents" / "AiCadConstraint.lsp").read_bytes()
         text = source.decode("ascii")
         depth, in_string, escaped, in_comment = 0, False, False, False
@@ -170,7 +221,12 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(depth, 0)
         self.assertIn("(defun c:AICAD_AI", text)
         self.assertIn("(defun c:AICAD_DOCTOR", text)
-        self.assertIn('(setq aicad:*version* "1.4.0")', text)
+        self.assertIn('(= version "3")', text)
+        self.assertIn('(= kind "TEXT")', text)
+        self.assertIn('(cons 8 layer)', text)
+        self.assertIn('(defun aicad:layer-style', text)
+        self.assertIn('(cons 370 (nth 1 style))', text)
+        self.assertIn('(setq aicad:*version* "1.5.0")', text)
         self.assertNotIn('(command "_.UNDO"', text)
         installer = (ROOT / "scripts" / "install.ps1").read_text(encoding="utf-8")
         self.assertIn("AICAD_RUNNER", installer)

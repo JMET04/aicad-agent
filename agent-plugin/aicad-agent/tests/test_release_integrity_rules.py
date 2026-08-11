@@ -20,7 +20,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
-                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017", "REL-G018",
+                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017", "REL-G018", "REL-G019", "REL-G020",
             },
         )
         for rule in rules.values():
@@ -101,6 +101,15 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         self.assertIn("integration-manifest.json", rule["root_cause"])
         self.assertIn("Install only files declared", rule["prevention"])
         self.assertIn("caches and temporary files", rule["prevention"])
+
+    def test_modern_dxf_features_require_version_and_native_host_parity(self) -> None:
+        data = json.loads((PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8"))
+        rule = next(item for item in data["rules"] if item["id"] == "REL-G020")
+        self.assertEqual(rule["name"], "declared_dxf_capability_and_native_parser_parity")
+        self.assertIn("declared DXF version", rule["root_cause"])
+        self.assertIn("declared ACADVER", rule["prevention"])
+        self.assertIn("real AutoCAD import", rule["prevention"])
+        self.assertIn("semantic persistence", rule["prevention"])
 
 
 if __name__ == "__main__":

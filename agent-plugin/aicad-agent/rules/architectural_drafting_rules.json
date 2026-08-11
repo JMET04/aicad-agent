@@ -1,6 +1,6 @@
 {
   "schema": "aicad_architectural_drafting_rules_v6",
-  "version": "6.0.0",
+  "version": "8.0.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -206,6 +206,48 @@
       "requirement": "Every structural axis shall bind one center-pattern line at its declared coordinate, two equal-radius exterior bubbles tangent to opposite line endpoints, and two identical centered identifiers; numeric and letter identifiers shall follow one coordinate-ordered global catalogue.",
       "failureCause": "The earlier precompile gate counted axis members but did not prove line coordinate, bubble tangency, exterior placement or identifier text/centering, so malformed axes could satisfy a superficial completeness count.",
       "prevention": "Resolve every axis as one typed mathematical group, bind all five entities by ID, validate coordinate/span/tangency/centering/order before compilation, and replay the group after structural or annotation edits."
+    },
+    {
+      "id": "ARCH-D030",
+      "name": "plan_native_axis_identifier_entities",
+      "requirement": "Every axis identifier and geometry-bound technical tag shall be a real constrained AICAD text entity, not unbound post-processing annotation.",
+      "failureCause": "The axis contract referenced identifier IDs, but the executable plan contained only lines, circles and arcs; later DXF annotation created labels outside the dependency graph.",
+      "prevention": "Require TEXT entities with position_coincident or position_offset, text_height and rotation constraints; bind them to axis bubbles by earlier-entity ID and reject contracts whose identifier IDs do not resolve from the compiled plan."
+    },
+    {
+      "id": "ARCH-D031",
+      "name": "semantic_style_transport_parity",
+      "requirement": "Every semantic layer shall retain its normative linetype and lineweight in AICAD host drawing, SCR fallback, DXF, rendered preview and saved/reopened DWG.",
+      "failureCause": "The compiler retained layer names, but the AICAD host reader collapsed all entities onto one default layer and the generic DXF exporter declared every layer Continuous with one lineweight.",
+      "prevention": "Transport semantic layer names in AICAD protocol 3, resolve them through one normative layer profile, create/load required linetypes, write native layer lineweights, and compare host readback against the same profile."
+    },
+    {
+      "id": "ARCH-D032",
+      "name": "entity_protocol_end_to_end_parity",
+      "requirement": "Any entity type advertised by the plan schema shall be supported end-to-end by constraint solving, audit, manifest, AICAD, SCR, DXF, AutoCAD creation, XData and save/reopen readback.",
+      "failureCause": "A strict contract could require an entity kind that the real execution protocol could not create, allowing tests with synthetic resolved dictionaries to pass while production compilation remained impossible.",
+      "prevention": "Add one real compiled-plan regression for every advertised entity type and fail release if any artifact or native-host path omits its geometry, layer, value, dependency or metadata."
+    },
+    {
+      "id": "ARCH-D033",
+      "name": "unique_redundant_door_geometry_recovery",
+      "requirement": "Conflicting hinge, opening, leaf endpoint, width and arc fields may be auto-recovered only when one host topology and one bounded minimum-change clearance solution are mathematically unique.",
+      "failureCause": "A nearest-wall snap trusted one inconsistent door field and ignored the other redundant fields, allowing a plausible-looking leaf to remain topologically wrong or collide with furniture.",
+      "prevention": "Solve all redundant door fields together, enumerate host candidates, replay the complete swept sector against every occupancy object and block ambiguous or non-unique recovery instead of guessing."
+    },
+    {
+      "id": "ARCH-D034",
+      "name": "programme_authoritative_room_classification",
+      "requirement": "Every room functional category shall come from a cited user brief, authority input, approved programme or explicit spatial programme before any furniture or equipment is assigned.",
+      "failureCause": "The validator inferred room use from contents, so a kitchen containing a basin was misclassified as a bathroom and the wrong completeness standard was applied.",
+      "prevention": "Require categorySource and categoryReference per room, reject content-inferred categories in production, then validate contents as evidence against the declared programme."
+    },
+    {
+      "id": "ARCH-D035",
+      "name": "exhaustive_occupancy_clearance_without_name_exclusions",
+      "requirement": "Door, route and access-clearance checks shall include every typed occupancy body; an exclusion is allowed only through a reviewed non-occupying semantic class, never through broad name tokens.",
+      "failureCause": "A pre-audit excluded vehicles by name, masking a real garage door sweep collision with the first parking object.",
+      "prevention": "Build clearance candidates from typed spatial roles, record any explicit exclusion with rule evidence, and regression-test that vehicles, movable furniture, casework, sanitary fixtures and appliances all participate."
     }
   ],
   "defaultLayerProfile": {

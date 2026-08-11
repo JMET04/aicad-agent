@@ -45,7 +45,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.9.0"
+AGENT_API_VERSION = "1.10.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -113,12 +113,13 @@ def capabilities() -> dict[str, Any]:
         "ok": True,
         "api_version": AGENT_API_VERSION,
         "purpose": "Convert 2D/3D CAD intent into deterministic, origin-anchored, audited geometry and SolidWorks parts.",
-        "entities": ["line", "circle", "arc"],
+        "entities": ["line", "circle", "arc", "text"],
         "units": ["mm", "inch"],
         "constraints": [
             "horizontal", "vertical", "length", "parallel", "perpendicular", "collinear",
             "start_coincident", "end_coincident", "start_offset", "radius", "diameter",
             "center_coincident", "center_offset", "start_angle", "end_angle",
+            "position_coincident", "position_offset", "text_height", "rotation",
         ],
         "artifacts": ["plan.json", "aicad", "scr", "dxf", "audit.md", "manifest.json"],
         "agent_native": {
@@ -136,13 +137,17 @@ def capabilities() -> dict[str, Any]:
             "drawing origin is [0,0]",
             "first entity anchor is origin",
             "every entity has purpose, reasoning, and mathematical constraints",
-            "AutoCAD execution channel is ASCII and accepts only LINE/CIRCLE/ARC records",
+            "AutoCAD execution channel is ASCII and accepts LINE/CIRCLE/ARC/TEXT records",
+            "schema 2.0 compiles to layer-preserving AICAD protocol 3",
+            "semantic architecture layers preserve normative linetype and lineweight through DXF, SCR, and AutoCAD",
         ],
         "architectural_drafting_qa": {
             "available": True,
             "script": str((PLUGIN_ROOT / "scripts" / "aicad_architecture_qa.py").resolve()),
             "rules": str((PLUGIN_ROOT / "rules" / "architectural_drafting_rules.json").resolve()),
             "complete_axis_groups": True,
+            "axis_identifiers_are_plan_entities": True,
+            "semantic_layer_style_transport": ["aicad-v3", "scr", "dxf", "autocad"],
             "annotation_completeness_matrix": True,
             "review_only": True,
         },
@@ -152,7 +157,9 @@ def capabilities() -> dict[str, Any]:
             "schema": str((PLUGIN_ROOT / "rules" / "architectural_detail_contract_v2.schema.json").resolve()),
             "symbol_profiles": str((PLUGIN_ROOT / "rules" / "architectural_symbol_profiles.json").resolve()),
             "review_renderer": str((PLUGIN_ROOT / "scripts" / "aicad_review_report.py").resolve()),
-            "gates": ["complete axis identity groups", "complete production drawing set", "room equipment matrix", "typed selectable detailed object linework", "semantic interior layers", "four-purpose dimension chains", "door host-opening-sweep topology", "production authority"],
+            "gates": ["complete axis identity groups", "complete production drawing set", "programme-authoritative room categories", "room equipment matrix", "typed selectable detailed object linework", "semantic interior layers", "four-purpose dimension chains", "door host-opening-sweep topology", "exhaustive typed occupancy clearance", "production authority"],
+            "room_category_provenance_required": True,
+            "name_based_clearance_exclusions_allowed": False,
             "precompile_required": True,
             "strict_production_only": True,
             "allow_intermediate_cad": False,
@@ -493,12 +500,12 @@ TOOLS: list[dict[str, Any]] = [
     },
     {
         "name": "aicad_get_architecture_detail_contract_schema",
-        "description": "Return the precompile architectural contract for complete axes, room equipment, dimension purposes and door host topology.",
+        "description": "Return the strict precompile architectural contract for complete axes, cited room programmes, equipment, dimension purposes, door host topology and exhaustive typed occupancy clearance.",
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
     },
     {
         "name": "aicad_validate_architecture_detail_contract",
-        "description": "Fail closed before CAD compilation when architectural axes, detail completeness, dimension purposes, door topology or stage authority is unproved.",
+        "description": "Fail closed before CAD compilation when axes, room-programme provenance, detail completeness, dimension purposes, door topology, typed occupancy clearance or stage authority is unproved.",
         "inputSchema": {
             "type": "object", "additionalProperties": False, "required": ["contract", "plan"],
             "properties": {

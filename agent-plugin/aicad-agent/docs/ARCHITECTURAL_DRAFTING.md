@@ -48,9 +48,9 @@ The contract treats the following as one dependency graph:
 
 - every axis is a line plus two tangent bubbles and two identical identifiers inside a declared structural coverage scope;
 - overall, grid, partition and opening dimensions are four distinct native-purpose chains;
-- every room has a functional category and the required typed equipment families;
+- every room has a functional category declared before contents, plus `categorySource` and `categoryReference`; production rejects `inferred_unverified`, then checks the required typed equipment families against that programme;
 - movable furniture, fixed casework, sanitary fixtures and appliances stay on separate semantic layers; each object binds an actual-size closed outline and profile-specific selectable roles such as sofa backs/arms/seat divisions, bed pillows, fixture cores, drains, controls and handles from `rules/architectural_symbol_profiles.json`;
-- every door binds to one host wall and one wall opening; the host wall is segmented around the opening; hinge, opening endpoint, leaf length, arc endpoint, sweep and clearance agree mathematically;
+- every door binds to one host wall and one wall opening; the host wall is segmented around the opening; hinge, opening endpoint, leaf length, arc endpoint, sweep and clearance agree mathematically; vehicles, furniture, casework, sanitary fixtures and appliances all participate in clearance, while any exclusion requires a reviewed non-occupying semantic role;
 - the complete production drawing-set matrix and all annotation/authority evidence are present; strictProductionOnly=true, allowIntermediateCad=false and CAD exposure is limited to production-release candidates.
 
 The contract is non-compensatory. A failure produces `artifactDisposition=blocker_report_only`; the generator must not compile, launch or label a review/production drawing. Any wall, opening, door, equipment or dimension edit replays the affected checks.

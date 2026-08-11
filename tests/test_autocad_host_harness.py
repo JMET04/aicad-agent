@@ -14,6 +14,9 @@ class AutoCadHostHarnessTests(unittest.TestCase):
         self.assertIn("Test-Path -LiteralPath $PythonExe -PathType Leaf", harness)
         self.assertIn("$pythonCommand.Source", harness)
         self.assertNotIn('$env:AICAD_PYTHON = (Resolve-Path -LiteralPath $PythonExe).Path', harness)
+        self.assertIn("protocol3-text-layer.plan.json", harness)
+        self.assertIn("AICAD_V3_PASS", harness)
+        self.assertIn("AICAD_V3_PERSISTENCE_PASS", harness)
 
 
 if __name__ == "__main__":

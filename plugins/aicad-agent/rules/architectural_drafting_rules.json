@@ -1,6 +1,6 @@
 {
-  "schema": "aicad_architectural_drafting_rules_v3",
-  "version": "3.0.0",
+  "schema": "aicad_architectural_drafting_rules_v6",
+  "version": "8.0.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -143,6 +143,111 @@
       "requirement": "Routes, grids and other symbolic lines shall not cross annotation text envelopes; editing either the symbol geometry or the annotation shall replay the clearance gate.",
       "failureCause": "Object clearance QA ignored the separately rendered tag/text envelope, allowing a route to remain geometrically valid but visually obscure a window identifier.",
       "prevention": "Bind every tag envelope to symbolic-line collision checks and fail when the scale-aware minimum separation is not met."
+    },
+    {
+      "id": "ARCH-D021",
+      "name": "room_function_equipment_completeness",
+      "requirement": "Every named room shall declare a functional category and pass both the built-in category equipment profile and its project-specific required-equipment set; labels and occupancy rectangles do not satisfy the requirement.",
+      "failureCause": "Whole-drawing entity counts allowed kitchens, bathrooms, bedrooms and service rooms to remain empty or to contain only generic boxes.",
+      "prevention": "Validate the equipment family set room by room, bind every equipment item to a room polygon and block compilation when a required family is missing."
+    },
+    {
+      "id": "ARCH-D022",
+      "name": "interior_object_semantic_layering",
+      "requirement": "Movable furniture, fixed casework, sanitary fixtures and appliances shall use separate semantic layers and retain selectable component linework.",
+      "failureCause": "All interior objects were collapsed onto FURNITURE, so display, plotting, coordination and local correction could not distinguish their technical roles.",
+      "prevention": "Map every typed equipment family to FURNITURE, CASEWORK, SANITARY or APPLIANCE before generation and reject layer-family mismatches."
+    },
+    {
+      "id": "ARCH-D023",
+      "name": "purpose_complete_dimension_chain_matrix",
+      "requirement": "Architectural plans shall contain distinct native dimension chains for overall extent, structural grid, major partitions and openings, with each entity bound to one declared purpose.",
+      "failureCause": "A dimension count passed even though only overall and grid dimensions existed, leaving partitions and openings unlocatable for construction review.",
+      "prevention": "Validate the four-purpose dimension-chain matrix before artifact exposure and preserve native DIMENSION entities through host save and reopen."
+    },
+    {
+      "id": "ARCH-D024",
+      "name": "door_host_opening_sweep_topology",
+      "requirement": "Every door shall reference an existing host wall and opening; the wall shall be segmented around that opening; hinge, opening endpoint, leaf length, arc endpoint, required sweep and equipment clearance shall agree mathematically.",
+      "failureCause": "Door leaves and arcs were drawn as independent symbols with no host-wall topology, allowing floating hinges, continuous walls through doors and arcs disconnected from their leaves.",
+      "prevention": "Create the door from one host-opening record, derive all door geometry from it and replay topology plus sweep-clearance checks after any wall, opening, door or equipment edit."
+    },
+    {
+      "id": "ARCH-D025",
+      "name": "precompile_architectural_detail_gate",
+      "requirement": "Axis identity, room equipment, semantic layers, dimension purposes, door topology, annotation completeness and stage authority shall pass one non-compensatory contract before CAD compilation or review launch.",
+      "failureCause": "Independent post-export checks found defects only after a visually polished but technically inconsistent drawing had already been exposed to the user.",
+      "prevention": "Run the architectural detail contract before compile; on any failure expose only machine-readable and Chinese blocker reports with root cause and disabled prevention-rule candidates."
+    },
+    {
+      "id": "ARCH-D026",
+      "name": "typed_selectable_detailed_object_linework",
+      "requirement": "Every required furniture, casework, sanitary fixture and appliance shall use actual-size selectable line, arc or circle components whose typed roles satisfy its versioned symbol profile; text, fills, blocks without subcomponents and occupancy rectangles are forbidden substitutes.",
+      "failureCause": "A bounding rectangle and object label were counted as a furnished room even though the CAD contained no recognisable sofa cushions, bed pillows, fixture cores, drains, controls or other functional detail.",
+      "prevention": "Bind every component role to a resolved AICAD entity, prove exact closed outline, profile-specific role counts, permitted primitive types, semantic layer, actual size, object bbox and clearance bbox before any CAD artifact is exposed."
+    },
+    {
+      "id": "ARCH-D027",
+      "name": "strict_production_only_artifact_exposure",
+      "requirement": "When strictProductionOnly is enabled, every architecture request shall use stage=production and pass the complete production drawing-set matrix, detailed linework, authority, native-host, visual and authorized-release gates; otherwise CAD artifacts and review launch are forbidden.",
+      "failureCause": "Concept or coordination drawings were still compiled and presented after a blocker report, making users repeatedly inspect artifacts that were known not to be construction-ready.",
+      "prevention": "Use production_release_candidate_only exposure, allowIntermediateCad=false and blocker formats JSON plus UTF-8 HTML plus opaque PNG; a failed gate emits only readable diagnostics with root cause and no DXF/DWG/SCR/AICAD."
+    },
+    {
+      "id": "ARCH-D028",
+      "name": "portable_human_readable_blocker_review",
+      "requirement": "Every failed architectural gate shall emit machine JSON and a local single-file UTF-8 HTML review plus an opaque white-background PNG summary; the HTML shall contain every check, expandable evidence, root cause and prevention rule without external services.",
+      "failureCause": "Markdown and JSON were valid but depended on desktop file association and local-link handling, so users repeatedly saw an unable-to-open result and could not inspect the evidence.",
+      "prevention": "Render reports through aicad_review_report.py, verify HTML charset and Chinese content, verify PNG RGB mode and white background, and make the HTML path the primary review entry."
+    },
+    {
+      "id": "ARCH-D029",
+      "name": "mathematically_bound_axis_group",
+      "requirement": "Every structural axis shall bind one center-pattern line at its declared coordinate, two equal-radius exterior bubbles tangent to opposite line endpoints, and two identical centered identifiers; numeric and letter identifiers shall follow one coordinate-ordered global catalogue.",
+      "failureCause": "The earlier precompile gate counted axis members but did not prove line coordinate, bubble tangency, exterior placement or identifier text/centering, so malformed axes could satisfy a superficial completeness count.",
+      "prevention": "Resolve every axis as one typed mathematical group, bind all five entities by ID, validate coordinate/span/tangency/centering/order before compilation, and replay the group after structural or annotation edits."
+    },
+    {
+      "id": "ARCH-D030",
+      "name": "plan_native_axis_identifier_entities",
+      "requirement": "Every axis identifier and geometry-bound technical tag shall be a real constrained AICAD text entity, not unbound post-processing annotation.",
+      "failureCause": "The axis contract referenced identifier IDs, but the executable plan contained only lines, circles and arcs; later DXF annotation created labels outside the dependency graph.",
+      "prevention": "Require TEXT entities with position_coincident or position_offset, text_height and rotation constraints; bind them to axis bubbles by earlier-entity ID and reject contracts whose identifier IDs do not resolve from the compiled plan."
+    },
+    {
+      "id": "ARCH-D031",
+      "name": "semantic_style_transport_parity",
+      "requirement": "Every semantic layer shall retain its normative linetype and lineweight in AICAD host drawing, SCR fallback, DXF, rendered preview and saved/reopened DWG.",
+      "failureCause": "The compiler retained layer names, but the AICAD host reader collapsed all entities onto one default layer and the generic DXF exporter declared every layer Continuous with one lineweight.",
+      "prevention": "Transport semantic layer names in AICAD protocol 3, resolve them through one normative layer profile, create/load required linetypes, write native layer lineweights, and compare host readback against the same profile."
+    },
+    {
+      "id": "ARCH-D032",
+      "name": "entity_protocol_end_to_end_parity",
+      "requirement": "Any entity type advertised by the plan schema shall be supported end-to-end by constraint solving, audit, manifest, AICAD, SCR, DXF, AutoCAD creation, XData and save/reopen readback.",
+      "failureCause": "A strict contract could require an entity kind that the real execution protocol could not create, allowing tests with synthetic resolved dictionaries to pass while production compilation remained impossible.",
+      "prevention": "Add one real compiled-plan regression for every advertised entity type and fail release if any artifact or native-host path omits its geometry, layer, value, dependency or metadata."
+    },
+    {
+      "id": "ARCH-D033",
+      "name": "unique_redundant_door_geometry_recovery",
+      "requirement": "Conflicting hinge, opening, leaf endpoint, width and arc fields may be auto-recovered only when one host topology and one bounded minimum-change clearance solution are mathematically unique.",
+      "failureCause": "A nearest-wall snap trusted one inconsistent door field and ignored the other redundant fields, allowing a plausible-looking leaf to remain topologically wrong or collide with furniture.",
+      "prevention": "Solve all redundant door fields together, enumerate host candidates, replay the complete swept sector against every occupancy object and block ambiguous or non-unique recovery instead of guessing."
+    },
+    {
+      "id": "ARCH-D034",
+      "name": "programme_authoritative_room_classification",
+      "requirement": "Every room functional category shall come from a cited user brief, authority input, approved programme or explicit spatial programme before any furniture or equipment is assigned.",
+      "failureCause": "The validator inferred room use from contents, so a kitchen containing a basin was misclassified as a bathroom and the wrong completeness standard was applied.",
+      "prevention": "Require categorySource and categoryReference per room, reject content-inferred categories in production, then validate contents as evidence against the declared programme."
+    },
+    {
+      "id": "ARCH-D035",
+      "name": "exhaustive_occupancy_clearance_without_name_exclusions",
+      "requirement": "Door, route and access-clearance checks shall include every typed occupancy body; an exclusion is allowed only through a reviewed non-occupying semantic class, never through broad name tokens.",
+      "failureCause": "A pre-audit excluded vehicles by name, masking a real garage door sweep collision with the first parking object.",
+      "prevention": "Build clearance candidates from typed spatial roles, record any explicit exclusion with rule evidence, and regression-test that vehicles, movable furniture, casework, sanitary fixtures and appliances all participate."
     }
   ],
   "defaultLayerProfile": {
@@ -215,6 +320,21 @@
       "category": "annotation",
       "lineweightMm": 0.18,
       "linetype": "Continuous"
+    },
+    "CASEWORK": {
+      "category": "secondary",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
+    },
+    "SANITARY": {
+      "category": "secondary",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
+    },
+    "APPLIANCE": {
+      "category": "secondary",
+      "lineweightMm": 0.18,
+      "linetype": "Continuous"
     }
   },
   "reviewPolicy": {
@@ -262,7 +382,16 @@
         "revision_status",
         "paperspace_viewport",
         "title_block",
-        "typed_furniture_linework"
+        "typed_furniture_linework",
+        "room_equipment_matrix",
+        "casework_linework",
+        "sanitary_fixture_linework",
+        "appliance_linework",
+        "internal_partition_dimension_chain",
+        "opening_dimension_chain",
+        "door_host_binding",
+        "door_wall_gap",
+        "door_sweep_clearance"
       ]
     }
   },
@@ -297,5 +426,21 @@
     "conflictingDuplicatePolicy": "fail",
     "repeatRunPolicy": "same_inputs_same_canonical_inventory_and_hash",
     "qaTool": "scripts/aicad_report_qa.py"
+  },
+  "architecturalDetailContract": {
+    "schema": "rules/architectural_detail_contract_v2.schema.json",
+    "symbolProfiles": "rules/architectural_symbol_profiles.json",
+    "qaTool": "scripts/aicad_architecture_detail_qa.py",
+    "reviewRenderer": "scripts/aicad_review_report.py",
+    "requiredBeforeCompile": true,
+    "strictProductionOnly": true,
+    "allowIntermediateCad": false,
+    "failureDisposition": "blocker_report_only",
+    "requiredBlockerFormats": [
+      "json",
+      "html",
+      "png"
+    ],
+    "nonCompensatory": true
   }
 }

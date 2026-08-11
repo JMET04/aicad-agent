@@ -9,9 +9,9 @@ import zipfile
 from pathlib import Path
 
 
-EXPECTED_VERSION = "1.9.0"
+EXPECTED_VERSION = "1.10.0"
 REQUIRED_README_SECTIONS = (
-    "# aicad-agent 1.9.0",
+    "# aicad-agent 1.10.0",
     "## 安装步骤",
     "## 第一次使用：完全不需要写代码",
     "## 常用任务提示词",
@@ -81,7 +81,7 @@ def verify(root: Path) -> dict:
         "SECURITY.md",
         "THIRD_PARTY_NOTICES.md",
         "source-manifest.json",
-        "dist/aicad-agent-1.9.0.zip",
+        "dist/aicad-agent-1.10.0.zip",
         "dist/SHA256SUMS",
         "docs/images/modifier-measurements-v3.png",
         "plugins/aicad-agent/.codex-plugin/plugin.json",
@@ -126,8 +126,8 @@ def verify(root: Path) -> dict:
     workflow = root / ".github" / "workflows" / "ci.yml"
     if workflow.is_file():
         workflow_text = workflow.read_text(encoding="utf-8")
-        if "Version 1.9.0" not in workflow_text:
-            errors.append("ci-not-pinned-to-1.9.0")
+        if "Version 1.10.0" not in workflow_text:
+            errors.append("ci-not-pinned-to-1.10.0")
         if "verify_github_source.py" not in workflow_text:
             errors.append("ci-missing-github-source-verifier")
         if "1.3.4" in workflow_text or "1.4.0" in workflow_text:
@@ -182,7 +182,7 @@ def verify(root: Path) -> dict:
     for relative in sorted(manifest_paths - actual_paths):
         errors.append(f"manifest-extra:{relative}")
 
-    archive = root / "dist" / "aicad-agent-1.9.0.zip"
+    archive = root / "dist" / "aicad-agent-1.10.0.zip"
     sums = root / "dist" / "SHA256SUMS"
     if archive.is_file() and sums.is_file():
         parts = sums.read_text(encoding="ascii").strip().split()

@@ -32,7 +32,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.9.0")
+        self.assertEqual(manifest["version"], "1.10.0")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         mcp = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
@@ -49,8 +49,10 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.9.0")
-        self.assertEqual(payload["entities"], ["line", "circle", "arc"])
+        self.assertEqual(payload["api_version"], "1.10.0")
+        self.assertEqual(payload["entities"], ["line", "circle", "arc", "text"])
+        self.assertTrue({"position_coincident", "position_offset", "text_height", "rotation"}.issubset(payload["constraints"]))
+        self.assertIn("schema 2.0 compiles to layer-preserving AICAD protocol 3", payload["invariants"])
         self.assertTrue(Path(payload["schema_path"]).is_file())
         self.assertTrue(payload["agent_native"]["default"])
         self.assertFalse(payload["agent_native"]["api_key_required"])
@@ -108,7 +110,7 @@ class AgentPluginTests(unittest.TestCase):
             for key in ("plan", "execution", "script", "dxf", "audit", "manifest"):
                 self.assertTrue(Path(payload[key]).is_file(), key)
             manifest = json.loads(Path(payload["manifest"]).read_text(encoding="utf-8"))
-            self.assertEqual(manifest["entity_types"], {"line": 4, "circle": 1, "arc": 0})
+            self.assertEqual(manifest["entity_types"], {"line": 4, "circle": 1, "arc": 0, "text": 0})
 
     def test_cli_reads_utf8_request_file_and_emits_utf8_json(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

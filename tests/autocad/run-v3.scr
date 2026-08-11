@@ -1,0 +1,4 @@
+(load (strcat (getenv "AICAD_TEST_ROOT") "/v3_text_layer_test.lsp"))
+(aicad-v3:run)
+_.QUIT
+_Y

@@ -21,6 +21,7 @@ Available point references:
 - line: `.start`, `.end`, `.midpoint`;
 - circle: `.center`;
 - arc: `.center`, `.start`, `.end`;
+- text: `.insert`;
 - global: `origin`.
 
 ## Line
@@ -48,6 +49,14 @@ Circle constraints: `radius`, `diameter`, `center_coincident`, `center_offset`.
 Required fields: `center`, positive `radius`, `start_angle_deg`, `end_angle_deg`, `constraints`. Arcs are counter-clockwise and cannot have a zero or 360-degree-equivalent sweep.
 
 Arc constraints: circle constraints plus `start_angle` and `end_angle`.
+
+## Text
+
+Required fields: `insert`, non-empty `value`, positive `height`, and `constraints`; `rotation_deg` defaults to zero. Text is middle-centre aligned at `insert` so an axis identifier can be mathematically coincident with its bubble centre.
+
+Text constraints: `position_coincident`, `position_offset`, `text_height`, and `rotation`. Unicode BMP text is escaped as ASCII `\U+XXXX` in `.aicad`, `.scr`, and `.dxf`, while the UTF-8 plan and audit retain the original string. Control characters, the record separator `|`, backslash input, and non-BMP characters fail closed.
+
+For architecture, use semantic layers such as `GRID`, `GRID_BUBBLE`, `GRID_TEXT`, `WALL`, `OPENING`, `FURNITURE`, `DIMENSION`, and `OVERHEAD`. Schema 2.0 compiles to AICAD protocol 3, which transports the actual layer; DXF, SCR, and AutoCAD resolve the same normative linetype/lineweight profile. A complete axis is one line, two tangent bubbles, and two identical centred text entities generated from one axis record.
 
 ## Offset constraints
 

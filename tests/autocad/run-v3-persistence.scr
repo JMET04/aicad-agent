@@ -1,0 +1,3 @@
+(load (strcat (getenv "AICAD_TEST_ROOT") "/v3_text_layer_test.lsp"))
+(aicad-v3:persistence-run)
+_.QUIT

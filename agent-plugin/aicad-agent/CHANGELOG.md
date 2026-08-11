@@ -1,5 +1,16 @@
 # Changelog
 
+- Fixed modern DXF emission to use a standards-valid AC1018 document with complete tables; new release rule REL-G020 now requires version/group-code parity and real AutoCAD import-save-reopen persistence evidence.
+
+## 1.10.0 - 2026-08-12
+
+- Added constrained native `text` steps with middle-centre placement, UTF-8-to-ASCII CAD escaping, audit/manifest support and real DXF/SCR/AutoCAD TEXT creation.
+- Upgraded schema-2 execution to backward-compatible AICAD protocol 3 so every entity retains its semantic layer in the AutoCAD host and XData workflow.
+- Applied the architectural lineweight/linetype profile across DXF, SCR and AutoCAD layers; GRID is CENTER2/0.13 mm while cut, projection, secondary, hidden and annotation layers retain their hierarchy.
+- Added `ARCH-D030` through `ARCH-D035` for native axis identifiers, semantic style transport, end-to-end entity protocol parity, unique redundant-door recovery, programme-authoritative room categories and exhaustive typed occupancy clearance; added `REL-G019` for generated-target compilation after migrations.
+- Architectural room contracts now require `categorySource` and `categoryReference`; production rejects categories inferred from already placed furniture. Vehicles and other typed occupancy bodies can no longer be excluded from door-clearance QA by name.
+- Kept strict production-only gates: incomplete authority or drawing sets still yield blocker reports and no CAD exposure.
+
 ## 1.9.0 - 2026-08-12
 - Strengthened axis-grid precompile proof: declared coordinate and coverage, two equal exterior tangent bubbles, centered matching identifiers, both directions and coordinate-ordered IDs are now non-compensatory gates.
 

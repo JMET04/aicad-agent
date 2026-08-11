@@ -39,7 +39,7 @@ def build_fixture(path: Path, bad_route: bool = False, bad_axis: bool = False) -
     doc.appids.add("AICAD")
     msp = doc.modelspace()
     y = 0.0
-    for layer in ("WALL", "COLUMN", "OPENING", "ROOM", "STAIR", "FURNITURE", "ROUTE"):
+    for layer in ("WALL", "COLUMN", "OPENING", "ROOM", "STAIR", "FURNITURE", "CASEWORK", "SANITARY", "APPLIANCE", "ROUTE"):
         msp.add_line((0, y), (1000, y), dxfattribs={"layer": layer})
         y += 250.0
     msp.add_line((500, 1500), (500, 2500), dxfattribs={"layer": "GRID"})
@@ -51,7 +51,10 @@ def build_fixture(path: Path, bad_route: bool = False, bad_axis: bool = False) -
     msp.add_mtext("建筑平面", dxfattribs={"layer": "TEXT"})
     for index, value in enumerate(("D01", "W01", "UP 上", "标高 +0.000", "N ↑")):
         msp.add_mtext(value, dxfattribs={"layer": "TAG_TEXT"}).set_location((1500, index * 300))
-    msp.add_linear_dim(base=(0, -500), p1=(0, 0), p2=(1000, 0), dimstyle="AICAD_ARCH", dxfattribs={"layer": "DIMENSION"}).render()
+    for index, purpose in enumerate(("overall", "grid", "partition", "opening")):
+        override = msp.add_linear_dim(base=(0, -500 - index * 300), p1=(0, 0), p2=(1000 - index * 100, 0), dimstyle="AICAD_ARCH", dxfattribs={"layer": "DIMENSION"})
+        override.render()
+        override.dimension.set_xdata("AICAD", [(1000, f"DIM_PURPOSE:{purpose}")])
     doc.saveas(path)
 
 
@@ -59,7 +62,7 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
     def test_rule_pack_records_causes_and_prevention(self) -> None:
         data = json.loads((ROOT / "rules" / "architectural_drafting_rules.json").read_text(encoding="utf-8"))
         ids = {row["id"] for row in data["rules"]}
-        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 21)})
+        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 36)})
         self.assertEqual(data["axisCoverageContract"]["remoteAppendagePolicy"], "explicit_include_or_exclude")
         self.assertEqual(data["reportQualityContract"]["conflictingDuplicatePolicy"], "fail")
         self.assertTrue(all(row["failureCause"] and row["prevention"] for row in data["rules"]))
@@ -69,6 +72,9 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
         self.assertIn("axis_identifier", data["annotationCompletenessProfile"]["architectural_concept_plan"]["required"])
         self.assertIn("paperspace_viewport", data["annotationCompletenessProfile"]["architectural_construction_plan"]["requiredAdditional"])
         self.assertIn("typed_furniture_linework", data["annotationCompletenessProfile"]["architectural_construction_plan"]["requiredAdditional"])
+        self.assertIn("door_host_binding", data["annotationCompletenessProfile"]["architectural_construction_plan"]["requiredAdditional"])
+        self.assertIn("opening_dimension_chain", data["annotationCompletenessProfile"]["architectural_construction_plan"]["requiredAdditional"])
+        self.assertEqual(data["architecturalDetailContract"]["failureDisposition"], "blocker_report_only")
         self.assertFalse(data["reviewPolicy"]["accepted"])
         self.assertFalse(data["reviewPolicy"]["ruleEnabled"])
 
@@ -79,7 +85,8 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
             result = QA.audit_dxf(path)
         self.assertEqual(result["status"], "pass")
         self.assertTrue(all(result["checks"].values()))
-        self.assertGreater(result["nativeDimensionCount"], 0)
+        self.assertEqual(result["nativeDimensionCount"], 4)
+        self.assertEqual(set(result["nativeDimensionPurposes"]["counts"]), {"overall", "grid", "partition", "opening"})
         self.assertIn("DASHED", result["effectiveLinetypes"])
         self.assertIn("CENTER2", result["effectiveLinetypes"])
 

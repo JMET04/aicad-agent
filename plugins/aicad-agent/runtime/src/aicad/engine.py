@@ -98,7 +98,28 @@ class ResolvedArc:
         return self.center
 
 
-ResolvedEntity: TypeAlias = ResolvedLine | ResolvedCircle | ResolvedArc
+@dataclass(frozen=True)
+class ResolvedText:
+    id: str
+    purpose: str
+    reasoning: str
+    insert: Point
+    value: str
+    height: float
+    rotation_deg: float
+    constraints: tuple[dict[str, Any], ...]
+    type: str = "text"
+    layer: str = "AICAD_TEXT"
+    roles: tuple[str, ...] = ()
+    editable: bool = True
+    depends_on: tuple[str, ...] = ()
+
+    @property
+    def anchor(self) -> Point:
+        return self.insert
+
+
+ResolvedEntity: TypeAlias = ResolvedLine | ResolvedCircle | ResolvedArc | ResolvedText
 
 
 @dataclass(frozen=True)
@@ -162,8 +183,10 @@ def _resolve_ref(ref: str, entities: dict[str, ResolvedEntity], origin: Point) -
         }
     elif isinstance(entity, ResolvedCircle):
         points = {"center": entity.center}
-    else:
+    elif isinstance(entity, ResolvedArc):
         points = {"center": entity.center, "start": entity.start, "end": entity.end}
+    else:
+        points = {"insert": entity.insert}
     if point_name not in points:
         raise PlanError(f"Reference '{ref}' is not valid for a {entity.type}")
     return points[point_name]
@@ -330,12 +353,41 @@ def _validate_radial_constraints(entity: ResolvedCircle | ResolvedArc, entities:
     return has_anchor_relation
 
 
+def _validate_text_constraints(entity: ResolvedText, entities: dict[str, ResolvedEntity], origin: Point, tolerance: float) -> bool:
+    has_anchor_relation = False
+    for index, constraint in enumerate(entity.constraints):
+        if not isinstance(constraint, dict) or not isinstance(constraint.get("kind"), str):
+            raise PlanError(f"{entity.id}.constraints[{index}] must contain a kind")
+        kind = constraint["kind"]
+        if kind == "position_coincident":
+            target = constraint.get("target")
+            if not isinstance(target, str) or not _close(entity.insert, _resolve_ref(target, entities, origin), tolerance):
+                raise PlanError(f"{entity.id} violates position_coincident constraint")
+            has_anchor_relation = True
+        elif kind == "position_offset":
+            _validate_offset(entity.insert, constraint, entities, origin, tolerance, f"{entity.id}.position_offset")
+            has_anchor_relation = True
+        elif kind == "text_height":
+            expected = _positive(constraint.get("value"), f"{entity.id}.text_height.value")
+            if abs(entity.height - expected) > tolerance:
+                raise PlanError(f"{entity.id} violates text_height constraint")
+        elif kind == "rotation":
+            expected = _number(constraint.get("value"), f"{entity.id}.rotation.value")
+            if abs(((entity.rotation_deg - expected + 180) % 360) - 180) > tolerance:
+                raise PlanError(f"{entity.id} violates rotation constraint")
+        else:
+            raise PlanError(f"Unsupported constraint kind '{kind}' on {entity.id}")
+    return has_anchor_relation
+
+
 def _entity_points(entity: ResolvedEntity) -> tuple[Point, ...]:
     if isinstance(entity, ResolvedLine):
         return (entity.start, entity.end, ((entity.start[0] + entity.end[0]) / 2, (entity.start[1] + entity.end[1]) / 2))
     if isinstance(entity, ResolvedCircle):
         return (entity.center,)
-    return (entity.center, entity.start, entity.end)
+    if isinstance(entity, ResolvedArc):
+        return (entity.center, entity.start, entity.end)
+    return (entity.insert,)
 
 
 def _is_duplicate(candidate: ResolvedEntity, prior: ResolvedEntity, tolerance: float) -> bool:
@@ -345,6 +397,9 @@ def _is_duplicate(candidate: ResolvedEntity, prior: ResolvedEntity, tolerance: f
         return _close(candidate.center, prior.center, tolerance) and abs(candidate.radius - prior.radius) <= tolerance
     if isinstance(candidate, ResolvedArc) and isinstance(prior, ResolvedArc):
         return (_close(candidate.center, prior.center, tolerance) and abs(candidate.radius - prior.radius) <= tolerance and abs(candidate.start_angle_deg - prior.start_angle_deg) <= tolerance and abs(candidate.end_angle_deg - prior.end_angle_deg) <= tolerance)
+    if isinstance(candidate, ResolvedText) and isinstance(prior, ResolvedText):
+        return (_close(candidate.insert, prior.insert, tolerance) and candidate.value == prior.value and
+                abs(candidate.height - prior.height) <= tolerance and abs(candidate.rotation_deg - prior.rotation_deg) <= tolerance)
     return False
 
 
@@ -369,7 +424,7 @@ def _referenced_entity_ids(value: Any) -> tuple[str, ...]:
 
 def _inferred_dependencies(step: dict[str, Any], known: set[str]) -> tuple[str, ...]:
     result: list[str] = []
-    for field in ("start", "center", "construction", "constraints"):
+    for field in ("start", "center", "insert", "construction", "constraints"):
         for candidate in _referenced_entity_ids(step.get(field)):
             if candidate in known and candidate not in result:
                 result.append(candidate)
@@ -427,8 +482,8 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
         step_type = raw_step.get("type")
         if schema_version == "1.0" and step_type != "line":
             raise PlanError(f"{label}.type must be line in schema 1.0")
-        if step_type not in {"line", "circle", "arc"}:
-            raise PlanError(f"{label}.type must be line, circle, or arc")
+        if step_type not in {"line", "circle", "arc", "text"}:
+            raise PlanError(f"{label}.type must be line, circle, arc, or text")
         entity_id, purpose, reasoning, constraints = _common_step(raw_step, label, resolved)
         layer = raw_step.get("layer", "AICAD_GEOMETRY")
         if not isinstance(layer, str) or not LAYER_PATTERN.fullmatch(layer):
@@ -463,7 +518,7 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
             center = _resolve_anchor(raw_step.get("center"), resolved, origin, f"{entity_id}.center")
             entity = ResolvedCircle(entity_id, purpose, reasoning, center, _positive(raw_step.get("radius"), f"{entity_id}.radius"), constraints, layer=layer, roles=roles, editable=editable, depends_on=depends_on)
             has_relation = _validate_radial_constraints(entity, resolved, origin, tolerance)
-        else:
+        elif step_type == "arc":
             center = _resolve_anchor(raw_step.get("center"), resolved, origin, f"{entity_id}.center")
             radius = _positive(raw_step.get("radius"), f"{entity_id}.radius")
             start_angle = _number(raw_step.get("start_angle_deg"), f"{entity_id}.start_angle_deg")
@@ -472,6 +527,17 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
                 raise PlanError(f"{entity_id} arc sweep must be between 0 and 360 degrees")
             entity = ResolvedArc(entity_id, purpose, reasoning, center, radius, start_angle, end_angle, constraints, layer=layer, roles=roles, editable=editable, depends_on=depends_on)
             has_relation = _validate_radial_constraints(entity, resolved, origin, tolerance)
+        else:
+            insert = _resolve_anchor(raw_step.get("insert"), resolved, origin, f"{entity_id}.insert")
+            value = raw_step.get("value")
+            if not isinstance(value, str) or not value:
+                raise PlanError(f"{entity_id}.value must be non-empty text")
+            if any(ord(char) < 32 or ord(char) > 0xFFFF for char in value) or "|" in value or "\\" in value:
+                raise PlanError(f"{entity_id}.value contains unsupported control, separator, escape, or non-BMP characters")
+            height = _positive(raw_step.get("height"), f"{entity_id}.height")
+            rotation = _number(raw_step.get("rotation_deg", 0), f"{entity_id}.rotation_deg")
+            entity = ResolvedText(entity_id, purpose, reasoning, insert, value, height, rotation, constraints, layer=layer, roles=roles, editable=editable, depends_on=depends_on)
+            has_relation = _validate_text_constraints(entity, resolved, origin, tolerance)
 
         if index == 0 and not _close(entity.anchor, origin, tolerance):
             raise PlanError("The first entity anchor must be origin [0, 0]")

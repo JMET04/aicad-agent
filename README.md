@@ -1,4 +1,4 @@
-# aicad-agent 1.9.0
+# aicad-agent 1.10.0
 
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
@@ -17,7 +17,7 @@
 | 能力 | 用户看到的结果 | 插件内部保证 |
 |---|---|---|
 | 自然语言画 2D CAD | DXF、SCR、AICAD、审计和清单 | 每条线都有 ID、用途、推理、依赖和数学约束 |
-| 建筑平面专业制图 | 剖切粗实线、投影中实线、隐藏虚线、数学绑定轴网、原生尺寸 | 自动校验轴线坐标/覆盖、两端轴圈相切、轴号同值居中、语义线宽线型、DIMSTYLE 与修改器显示一致性 |
+| 建筑平面专业制图 | 剖切粗实线、投影中实线、隐藏虚线、数学绑定轴网、原生尺寸 | 自动校验轴线坐标/覆盖、两端轴圈相切、轴号同值居中、房间用途来源、逐房间设备、全占用体净空、语义线宽线型、DIMSTYLE 与修改器显示一致性 |
 | 规范报告质量 | 完整现象/根因/修正/预防规则记录、稳定唯一规则 ID | 相同记录折叠、冲突 ID 失败、同输入重复运行哈希一致 |
 | 包装刀版设计与复核 | 切割/压痕/开槽/胶区分层图、白底预览、对象编号 | 先核对整体结构，再检查轮廓、闭合、槽口、胶区、公式和参数域 |
 | 点击修改 2D/3D | 点线看长度和端点，点点看 XYZ，点圆看半径/直径/圆心 | 数值来自编译模型，不来自屏幕像素 |
@@ -53,7 +53,7 @@ flowchart LR
 准备：Codex CLI 或 Codex 桌面版、Git、Python 3.10+。
 
 ```powershell
-codex plugin marketplace add JMET04/aicad-agent --ref v1.9.0
+codex plugin marketplace add JMET04/aicad-agent --ref v1.10.0
 codex plugin add aicad-agent@aicad-agent
 codex plugin list
 ```
@@ -77,13 +77,13 @@ codex plugin remove aicad-agent
 
 从 [GitHub Releases](https://github.com/JMET04/aicad-agent/releases) 或仓库的 [`dist`](dist/) 目录下载：
 
-- `aicad-agent-1.9.0.zip`
+- `aicad-agent-1.10.0.zip`
 - `SHA256SUMS`
 
 先核对哈希：
 
 ```powershell
-Get-FileHash .\aicad-agent-1.9.0.zip -Algorithm SHA256
+Get-FileHash .\aicad-agent-1.10.0.zip -Algorithm SHA256
 Get-Content .\SHA256SUMS
 ```
 
@@ -288,17 +288,17 @@ python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-.\scripts\build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.9.0
+.\scripts\build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.10.0
 python -B scripts/verify_release_package.py release-ci/aicad-agent
 .\scripts\build-github-source.ps1 `
   -OutputDirectory release-ci/github-repository `
-  -Version 1.9.0 `
-  -PluginArchive release-ci/aicad-agent-1.9.0.zip `
+  -Version 1.10.0 `
+  -PluginArchive release-ci/aicad-agent-1.10.0.zip `
   -PluginDirectory release-ci/aicad-agent
 python -B scripts/verify_github_source.py release-ci/github-repository
 ```
 
-当前 1.9.0 本地门禁覆盖自动打开审核、线/点/圆模型测量、坐标系同步隐藏/开启与重开持久化、建筑细节预编译阻断，以及安装后哈希不变门禁。CI 会在每次 push 和 pull request 中重新构建并验证发布源。
+当前 1.10.0 本地门禁覆盖自动打开审核、线/点/圆模型测量、坐标系同步隐藏/开启与重开持久化、建筑细节预编译阻断，以及安装后哈希不变门禁。CI 会在每次 push 和 pull request 中重新构建并验证发布源。
 
 ## 文档索引
 

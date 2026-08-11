@@ -1,5 +1,31 @@
 # Changelog
 
+- Fixed modern DXF emission to use a standards-valid AC1018 document with complete tables; new release rule REL-G020 now requires version/group-code parity and real AutoCAD import-save-reopen persistence evidence.
+
+## 1.10.0 - 2026-08-12
+
+- Added constrained native `text` steps with middle-centre placement, UTF-8-to-ASCII CAD escaping, audit/manifest support and real DXF/SCR/AutoCAD TEXT creation.
+- Upgraded schema-2 execution to backward-compatible AICAD protocol 3 so every entity retains its semantic layer in the AutoCAD host and XData workflow.
+- Applied the architectural lineweight/linetype profile across DXF, SCR and AutoCAD layers; GRID is CENTER2/0.13 mm while cut, projection, secondary, hidden and annotation layers retain their hierarchy.
+- Added `ARCH-D030` through `ARCH-D035` for native axis identifiers, semantic style transport, end-to-end entity protocol parity, unique redundant-door recovery, programme-authoritative room categories and exhaustive typed occupancy clearance; added `REL-G019` for generated-target compilation after migrations.
+- Architectural room contracts now require `categorySource` and `categoryReference`; production rejects categories inferred from already placed furniture. Vehicles and other typed occupancy bodies can no longer be excluded from door-clearance QA by name.
+- Kept strict production-only gates: incomplete authority or drawing sets still yield blocker reports and no CAD exposure.
+
+## 1.9.0 - 2026-08-12
+- Strengthened axis-grid precompile proof: declared coordinate and coverage, two equal exterior tangent bubbles, centered matching identifiers, both directions and coordinate-ordered IDs are now non-compensatory gates.
+
+- Made architecture CAD delivery strict-production-only through `aicad_architectural_detail_contract_v2`; non-production stage, incomplete drawing set, missing authority or failed detail gates expose blocker reports only.
+- Added selectable component-role furniture/equipment profiles and exact entity binding (`ARCH-D026`).
+- Added local UTF-8 HTML and opaque PNG validation reviews (`ARCH-D028`).
+- Added evidence-bound production readiness v2 with file hashes, JSON Pointer readback and artifact-set binding (`PROD-G009`).
+
+## 1.8.4 - 2026-08-12
+
+- Added a fail-closed architectural detail contract before validate/compile artifact exposure.
+- Added complete axis identity, room equipment, interior semantic layer, four-purpose native dimension and door host/opening/sweep gates.
+- Bound contract geometry back to resolved AICAD entity IDs and coordinates; added blocker-only failures and regression tests.
+- Added dimension-purpose AICAD XData verification and fixed duplicate model-space entity counting in architectural DXF QA.
+
 ## 1.8.3 - 2026-08-11
 
 - Adds a non-compensatory, fail-closed production-readiness contract and machine/Chinese blocker reports.

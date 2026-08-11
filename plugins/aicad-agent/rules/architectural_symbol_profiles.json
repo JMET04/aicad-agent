@@ -1,0 +1,330 @@
+{
+  "schema": "aicad_architectural_symbol_profiles_v1",
+  "version": "1.0.0",
+  "policy": "typed_selectable_detailed_linework",
+  "defaultRequiredRoles": {
+    "outline": 4,
+    "inner_outline": 4
+  },
+  "rolePrimitiveTypes": {
+    "outline": [
+      "line"
+    ],
+    "inner_outline": [
+      "line"
+    ],
+    "back_edge": [
+      "line",
+      "arc"
+    ],
+    "arm_edge": [
+      "line",
+      "arc"
+    ],
+    "seat_edge": [
+      "line",
+      "arc"
+    ],
+    "seat_division": [
+      "line"
+    ],
+    "headboard": [
+      "line"
+    ],
+    "pillow_outline": [
+      "line",
+      "arc"
+    ],
+    "blanket_edge": [
+      "line",
+      "arc"
+    ],
+    "fixture_body": [
+      "line",
+      "arc",
+      "circle"
+    ],
+    "fixture_core": [
+      "arc",
+      "circle"
+    ],
+    "control": [
+      "line",
+      "circle"
+    ],
+    "drain": [
+      "circle"
+    ],
+    "faucet": [
+      "line",
+      "arc"
+    ],
+    "slope": [
+      "line"
+    ],
+    "appliance_door": [
+      "line"
+    ],
+    "handle": [
+      "line",
+      "circle"
+    ],
+    "burner": [
+      "circle"
+    ],
+    "wheel": [
+      "circle"
+    ],
+    "screen": [
+      "line"
+    ],
+    "speaker_cone": [
+      "circle"
+    ],
+    "work_surface": [
+      "line"
+    ],
+    "storage_division": [
+      "line"
+    ],
+    "orientation": [
+      "line",
+      "arc",
+      "circle"
+    ],
+    "other_detail": [
+      "line",
+      "arc",
+      "circle"
+    ]
+  },
+  "profiles": {
+    "sofa": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "back_edge": 2,
+        "arm_edge": 2,
+        "seat_edge": 1,
+        "seat_division": 2
+      }
+    },
+    "chair": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "back_edge": 1,
+        "arm_edge": 2
+      }
+    },
+    "table": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4
+      }
+    },
+    "bed": {
+      "requiredRoles": {
+        "outline": 4,
+        "headboard": 1,
+        "pillow_outline": 8,
+        "blanket_edge": 1
+      }
+    },
+    "desk": {
+      "requiredRoles": {
+        "outline": 4,
+        "work_surface": 4,
+        "orientation": 1
+      }
+    },
+    "vehicle": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "wheel": 4,
+        "orientation": 2
+      }
+    },
+    "bench": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "storage_division": 2
+      }
+    },
+    "fitness_equipment": {
+      "requiredRoles": {
+        "outline": 4,
+        "fixture_body": 4,
+        "fixture_core": 2
+      }
+    },
+    "cabinet": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "storage_division": 1
+      }
+    },
+    "wardrobe": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "storage_division": 1
+      }
+    },
+    "bookcase": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "storage_division": 1
+      }
+    },
+    "shoe_cabinet": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "storage_division": 1
+      }
+    },
+    "toilet": {
+      "requiredRoles": {
+        "outline": 4,
+        "fixture_body": 4,
+        "fixture_core": 1,
+        "orientation": 1
+      }
+    },
+    "basin": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "drain": 1,
+        "faucet": 1
+      }
+    },
+    "sink": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "drain": 1,
+        "faucet": 1
+      }
+    },
+    "shower": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "slope": 2,
+        "drain": 1
+      }
+    },
+    "bathtub": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "drain": 1
+      }
+    },
+    "floor_drain": {
+      "requiredRoles": {
+        "outline": 4,
+        "drain": 1
+      }
+    },
+    "spa_pool": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "drain": 1
+      }
+    },
+    "refrigerator": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "appliance_door": 1,
+        "handle": 2
+      }
+    },
+    "cooktop": {
+      "requiredRoles": {
+        "outline": 4,
+        "work_surface": 4,
+        "burner": 4
+      }
+    },
+    "oven": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "control": 1
+      }
+    },
+    "dishwasher": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "control": 1
+      }
+    },
+    "washer": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "fixture_core": 1,
+        "control": 1
+      }
+    },
+    "dryer": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "fixture_core": 1,
+        "control": 1
+      }
+    },
+    "equipment_unit": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "fixture_core": 2,
+        "control": 1
+      }
+    },
+    "screen": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "orientation": 1
+      }
+    },
+    "speaker": {
+      "requiredRoles": {
+        "outline": 4,
+        "speaker_cone": 2
+      }
+    },
+    "treadmill": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "control": 1,
+        "orientation": 1
+      }
+    },
+    "clearance_zone": {
+      "requiredRoles": {
+        "outline": 4,
+        "inner_outline": 4,
+        "orientation": 1
+      }
+    }
+  },
+  "failureDisposition": "blocker_report_only",
+  "ruleIds": [
+    "PROD-G004",
+    "ARCH-D026"
+  ]
+}

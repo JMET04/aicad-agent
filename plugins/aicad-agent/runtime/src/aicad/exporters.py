@@ -4,7 +4,35 @@ import hashlib
 import json
 from pathlib import Path
 
-from .engine import CompiledPlan, ResolvedArc, ResolvedCircle, ResolvedEntity, ResolvedLine
+import ezdxf
+from ezdxf.enums import TextEntityAlignment
+
+from .engine import CompiledPlan, ResolvedArc, ResolvedCircle, ResolvedEntity, ResolvedLine, ResolvedText
+
+
+_ARCHITECTURE_LAYER_STYLES: dict[str, tuple[int, int, str]] = {
+    "WALL": (7, 60, "CONTINUOUS"), "COLUMN": (7, 70, "CONTINUOUS"),
+    "OPENING": (7, 30, "CONTINUOUS"), "ROOM": (7, 25, "CONTINUOUS"),
+    "STAIR": (7, 25, "CONTINUOUS"), "FURNITURE": (7, 18, "CONTINUOUS"),
+    "CASEWORK": (7, 18, "CONTINUOUS"), "SANITARY": (7, 18, "CONTINUOUS"),
+    "APPLIANCE": (7, 18, "CONTINUOUS"), "ROUTE": (7, 18, "DASHED"),
+    "GRID": (7, 13, "CENTER2"), "GRID_BUBBLE": (7, 18, "CONTINUOUS"),
+    "GRID_TEXT": (7, 18, "CONTINUOUS"), "TAG_TEXT": (7, 18, "CONTINUOUS"),
+    "DIMENSION": (7, 18, "CONTINUOUS"), "TEXT": (7, 18, "CONTINUOUS"),
+    "OVERHEAD": (7, 18, "DASHED2"),
+}
+
+_LINETYPE_PATTERNS: dict[str, tuple[str, tuple[float, ...]]] = {
+    "CONTINUOUS": ("Solid line", ()),
+    "DASHED": ("Dashed __ __ __", (12.7, -6.35)),
+    "DASHED2": ("Dashed half scale", (6.35, -3.175)),
+    "CENTER2": ("Center half scale", (9.525, -3.175, 1.5875, -1.5875)),
+}
+
+
+def _layer_style(layer: str) -> dict[str, int | str]:
+    color, lineweight, linetype = _ARCHITECTURE_LAYER_STYLES.get(layer.upper(), (7, 25, "CONTINUOUS"))
+    return {"color": color, "lineweight": lineweight, "linetype": linetype}
 
 
 def _fmt(value: float) -> str:
@@ -16,83 +44,109 @@ def _text_hash(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()[:16]
 
 
+def _cad_text(value: str) -> str:
+    return "".join(char if ord(char) < 128 else f"\\U+{ord(char):04X}" for char in value)
+
+
 def write_execution(plan: CompiledPlan, path: Path) -> None:
-    protocol = "1" if plan.schema_version == "1.0" else "2"
+    protocol = "1" if plan.schema_version == "1.0" else "3"
     records = [f"AICAD|{protocol}|{plan.units.upper()}|{_fmt(plan.tolerance)}|{plan.source_hash}"]
     for entity in plan.entities:
-        common = [entity.id, _text_hash(entity.purpose), _text_hash(entity.reasoning)]
+        hashes = [_text_hash(entity.purpose), _text_hash(entity.reasoning)]
         proof = [_fmt(plan.origin[0]), _fmt(plan.origin[1]), _fmt(entity.anchor[0] - plan.origin[0]), _fmt(entity.anchor[1] - plan.origin[1])]
+        prefix = [entity.id] if protocol == "1" else [entity.id, entity.layer]
         if isinstance(entity, ResolvedLine):
             values = [_fmt(entity.start[0]), _fmt(entity.start[1]), _fmt(entity.end[0]), _fmt(entity.end[1])]
-            records.append("|".join(["LINE", entity.id, *values, *common[1:], *(proof if protocol == "2" else [])]))
+            records.append("|".join(["LINE", *prefix, *values, *hashes, *(proof if protocol == "3" else [])]))
         elif isinstance(entity, ResolvedCircle):
             values = [_fmt(entity.center[0]), _fmt(entity.center[1]), _fmt(entity.radius)]
-            records.append("|".join(["CIRCLE", entity.id, *values, *common[1:], *proof]))
+            records.append("|".join(["CIRCLE", *prefix, *values, *hashes, *proof]))
+        elif isinstance(entity, ResolvedArc):
+            values = [_fmt(entity.center[0]), _fmt(entity.center[1]), _fmt(entity.radius), _fmt(entity.start_angle_deg), _fmt(entity.end_angle_deg)]
+            records.append("|".join(["ARC", *prefix, *values, *hashes, *proof]))
         else:
-            values = [
-                _fmt(entity.center[0]), _fmt(entity.center[1]), _fmt(entity.radius),
-                _fmt(entity.start_angle_deg), _fmt(entity.end_angle_deg),
-            ]
-            records.append("|".join(["ARC", entity.id, *values, *common[1:], *proof]))
+            values = [_fmt(entity.insert[0]), _fmt(entity.insert[1]), _fmt(entity.height), _fmt(entity.rotation_deg), _cad_text(entity.value)]
+            records.append("|".join(["TEXT", *prefix, *values, *hashes, *proof]))
     records.append(f"END|{len(plan.entities)}|{plan.source_hash}")
     path.write_text("\n".join(records) + "\n", encoding="ascii", newline="\n")
 
-
 def write_script(plan: CompiledPlan, path: Path) -> None:
+    layers = sorted({entity.layer for entity in plan.entities})
     lines = ["_.UNDO", "_Begin"]
+    for linetype in sorted({_layer_style(layer)["linetype"] for layer in layers} - {"CONTINUOUS"}):
+        lines.extend(["_.-LINETYPE", "_Load", str(linetype), "acadiso.lin", ""])
+    for layer in layers:
+        style = _layer_style(layer)
+        lines.extend(["_.-LAYER", "_Make", layer, "_Color", str(style["color"]), layer, "_Ltype", str(style["linetype"]), layer, "_Lweight", f"{int(style['lineweight']) / 100:.2f}", layer, ""])
     current_layer: str | None = None
     for entity in plan.entities:
         if entity.layer != current_layer:
-            lines.extend(["_.-LAYER", "_Make", entity.layer, ""])
+            lines.extend(["_.-LAYER", "_Set", entity.layer, ""])
             current_layer = entity.layer
         if isinstance(entity, ResolvedLine):
             lines.extend(["_.LINE", f"{_fmt(entity.start[0])},{_fmt(entity.start[1])}", f"{_fmt(entity.end[0])},{_fmt(entity.end[1])}", ""])
         elif isinstance(entity, ResolvedCircle):
             lines.extend(["_.CIRCLE", f"{_fmt(entity.center[0])},{_fmt(entity.center[1])}", _fmt(entity.radius)])
+        elif isinstance(entity, ResolvedArc):
+            lines.extend(["_.ARC", "_C", f"{_fmt(entity.center[0])},{_fmt(entity.center[1])}", f"{_fmt(entity.start[0])},{_fmt(entity.start[1])}", "_A", _fmt((entity.end_angle_deg - entity.start_angle_deg) % 360)])
         else:
-            lines.extend([
-                "_.ARC", "_C", f"{_fmt(entity.center[0])},{_fmt(entity.center[1])}",
-                f"{_fmt(entity.start[0])},{_fmt(entity.start[1])}", "_A",
-                _fmt((entity.end_angle_deg - entity.start_angle_deg) % 360),
-            ])
+            lines.extend(["_.-TEXT", "_Justify", "_MC", f"{_fmt(entity.insert[0])},{_fmt(entity.insert[1])}", _fmt(entity.height), _fmt(entity.rotation_deg), _cad_text(entity.value)])
     lines.extend(["_.UNDO", "_End", "_.ZOOM", "_Extents", ""])
     path.write_text("\n".join(lines), encoding="ascii", newline="\n")
-
 
 def _dxf_pair(code: int, value: str | int | float) -> str:
     return f"{code}\n{value}\n"
 
 
 def write_dxf(plan: CompiledPlan, path: Path) -> None:
+    """Write a standards-valid AutoCAD 2004 DXF with semantic layer styles.
+
+    ezdxf owns the mandatory modern table/header structure.  This is essential
+    because layer lineweight group 370 is illegal in R12 or an unspecified DXF.
+    All non-ASCII text is explicitly escaped before writing, so the execution
+    artifact remains ASCII while AutoCAD still reconstructs Unicode TEXT.
+    """
+    document = ezdxf.new("R2004", setup=False)
+    document.units = 4  # millimetres
+    document.header["$LWDISPLAY"] = 1
     layers = sorted({entity.layer for entity in plan.entities})
-    content = [_dxf_pair(0, "SECTION"), _dxf_pair(2, "HEADER"), _dxf_pair(0, "ENDSEC")]
-    content.extend([_dxf_pair(0, "SECTION"), _dxf_pair(2, "TABLES"), _dxf_pair(0, "TABLE"), _dxf_pair(2, "LAYER"), _dxf_pair(70, len(layers))])
+    for linetype in sorted({str(_layer_style(layer)["linetype"]) for layer in layers} - {"CONTINUOUS"}):
+        if linetype not in document.linetypes:
+            description, segments = _LINETYPE_PATTERNS[linetype]
+            document.linetypes.add(linetype, pattern=[sum(abs(value) for value in segments), *segments], description=description)
     for layer in layers:
-        content.extend([_dxf_pair(0, "LAYER"), _dxf_pair(2, layer), _dxf_pair(70, 0), _dxf_pair(62, 7), _dxf_pair(6, "CONTINUOUS")])
-    content.extend([_dxf_pair(0, "ENDTAB"), _dxf_pair(0, "ENDSEC"), _dxf_pair(0, "SECTION"), _dxf_pair(2, "ENTITIES")])
-    for entity in plan.entities:
-        common = [_dxf_pair(8, entity.layer)]
-        if isinstance(entity, ResolvedLine):
-            content.extend([
-                _dxf_pair(0, "LINE"), *common,
-                _dxf_pair(10, _fmt(entity.start[0])), _dxf_pair(20, _fmt(entity.start[1])), _dxf_pair(30, "0"),
-                _dxf_pair(11, _fmt(entity.end[0])), _dxf_pair(21, _fmt(entity.end[1])), _dxf_pair(31, "0"),
-            ])
-        elif isinstance(entity, ResolvedCircle):
-            content.extend([
-                _dxf_pair(0, "CIRCLE"), *common,
-                _dxf_pair(10, _fmt(entity.center[0])), _dxf_pair(20, _fmt(entity.center[1])), _dxf_pair(30, "0"),
-                _dxf_pair(40, _fmt(entity.radius)),
-            ])
+        style = _layer_style(layer)
+        if layer in document.layers:
+            record = document.layers.get(layer)
+            record.dxf.color = int(style["color"])
+            record.dxf.linetype = str(style["linetype"])
+            record.dxf.lineweight = int(style["lineweight"])
         else:
-            content.extend([
-                _dxf_pair(0, "ARC"), *common,
-                _dxf_pair(10, _fmt(entity.center[0])), _dxf_pair(20, _fmt(entity.center[1])), _dxf_pair(30, "0"),
-                _dxf_pair(40, _fmt(entity.radius)), _dxf_pair(50, _fmt(entity.start_angle_deg)),
-                _dxf_pair(51, _fmt(entity.end_angle_deg)),
-            ])
-    content.extend([_dxf_pair(0, "ENDSEC"), _dxf_pair(0, "EOF")])
-    path.write_text("".join(content), encoding="ascii", newline="\n")
+            document.layers.add(
+                layer,
+                color=int(style["color"]),
+                linetype=str(style["linetype"]),
+                lineweight=int(style["lineweight"]),
+            )
+    modelspace = document.modelspace()
+    for entity in plan.entities:
+        attributes = {"layer": entity.layer}
+        if isinstance(entity, ResolvedLine):
+            modelspace.add_line(entity.start, entity.end, dxfattribs=attributes)
+        elif isinstance(entity, ResolvedCircle):
+            modelspace.add_circle(entity.center, entity.radius, dxfattribs=attributes)
+        elif isinstance(entity, ResolvedArc):
+            modelspace.add_arc(entity.center, entity.radius, entity.start_angle_deg, entity.end_angle_deg, dxfattribs=attributes)
+        else:
+            text = modelspace.add_text(
+                _cad_text(entity.value),
+                height=entity.height,
+                rotation=entity.rotation_deg,
+                dxfattribs={**attributes, "style": "Standard"},
+            )
+            text.set_placement(entity.insert, align=TextEntityAlignment.MIDDLE_CENTER)
+    document.saveas(path, encoding="ascii", fmt="asc")
+    path.read_bytes().decode("ascii")
 
 
 def _constraint_summary(entity: ResolvedEntity) -> str:
@@ -114,7 +168,9 @@ def _geometry(entity: ResolvedEntity) -> str:
         return f"({_fmt(entity.start[0])}, {_fmt(entity.start[1])}) -> ({_fmt(entity.end[0])}, {_fmt(entity.end[1])}); L={_fmt(entity.length)}"
     if isinstance(entity, ResolvedCircle):
         return f"C=({_fmt(entity.center[0])}, {_fmt(entity.center[1])}); R={_fmt(entity.radius)}"
-    return f"C=({_fmt(entity.center[0])}, {_fmt(entity.center[1])}); R={_fmt(entity.radius)}; A={_fmt(entity.start_angle_deg)}..{_fmt(entity.end_angle_deg)}"
+    if isinstance(entity, ResolvedArc):
+        return f"C=({_fmt(entity.center[0])}, {_fmt(entity.center[1])}); R={_fmt(entity.radius)}; A={_fmt(entity.start_angle_deg)}..{_fmt(entity.end_angle_deg)}"
+    return f"P=({_fmt(entity.insert[0])}, {_fmt(entity.insert[1])}); H={_fmt(entity.height)}; R={_fmt(entity.rotation_deg)}; TEXT={entity.value}"
 
 
 def write_audit(plan: CompiledPlan, path: Path) -> None:
@@ -140,7 +196,7 @@ def write_manifest(plan: CompiledPlan, output_dir: Path, stem: str) -> None:
         "schema_version": plan.schema_version, "name": plan.name, "domain": plan.domain, "source_sha256": plan.source_hash,
         "units": plan.units, "origin": list(plan.origin), "tolerance": plan.tolerance,
         "entity_count": len(plan.entities),
-        "entity_types": {kind: sum(entity.type == kind for entity in plan.entities) for kind in ("line", "circle", "arc")},
+        "entity_types": {kind: sum(entity.type == kind for entity in plan.entities) for kind in ("line", "circle", "arc", "text")},
         "layers": {layer: sum(entity.layer == layer for entity in plan.entities) for layer in sorted({entity.layer for entity in plan.entities})},
         "roles": {role: sum(role in entity.roles for entity in plan.entities) for role in sorted({role for entity in plan.entities for role in entity.roles})},
         "editable_entities": sum(entity.editable for entity in plan.entities),

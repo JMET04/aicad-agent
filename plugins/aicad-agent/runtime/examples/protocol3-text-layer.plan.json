@@ -1,0 +1,55 @@
+{
+  "schema_version": "2.0",
+  "drawing": {
+    "name": "protocol3_text_layer",
+    "units": "mm",
+    "origin": [0, 0],
+    "tolerance": 0.000001
+  },
+  "steps": [
+    {
+      "id": "AX1",
+      "type": "line",
+      "purpose": "vertical architectural axis datum",
+      "reasoning": "The first entity starts at the origin and establishes a vertical datum whose semantic GRID layer must survive every exporter and host reopen.",
+      "start": {"ref": "origin"},
+      "construction": {"kind": "vector", "dx": 0, "dy": 1000},
+      "constraints": [
+        {"kind": "vertical"},
+        {"kind": "length", "value": 1000}
+      ],
+      "layer": "GRID"
+    },
+    {
+      "id": "AX1B",
+      "type": "circle",
+      "purpose": "axis identifier bubble",
+      "reasoning": "The bubble center is constrained 1200 mm above the origin datum and must remain a separate GRID_BUBBLE entity.",
+      "center": {"point": [0, 1200]},
+      "radius": 100,
+      "constraints": [
+        {"kind": "center_offset", "target": "AX1.start", "dx": 0, "dy": 1200},
+        {"kind": "radius", "value": 100}
+      ],
+      "depends_on": ["AX1"],
+      "layer": "GRID_BUBBLE"
+    },
+    {
+      "id": "AX1T",
+      "type": "text",
+      "purpose": "Chinese axis identifier",
+      "reasoning": "The identifier is a real middle-centred TEXT entity constrained to the bubble center; it verifies Unicode transport, semantic layer persistence and XData after save and reopen.",
+      "insert": {"ref": "AX1B.center"},
+      "value": "轴1",
+      "height": 80,
+      "rotation_deg": 0,
+      "constraints": [
+        {"kind": "position_coincident", "target": "AX1B.center"},
+        {"kind": "text_height", "value": 80},
+        {"kind": "rotation", "value": 0}
+      ],
+      "depends_on": ["AX1B"],
+      "layer": "GRID_TEXT"
+    }
+  ]
+}

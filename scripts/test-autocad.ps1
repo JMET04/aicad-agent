@@ -36,6 +36,10 @@ if ($LASTEXITCODE -ne 0) {
 if ($LASTEXITCODE -ne 0) {
     throw 'The arc plan failed to compile.'
 }
+& $PythonExe (Join-Path $root 'tools\aicad.py') compile (Join-Path $root 'examples\protocol3-text-layer.plan.json') --out $outputDirectory --name protocol3-text-layer
+if ($LASTEXITCODE -ne 0) {
+    throw 'The protocol 3 text/layer plan failed to compile.'
+}
 & $PythonExe (Join-Path $root 'agent-plugin\aicad-agent\scripts\aicad_agent.py') generate --request '120x80 plate with centered diameter 20 hole' --out $outputDirectory --name agent-plate --provider offline
 if ($LASTEXITCODE -ne 0) {
     throw 'The agent plugin failed to generate its AutoCAD test artifact.'
@@ -49,6 +53,9 @@ $testFiles = @(
     'persistence-report.txt',
     'v2-report.txt',
     'agent-plugin-report.txt',
+    'result-v3.dwg',
+    'v3-report.txt',
+    'v3-persistence-report.txt',
     'integration.stdout.bin',
     'integration.stderr.bin',
     'persistence.stdout.bin',
@@ -56,7 +63,11 @@ $testFiles = @(
     'v2.stdout.bin',
     'v2.stderr.bin',
     'agent-plugin.stdout.bin',
-    'agent-plugin.stderr.bin'
+    'agent-plugin.stderr.bin',
+    'v3.stdout.bin',
+    'v3.stderr.bin',
+    'v3-persistence.stdout.bin',
+    'v3-persistence.stderr.bin'
 )
 foreach ($name in $testFiles) {
     $path = Join-Path $testRootResolved $name
@@ -78,9 +89,13 @@ $copies = @{
     (Join-Path $root 'tests\autocad\run-v2.scr') = 'run-v2.scr'
     (Join-Path $root 'tests\autocad\agent_plugin_test.lsp') = 'agent_plugin_test.lsp'
     (Join-Path $root 'tests\autocad\run-agent-plugin.scr') = 'run-agent-plugin.scr'
+    (Join-Path $root 'tests\autocad\v3_text_layer_test.lsp') = 'v3_text_layer_test.lsp'
+    (Join-Path $root 'tests\autocad\run-v3.scr') = 'run-v3.scr'
+    (Join-Path $root 'tests\autocad\run-v3-persistence.scr') = 'run-v3-persistence.scr'
     (Join-Path $outputDirectory 'rectangle.aicad') = 'rectangle.aicad'
     (Join-Path $outputDirectory 'rectangle.dxf') = 'input.dxf'
     (Join-Path $outputDirectory 'arc.aicad') = 'arc.aicad'
+    (Join-Path $outputDirectory 'protocol3-text-layer.aicad') = 'protocol3-text-layer.aicad'
     (Join-Path $outputDirectory 'agent-plate.aicad') = 'agent-plate.aicad'
 }
 foreach ($source in $copies.Keys) {
@@ -139,6 +154,16 @@ try {
     if ($agentPlugin -notcontains 'AICAD_AGENT_PASS') {
         throw "Agent-plugin AutoCAD check failed: $($agentPlugin -join '; ')"
     }
+    Invoke-AutoCadCoreTest -InputDrawing (Join-Path $testRootResolved 'input.dxf') -Script (Join-Path $testRootResolved 'run-v3.scr') -LogPrefix 'v3'
+    $v3 = Get-Content -LiteralPath (Join-Path $testRootResolved 'v3-report.txt')
+    if ($v3 -notcontains 'AICAD_V3_PASS') {
+        throw "AutoCAD protocol 3 text/layer check failed: $($v3 -join '; ')"
+    }
+    Invoke-AutoCadCoreTest -InputDrawing (Join-Path $testRootResolved 'result-v3.dwg') -Script (Join-Path $testRootResolved 'run-v3-persistence.scr') -LogPrefix 'v3-persistence'
+    $v3Persistence = Get-Content -LiteralPath (Join-Path $testRootResolved 'v3-persistence-report.txt')
+    if ($v3Persistence -notcontains 'AICAD_V3_PERSISTENCE_PASS') {
+        throw "AutoCAD protocol 3 save/reopen check failed: $($v3Persistence -join '; ')"
+    }
 } finally {
     foreach ($name in $oldEnvironment.Keys) {
         [Environment]::SetEnvironmentVariable($name, $oldEnvironment[$name], 'Process')
@@ -150,8 +175,12 @@ Copy-Item -LiteralPath (Join-Path $testRootResolved 'integration-report.txt') -D
 Copy-Item -LiteralPath (Join-Path $testRootResolved 'persistence-report.txt') -Destination (Join-Path $outputDirectory 'persistence-report.txt') -Force
 Copy-Item -LiteralPath (Join-Path $testRootResolved 'v2-report.txt') -Destination (Join-Path $outputDirectory 'v2-report.txt') -Force
 Copy-Item -LiteralPath (Join-Path $testRootResolved 'agent-plugin-report.txt') -Destination (Join-Path $outputDirectory 'agent-plugin-report.txt') -Force
+Copy-Item -LiteralPath (Join-Path $testRootResolved 'result-v3.dwg') -Destination (Join-Path $outputDirectory 'result-v3.dwg') -Force
+Copy-Item -LiteralPath (Join-Path $testRootResolved 'v3-report.txt') -Destination (Join-Path $outputDirectory 'v3-report.txt') -Force
+Copy-Item -LiteralPath (Join-Path $testRootResolved 'v3-persistence-report.txt') -Destination (Join-Path $outputDirectory 'v3-persistence-report.txt') -Force
 
 $dwg = Get-Item -LiteralPath (Join-Path $outputDirectory 'result.dwg')
+$v3Dwg = Get-Item -LiteralPath (Join-Path $outputDirectory 'result-v3.dwg')
 $signature = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($dwg.FullName), 0, 6)
 $summary = [pscustomobject]@{
     Status = 'PASS'
@@ -162,8 +191,12 @@ $summary = [pscustomobject]@{
     IntegrationReport = (Join-Path $outputDirectory 'integration-report.txt')
     PersistenceReport = (Join-Path $outputDirectory 'persistence-report.txt')
     ProtocolV2Report = (Join-Path $outputDirectory 'v2-report.txt')
+    ProtocolV3Report = (Join-Path $outputDirectory 'v3-report.txt')
+    ProtocolV3PersistenceReport = (Join-Path $outputDirectory 'v3-persistence-report.txt')
     AgentPluginReport = (Join-Path $outputDirectory 'agent-plugin-report.txt')
     ResultDrawing = $dwg.FullName
+    ProtocolV3Drawing = $v3Dwg.FullName
+    ProtocolV3DrawingBytes = $v3Dwg.Length
 }
 $summary | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $outputDirectory 'host-validation.json') -Encoding UTF8
 $summary | Format-List
