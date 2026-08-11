@@ -1,5 +1,7 @@
 # Changelog
 
+- Removed a stale AutoCAD protocol-v2 limitation from the public capability matrix; REL-G021 now rejects contradictions between top-level claims, host matrices and native persistence evidence.
+
 - Fixed modern DXF emission to use a standards-valid AC1018 document with complete tables; new release rule REL-G020 now requires version/group-code parity and real AutoCAD import-save-reopen persistence evidence.
 
 ## 1.10.0 - 2026-08-12

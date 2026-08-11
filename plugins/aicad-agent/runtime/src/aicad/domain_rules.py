@@ -96,8 +96,12 @@ HOST_CAPABILITIES: dict[str, dict[str, Any]] = {
         "not_supported": ["native_dwg_persistence", "associative_dimensions", "native_bim_semantics", "pcb_netlist"],
     },
     "autocad_2025": {
-        "supported": ["line", "circle", "arc", "scr_layers", "dxf_layers", "aicad_xdata_baseline"],
-        "not_supported": ["per_entity_layer_in_aicad_protocol_v2", "native_bim_semantics", "pcb_netlist"],
+        "supported": [
+            "line", "circle", "arc", "text", "scr_layers", "dxf_layers",
+            "aicad_protocol_v3_semantic_layers", "native_linetype_and_lineweight",
+            "aicad_xdata_save_reopen",
+        ],
+        "not_supported": ["native_bim_semantics", "pcb_netlist"],
     },
     "portable_3d": {
         "supported": ["base_extrude", "boss_extrude", "cut_extrude", "analytic_volume", "bbox", "dependency_graph", "review_views"],

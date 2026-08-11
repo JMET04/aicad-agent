@@ -12,7 +12,7 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from aicad.domain_rules import evaluate_domain_plan, write_domain_validation
+from aicad.domain_rules import HOST_CAPABILITIES, evaluate_domain_plan, write_domain_validation
 
 
 def electronics_board() -> dict:
@@ -75,6 +75,14 @@ class DomainRuleTests(unittest.TestCase):
             self.assertEqual(payload["status"], "failed")
             self.assertIn("Root cause:", markdown)
             self.assertIn("Prevention candidate (disabled):", markdown)
+
+    def test_autocad_capability_matrix_matches_protocol3_host_evidence(self) -> None:
+        host = HOST_CAPABILITIES["autocad_2025"]
+        self.assertIn("text", host["supported"])
+        self.assertIn("aicad_protocol_v3_semantic_layers", host["supported"])
+        self.assertIn("native_linetype_and_lineweight", host["supported"])
+        self.assertIn("aicad_xdata_save_reopen", host["supported"])
+        self.assertNotIn("per_entity_layer_in_aicad_protocol_v2", host["not_supported"])
 
 
 if __name__ == "__main__":

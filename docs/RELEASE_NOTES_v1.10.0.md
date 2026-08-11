@@ -1,5 +1,7 @@
 # aicad-agent v1.10.0
 
+- Removed a stale AutoCAD protocol-v2 limitation from the public capability matrix; REL-G021 now rejects contradictions between top-level claims, host matrices and native persistence evidence.
+
 - DXF output now uses a standards-valid AC1018 container for semantic layers, linetypes, lineweights and constrained TEXT. REL-G020 permanently requires declared-version parity plus real AutoCAD import/save/reopen persistence checks.
 
 v1.10.0 closes a gap between architectural drafting rules and the real AutoCAD execution path.

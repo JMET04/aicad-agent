@@ -157,8 +157,8 @@
                   },
                   {
                       "path":  "CHANGELOG.md",
-                      "size":  11927,
-                      "sha256":  "adbfe32f7495cc57fee6964ae6645f3945fbfb66b6d4e8229b23e0a57cd2a779"
+                      "size":  12121,
+                      "sha256":  "03cf2d8d4b79aa46c785e23517c88543ae6a1402799c6ba85c19b1f5233f7810"
                   },
                   {
                       "path":  "docs/ARCHITECTURAL_DRAFTING.md",
@@ -202,8 +202,8 @@
                   },
                   {
                       "path":  "docs/RELEASE_NOTES_v1.10.0.md",
-                      "size":  1921,
-                      "sha256":  "bb620dab5e03aca0db019c5519a827938a7a03c8bfc9df087a358f308b7be7fa"
+                      "size":  2115,
+                      "sha256":  "228ea26b506c160792a69fbe92259731ea0d3ff4d7a362a4384806b64f74435a"
                   },
                   {
                       "path":  "docs/RELEASE_NOTES_v1.6.0.md",
@@ -337,8 +337,8 @@
                   },
                   {
                       "path":  "rules/release_integrity_rules.json",
-                      "size":  12390,
-                      "sha256":  "e614e3dd921a24ba3bfd43697afa6ddfc165005e663daa781965514a6846d518"
+                      "size":  13127,
+                      "sha256":  "be604230ed62c5558eccdbd3e2ce5ec1d1979adf01b80b20c94ea86fa7a288cf"
                   },
                   {
                       "path":  "rules/subobject_correction_rules.json",
@@ -477,8 +477,8 @@
                   },
                   {
                       "path":  "runtime/src/aicad/domain_rules.py",
-                      "size":  14413,
-                      "sha256":  "9c3411deb6dfdd2540bef2020946ee4fae51aa26ab4b0e350b7d67b44a7b04f4"
+                      "size":  14501,
+                      "sha256":  "433c8a5a8ae7f7c741187ed8825139929bf057e3807c8c650a827250e5f91c01"
                   },
                   {
                       "path":  "runtime/src/aicad/engine.py",
@@ -787,8 +787,8 @@
                   },
                   {
                       "path":  "tests/test_release_integrity_rules.py",
-                      "size":  6316,
-                      "sha256":  "14527afbc2a5b89f30b09b62b4aed009e4ffce3f1d80fc44730f4f1b74ed99c6"
+                      "size":  6809,
+                      "sha256":  "d6edb88c624ac58ebffa92de29b20ff3f1a7ba8ccfcca568e6d04fa8d8813a25"
                   },
                   {
                       "path":  "tests/test_report_quality_rules.py",

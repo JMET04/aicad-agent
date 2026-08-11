@@ -140,6 +140,13 @@
       "symptom": "A DXF declared as an unspecified legacy format contained modern layer lineweight group 370, passed text-level tests, and was rejected by AutoCAD with an unknown-group error.",
       "root_cause": "The exporter added a modern group code without advancing the declared DXF version and supplying the mandatory modern table structure; no real-host import gate covered the new group.",
       "prevention": "Generate standards-valid DXF through a version-aware writer; every new DXF entity, table field, linetype, lineweight or group code must be legal for the declared ACADVER and must pass real AutoCAD import, save, close, reopen and semantic persistence verification before release."
+    },
+    {
+      "id": "REL-G021",
+      "name": "capability_surfaces_must_be_noncontradictory",
+      "symptom": "The same capabilities response advertised AICAD protocol 3 semantic-layer transport while its AutoCAD matrix retained a protocol 2 per-entity-layer limitation.",
+      "root_cause": "Top-level invariants and the host capability matrix evolved independently, and no regression compared both declarations with native-host persistence evidence.",
+      "prevention": "Derive public capability surfaces from the same versioned implementation facts; reject stale-version contradictions and require every newly advertised host feature to be asserted by source tests, packaged tests and real-host import-save-reopen evidence."
     }
   ]
 }

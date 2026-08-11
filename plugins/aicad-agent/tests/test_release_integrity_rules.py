@@ -20,7 +20,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
-                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017", "REL-G018", "REL-G019", "REL-G020",
+                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017", "REL-G018", "REL-G019", "REL-G020", "REL-G021",
             },
         )
         for rule in rules.values():
@@ -110,6 +110,13 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         self.assertIn("declared ACADVER", rule["prevention"])
         self.assertIn("real AutoCAD import", rule["prevention"])
         self.assertIn("semantic persistence", rule["prevention"])
+
+    def test_capability_surfaces_are_noncontradictory(self) -> None:
+        data = json.loads((PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8"))
+        rule = next(item for item in data["rules"] if item["id"] == "REL-G021")
+        self.assertIn("evolved independently", rule["root_cause"])
+        self.assertIn("stale-version contradictions", rule["prevention"])
+        self.assertIn("real-host import-save-reopen evidence", rule["prevention"])
 
 
 if __name__ == "__main__":
