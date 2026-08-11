@@ -48,6 +48,7 @@ For architectural plans, read `rules/architectural_drafting_rules.json` and [ARC
 7. Expand the stage-specific annotation completeness matrix. A concept plan accounts for room names, dimensions, door/window tags, stair direction, level datum, north indicator, title, units and review state; construction plans additionally require section/elevation/detail and schedule references, sheet number and plot scale. Declare conditional omissions explicitly.
 8. Bind every symbol/tag to its source geometry, reserve annotation envelopes in the order content → axis bubbles → chain dimensions → overall dimensions → notes, and run scale-aware collision/readability checks.
 9. Run scripts/aicad_architecture_qa.py on the final DXF, then perform a rendered visual check and a native host save/reopen when DWG is requested. Record the failed invariant, root cause, correction and candidate prevention rule before redrawing.
+10. Before delivery, merge root-cause lessons by stable prevention-rule ID and run scripts/aicad_report_qa.py on validation.json. Repeated runs with unchanged inputs must preserve the same canonical lesson inventory; conflicting duplicate IDs are a hard failure.
 
 ## Plan every entity mathematically
 
@@ -104,6 +105,7 @@ python scripts/aicad_agent.py reference-validate --plan drawing.plan.json --refe
 python scripts/aicad_agent.py reference-build --plan drawing.plan.json --reference drawing.reference.json --out build/reference --name drawing
 node scripts/aicad_reference_visual_qa.cjs build/reference/drawing.preview.html build/reference/drawing.visual-validation.json build/reference/drawing.preview.png
 python scripts/aicad_architecture_qa.py build/job/drawing.dxf --output build/reports/drawing.architecture-qa.json
+python scripts/aicad_report_qa.py build/reports/validation.json --output build/reports/report-quality.json
 python scripts/aicad_requirement_conformance.py --contract requirement-contract.json --trace requirement-trace.json --normality-template structure.normality.json --normality-instance drawing.instance.json --out-json build/reports/requirement.json --out-md build/reports/requirement.md
 python scripts/aicad_guarded_delivery.py --contract requirement-contract.json --trace requirement-trace.json --plan drawing.plan.json --geometry geometry.json --template structure.normality.json --instance instance.json --out build/candidate --report-dir build/reports --name drawing
 ```

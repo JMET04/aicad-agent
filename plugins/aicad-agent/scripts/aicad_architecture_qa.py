@@ -241,7 +241,7 @@ def audit_dxf(path: str | Path) -> dict[str, Any]:
         "preventionRule": {
             "status": "candidate",
             "ruleEnabled": False,
-            "rules": [f"ARCH-D{i:03d}" for i in range(1, 14)],
+            "rules": [f"ARCH-D{i:03d}" for i in range(1, 15)],
         },
         "reviewPolicy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
     }

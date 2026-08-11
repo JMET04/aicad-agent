@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.8.1',
+    [string]$Version = '1.8.2',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -104,7 +104,7 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.8.1'
+        pythonConstraintCompiler = '1.8.2'
         autocadBundle = '1.4.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
@@ -130,13 +130,14 @@ $releaseManifest = [ordered]@{
         'aicad_get_reference_rebuild_schema', 'aicad_validate_reference_rebuild', 'aicad_build_reference_reconstruction',
         'aicad_solidworks_doctor',
         'aicad_get_3d_plan_schema', 'aicad_validate_3d_plan', 'aicad_build_solidworks_part',
-        'scripts/aicad_packaging_qa.py', 'scripts/aicad_architecture_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
+        'scripts/aicad_packaging_qa.py', 'scripts/aicad_architecture_qa.py', 'scripts/aicad_report_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
         'scripts/aicad_requirement_conformance.py', 'scripts/aicad_guarded_delivery.py', 'scripts/aicad_modifier_ui_qa.cjs',
         'scripts/aicad_modifier_measurement_qa.cjs'
     )
     capabilities = @(
         'origin-anchored 2D constraints', 'ASCII AICAD compilation', 'DXF/SCR/audit/manifest output',
         'architectural plan-cut/projection/hidden/datum hierarchy with complete axis groups, stage annotation matrix and native DIMSTYLE QA',
+        'idempotent audit-report inventory with unique stable prevention-rule IDs and conflict rejection',
         'calibrated webpage/SVG/image reference reconstruction', 'direct DOM object evidence and browser-backed annotation QA',
         'packaging dieline global QA and prevention rules', 'bounded CAD normality proof and typed top/bottom closure families',
         'whole user-requirement conformance before geometry', 'non-skippable whole-intent detail-proof and hashed candidate-build order',
@@ -172,6 +173,7 @@ $releaseManifest = [ordered]@{
         'python -m unittest discover -s tests -v',
         'python -m unittest discover -s agent-plugin/aicad-agent/tests -v',
         'python agent-plugin/aicad-agent/scripts/aicad_agent.py capabilities',
+        'python agent-plugin/aicad-agent/scripts/aicad_report_qa.py <validation.json> --output <report-qa.json>',
         'node agent-plugin/aicad-agent/scripts/aicad_reference_visual_qa.cjs --help-or-preview-arguments',
         'node agent-plugin/aicad-agent/scripts/aicad_modifier_ui_qa.cjs <review.html> <report.json> <screenshot.png>',
         'node agent-plugin/aicad-agent/scripts/aicad_modifier_measurement_qa.cjs <review.html> <report.json> <screenshot.png>'

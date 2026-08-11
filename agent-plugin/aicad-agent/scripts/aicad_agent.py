@@ -42,7 +42,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.8.1"
+AGENT_API_VERSION = "1.8.2"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -135,6 +135,22 @@ def capabilities() -> dict[str, Any]:
             "every entity has purpose, reasoning, and mathematical constraints",
             "AutoCAD execution channel is ASCII and accepts only LINE/CIRCLE/ARC records",
         ],
+        "architectural_drafting_qa": {
+            "available": True,
+            "script": str((PLUGIN_ROOT / "scripts" / "aicad_architecture_qa.py").resolve()),
+            "rules": str((PLUGIN_ROOT / "rules" / "architectural_drafting_rules.json").resolve()),
+            "complete_axis_groups": True,
+            "annotation_completeness_matrix": True,
+            "review_only": True,
+        },
+        "report_quality_qa": {
+            "available": True,
+            "script": str((PLUGIN_ROOT / "scripts" / "aicad_report_qa.py").resolve()),
+            "unique_prevention_rule_ids": True,
+            "conflicting_duplicates_fail": True,
+            "repeat_run_idempotence_required": True,
+            "review_only": True,
+        },
         "packaging_dieline_qa": {
             "available": True,
             "script": str((PLUGIN_ROOT / "scripts" / "aicad_packaging_qa.py").resolve()),

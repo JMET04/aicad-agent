@@ -1,6 +1,6 @@
 {
   "schema": "aicad_architectural_drafting_rules_v2",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -94,6 +94,13 @@
       "requirement": "Axis extents shall come from a declared structural coverage scope, not from the undifferentiated bounding box of every visible equipment, bridge, route or note.",
       "failureCause": "The generator reused the whole-drawing content envelope for datum geometry, so one remote appendage stretched every axis across empty space.",
       "prevention": "Maintain separate full-content, structural-axis and annotation envelopes; require each remote appendage to declare whether it participates in the primary grid."
+    },
+    {
+      "id": "ARCH-D014",
+      "name": "idempotent_audit_report_inventory",
+      "requirement": "Validation and audit reports shall contain one complete symptom/root-cause/correction/prevention record per stable rule ID, and repeated generator runs over unchanged inputs shall produce the same canonical inventory.",
+      "failureCause": "A post-validator appended lessons to its own previous output, so every rerun duplicated rule records even though the CAD candidate was unchanged.",
+      "prevention": "Merge lessons through stable rule IDs, reject conflicting duplicate content, audit uniqueness/completeness and regression-test repeat-run hashes before delivery."
     }
   ],
   "defaultLayerProfile": {
@@ -231,5 +238,18 @@
       "structural_terrace",
       "structural_water_edge"
     ]
+  },
+  "reportQualityContract": {
+    "requiredRootCauseFields": [
+      "symptom",
+      "rootCause",
+      "correction",
+      "preventionRule"
+    ],
+    "preventionRuleIdPolicy": "unique_stable_identifier",
+    "identicalDuplicatePolicy": "collapse_before_write",
+    "conflictingDuplicatePolicy": "fail",
+    "repeatRunPolicy": "same_inputs_same_canonical_inventory_and_hash",
+    "qaTool": "scripts/aicad_report_qa.py"
   }
 }

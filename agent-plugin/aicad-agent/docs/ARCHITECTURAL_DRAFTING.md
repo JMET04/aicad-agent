@@ -1,4 +1,4 @@
-# Architectural drafting invariants
+﻿# Architectural drafting invariants
 
 This profile prevents a geometrically valid plan from becoming an unreadable drawing. It is a candidate engineering rule set and does not replace an office CAD standard or professional review.
 
@@ -56,3 +56,7 @@ Then inspect a rendered original-resolution preview and, when DWG is requested, 
 - which artifact and renderer were rechecked.
 
 The safety state remains `reviewOnly=true`, `accepted=false`, `ruleEnabled=false`, `packagingGated=true`.
+
+## 规范报告门禁
+
+最终验证报告本身也是交付物，不能在重复运行时不断累积相同经验。每条经验必须同时包含现象、根因、修正和稳定的预防规则 ID；相同 ID 的相同记录在写入前折叠，相同 ID 的冲突记录直接失败。使用 scripts/aicad_report_qa.py 检查完整性、ID 唯一性和安全锁；同一输入连续运行的规范化报告哈希必须一致。

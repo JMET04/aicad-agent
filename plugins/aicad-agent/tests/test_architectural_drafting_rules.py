@@ -59,8 +59,9 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
     def test_rule_pack_records_causes_and_prevention(self) -> None:
         data = json.loads((ROOT / "rules" / "architectural_drafting_rules.json").read_text(encoding="utf-8"))
         ids = {row["id"] for row in data["rules"]}
-        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 14)})
+        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 15)})
         self.assertEqual(data["axisCoverageContract"]["remoteAppendagePolicy"], "explicit_include_or_exclude")
+        self.assertEqual(data["reportQualityContract"]["conflictingDuplicatePolicy"], "fail")
         self.assertTrue(all(row["failureCause"] and row["prevention"] for row in data["rules"]))
         self.assertEqual(data["defaultLayerProfile"]["ROUTE"]["linetype"], "DASHED")
         self.assertEqual(data["defaultLayerProfile"]["GRID"]["linetype"], "CENTER2")

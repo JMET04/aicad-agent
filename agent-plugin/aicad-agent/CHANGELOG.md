@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.2 - 2026-08-11
+
+- Added ARCH-D014: validation/audit reports now require complete root-cause records, stable unique prevention-rule IDs and repeat-run idempotence.
+- Added a shared report-invariant module plus scripts/aicad_report_qa.py with positive and negative regression fixtures.
+- Fixed post-validation reports that could append the same lessons on every rerun; identical records collapse and conflicting records fail.
+- Preserved all architectural axis, annotation, AutoCAD XData and review-only safety gates from 1.8.1.
+
+
 ## 1.8.1 - 2026-08-11
 
 - Added architectural drafting semantics for plan-cut, projection, hidden/overhead, route, datum, furniture and annotation objects.
