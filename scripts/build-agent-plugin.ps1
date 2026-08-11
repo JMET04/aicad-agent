@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.7.0',
+    [string]$Version = '1.8.0',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -104,7 +104,7 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.7.0'
+        pythonConstraintCompiler = '1.8.0'
         autocadBundle = '1.4.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'

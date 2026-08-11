@@ -8,7 +8,7 @@ if (-not $SourceDirectory) {
     $repositoryRoot = Split-Path -Parent $PSScriptRoot
     $candidates = @(
         (Join-Path $repositoryRoot 'plugins\aicad-agent'),
-        (Join-Path $repositoryRoot 'release\v1.7.0\aicad-agent'),
+        (Join-Path $repositoryRoot 'release\v1.8.0\aicad-agent'),
         (Join-Path $repositoryRoot 'agent-plugin\aicad-agent')
     )
     $SourceDirectory = $candidates | Where-Object { Test-Path -LiteralPath (Join-Path $_ '.codex-plugin\plugin.json') -PathType Leaf } | Select-Object -First 1
@@ -41,10 +41,6 @@ Get-ChildItem -LiteralPath $source -Force | ForEach-Object {
 
 $installedManifestPath = Join-Path $destination '.codex-plugin\plugin.json'
 $installedManifest = Get-Content -LiteralPath $installedManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-$baseVersion = ([string]$installedManifest.version).Split('+')[0]
-$installedManifest.version = "$baseVersion+codex.$([DateTime]::UtcNow.ToString('yyyyMMddHHmmss'))"
-$manifestJson = $installedManifest | ConvertTo-Json -Depth 20
-[IO.File]::WriteAllText($installedManifestPath, $manifestJson + [Environment]::NewLine, [Text.UTF8Encoding]::new($false))
 
 $marketplaceDirectory = Split-Path -Parent $marketplacePath
 New-Item -ItemType Directory -Path $marketplaceDirectory -Force | Out-Null

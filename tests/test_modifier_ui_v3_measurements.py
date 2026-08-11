@@ -85,6 +85,9 @@ class ModifierUiV3MeasurementTests(unittest.TestCase):
         self.assertEqual(page.count('class="view-coordinate-triad"'), 6)
         self.assertEqual(page.count('class="model-origin-marker"'), 6)
         self.assertIn("drawCoordinateTriad", page)
+        self.assertIn("aicad.coordinate-system.visible", page)
+        self.assertIn("localStorage.setItem", page)
+        self.assertIn("setCoordinateVisible(readCoordinatePreference(),false)", page)
 
 
 if __name__ == "__main__":

@@ -30,6 +30,12 @@ class PackagedModifierUiV3MeasurementTests(unittest.TestCase):
         self.assertIn('id="measurement"', page)
         self.assertIn('id="coordinateToggle"', page)
         self.assertIn("drawCoordinateTriad", page)
+        self.assertIn("aicad.coordinate-system.visible", page)
+        self.assertIn("localStorage.setItem", page)
+        self.assertIn("setCoordinateVisible(readCoordinatePreference(),false)", page)
+        qa = (ROOT / "scripts" / "aicad_modifier_measurement_qa.cjs").read_text(encoding="utf-8")
+        self.assertIn("coordinatesOffPersisted", qa)
+        self.assertIn("coordinatesOnPersisted", qa)
 
 
 if __name__ == "__main__":

@@ -105,6 +105,13 @@
                       "symptom":  "The real AutoCAD host test compiled its plans but stopped before launching AutoCAD because Resolve-Path treated the command name python as a literal file in the workspace.",
                       "root_cause":  "Get-Command had already resolved the executable, but the harness discarded that result and attempted filesystem resolution on the original command token.",
                       "prevention":  "When a host harness accepts either an executable path or a PATH command, use Resolve-Path only for an existing file and otherwise use the Source returned by Get-Command; exercise the default command-name path in the real-host regression."
+                  },
+                  {
+                      "id":  "REL-G016",
+                      "name":  "installed_package_integrity_is_immutable",
+                      "symptom":  "The installed plugin passed all behavior tests but failed release verification because the installer changed plugin.json after copying the signed package.",
+                      "root_cause":  "A cache-busting build suffix was written into the installed manifest without atomically updating the integration manifest and SHA256SUMS.",
+                      "prevention":  "A production installer must copy the versioned package byte-for-byte and preserve all manifest hashes; same-version development cache busting is a separate workflow and must never silently mutate a verified release install."
                   }
               ]
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.8.0 - 2026-08-11
+
+- Added automatic source-bound review HTML generation and desktop launch after interactive 2D/3D builds.
+- Added `review_launch=auto|always|never` for CLI and Agent tools with explicit CI/headless degradation.
+- Restricted the launcher to existing local HTML while preserving all review and acceptance safety locks.
+- Made the shared coordinate-system switch persist its hidden/visible choice across review reopen while synchronizing 2D axes, origins, and the 3D triad.
+- Made production installation byte-preserving so plugin manifest, integration manifest, and SHA256SUMS remain verifiable after install; development cache busting is no longer silently applied to release installs.
+- Added REVIEW-G001 through REVIEW-G004 and compile/launcher regression coverage.
+
 ## 1.7.0 - 2026-08-11
 
 - Added typed compiled-model measurements for every selectable line, point, circle and face.

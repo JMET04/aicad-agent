@@ -20,7 +20,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
-                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015",
+                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016",
             },
         )
         for rule in rules.values():
@@ -77,5 +77,12 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         self.assertIn("Get-Command", rule["root_cause"])
         self.assertIn("Source returned by Get-Command", rule["prevention"])
         self.assertIn("default command-name path", rule["prevention"])
+    def test_release_installer_must_preserve_verified_hashes(self) -> None:
+        data = json.loads((PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8"))
+        rule = next(item for item in data["rules"] if item["id"] == "REL-G016")
+        self.assertEqual(rule["name"], "installed_package_integrity_is_immutable")
+        self.assertIn("byte-for-byte", rule["prevention"])
+        self.assertIn("SHA256SUMS", rule["root_cause"])
+
 if __name__ == "__main__":
     unittest.main()

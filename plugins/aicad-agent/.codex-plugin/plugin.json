@@ -1,6 +1,6 @@
 {
   "name": "aicad-agent",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Agent-native tools for deterministic 2D/3D CAD, calibrated reference reconstruction, and audited host workflows.",
   "author": {
     "name": "AI CAD Constraint Project"
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "AI CAD Constraint Agent",
     "shortDescription": "Review and modify constrained 2D/3D CAD through one agent-native workflow.",
-    "longDescription": "Select geometry or parameters, read exact model measurements, toggle MODEL_XYZ, describe changes in plain language, inspect arbitrary sections, and export one source-bound modification request. Exact transactions, dependency replay, host authority boundaries, packaging gates and audit evidence remain enforced internally.",
+    "longDescription": "Select geometry or parameters, read exact model measurements, toggle MODEL_XYZ, describe changes in plain language, inspect arbitrary sections, and export one source-bound modification request. Validated builds automatically open their local review UI on desktop hosts and degrade explicitly in headless environments. Exact transactions, dependency replay, host authority boundaries, packaging gates and audit evidence remain enforced internally.",
     "developerName": "AI CAD Constraint Project",
     "category": "Developer Tools",
     "capabilities": [
@@ -49,7 +49,8 @@
       "Hover-discovered centers and interface geometry",
       "Clickable core feature parameters",
       "Typed selected line/point/circle/face measurements",
-      "Synchronized MODEL_XYZ visibility switch"
+      "Synchronized MODEL_XYZ visibility switch",
+      "Automatic post-build review launch with safe headless fallback"
     ],
     "defaultPrompt": [
       "Open the CAD modifier so I can click a line, point, or circle and inspect its exact model values.",

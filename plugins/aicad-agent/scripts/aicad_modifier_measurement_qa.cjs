@@ -54,8 +54,24 @@ async function main() {
     svgHidden: [...document.querySelectorAll(".view-coordinate-triad")].every(item => getComputedStyle(item).display === "none"),
     canvasHidden: !window.__aicad3dSelector.coordinateSystemVisible,
   }));
+  await page.reload({ waitUntil: "load" });
+  await page.waitForFunction(() => window.__aicadUi && window.__aicad3dSelector);
+  const coordinatesOffPersisted = await page.evaluate(() => ({
+    checked: document.querySelector("#coordinateToggle").checked,
+    bodyHidden: document.body.classList.contains("coordinates-hidden"),
+    svgHidden: [...document.querySelectorAll(".view-coordinate-triad")].every(item => getComputedStyle(item).display === "none"),
+    canvasHidden: !window.__aicad3dSelector.coordinateSystemVisible,
+  }));
   await page.locator(".coordinate-toggle").click();
   const coordinatesOn = await page.evaluate(() => ({
+    checked: document.querySelector("#coordinateToggle").checked,
+    bodyVisible: !document.body.classList.contains("coordinates-hidden"),
+    svgVisible: [...document.querySelectorAll(".view-coordinate-triad")].every(item => getComputedStyle(item).display !== "none"),
+    canvasVisible: window.__aicad3dSelector.coordinateSystemVisible,
+  }));
+  await page.reload({ waitUntil: "load" });
+  await page.waitForFunction(() => window.__aicadUi && window.__aicad3dSelector);
+  const coordinatesOnPersisted = await page.evaluate(() => ({
     checked: document.querySelector("#coordinateToggle").checked,
     bodyVisible: !document.body.classList.contains("coordinates-hidden"),
     svgVisible: [...document.querySelectorAll(".view-coordinate-triad")].every(item => getComputedStyle(item).display !== "none"),
@@ -96,8 +112,8 @@ async function main() {
     pageLoadedWithoutErrors: errors.length === 0,
     coordinateSystemIsRightHandedModelXYZ: initialCoordinates.system?.id === "MODEL_XYZ" && initialCoordinates.system?.handedness === "right" && same(initialCoordinates.system?.origin, [0, 0, 0]),
     coordinateSystemInitiallyVisible: initialCoordinates.toggle && initialCoordinates.triads === 6 && initialCoordinates.origins === 6 && initialCoordinates.svgVisible && initialCoordinates.canvasVisible,
-    coordinateToggleHidesAllViews: !coordinatesOff.checked && coordinatesOff.bodyHidden && coordinatesOff.svgHidden && coordinatesOff.canvasHidden,
-    coordinateToggleRestoresAllViews: coordinatesOn.checked && coordinatesOn.bodyVisible && coordinatesOn.svgVisible && coordinatesOn.canvasVisible,
+    coordinateToggleHidesAllViews: !coordinatesOff.checked && coordinatesOff.bodyHidden && coordinatesOff.svgHidden && coordinatesOff.canvasHidden && !coordinatesOffPersisted.checked && coordinatesOffPersisted.bodyHidden && coordinatesOffPersisted.svgHidden && coordinatesOffPersisted.canvasHidden,
+    coordinateToggleRestoresAllViews: coordinatesOn.checked && coordinatesOn.bodyVisible && coordinatesOn.svgVisible && coordinatesOn.canvasVisible && coordinatesOnPersisted.checked && coordinatesOnPersisted.bodyVisible && coordinatesOnPersisted.svgVisible && coordinatesOnPersisted.canvasVisible,
     lineClickShowsLengthAndEndpoints: line.kind === "line" && line.selected[0]?.measurement?.length_mm === 120 && same(line.selected[0]?.measurement?.start, [-60, -40, 0]) && same(line.selected[0]?.measurement?.end, [60, -40, 0]) && line.text.includes("长度") && line.text.includes("120"),
     lineSelectionPrefillsWidth: line.path === "profile.width" && line.value === "120",
     lineMeasurementPrefillsWidth: lineEdit.path === "profile.width" && lineEdit.value === "120",
@@ -116,7 +132,7 @@ async function main() {
   const report = {
     ok, status: ok ? "pass" : "failed", browser: executablePath || "playwright-managed-chromium",
     review, screenshot, checks,
-    evidence: { initialCoordinates, coordinatesOff, coordinatesOn, line, lineEdit, secondLine, point, pointEdit, circle, circleEdit, layout },
+    evidence: { initialCoordinates, coordinatesOff, coordinatesOffPersisted, coordinatesOn, coordinatesOnPersisted, line, lineEdit, secondLine, point, pointEdit, circle, circleEdit, layout },
     errors,
     hashes: { review: hash(review), screenshot: hash(screenshot) },
   };

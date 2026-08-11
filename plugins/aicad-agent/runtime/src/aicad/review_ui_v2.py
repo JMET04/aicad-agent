@@ -191,7 +191,9 @@ function renderMeasurements(){
   }).join('');
   host.querySelectorAll('.measurement-card').forEach(card=>{const button=card.querySelector('[data-editable]');if(button)button.onclick=()=>editMeasuredValue(selectedRefs[Number(card.dataset.index)]);});
 }
-function setCoordinateVisible(value){coordinateVisible=!!value;window.__aicadCoordinateVisible=coordinateVisible;document.body.classList.toggle('coordinates-hidden',!coordinateVisible);const toggle=document.getElementById('coordinateToggle');if(toggle){toggle.checked=coordinateVisible;toggle.setAttribute('aria-checked',String(coordinateVisible));}if(window.drawAicad3d)window.drawAicad3d();}
+const coordinatePreferenceKey='aicad.coordinate-system.visible';
+function readCoordinatePreference(){try{const saved=localStorage.getItem(coordinatePreferenceKey);return saved===null?true:saved==='true';}catch(_error){return true;}}
+function setCoordinateVisible(value,persist=false){coordinateVisible=!!value;window.__aicadCoordinateVisible=coordinateVisible;document.body.classList.toggle('coordinates-hidden',!coordinateVisible);const toggle=document.getElementById('coordinateToggle');if(toggle){toggle.checked=coordinateVisible;toggle.setAttribute('aria-checked',String(coordinateVisible));}if(persist){try{localStorage.setItem(coordinatePreferenceKey,String(coordinateVisible));}catch(_error){/* file/locked-down browsers may deny storage; the live switch still works */}}if(window.drawAicad3d)window.drawAicad3d();}
 function renderParameters(){
   const host=document.getElementById('coreParameters');
   host.innerHTML=[...selectorObjects.values()].map(o=>`<section class="parameter-group ${selected.includes(o.source_object_id)?'active':''}"><header><b>${o.source_object_id}</b><span>${featureLabel(o.feature_type)}</span></header><div>${(o.core_parameters||[]).map(p=>`<button class="parameter-row" data-feature="${o.source_object_id}" data-param="${p.id}"><span>${p.label}</span><strong>${Array.isArray(p.value)?p.value.join(', '):p.value}${p.unit?` <i>${p.unit}</i>`:''}</strong></button>`).join('')}</div></section>`).join('');
@@ -240,7 +242,7 @@ function renderUi(redraw=true){
 }
 function showToast(text){const n=document.getElementById('toast');n.textContent=text;n.classList.add('show');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>n.classList.remove('show'),2200);}
 document.querySelectorAll('.view-hit').forEach(x=>x.onclick=e=>{e.stopPropagation();toggleSelectionRef(pkg.selection_map[x.dataset.viewEntityId]);});
-document.getElementById('setParameter').onclick=commitParameter;document.getElementById('addMove').onclick=commitMove;document.getElementById('addInstruction').onclick=addInstruction;document.getElementById('exportRequest').onclick=exportHandoff;document.getElementById('coordinateToggle').onchange=e=>setCoordinateVisible(e.target.checked);setCoordinateVisible(true);
+document.getElementById('setParameter').onclick=commitParameter;document.getElementById('addMove').onclick=commitMove;document.getElementById('addInstruction').onclick=addInstruction;document.getElementById('exportRequest').onclick=exportHandoff;document.getElementById('coordinateToggle').onchange=e=>setCoordinateVisible(e.target.checked,true);setCoordinateVisible(readCoordinatePreference(),false);
 window.__aicadUi={get selectedRefs(){return selectedRefs},get operations(){return operations},get instructions(){return instructions},get coordinateVisible(){return coordinateVisible},toggleSelectionRef,selectParameter,formalCorrection,handoff,renderUi,setCoordinateVisible};
 """
 

@@ -32,7 +32,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.7.0")
+        self.assertEqual(manifest["version"], "1.8.0")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         mcp = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
@@ -49,7 +49,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.7.0")
+        self.assertEqual(payload["api_version"], "1.8.0")
         self.assertEqual(payload["entities"], ["line", "circle", "arc"])
         self.assertTrue(Path(payload["schema_path"]).is_file())
         self.assertTrue(payload["agent_native"]["default"])
@@ -230,6 +230,12 @@ class AgentPluginTests(unittest.TestCase):
             self.assertIsNone(payload["host"])
             self.assertIn("solidworks_registered", payload)
 
+
+    def test_production_installer_preserves_verified_plugin_manifest(self) -> None:
+        installer = (ROOT / "scripts" / "install-agent-plugin.ps1").read_text(encoding="utf-8-sig")
+        self.assertNotIn("$installedManifest.version =", installer)
+        self.assertIn("Installed plugin version", installer)
+        self.assertIn("Copy-Item", installer)
 
 if __name__ == "__main__":
     unittest.main()

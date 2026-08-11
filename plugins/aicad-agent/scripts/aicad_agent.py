@@ -34,6 +34,7 @@ try:
     from aicad.exporters import export_all
     from aicad.provider import ProviderError, generate_plan
     from aicad.reference_rebuild import build_reference_reconstruction, validate_reference_rebuild
+    from aicad.review_launch import REVIEW_LAUNCH_MODES, launch_review
     from aicad.semantic import describe_plan, domain_capabilities
     from aicad.solidworks3d import compile_3d_plan, solidworks_doctor, validate_3d_plan
     from aicad.viewmap import build_multiview_review
@@ -41,7 +42,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.7.0"
+AGENT_API_VERSION = "1.8.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -273,18 +274,41 @@ def _compile_data(data: dict[str, Any], output_dir: str | None, name: str | None
     }
 
 
-def compile_plan_value(value: Any, output_dir: str | None = None, name: str | None = None) -> dict[str, Any]:
-    return _compile_data(_load_plan(value), output_dir, name)
+def _attach_review(
+    data: dict[str, Any], result: dict[str, Any], space: str, domain: str,
+    name: str | None, review_launch: str,
+) -> dict[str, Any]:
+    directory = Path(str(result["output_dir"]))
+    stem = _safe_name(f"{name or result.get('name') or 'drawing'}-review")
+    review = build_multiview_review(data, space, domain, directory, stem)
+    review_path = Path(review["artifacts"]["review_html"])
+    result["review"] = review
+    result["review_launch"] = launch_review(review_path, review_launch)
+    return result
 
 
-def generate(request: str, output_dir: str | None = None, name: str | None = None, provider: str = "offline") -> dict[str, Any]:
+def compile_plan_value(
+    value: Any, output_dir: str | None = None, name: str | None = None,
+    review_launch: str = "never",
+) -> dict[str, Any]:
+    data = _load_plan(value)
+    result = _compile_data(data, output_dir, name)
+    domain = str(data.get("drawing", {}).get("domain", "general"))
+    return _attach_review(data, result, "2d", domain, name, review_launch)
+
+
+def generate(
+    request: str, output_dir: str | None = None, name: str | None = None,
+    provider: str = "offline", review_launch: str = "never",
+) -> dict[str, Any]:
     if not isinstance(request, str) or not request.strip():
         raise PlanError("request must be a non-empty string")
     data, used_provider = generate_plan(request.strip(), provider)
     result = _compile_data(data, output_dir, name)
     result["provider"] = used_provider
     result["request_interpreted"] = True
-    return result
+    domain = str(data.get("drawing", {}).get("domain", "general"))
+    return _attach_review(data, result, "2d", domain, name, review_launch)
 
 
 def get_schema() -> dict[str, Any]:
@@ -339,10 +363,13 @@ def apply_correction_value(
 
 
 def build_multiview_value(
-    value: Any, space: str, domain: str = "general", output_dir: str | None = None, name: str | None = None,
+    value: Any, space: str, domain: str = "general", output_dir: str | None = None,
+    name: str | None = None, review_launch: str = "never",
 ) -> dict[str, Any]:
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
-    return build_multiview_review(_load_plan(value), space, domain, directory, _safe_name(name or "multiview"))
+    result = build_multiview_review(_load_plan(value), space, domain, directory, _safe_name(name or "multiview"))
+    result["review_launch"] = launch_review(Path(result["artifacts"]["review_html"]), review_launch)
+    return result
 
 
 def validate_reference_rebuild_value(plan_value: Any, reference_value: Any) -> dict[str, Any]:
@@ -368,9 +395,13 @@ def build_solidworks_part(
     name: str | None = None,
     execute: bool = True,
     timeout_seconds: int = 300,
+    review_launch: str = "never",
 ) -> dict[str, Any]:
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
-    return compile_3d_plan(_load_plan(value), directory, name, execute, timeout_seconds)
+    data = _load_plan(value)
+    result = compile_3d_plan(data, directory, name, execute, timeout_seconds)
+    domain = str(data.get("part", {}).get("domain", "general"))
+    return _attach_review(data, result, "3d", domain, name, review_launch)
 
 
 TOOLS: list[dict[str, Any]] = [
@@ -393,6 +424,7 @@ TOOLS: list[dict[str, Any]] = [
                 "request": {"type": "string", "minLength": 1},
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
                 "provider": {"type": "string", "enum": ["offline", "auto", "openai"], "default": "offline"},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "auto"},
             },
         },
     },
@@ -412,6 +444,7 @@ TOOLS: list[dict[str, Any]] = [
             "properties": {
                 "plan": {"description": "Plan object, JSON string, or UTF-8 plan file path"},
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "auto"},
             },
         },
     },
@@ -477,6 +510,7 @@ TOOLS: list[dict[str, Any]] = [
                 "space": {"type": "string", "enum": ["2d", "3d"]},
                 "domain": {"type": "string", "default": "general"},
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "auto"},
             },
         },
     },
@@ -553,6 +587,7 @@ TOOLS: list[dict[str, Any]] = [
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
                 "execute": {"type": "boolean", "default": True},
                 "timeout_seconds": {"type": "integer", "minimum": 30, "maximum": 1800, "default": 300},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "auto"},
             },
         },
     },
@@ -565,11 +600,11 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_get_plan_schema":
         return get_schema()
     if name == "aicad_generate":
-        return generate(arguments.get("request", ""), arguments.get("output_dir"), arguments.get("name"), arguments.get("provider", "offline"))
+        return generate(arguments.get("request", ""), arguments.get("output_dir"), arguments.get("name"), arguments.get("provider", "offline"), arguments.get("review_launch", "auto"))
     if name == "aicad_validate_plan":
         return validate_plan_value(arguments.get("plan"))
     if name == "aicad_compile_plan":
-        return compile_plan_value(arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"))
+        return compile_plan_value(arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"), arguments.get("review_launch", "auto"))
     if name == "aicad_get_semantic_schema":
         return get_aux_schema("semantic")
     if name == "aicad_get_correction_schema":
@@ -592,7 +627,7 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_build_multiview_review":
         return build_multiview_value(
             arguments.get("plan"), arguments.get("space", "2d"), arguments.get("domain", "general"),
-            arguments.get("output_dir"), arguments.get("name"),
+            arguments.get("output_dir"), arguments.get("name"), arguments.get("review_launch", "auto"),
         )
     if name == "aicad_get_reference_rebuild_schema":
         return get_aux_schema("reference")
@@ -611,7 +646,7 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_build_solidworks_part":
         return build_solidworks_part(
             arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"),
-            arguments.get("execute", True), arguments.get("timeout_seconds", 300),
+            arguments.get("execute", True), arguments.get("timeout_seconds", 300), arguments.get("review_launch", "auto"),
         )
     raise PlanError(f"Unknown tool '{name}'")
 
@@ -751,12 +786,14 @@ def _parser() -> argparse.ArgumentParser:
     generate_parser.add_argument("--out")
     generate_parser.add_argument("--name")
     generate_parser.add_argument("--provider", choices=["offline", "auto", "openai"], default="offline")
+    generate_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
     validate_parser = commands.add_parser("validate")
     validate_parser.add_argument("--plan", required=True)
     compile_parser = commands.add_parser("compile")
     compile_parser.add_argument("--plan", required=True)
     compile_parser.add_argument("--out")
     compile_parser.add_argument("--name")
+    compile_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
     validate3d_parser = commands.add_parser("validate3d")
     validate3d_parser.add_argument("--plan", required=True)
     build3d_parser = commands.add_parser("build3d")
@@ -765,6 +802,7 @@ def _parser() -> argparse.ArgumentParser:
     build3d_parser.add_argument("--name")
     build3d_parser.add_argument("--no-execute", action="store_true")
     build3d_parser.add_argument("--timeout", type=int, default=300)
+    build3d_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
     describe_parser = commands.add_parser("describe")
     describe_parser.add_argument("--plan", required=True)
     describe_parser.add_argument("--space", choices=["2d", "3d"], required=True)
@@ -791,6 +829,7 @@ def _parser() -> argparse.ArgumentParser:
     multiview_parser.add_argument("--domain", default="general")
     multiview_parser.add_argument("--out")
     multiview_parser.add_argument("--name")
+    multiview_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
     return parser
 
 
@@ -802,7 +841,7 @@ def main(argv: list[str] | None = None) -> int:
         request = args.request
         if args.request_file is not None:
             request = args.request_file.read_text(encoding="utf-8")
-        return generate(request, args.out, args.name, args.provider)
+        return generate(request, args.out, args.name, args.provider, args.review_launch)
 
     actions: dict[str, Callable[[], dict[str, Any]]] = {
         "capabilities": capabilities,
@@ -818,14 +857,14 @@ def main(argv: list[str] | None = None) -> int:
         "solidworks-doctor": solidworks_doctor,
         "generate": generate_action,
         "validate": lambda: validate_plan_value(args.plan),
-        "compile": lambda: compile_plan_value(args.plan, args.out, args.name),
+        "compile": lambda: compile_plan_value(args.plan, args.out, args.name, args.review_launch),
         "validate3d": lambda: validate_3d_plan_value(args.plan),
-        "build3d": lambda: build_solidworks_part(args.plan, args.out, args.name, not args.no_execute, args.timeout),
+        "build3d": lambda: build_solidworks_part(args.plan, args.out, args.name, not args.no_execute, args.timeout, args.review_launch),
         "describe": lambda: describe_plan_value(args.plan, args.space, args.domain),
         "domain-validate": lambda: validate_domain_value(args.plan, args.space, args.domain, args.out, args.name),
         "preview-correction": lambda: preview_correction_value(args.plan, args.correction, args.domain),
         "apply-correction": lambda: apply_correction_value(args.plan, args.correction, args.out, args.name, args.domain),
-        "multiview": lambda: build_multiview_value(args.plan, args.space, args.domain, args.out, args.name),
+        "multiview": lambda: build_multiview_value(args.plan, args.space, args.domain, args.out, args.name, args.review_launch),
     }
     try:
         payload = actions[args.command]()

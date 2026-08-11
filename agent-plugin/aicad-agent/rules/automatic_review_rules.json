@@ -1,0 +1,31 @@
+{
+  "schema": "aicad_automatic_review_rules_v1",
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "REVIEW-G001",
+      "requirement": "Every interactive generation or compile result must include a source-bound review HTML artifact.",
+      "prevention": "Attach multiview generation to generate, compile and build3d before returning the result."
+    },
+    {
+      "id": "REVIEW-G002",
+      "requirement": "Desktop workflows open the review automatically after artifact validation.",
+      "prevention": "Use review_launch=auto by default for CLI and Agent tools, with explicit always and never modes."
+    },
+    {
+      "id": "REVIEW-G003",
+      "requirement": "Headless operation must degrade safely without falsifying review completion.",
+      "prevention": "CI, AICAD_NO_GUI and missing-display detection return an explicit skipped result while preserving the HTML artifact."
+    },
+    {
+      "id": "REVIEW-G004",
+      "requirement": "Opening a review must never imply engineering acceptance.",
+      "prevention": "Retain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true in generated review packages."
+    },
+    {
+      "id": "REVIEW-G005",
+      "requirement": "Every 2D and 3D review surface must provide one synchronized coordinate-system visibility switch whose last choice survives reopening.",
+      "prevention": "The switch controls all 2D axes, origin marks and the rotating 3D triad together; store only the boolean visibility preference and never use screen pixels as model coordinates."
+    }
+  ]
+}
