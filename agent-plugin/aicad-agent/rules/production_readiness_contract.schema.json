@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aicad.local/schema/production-readiness-contract-v1.json",
+  "title": "AICAD production readiness contract",
+  "type": "object",
+  "required": [
+    "schema",
+    "project",
+    "requestedStage",
+    "discipline",
+    "strictProductionOnly",
+    "evidence",
+    "safetyLocks"
+  ],
+  "properties": {
+    "schema": {
+      "const": "aicad_production_readiness_contract_v1"
+    },
+    "project": {
+      "type": "object",
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "requestedStage": {
+      "enum": [
+        "review",
+        "coordination",
+        "production"
+      ]
+    },
+    "discipline": {
+      "enum": [
+        "architecture",
+        "mechanical",
+        "packaging",
+        "electronics",
+        "custom"
+      ]
+    },
+    "strictProductionOnly": {
+      "type": "boolean"
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "intent",
+        "geometry",
+        "drafting",
+        "authority",
+        "host",
+        "professionalRelease"
+      ],
+      "properties": {
+        "intent": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "geometry": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "drafting": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "authority": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "host": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "professionalRelease": {
+          "$ref": "#/$defs/gateGroup"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/gateGroup"
+      }
+    },
+    "candidateArtifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[A-Fa-f0-9]{64}$"
+          }
+        },
+        "additionalProperties": true
+      },
+      "default": []
+    },
+    "safetyLocks": {
+      "type": "object",
+      "properties": {
+        "reviewOnly": {
+          "const": true
+        },
+        "accepted": {
+          "const": false
+        },
+        "ruleEnabled": {
+          "const": false
+        },
+        "packagingGated": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "gateGroup": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "passed",
+          "evidence"
+        ],
+        "properties": {
+          "passed": {
+            "type": "boolean"
+          },
+          "evidence": {
+            "not": {
+              "type": "null"
+            }
+          },
+          "source": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

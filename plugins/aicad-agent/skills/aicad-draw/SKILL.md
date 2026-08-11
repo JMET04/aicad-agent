@@ -49,6 +49,8 @@ For architectural plans, read `rules/architectural_drafting_rules.json` and [ARC
 8. Bind every symbol/tag to its source geometry, reserve annotation envelopes in the order content → axis bubbles → chain dimensions → overall dimensions → notes, and run scale-aware collision/readability checks.
 9. Run scripts/aicad_architecture_qa.py on the final DXF, then perform a rendered visual check and a native host save/reopen when DWG is requested. Record the failed invariant, root cause, correction and candidate prevention rule before redrawing.
 10. Before delivery, merge root-cause lessons by stable prevention-rule ID and run scripts/aicad_report_qa.py on validation.json. Repeated runs with unchanged inputs must preserve the same canonical lesson inventory; conflicting duplicate IDs are a hard failure.
+11. Furniture and fixtures required by the brief must be typed selectable linework, not labels or occupancy rectangles. Validate the minimum component matrix for each family, including sofa back/front edges, arms, seat edge and cushion divisions, plus scale and clearances. Every furniture/equipment edit must replay all dependent circulation routes and fail on any route intersection with the occupancy plus clearance envelope.
+12. If the user requests construction-ready, fabrication-ready, manufacturing-ready or production-ready output, read `rules/production_readiness_rules.json` and validate a `rules/production_readiness_contract.schema.json` contract with `scripts/aicad_production_readiness_qa.py`. With `strictProductionOnly=true`, any failed gate exposes only the blocker report; more annotations may not compensate for missing engineering authority, host persistence or authorized release.
 
 ## Plan every entity mathematically
 
@@ -106,6 +108,7 @@ python scripts/aicad_agent.py reference-build --plan drawing.plan.json --referen
 node scripts/aicad_reference_visual_qa.cjs build/reference/drawing.preview.html build/reference/drawing.visual-validation.json build/reference/drawing.preview.png
 python scripts/aicad_architecture_qa.py build/job/drawing.dxf --output build/reports/drawing.architecture-qa.json
 python scripts/aicad_report_qa.py build/reports/validation.json --output build/reports/report-quality.json
+python scripts/aicad_production_readiness_qa.py production-contract.json --output build/reports/production-readiness.json --markdown build/reports/production-readiness.md
 python scripts/aicad_requirement_conformance.py --contract requirement-contract.json --trace requirement-trace.json --normality-template structure.normality.json --normality-instance drawing.instance.json --out-json build/reports/requirement.json --out-md build/reports/requirement.md
 python scripts/aicad_guarded_delivery.py --contract requirement-contract.json --trace requirement-trace.json --plan drawing.plan.json --geometry geometry.json --template structure.normality.json --instance instance.json --out build/candidate --report-dir build/reports --name drawing
 ```

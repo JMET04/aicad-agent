@@ -42,7 +42,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.8.2"
+AGENT_API_VERSION = "1.8.3"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -142,6 +142,15 @@ def capabilities() -> dict[str, Any]:
             "complete_axis_groups": True,
             "annotation_completeness_matrix": True,
             "review_only": True,
+        },
+        "production_readiness_qa": {
+            "available": True,
+            "script": str((PLUGIN_ROOT / "scripts" / "aicad_production_readiness_qa.py").resolve()),
+            "rules": str((PLUGIN_ROOT / "rules" / "production_readiness_rules.json").resolve()),
+            "contract_schema": str((PLUGIN_ROOT / "rules" / "production_readiness_contract.schema.json").resolve()),
+            "policy": "non_compensatory_fail_closed",
+            "strict_production_failure_disposition": "blocker_report_only",
+            "automatic_acceptance": False,
         },
         "report_quality_qa": {
             "available": True,

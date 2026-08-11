@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.8.3 - 2026-08-11
+
+- Adds a non-compensatory, fail-closed production-readiness contract and machine/Chinese blocker reports.
+- Deepens architectural drafting rules for complete axes, populated paper space, sheet/revision control and recognisable typed furniture linework.
+- Revalidates all circulation routes after furniture/equipment edits and blocks route-clearance intersections.
+- Adds scale-aware symbolic-line versus annotation-envelope collision gates.
+- Stages self-contained review HTML to a hash-addressed ASCII Windows path when non-ASCII paths or direct-open failures make local review unreliable.
+- Keeps production candidates review-only and prevents automated acceptance or self-signing.
+- Derives Windows compatibility paths from environment/system roots and locks release verification to a no-bytecode process tree.
+
 ## 1.8.2 - 2026-08-11
 
 - Added ARCH-D014: validation/audit reports now require complete root-cause records, stable unique prevention-rule IDs and repeat-run idempotence.

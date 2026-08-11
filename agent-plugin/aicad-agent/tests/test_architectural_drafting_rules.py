@@ -59,7 +59,7 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
     def test_rule_pack_records_causes_and_prevention(self) -> None:
         data = json.loads((ROOT / "rules" / "architectural_drafting_rules.json").read_text(encoding="utf-8"))
         ids = {row["id"] for row in data["rules"]}
-        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 15)})
+        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 21)})
         self.assertEqual(data["axisCoverageContract"]["remoteAppendagePolicy"], "explicit_include_or_exclude")
         self.assertEqual(data["reportQualityContract"]["conflictingDuplicatePolicy"], "fail")
         self.assertTrue(all(row["failureCause"] and row["prevention"] for row in data["rules"]))
@@ -67,6 +67,8 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
         self.assertEqual(data["defaultLayerProfile"]["GRID"]["linetype"], "CENTER2")
         self.assertEqual(data["defaultLayerProfile"]["GRID_BUBBLE"]["linetype"], "Continuous")
         self.assertIn("axis_identifier", data["annotationCompletenessProfile"]["architectural_concept_plan"]["required"])
+        self.assertIn("paperspace_viewport", data["annotationCompletenessProfile"]["architectural_construction_plan"]["requiredAdditional"])
+        self.assertIn("typed_furniture_linework", data["annotationCompletenessProfile"]["architectural_construction_plan"]["requiredAdditional"])
         self.assertFalse(data["reviewPolicy"]["accepted"])
         self.assertFalse(data["reviewPolicy"]["ruleEnabled"])
 

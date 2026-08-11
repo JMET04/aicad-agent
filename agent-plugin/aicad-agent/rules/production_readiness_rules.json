@@ -1,0 +1,122 @@
+{
+  "schema": "aicad_production_readiness_rules_v1",
+  "version": "1.0.0",
+  "status": "candidate",
+  "policy": "non_compensatory_fail_closed",
+  "rules": [
+    {
+      "id": "PROD-G001",
+      "name": "whole_requirement_authority",
+      "requirement": "The requested product, use, dimensions, materials, applicable jurisdiction and drawing stage shall be explicit and traceable to authoritative inputs.",
+      "failureCause": "Geometry was generated before the intended product and authority hierarchy were locked.",
+      "prevention": "Block production status until wholeIntent, dimensionalAuthority and jurisdictionAndCodeEdition all pass."
+    },
+    {
+      "id": "PROD-G002",
+      "name": "constraint_and_detail_proof",
+      "requirement": "Origin protocol, constraint compilation, whole-intent checks, detail proof and domain QA shall all pass independently.",
+      "failureCause": "A valid outline was treated as proof that every functional detail was correct.",
+      "prevention": "Require each named geometry gate; do not average or score away one failed detail."
+    },
+    {
+      "id": "PROD-G003",
+      "name": "stage_appropriate_drafting",
+      "requirement": "Drawing layers, linetypes, lineweights, dimensions, annotation matrix, axes and axis identifiers shall satisfy the selected discipline and stage.",
+      "failureCause": "Coordinate validity was confused with readable professional drafting.",
+      "prevention": "Resolve a stage profile before drawing and reject every missing required annotation or semantic style class."
+    },
+    {
+      "id": "PROD-G004",
+      "name": "recognisable_detail_geometry",
+      "requirement": "Required product details and furnishings shall be represented by typed, selectable geometry with a component matrix; labels and occupancy rectangles are not substitutes.",
+      "failureCause": "Object names and filled rectangles visually suggested details that were absent from CAD geometry.",
+      "prevention": "For every required object type, prove its minimum linework components, scale and clearance before delivery."
+    },
+    {
+      "id": "PROD-G005",
+      "name": "sheet_revision_and_navigation_control",
+      "requirement": "Production candidates shall include populated paper-space sheets, title blocks, sheet numbers, plot scales, revisions, statuses, schedules and section/elevation/detail references where required.",
+      "failureCause": "A complete model-space drawing was exposed as a deliverable even though its paper-space and revision system were empty.",
+      "prevention": "Treat model geometry and published sheets as separate mandatory gates and validate their bindings."
+    },
+    {
+      "id": "PROD-G006",
+      "name": "discipline_authority",
+      "requirement": "Site survey, geotechnical, structural, MEP, fire, accessibility, manufacturing or equivalent discipline evidence required by the project shall be present and current.",
+      "failureCause": "The CAD generator inferred engineering facts from an image or concept model.",
+      "prevention": "Image pixels never satisfy engineering authority; require hashed project evidence for every selected discipline gate."
+    },
+    {
+      "id": "PROD-G007",
+      "name": "native_host_persistence",
+      "requirement": "When native deliverables are requested, the target host shall save, reopen and verify layers, coordinates, text, semantic metadata and hashes.",
+      "failureCause": "Portable output was assumed to prove native host persistence.",
+      "prevention": "Require a real host round trip and record exact host/version evidence before native artifacts are exposed."
+    },
+    {
+      "id": "PROD-G008",
+      "name": "authorized_release",
+      "requirement": "A production release candidate shall retain reviewOnly=true and accepted=false until the authorized professional or manufacturing reviewer records approval.",
+      "failureCause": "Automated QA was misrepresented as legal, engineering or manufacturing acceptance.",
+      "prevention": "Separate technical candidate readiness from authorized acceptance and never let a generator self-sign."
+    }
+  ],
+  "architectureProductionProfile": {
+    "intent": [
+      "wholeIntent",
+      "dimensionalAuthority"
+    ],
+    "geometry": [
+      "originProtocol",
+      "constraintCompile",
+      "wholeIntentCheck",
+      "detailProof",
+      "domainQA"
+    ],
+    "drafting": [
+      "lineHierarchy",
+      "nativeDimensions",
+      "axisGroups",
+      "axisIdentifiers",
+      "annotationMatrix",
+      "recognisableFurnitureLinework",
+      "paperspaceSheets",
+      "titleBlocks",
+      "revisionControl",
+      "navigationReferences",
+      "visualCollisionQA",
+      "routeFurnitureClearance",
+      "routeAnnotationClearance"
+    ],
+    "authority": [
+      "jurisdictionAndCodeEdition",
+      "siteSurvey",
+      "geotechnical",
+      "structural",
+      "mep",
+      "fire",
+      "accessibility"
+    ],
+    "host": [
+      "nativeSaveReopen",
+      "semanticMetadataPersistence",
+      "fontAndTextReadback"
+    ],
+    "professionalRelease": [
+      "licensedReview",
+      "releaseSignature"
+    ]
+  },
+  "deliveryDisposition": {
+    "allRequiredGatesPass": "production_release_candidate",
+    "anyRequiredGateFailsAndStrictProductionOnly": "blocker_report_only",
+    "reviewOrCoordinationRequest": "review_candidate",
+    "automaticAcceptanceAllowed": false
+  },
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

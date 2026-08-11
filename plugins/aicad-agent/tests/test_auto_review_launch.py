@@ -28,6 +28,21 @@ class PackagedAutomaticReviewLaunchTests(unittest.TestCase):
             self.assertEqual(result["status"], "launched")
             self.assertEqual(opened, [review.resolve()])
 
+    def test_non_ascii_source_uses_ascii_compatibility_stage(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source_dir = Path(directory) / "中文目录"
+            source_dir.mkdir()
+            review = source_dir / "审核.html"
+            review.write_text("<html><body>完整审核</body></html>", encoding="utf-8")
+            stage = Path(directory) / "ascii-stage"
+            opened: list[Path] = []
+            with patch.dict(os.environ, {"AICAD_REVIEW_FORCE_STAGE": "true", "AICAD_REVIEW_STAGE_DIR": str(stage)}, clear=False):
+                result = launch_review(review, "always", opener=opened.append)
+            self.assertEqual(result["status"], "launched")
+            self.assertTrue(result["staged_for_compatibility"])
+            self.assertEqual(opened[0].name, "review.html")
+            self.assertEqual(opened[0].read_bytes(), review.read_bytes())
+
     def test_compile_writes_review_when_launch_is_disabled(self) -> None:
         script = ROOT / "scripts" / "aicad_agent.py"
         plan = ROOT / "runtime" / "examples" / "rectangle.plan.json"

@@ -119,6 +119,13 @@
       "symptom": "A verified release directory accumulated __pycache__ files during tests and the installer copied those unlisted caches into the user plugin directory.",
       "root_cause": "The installer copied the source directory recursively instead of treating integration-manifest.json as the installation allowlist.",
       "prevention": "Install only files declared by integration-manifest.json plus the manifest and SHA256SUMS; reject unsafe paths and verify the installed tree so caches and temporary files cannot cross the release boundary."
+    },
+    {
+      "id": "REL-G018",
+      "name": "runtime_fallback_paths_are_environment_derived",
+      "symptom": "Release verification rejected a runtime compatibility fallback because it embedded a C:\\Users\\... absolute path pattern.",
+      "root_cause": "A portable public-directory fallback was implemented as a literal Windows absolute path instead of deriving it from the runtime environment.",
+      "prevention": "Resolve platform fallbacks from environment variables or system-root path components, scan every release text file for personal absolute-path patterns, and fail before packaging."
     }
   ]
 }

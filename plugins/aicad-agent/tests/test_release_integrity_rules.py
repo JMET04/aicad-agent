@@ -20,7 +20,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
-                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017",
+                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017", "REL-G018",
             },
         )
         for rule in rules.values():
@@ -83,6 +83,17 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         self.assertEqual(rule["name"], "installed_package_integrity_is_immutable")
         self.assertIn("byte-for-byte", rule["prevention"])
         self.assertIn("SHA256SUMS", rule["root_cause"])
+    def test_runtime_fallback_paths_are_environment_derived(self) -> None:
+        data = json.loads((PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8"))
+        rule = next(item for item in data["rules"] if item["id"] == "REL-G018")
+        packaged_runtime = PLUGIN / "runtime" / "src" / "aicad" / "review_launch.py"
+        source_runtime = PLUGIN.parents[1] / "src" / "aicad" / "review_launch.py"
+        runtime_path = packaged_runtime if packaged_runtime.is_file() else source_runtime
+        self.assertTrue(runtime_path.is_file(), runtime_path)
+        runtime = runtime_path.read_text(encoding="utf-8")
+        self.assertIn("environment variables", rule["prevention"])
+        self.assertNotIn("C:\\Users\\", runtime)
+
     def test_installer_payload_is_manifest_allowlisted(self) -> None:
         data = json.loads((PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8"))
         rule = next(item for item in data["rules"] if item["id"] == "REL-G017")

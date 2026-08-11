@@ -1,9 +1,9 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.8.2\github-repository',
-    [string]$Version = '1.8.2',
-    [string]$PluginArchive = 'release\v1.8.2\aicad-agent-1.8.2.zip',
-    [string]$PluginDirectory = 'release\v1.8.2\aicad-agent'
+    [string]$OutputDirectory = 'release\v1.8.3\github-repository',
+    [string]$Version = '1.8.3',
+    [string]$PluginArchive = 'release\v1.8.3\aicad-agent-1.8.3.zip',
+    [string]$PluginDirectory = 'release\v1.8.3\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -133,6 +133,7 @@ $manifest = [ordered]@{
         'whole user-requirement contract and controlled actualBinding',
         'non-skippable whole-intent, detail-normality and hashed-build gates',
         'origin-anchored deterministic 2D AICAD compilation',
+        'fail-closed production-readiness contract with authority, paper-space, furniture, route-clearance, host and release gates',
         'architectural plan-cut/projection/hidden/datum hierarchy with complete axis groups, stage annotation matrix and native dimension QA',
         'bounded independent-rank and packaging dieline normality proof',
         'aligned interactive edge/corner/face review surface',

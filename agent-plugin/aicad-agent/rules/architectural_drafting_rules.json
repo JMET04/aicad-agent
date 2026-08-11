@@ -1,6 +1,6 @@
 {
-  "schema": "aicad_architectural_drafting_rules_v2",
-  "version": "2.1.0",
+  "schema": "aicad_architectural_drafting_rules_v3",
+  "version": "3.0.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -101,6 +101,48 @@
       "requirement": "Validation and audit reports shall contain one complete symptom/root-cause/correction/prevention record per stable rule ID, and repeated generator runs over unchanged inputs shall produce the same canonical inventory.",
       "failureCause": "A post-validator appended lessons to its own previous output, so every rerun duplicated rule records even though the CAD candidate was unchanged.",
       "prevention": "Merge lessons through stable rule IDs, reject conflicting duplicate content, audit uniqueness/completeness and regression-test repeat-run hashes before delivery."
+    },
+    {
+      "id": "ARCH-D015",
+      "name": "model_and_paperspace_sheet_gate",
+      "requirement": "Construction-stage output shall include populated paper-space sheets with bound viewports, title blocks, drawing numbers, plot scales, revisions, statuses and schedule/navigation references.",
+      "failureCause": "Model-space geometry was treated as a complete drawing even though the published layouts were empty.",
+      "prevention": "Validate model geometry and every required paper-space sheet as separate non-compensatory gates."
+    },
+    {
+      "id": "ARCH-D016",
+      "name": "recognisable_furniture_component_matrix",
+      "requirement": "Furniture required by the brief shall be selectable linework whose typed component matrix makes the object recognisable without relying on its label or fill.",
+      "failureCause": "An occupancy rectangle and object name were mistaken for detailed furniture geometry.",
+      "prevention": "Define minimum components per furniture family, including sofa back, arms, seat/front and cushion divisions, and validate scale and clearance."
+    },
+    {
+      "id": "ARCH-D017",
+      "name": "axis_grid_stage_contract",
+      "requirement": "Every architectural sheet shall declare its axis convention, primary/secondary grid scope, identifier direction, cross-storey identity and exceptions for irregular or remote appendages.",
+      "failureCause": "A fixed regular grid was copied to every plan without proving that it represented the structural or coordination datum system.",
+      "prevention": "Generate axes from a project datum catalogue and a declared coverage contract; reject unbound, duplicated, omitted or gratuitously extended axes."
+    },
+    {
+      "id": "ARCH-D018",
+      "name": "fail_closed_construction_release",
+      "requirement": "A drawing shall not be labelled or exposed as construction/production output unless the production-readiness contract proves drafting, discipline authority, native-host persistence and authorized release evidence.",
+      "failureCause": "More annotation was assumed to turn a concept drawing into a construction document.",
+      "prevention": "Run production-readiness QA after drawing QA; on any failed gate, expose only the blocker report or an explicitly marked review candidate."
+    },
+    {
+      "id": "ARCH-D019",
+      "name": "route_furniture_clearance_revalidation",
+      "requirement": "Every furniture, equipment or route edit shall trigger a full-route clearance check; a route centreline shall not intersect any controlled occupancy plus its declared clearance envelope.",
+      "failureCause": "Furniture component QA passed, but the downstream circulation graph was not replayed after the furniture layout changed.",
+      "prevention": "Register route clearance as a dependency of all furniture/equipment geometry and fail the whole drawing on any segment-envelope intersection."
+    },
+    {
+      "id": "ARCH-D020",
+      "name": "symbol_annotation_clearance_revalidation",
+      "requirement": "Routes, grids and other symbolic lines shall not cross annotation text envelopes; editing either the symbol geometry or the annotation shall replay the clearance gate.",
+      "failureCause": "Object clearance QA ignored the separately rendered tag/text envelope, allowing a route to remain geometrically valid but visually obscure a window identifier.",
+      "prevention": "Bind every tag envelope to symbolic-line collision checks and fail when the scale-aware minimum separation is not met."
     }
   ],
   "defaultLayerProfile": {
@@ -216,7 +258,11 @@
         "opening_schedule_reference",
         "detail_reference",
         "sheet_number",
-        "plot_scale"
+        "plot_scale",
+        "revision_status",
+        "paperspace_viewport",
+        "title_block",
+        "typed_furniture_linework"
       ]
     }
   },
