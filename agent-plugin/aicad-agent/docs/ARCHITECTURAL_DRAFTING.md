@@ -27,9 +27,9 @@ DXF/DWG, PDF/PNG and the interactive reviewer must all show the same hierarchy. 
 
 A GRID centerline is not a complete axis. For every plan view, generate one typed axis group from a shared catalogue:
 
-- one center-pattern axis line;
-- two continuous axis bubbles tangent to the two line endpoints;
-- two centered, identical axis identifiers;
+- one center-pattern axis line whose resolved endpoints span the structural coverage bounds and whose constant coordinate equals the declared datum;
+- two equal-radius continuous axis bubbles on opposite exterior sides, collinear with the axis and tangent to the two line endpoints;
+- two centered, identical axis identifiers whose resolved TEXT/MTEXT content equals the axis ID;
 - stable references/XData from all members to the axis identity;
 - numeric vertical axes ordered west-to-east and uppercase-letter horizontal axes ordered south-to-north;
 - one global-coordinate-to-identifier mapping shared by every storey.
@@ -42,16 +42,16 @@ Keep full-content, structural-axis and annotation envelopes separate. Remote equ
 
 ## Precompile architectural detail contract
 
-Do not wait for a rendered drawing to discover missing axes, empty rooms or disconnected door symbols. Before compiling CAD, author `aicad_architectural_detail_contract_v1` from `rules/architectural_detail_contract.schema.json` and run `scripts/aicad_architecture_detail_qa.py`.
+Do not wait for a rendered drawing to discover missing axes, empty rooms or disconnected door symbols. Before compiling CAD, author `aicad_architectural_detail_contract_v2` from `rules/architectural_detail_contract_v2.schema.json` and run `scripts/aicad_architecture_detail_qa.py`. Version 2 is strict-production-only: concept, coordination and incomplete construction packages remain diagnostic inputs and cannot expose CAD artifacts.
 
 The contract treats the following as one dependency graph:
 
 - every axis is a line plus two tangent bubbles and two identical identifiers inside a declared structural coverage scope;
 - overall, grid, partition and opening dimensions are four distinct native-purpose chains;
 - every room has a functional category and the required typed equipment families;
-- movable furniture, fixed casework, sanitary fixtures and appliances stay on separate semantic layers with selectable component linework;
+- movable furniture, fixed casework, sanitary fixtures and appliances stay on separate semantic layers; each object binds an actual-size closed outline and profile-specific selectable roles such as sofa backs/arms/seat divisions, bed pillows, fixture cores, drains, controls and handles from `rules/architectural_symbol_profiles.json`;
 - every door binds to one host wall and one wall opening; the host wall is segmented around the opening; hinge, opening endpoint, leaf length, arc endpoint, sweep and clearance agree mathematically;
-- construction/production stages carry the required annotation and authority evidence.
+- the complete production drawing-set matrix and all annotation/authority evidence are present; strictProductionOnly=true, allowIntermediateCad=false and CAD exposure is limited to production-release candidates.
 
 The contract is non-compensatory. A failure produces `artifactDisposition=blocker_report_only`; the generator must not compile, launch or label a review/production drawing. Any wall, opening, door, equipment or dimension edit replays the affected checks.
 
@@ -60,7 +60,7 @@ The contract is non-compensatory. A failure produces `artifactDisposition=blocke
 Run:
 
 ```powershell
-python scripts/aicad_architecture_detail_qa.py drawing.architecture-detail.json --plan drawing.plan.json --output drawing.architecture-detail-qa.json --markdown drawing.architecture-detail-qa.md
+python scripts/aicad_architecture_detail_qa.py drawing.architecture-detail.json --plan drawing.plan.json --output drawing.architecture-detail-qa.json --markdown drawing.architecture-detail-qa.md --html drawing.architecture-detail-qa.review.html --png drawing.architecture-detail-qa.review.png
 python scripts/aicad_architecture_qa.py drawing.dxf --output drawing.architecture-qa.json
 ```
 
@@ -79,4 +79,4 @@ The safety state remains `reviewOnly=true`, `accepted=false`, `ruleEnabled=false
 
 ## Construction and production boundary
 
-A complete axis grid is necessary but not sufficient. Construction-stage drawings also require typed furniture/detail linework, bound section/elevation/detail references, populated paper-space viewports, title blocks, plot scale, revision/status and schedule navigation. Run `scripts/aicad_production_readiness_qa.py` after architectural DXF QA. A failed production gate may not be offset by a high geometry score; strict production mode exposes only the blocker report.
+A complete axis grid is necessary but not sufficient. Construction-stage drawings also require typed furniture/detail linework, bound section/elevation/detail references, populated paper-space viewports, title blocks, plot scale, revision/status and schedule navigation. Run `scripts/aicad_production_readiness_qa_v2.py` after architectural DXF QA. Its v2 contract rejects `passed=true` self-reporting: every machine gate is read from a hash-fixed file through a JSON Pointer, and native-host plus professional-release evidence must bind the exact artifact-set SHA-256. A failed production gate may not be offset by a high geometry score; strict production mode exposes only JSON plus a local UTF-8 HTML review and opaque PNG blocker summary. The HTML is the primary human review entry and must not require a server or external assets.

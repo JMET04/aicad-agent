@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aicad.local/schema/production-readiness-contract-v2.json",
+  "title": "AICAD evidence-bound production readiness contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "project",
+    "requestedStage",
+    "discipline",
+    "strictProductionOnly",
+    "evidence",
+    "candidateArtifacts",
+    "safetyLocks"
+  ],
+  "properties": {
+    "schema": {"const": "aicad_production_readiness_contract_v2"},
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "requestedStage": {"const": "production"},
+    "discipline": {"enum": ["architecture", "mechanical", "packaging", "electronics", "custom"]},
+    "strictProductionOnly": {"const": true},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/gateGroup"},
+      "required": ["intent", "geometry", "drafting", "authority", "host", "professionalRelease"],
+      "properties": {
+        "intent": {"$ref": "#/$defs/gateGroup"},
+        "geometry": {"$ref": "#/$defs/gateGroup"},
+        "drafting": {"$ref": "#/$defs/gateGroup"},
+        "authority": {"$ref": "#/$defs/gateGroup"},
+        "host": {"$ref": "#/$defs/gateGroup"},
+        "professionalRelease": {"$ref": "#/$defs/gateGroup"}
+      }
+    },
+    "candidateArtifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "path", "sha256"],
+        "properties": {
+          "kind": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+        }
+      }
+    },
+    "safetyLocks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "gateGroup": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["evidenceRef"],
+        "properties": {
+          "evidenceRef": {"$ref": "#/$defs/evidenceRef"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "path", "sha256"],
+      "properties": {
+        "kind": {"enum": ["machine_report", "authority_document", "professional_release"]},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+        "jsonPointer": {"type": "string", "pattern": "^/"},
+        "expectedValue": {},
+        "artifactSetPointer": {"type": "string", "pattern": "^/"},
+        "issuer": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1},
+        "issuedAt": {"type": "string", "minLength": 1},
+        "signer": {"type": "string", "minLength": 1},
+        "credential": {"type": "string", "minLength": 1},
+        "subjectArtifactSetSha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+      }
+    }
+  }
+}

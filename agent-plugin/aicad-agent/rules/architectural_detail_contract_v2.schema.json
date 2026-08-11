@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.invalid/aicad/architectural-detail-contract.schema.json",
-  "title": "Legacy AICAD architectural detail contract v1",
+  "$id": "https://example.invalid/aicad/architectural-detail-contract-v2.schema.json",
+  "title": "AICAD production-only architectural detail contract",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -10,6 +10,7 @@
     "stage",
     "units",
     "toleranceMm",
+    "deliveryPolicy",
     "axisGrid",
     "walls",
     "openings",
@@ -23,7 +24,7 @@
   ],
   "properties": {
     "schema": {
-      "const": "aicad_architectural_detail_contract_v1"
+      "const": "aicad_architectural_detail_contract_v2"
     },
     "projectId": {
       "type": "string",
@@ -364,7 +365,8 @@
           "type",
           "layer",
           "bbox",
-          "componentEntityIds"
+          "componentEntityIds",
+          "representation"
         ],
         "properties": {
           "id": {
@@ -394,6 +396,91 @@
             "uniqueItems": true,
             "items": {
               "$ref": "#/$defs/asciiId"
+            }
+          },
+          "representation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "profileId",
+              "standard",
+              "actualSizeMm",
+              "clearanceBBox",
+              "components"
+            ],
+            "properties": {
+              "profileId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "standard": {
+                "const": "detailed_plan_linework"
+              },
+              "actualSizeMm": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                ],
+                "items": false
+              },
+              "clearanceBBox": {
+                "$ref": "#/$defs/bbox"
+              },
+              "components": {
+                "type": "array",
+                "minItems": 6,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "entityId",
+                    "role"
+                  ],
+                  "properties": {
+                    "entityId": {
+                      "$ref": "#/$defs/asciiId"
+                    },
+                    "role": {
+                      "enum": [
+                        "outline",
+                        "inner_outline",
+                        "back_edge",
+                        "arm_edge",
+                        "seat_edge",
+                        "seat_division",
+                        "headboard",
+                        "pillow_outline",
+                        "blanket_edge",
+                        "fixture_body",
+                        "fixture_core",
+                        "control",
+                        "drain",
+                        "faucet",
+                        "slope",
+                        "appliance_door",
+                        "handle",
+                        "burner",
+                        "wheel",
+                        "screen",
+                        "speaker_cone",
+                        "work_surface",
+                        "storage_division",
+                        "orientation",
+                        "other_detail"
+                      ]
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -527,6 +614,92 @@
           "const": true
         }
       }
+    },
+    "deliveryPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strictProductionOnly",
+        "cadExposure",
+        "allowIntermediateCad",
+        "blockerFormats",
+        "requireDetailedObjectLinework",
+        "requireNativeHostRoundTrip",
+        "requireOpaqueVisualAudit",
+        "requireAuthorizedRelease",
+        "requiredDrawingClasses",
+        "providedDrawingClasses"
+      ],
+      "properties": {
+        "strictProductionOnly": {
+          "const": true
+        },
+        "cadExposure": {
+          "const": "production_release_candidate_only"
+        },
+        "allowIntermediateCad": {
+          "const": false
+        },
+        "blockerFormats": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "json",
+              "markdown",
+              "html",
+              "png"
+            ]
+          },
+          "allOf": [
+            {
+              "contains": {
+                "const": "json"
+              }
+            },
+            {
+              "contains": {
+                "const": "html"
+              }
+            },
+            {
+              "contains": {
+                "const": "png"
+              }
+            }
+          ]
+        },
+        "requireDetailedObjectLinework": {
+          "const": true
+        },
+        "requireNativeHostRoundTrip": {
+          "const": true
+        },
+        "requireOpaqueVisualAudit": {
+          "const": true
+        },
+        "requireAuthorizedRelease": {
+          "const": true
+        },
+        "requiredDrawingClasses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          }
+        },
+        "providedDrawingClasses": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          }
+        }
+      }
     }
   },
   "$defs": {
@@ -578,7 +751,5 @@
         }
       }
     }
-  },
-  "deprecated": true,
-  "$comment": "Deprecated in 1.9.0 and not accepted by the current architecture compile boundary; use architectural_detail_contract_v2.schema.json."
+  }
 }

@@ -1,6 +1,6 @@
 {
-  "schema": "aicad_architectural_drafting_rules_v4",
-  "version": "4.0.0",
+  "schema": "aicad_architectural_drafting_rules_v6",
+  "version": "6.0.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -178,6 +178,34 @@
       "requirement": "Axis identity, room equipment, semantic layers, dimension purposes, door topology, annotation completeness and stage authority shall pass one non-compensatory contract before CAD compilation or review launch.",
       "failureCause": "Independent post-export checks found defects only after a visually polished but technically inconsistent drawing had already been exposed to the user.",
       "prevention": "Run the architectural detail contract before compile; on any failure expose only machine-readable and Chinese blocker reports with root cause and disabled prevention-rule candidates."
+    },
+    {
+      "id": "ARCH-D026",
+      "name": "typed_selectable_detailed_object_linework",
+      "requirement": "Every required furniture, casework, sanitary fixture and appliance shall use actual-size selectable line, arc or circle components whose typed roles satisfy its versioned symbol profile; text, fills, blocks without subcomponents and occupancy rectangles are forbidden substitutes.",
+      "failureCause": "A bounding rectangle and object label were counted as a furnished room even though the CAD contained no recognisable sofa cushions, bed pillows, fixture cores, drains, controls or other functional detail.",
+      "prevention": "Bind every component role to a resolved AICAD entity, prove exact closed outline, profile-specific role counts, permitted primitive types, semantic layer, actual size, object bbox and clearance bbox before any CAD artifact is exposed."
+    },
+    {
+      "id": "ARCH-D027",
+      "name": "strict_production_only_artifact_exposure",
+      "requirement": "When strictProductionOnly is enabled, every architecture request shall use stage=production and pass the complete production drawing-set matrix, detailed linework, authority, native-host, visual and authorized-release gates; otherwise CAD artifacts and review launch are forbidden.",
+      "failureCause": "Concept or coordination drawings were still compiled and presented after a blocker report, making users repeatedly inspect artifacts that were known not to be construction-ready.",
+      "prevention": "Use production_release_candidate_only exposure, allowIntermediateCad=false and blocker formats JSON plus UTF-8 HTML plus opaque PNG; a failed gate emits only readable diagnostics with root cause and no DXF/DWG/SCR/AICAD."
+    },
+    {
+      "id": "ARCH-D028",
+      "name": "portable_human_readable_blocker_review",
+      "requirement": "Every failed architectural gate shall emit machine JSON and a local single-file UTF-8 HTML review plus an opaque white-background PNG summary; the HTML shall contain every check, expandable evidence, root cause and prevention rule without external services.",
+      "failureCause": "Markdown and JSON were valid but depended on desktop file association and local-link handling, so users repeatedly saw an unable-to-open result and could not inspect the evidence.",
+      "prevention": "Render reports through aicad_review_report.py, verify HTML charset and Chinese content, verify PNG RGB mode and white background, and make the HTML path the primary review entry."
+    },
+    {
+      "id": "ARCH-D029",
+      "name": "mathematically_bound_axis_group",
+      "requirement": "Every structural axis shall bind one center-pattern line at its declared coordinate, two equal-radius exterior bubbles tangent to opposite line endpoints, and two identical centered identifiers; numeric and letter identifiers shall follow one coordinate-ordered global catalogue.",
+      "failureCause": "The earlier precompile gate counted axis members but did not prove line coordinate, bubble tangency, exterior placement or identifier text/centering, so malformed axes could satisfy a superficial completeness count.",
+      "prevention": "Resolve every axis as one typed mathematical group, bind all five entities by ID, validate coordinate/span/tangency/centering/order before compilation, and replay the group after structural or annotation edits."
     }
   ],
   "defaultLayerProfile": {
@@ -358,10 +386,19 @@
     "qaTool": "scripts/aicad_report_qa.py"
   },
   "architecturalDetailContract": {
-    "schema": "rules/architectural_detail_contract.schema.json",
+    "schema": "rules/architectural_detail_contract_v2.schema.json",
+    "symbolProfiles": "rules/architectural_symbol_profiles.json",
     "qaTool": "scripts/aicad_architecture_detail_qa.py",
+    "reviewRenderer": "scripts/aicad_review_report.py",
     "requiredBeforeCompile": true,
+    "strictProductionOnly": true,
+    "allowIntermediateCad": false,
     "failureDisposition": "blocker_report_only",
+    "requiredBlockerFormats": [
+      "json",
+      "html",
+      "png"
+    ],
     "nonCompensatory": true
   }
 }

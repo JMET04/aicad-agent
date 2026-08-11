@@ -12,8 +12,15 @@ from jsonschema import Draft202012Validator
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMA_PATH = ROOT / "rules" / "architectural_detail_contract.schema.json"
+SCHEMA_PATH = ROOT / "rules" / "architectural_detail_contract_v2.schema.json"
+SYMBOL_PROFILES_PATH = ROOT / "rules" / "architectural_symbol_profiles.json"
 TOL = 1e-6
+REQUIRED_PRODUCTION_DRAWING_CLASSES = {
+    "cover_index", "site_plan", "floor_plan", "roof_plan", "elevation", "building_section",
+    "wall_section_detail", "stair_detail", "waterproofing_detail", "door_window_schedule",
+    "finish_schedule", "reflected_ceiling_plan", "life_safety_plan", "accessibility_detail",
+    "discipline_coordination_plan",
+}
 REQUIRED_DIMENSION_PURPOSES = {"overall", "grid", "partition", "opening"}
 REQUIRED_ANNOTATION_CLASSES = {
     "axis_line", "axis_bubble", "axis_identifier", "room_name", "door_tag", "window_tag",
@@ -31,7 +38,7 @@ SEMANTIC_LAYER_BY_TYPE: dict[str, str] = {
     "toilet": "SANITARY", "basin": "SANITARY", "sink": "SANITARY", "shower": "SANITARY",
     "bathtub": "SANITARY", "floor_drain": "SANITARY", "spa_pool": "SANITARY",
     "refrigerator": "APPLIANCE", "cooktop": "APPLIANCE", "oven": "APPLIANCE", "dishwasher": "APPLIANCE",
-    "washer": "APPLIANCE", "dryer": "APPLIANCE", "equipment_unit": "APPLIANCE", "screen": "APPLIANCE",
+    "washer": "APPLIANCE", "dryer": "APPLIANCE", "equipment_unit": "APPLIANCE", "treadmill": "APPLIANCE", "screen": "APPLIANCE",
     "speaker": "APPLIANCE",
 }
 MINIMUM_ROOM_EQUIPMENT: dict[str, tuple[frozenset[str], ...]] = {
@@ -44,7 +51,7 @@ MINIMUM_ROOM_EQUIPMENT: dict[str, tuple[frozenset[str], ...]] = {
     "office": (frozenset({"desk"}), frozenset({"chair"}), frozenset({"bookcase", "cabinet"})),
     "wardrobe": (frozenset({"wardrobe", "cabinet"}),),
     "garage": (frozenset({"vehicle"}), frozenset({"cabinet"})),
-    "fitness": (frozenset({"fitness_equipment"}),),
+    "fitness": (frozenset({"fitness_equipment", "treadmill"}),),
     "spa": (frozenset({"spa_pool", "bathtub", "shower"}),),
     "media": (frozenset({"sofa", "chair"}), frozenset({"screen"}), frozenset({"speaker"})),
     "service": (frozenset({"cabinet", "equipment_unit"}),),
@@ -148,12 +155,45 @@ def _door_hits_bbox(door: dict[str, Any], bbox: list[float]) -> bool:
 def _schema_failure(errors: list[Any]) -> dict[str, Any]:
     evidence = [{"path": "/".join(map(str, error.path)), "message": error.message} for error in errors]
     return {
-        "schema": "aicad_architectural_detail_validation_v1", "status": "failed", "releaseAllowed": False,
+        "schema": "aicad_architectural_detail_validation_v2", "status": "failed", "releaseAllowed": False,
         "artifactDisposition": "blocker_report_only", "checks": {"contract_schema_valid": {"pass": False, "evidence": evidence}},
         "rootCause": "The architectural semantic contract is incomplete or malformed, so geometry must not be compiled or exposed.",
-        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025"],
+        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029"],
         "reviewPolicy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
     }
+
+
+def _bbox_contains(outer: list[float], inner: list[float], tolerance: float) -> bool:
+    ox1, oy1, ox2, oy2 = map(float, outer)
+    ix1, iy1, ix2, iy2 = map(float, inner)
+    return (
+        min(ox1, ox2) <= min(ix1, ix2) + tolerance
+        and min(oy1, oy2) <= min(iy1, iy2) + tolerance
+        and max(ox1, ox2) >= max(ix1, ix2) - tolerance
+        and max(oy1, oy2) >= max(iy1, iy2) - tolerance
+    )
+
+
+def _entity_inside_bbox(entity: dict[str, Any], bbox: list[float], tolerance: float) -> bool:
+    x1, y1, x2, y2 = map(float, bbox)
+    bounds = [min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)]
+    if entity.get("type") == "line":
+        points = [entity.get("start"), entity.get("end")]
+        return all(point is not None and _bbox_contains(bounds, [point[0], point[1], point[0], point[1]], tolerance) for point in points)
+    if entity.get("type") in {"circle", "arc"}:
+        center = entity.get("center")
+        radius = float(entity.get("radius", math.inf))
+        if center is None:
+            return False
+        return _bbox_contains(bounds, [float(center[0]) - radius, float(center[1]) - radius, float(center[0]) + radius, float(center[1]) + radius], tolerance)
+    return False
+
+
+def _outline_matches_bbox(entities: list[dict[str, Any]], bbox: list[float], tolerance: float) -> bool:
+    x1, y1, x2, y2 = map(float, bbox)
+    corners = [[min(x1, x2), min(y1, y2)], [max(x1, x2), min(y1, y2)], [max(x1, x2), max(y1, y2)], [min(x1, x2), max(y1, y2)]]
+    expected = list(zip(corners, corners[1:] + corners[:1]))
+    return len(entities) == 4 and all(any(_same_line(entity, start, end, tolerance) for entity in entities) for start, end in expected)
 
 
 def _same_point(actual: Any, expected: list[float], tolerance: float) -> bool:
@@ -189,22 +229,100 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
 
     tolerance = float(contract["toleranceMm"])
     checks: dict[str, dict[str, Any]] = {"contract_schema_valid": {"pass": True, "evidence": []}}
+    policy = contract["deliveryPolicy"]
 
     def add(name: str, passed: bool, evidence: Any) -> None:
         checks[name] = {"pass": bool(passed), "evidence": evidence}
+
+    policy_ok = (
+        policy["strictProductionOnly"] is True
+        and policy["cadExposure"] == "production_release_candidate_only"
+        and policy["allowIntermediateCad"] is False
+        and set(policy["blockerFormats"]) >= {"json", "html", "png"}
+        and all(policy[key] is True for key in (
+            "requireDetailedObjectLinework", "requireNativeHostRoundTrip", "requireOpaqueVisualAudit", "requireAuthorizedRelease"
+        ))
+    )
+    add("strict_production_output_policy", policy_ok, policy)
+    missing_drawing_classes = sorted(set(policy["requiredDrawingClasses"]) - set(policy["providedDrawingClasses"]))
+    missing_default_classes = sorted(REQUIRED_PRODUCTION_DRAWING_CLASSES - set(policy["providedDrawingClasses"]))
+    add("production_drawing_set_complete", not missing_drawing_classes and not missing_default_classes, {"missingDeclared": missing_drawing_classes, "missingArchitectureDefault": missing_default_classes})
+    add("production_stage_required", contract["stage"] == "production", {"actualStage": contract["stage"], "requiredStage": "production"})
 
     binding_failures: list[dict[str, Any]] = []
     if resolved_entities is None:
         binding_failures.append({"reason": "resolved_aicad_entities_not_supplied"})
     else:
         for axis in contract["axisGrid"]["axes"]:
+            axis_id = axis["id"]
             line = resolved_entities.get(axis["lineEntityId"])
-            if line is None or line.get("type") != "line" or str(line.get("layer", "")).upper() != "GRID":
-                binding_failures.append({"objectId": axis["id"], "entityId": axis["lineEntityId"], "reason": "axis_line_missing_or_wrong_type_layer"})
+            line_valid = line is not None and line.get("type") == "line" and str(line.get("layer", "")).upper() == "GRID"
+            if not line_valid:
+                binding_failures.append({"objectId": axis_id, "entityId": axis["lineEntityId"], "reason": "axis_line_missing_or_wrong_type_layer"})
+
+            bubbles: list[dict[str, Any]] = []
             for entity_id in axis["bubbleEntityIds"]:
                 bubble = resolved_entities.get(entity_id)
-                if bubble is None or bubble.get("type") != "circle" or str(bubble.get("layer", "")).upper() != "GRID_BUBBLE":
-                    binding_failures.append({"objectId": axis["id"], "entityId": entity_id, "reason": "axis_bubble_missing_or_wrong_type_layer"})
+                valid = bubble is not None and bubble.get("type") == "circle" and str(bubble.get("layer", "")).upper() == "GRID_BUBBLE"
+                if not valid:
+                    binding_failures.append({"objectId": axis_id, "entityId": entity_id, "reason": "axis_bubble_missing_or_wrong_type_layer"})
+                else:
+                    bubbles.append(bubble)
+
+            identifiers: list[dict[str, Any]] = []
+            for entity_id in axis["identifierEntityIds"]:
+                label = resolved_entities.get(entity_id)
+                valid = label is not None and str(label.get("type", "")).lower() in {"text", "mtext"} and str(label.get("layer", "")).upper() == "GRID_TEXT"
+                if not valid:
+                    binding_failures.append({"objectId": axis_id, "entityId": entity_id, "reason": "axis_identifier_missing_or_wrong_type_layer"})
+                elif str(label.get("text", "")).strip() != axis_id:
+                    binding_failures.append({"objectId": axis_id, "entityId": entity_id, "reason": "axis_identifier_text_mismatch"})
+                else:
+                    identifiers.append(label)
+
+            if line_valid:
+                start, end = line.get("start"), line.get("end")
+                coordinate = float(axis["coordinate"])
+                if start is None or end is None:
+                    binding_failures.append({"objectId": axis_id, "entityId": axis["lineEntityId"], "reason": "axis_line_missing_endpoints"})
+                else:
+                    start = list(map(float, start))
+                    end = list(map(float, end))
+                    coordinate_index = 0 if axis["direction"] == "vertical" else 1
+                    span_index = 1 - coordinate_index
+                    if abs(start[coordinate_index] - coordinate) > tolerance or abs(end[coordinate_index] - coordinate) > tolerance:
+                        binding_failures.append({"objectId": axis_id, "entityId": axis["lineEntityId"], "reason": "axis_line_declared_coordinate_mismatch"})
+                    coverage = list(map(float, contract["axisGrid"]["structuralCoverageBounds"]))
+                    coverage_min, coverage_max = (min(coverage[1], coverage[3]), max(coverage[1], coverage[3])) if axis["direction"] == "vertical" else (min(coverage[0], coverage[2]), max(coverage[0], coverage[2]))
+                    if min(start[span_index], end[span_index]) > coverage_min + tolerance or max(start[span_index], end[span_index]) < coverage_max - tolerance:
+                        binding_failures.append({"objectId": axis_id, "entityId": axis["lineEntityId"], "reason": "axis_line_does_not_span_structural_coverage"})
+
+                    if len(bubbles) == 2:
+                        centers = [bubble.get("center") for bubble in bubbles]
+                        radii = [float(bubble.get("radius", math.nan)) for bubble in bubbles]
+                        if any(center is None for center in centers) or any(not math.isfinite(radius) or radius <= tolerance for radius in radii):
+                            binding_failures.append({"objectId": axis_id, "reason": "axis_bubble_invalid_center_or_radius"})
+                        else:
+                            centers = [list(map(float, center)) for center in centers]
+                            if any(abs(center[coordinate_index] - coordinate) > tolerance for center in centers):
+                                binding_failures.append({"objectId": axis_id, "reason": "axis_bubble_not_collinear_with_axis"})
+                            if abs(radii[0] - radii[1]) > tolerance:
+                                binding_failures.append({"objectId": axis_id, "reason": "axis_bubble_pair_radius_mismatch"})
+                            tangent_direct = abs(math.dist(start, centers[0]) - radii[0]) <= tolerance and abs(math.dist(end, centers[1]) - radii[1]) <= tolerance
+                            tangent_reverse = abs(math.dist(start, centers[1]) - radii[1]) <= tolerance and abs(math.dist(end, centers[0]) - radii[0]) <= tolerance
+                            if not (tangent_direct or tangent_reverse):
+                                binding_failures.append({"objectId": axis_id, "reason": "axis_line_endpoints_not_tangent_to_bubble_pair"})
+                            bubble_spans = sorted(center[span_index] for center in centers)
+                            if bubble_spans[0] >= coverage_min - tolerance or bubble_spans[1] <= coverage_max + tolerance:
+                                binding_failures.append({"objectId": axis_id, "reason": "axis_bubbles_not_on_opposite_exterior_sides"})
+                            if len(identifiers) == 2:
+                                inserts = [label.get("insert") for label in identifiers]
+                                paired = all(insert is not None for insert in inserts) and (
+                                    _same_point(inserts[0], centers[0], tolerance) and _same_point(inserts[1], centers[1], tolerance)
+                                    or _same_point(inserts[0], centers[1], tolerance) and _same_point(inserts[1], centers[0], tolerance)
+                                )
+                                if not paired:
+                                    binding_failures.append({"objectId": axis_id, "reason": "axis_identifiers_not_centered_in_bubble_pair"})
         for wall in contract["walls"]:
             for segment in wall["segments"]:
                 entity = resolved_entities.get(segment["entityId"])
@@ -234,6 +352,20 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
         or (axis["direction"] == "horizontal" and (not axis["id"].isalpha() or not axis["id"].isupper()))
     ]
     add("axis_identifier_convention", not convention_failures, {"invalidIdentifiers": convention_failures})
+    direction_counts = Counter(axis["direction"] for axis in axes)
+    add("axis_direction_pairs_complete", all(direction_counts[direction] > 0 for direction in ("vertical", "horizontal")), {"counts": dict(direction_counts)})
+    ordering_failures: list[dict[str, Any]] = []
+    vertical_axes = sorted((axis for axis in axes if axis["direction"] == "vertical"), key=lambda axis: float(axis["coordinate"]))
+    if [int(axis["id"]) for axis in vertical_axes if axis["id"].isdigit()] != sorted(int(axis["id"]) for axis in vertical_axes if axis["id"].isdigit()):
+        ordering_failures.append({"direction": "vertical", "reason": "numeric_identifiers_not_west_to_east"})
+    horizontal_axes = sorted((axis for axis in axes if axis["direction"] == "horizontal"), key=lambda axis: float(axis["coordinate"]))
+    if [axis["id"] for axis in horizontal_axes] != sorted(axis["id"] for axis in horizontal_axes):
+        ordering_failures.append({"direction": "horizontal", "reason": "letter_identifiers_not_south_to_north"})
+    for direction in ("vertical", "horizontal"):
+        coordinates = [round(float(axis["coordinate"]), 9) for axis in axes if axis["direction"] == direction]
+        if len(coordinates) != len(set(coordinates)):
+            ordering_failures.append({"direction": direction, "reason": "duplicate_axis_coordinate"})
+    add("axis_coordinate_identifier_order", not ordering_failures, {"failures": ordering_failures})
     x1, y1, x2, y2 = map(float, contract["axisGrid"]["structuralCoverageBounds"])
     coverage_failures = []
     for axis in axes:
@@ -287,6 +419,54 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
         if not _point_in_polygon(center, room["boundary"], tolerance):
             location_failures.append({"equipmentId": row["id"], "roomId": row["roomId"], "center": list(center)})
     add("equipment_inside_assigned_rooms", not location_failures, {"failures": location_failures})
+
+    profiles_document = json.loads(SYMBOL_PROFILES_PATH.read_text(encoding="utf-8"))
+    profiles = profiles_document["profiles"]
+    role_primitives = profiles_document["rolePrimitiveTypes"]
+    linework_failures: list[dict[str, Any]] = []
+    for row in equipment.values():
+        representation = row["representation"]
+        profile_id = representation["profileId"]
+        profile = profiles.get(profile_id)
+        if profile_id != row["type"] or profile is None:
+            linework_failures.append({"equipmentId": row["id"], "reason": "missing_or_mismatched_symbol_profile", "type": row["type"], "profileId": profile_id})
+            continue
+        components = representation["components"]
+        component_ids = [item["entityId"] for item in components]
+        if len(component_ids) != len(set(component_ids)):
+            linework_failures.append({"equipmentId": row["id"], "reason": "duplicate_component_entity_id"})
+        if set(component_ids) != set(row["componentEntityIds"]):
+            linework_failures.append({"equipmentId": row["id"], "reason": "component_catalog_mismatch", "declared": row["componentEntityIds"], "represented": component_ids})
+        bx1, by1, bx2, by2 = map(float, row["bbox"])
+        expected_size = [abs(bx2 - bx1), abs(by2 - by1)]
+        actual_size = list(map(float, representation["actualSizeMm"]))
+        if any(abs(actual - expected) > tolerance for actual, expected in zip(actual_size, expected_size)):
+            linework_failures.append({"equipmentId": row["id"], "reason": "actual_size_does_not_match_bbox", "expected": expected_size, "actual": actual_size})
+        if not _bbox_contains(representation["clearanceBBox"], row["bbox"], tolerance):
+            linework_failures.append({"equipmentId": row["id"], "reason": "clearance_bbox_does_not_contain_object"})
+        role_counts = Counter(item["role"] for item in components)
+        for role, minimum in profile["requiredRoles"].items():
+            if role_counts[role] < int(minimum):
+                linework_failures.append({"equipmentId": row["id"], "reason": "required_linework_role_missing", "role": role, "minimum": minimum, "actual": role_counts[role]})
+        resolved_components: dict[str, dict[str, Any]] = {}
+        for component in components:
+            entity_id, role = component["entityId"], component["role"]
+            entity = (resolved_entities or {}).get(entity_id)
+            if entity is None:
+                linework_failures.append({"equipmentId": row["id"], "entityId": entity_id, "reason": "linework_entity_missing"})
+                continue
+            resolved_components[entity_id] = entity
+            if str(entity.get("layer", "")).upper() != row["layer"]:
+                linework_failures.append({"equipmentId": row["id"], "entityId": entity_id, "reason": "linework_layer_mismatch"})
+            allowed = role_primitives.get(role, [])
+            if entity.get("type") not in allowed:
+                linework_failures.append({"equipmentId": row["id"], "entityId": entity_id, "reason": "linework_primitive_mismatch", "role": role, "actual": entity.get("type"), "allowed": allowed})
+            if not _entity_inside_bbox(entity, row["bbox"], tolerance):
+                linework_failures.append({"equipmentId": row["id"], "entityId": entity_id, "reason": "linework_outside_object_bbox"})
+        outlines = [resolved_components[item["entityId"]] for item in components if item["role"] == "outline" and item["entityId"] in resolved_components]
+        if not _outline_matches_bbox(outlines, row["bbox"], tolerance):
+            linework_failures.append({"equipmentId": row["id"], "reason": "outline_is_not_exact_closed_bbox", "outlineCount": len(outlines)})
+    add("recognisable_detailed_object_linework", not linework_failures, {"equipmentCount": len(equipment), "failures": linework_failures})
 
     walls = {row["id"]: row for row in contract["walls"]}
     openings = {row["id"]: row for row in contract["openings"]}
@@ -367,7 +547,7 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
     missing_authority = sorted(
         key for key in PRODUCTION_AUTHORITY_FIELDS
         if not contract["authority"][key]["available"] or not contract["authority"][key]["reference"].strip()
-    ) if contract["stage"] == "production" else []
+    )
     add("production_authority_complete", not missing_authority, {"stage": contract["stage"], "missing": missing_authority})
     locks = contract["safetyLocks"]
     locks_ok = locks == {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True}
@@ -376,12 +556,12 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
     status = "pass" if all(row["pass"] for row in checks.values()) else "failed"
     release_allowed = status == "pass" and contract["stage"] == "production" and not missing_authority
     return {
-        "schema": "aicad_architectural_detail_validation_v1", "status": status,
+        "schema": "aicad_architectural_detail_validation_v2", "status": status,
         "releaseAllowed": release_allowed,
-        "artifactDisposition": "production_candidate" if release_allowed else ("review_candidate" if status == "pass" else "blocker_report_only"),
+        "artifactDisposition": "production_release_candidate" if release_allowed else "blocker_report_only",
         "checks": checks,
-        "rootCause": "Low-level drafting defects recur when axes, room contents, dimension purposes and door topology are counted independently instead of validated as one dependency graph.",
-        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025"],
+        "rootCause": "Low-level drafting defects recur when axes, room contents, dimensions, door topology, detailed object graphics, drawing-set coverage and authority are counted independently instead of validated as one production dependency graph.",
+        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029"],
         "reviewPolicy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
     }
 
@@ -408,9 +588,12 @@ def main() -> int:
     parser.add_argument("--plan", required=True, type=Path)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--markdown", type=Path)
+    parser.add_argument("--html", type=Path)
+    parser.add_argument("--png", type=Path)
     args = parser.parse_args()
     contract = json.loads(args.contract.read_text(encoding="utf-8"))
     from aicad_agent import _load_plan
+    from aicad_review_report import write_html, write_png
     from aicad.engine import compile_plan
     compiled = compile_plan(_load_plan(str(args.plan)))
     report = evaluate(contract, normalize_resolved_entities(compiled))
@@ -419,7 +602,11 @@ def main() -> int:
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.markdown:
         write_markdown(report, args.markdown)
-    print(json.dumps({"ok": report["status"] == "pass", "status": report["status"], "artifactDisposition": report["artifactDisposition"], "output": str(output.resolve())}, ensure_ascii=False))
+    if args.html:
+        write_html(report, args.html, "AICAD 建筑生产输出审核")
+    if args.png:
+        write_png(report, args.png, "AICAD 建筑生产输出审核")
+    print(json.dumps({"ok": report["status"] == "pass", "status": report["status"], "artifactDisposition": report["artifactDisposition"], "output": str(output.resolve()), "html": str(args.html.resolve()) if args.html else None, "png": str(args.png.resolve()) if args.png else None}, ensure_ascii=False))
     return 0 if report["status"] == "pass" else 2
 
 

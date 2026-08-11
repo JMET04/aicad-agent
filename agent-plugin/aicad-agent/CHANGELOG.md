@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.9.0 - 2026-08-12
+- Strengthened axis-grid precompile proof: declared coordinate and coverage, two equal exterior tangent bubbles, centered matching identifiers, both directions and coordinate-ordered IDs are now non-compensatory gates.
+
+- Made architecture CAD delivery strict-production-only through `aicad_architectural_detail_contract_v2`; non-production stage, incomplete drawing set, missing authority or failed detail gates expose blocker reports only.
+- Added selectable component-role furniture/equipment profiles and exact entity binding (`ARCH-D026`).
+- Added local UTF-8 HTML and opaque PNG validation reviews (`ARCH-D028`).
+- Added evidence-bound production readiness v2 with file hashes, JSON Pointer readback and artifact-set binding (`PROD-G009`).
+
 ## 1.8.4 - 2026-08-12
 
 - Added a fail-closed architectural detail contract before validate/compile artifact exposure.

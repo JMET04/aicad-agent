@@ -1,13 +1,13 @@
-# aicad-agent 1.8.4
+# aicad-agent 1.9.0
 
 ## 1:1 webpage and image reference reconstruction
 
-Version 1.8.4 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
+Version 1.9.0 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
 
 Portable output includes annotated DXF, native-text SVG/HTML, validation, manifest, and browser-backed PNG evidence. Native AutoCAD DIMENSION objects and DWG save/reopen remain an explicit host post-process gate.
 ## 建筑平面制图语义
 
-建筑图不再使用统一线条。插件按对象语义区分剖切柱/墙粗实线、门窗与可见投影中实线、家具/柜体/洁具/家电和标注细实线、交通/上方构件虚线以及轴网中心线；原生 DIMENSION 使用持久命名 DIMSTYLE。编译前必须通过 `aicad_architectural_detail_contract_v1`，证明完整轴线+双轴圈+双轴号、总/轴网/分隔/洞口四类尺寸链、逐房间设备矩阵和门-墙-洞口-开启弧拓扑；失败仅输出阻断报告。最终 DXF 再由 `scripts/aicad_architecture_qa.py` 检查，二维修改器也会继承每个对象的 `cad_layer`。详见 [建筑制图不变量](docs/ARCHITECTURAL_DRAFTING.md)。验证报告也必须通过稳定规则 ID、完整根因记录和重复运行幂等门禁；可使用 scripts/aicad_report_qa.py 独立复核。
+建筑图不再使用统一线条。插件按对象语义区分剖切柱/墙粗实线、门窗与可见投影中实线、家具/柜体/洁具/家电和标注细实线、交通/上方构件虚线以及轴网中心线；原生 DIMENSION 使用持久命名 DIMSTYLE。建筑编译前必须通过 strict-production-only 的 `aicad_architectural_detail_contract_v2`，证明轴线坐标/覆盖范围+两端相切轴圈+居中同值轴号的数学绑定、完整生产图纸集、总/轴网/分隔/洞口四类尺寸链、逐房间设备矩阵、门-墙-洞口-开启弧拓扑，以及沙发靠背/扶手/坐垫分缝、床枕、洁具芯体/排水、家电控制等逐实体线稿角色。任何失败只输出 JSON、单文件 UTF-8 HTML 和白底 PNG 阻断报告，零 CAD 工件。最终 DXF 再由 `scripts/aicad_architecture_qa.py` 检查，二维修改器也会继承每个对象的 `cad_layer`。详见 [建筑制图不变量](docs/ARCHITECTURAL_DRAFTING.md)。
 
 ## 生产就绪门禁
 
@@ -21,7 +21,7 @@ Portable output includes annotated DXF, native-text SVG/HTML, validation, manife
 
 The multiview selector addresses individual lines, circles, and faces with stable semantic keys. Corrections are bound to a source hash, explicit preservation policy, shared-pattern fanout, and full downstream dependency replay. Thin visible strokes are separate from the larger click target, so precision and usability do not conflict.
 
-On a licensed SolidWorks 2026 host, version 1.8.4 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
+On a licensed SolidWorks 2026 host, version 1.9.0 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
 
 确定性、原点锚定、面向 Agent 的 CAD 约束插件。它把 2D AICAD 计划编译为 AICAD/SCR/DXF/审计工件，提供包装刀版正常性证明与交互修改器，并通过可选 Windows 宿主支持 AutoCAD 和 SolidWorks。
 
@@ -73,7 +73,7 @@ The reviewer now exposes one modification list instead of separate user-facing i
 
 ```powershell
 python scripts/aicad_agent.py capabilities
-python scripts/aicad_production_readiness_qa.py production-contract.json --output production-validation.json --markdown production-validation.md
+python scripts/aicad_production_readiness_qa_v2.py production-contract-v2.json --output production-validation.json --markdown production-validation.md --html production-validation.review.html --png production-validation.review.png
 python scripts/aicad_agent.py compile --plan runtime/examples/rectangle.plan.json --out smoke --name rectangle
 python scripts/aicad_agent.py build3d --plan runtime/examples/mounting_plate_3d.plan.json --out smoke3d --name plate --no-execute
 python -B -m unittest discover -s tests -p "test_*.py" -v

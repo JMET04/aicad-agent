@@ -1,6 +1,6 @@
 {
-  "schema": "aicad_production_readiness_rules_v1",
-  "version": "1.0.0",
+  "schema": "aicad_production_readiness_rules_v2",
+  "version": "2.0.0",
   "status": "candidate",
   "policy": "non_compensatory_fail_closed",
   "rules": [
@@ -59,6 +59,13 @@
       "requirement": "A production release candidate shall retain reviewOnly=true and accepted=false until the authorized professional or manufacturing reviewer records approval.",
       "failureCause": "Automated QA was misrepresented as legal, engineering or manufacturing acceptance.",
       "prevention": "Separate technical candidate readiness from authorized acceptance and never let a generator self-sign."
+    },
+    {
+      "id": "PROD-G009",
+      "name": "evidence_file_hash_and_artifact_set_binding",
+      "requirement": "Production gates shall be read from real hash-fixed evidence files; machine reports shall be evaluated through declared JSON Pointers, native-host reports and professional releases shall bind the exact candidate artifact-set SHA-256, and passed=true self-reporting is forbidden.",
+      "failureCause": "The first production contract accepted a Boolean and arbitrary evidence string, so a caller could claim that axes, host reopen or professional review passed without supplying the report that proved it.",
+      "prevention": "Use aicad_production_readiness_contract_v2 and aicad_production_readiness_qa_v2.py; verify every file path and SHA-256, read the expected machine value, and expose zero artifacts on any evidence or artifact-set mismatch."
     }
   ],
   "architectureProductionProfile": {
@@ -118,5 +125,15 @@
     "accepted": false,
     "ruleEnabled": false,
     "packagingGated": true
+  },
+  "evidenceBinding": {
+    "contract": "rules/production_readiness_contract_v2.schema.json",
+    "qaTool": "scripts/aicad_production_readiness_qa_v2.py",
+    "selfReportedBooleanAllowed": false,
+    "machineEvidence": "sha256_plus_json_pointer",
+    "hostBinding": "artifact_set_sha256",
+    "professionalReleaseBinding": "artifact_set_sha256",
+    "failedDisposition": "blocker_report_only",
+    "failedArtifactsExposed": 0
   }
 }

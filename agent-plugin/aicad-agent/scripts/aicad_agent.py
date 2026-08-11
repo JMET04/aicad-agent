@@ -45,7 +45,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.8.4"
+AGENT_API_VERSION = "1.9.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -149,18 +149,26 @@ def capabilities() -> dict[str, Any]:
         "architectural_detail_contract": {
             "available": True,
             "script": str((PLUGIN_ROOT / "scripts" / "aicad_architecture_detail_qa.py").resolve()),
-            "schema": str((PLUGIN_ROOT / "rules" / "architectural_detail_contract.schema.json").resolve()),
-            "gates": ["complete axis identity groups", "room equipment matrix", "semantic interior layers", "four-purpose dimension chains", "door host-opening-sweep topology", "stage authority"],
+            "schema": str((PLUGIN_ROOT / "rules" / "architectural_detail_contract_v2.schema.json").resolve()),
+            "symbol_profiles": str((PLUGIN_ROOT / "rules" / "architectural_symbol_profiles.json").resolve()),
+            "review_renderer": str((PLUGIN_ROOT / "scripts" / "aicad_review_report.py").resolve()),
+            "gates": ["complete axis identity groups", "complete production drawing set", "room equipment matrix", "typed selectable detailed object linework", "semantic interior layers", "four-purpose dimension chains", "door host-opening-sweep topology", "production authority"],
             "precompile_required": True,
+            "strict_production_only": True,
+            "allow_intermediate_cad": False,
             "failure_disposition": "blocker_report_only",
+            "blocker_formats": ["json", "html", "png"],
             "review_only": True,
         },
         "production_readiness_qa": {
             "available": True,
-            "script": str((PLUGIN_ROOT / "scripts" / "aicad_production_readiness_qa.py").resolve()),
+            "script": str((PLUGIN_ROOT / "scripts" / "aicad_production_readiness_qa_v2.py").resolve()),
             "rules": str((PLUGIN_ROOT / "rules" / "production_readiness_rules.json").resolve()),
-            "contract_schema": str((PLUGIN_ROOT / "rules" / "production_readiness_contract.schema.json").resolve()),
-            "policy": "non_compensatory_fail_closed",
+            "contract_schema": str((PLUGIN_ROOT / "rules" / "production_readiness_contract_v2.schema.json").resolve()),
+            "policy": "evidence_bound_non_compensatory_fail_closed",
+            "self_reported_boolean_allowed": False,
+            "machine_evidence": "sha256_plus_json_pointer",
+            "host_and_professional_binding": "artifact_set_sha256",
             "strict_production_failure_disposition": "blocker_report_only",
             "automatic_acceptance": False,
         },
@@ -363,7 +371,7 @@ def get_3d_schema() -> dict[str, Any]:
 
 
 def get_architecture_detail_schema() -> dict[str, Any]:
-    path = PLUGIN_ROOT / "rules" / "architectural_detail_contract.schema.json"
+    path = PLUGIN_ROOT / "rules" / "architectural_detail_contract_v2.schema.json"
     return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
 
 
@@ -371,7 +379,7 @@ def validate_architecture_detail_contract_value(value: Any, plan_value: Any) -> 
     from aicad_architecture_detail_qa import evaluate, normalize_resolved_entities
     plan = compile_plan(_load_plan(plan_value))
     report = evaluate(_load_plan(value), normalize_resolved_entities(plan))
-    return {"ok": report["status"] == "pass", **report}
+    return {"ok": bool(report.get("releaseAllowed")), **report}
 
 
 def _require_architecture_detail_contract(data: dict[str, Any], plan: Any) -> dict[str, Any] | None:
@@ -382,9 +390,10 @@ def _require_architecture_detail_contract(data: dict[str, Any], plan: Any) -> di
         raise PlanError("architecture plans require an embedded architecture_detail_contract before validation or compilation")
     from aicad_architecture_detail_qa import evaluate, normalize_resolved_entities
     report = evaluate(contract, normalize_resolved_entities(plan))
-    if report["status"] != "pass":
+    if report["status"] != "pass" or not report.get("releaseAllowed"):
         failed = [name for name, item in report["checks"].items() if not item["pass"]]
-        raise PlanError("architectural detail precompile gate failed; blocker_report_only: " + ", ".join(failed))
+        detail = ", ".join(failed) if failed else "production_release_not_authorized"
+        raise PlanError("architectural production-only precompile gate failed; blocker_report_only: " + detail)
     return report
 
 
