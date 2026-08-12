@@ -40,6 +40,28 @@ def report() -> dict[str, object]:
 
 
 class ReviewReportTests(unittest.TestCase):
+    def test_bundle_stage_persists_without_opening(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            html_path = root / "review.html"
+            stage = root / "stage"
+            old_stage = os.environ.get("AICAD_REVIEW_STAGE_DIR")
+            try:
+                os.environ["AICAD_REVIEW_STAGE_DIR"] = str(stage)
+                result = RENDERER.write_review_bundle(
+                    report(), html_path, None, "施工审核", "stage",
+                    opener=lambda _: self.fail("stage must not open a browser"),
+                )
+            finally:
+                if old_stage is None:
+                    os.environ.pop("AICAD_REVIEW_STAGE_DIR", None)
+                else:
+                    os.environ["AICAD_REVIEW_STAGE_DIR"] = old_stage
+            launch = result["reviewLaunch"]
+            self.assertEqual(launch["status"], "staged")
+            self.assertEqual(launch["reason"], "staged_without_launch")
+            self.assertTrue(Path(launch["review_html"]).is_file())
+
     def test_html_is_utf8_self_contained_and_contains_chinese(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "review.html"

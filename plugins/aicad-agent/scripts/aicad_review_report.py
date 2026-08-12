@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 
-REVIEW_LAUNCH_MODES = ("auto", "always", "never")
+REVIEW_LAUNCH_MODES = ("auto", "stage", "always", "never")
 
 
 def _evidence_text(value: Any) -> str:

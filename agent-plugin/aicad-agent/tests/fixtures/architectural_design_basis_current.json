@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "stage": "production",
+  "units": "mm",
+  "parameters": {
+    "axisBasis": "declared_column_centres_and_core_wall_centrelines",
+    "structuralModuleAuthority": false
+  },
+  "floors": [
+    {
+      "code": "TEST",
+      "globalOrigin": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "axisGrid": {
+    "vertical": [
+      {
+        "id": "1",
+        "globalX": 0.0
+      }
+    ],
+    "horizontal": [
+      {
+        "id": "A",
+        "globalY": 0.0
+      }
+    ]
+  }
+}

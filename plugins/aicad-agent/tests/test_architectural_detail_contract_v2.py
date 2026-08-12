@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
+import tempfile
 import unittest
 from collections import Counter
 from pathlib import Path
@@ -17,6 +19,7 @@ assert SPEC and SPEC.loader
 QA = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(QA)
 PROFILES = json.loads((ROOT / "rules" / "architectural_symbol_profiles.json").read_text(encoding="utf-8"))
+DESIGN_BASIS_FIXTURE = ROOT / "tests" / "fixtures" / "architectural_design_basis_current.json"
 
 
 def authority(available: bool = True) -> dict[str, dict[str, object]]:
@@ -131,6 +134,15 @@ def valid_contract() -> dict[str, object]:
         "units": "mm",
         "toleranceMm": 1e-6,
         "deliveryPolicy": delivery_policy(),
+        "designBasisBinding": {
+            "sourcePath": str(DESIGN_BASIS_FIXTURE.resolve()),
+            "sourceSha256": hashlib.sha256(DESIGN_BASIS_FIXTURE.read_bytes()).hexdigest(),
+            "floorCode": "TEST",
+            "localToGlobalOrigin": [0.0, 0.0],
+            "axisBasis": "declared_column_centres_and_core_wall_centrelines",
+            "structuralModuleAuthority": False,
+            "freshnessStatus": "bound_current",
+        },
         "axisGrid": {
             "conventionDeclared": True,
             "verticalIdentifierPattern": "positive_integer",
@@ -254,6 +266,34 @@ class ArchitecturalDetailContractV2Tests(unittest.TestCase):
         self.assertTrue(report["releaseAllowed"])
         self.assertEqual(report["artifactDisposition"], "production_release_candidate")
         self.assertTrue(all(item["pass"] for item in report["checks"].values()))
+
+    def test_stale_fixed_grid_design_basis_is_rejected(self) -> None:
+        contract = valid_contract()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "design_basis.json"
+            basis = json.loads(DESIGN_BASIS_FIXTURE.read_text(encoding="utf-8"))
+            basis["parameters"]["structuralGrid"] = 4200.0
+            path.write_text(json.dumps(basis, ensure_ascii=False), encoding="utf-8")
+            contract["designBasisBinding"]["sourcePath"] = str(path.resolve())
+            contract["designBasisBinding"]["sourceSha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+            report = evaluate_contract(contract)
+        self.assertFalse(report["checks"]["design_basis_axis_catalog_binding"]["pass"])
+        reasons = {row["reason"] for row in report["checks"]["design_basis_axis_catalog_binding"]["evidence"]["failures"]}
+        self.assertIn("stale_fixed_structural_grid_parameter_forbidden", reasons)
+
+    def test_malformed_design_basis_axis_coordinate_fails_closed(self) -> None:
+        contract = valid_contract()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "design_basis.json"
+            basis = json.loads(DESIGN_BASIS_FIXTURE.read_text(encoding="utf-8"))
+            basis["axisGrid"]["vertical"][0]["globalX"] = "not-a-number"
+            path.write_text(json.dumps(basis, ensure_ascii=False), encoding="utf-8")
+            contract["designBasisBinding"]["sourcePath"] = str(path.resolve())
+            contract["designBasisBinding"]["sourceSha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+            report = evaluate_contract(contract)
+        self.assertFalse(report["checks"]["design_basis_axis_catalog_binding"]["pass"])
+        reasons = {row["reason"] for row in report["checks"]["design_basis_axis_catalog_binding"]["evidence"]["failures"]}
+        self.assertIn("local_axis_not_bijective_with_global_catalog", reasons)
 
     def test_non_production_stage_is_blocked(self) -> None:
         contract = valid_contract()

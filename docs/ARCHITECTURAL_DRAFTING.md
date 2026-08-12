@@ -88,7 +88,7 @@ A complete axis grid is necessary but not sufficient. Construction-stage drawing
 
 ## Verified blocker-report launch
 
-Creating an HTML file is not delivery proof. Every strict-production blocker emitter must use `write_review_bundle`, include JSON, UTF-8 self-contained HTML, opaque PNG and an automatically persisted `*.review-launch.json`, and record both the source path and the compatibility-staged path. Every launched source path, including an ASCII temporary path, is first copied to a persistent content-addressed directory. Browser QA must open those persisted bytes and record a rendered screenshot or equivalent DOM evidence; returning a path string alone fails `ARCH-D036`. Automated compile and QA calls default to `never`, and repeated identical `auto` launches are suppressed by `ARCH-D038`; use `always` only for an explicit reopen request.
+Creating an HTML file is not delivery proof. Every strict-production blocker emitter must use `write_review_bundle`, include JSON, UTF-8 self-contained HTML, opaque PNG and an automatically persisted `*.review-launch.json`, and record both the source path and the compatibility-staged path. Strict blocker emitters default to `stage`: persist content-addressed bytes without opening a browser tab. Every GUI-launched source path, including an ASCII temporary path, is also staged before opening. Browser QA must open those persisted bytes and record a rendered screenshot or equivalent DOM evidence; returning a path string alone fails `ARCH-D036`. General compile calls default to `never`, repeated identical `auto` launches are suppressed by `ARCH-D038`, and `always` is reserved for an explicit reopen request.
 
 Dimension-chain completeness is also entity-bound. Every declared overall, grid, partition and opening dimension ID must resolve to a native `DIMENSION` inventory row on `DIMENSION`, with matching purpose and named style. The native host save/reopen report must preserve the same ID set; purpose counts without entities fail `ARCH-D037`.
 
@@ -103,3 +103,7 @@ When the user asks for directly usable construction/production output, `PROD-G01
 ## Whole-drawing review loop
 
 After each semantic or geometric edit, replay one dependency graph in this order: envelope/wall/opening topology, rooms and typed contents, door and service clearances, plan-native annotations, drawing-sheet bindings, scale-aware occupancy, raster/vector parity, then native-host persistence. Record the observed defect, why the previous gate allowed it, the stable prevention-rule ID and the exact artifact rechecked. A failed audit report is evidence only; it never replaces or automatically opens the interactive drawing modifier.
+
+### Design-basis freshness (`ARCH-D047`)
+
+Axis geometry, dimensions, contracts, previews and design metadata are one dependency graph. Bind the current design-basis file by SHA-256, add each floor's local-to-global origin, compare every local axis ID and coordinate against the global catalogue, and reject fixed `structuralGrid` metadata as stale authority. A geometry fix is incomplete until every downstream artifact is regenerated or independently proven current.

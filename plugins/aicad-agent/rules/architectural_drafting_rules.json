@@ -1,6 +1,6 @@
 {
-  "schema": "aicad_architectural_drafting_rules_v6",
-  "version": "8.2.0",
+  "schema": "aicad_architectural_drafting_rules_v7",
+  "version": "8.3.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -325,6 +325,13 @@
       "requirement": "Every architectural axis shall be derived from and mathematically anchored to at least one earlier structural column centre or declared structural/core-wall centreline at the same coordinate; equal spacing is permitted only when it is the result of those supports, never a default input.",
       "failureCause": "One fixed grid constant drove axis coordinates, dimension chains, design metadata and the pass condition, while columns were generated after axes; the system therefore proved its own unsupported assumption.",
       "prevention": "Generate structural supports first, derive the axis coordinate set from their geometry, bind each axis start_offset and dependency list to real support entity IDs, derive grid dimensions from consecutive supported coordinates, and reject every unsupported axis before compilation."
+    },
+    {
+      "id": "ARCH-D047",
+      "name": "design_basis_axis_catalog_freshness",
+      "requirement": "Every architectural axis contract shall bind the exact current design-basis file by SHA-256 and prove that local axis coordinate plus the declared storey origin resolves to the same global axis identifier and coordinate; stale fixed-module metadata is forbidden.",
+      "failureCause": "The geometry generator was corrected to derive axes from structural supports, but an older design_basis.json still declared a fixed equal grid, so downstream reviewers could read a contradictory authority source.",
+      "prevention": "Write design-basis metadata before contract generation, bind its path/hash/origin in the schema, compare every local axis against the global catalogue in independent QA, reject structuralGrid input authority, and regression-test stale metadata."
     }
   ],
   "defaultLayerProfile": {

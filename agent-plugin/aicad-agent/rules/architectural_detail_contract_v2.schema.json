@@ -11,6 +11,7 @@
     "units",
     "toleranceMm",
     "deliveryPolicy",
+    "designBasisBinding",
     "axisGrid",
     "walls",
     "openings",
@@ -915,6 +916,44 @@
               "project_authority"
             ]
           }
+        }
+      }
+    },
+    "designBasisBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourcePath",
+        "sourceSha256",
+        "floorCode",
+        "localToGlobalOrigin",
+        "axisBasis",
+        "structuralModuleAuthority",
+        "freshnessStatus"
+      ],
+      "properties": {
+        "sourcePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "floorCode": {
+          "$ref": "#/$defs/asciiId"
+        },
+        "localToGlobalOrigin": {
+          "$ref": "#/$defs/point"
+        },
+        "axisBasis": {
+          "const": "declared_column_centres_and_core_wall_centrelines"
+        },
+        "structuralModuleAuthority": {
+          "const": false
+        },
+        "freshnessStatus": {
+          "const": "bound_current"
         }
       }
     }

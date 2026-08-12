@@ -32,7 +32,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.11.1")
+        self.assertEqual(manifest["version"], "1.11.2")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         mcp = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
@@ -49,7 +49,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.11.1")
+        self.assertEqual(payload["api_version"], "1.11.2")
         self.assertEqual(payload["entities"], ["line", "circle", "arc", "text", "dimension"])
         self.assertTrue({"position_coincident", "position_offset", "text_height", "rotation", "dimension_measurement", "dimension_orientation", "base_offset"}.issubset(payload["constraints"]))
         self.assertIn("schema 2.0 compiles to AICAD protocol 3, or protocol 4 when native dimensions are present", payload["invariants"])

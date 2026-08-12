@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.11.2 - 2026-08-12
+
+- Added persistent no-window `stage` review mode for strict blocker reports, preventing deleted temporary review paths without creating repeated browser tabs.
+- Added `ARCH-D047`, SHA-bound design-basis freshness, local-to-global axis catalogue comparison and a negative stale-`structuralGrid` regression.
+- Kept architecture output blocker-only while the complete drawing set and professional authority remain absent.
+
 ## 1.11.1 - 2026-08-12
 
 - Promoted cross-domain normative governance to the first non-compensatory gate. Requirement contracts now bind domain, delivery stage, applicable standards, domain rule packs and the authority order before geometry.

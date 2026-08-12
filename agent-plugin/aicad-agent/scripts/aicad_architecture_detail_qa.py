@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from collections import Counter, defaultdict
@@ -180,7 +181,7 @@ def _schema_failure(errors: list[Any]) -> dict[str, Any]:
         "schema": "aicad_architectural_detail_validation_v2", "status": "failed", "releaseAllowed": False,
         "artifactDisposition": "blocker_report_only", "checks": {"contract_schema_valid": {"pass": False, "evidence": evidence}},
         "rootCause": "The architectural semantic contract is incomplete or malformed, so geometry must not be compiled or exposed.",
-        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029", "ARCH-D030", "ARCH-D031", "ARCH-D032", "ARCH-D033", "ARCH-D034", "ARCH-D035", "ARCH-D036", "ARCH-D037", "ARCH-D041", "ARCH-D042", "ARCH-D043", "ARCH-D044", "ARCH-D045", "ARCH-D046"],
+        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029", "ARCH-D030", "ARCH-D031", "ARCH-D032", "ARCH-D033", "ARCH-D034", "ARCH-D035", "ARCH-D036", "ARCH-D037", "ARCH-D041", "ARCH-D042", "ARCH-D043", "ARCH-D044", "ARCH-D045", "ARCH-D046", "ARCH-D047"],
         "reviewPolicy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
     }
 
@@ -300,6 +301,84 @@ def normalize_resolved_entities(compiled: Any) -> dict[str, dict[str, Any]]:
     return rows
 
 
+
+def _design_basis_axis_catalog_evidence(contract: dict[str, Any], tolerance: float) -> tuple[bool, dict[str, Any]]:
+    binding = contract["designBasisBinding"]
+    source = Path(binding["sourcePath"]).expanduser()
+    failures: list[dict[str, Any]] = []
+    if not source.is_file():
+        return False, {"sourcePath": str(source), "failures": [{"reason": "design_basis_source_missing"}]}
+    source_bytes = source.read_bytes()
+    actual_sha = hashlib.sha256(source_bytes).hexdigest()
+    if actual_sha != binding["sourceSha256"]:
+        failures.append({"reason": "design_basis_sha256_mismatch", "expected": binding["sourceSha256"], "actual": actual_sha})
+    try:
+        basis = json.loads(source_bytes.decode("utf-8-sig"))
+    except (UnicodeError, json.JSONDecodeError) as error:
+        return False, {"sourcePath": str(source), "sourceSha256": actual_sha, "failures": failures + [{"reason": "design_basis_invalid_json", "detail": str(error)}]}
+    parameters = basis.get("parameters") if isinstance(basis.get("parameters"), dict) else {}
+    if "structuralGrid" in parameters:
+        failures.append({"reason": "stale_fixed_structural_grid_parameter_forbidden", "value": parameters.get("structuralGrid")})
+    if parameters.get("axisBasis") != binding["axisBasis"]:
+        failures.append({"reason": "axis_basis_mismatch", "contract": binding["axisBasis"], "designBasis": parameters.get("axisBasis")})
+    if parameters.get("structuralModuleAuthority") is not False:
+        failures.append({"reason": "structural_module_authority_must_be_false", "actual": parameters.get("structuralModuleAuthority")})
+    floor_values = basis.get("floors")
+    if not isinstance(floor_values, list):
+        failures.append({"reason": "design_basis_floors_must_be_array"})
+        floor_values = []
+    floors = [row for row in floor_values if isinstance(row, dict) and row.get("code") == binding["floorCode"]]
+    if len(floors) != 1:
+        failures.append({"reason": "floor_origin_binding_not_unique", "floorCode": binding["floorCode"], "matches": len(floors)})
+    elif not _same_point(floors[0].get("globalOrigin"), binding["localToGlobalOrigin"], tolerance):
+        failures.append({"reason": "floor_origin_mismatch", "contract": binding["localToGlobalOrigin"], "designBasis": floors[0].get("globalOrigin")})
+    axis_grid = basis.get("axisGrid") if isinstance(basis.get("axisGrid"), dict) else {}
+    vertical_values = axis_grid.get("vertical")
+    horizontal_values = axis_grid.get("horizontal")
+    if not isinstance(vertical_values, list):
+        failures.append({"reason": "design_basis_vertical_axes_must_be_array"})
+        vertical_values = []
+    if not isinstance(horizontal_values, list):
+        failures.append({"reason": "design_basis_horizontal_axes_must_be_array"})
+        horizontal_values = []
+    vertical = [row for row in vertical_values if isinstance(row, dict)]
+    horizontal = [row for row in horizontal_values if isinstance(row, dict)]
+
+    def catalog_match_count(rows: list[dict[str, Any]], axis_id: str, field: str, expected: float) -> int:
+        count = 0
+        for row in rows:
+            if row.get("id") != axis_id:
+                continue
+            try:
+                actual = float(row[field])
+            except (KeyError, TypeError, ValueError):
+                continue
+            if math.isfinite(actual) and abs(actual - expected) <= tolerance:
+                count += 1
+        return count
+
+    origin = list(map(float, binding["localToGlobalOrigin"]))
+    compared: list[dict[str, Any]] = []
+    for axis in contract["axisGrid"]["axes"]:
+        coordinate = float(axis["coordinate"])
+        if axis["direction"] == "vertical":
+            global_coordinate = coordinate + origin[0]
+            field = "globalX"
+            match_count = catalog_match_count(vertical, axis["id"], field, global_coordinate)
+        else:
+            global_coordinate = coordinate + origin[1]
+            field = "globalY"
+            match_count = catalog_match_count(horizontal, axis["id"], field, global_coordinate)
+        compared.append({"axisId": axis["id"], "direction": axis["direction"], "localCoordinate": coordinate, "globalCoordinate": global_coordinate, "catalogField": field})
+        if match_count != 1:
+            failures.append({"reason": "local_axis_not_bijective_with_global_catalog", "axisId": axis["id"], "direction": axis["direction"], "globalCoordinate": global_coordinate, "matches": match_count})
+    return not failures, {
+        "sourcePath": str(source.resolve()), "sourceSha256": actual_sha,
+        "floorCode": binding["floorCode"], "localToGlobalOrigin": binding["localToGlobalOrigin"],
+        "comparedAxes": compared, "failures": failures,
+    }
+
+
 def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     schema_errors = sorted(Draft202012Validator(schema).iter_errors(contract), key=lambda error: list(error.path))
@@ -312,6 +391,9 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
 
     def add(name: str, passed: bool, evidence: Any) -> None:
         checks[name] = {"pass": bool(passed), "evidence": evidence}
+
+    design_basis_ok, design_basis_evidence = _design_basis_axis_catalog_evidence(contract, tolerance)
+    add("design_basis_axis_catalog_binding", design_basis_ok, design_basis_evidence)
 
     policy_ok = (
         policy["strictProductionOnly"] is True
@@ -915,7 +997,7 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
         "artifactDisposition": "production_release_candidate" if release_allowed else "blocker_report_only",
         "checks": checks,
         "rootCause": "Low-level drafting defects recur when axes, room contents, dimensions, door topology, detailed object graphics, drawing-set coverage and authority are counted independently instead of validated as one production dependency graph.",
-        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029", "ARCH-D030", "ARCH-D031", "ARCH-D032", "ARCH-D033", "ARCH-D034", "ARCH-D035", "ARCH-D036", "ARCH-D037", "ARCH-D041", "ARCH-D042", "ARCH-D043", "ARCH-D044", "ARCH-D045", "ARCH-D046"],
+        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029", "ARCH-D030", "ARCH-D031", "ARCH-D032", "ARCH-D033", "ARCH-D034", "ARCH-D035", "ARCH-D036", "ARCH-D037", "ARCH-D041", "ARCH-D042", "ARCH-D043", "ARCH-D044", "ARCH-D045", "ARCH-D046", "ARCH-D047"],
         "reviewPolicy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
     }
 
@@ -944,7 +1026,7 @@ def main() -> int:
     parser.add_argument("--markdown", type=Path)
     parser.add_argument("--html", type=Path)
     parser.add_argument("--png", type=Path)
-    parser.add_argument("--review-launch", choices=("auto", "always", "never"), default="never")
+    parser.add_argument("--review-launch", choices=("auto", "stage", "always", "never"), default="stage")
     args = parser.parse_args()
     contract = json.loads(args.contract.read_text(encoding="utf-8"))
     from aicad_agent import _load_plan

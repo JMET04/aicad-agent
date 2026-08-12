@@ -18,6 +18,23 @@ from aicad.review_launch import launch_review
 
 
 class PackagedAutomaticReviewLaunchTests(unittest.TestCase):
+    def test_stage_persists_without_opening_a_browser(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            review = root / "review.html"
+            review.write_text("<html><body>staged review</body></html>", encoding="utf-8")
+            with patch.dict(
+                os.environ,
+                {"AICAD_REVIEW_LAUNCH": "", "AICAD_REVIEW_STAGE_DIR": str(root / "stage")},
+                clear=False,
+            ):
+                result = launch_review(review, "stage", opener=lambda _: self.fail("stage must not open a browser"))
+            staged = Path(str(result["review_html"]))
+            self.assertEqual(result["status"], "staged")
+            self.assertEqual(result["reason"], "staged_without_launch")
+            self.assertNotEqual(staged, review.resolve())
+            self.assertEqual(staged.read_bytes(), review.read_bytes())
+
     def test_existing_local_review_launches_persisted_copy(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

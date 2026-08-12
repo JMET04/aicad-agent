@@ -13,7 +13,7 @@ from typing import Callable
 from .engine import PlanError
 
 
-REVIEW_LAUNCH_MODES = ("auto", "always", "never")
+REVIEW_LAUNCH_MODES = ("auto", "stage", "always", "never")
 _TRUE = {"1", "true", "yes", "on"}
 _DEFAULT_AUTO_DEDUP_SECONDS = 300.0
 
@@ -22,7 +22,7 @@ def _environment_mode(requested: str) -> str:
     override = os.environ.get("AICAD_REVIEW_LAUNCH", "").strip().lower()
     if override:
         if override not in REVIEW_LAUNCH_MODES:
-            raise PlanError("AICAD_REVIEW_LAUNCH must be auto, always, or never")
+            raise PlanError("AICAD_REVIEW_LAUNCH must be auto, stage, always, or never")
         return override
     return requested
 
@@ -124,7 +124,7 @@ def launch_review(
     opener: Callable[[Path], None] | None = None,
 ) -> dict[str, object]:
     if mode not in REVIEW_LAUNCH_MODES:
-        raise PlanError("review launch mode must be auto, always, or never")
+        raise PlanError("review launch mode must be auto, stage, always, or never")
     resolved_mode = _environment_mode(mode)
     path = Path(review_html).expanduser().resolve()
     if not path.is_file() or path.suffix.lower() != ".html":
@@ -137,6 +137,18 @@ def launch_review(
             "review_html": str(path),
             "source_review_html": str(path),
             "staged_for_compatibility": False,
+        }
+    if resolved_mode == "stage":
+        staged_path = _stage_review_for_compatibility(path)
+        return {
+            "status": "staged",
+            "mode": resolved_mode,
+            "reason": "staged_without_launch",
+            "review_html": str(staged_path),
+            "source_review_html": str(path),
+            "sha256": hashlib.sha256(staged_path.read_bytes()).hexdigest(),
+            "staged_for_compatibility": staged_path != path,
+            "staged_for_persistence": staged_path != path,
         }
     headless = _headless_reason()
     if resolved_mode == "auto" and headless:
