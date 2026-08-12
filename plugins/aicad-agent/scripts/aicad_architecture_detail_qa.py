@@ -159,7 +159,7 @@ def _schema_failure(errors: list[Any]) -> dict[str, Any]:
         "schema": "aicad_architectural_detail_validation_v2", "status": "failed", "releaseAllowed": False,
         "artifactDisposition": "blocker_report_only", "checks": {"contract_schema_valid": {"pass": False, "evidence": evidence}},
         "rootCause": "The architectural semantic contract is incomplete or malformed, so geometry must not be compiled or exposed.",
-        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029", "ARCH-D030", "ARCH-D031", "ARCH-D032", "ARCH-D033", "ARCH-D034", "ARCH-D035"],
+        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029", "ARCH-D030", "ARCH-D031", "ARCH-D032", "ARCH-D033", "ARCH-D034", "ARCH-D035", "ARCH-D036", "ARCH-D037"],
         "reviewPolicy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
     }
 
@@ -241,7 +241,7 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
         policy["strictProductionOnly"] is True
         and policy["cadExposure"] == "production_release_candidate_only"
         and policy["allowIntermediateCad"] is False
-        and set(policy["blockerFormats"]) >= {"json", "html", "png"}
+        and set(policy["blockerFormats"]) >= {"json", "html", "png", "launch_json"}
         and all(policy[key] is True for key in (
             "requireDetailedObjectLinework", "requireNativeHostRoundTrip", "requireOpaqueVisualAudit", "requireAuthorizedRelease"
         ))
@@ -343,7 +343,28 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
                 binding_failures.append({"objectId": door["id"], "entityId": door["leafEntityId"], "reason": "door_leaf_geometry_or_layer_mismatch"})
             if arc is None or arc.get("type") != "arc" or str(arc.get("layer", "")).upper() != "OPENING" or not _same_point(arc.get("center"), door["hinge"], tolerance) or abs(float(arc.get("radius", math.nan)) - float(door["widthMm"])) > tolerance or _angle_delta(float(arc.get("startAngleDeg", math.nan)), float(door["arcStartDeg"])) > tolerance or _angle_delta(float(arc.get("endAngleDeg", math.nan)), float(door["arcEndDeg"])) > tolerance:
                 binding_failures.append({"objectId": door["id"], "entityId": door["arcEntityId"], "reason": "door_arc_geometry_or_layer_mismatch"})
+        dimension_binding_failures: list[dict[str, Any]] = []
+        for chain in contract["dimensionChains"]:
+            for entity_id in chain["entityIds"]:
+                entity = resolved_entities.get(entity_id)
+                valid = (
+                    entity is not None
+                    and str(entity.get("type", "")).lower() == "dimension"
+                    and str(entity.get("layer", "")).upper() == chain["layer"]
+                    and str(entity.get("purpose", "")).lower() == chain["purpose"]
+                    and str(entity.get("styleName", "")) == chain["styleName"]
+                )
+                if not valid:
+                    failure = {
+                        "chainId": chain["id"], "entityId": entity_id,
+                        "reason": "native_dimension_missing_or_type_layer_purpose_style_mismatch",
+                        "expected": {"type": chain["entityKind"], "layer": chain["layer"], "purpose": chain["purpose"], "styleName": chain["styleName"]},
+                        "actual": entity,
+                    }
+                    dimension_binding_failures.append(failure)
+                    binding_failures.append(failure)
     add("aicad_entity_bindings", not binding_failures, {"failures": binding_failures})
+    add("native_dimension_entity_bindings", not dimension_binding_failures if resolved_entities is not None else False, {"failures": dimension_binding_failures if resolved_entities is not None else [{"reason": "resolved_native_dimensions_not_supplied"}]})
 
     axes = contract["axisGrid"]["axes"]
     axis_keys = [(axis["direction"], axis["id"]) for axis in axes]
@@ -575,7 +596,7 @@ def evaluate(contract: dict[str, Any], resolved_entities: dict[str, dict[str, An
         "artifactDisposition": "production_release_candidate" if release_allowed else "blocker_report_only",
         "checks": checks,
         "rootCause": "Low-level drafting defects recur when axes, room contents, dimensions, door topology, detailed object graphics, drawing-set coverage and authority are counted independently instead of validated as one production dependency graph.",
-        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029", "ARCH-D030", "ARCH-D031", "ARCH-D032", "ARCH-D033", "ARCH-D034", "ARCH-D035"],
+        "candidatePreventionRules": ["ARCH-D021", "ARCH-D022", "ARCH-D023", "ARCH-D024", "ARCH-D025", "ARCH-D026", "ARCH-D027", "ARCH-D028", "ARCH-D029", "ARCH-D030", "ARCH-D031", "ARCH-D032", "ARCH-D033", "ARCH-D034", "ARCH-D035", "ARCH-D036", "ARCH-D037"],
         "reviewPolicy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
     }
 
@@ -604,10 +625,11 @@ def main() -> int:
     parser.add_argument("--markdown", type=Path)
     parser.add_argument("--html", type=Path)
     parser.add_argument("--png", type=Path)
+    parser.add_argument("--review-launch", choices=("auto", "always", "never"), default="auto")
     args = parser.parse_args()
     contract = json.loads(args.contract.read_text(encoding="utf-8"))
     from aicad_agent import _load_plan
-    from aicad_review_report import write_html, write_png
+    from aicad_review_report import write_html, write_png, write_review_bundle
     from aicad.engine import compile_plan
     compiled = compile_plan(_load_plan(str(args.plan)))
     report = evaluate(contract, normalize_resolved_entities(compiled))
@@ -616,11 +638,15 @@ def main() -> int:
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.markdown:
         write_markdown(report, args.markdown)
+    review_launch_result = None
+    review_launch_json = None
     if args.html:
-        write_html(report, args.html, "AICAD 建筑生产输出审核")
-    if args.png:
+        bundle = write_review_bundle(report, args.html, args.png, "AICAD 建筑生产输出审核", args.review_launch)
+        review_launch_result = bundle["reviewLaunch"]
+        review_launch_json = bundle["launchJson"]
+    elif args.png:
         write_png(report, args.png, "AICAD 建筑生产输出审核")
-    print(json.dumps({"ok": report["status"] == "pass", "status": report["status"], "artifactDisposition": report["artifactDisposition"], "output": str(output.resolve()), "html": str(args.html.resolve()) if args.html else None, "png": str(args.png.resolve()) if args.png else None}, ensure_ascii=False))
+    print(json.dumps({"ok": report["status"] == "pass", "status": report["status"], "artifactDisposition": report["artifactDisposition"], "output": str(output.resolve()), "html": str(args.html.resolve()) if args.html else None, "png": str(args.png.resolve()) if args.png else None, "reviewLaunchJson": review_launch_json, "reviewLaunch": review_launch_result}, ensure_ascii=False))
     return 0 if report["status"] == "pass" else 2
 
 

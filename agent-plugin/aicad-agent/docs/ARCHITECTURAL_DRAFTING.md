@@ -80,3 +80,9 @@ The safety state remains `reviewOnly=true`, `accepted=false`, `ruleEnabled=false
 ## Construction and production boundary
 
 A complete axis grid is necessary but not sufficient. Construction-stage drawings also require typed furniture/detail linework, bound section/elevation/detail references, populated paper-space viewports, title blocks, plot scale, revision/status and schedule navigation. Run `scripts/aicad_production_readiness_qa_v2.py` after architectural DXF QA. Its v2 contract rejects `passed=true` self-reporting: every machine gate is read from a hash-fixed file through a JSON Pointer, and native-host plus professional-release evidence must bind the exact artifact-set SHA-256. A failed production gate may not be offset by a high geometry score; strict production mode exposes only JSON plus a local UTF-8 HTML review and opaque PNG blocker summary. The HTML is the primary human review entry and must not require a server or external assets.
+
+## Verified blocker-report launch
+
+Creating an HTML file is not delivery proof. Every strict-production blocker emitter must use `write_review_bundle`, include JSON, UTF-8 self-contained HTML, opaque PNG and an automatically persisted `*.review-launch.json`, and record both the source path and the compatibility-staged path. On Windows, any non-ASCII source path is staged before launch. Browser QA must open the staged bytes and record a rendered screenshot or equivalent DOM evidence; returning a path string alone fails `ARCH-D036`.
+
+Dimension-chain completeness is also entity-bound. Every declared overall, grid, partition and opening dimension ID must resolve to a native `DIMENSION` inventory row on `DIMENSION`, with matching purpose and named style. The native host save/reopen report must preserve the same ID set; purpose counts without entities fail `ARCH-D037`.

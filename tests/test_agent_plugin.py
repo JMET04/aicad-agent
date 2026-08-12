@@ -32,7 +32,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.10.0")
+        self.assertEqual(manifest["version"], "1.10.1")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         mcp = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
@@ -49,7 +49,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.10.0")
+        self.assertEqual(payload["api_version"], "1.10.1")
         self.assertEqual(payload["entities"], ["line", "circle", "arc", "text"])
         self.assertTrue({"position_coincident", "position_offset", "text_height", "rotation"}.issubset(payload["constraints"]))
         self.assertIn("schema 2.0 compiles to layer-preserving AICAD protocol 3", payload["invariants"])
@@ -64,6 +64,7 @@ class AgentPluginTests(unittest.TestCase):
         self.assertTrue(Path(payload["architectural_detail_contract"]["script"]).is_file())
         self.assertTrue(Path(payload["architectural_detail_contract"]["schema"]).is_file())
         self.assertEqual(payload["architectural_detail_contract"]["failure_disposition"], "blocker_report_only")
+        self.assertEqual(payload["architectural_detail_contract"]["blocker_formats"], ["json", "html", "png", "launch_json"])
         self.assertTrue(payload["report_quality_qa"]["available"])
         self.assertTrue(Path(payload["report_quality_qa"]["script"]).is_file())
         self.assertTrue(payload["report_quality_qa"]["unique_prevention_rule_ids"])

@@ -90,7 +90,7 @@ Return the most useful artifacts to the user:
 - `.manifest.json` for hashes, counts, and artifact inventory;
 - `.plan.json` as the editable source of truth.
 
-For a strict production-only architecture request, these CAD artifacts are returned only after the v2 architectural and production-evidence gates pass. Any failure returns JSON plus a local UTF-8 `.review.html` and opaque white-background `.review.png`; Markdown is supplemental, not the primary opening path.
+For a strict production-only architecture request, these CAD artifacts are returned only after the v2 architectural and production-evidence gates pass. Any failure returns JSON plus a local UTF-8 `.review.html`, opaque white-background `.review.png`, and machine-readable `launch.json`; Markdown is supplemental. The report emitter must call the non-ASCII compatibility launcher and record source/staged paths—returning a path string alone is not delivery proof.
 
 Never claim that a drawing was created when the tool returned `ok: false`, when only validation ran, or when an expected artifact path does not exist.
 

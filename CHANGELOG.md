@@ -1,11 +1,14 @@
 # Changelog
 
-- Removed a stale AutoCAD protocol-v2 limitation from the public capability matrix; REL-G021 now rejects contradictions between top-level claims, host matrices and native persistence evidence.
+## 1.10.1 - 2026-08-12
 
-- Fixed modern DXF emission to use a standards-valid AC1018 document with complete tables; new release rule REL-G020 now requires version/group-code parity and real AutoCAD import-save-reopen persistence evidence.
+- Added `ARCH-D036`: blocker reviews now invoke the non-ASCII compatibility launcher and emit a source/staged-path launch record; returning a local path alone no longer counts as delivery.
+- Added `ARCH-D037`: all four dimension-chain classes must resolve to native DIMENSION inventory rows with matching layer, purpose and named style.
+- Added review-bundle and phantom-dimension regressions, and bumped the immutable package version instead of replacing already-uploaded 1.10.0 bytes.
 
 ## 1.10.0 - 2026-08-12
 
+- The DXF exporter uses a standards-valid AC1018 document and real AutoCAD import/save/reopen evidence; capability surfaces are cross-checked against the implemented protocol.
 - Added constrained native `text` steps with middle-centre placement, UTF-8-to-ASCII CAD escaping, audit/manifest support and real DXF/SCR/AutoCAD TEXT creation.
 - Upgraded schema-2 execution to backward-compatible AICAD protocol 3 so every entity retains its semantic layer in the AutoCAD host and XData workflow.
 - Applied the architectural lineweight/linetype profile across DXF, SCR and AutoCAD layers; GRID is CENTER2/0.13 mm while cut, projection, secondary, hidden and annotation layers retain their hierarchy.

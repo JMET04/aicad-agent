@@ -1,9 +1,9 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.10.0\github-repository',
-    [string]$Version = '1.10.0',
-    [string]$PluginArchive = 'release\v1.10.0\aicad-agent-1.10.0.zip',
-    [string]$PluginDirectory = 'release\v1.10.0\aicad-agent'
+    [string]$OutputDirectory = 'release\v1.10.1\github-repository',
+    [string]$Version = '1.10.1',
+    [string]$PluginArchive = 'release\v1.10.1\aicad-agent-1.10.1.zip',
+    [string]$PluginDirectory = 'release\v1.10.1\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'

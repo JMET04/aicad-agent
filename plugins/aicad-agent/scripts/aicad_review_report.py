@@ -4,13 +4,37 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import sys
 import textwrap
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
+
+
+REVIEW_LAUNCH_MODES = ("auto", "always", "never")
 
 
 def _evidence_text(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True)
+
+
+def _load_review_launcher():
+    plugin_root = Path(__file__).resolve().parents[1]
+    candidates = [plugin_root / "runtime" / "src", plugin_root.parents[1] / "src"]
+    for candidate in candidates:
+        if candidate.is_dir() and str(candidate) not in sys.path:
+            sys.path.insert(0, str(candidate))
+    from aicad.review_launch import launch_review
+
+    return launch_review
+
+
+def _review_launch_json_path(html_path: Path) -> Path:
+    suffix = ".review.html"
+    if html_path.name == "review.html":
+        return html_path.with_name("review-launch.json")
+    if html_path.name.endswith(suffix):
+        return html_path.with_name(html_path.name[:-len(suffix)] + ".review-launch.json")
+    return html_path.with_suffix(".review-launch.json")
 
 
 def write_html(report: dict[str, Any], path: Path, title: str = "AICAD 审核报告") -> None:
@@ -152,18 +176,42 @@ def write_png(report: dict[str, Any], path: Path, title: str = "AICAD 审核摘�
     image.save(path, format="PNG", optimize=True)
 
 
+def write_review_bundle(
+    report: dict[str, Any],
+    html_path: Path,
+    png_path: Path | None = None,
+    title: str = "AICAD 审核报告",
+    review_launch: str = "auto",
+    *,
+    opener: Callable[[Path], None] | None = None,
+) -> dict[str, Any]:
+    write_html(report, html_path, title)
+    if png_path is not None:
+        write_png(report, png_path, title)
+    launch = _load_review_launcher()(html_path, review_launch, opener=opener)
+    launch_json_path = _review_launch_json_path(html_path)
+    launch_json_path.parent.mkdir(parents=True, exist_ok=True)
+    launch_json_path.write_text(json.dumps(launch, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return {
+        "ok": True,
+        "html": str(html_path.resolve()),
+        "png": str(png_path.resolve()) if png_path else None,
+        "launchJson": str(launch_json_path.resolve()),
+        "reviewLaunch": launch,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Render a machine-readable AICAD validation report as a local UTF-8 HTML review and optional opaque PNG summary.")
     parser.add_argument("report", type=Path)
     parser.add_argument("--html", required=True, type=Path)
     parser.add_argument("--png", type=Path)
     parser.add_argument("--title", default="AICAD 审核报告")
+    parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
     args = parser.parse_args()
     report = json.loads(args.report.read_text(encoding="utf-8-sig"))
-    write_html(report, args.html, args.title)
-    if args.png:
-        write_png(report, args.png, args.title)
-    print(json.dumps({"ok": True, "html": str(args.html.resolve()), "png": str(args.png.resolve()) if args.png else None}, ensure_ascii=False))
+    result = write_review_bundle(report, args.html, args.png, args.title, args.review_launch)
+    print(json.dumps(result, ensure_ascii=False))
     return 0
 
 

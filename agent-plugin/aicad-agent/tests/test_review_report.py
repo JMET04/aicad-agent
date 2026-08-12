@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import importlib.util
+import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -48,6 +50,8 @@ class ReviewReportTests(unittest.TestCase):
             self.assertIn("审核文件无法直接打开", text)
             self.assertNotIn("http://", text)
             self.assertNotIn("https://", text)
+            for forbidden in ("瀹℃", "鈫", chr(0xFFFD)):
+                self.assertNotIn(forbidden, text)
 
     def test_png_is_opaque_white_background_and_contains_content(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -58,6 +62,40 @@ class ReviewReportTests(unittest.TestCase):
                 self.assertGreaterEqual(image.width, 1600)
                 self.assertGreaterEqual(image.height, 900)
                 self.assertEqual(image.getpixel((image.width - 1, image.height - 1)), (255, 255, 255))
+
+    def test_bundle_records_compatibility_launch_instead_of_returning_only_source_path(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            html_path = root / "中文目录" / "review.html"
+            png_path = root / "中文目录" / "review.png"
+            stage = root / "ascii-stage"
+            opened: list[Path] = []
+            old_force = os.environ.get("AICAD_REVIEW_FORCE_STAGE")
+            old_stage = os.environ.get("AICAD_REVIEW_STAGE_DIR")
+            try:
+                os.environ["AICAD_REVIEW_FORCE_STAGE"] = "1"
+                os.environ["AICAD_REVIEW_STAGE_DIR"] = str(stage)
+                result = RENDERER.write_review_bundle(report(), html_path, png_path, "施工审核", "always", opener=opened.append)
+            finally:
+                if old_force is None:
+                    os.environ.pop("AICAD_REVIEW_FORCE_STAGE", None)
+                else:
+                    os.environ["AICAD_REVIEW_FORCE_STAGE"] = old_force
+                if old_stage is None:
+                    os.environ.pop("AICAD_REVIEW_STAGE_DIR", None)
+                else:
+                    os.environ["AICAD_REVIEW_STAGE_DIR"] = old_stage
+            launch = result["reviewLaunch"]
+            self.assertEqual(launch["status"], "launched")
+            self.assertTrue(launch["staged_for_compatibility"])
+            self.assertEqual(len(opened), 1)
+            self.assertEqual(opened[0], Path(launch["review_html"]))
+            self.assertTrue(opened[0].is_file())
+            self.assertEqual(opened[0].read_bytes(), html_path.read_bytes())
+            launch_json = Path(result["launchJson"])
+            self.assertEqual(launch_json.name, "review-launch.json")
+            self.assertTrue(launch_json.is_file())
+            self.assertEqual(json.loads(launch_json.read_text(encoding="utf-8")), launch)
 
 
 if __name__ == "__main__":

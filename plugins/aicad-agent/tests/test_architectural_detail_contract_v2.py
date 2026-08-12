@@ -62,7 +62,7 @@ def delivery_policy() -> dict[str, object]:
         "strictProductionOnly": True,
         "cadExposure": "production_release_candidate_only",
         "allowIntermediateCad": False,
-        "blockerFormats": ["json", "html", "png"],
+        "blockerFormats": ["json", "html", "png", "launch_json"],
         "requireDetailedObjectLinework": True,
         "requireNativeHostRoundTrip": True,
         "requireOpaqueVisualAudit": True,
@@ -110,10 +110,10 @@ def valid_contract() -> dict[str, object]:
             equipment("EQ03", "shower", [3600, 2300, 4700, 3600]),
         ],
         "dimensionChains": [
-            {"id": "DIMOVERALL", "purpose": "overall", "entityIds": ["DIM01"]},
-            {"id": "DIMGRID", "purpose": "grid", "entityIds": ["DIM02"]},
-            {"id": "DIMPART", "purpose": "partition", "entityIds": ["DIM03"]},
-            {"id": "DIMOPEN", "purpose": "opening", "entityIds": ["DIM04"]},
+            {"id": "DIMOVERALL", "purpose": "overall", "entityIds": ["DIM01"], "entityKind": "dimension", "layer": "DIMENSION", "styleName": "AICAD_ARCH"},
+            {"id": "DIMGRID", "purpose": "grid", "entityIds": ["DIM02"], "entityKind": "dimension", "layer": "DIMENSION", "styleName": "AICAD_ARCH"},
+            {"id": "DIMPART", "purpose": "partition", "entityIds": ["DIM03"], "entityKind": "dimension", "layer": "DIMENSION", "styleName": "AICAD_ARCH"},
+            {"id": "DIMOPEN", "purpose": "opening", "entityIds": ["DIM04"], "entityKind": "dimension", "layer": "DIMENSION", "styleName": "AICAD_ARCH"},
         ],
         "annotations": {"requiredClasses": annotations, "providedClasses": annotations},
         "authority": authority(True),
@@ -166,6 +166,9 @@ def resolved_entities(contract: dict[str, object] | None = None) -> dict[str, di
         rows[entity_id] = {"type": "text", "layer": "GRID_TEXT", "insert": center, "text": label}
     for item in contract["equipment"]:
         add_equipment_entities(rows, item)
+    for chain in contract["dimensionChains"]:
+        for entity_id in chain["entityIds"]:
+            rows[entity_id] = {"type": "dimension", "layer": chain["layer"], "purpose": chain["purpose"], "styleName": chain["styleName"]}
     return rows
 
 
@@ -299,6 +302,16 @@ class ArchitecturalDetailContractV2Tests(unittest.TestCase):
         report = evaluate_contract(contract)
         self.assertFalse(report["checks"]["door_equipment_clearance"]["pass"])
         self.assertIn("EQVEHICLE", {row["equipmentId"] for row in report["checks"]["door_equipment_clearance"]["evidence"]["failures"]})
+
+    def test_dimension_chain_ids_must_resolve_to_native_dimension_entities(self) -> None:
+        contract = valid_contract()
+        resolved = resolved_entities(contract)
+        resolved["DIM04"] = {"type": "line", "layer": "DIMENSION", "purpose": "opening", "styleName": "AICAD_ARCH"}
+        report = QA.evaluate(contract, resolved)
+        self.assertFalse(report["checks"]["native_dimension_entity_bindings"]["pass"])
+        self.assertFalse(report["checks"]["aicad_entity_bindings"]["pass"])
+        failure = report["checks"]["native_dimension_entity_bindings"]["evidence"]["failures"][0]
+        self.assertEqual(failure["entityId"], "DIM04")
 
 
 if __name__ == "__main__":

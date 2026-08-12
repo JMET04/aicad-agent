@@ -62,7 +62,7 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
     def test_rule_pack_records_causes_and_prevention(self) -> None:
         data = json.loads((ROOT / "rules" / "architectural_drafting_rules.json").read_text(encoding="utf-8"))
         ids = {row["id"] for row in data["rules"]}
-        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 36)})
+        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 38)})
         self.assertEqual(data["axisCoverageContract"]["remoteAppendagePolicy"], "explicit_include_or_exclude")
         self.assertEqual(data["reportQualityContract"]["conflictingDuplicatePolicy"], "fail")
         self.assertTrue(all(row["failureCause"] and row["prevention"] for row in data["rules"]))
@@ -75,6 +75,8 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
         self.assertIn("door_host_binding", data["annotationCompletenessProfile"]["architectural_construction_plan"]["requiredAdditional"])
         self.assertIn("opening_dimension_chain", data["annotationCompletenessProfile"]["architectural_construction_plan"]["requiredAdditional"])
         self.assertEqual(data["architecturalDetailContract"]["failureDisposition"], "blocker_report_only")
+        self.assertIn("launch_json", data["architecturalDetailContract"]["requiredBlockerFormats"])
+        self.assertEqual(data["architecturalDetailContract"]["reviewLaunchContract"], "source_path_plus_ascii_staged_path_plus_launch_status")
         self.assertFalse(data["reviewPolicy"]["accepted"])
         self.assertFalse(data["reviewPolicy"]["ruleEnabled"])
 

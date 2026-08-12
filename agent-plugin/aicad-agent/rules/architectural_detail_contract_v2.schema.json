@@ -511,7 +511,10 @@
         "required": [
           "id",
           "purpose",
-          "entityIds"
+          "entityIds",
+          "entityKind",
+          "layer",
+          "styleName"
         ],
         "properties": {
           "id": {
@@ -532,6 +535,16 @@
             "items": {
               "$ref": "#/$defs/asciiId"
             }
+          },
+          "entityKind": {
+            "const": "dimension"
+          },
+          "layer": {
+            "const": "DIMENSION"
+          },
+          "styleName": {
+            "type": "string",
+            "minLength": 1
           }
         }
       }
@@ -658,14 +671,15 @@
         },
         "blockerFormats": {
           "type": "array",
-          "minItems": 3,
+          "minItems": 4,
           "uniqueItems": true,
           "items": {
             "enum": [
               "json",
               "markdown",
               "html",
-              "png"
+              "png",
+              "launch_json"
             ]
           },
           "allOf": [
@@ -682,6 +696,11 @@
             {
               "contains": {
                 "const": "png"
+              }
+            },
+            {
+              "contains": {
+                "const": "launch_json"
               }
             }
           ]

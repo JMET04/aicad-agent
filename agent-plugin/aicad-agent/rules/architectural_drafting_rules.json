@@ -1,6 +1,6 @@
 {
   "schema": "aicad_architectural_drafting_rules_v6",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -248,6 +248,20 @@
       "requirement": "Door, route and access-clearance checks shall include every typed occupancy body; an exclusion is allowed only through a reviewed non-occupying semantic class, never through broad name tokens.",
       "failureCause": "A pre-audit excluded vehicles by name, masking a real garage door sweep collision with the first parking object.",
       "prevention": "Build clearance candidates from typed spatial roles, record any explicit exclusion with rule evidence, and regression-test that vehicles, movable furniture, casework, sanitary fixtures and appliances all participate."
+    },
+    {
+      "id": "ARCH-D036",
+      "name": "verified_blocker_review_launch",
+      "requirement": "A blocker report is not delivered by returning a local path alone; its UTF-8 HTML shall be routed through the non-ASCII compatibility launcher and accompanied by a machine-readable source/staged-path launch result, while browser QA proves that the staged file renders.",
+      "failureCause": "The renderer produced a valid self-contained HTML file, but report generators returned the original Chinese path without invoking the compatibility launcher, so desktop review repeatedly appeared unable to open.",
+      "prevention": "Route every blocker emitter through write_review_bundle, require JSON/HTML/PNG/launch_json, stage non-ASCII paths, record launch status and add an integration test that opens the staged bytes rather than merely checking file existence."
+    },
+    {
+      "id": "ARCH-D037",
+      "name": "native_dimension_entity_bijection",
+      "requirement": "Every overall, grid, partition and opening dimension-chain ID shall resolve to one native DIMENSION inventory entity on DIMENSION with the declared purpose and persisted named style; four self-reported purpose names are not dimension proof.",
+      "failureCause": "The contract counted dimension-chain purposes but never resolved their entity IDs, allowing nonexistent dimensions to pass the precompile matrix.",
+      "prevention": "Bind every declared dimension ID to the native entity inventory, verify type/layer/purpose/style and require the post-save/reopen host report to preserve the same ID set before production release."
     }
   ],
   "defaultLayerProfile": {
@@ -439,8 +453,10 @@
     "requiredBlockerFormats": [
       "json",
       "html",
-      "png"
+      "png",
+      "launch_json"
     ],
-    "nonCompensatory": true
+    "nonCompensatory": true,
+    "reviewLaunchContract": "source_path_plus_ascii_staged_path_plus_launch_status"
   }
 }
