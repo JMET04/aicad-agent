@@ -1,0 +1,59 @@
+{
+  "schema": "srb160_validation_v1",
+  "status": "pass",
+  "product": "SRB-160 precision servo reducer flange and bearing bracket",
+  "domain": "mechanical",
+  "delivery_stage": "review",
+  "gates": {
+    "normative_requirement_conformance": true,
+    "bounded_parameter_normality": true,
+    "rich_2d_schema_validation": true,
+    "rich_2d_agent_compile": true,
+    "rich_3d_schema_validation": true,
+    "engineering_geometry_checks": true,
+    "autocad_dwg_save_reopen": true,
+    "solidworks_sldprt_step_save_reopen": true,
+    "utf8_and_json_integrity": true,
+    "opaque_visual_inspection": true,
+    "review_locks_closed": true
+  },
+  "failed_gates": [],
+  "counts": {
+    "requirements": 35,
+    "requirements_passed": 35,
+    "drawing_entities": 217,
+    "features_3d": 16
+  },
+  "primary_artifacts": {
+    "plan_2d": "source/drawing.plan.json",
+    "aicad": "cad/servo_reducer_bracket_srb160.aicad",
+    "scr": "cad/servo_reducer_bracket_srb160.scr",
+    "dxf": "cad/servo_reducer_bracket_srb160.dxf",
+    "audit": "cad/servo_reducer_bracket_srb160.audit.md",
+    "dwg": "native/autocad/servo_reducer_bracket_srb160.dwg",
+    "plan_3d": "source/model.3d-plan.json",
+    "sldprt": "model3d/native/servo_reducer_bracket_srb160.SLDPRT",
+    "step": "model3d/native/servo_reducer_bracket_srb160.step",
+    "review": "review.html",
+    "white_preview": "preview/review-dashboard.png"
+  },
+  "capability_boundaries": {
+    "normality_prover": "The installed line-only normality prover guards the physical base envelope and all coupled family parameters. Circles, text and native dimensions in the rich drawing are independently handled by schema validation, domain QA, DXF audit and host readback; no whole-rich-plan normality claim is made.",
+    "three_d_schema": "Native schema supports base/boss/cut extrudes with rectangle, circle and circle-pattern profiles. Fillets, chamfers, revolve, sweep and assembly mates are not claimed.",
+    "engineering_authority": "Host success proves persistence and typed geometry readback, not load rating, supplier fit confirmation or manufacturing acceptance."
+  },
+  "manual_engineering_review_required": [
+    "supplier interface confirmation",
+    "torque and load analysis",
+    "fatigue and stiffness",
+    "coating stack",
+    "tool access and cutter radii",
+    "GD&T release authority"
+  ],
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

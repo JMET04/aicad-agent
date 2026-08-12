@@ -1,4 +1,4 @@
-# aicad-agent 1.11.2
+# aicad-agent 1.12.0
 
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
@@ -56,7 +56,7 @@ flowchart LR
 准备：Codex CLI 或 Codex 桌面版、Git、Python 3.10+。
 
 ```powershell
-codex plugin marketplace add JMET04/aicad-agent --ref v1.11.2
+codex plugin marketplace add JMET04/aicad-agent --ref v1.12.0
 codex plugin add aicad-agent@aicad-agent
 codex plugin list
 ```
@@ -80,13 +80,13 @@ codex plugin remove aicad-agent
 
 从 [GitHub Releases](https://github.com/JMET04/aicad-agent/releases) 或仓库的 [`dist`](dist/) 目录下载：
 
-- `aicad-agent-1.11.2.zip`
+- `aicad-agent-1.12.0.zip`
 - `SHA256SUMS`
 
 先核对哈希：
 
 ```powershell
-Get-FileHash .\aicad-agent-1.11.2.zip -Algorithm SHA256
+Get-FileHash .\aicad-agent-1.12.0.zip -Algorithm SHA256
 Get-Content .\SHA256SUMS
 ```
 
@@ -291,17 +291,17 @@ python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-.\scripts\build-agent-plugin.ps1 -OutputDirectory release-ci -Version 1.11.2
-python -B scripts/verify_release_package.py release-ci/aicad-agent
+.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.12.0
+python -B scripts/verify_release_package.py release/ci/aicad-agent --source-root .
 .\scripts\build-github-source.ps1 `
-  -OutputDirectory release-ci/github-repository `
-  -Version 1.11.2 `
-  -PluginArchive release-ci/aicad-agent-1.11.2.zip `
-  -PluginDirectory release-ci/aicad-agent
-python -B scripts/verify_github_source.py release-ci/github-repository
+  -OutputDirectory release/ci/github-repository `
+  -Version 1.12.0 `
+  -PluginArchive release/ci/aicad-agent-1.12.0.zip `
+  -PluginDirectory release/ci/aicad-agent
+python -B scripts/verify_github_source.py release/ci/github-repository --source-root .
 ```
 
-当前 1.11.2 本地门禁覆盖自动打开审核、线/点/圆模型测量、坐标系同步隐藏/开启与重开持久化、建筑细节预编译阻断，以及安装后哈希不变门禁。CI 会在每次 push 和 pull request 中重新构建并验证发布源。
+当前 1.12.0 增加跨领域规范质量合同、建筑文档集隔离、原生 UTF-8 标注、语义距离拾取、双视口零碰撞门禁、确定性公开 showcase，以及同卷隐藏 staging、输入哈希与双向清单闭包。CI 会在每次 push 和 pull request 中从源码重建并独立验证插件与 GitHub 发布源。
 
 ## 文档索引
 

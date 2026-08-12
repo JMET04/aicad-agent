@@ -1,0 +1,69 @@
+{
+  "schema": "aicad_cad_normative_quality_rules_v1",
+  "version": "1.0.0",
+  "scope": "reviewable_cad_deliveries_with_2d_or_multiview_modifier",
+  "priority": "first_non_compensatory_gate",
+  "inherits": "rules/normative_governance_rules.json",
+  "rules": [
+    {
+      "id": "CAD-Q001",
+      "name": "exact_structural_support_pair_transfer",
+      "requirement": "Transfer supports as typed XY pairs with source-entity provenance and prove exact bidirectional pair-set equality; Cartesian expansion of separate X and Y sets is forbidden.",
+      "rootCausePrevented": "Independent X/Y expansion invents unsupported columns and beams while retaining superficially plausible axis coordinates.",
+      "executableEvidence": ["typed support contract", "source-to-target provenance", "bidirectional Counter equality", "Cartesian-expansion negative regression"],
+      "failureDisposition": "block_release"
+    },
+    {
+      "id": "CAD-Q002",
+      "name": "forward_annotation_occupancy_reservation",
+      "requirement": "Reserve final envelopes before placing annotations in the order content, axis bubbles, chain dimensions, overall dimensions and notes; every label must remain inside its owned reservation and outside every foreign reservation.",
+      "rootCausePrevented": "Sequential generators validate a tag only against earlier objects and then place a later dimension or note on top of it.",
+      "executableEvidence": ["owner-bound reservation envelopes", "containment proof", "foreign-reservation non-overlap", "future-dimension collision regression"],
+      "failureDisposition": "block_release"
+    },
+    {
+      "id": "CAD-Q003",
+      "name": "dual_viewport_text_and_collision_gate",
+      "requirement": "At 1920x1200 and 1280x800 every required native label must be at least 8 CSS pixels high, with zero foreign-owner collision, clipping, replacement characters and horizontal overflow.",
+      "rootCausePrevented": "A fixed-height or text-free preview can pass static checks while labels become unreadable, overlap or disappear in the real review viewport.",
+      "executableEvidence": ["real viewport dimensions", "rendered bounding boxes", "native text inventory", "strict UTF-8 evidence"],
+      "failureDisposition": "block_release"
+    },
+    {
+      "id": "CAD-Q004",
+      "name": "geometry_distance_semantic_pick_arbitration",
+      "requirement": "Choose candidates by visible-primitive screen-distance bucket, fixed semantic priority, exact distance and stable object ID; paint order is not authority and repeated picks cycle all in-scope candidates.",
+      "rootCausePrevented": "Wide transparent hit polygons and drawing order make intended walls unreachable or select unrelated grids and dimensions.",
+      "executableEvidence": ["typed priority table", "screen-distance candidates", "document filter", "reversed-input-order regression"],
+      "failureDisposition": "block_release"
+    },
+    {
+      "id": "CAD-Q005",
+      "name": "document_set_scope_and_freshness",
+      "requirement": "Requested, rendered and source document IDs must form the same exact non-empty set; selection is document-namespaced, switching clears it, and source-to-open hashes bind the current inputs.",
+      "rootCausePrevented": "One stale floor can stand in for a multi-document delivery and cross-document selection can edit the wrong source.",
+      "executableEvidence": ["exact document counters", "namespaced selection", "clear-on-switch", "external file/hash validator"],
+      "failureDisposition": "block_release"
+    },
+    {
+      "id": "CAD-Q006",
+      "name": "verified_atomic_release_closure",
+      "requirement": "Build in a hidden same-volume staging directory, independently validate canonical input hashes and exact manifest/SHA256 closure, then publish by verified rename with rollback; post-publication writes are forbidden.",
+      "rootCausePrevented": "Direct live writes mix new plans with stale views, while unlisted or later-added evidence silently breaks release closure.",
+      "executableEvidence": ["hidden staging", "independent source-input closure", "bidirectional payload closure", "rename-and-rollback test"],
+      "failureDisposition": "block_release"
+    },
+    {
+      "id": "CAD-Q007",
+      "name": "native_utf8_text_ascii_execution_separation",
+      "requirement": "Keep execution IDs and protocol tokens ASCII while human text remains strict UTF-8 native TEXT/MTEXT/SVG text; replacement characters and path-only text proof are forbidden.",
+      "rootCausePrevented": "Localized command tokens and terminal-codepage inference produce mojibake or missing labels despite successful CAD execution.",
+      "executableEvidence": ["ASCII ID inventory", "strict UTF-8 decode", "native text bijection", "host or browser readback"],
+      "failureDisposition": "block_release"
+    }
+  ],
+  "contractSchema": "rules/cad_normative_quality_contract.schema.json",
+  "qaTool": "scripts/aicad_normative_quality_qa.py",
+  "externalReleaseVerifierRequired": true,
+  "safetyLocks": {"reviewOnly": true, "accepted": false, "ruleEnabled": false, "packagingGated": true}
+}

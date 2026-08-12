@@ -194,7 +194,13 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
         elif isinstance(item, ResolvedText):
             entities.append({
                 "id": f"PLAN_{item.id}", "view_id": "PLAN", "source_object_id": item.id,
-                "source_subobject": "entity.insert", "geometry": {"type": "point", "point": list(item.insert)},
+                "source_subobject": "entity.insert", "geometry": {
+                    "type": "point", "point": list(item.insert),
+                    "display": {
+                        "kind": "text", "value": item.value, "height": item.height,
+                        "rotation_deg": item.rotation_deg,
+                    },
+                },
                 "role": "annotation", "derived": False, "selectable": True,
                 "edit_paths": ["insert", "value", "height", "rotation_deg"],
             })
@@ -205,8 +211,20 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
             offset = item.offset_distance
             first_base = (item.first[0] + nx * offset, item.first[1] + ny * offset)
             second_base = (item.second[0] + nx * offset, item.second[1] + ny * offset)
+            dimension_line = _line(
+                f"PLAN_{item.id}_D", "PLAN", item.id, first_base, second_base,
+                "annotation", False, ["base", "dimension_purpose"], "dimension.line",
+            )
+            dimension_line["geometry"]["display"] = {
+                "kind": "dimension", "measurement": item.measurement,
+                "orientation_deg": item.orientation_deg, "unit": "mm",
+                "style_name": item.style_name,
+                "dimension_purpose": item.dimension_purpose,
+                "text_height": 280.0,
+                "owner_id": item.id,
+            }
             entities.extend([
-                _line(f"PLAN_{item.id}_D", "PLAN", item.id, first_base, second_base, "annotation", False, ["base", "dimension_purpose"], "dimension.line"),
+                dimension_line,
                 _line(f"PLAN_{item.id}_E1", "PLAN", item.id, item.first, first_base, "annotation", True, ["first", "base"], "dimension.extension.1"),
                 _line(f"PLAN_{item.id}_E2", "PLAN", item.id, item.second, second_base, "annotation", True, ["second", "base"], "dimension.extension.2"),
             ])
@@ -392,6 +410,10 @@ def generate_view_package(data: dict[str, Any], space: str, domain: str = "gener
         raise PlanError("space must be 2d or 3d")
     semantic = describe_plan(data, space, domain)
     views = _views_2d(data) if space == "2d" else _views_3d(data)
+    layer_by_id = {
+        str(item["id"]): str(item.get("source", {}).get("cad_layer", "0")).upper()
+        for item in semantic.get("objects", [])
+    }
     selector_3d = _selector_3d(data) if space == "3d" else None
     compiled_origin = compile_plan(data).origin if space == "2d" else compile_plan3d(data).origin
     model_coordinate_system = coordinate_system(compiled_origin, space)
@@ -399,13 +421,31 @@ def generate_view_package(data: dict[str, Any], space: str, domain: str = "gener
     selection_map: dict[str, dict[str, Any]] = {}
     for view in views:
         for entity in view["entities"]:
-            selection_map[entity["id"]] = {
+            selection = {
                 "view_id": view["id"], "view_entity_id": entity["id"], "source_object_id": entity["source_object_id"],
                 "source_subobject": entity["source_subobject"], "reference_key": f"{entity['source_object_id']}|{entity['source_subobject']}",
                 "geometry_type": entity["geometry"]["type"], "role": entity["role"], "derived": entity["derived"],
                 "edit_paths": entity["edit_paths"], "back_projection": view["back_projection"],
                 "measurement": view_measurement(view, entity, space, selector_objects_by_id),
             }
+            if space == "2d":
+                geometry_type = entity["geometry"]["type"]
+                layer = layer_by_id.get(entity["source_object_id"], "0")
+                annotation = layer in {"DIMENSION", "TEXT", "TAG_TEXT", "GRID_TEXT", "TITLEBLOCK", "SCHEDULE", "REVISION", "WALL_TYPE"}
+                capabilities = [] if annotation else {
+                    "line": ["parallel", "perpendicular", "collinear", "equal_length"],
+                    "circle": ["concentric", "equal_radius"],
+                    "point": ["coincident"],
+                }.get(geometry_type, [])
+                selection.update({
+                    "edit_scope": "subobject_parameterized",
+                    "shared_parameter_groups": [],
+                    "affected_instance_count": 1,
+                    "requires_preserve_policy": geometry_type == "line" and not annotation,
+                    "detach_supported": False,
+                    "relation_capabilities": capabilities,
+                })
+            selection_map[entity["id"]] = selection
             if entity.get("key_geometry"):
                 selection_map[entity["id"]].update({"key_geometry": True, "key_kind": entity.get("key_kind", "construction")})
     if selector_3d is not None:

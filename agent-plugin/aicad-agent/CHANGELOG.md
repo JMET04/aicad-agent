@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.12.0 - 2026-08-12
+
+- Added one canonical cross-domain normative quality contract and derived QA for support-pair transfer, forward annotation reservations, dual viewport readability, semantic candidate cycling, document isolation, and native UTF-8 evidence.
+- Added multi-storey architectural document-set, independent axis-authority and plan/view/modifier/open-target freshness contracts without permitting fixed-module grid compensation.
+- Added deterministic sanitized GitHub showcase assembly and required its script, regression test and public index in the publishable source tree.
+- Hardened plugin and GitHub-source publication with hidden same-volume staging, independent pre-publish verification, rollback, exact manifest/SHA256 closure and source-input hash freshness.
+- Updated the official build/verify/build-source commands to use one consistent `release/ci` root.
+
 ## 1.11.2 - 2026-08-12
 
 - Added persistent no-window `stage` review mode for strict blocker reports, preventing deleted temporary review paths without creating repeated browser tabs.

@@ -1,6 +1,6 @@
 {
-  "schema": "aicad_architectural_drafting_rules_v7",
-  "version": "8.3.0",
+  "schema": "aicad_architectural_drafting_rules_v9",
+  "version": "8.5.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -332,6 +332,55 @@
       "requirement": "Every architectural axis contract shall bind the exact current design-basis file by SHA-256 and prove that local axis coordinate plus the declared storey origin resolves to the same global axis identifier and coordinate; stale fixed-module metadata is forbidden.",
       "failureCause": "The geometry generator was corrected to derive axes from structural supports, but an older design_basis.json still declared a fixed equal grid, so downstream reviewers could read a contradictory authority source.",
       "prevention": "Write design-basis metadata before contract generation, bind its path/hash/origin in the schema, compare every local axis against the global catalogue in independent QA, reject structuralGrid input authority, and regression-test stale metadata."
+    },
+    {
+      "id": "ARCH-D048",
+      "name": "independent_axis_authority_binding",
+      "requirement": "Every storey axis candidate shall bind by path, revision and SHA-256 to an independent project-authority, approved-input or explicitly review-only concept-assumption catalogue outside the candidate generation dependency cycle; an equal-spaced result is valid only when that bound authority independently yields the same identifiers and coordinates, while unsupported equal spacing or a synchronized self-authored authority is forbidden.",
+      "failureCause": "The candidate plan, structural supports, dimensions and validation metadata could all be regenerated from one fixed-module assumption, so mutually consistent equal spacing passed without independent evidence and a blanket irregularity check would also reject legitimate authority-derived equal grids.",
+      "prevention": "Bind every storey to a separately hashed authority catalogue, compare axis identifiers and coordinates exactly in independent QA, require support entity IDs for candidate axes, allow observed equal spacing only as an exact authority result, and regression-test synchronized wrong grids against an unchanged authority source."
+    },
+    {
+      "id": "ARCH-D049",
+      "name": "requested_storey_document_bijection",
+      "requirement": "The requested storey identifier set shall be in exact one-to-one correspondence with delivered plan documents, sheet identifiers, 2D view packages and axis-authority bindings; duplicate documents for one storey, missing storeys, aliases without an explicit mapping and class-set equality without multiplicity proof shall fail.",
+      "failureCause": "Validation checked that an architectural plan class existed but did not prove the number or identity of requested floor documents, allowing one main-floor artefact to stand in for a three-storey request.",
+      "prevention": "Declare requestedStoreys explicitly, enforce unique IDs, compare Counters as well as sets across documents and authority bindings, require one sheet and one view package per storey, and add missing-storey and duplicate-storey negative tests."
+    },
+    {
+      "id": "ARCH-D050",
+      "name": "document_set_modifier_completeness",
+      "requirement": "A multi-storey delivery shall expose one document-set modifier in document_set_switcher mode whose storey selector is an exact bijection with requestedStoreys, whose selection state is document-scoped, and whose default and active document belong to that set; a single-floor modifier or unscoped cross-document selection is forbidden.",
+      "failureCause": "The modifier renderer accepted only one plan/viewmap pair, so the latest main-floor review page could pass while lower-floor and upper-floor plans were unreachable for correction.",
+      "prevention": "Make document_set_switcher and document_scoped selection explicit contract fields, embed every requested storey ID in the modifier, compare the rendered selector inventory with the contract, and regression-test a three-storey request against a one-storey modifier."
+    },
+    {
+      "id": "ARCH-D051",
+      "name": "modifier_source_and_open_target_freshness",
+      "requirement": "The plan canonical SHA-256, view-package source SHA-256, view-package byte SHA-256, modifier byte SHA-256, embedded document-set digest, declared open-target path and actual opened-target SHA-256 shall form one current chain; any stale source, copied modifier, mismatched open target or unverified launch target shall fail even when geometry QA passes.",
+      "failureCause": "A previously generated temporary review page remained open after the plan and validation artefacts changed, while a constant drawingModifierPreserved flag reported success without hashing the bytes actually shown to the user.",
+      "prevention": "Compute a canonical document-set digest, embed it in a content-addressed modifier, hash the exact launch target immediately before opening, compare plan/view source hashes, record the resolved opened path and hash, and regression-test stale view sources and wrong open targets."
+    },
+    {
+      "id": "ARCH-D052",
+      "name": "semantic_screen_space_pick_arbitration",
+      "requirement": "Every interactive drawing modifier shall resolve overlapping selectable objects from visible-primitive screen distance and an explicit semantic priority table, independent of SVG or canvas paint order; repeated selection at one point shall make lower-priority candidates reachable while preserving document scope.",
+      "failureCause": "Large transparent hit polygons and DOM paint order caused dimensions, grids and furniture to intercept wall clicks even though the wall was visibly under the cursor.",
+      "prevention": "Collect every candidate under the pointer, measure distance to the visible line, circle or text, sort by distance bucket then typed priority then stable object ID, cycle repeated clicks, reject cross-storey references, and regression-test shuffled drawing order."
+    },
+    {
+      "id": "ARCH-D053",
+      "name": "modifier_annotation_readability_and_collision",
+      "requirement": "Modifier text and dimension labels shall use model-bound style heights, preserve upright UTF-8 text, meet a minimum readable screen height at the declared review viewport and pass owner-aware rotated-label collision checks against other annotations and critical geometry.",
+      "failureCause": "Dimension text height was derived from the full model extent and the QA ignored text-to-text and dimension-label collisions, so axis numbers, opening tags and dimensions overlapped or became unreadably small while static checks passed.",
+      "prevention": "Carry DIMSTYLE text height through the view package, evaluate rotated label boxes at 1920x1200 and 1280x800, fail required text below 8 CSS pixels or collisions above the tolerance, and allow only explicit owner-pair exceptions."
+    },
+    {
+      "id": "ARCH-D054",
+      "name": "architecture_structure_support_bijection",
+      "requirement": "Concept structural columns shall equal the union of explicit architectural COLUMN centres and separately declared core support nodes for each storey; forming a Cartesian product from independent X and Y axis coordinate sets or adding unapproved supports is forbidden.",
+      "failureCause": "The steel model combined every X coordinate with every Y coordinate, creating forty columns unsupported by the architectural plan even though both models used the same nominal axes.",
+      "prevention": "Transfer support points as typed XY pairs with source entity provenance, compare generated and source sets in both directions, require an approved cross-discipline change for additions, and bind the structural release to current architecture plan and design-basis hashes."
     }
   ],
   "defaultLayerProfile": {
@@ -482,6 +531,8 @@
   "axisCoverageContract": {
     "coordinateAuthority": "earlier_structural_support_entities_only",
     "equalSpacingPolicy": "allowed_only_as_support_derived_result",
+    "authorityIndependencePolicy": "hash_bound_source_outside_candidate_dependency_cycle_required",
+    "observedEqualSpacingPolicy": "pass_only_when_exact_independent_authority_result",
     "unsupportedFixedModulePolicy": "fail",
     "requiredEnvelopes": [
       "fullContentBounds",
@@ -531,5 +582,15 @@
     ],
     "nonCompensatory": true,
     "reviewLaunchContract": "persistent_content_addressed_path_plus_idempotent_launch_status"
+  },
+  "architecturalDocumentSetContract": {
+    "schema": "rules/architectural_document_set.schema.json",
+    "qaTool": "scripts/aicad_architecture_document_set_qa.py",
+    "requiredForRequestedStoreyCountAbove": 1,
+    "storeySetPolicy": "exact_bijection",
+    "modifierMode": "document_set_switcher",
+    "selectionScope": "document_scoped",
+    "freshnessPolicy": "plan_view_modifier_open_target_hash_chain",
+    "failureDisposition": "blocker_report_only"
   }
 }

@@ -1,0 +1,251 @@
+{
+  "schemaVersion": "1.1.0",
+  "root": ".",
+  "hashAlgorithm": "SHA-256",
+  "selfExcluded": [
+    "manifest.json"
+  ],
+  "fileCount": 48,
+  "files": [
+    {
+      "path": "REQUIREMENTS_PUBLIC.md",
+      "bytes": 709,
+      "sha256": "8d94bd57cc5183d91115561db2e04f72731eb654b6712e111b4460c1b80feda8"
+    },
+    {
+      "path": "SHA256SUMS.txt",
+      "bytes": 4644,
+      "sha256": "e85704480f7e4c98825573c38e4cabd634ecfd1bf1c01f6a15dcb7942c4cd6ae"
+    },
+    {
+      "path": "analysis/build_metrics.json",
+      "bytes": 849,
+      "sha256": "8380b89e62f3942677820dd4ae96d0b4e924153a2e91bfd0fbd971b9d59c8ae6"
+    },
+    {
+      "path": "analysis/clean_router.json",
+      "bytes": 11481,
+      "sha256": "a3cf1c6e78e9ddeb4020320d88bbf788265355ef23c1c3da812fb35b92450a44"
+    },
+    {
+      "path": "analysis/cross.json",
+      "bytes": 17095,
+      "sha256": "ca8a4a2c40c5f11782415ec7153f8d35f9a1ff14886fa21d4bc6c193961318ca"
+    },
+    {
+      "path": "analysis/emc.json",
+      "bytes": 58652,
+      "sha256": "50ccf04f6541a82caa85c2991c2f7e5d21c510f030890c050af6e896efe31280"
+    },
+    {
+      "path": "analysis/fab_gate.json",
+      "bytes": 3581,
+      "sha256": "cf12bde9f19ada20a2b05a5e991d23f76a5a9e91c7e981f867049725a1d9d82e"
+    },
+    {
+      "path": "analysis/full_review.json",
+      "bytes": 3661,
+      "sha256": "952810fabd84dee7125694cf2e3abcca22c0d4726091397364764e808ce5f66d"
+    },
+    {
+      "path": "analysis/geometry_classification.json",
+      "bytes": 1909,
+      "sha256": "73c953e4022f6e7171edd8952de96e9016bb8717aad47213f2fef2788ae45d15"
+    },
+    {
+      "path": "analysis/gerbers.json",
+      "bytes": 9892,
+      "sha256": "a12725d5a032ba0e3f2b9fc1772441d974e903e7b2cc0e1a2807c38d6db0a12b"
+    },
+    {
+      "path": "analysis/independent_drc.json",
+      "bytes": 1241,
+      "sha256": "2b4b7751f028a4d22595a11dd1d99cd2a4adae094aab41907f3b6fe461b56a7a"
+    },
+    {
+      "path": "analysis/pcb.json",
+      "bytes": 800518,
+      "sha256": "cb3db3eff391ebe9cd6f86939b5270192d97d2cae910402aef09823d2572a02e"
+    },
+    {
+      "path": "analysis/route_corrections.json",
+      "bytes": 301,
+      "sha256": "71c1c2d5c6fd90a01f87a3c4ebcc3ea81aee82af526ebac74b8b8e7a55873e94"
+    },
+    {
+      "path": "analysis/schematic.json",
+      "bytes": 1057227,
+      "sha256": "0bf80a366da25752ce65c3f58d545abc3a2aa9559482922718cc8d1dd312e461"
+    },
+    {
+      "path": "analysis/thermal.json",
+      "bytes": 928,
+      "sha256": "6f9b423d3687a4f1be89af8ec4bccf7ab3f0e9a6563157050aa77f14e2134478"
+    },
+    {
+      "path": "analysis/tool_inventory.json",
+      "bytes": 412,
+      "sha256": "d0f19f1f600891569876f2f334ea8635d02a99806699a99bbebd63e96651b404"
+    },
+    {
+      "path": "datasheets/official_sources.json",
+      "bytes": 2420,
+      "sha256": "f327c579c03c6e08c519bfb6df9c9cf8632e79d26b5266b0258d49986b4ac4d7"
+    },
+    {
+      "path": "design_contract.json",
+      "bytes": 3979,
+      "sha256": "9afc408deb626e280bfb34cad7c9710eb4e817aa96d8ce580c44b54dd8fc3cb8"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1746,
+      "sha256": "291265e2b1ea423675c043f9d9310bf85c4e861730a60cc9c2cfc9ad639c7191"
+    },
+    {
+      "path": "outputs/bom.csv",
+      "bytes": 5146,
+      "sha256": "c85d98614d9ddaf4de178ebbd0a8b16d55e7e8f227f60c6d145fe079dfafd5fb"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-B_Cu.gbr",
+      "bytes": 17642,
+      "sha256": "212ae50e93079d8103054612a10862836d5748c8040d8f0a5f1113536ffd91ea"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-B_Mask.gbr",
+      "bytes": 8733,
+      "sha256": "4e1be33539a1dc609315e1f2372468bd658a0f7c6934144bb8b54c1648e9fe1c"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-B_Silkscreen.gbr",
+      "bytes": 19727,
+      "sha256": "046d42501d902ebb8343240bf8d9afed0cca95b97b86bba482dde209225f8e2e"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-Edge_Cuts.gbr",
+      "bytes": 407,
+      "sha256": "3cfa63bd289c3fb72f0adaa3ba9dbe5ddb810cad4412652c3c2c2413688bfcae"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-F_Cu.gbr",
+      "bytes": 17642,
+      "sha256": "bbf8ecab09d680717f16df5385661ffcc1f213979815f38c3f23c7006dc9694a"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-F_Mask.gbr",
+      "bytes": 8733,
+      "sha256": "7bf47d87fdc4e50c3bf6ea77412aaa8caefb8e4e60a40c286380e275f03a0d68"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-F_Silkscreen.gbr",
+      "bytes": 19727,
+      "sha256": "232943888a3cdde33ae747b26e8ea955b54fc570bf87adaa79ba5180181e633e"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-In1_Cu.gbr",
+      "bytes": 17642,
+      "sha256": "c5ea95c41921d1371d550bdc167f168152d756195deab5e36f873d936587bb1c"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-In2_Cu.gbr",
+      "bytes": 17642,
+      "sha256": "63cca3ec7bafb053081294f29d1dbba4159601629bc009aaa4c99a0a367ab718"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-NPTH.drl",
+      "bytes": 147,
+      "sha256": "d09a0beb886ab79b766cb70a883bc685bd62ad9a6a768aa90407972fd5dee2aa"
+    },
+    {
+      "path": "outputs/gerbers/industrial_controller-PTH.drl",
+      "bytes": 429,
+      "sha256": "b793233f320baecb0ca3ebcb3297e5efbb5f4e1d0444fff4f478943b37995c9f"
+    },
+    {
+      "path": "outputs/positions.csv",
+      "bytes": 7998,
+      "sha256": "71234214a168e2fa284fb4437375957cf3a2ae9e2f3fd092fa0d1451fe5be17d"
+    },
+    {
+      "path": "outputs/review_drawing.pdf",
+      "bytes": 1388,
+      "sha256": "2b63b58b8dcb85a6e9506b03ca347da77f288986641c08bfe5c832ce20af9e82"
+    },
+    {
+      "path": "preview/board_isometric_concept.svg",
+      "bytes": 26248,
+      "sha256": "511a2d2b4e8f5fd2297a1d8edfbc4fc4e3748bfa99af00c4436893746f6110d6"
+    },
+    {
+      "path": "preview/board_top_white.png",
+      "bytes": 136586,
+      "sha256": "d7e8371cc5735ceb3e7e3971a94d63120d80cf243d34abe58f149e4b78fe94e6"
+    },
+    {
+      "path": "preview/board_top_white.svg",
+      "bytes": 41140,
+      "sha256": "5763cf6e7cd2fa985f958b02757e184173e0bdf81f6bda7e65fa0293858b83d6"
+    },
+    {
+      "path": "project/industrial_controller.kicad_dru",
+      "bytes": 307,
+      "sha256": "aa6971eab1ef75a49b1ea48b6abd6c8f0ad9ede1ccad396e6f6fc5fa93698e0b"
+    },
+    {
+      "path": "project/industrial_controller.kicad_pcb",
+      "bytes": 216789,
+      "sha256": "219a2c16938630b4503bfcd3b03f573f98227ce2139ec9f0fc2c7918be783f87"
+    },
+    {
+      "path": "project/industrial_controller.kicad_pro",
+      "bytes": 3028,
+      "sha256": "3e38b9b60f80df563f1d110b1d96b2b84bca26cd1f1d86c92667a49c559d4257"
+    },
+    {
+      "path": "project/industrial_controller.kicad_sch",
+      "bytes": 398472,
+      "sha256": "ae94ca8eae1f8965957aad86e6284f2c0978d0b05891041ca7874b0fac60660a"
+    },
+    {
+      "path": "review_cn.md",
+      "bytes": 9287,
+      "sha256": "bf797722701dcd19d1a19891e02b319e4db7ae01a4b10fcd0bf11e6b731f3798"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 5478,
+      "sha256": "bec34928f928ecbc082d560351dd804b407a7c6259cbdc991cdb5082f98f1cf2"
+    },
+    {
+      "path": "validation.md",
+      "bytes": 2790,
+      "sha256": "62bc3c10ffeb7644ad49d079ac752b25c9be9a13dff14ad6d37ee24d4d8aa4bf"
+    },
+    {
+      "path": "validation/public_gate.json",
+      "bytes": 312,
+      "sha256": "c105497fea3cd9e0bf9fc80154081a421ea903844a4a862d32aae49ed8870d04"
+    },
+    {
+      "path": "validation/release_lock.json",
+      "bytes": 294,
+      "sha256": "1d474877f6b65e0302ff6142461d2a3142bd18f50c787b1b697f706b2b6b7be5"
+    },
+    {
+      "path": "validation/root_cause_prevention.md",
+      "bytes": 2965,
+      "sha256": "0311322d9d573281b6d5ad987a8714ddb6a3b257c3cfcb2ffd246a0c600fa018"
+    },
+    {
+      "path": "validation/validation.json",
+      "bytes": 5478,
+      "sha256": "bec34928f928ecbc082d560351dd804b407a7c6259cbdc991cdb5082f98f1cf2"
+    },
+    {
+      "path": "validation/validation.md",
+      "bytes": 2790,
+      "sha256": "62bc3c10ffeb7644ad49d079ac752b25c9be9a13dff14ad6d37ee24d4d8aa4bf"
+    }
+  ]
+}

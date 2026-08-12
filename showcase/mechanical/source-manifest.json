@@ -1,0 +1,711 @@
+{
+  "schema": "srb160_release_manifest_v1",
+  "status": "pass",
+  "product": "SRB-160 precision servo reducer flange and bearing bracket",
+  "generator": {
+    "agent": "aicad-agent",
+    "version": "1.11.2",
+    "geometry_provider": "caller-authored constrained plans compiled by installed agent"
+  },
+  "artifact_count": 113,
+  "artifacts": [
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope-review.review.html",
+      "bytes": 44164,
+      "sha256": "dbba33037a1a8891ab59a312195dbaa2049b46f9c9fad29892022c86bd794e97",
+      "media_type": "text/html"
+    },
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope-review.views.audit.md",
+      "bytes": 945,
+      "sha256": "a9a64ec6b376b329b7c232b365cdeb0b81faf09331eb697e92d079358c9429a2",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope-review.views.json",
+      "bytes": 20353,
+      "sha256": "fa1e2fbe0f9dba04a317f14f4e1df0888ef90d728ec71394f7f4fb3efbd05d0b",
+      "media_type": "application/json"
+    },
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope.aicad",
+      "bytes": 516,
+      "sha256": "d6cef51edda11794a36944f326ad0ddd8c14b911244c360b705e9a0f2312c5ac",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope.audit.md",
+      "bytes": 1632,
+      "sha256": "44a4dd15dc945487f05cc517e0891245bfad350dfd19b555b9bc48e819ccb468",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope.dxf",
+      "bytes": 18211,
+      "sha256": "257a76042b03dba19ecb26291e532b12d41ed8f79532d088d17655b9c8126b2c",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope.manifest.json",
+      "bytes": 739,
+      "sha256": "3facfe85c9c65c938184ab85e381cc6d36a49bda838cf9c513ce9263be319e59",
+      "media_type": "application/json"
+    },
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope.plan.json",
+      "bytes": 4102,
+      "sha256": "c8e225f6ba14881aa38ca2f8d1853883b65a979c29ef1c0845247a9a64f03c96",
+      "media_type": "application/json"
+    },
+    {
+      "path": "bounded-envelope/srb160_bounded_envelope.scr",
+      "bytes": 354,
+      "sha256": "7dd414b746b80f6035b20c42ba5d3562ed9c7f18ad7204f4669a5774acfcd0b6",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160-review.review.html",
+      "bytes": 526438,
+      "sha256": "301f43f66ceaa3008bcc1dc824619bdcfa0a91ad459329228b81277e5b207ed2",
+      "media_type": "text/html"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160-review.views.audit.md",
+      "bytes": 958,
+      "sha256": "0604c29d2d81889e571af37894a4dba1c1920f9f3454be1ffcf1ea7163a26271",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160-review.views.json",
+      "bytes": 748138,
+      "sha256": "6b0d1e81813a5912002912acf363e24b7428792edf4d091fec0963dc46d38ef1",
+      "media_type": "application/json"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160.aicad",
+      "bytes": 20973,
+      "sha256": "c487a587bf4e371bbc565bfd10bf708d7b89c802c216b10a015cf3e0b0f2a024",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160.audit.md",
+      "bytes": 63825,
+      "sha256": "20c980a64fbbcbeb1a45ec690fbafeb415e84ad321af920e76d33c0068ca517d",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160.dxf",
+      "bytes": 63717,
+      "sha256": "c8202080a2efc79f561a86d01a1e293020f50d2813056f931b369ccc75a82a9d",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160.manifest.json",
+      "bytes": 1044,
+      "sha256": "5dbc084fefa46dcf1b9e7cb9c51bc096d239765b8b6c37b24166aa9c9d94b766",
+      "media_type": "application/json"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160.plan.json",
+      "bytes": 189955,
+      "sha256": "95e123530d4b0cec1bd6d1f2ed6ef5f8ae9dab321ee8fe6d2ad25d0e2c597104",
+      "media_type": "application/json"
+    },
+    {
+      "path": "cad/agent/servo_reducer_bracket_srb160.scr",
+      "bytes": 8678,
+      "sha256": "e24e99cf2f4386281b38e6fdd23a329890934851560ad1b528fc5bea8a92017e",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "cad/servo_reducer_bracket_srb160.aicad",
+      "bytes": 20973,
+      "sha256": "c487a587bf4e371bbc565bfd10bf708d7b89c802c216b10a015cf3e0b0f2a024",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "cad/servo_reducer_bracket_srb160.audit.md",
+      "bytes": 63825,
+      "sha256": "20c980a64fbbcbeb1a45ec690fbafeb415e84ad321af920e76d33c0068ca517d",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "cad/servo_reducer_bracket_srb160.dxf",
+      "bytes": 74597,
+      "sha256": "49e76f52b09cc52307639475bfc5db20c2cd1a44dceac130cfe63abdd4f92cf5",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "cad/servo_reducer_bracket_srb160.plan.json",
+      "bytes": 189955,
+      "sha256": "95e123530d4b0cec1bd6d1f2ed6ef5f8ae9dab321ee8fe6d2ad25d0e2c597104",
+      "media_type": "application/json"
+    },
+    {
+      "path": "cad/servo_reducer_bracket_srb160.scr",
+      "bytes": 8678,
+      "sha256": "e24e99cf2f4386281b38e6fdd23a329890934851560ad1b528fc5bea8a92017e",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160-review.review.html",
+      "bytes": 1457155,
+      "sha256": "fefc41a8223682f2a25cae0aac1a98d27445ad478f79d87d8bbd83e463312a9d",
+      "media_type": "text/html"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160-review.views.audit.md",
+      "bytes": 1396,
+      "sha256": "06fd18fb2f1ef105eb7ef24a28e983e1cbd26204f693f6ad3aa4815ecdc5a1b6",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160-review.views.json",
+      "bytes": 2030610,
+      "sha256": "8e7f1115e189453aa5be66826c7a97539a0ecbf8addf82bd2c7927a08b47bc76",
+      "media_type": "application/json"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160.3d.audit.md",
+      "bytes": 8082,
+      "sha256": "2944318868baa95c84dc97d279a0693de4476ff11897fe2a30f7cbf862b326fa",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160.3d.manifest.json",
+      "bytes": 10841,
+      "sha256": "e7fcbc70badebe3530b5c4c6782a8aebd50734944b954deeef778c266c2aa66a",
+      "media_type": "application/json"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160.aicad3d.plan.json",
+      "bytes": 22473,
+      "sha256": "9526113a8267993b406c31407242ce58fb8fbb6bf2b5671c83ca83e1af432f60",
+      "media_type": "application/json"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160.reopen-report.json",
+      "bytes": 161353,
+      "sha256": "d93d8856750c06f0f01b9d5d73925d5925768b961be4b224ed3b60948f9225f7",
+      "media_type": "application/json"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160.SLDPRT",
+      "bytes": 311082,
+      "sha256": "26ccc9abf05c460c3cbc581f1b23a9e0e8380a1d343a5f74b735270f8c5e1f9f",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160.solidworks-report.json",
+      "bytes": 237638,
+      "sha256": "10cee716b6a9149867f876f38804b924133e5f9ef29b4846c69586fe922272c0",
+      "media_type": "application/json"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160.step",
+      "bytes": 228117,
+      "sha256": "8ac9fa4e20de163bf6fce49665cec6a50f8ddb89afa74b940adf087cac5bb978",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "model3d/native/servo_reducer_bracket_srb160.swplan.json",
+      "bytes": 27233,
+      "sha256": "fc61c95d60deb383563600494996769d33403a3ad16035ca20da944f58ae282b",
+      "media_type": "application/json"
+    },
+    {
+      "path": "native/autocad/autocad-host-report.json",
+      "bytes": 2527,
+      "sha256": "c51f9b99581ad26a684be5ce258b5fa45942d22664fd015dcd05d6b0edf95702",
+      "media_type": "application/json"
+    },
+    {
+      "path": "native/autocad/autocad-readback.lsp",
+      "bytes": 1735,
+      "sha256": "c1a30d7d3c8ac8d56b246513487e5ba0967102dbc902b8321f2343542fdbcafb",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "native/autocad/autocad-readback.scr",
+      "bytes": 122,
+      "sha256": "f3951b23bcb64c9e93fa21fde312a7c74764f8c7e760137ff77ee4fb921d5fb7",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "native/autocad/autocad-readback.txt",
+      "bytes": 1076,
+      "sha256": "9cbabe7fdf92c26147bede9336aa5360abb8fe85636a972bcce01f44ad64c38f",
+      "media_type": "text/plain"
+    },
+    {
+      "path": "native/autocad/autocad-reopen-console.log",
+      "bytes": 1500,
+      "sha256": "8ac3ad054676e388d385ca8970d1a4e5f9a26685718f59d22d0c8cc6e5d04805",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "native/autocad/autocad-save-console.log",
+      "bytes": 7902,
+      "sha256": "4e80b001b2d4e071790b57af494dfed0c2fcbf140b231e3e04c5da68f06a995f",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "native/autocad/autocad-save.lsp",
+      "bytes": 648,
+      "sha256": "c0e72ca08624283a8e991eb73fde04c9389b1e49d876936785bc3c76c940c508",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "native/autocad/autocad-save.scr",
+      "bytes": 111,
+      "sha256": "3b3bce2f01be66223af5592b437dbe0f66ef28f7004aaf2c5fa8f9dedc0f3892",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "native/autocad/servo_reducer_bracket_srb160.dwg",
+      "bytes": 26929,
+      "sha256": "d328255564e0edef128bb9652adee564460bd02aa01a140b9806f43407474c90",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "native/autocad/servo_reducer_bracket_srb160.dxf",
+      "bytes": 74597,
+      "sha256": "49e76f52b09cc52307639475bfc5db20c2cd1a44dceac130cfe63abdd4f92cf5",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "path": "preview/agent-3d-review.png",
+      "bytes": 145824,
+      "sha256": "1559c7c0b85b847a770eb525e3e1b6ac212c2940191ebffc2a398e879773aec6",
+      "media_type": "image/png"
+    },
+    {
+      "path": "preview/drawing.png",
+      "bytes": 110670,
+      "sha256": "b2eeca72fd5150544787ce72bc286645e98f303980c84de48a87688f4773df6d",
+      "media_type": "image/png"
+    },
+    {
+      "path": "preview/drawing.svg",
+      "bytes": 50123,
+      "sha256": "bbe9f1bf53080eecdb5cbfeaa1e4b04aa6d6e84c4beb7dcec69c55737e78a82c",
+      "media_type": "image/svg+xml"
+    },
+    {
+      "path": "preview/isometric.png",
+      "bytes": 161864,
+      "sha256": "feda9a94fe44c1058edc2c5c984ec8b884f0a5bdc06b327e9c5699f14bf65698",
+      "media_type": "image/png"
+    },
+    {
+      "path": "preview/isometric.svg",
+      "bytes": 3219,
+      "sha256": "927295d49438e6b9a5909524f13ecc9e461a684dec8ad5264d7d7fdfd212b875",
+      "media_type": "image/svg+xml"
+    },
+    {
+      "path": "preview/review-dashboard.png",
+      "bytes": 190945,
+      "sha256": "b868066e6f029f6a145ef531a9d13eb11158332e5e884e0072a6aae724d61457",
+      "media_type": "image/png"
+    },
+    {
+      "path": "qa/autocad-native-retry.json",
+      "bytes": 667,
+      "sha256": "daaf82c248f573e1fabdbaea9a655a64f10eb4e892ff873bd166c8e17ccff63c",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/bounded-normality.command.json",
+      "bytes": 474,
+      "sha256": "311a649bab7ccfc23828e9281b0f3b7c32e909ca8ba55ee44977ea0247a06770",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/bounded-normality.json",
+      "bytes": 9365,
+      "sha256": "bd109a83b08204147fd4150392fe707804e8f745c93eb4b046888f89c90091ac",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/bounded-normality.md",
+      "bytes": 1345,
+      "sha256": "c29cb8890ec258a46f1eb28cba5e9ecc7095f9dc3d2156e73393eff2eb15b360",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "qa/compile-2d-final.command.json",
+      "bytes": 23789,
+      "sha256": "dc6e92c97b98ebef1b6e0e25f43099629b04700293c6c708ae05b29ccc1578a9",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/compile-2d.command.json",
+      "bytes": 24242,
+      "sha256": "7207800498fc793ed7f3f8ee355c5a0ef1545f49d6a83ccd25fb9f351dcc2586",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/domain-2d-final.command.json",
+      "bytes": 121924,
+      "sha256": "506ae7c12765b5e45067c9e52c623528c781f6d3f687b83ab30a4328c530e0cc",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/domain-2d.command.json",
+      "bytes": 121121,
+      "sha256": "9a711614b8b1602d585ca1a35ff4d5c05f3a9125aa094cdde6085cc3a146eda1",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/domain-3d-native-retry.command.json",
+      "bytes": 3600,
+      "sha256": "9da38c477d9c46dd40f6346cc18ce7d0e4600a44aa864ebf49e110d2843aa500",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/domain-3d.command.json",
+      "bytes": 3582,
+      "sha256": "90d411d128972529aeb861a81a4da7bde84badab2e330b0aa76fe6f736f4acd4",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/drawing-2d.domain-validation.json",
+      "bytes": 114425,
+      "sha256": "2601cb146fcd3cec859c4fdc5887ee2dcddcdc12a54b13735055917dc11d7e0a",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/drawing-2d.domain-validation.md",
+      "bytes": 58087,
+      "sha256": "44145afb80b3056aab94be24d41b20d42e32ecac34becec4a62a98a522f27a26",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "qa/dxf-style-and-audit.json",
+      "bytes": 1647,
+      "sha256": "4ef7403c0d95a84d1c25dd90400f3189940d99a44a569bce93c8c9475fb5a9e9",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/engineering-qa.json",
+      "bytes": 1346,
+      "sha256": "c7e911eb11eda8ae3ae5dbae0ed533396df802ec7964cd1db642d437a5dfdc4a",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/engineering-qa.md",
+      "bytes": 872,
+      "sha256": "813f2504de5a092d1cbcc07f4c33efbc0ea72d97b4593495ba2b966b8350bd1a",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "qa/guarded/detail_normality.json",
+      "bytes": 9365,
+      "sha256": "bd109a83b08204147fd4150392fe707804e8f745c93eb4b046888f89c90091ac",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/guarded/detail_normality.md",
+      "bytes": 1345,
+      "sha256": "c29cb8890ec258a46f1eb28cba5e9ecc7095f9dc3d2156e73393eff2eb15b360",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "qa/guarded/guarded_delivery.json",
+      "bytes": 3006,
+      "sha256": "e3db0ec6a6483dd03ebc3c9c84542287d854ba6f0432dc4ef2e599941842a6d4",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/guarded/guarded_delivery.md",
+      "bytes": 1702,
+      "sha256": "f80f54129eff2d30879ea30236f4c5593fcf8bb7c027081ec5a5757e332b0a72",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "qa/guarded/requirement_conformance.json",
+      "bytes": 27833,
+      "sha256": "5ecf30c0f0deeece33014be5d9b4f25a52c713955b766096724f4ba65370fa9b",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/guarded/requirement_conformance.md",
+      "bytes": 1391,
+      "sha256": "37c9fa6ea3ae66a8f0d3b21c6ca1e8a5cbccfb85d9b95396e0c213d9dca71722",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "qa/guarded-envelope-delivery.command.json",
+      "bytes": 556,
+      "sha256": "9baa261a1637287ca368dfaf7161c7269c9fbf63e3eafa5378031ff2a01787cc",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/model-3d.domain-validation.json",
+      "bytes": 2834,
+      "sha256": "4f1829149962e9ee5dc102ad61228ce33069010c8a6bbcab38f97498731d2ea4",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/model-3d.domain-validation.md",
+      "bytes": 762,
+      "sha256": "381161a8fd44bce5b2d5ead9645bdf3060075b72af434b8d0522d9d7704084c2",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "qa/multiview-2d-final.command.json",
+      "bytes": 1440,
+      "sha256": "3c377f8a90018c95a7fb4f9e9379059068ef09acc77b32b6454b17de07a1d828",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/multiview-2d.command.json",
+      "bytes": 1434,
+      "sha256": "7cd388ad0dba6925e00c07f52d49a5cfcd45ca8364fa2b4a11ef93b736200871",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/multiview-3d-native-retry.command.json",
+      "bytes": 1437,
+      "sha256": "3c957c72f321109bd78dba3dfab39c727be0f17651c4a2e7dd4da50920f20dd8",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/multiview-3d.command.json",
+      "bytes": 1424,
+      "sha256": "028f389ff9f4789ac672ec9f6629bb9a8423577bd278684b4190a3fa417cac6e",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/release-geometry-sync.json",
+      "bytes": 666,
+      "sha256": "fa8125f2265a5ee90e840e44c2e05c9cf205f5c5d169b63cd0b8087bede4968c",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/relief-system-redesign.json",
+      "bytes": 1270,
+      "sha256": "b02f6eb5601b000a92c83b074d2d0dab4b8495ae7eb7fdff846af293ef0bf6cd",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/render-evidence.json",
+      "bytes": 3519,
+      "sha256": "aab7b337b54849e38de8cd22800758070ef045c32b7196e68b8b0df8529b20c2",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/requirement-conformance.command.json",
+      "bytes": 492,
+      "sha256": "8cd576daf7df194bb6671e3619701473ec02a1507f49b6c48be209c119c8d500",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/requirement-conformance.json",
+      "bytes": 27833,
+      "sha256": "5ecf30c0f0deeece33014be5d9b4f25a52c713955b766096724f4ba65370fa9b",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/requirement-conformance.md",
+      "bytes": 1391,
+      "sha256": "37c9fa6ea3ae66a8f0d3b21c6ca1e8a5cbccfb85d9b95396e0c213d9dca71722",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "qa/solidworks-build.command.json",
+      "bytes": 40643,
+      "sha256": "d8d667dbc1acf9287371561713ec6a7d6c4ecb2d278566e6b5027ef5b1aca160",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/solidworks-doctor.command.json",
+      "bytes": 611,
+      "sha256": "7f97a9884869b3020712bf7b6edae117584541a868964fcc40f36740e90c74e3",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/solidworks-native-retry.json",
+      "bytes": 904,
+      "sha256": "1869a7c1193499cb7ad9f1c6dacc8fd11982b639f4d494d4992b0158dc268d49",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/solidworks-native-summary.json",
+      "bytes": 881,
+      "sha256": "a0110920463382989bf345d1e6506827f1b6b8451b3b7520cb6018062497272e",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/utf8-audit.json",
+      "bytes": 18350,
+      "sha256": "be0381297bc1ea050573ea4b85049a6753095e749d62b9d7398eb657617ff2fd",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/validate-2d-final.command.json",
+      "bytes": 21818,
+      "sha256": "4379dcb51438dd9704808ed21dee8c0e656f2f7a015a8a5fc42bc119e730cdd0",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/validate-2d.command.json",
+      "bytes": 22271,
+      "sha256": "10ffc6c187ed530aeeef2e0f9195221eb2d1987d57e42a5077e8de944f3cea52",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/validate-3d-native-retry.command.json",
+      "bytes": 6396,
+      "sha256": "004e7fe51b7baf32bb697790e60523fb59bd99ac8315f62e0cbdf3e86a80ccf4",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/validate-3d.command.json",
+      "bytes": 6285,
+      "sha256": "b82e9fc8149aff95daf796993ec75757e98d291239dd5ce936fd5f8a60c12903",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/visual-inspection.json",
+      "bytes": 1412,
+      "sha256": "62b716c1fb7cd3b1196b6fe908ba16d7c734985405b6acecd284d2efe9d6384f",
+      "media_type": "application/json"
+    },
+    {
+      "path": "qa/visual-review-observation.json",
+      "bytes": 1862,
+      "sha256": "2d4c028aea91000445878bca124f4f43bce910387a1344141edc3b0f8563fab6",
+      "media_type": "application/json"
+    },
+    {
+      "path": "review/2d/drawing-2d.review.html",
+      "bytes": 526438,
+      "sha256": "301f43f66ceaa3008bcc1dc824619bdcfa0a91ad459329228b81277e5b207ed2",
+      "media_type": "text/html"
+    },
+    {
+      "path": "review/2d/drawing-2d.views.audit.md",
+      "bytes": 933,
+      "sha256": "bcc8c86297651213f8085ee1853128860d7aff68fb79113ddc3929fd47f5832a",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "review/2d/drawing-2d.views.json",
+      "bytes": 748138,
+      "sha256": "6b0d1e81813a5912002912acf363e24b7428792edf4d091fec0963dc46d38ef1",
+      "media_type": "application/json"
+    },
+    {
+      "path": "review/3d/model-3d.review.html",
+      "bytes": 1457155,
+      "sha256": "fefc41a8223682f2a25cae0aac1a98d27445ad478f79d87d8bbd83e463312a9d",
+      "media_type": "text/html"
+    },
+    {
+      "path": "review/3d/model-3d.views.audit.md",
+      "bytes": 1369,
+      "sha256": "f5ce3c79ba5e376add325c4388297a30f2575ffdeb02c2f99b00be36b23b8348",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "review/3d/model-3d.views.json",
+      "bytes": 2030610,
+      "sha256": "8e7f1115e189453aa5be66826c7a97539a0ecbf8addf82bd2c7927a08b47bc76",
+      "media_type": "application/json"
+    },
+    {
+      "path": "review.html",
+      "bytes": 8327,
+      "sha256": "321651d0d389d247a50348b5d4edb01787192c81aa785010a73f7243668d8676",
+      "media_type": "text/html"
+    },
+    {
+      "path": "source/design-parameters.json",
+      "bytes": 2160,
+      "sha256": "c9f7a9b84293130370059f37c3cc328d9a6332fe78cbbc41b4506e7827343ce7",
+      "media_type": "application/json"
+    },
+    {
+      "path": "source/drawing.plan.json",
+      "bytes": 189955,
+      "sha256": "95e123530d4b0cec1bd6d1f2ed6ef5f8ae9dab321ee8fe6d2ad25d0e2c597104",
+      "media_type": "application/json"
+    },
+    {
+      "path": "source/model.3d-plan.json",
+      "bytes": 22473,
+      "sha256": "9526113a8267993b406c31407242ce58fb8fbb6bf2b5671c83ca83e1af432f60",
+      "media_type": "application/json"
+    },
+    {
+      "path": "source/normality-envelope.geometry.json",
+      "bytes": 1575,
+      "sha256": "2870b44bc4b9db5e10b94d630fa27fb00c22f6f9d5a8fadbf0af1c7bd9b2b122",
+      "media_type": "application/json"
+    },
+    {
+      "path": "source/normality-envelope.plan.json",
+      "bytes": 4102,
+      "sha256": "c8e225f6ba14881aa38ca2f8d1853883b65a979c29ef1c0845247a9a64f03c96",
+      "media_type": "application/json"
+    },
+    {
+      "path": "source/normality-instance.json",
+      "bytes": 725,
+      "sha256": "098cff855312f0c236801dbf8297c5279f61f95f0adf890f00a94bb711e60738",
+      "media_type": "application/json"
+    },
+    {
+      "path": "source/normality-template.json",
+      "bytes": 10962,
+      "sha256": "8886a2d0e31e081ad99b73a0424f1817e78ccc6195a5ca1faf3f2e66baf1bcec",
+      "media_type": "application/json"
+    },
+    {
+      "path": "source/requirement-contract.json",
+      "bytes": 18409,
+      "sha256": "d9ceb96c840285c8122efdca12f3510a69c85c6857027b6f0801b61140ba39d3",
+      "media_type": "application/json"
+    },
+    {
+      "path": "source/requirement-trace.json",
+      "bytes": 23743,
+      "sha256": "cbcc23dde985d4fdcaaec88a99d174f787f5bde19b0096883347dc7d0c9d795f",
+      "media_type": "application/json"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 2522,
+      "sha256": "f7e4971c946de7e229b7db1fe803b2d5183ef7298beac90a3d0ca53614305dfa",
+      "media_type": "application/json"
+    },
+    {
+      "path": "validation.md",
+      "bytes": 1571,
+      "sha256": "be8e89d562e1ebfd22004cb3cb3bdae62ac392121f4a88889082a6d89447676c",
+      "media_type": "text/markdown"
+    }
+  ],
+  "primary_artifacts": {
+    "plan_2d": "source/drawing.plan.json",
+    "aicad": "cad/servo_reducer_bracket_srb160.aicad",
+    "scr": "cad/servo_reducer_bracket_srb160.scr",
+    "dxf": "cad/servo_reducer_bracket_srb160.dxf",
+    "audit": "cad/servo_reducer_bracket_srb160.audit.md",
+    "dwg": "native/autocad/servo_reducer_bracket_srb160.dwg",
+    "plan_3d": "source/model.3d-plan.json",
+    "sldprt": "model3d/native/servo_reducer_bracket_srb160.SLDPRT",
+    "step": "model3d/native/servo_reducer_bracket_srb160.step",
+    "review": "review.html",
+    "white_preview": "preview/review-dashboard.png"
+  },
+  "hash_policy": "Every payload is listed here; manifest, closure report and public scan are covered by SHA256SUMS.txt to avoid self-reference.",
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

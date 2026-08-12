@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.11.2'
+    [string]$Version = '1.12.0'
 )
 
 $ErrorActionPreference = 'Stop'

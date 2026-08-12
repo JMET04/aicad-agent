@@ -1,6 +1,6 @@
 [project]
 name = "aicad-constraint"
-version = "1.11.2"
+version = "1.12.0"
 description = "Natural-language, origin-anchored, mathematically constrained CAD compiler"
 requires-python = ">=3.10"
 dependencies = ["ezdxf>=1.4,<2"]

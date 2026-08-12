@@ -123,6 +123,20 @@ class ModifierUiV2Tests(unittest.TestCase):
             "role": "grid_bubble",
             "depends_on": ["L001"],
         })
+        plan["steps"].append({
+            "id": "T001",
+            "type": "text",
+            "purpose": "轴号 1",
+            "reasoning": "轴号由独立文字实体绑定轴圈，不从用途文本猜测。",
+            "insert": {"ref": "C001.center"},
+            "value": "1",
+            "height": 6,
+            "rotation_deg": 0,
+            "constraints": [{"kind": "position_coincident", "target": "C001.center"}, {"kind": "text_height", "value": 6}, {"kind": "rotation", "value": 0}],
+            "layer": "GRID_TEXT",
+            "role": "grid_text",
+            "depends_on": ["C001"],
+        })
         page = render_review_html(generate_view_package(plan, "2d", "architecture"))
         self.assertIn('data-cad-layer="WALL"', page)
         self.assertIn("layer-wall", page)
@@ -135,7 +149,8 @@ class ModifierUiV2Tests(unittest.TestCase):
         self.assertIn(".view-entity.layer-grid{stroke:#7b8790;stroke-width:.5;stroke-dasharray:12 4 2 4}", page)
         self.assertIn('data-cad-layer="GRID_BUBBLE"', page)
         self.assertIn("layer-grid-bubble", page)
-        self.assertIn("axis-bubble-label", page)
+        self.assertNotIn("axis-bubble-label", page)
+        self.assertIn('class="native-text role-annotation layer-grid-text"', page)
         self.assertIn(">1</text>", page)
 
 

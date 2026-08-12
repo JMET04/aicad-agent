@@ -1,0 +1,848 @@
+{
+  "schema": "aicad_steel_diagnostic_validation_v2",
+  "status": "pass",
+  "artifactDisposition": "review_only_diagnostic_modifier",
+  "productionReleaseAllowed": false,
+  "checks": {
+    "ascii_unique_node_and_member_ids": {
+      "pass": true,
+      "evidence": {
+        "nodes": 52,
+        "members": 132
+      }
+    },
+    "all_member_endpoints_reference_exact_nodes": {
+      "pass": true,
+      "evidence": {
+        "checked": 132
+      }
+    },
+    "all_member_lengths_math_exact": {
+      "pass": true,
+      "evidence": []
+    },
+    "all_member_dependencies_backward": {
+      "pass": true,
+      "evidence": []
+    },
+    "no_duplicate_member_centerlines": {
+      "pass": true,
+      "evidence": []
+    },
+    "node_xy_provenance_is_column_or_explicit_core_only": {
+      "pass": true,
+      "evidence": []
+    },
+    "column_xy_set_exactly_matches_source_union_no_cartesian_expansion": {
+      "pass": true,
+      "evidence": [
+        {
+          "storey": "LF",
+          "generated": [
+            [
+              2100.0,
+              8400.0
+            ],
+            [
+              2100.0,
+              16800.0
+            ],
+            [
+              10500.0,
+              8400.0
+            ],
+            [
+              10500.0,
+              10500.0
+            ],
+            [
+              10500.0,
+              16800.0
+            ],
+            [
+              14700.0,
+              8400.0
+            ],
+            [
+              14700.0,
+              10500.0
+            ],
+            [
+              14700.0,
+              16800.0
+            ],
+            [
+              23100.0,
+              8400.0
+            ],
+            [
+              23100.0,
+              16800.0
+            ]
+          ],
+          "allowed": [
+            [
+              2100.0,
+              8400.0
+            ],
+            [
+              2100.0,
+              16800.0
+            ],
+            [
+              10500.0,
+              8400.0
+            ],
+            [
+              10500.0,
+              10500.0
+            ],
+            [
+              10500.0,
+              16800.0
+            ],
+            [
+              14700.0,
+              8400.0
+            ],
+            [
+              14700.0,
+              10500.0
+            ],
+            [
+              14700.0,
+              16800.0
+            ],
+            [
+              23100.0,
+              8400.0
+            ],
+            [
+              23100.0,
+              16800.0
+            ]
+          ],
+          "architecturalCartesianCandidateCount": 8,
+          "rejectedCartesianOrOtherSyntheticPoints": [],
+          "missingAllowedPoints": []
+        },
+        {
+          "storey": "MF",
+          "generated": [
+            [
+              0.0,
+              6300.0
+            ],
+            [
+              0.0,
+              16800.0
+            ],
+            [
+              8400.0,
+              6300.0
+            ],
+            [
+              8400.0,
+              16800.0
+            ],
+            [
+              10500.0,
+              10500.0
+            ],
+            [
+              10500.0,
+              16800.0
+            ],
+            [
+              14700.0,
+              10500.0
+            ],
+            [
+              14700.0,
+              16800.0
+            ],
+            [
+              16800.0,
+              6300.0
+            ],
+            [
+              16800.0,
+              16800.0
+            ],
+            [
+              25200.0,
+              6300.0
+            ],
+            [
+              25200.0,
+              16800.0
+            ]
+          ],
+          "allowed": [
+            [
+              0.0,
+              6300.0
+            ],
+            [
+              0.0,
+              16800.0
+            ],
+            [
+              8400.0,
+              6300.0
+            ],
+            [
+              8400.0,
+              16800.0
+            ],
+            [
+              10500.0,
+              10500.0
+            ],
+            [
+              10500.0,
+              16800.0
+            ],
+            [
+              14700.0,
+              10500.0
+            ],
+            [
+              14700.0,
+              16800.0
+            ],
+            [
+              16800.0,
+              6300.0
+            ],
+            [
+              16800.0,
+              16800.0
+            ],
+            [
+              25200.0,
+              6300.0
+            ],
+            [
+              25200.0,
+              16800.0
+            ]
+          ],
+          "architecturalCartesianCandidateCount": 8,
+          "rejectedCartesianOrOtherSyntheticPoints": [],
+          "missingAllowedPoints": []
+        },
+        {
+          "storey": "UF",
+          "generated": [
+            [
+              2100.0,
+              10500.0
+            ],
+            [
+              2100.0,
+              16800.0
+            ],
+            [
+              10500.0,
+              10500.0
+            ],
+            [
+              10500.0,
+              16800.0
+            ],
+            [
+              14700.0,
+              10500.0
+            ],
+            [
+              14700.0,
+              16800.0
+            ],
+            [
+              23100.0,
+              10500.0
+            ],
+            [
+              23100.0,
+              16800.0
+            ]
+          ],
+          "allowed": [
+            [
+              2100.0,
+              10500.0
+            ],
+            [
+              2100.0,
+              16800.0
+            ],
+            [
+              10500.0,
+              10500.0
+            ],
+            [
+              10500.0,
+              16800.0
+            ],
+            [
+              14700.0,
+              10500.0
+            ],
+            [
+              14700.0,
+              16800.0
+            ],
+            [
+              23100.0,
+              10500.0
+            ],
+            [
+              23100.0,
+              16800.0
+            ]
+          ],
+          "architecturalCartesianCandidateCount": 8,
+          "rejectedCartesianOrOtherSyntheticPoints": [],
+          "missingAllowedPoints": []
+        }
+      ]
+    },
+    "member_family_coverage": {
+      "pass": true,
+      "evidence": {
+        "total": 132,
+        "byType": {
+          "beam": 68,
+          "brace": 34,
+          "column": 30
+        },
+        "byFloor": {
+          "LF": 33,
+          "MF": 50,
+          "ROOF": 10,
+          "UF": 39
+        },
+        "byRole": {
+          "core_brace": 12,
+          "core_column": 12,
+          "floor_beam": 42,
+          "gravity_column": 18,
+          "north_facade_brace": 22,
+          "roof_beam": 10,
+          "transfer_beam": 16
+        }
+      }
+    },
+    "four_level_view_coverage": {
+      "pass": true,
+      "evidence": {
+        "LF": 33,
+        "MF": 50,
+        "ROOF": 10,
+        "UF": 39
+      }
+    },
+    "core_columns_continuous_all_three_storeys": {
+      "pass": true,
+      "evidence": [
+        {
+          "xy_mm": [
+            10500.0,
+            10500.0
+          ],
+          "storeys": [
+            "LF",
+            "MF",
+            "UF"
+          ],
+          "pass": true
+        },
+        {
+          "xy_mm": [
+            10500.0,
+            16800.0
+          ],
+          "storeys": [
+            "LF",
+            "MF",
+            "UF"
+          ],
+          "pass": true
+        },
+        {
+          "xy_mm": [
+            14700.0,
+            10500.0
+          ],
+          "storeys": [
+            "LF",
+            "MF",
+            "UF"
+          ],
+          "pass": true
+        },
+        {
+          "xy_mm": [
+            14700.0,
+            16800.0
+          ],
+          "storeys": [
+            "LF",
+            "MF",
+            "UF"
+          ],
+          "pass": true
+        }
+      ]
+    },
+    "axis_catalog_is_non_equal_and_not_module_authority": {
+      "pass": true,
+      "evidence": {
+        "x": [
+          0.0,
+          2100.0,
+          8400.0,
+          10500.0,
+          14700.0,
+          16800.0,
+          23100.0,
+          25200.0
+        ],
+        "xSpans": [
+          2100.0,
+          6300.0,
+          2100.0,
+          4200.0,
+          2100.0,
+          6300.0,
+          2100.0
+        ],
+        "y": [
+          6300.0,
+          8400.0,
+          10500.0,
+          16800.0
+        ],
+        "ySpans": [
+          2100.0,
+          2100.0,
+          6300.0
+        ]
+      }
+    },
+    "architecture_source_hashes_still_fresh": {
+      "pass": true,
+      "evidence": {
+        "expected": {
+          "LF": "0d751a621e448f17604656df5ef113fb600f73a740e31841a8e56947c2685b72",
+          "MF": "e7bcb533d3679e5981739089b9071126e5ee94370d360e7dcf4d98e098a7e983",
+          "UF": "d6729ff02bbe422d68dafff5715c5b7522ad166959a53a522167a05577bca287"
+        },
+        "actual": {
+          "LF": "0d751a621e448f17604656df5ef113fb600f73a740e31841a8e56947c2685b72",
+          "MF": "e7bcb533d3679e5981739089b9071126e5ee94370d360e7dcf4d98e098a7e983",
+          "UF": "d6729ff02bbe422d68dafff5715c5b7522ad166959a53a522167a05577bca287"
+        }
+      }
+    },
+    "design_basis_hash_still_fresh": {
+      "pass": true,
+      "evidence": {
+        "expected": "ebb707fa8fd492226aa15ea179db1de3f707a5605a172828bcfc90cf17047d50",
+        "actual": "ebb707fa8fd492226aa15ea179db1de3f707a5605a172828bcfc90cf17047d50"
+      }
+    },
+    "architecture_pointer_hash_still_fresh": {
+      "pass": true,
+      "evidence": {
+        "expected": "7cd8584bb49bdeeecc67583dd868ffe369fe5bde16d5da2be54229f2aa8617b3",
+        "actual": "7cd8584bb49bdeeecc67583dd868ffe369fe5bde16d5da2be54229f2aa8617b3"
+      }
+    },
+    "safety_locks_fail_closed": {
+      "pass": true,
+      "evidence": {
+        "reviewOnly": true,
+        "accepted": false,
+        "ruleEnabled": false,
+        "packagingGated": true,
+        "productionAuthority": false
+      }
+    },
+    "utf8_roundtrip_no_replacement": {
+      "pass": true,
+      "evidence": null
+    },
+    "mojibake_markers_absent": {
+      "pass": true,
+      "evidence": null
+    },
+    "required_chinese_ui_present": {
+      "pass": true,
+      "evidence": [
+        "楼层爆炸",
+        "水平截面",
+        "俯视",
+        "主视",
+        "右视",
+        "非等距轴网",
+        "productionAuthority=false"
+      ]
+    },
+    "interactive_api_present": {
+      "pass": true,
+      "evidence": null
+    },
+    "four_storey_options_present": {
+      "pass": true,
+      "evidence": null
+    },
+    "source_hash_embedded": {
+      "pass": true,
+      "evidence": null
+    },
+    "svg_white_background_and_native_text": {
+      "pass": true,
+      "evidence": null
+    },
+    "browser_interaction_qa": {
+      "pass": true,
+      "evidence": "browser_qa.json"
+    }
+  },
+  "statistics": {
+    "total": 132,
+    "byType": {
+      "beam": 68,
+      "brace": 34,
+      "column": 30
+    },
+    "byFloor": {
+      "LF": 33,
+      "MF": 50,
+      "ROOF": 10,
+      "UF": 39
+    },
+    "byRole": {
+      "core_brace": 12,
+      "core_column": 12,
+      "floor_beam": 42,
+      "gravity_column": 18,
+      "north_facade_brace": 22,
+      "roof_beam": 10,
+      "transfer_beam": 16
+    }
+  },
+  "sourceSupportEvidence": [
+    {
+      "storey": "LF",
+      "source_plan": "<private-or-secret-value-redacted>",
+      "source_sha256": "0d751a621e448f17604656df5ef113fb600f73a740e31841a8e56947c2685b72",
+      "architectural_column_count": 8,
+      "architectural_column_xy_mm": [
+        [
+          2100.0,
+          8400.0
+        ],
+        [
+          2100.0,
+          16800.0
+        ],
+        [
+          10500.0,
+          8400.0
+        ],
+        [
+          10500.0,
+          16800.0
+        ],
+        [
+          14700.0,
+          8400.0
+        ],
+        [
+          14700.0,
+          16800.0
+        ],
+        [
+          23100.0,
+          8400.0
+        ],
+        [
+          23100.0,
+          16800.0
+        ]
+      ],
+      "explicit_core_support_xy_mm": [
+        [
+          10500.0,
+          10500.0
+        ],
+        [
+          10500.0,
+          16800.0
+        ],
+        [
+          14700.0,
+          10500.0
+        ],
+        [
+          14700.0,
+          16800.0
+        ]
+      ],
+      "allowed_column_support_xy_mm": [
+        [
+          2100.0,
+          8400.0
+        ],
+        [
+          2100.0,
+          16800.0
+        ],
+        [
+          10500.0,
+          8400.0
+        ],
+        [
+          10500.0,
+          10500.0
+        ],
+        [
+          10500.0,
+          16800.0
+        ],
+        [
+          14700.0,
+          8400.0
+        ],
+        [
+          14700.0,
+          10500.0
+        ],
+        [
+          14700.0,
+          16800.0
+        ],
+        [
+          23100.0,
+          8400.0
+        ],
+        [
+          23100.0,
+          16800.0
+        ]
+      ]
+    },
+    {
+      "storey": "MF",
+      "source_plan": "<private-or-secret-value-redacted>",
+      "source_sha256": "e7bcb533d3679e5981739089b9071126e5ee94370d360e7dcf4d98e098a7e983",
+      "architectural_column_count": 8,
+      "architectural_column_xy_mm": [
+        [
+          0.0,
+          6300.0
+        ],
+        [
+          0.0,
+          16800.0
+        ],
+        [
+          8400.0,
+          6300.0
+        ],
+        [
+          8400.0,
+          16800.0
+        ],
+        [
+          16800.0,
+          6300.0
+        ],
+        [
+          16800.0,
+          16800.0
+        ],
+        [
+          25200.0,
+          6300.0
+        ],
+        [
+          25200.0,
+          16800.0
+        ]
+      ],
+      "explicit_core_support_xy_mm": [
+        [
+          10500.0,
+          10500.0
+        ],
+        [
+          10500.0,
+          16800.0
+        ],
+        [
+          14700.0,
+          10500.0
+        ],
+        [
+          14700.0,
+          16800.0
+        ]
+      ],
+      "allowed_column_support_xy_mm": [
+        [
+          0.0,
+          6300.0
+        ],
+        [
+          0.0,
+          16800.0
+        ],
+        [
+          8400.0,
+          6300.0
+        ],
+        [
+          8400.0,
+          16800.0
+        ],
+        [
+          10500.0,
+          10500.0
+        ],
+        [
+          10500.0,
+          16800.0
+        ],
+        [
+          14700.0,
+          10500.0
+        ],
+        [
+          14700.0,
+          16800.0
+        ],
+        [
+          16800.0,
+          6300.0
+        ],
+        [
+          16800.0,
+          16800.0
+        ],
+        [
+          25200.0,
+          6300.0
+        ],
+        [
+          25200.0,
+          16800.0
+        ]
+      ]
+    },
+    {
+      "storey": "UF",
+      "source_plan": "<private-or-secret-value-redacted>",
+      "source_sha256": "d6729ff02bbe422d68dafff5715c5b7522ad166959a53a522167a05577bca287",
+      "architectural_column_count": 8,
+      "architectural_column_xy_mm": [
+        [
+          2100.0,
+          10500.0
+        ],
+        [
+          2100.0,
+          16800.0
+        ],
+        [
+          10500.0,
+          10500.0
+        ],
+        [
+          10500.0,
+          16800.0
+        ],
+        [
+          14700.0,
+          10500.0
+        ],
+        [
+          14700.0,
+          16800.0
+        ],
+        [
+          23100.0,
+          10500.0
+        ],
+        [
+          23100.0,
+          16800.0
+        ]
+      ],
+      "explicit_core_support_xy_mm": [
+        [
+          10500.0,
+          10500.0
+        ],
+        [
+          10500.0,
+          16800.0
+        ],
+        [
+          14700.0,
+          10500.0
+        ],
+        [
+          14700.0,
+          16800.0
+        ]
+      ],
+      "allowed_column_support_xy_mm": [
+        [
+          2100.0,
+          10500.0
+        ],
+        [
+          2100.0,
+          16800.0
+        ],
+        [
+          10500.0,
+          10500.0
+        ],
+        [
+          10500.0,
+          16800.0
+        ],
+        [
+          14700.0,
+          10500.0
+        ],
+        [
+          14700.0,
+          16800.0
+        ],
+        [
+          23100.0,
+          10500.0
+        ],
+        [
+          23100.0,
+          16800.0
+        ]
+      ]
+    }
+  ],
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true,
+    "productionAuthority": false
+  },
+  "nodeCount": 52,
+  "source_sha256": "981e888344b1cabf63482bc609fbb2be4bb5fe7f88ea8bd06d05669415cc6e96"
+}

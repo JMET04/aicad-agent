@@ -1,0 +1,82 @@
+{
+  "schema": "aicad_structural_diagnostic_release_manifest_v1",
+  "status": "pass",
+  "generatorVersion": "1.12.0-diagnostic.1",
+  "generatedAtUtc": "2026-08-12T06:37:43.725051+00:00",
+  "sourceSha256": "981e888344b1cabf63482bc609fbb2be4bb5fe7f88ea8bd06d05669415cc6e96",
+  "productionAuthority": false,
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true,
+    "productionAuthority": false
+  },
+  "files": [
+    {
+      "path": "browser_qa.json",
+      "bytes": 4692,
+      "sha256": "b0faa1e9c15bb31867fd95509e25632eecb9a427d1dc50c366bf08e5d32ba725"
+    },
+    {
+      "path": "browser_qa.png",
+      "bytes": 440784,
+      "sha256": "68417085c4a5b60c9660f57df6bd93aa83edf65a94969357d8969093de86a814"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.audit.md",
+      "bytes": 17752,
+      "sha256": "a9bbcc5b07bdafa54a58beb9fba7b1d648970106795a197d9b7de63184659832"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.column-source-catalog.json",
+      "bytes": 5374,
+      "sha256": "0e2f4c6580dc2edcd270b696e24297b488d71b8efc51c782b5b5f4a523097758"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.input-binding.json",
+      "bytes": 2236,
+      "sha256": "35645b4cd085f1d7d8173bf70644332c7e2567bcaf7e02fca75e329b441a1e75"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.plan.json",
+      "bytes": 329404,
+      "sha256": "dd0fe30098767e7b6e1baaa7c8c0d7a44ac321c337a09f7651d4dd6fee6b5f93"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.prevention-rules.json",
+      "bytes": 1989,
+      "sha256": "2bc6c7c5f12c82464c0f5de3042e5407990c67008f0941cd10088a74046d496d"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.preview.svg",
+      "bytes": 18169,
+      "sha256": "c7d7fa3a89795360d79efa8486c3769b103787c5fef89457476d5ab11a685cb7"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.requirement-contract.json",
+      "bytes": 915,
+      "sha256": "60bd720893344db03e912d9985088df35882f54bf12e544ee6bd767c32d324cc"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.requirement-trace.json",
+      "bytes": 645,
+      "sha256": "967e30c43e1b79de27319e9eec47b16200bb92b681dd37b6589ce62b8653f32b"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.review.html",
+      "bytes": 202305,
+      "sha256": "e534f6ea33fdbee55af5392389ca678a57efb517fde618949cbc4db0e9230065"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.validation.json",
+      "bytes": 16683,
+      "sha256": "3800850ad982f2e7f2003ce7e13cc379752921ce37be611a93c0c0ca333d87f0"
+    },
+    {
+      "path": "cliff-villa-three-floor-steel-diagnostic-v112.validation.md",
+      "bytes": 2067,
+      "sha256": "bebccafdb5159ba5541ab0d5c7895175807a0dca1d4d9b74fe166e578b8e0081"
+    }
+  ]
+}

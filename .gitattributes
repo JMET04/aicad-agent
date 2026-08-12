@@ -1,4 +1,7 @@
 * text=auto eol=lf
+# Showcase files are content-addressed review artifacts. Preserve their exact
+# verified bytes instead of applying checkout/index newline normalization.
+showcase/** -text whitespace=cr-at-eol
 
 *.png binary
 *.jpg binary

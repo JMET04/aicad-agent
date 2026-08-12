@@ -1,0 +1,161 @@
+{
+  "schema": "aicad_diagnostic_modifier_release_manifest_v1",
+  "status": "pass",
+  "fileSetPolicy": "all_release_files_except_manifest_self",
+  "sourceSha256": "2348f84b9172e225229853f12ac6a1a91332cd1f96b3793104365284b851c929",
+  "documentSetSha256": "bab36bf3a08582742e8042f506257811b34e3603e0aea998cce3c8058f3e75f6",
+  "documentSetContract": "cliff-villa-three-floor-diagnostic-v112.document-set.contract.json",
+  "documentSetValidation": "cliff-villa-three-floor-diagnostic-v112.document-set.validation.json",
+  "documentSetRulesApplied": [
+    "ARCH-D048",
+    "ARCH-D049",
+    "ARCH-D050",
+    "ARCH-D051"
+  ],
+  "files": [
+    {
+      "path": "authority/concept-axis-authority.json",
+      "size": 2639,
+      "sha256": "65adc58a5dc08f6c59d14aadd90765533437b50a01777e464a86991acf9e2bde"
+    },
+    {
+      "path": "browser_qa_v2.json",
+      "size": 85407,
+      "sha256": "754963ed79c092992412ae816ce9cf559eeed479994d4ee46ff05532ff317476"
+    },
+    {
+      "path": "browser_qa_v2_1280x800_LF.png",
+      "size": 76622,
+      "sha256": "ff514e1c7e3a3a2e85cc3854a4cc465709b6e78b22befbcf30811867041b1e94"
+    },
+    {
+      "path": "browser_qa_v2_1280x800_MF.png",
+      "size": 82777,
+      "sha256": "78f7c411f7299342405a552294b5d87a15a47d86461930772c32e8aee535fa28"
+    },
+    {
+      "path": "browser_qa_v2_1280x800_UF.png",
+      "size": 62483,
+      "sha256": "15f9579dd938fd405e5ec760cfbc2991b2e3f0c689fb7a2abc62360d810c6f48"
+    },
+    {
+      "path": "browser_qa_v2_1920x1200_LF.png",
+      "size": 154282,
+      "sha256": "4c7c218d94bcbf680033d486b7b711a7c6ac589ecfc4efdc40f3e1a7e457546f"
+    },
+    {
+      "path": "browser_qa_v2_1920x1200_MF.png",
+      "size": 164946,
+      "sha256": "995b4715b390f1b22cd23074f10047b8085c97336fb1846e565c9c020abaf08c"
+    },
+    {
+      "path": "browser_qa_v2_1920x1200_UF.png",
+      "size": 146939,
+      "sha256": "2f8ed75ca25c4c03233a39d82c3f83f8d498fe9bda3a700cf630d1c2d835c2c9"
+    },
+    {
+      "path": "cliff-villa-three-floor-diagnostic-v112.document-set.contract.json",
+      "size": 8476,
+      "sha256": "6a68b16d90788def174f94b817ef7b7c69562c2f11edc24753420c8262e52d0d"
+    },
+    {
+      "path": "cliff-villa-three-floor-diagnostic-v112.document-set.validation.json",
+      "size": 5007,
+      "sha256": "cc57da41e111f022bee7ec2c0810878cd4b770a607498a90cab94daef66b93bf"
+    },
+    {
+      "path": "cliff-villa-three-floor-diagnostic-v112.document-set.validation.md",
+      "size": 623,
+      "sha256": "9a8490292d2c4d8494e3f5678ef94432220c40980ea6a59bc1c0452fb241404c"
+    },
+    {
+      "path": "cliff-villa-three-floor-diagnostic-v112.review.html",
+      "size": 5533387,
+      "sha256": "11bb2118ab468b24234f9da51bed799c16ad278d78b90488c62dcff1ccc1189f"
+    },
+    {
+      "path": "cliff-villa-three-floor-diagnostic-v112.validation.json",
+      "size": 33363,
+      "sha256": "195311d31035f4c1b42f6fbf762b0c54d2a94b7b0bf4935368af88a16921b487"
+    },
+    {
+      "path": "cliff-villa-three-floor-diagnostic-v112.validation.md",
+      "size": 2968,
+      "sha256": "670ada04105a4da994a3ae39bb4fb26b9dd4b173c1d44b794b3567bbad68918c"
+    },
+    {
+      "path": "cliff-villa-three-floor-diagnostic-v112.views.audit.md",
+      "size": 1144,
+      "sha256": "5741c6a909739fe1328bc89920f9e9f495353b7e82a9572a006bf6142a617319"
+    },
+    {
+      "path": "cliff-villa-three-floor-diagnostic-v112.views.json",
+      "size": 8036279,
+      "sha256": "2199a9c924eadbad96d71399c8172702f016bcdf0ad64a4bd0db42e2ab4e6fac"
+    },
+    {
+      "path": "contracts/lower_floor.architectural-detail-contract.json",
+      "size": 77888,
+      "sha256": "bbf463436467427aa1fb97e0ae1408c22d59fa38f72268f59bdddb651dd844d9"
+    },
+    {
+      "path": "contracts/lower_floor.architectural-detail-validation.json",
+      "size": 10607,
+      "sha256": "8a11b26a4304c7606c6b408f5e1acdf28b1bfdb631254bd838371b8dce20f362"
+    },
+    {
+      "path": "contracts/main_floor.architectural-detail-contract.json",
+      "size": 109419,
+      "sha256": "6472512495eba18c3bed27a796dc322abb2fe89bb0954b212dc734b4e4c1c88a"
+    },
+    {
+      "path": "contracts/main_floor.architectural-detail-validation.json",
+      "size": 11149,
+      "sha256": "38d00561d3f1dd4285923607eea1e3740ede2e1bd3cd1d0e93d4a6911eb06193"
+    },
+    {
+      "path": "contracts/upper_floor.architectural-detail-contract.json",
+      "size": 61738,
+      "sha256": "1bb281a2d9027aca2bc778ce9d8dde8b3aea8e970426492f0b8b548b00c058c2"
+    },
+    {
+      "path": "contracts/upper_floor.architectural-detail-validation.json",
+      "size": 10333,
+      "sha256": "19ec2ebcb6a75bc27c0d3bb3870b5c1d28ef34edc5e457451b4617c436c4cc11"
+    },
+    {
+      "path": "source_plans/lower_floor.source.plan.json",
+      "size": 434723,
+      "sha256": "0d751a621e448f17604656df5ef113fb600f73a740e31841a8e56947c2685b72"
+    },
+    {
+      "path": "source_plans/main_floor.source.plan.json",
+      "size": 625077,
+      "sha256": "e7bcb533d3679e5981739089b9071126e5ee94370d360e7dcf4d98e098a7e983"
+    },
+    {
+      "path": "source_plans/upper_floor.source.plan.json",
+      "size": 352619,
+      "sha256": "d6729ff02bbe422d68dafff5715c5b7522ad166959a53a522167a05577bca287"
+    },
+    {
+      "path": "source_views/lower_floor.source.views.json",
+      "size": 2308492,
+      "sha256": "cc07bd75240eddc159dfd5286b820bd0991fc890ad6d7b56f10634c299569030"
+    },
+    {
+      "path": "source_views/main_floor.source.views.json",
+      "size": 3130292,
+      "sha256": "15436ded74de0036556cbcf2cfdf837e1568f719aeee7b1a2faa22f76c67ccea"
+    },
+    {
+      "path": "source_views/upper_floor.source.views.json",
+      "size": 1823001,
+      "sha256": "b856f2a6085c43995e14b546b69f85d6f1cde1564b4cac35ae848099757e5575"
+    }
+  ],
+  "reviewOnly": true,
+  "accepted": false,
+  "ruleEnabled": false,
+  "productionReleaseAllowed": false
+}

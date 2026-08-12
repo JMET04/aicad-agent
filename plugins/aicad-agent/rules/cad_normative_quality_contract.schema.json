@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/aicad/cad_normative_quality_contract.schema.json",
+  "title": "AICAD executable cross-domain normative quality contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "contractId", "domain", "inputHashes",
+    "structuralSupportMode", "structuralSupportBindings",
+    "annotationLayout", "selectionArbitration", "documentSet",
+    "releaseClosure", "textTransport", "safetyLocks"
+  ],
+  "properties": {
+    "schema": {"const": "aicad_cad_normative_quality_contract_v1"},
+    "contractId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
+    "domain": {"type": "string", "minLength": 1},
+    "inputHashes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/inputHash"}},
+    "structuralSupportMode": {"enum": ["required", "not_applicable"]},
+    "structuralSupportWaiverReason": {"type": "string", "minLength": 20},
+    "structuralSupportBindings": {"type": "array", "items": {"$ref": "#/$defs/supportBinding"}},
+    "annotationLayout": {"$ref": "#/$defs/annotationLayout"},
+    "selectionArbitration": {"$ref": "#/$defs/selectionArbitration"},
+    "documentSet": {"$ref": "#/$defs/documentSet"},
+    "releaseClosure": {"$ref": "#/$defs/releaseClosure"},
+    "textTransport": {"$ref": "#/$defs/textTransport"},
+    "safetyLocks": {"$ref": "#/$defs/safetyLocks"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"structuralSupportMode": {"const": "required"}}},
+      "then": {
+        "properties": {"structuralSupportBindings": {"minItems": 1}},
+        "not": {"required": ["structuralSupportWaiverReason"]}
+      }
+    },
+    {
+      "if": {"properties": {"structuralSupportMode": {"const": "not_applicable"}}},
+      "then": {
+        "required": ["structuralSupportWaiverReason"],
+        "properties": {"structuralSupportBindings": {"maxItems": 0}}
+      }
+    }
+  ],
+  "$defs": {
+    "inputHash": {
+      "type": "object", "additionalProperties": false, "required": ["id", "sha256"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "supportPoint": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "xMm", "yMm", "sourceEntityId"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "xMm": {"type": "number"}, "yMm": {"type": "number"},
+        "sourceEntityId": {"type": "string", "minLength": 1}
+      }
+    },
+    "supportBinding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["documentId", "transferPolicy", "cartesianExpansionAllowed", "source", "target"],
+      "properties": {
+        "documentId": {"type": "string", "minLength": 1},
+        "transferPolicy": {"const": "exact_bidirectional_xy_pair_set"},
+        "cartesianExpansionAllowed": {"const": false},
+        "source": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/supportPoint"}},
+        "target": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/supportPoint"}}
+      }
+    },
+    "rect": {
+      "type": "object",
+      "required": ["leftPx", "topPx", "rightPx", "bottomPx"],
+      "properties": {
+        "leftPx": {"type": "number"}, "topPx": {"type": "number"},
+        "rightPx": {"type": "number"}, "bottomPx": {"type": "number"}
+      }
+    },
+    "reservation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "ownerId", "stage", "leftPx", "topPx", "rightPx", "bottomPx"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1}, "ownerId": {"type": "string", "minLength": 1},
+        "stage": {"enum": ["content", "axis_bubbles", "chain_dimensions", "overall_dimensions", "notes"]},
+        "leftPx": {"type": "number"}, "topPx": {"type": "number"},
+        "rightPx": {"type": "number"}, "bottomPx": {"type": "number"}
+      }
+    },
+    "annotationBox": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "ownerId", "reservationId", "stage", "leftPx", "topPx", "rightPx", "bottomPx", "textHeightPx"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "ownerId": {"type": "string", "minLength": 1},
+        "reservationId": {"type": "string", "minLength": 1},
+        "stage": {"enum": ["axis_bubbles", "chain_dimensions", "overall_dimensions", "notes"]},
+        "leftPx": {"type": "number"}, "topPx": {"type": "number"},
+        "rightPx": {"type": "number"}, "bottomPx": {"type": "number"},
+        "textHeightPx": {"type": "number", "minimum": 8}
+      }
+    },
+    "viewport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "widthPx", "heightPx", "collisionCount", "clippedCount", "horizontalOverflowPx", "reservations", "boxes"],
+      "properties": {
+        "id": {"enum": ["desktop_1920x1200", "compact_1280x800"]},
+        "widthPx": {"type": "integer", "minimum": 1},
+        "heightPx": {"type": "integer", "minimum": 1},
+        "collisionCount": {"type": "integer", "minimum": 0},
+        "clippedCount": {"type": "integer", "minimum": 0},
+        "horizontalOverflowPx": {"type": "number", "minimum": 0},
+        "reservations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/reservation"}},
+        "boxes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/annotationBox"}}
+      }
+    },
+    "annotationLayout": {
+      "type": "object", "additionalProperties": false,
+      "required": ["placementPolicy", "reservationOrder", "viewports"],
+      "properties": {
+        "placementPolicy": {"const": "forward_reservation_no_backtracking"},
+        "reservationOrder": {"const": ["content", "axis_bubbles", "chain_dimensions", "overall_dimensions", "notes"]},
+        "viewports": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/viewport"}}
+      }
+    },
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "documentId", "semanticType", "distancePx", "semanticPriority"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "documentId": {"type": "string", "minLength": 1},
+        "semanticType": {"enum": ["COLUMN", "WALL", "OPENING", "EQUIPMENT", "FURNITURE", "GENERAL", "DIMENSION", "TEXT", "GRID"]},
+        "distancePx": {"type": "number", "minimum": 0},
+        "semanticPriority": {"type": "integer"}
+      }
+    },
+    "pickCase": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "activeDocumentId", "candidates", "expectedCycle"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "activeDocumentId": {"type": "string", "minLength": 1},
+        "candidates": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/candidate"}},
+        "expectedCycle": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "selectionArbitration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["distanceMetric", "maximumCandidateDistancePx", "distanceBucketPx", "priorityTableVersion", "paintOrderAuthority", "repeatPickPolicy", "documentScope", "qaCases"],
+      "properties": {
+        "distanceMetric": {"const": "visible_primitive_screen_distance"},
+        "maximumCandidateDistancePx": {"const": 8},
+        "distanceBucketPx": {"const": 1.5},
+        "priorityTableVersion": {"const": "aicad_semantic_pick_priority_v1"},
+        "paintOrderAuthority": {"const": false},
+        "repeatPickPolicy": {"const": "cycle_all_candidates_at_same_pointer"},
+        "documentScope": {"const": "document_scoped"},
+        "qaCases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/pickCase"}}
+      }
+    },
+    "documentSet": {
+      "type": "object", "additionalProperties": false,
+      "required": ["requestedIds", "renderedIds", "sourceIds", "selectionScope", "switchClearsSelection", "freshnessHashesMatch"],
+      "properties": {
+        "requestedIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "renderedIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "sourceIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "selectionScope": {"const": "document_scoped"},
+        "switchClearsSelection": {"const": true},
+        "freshnessHashesMatch": {"const": true}
+      }
+    },
+    "releaseClosure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["builtInHiddenSameVolumeStaging", "independentVerifierPassed", "atomicRenameWithRollback", "manifestPolicy", "postPublishWrites", "inputHashesMatch"],
+      "properties": {
+        "builtInHiddenSameVolumeStaging": {"const": true},
+        "independentVerifierPassed": {"const": true},
+        "atomicRenameWithRollback": {"const": true},
+        "manifestPolicy": {"const": "all_release_files_except_manifest_self"},
+        "postPublishWrites": {"const": false},
+        "inputHashesMatch": {"const": true}
+      }
+    },
+    "textTransport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["executionIdsAscii", "humanTextEncoding", "nativeTextBijection", "replacementCharacterCount"],
+      "properties": {
+        "executionIdsAscii": {"const": true}, "humanTextEncoding": {"const": "UTF-8"},
+        "nativeTextBijection": {"const": true}, "replacementCharacterCount": {"const": 0}
+      }
+    },
+    "safetyLocks": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true}, "accepted": {"const": false},
+        "ruleEnabled": {"const": false}, "packagingGated": {"const": true}
+      }
+    }
+  }
+}

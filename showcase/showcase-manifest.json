@@ -1,0 +1,465 @@
+{
+  "schema": "aicad_github_showcase_v2",
+  "releaseStatus": "engineering-review-candidate",
+  "verificationBoundary": "source manifests are exact-closure checked; native engineering acceptance remains external",
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true,
+    "productionOrFabricationAcceptanceClaimed": false
+  },
+  "deterministicArchiveTimestamp": "2020-01-01T00:00:00Z",
+  "demos": [
+    {
+      "slug": "architecture",
+      "sourceDirectoryName": "three-floor-diagnostic-v112-a859c1cd3970",
+      "publicScan": {
+        "strictUtf8": true,
+        "privateOrSecretMatches": 7,
+        "forbiddenBrandMatches": 0,
+        "replacementCharacterMatches": 0,
+        "symlinks": 0,
+        "forbiddenFileTypes": 0,
+        "excludedSourceFiles": [
+          "browser_qa_v2.json",
+          "contracts/lower_floor.architectural-detail-contract.json",
+          "contracts/lower_floor.architectural-detail-validation.json",
+          "contracts/main_floor.architectural-detail-contract.json",
+          "contracts/main_floor.architectural-detail-validation.json",
+          "contracts/upper_floor.architectural-detail-contract.json",
+          "contracts/upper_floor.architectural-detail-validation.json"
+        ],
+        "publicArchiveFileCount": 22
+      },
+      "sourceManifestClosure": {
+        "schema": "aicad_diagnostic_modifier_release_manifest_v1",
+        "status": "pass",
+        "fileCount": 28,
+        "manifestSha256": "df17da27b4262b797419e3438ee7f8689e755e2da9bbfde9d43c582a6279170d",
+        "exactBidirectionalClosure": true,
+        "closureAuthority": "manifest",
+        "manifestDeclaredArtifactCount": 28,
+        "sha256Sums": null
+      },
+      "inputSafetyLocks": {
+        "reviewOnly": true,
+        "accepted": false,
+        "ruleEnabled": false,
+        "packagingGated": true
+      },
+      "artifacts": [
+        {
+          "role": "preview",
+          "path": "architecture/preview.png",
+          "sourceName": "browser_qa_v2_1920x1200_MF.png",
+          "size": 164946,
+          "sha256": "995b4715b390f1b22cd23074f10047b8085c97336fb1846e565c9c020abaf08c"
+        },
+        {
+          "role": "interactive_review",
+          "path": "architecture/review.html",
+          "sourceName": "cliff-villa-three-floor-diagnostic-v112.review.html",
+          "size": 5533387,
+          "sha256": "11bb2118ab468b24234f9da51bed799c16ad278d78b90488c62dcff1ccc1189f"
+        },
+        {
+          "role": "validation_machine",
+          "path": "architecture/validation.json",
+          "sourceName": "cliff-villa-three-floor-diagnostic-v112.validation.json",
+          "size": 33363,
+          "sha256": "195311d31035f4c1b42f6fbf762b0c54d2a94b7b0bf4935368af88a16921b487"
+        },
+        {
+          "role": "validation_human",
+          "path": "architecture/validation.md",
+          "sourceName": "cliff-villa-three-floor-diagnostic-v112.validation.md",
+          "size": 2968,
+          "sha256": "670ada04105a4da994a3ae39bb4fb26b9dd4b173c1d44b794b3567bbad68918c"
+        },
+        {
+          "role": "source_manifest",
+          "path": "architecture/source-manifest.json",
+          "sourceName": "cliff-villa-three-floor-diagnostic-v112.manifest.json",
+          "size": 5812,
+          "sha256": "df17da27b4262b797419e3438ee7f8689e755e2da9bbfde9d43c582a6279170d"
+        },
+        {
+          "role": "sanitized_review_candidate",
+          "path": "architecture/architecture-sanitized-review-candidate.zip",
+          "sourceName": "three-floor-diagnostic-v112-a859c1cd3970",
+          "size": 1675110,
+          "sha256": "4928e02586ed7fbd96f31d639a012988b4da8d06ba049b1ffa236fa07fbfc28a",
+          "memberCount": 22
+        }
+      ]
+    },
+    {
+      "slug": "steel",
+      "sourceDirectoryName": "steel-three-floor-diagnostic-v112-981e888344b1",
+      "publicScan": {
+        "strictUtf8": true,
+        "privateOrSecretMatches": 4,
+        "forbiddenBrandMatches": 0,
+        "replacementCharacterMatches": 0,
+        "symlinks": 0,
+        "forbiddenFileTypes": 0,
+        "excludedSourceFiles": [
+          "browser_qa.json",
+          "cliff-villa-three-floor-steel-diagnostic-v112.column-source-catalog.json",
+          "cliff-villa-three-floor-steel-diagnostic-v112.input-binding.json",
+          "cliff-villa-three-floor-steel-diagnostic-v112.validation.json"
+        ],
+        "publicArchiveFileCount": 10
+      },
+      "sourceManifestClosure": {
+        "schema": "aicad_structural_diagnostic_release_manifest_v1",
+        "status": "pass",
+        "fileCount": 13,
+        "manifestSha256": "9b5fd9078a1f5318e78b009a50801f188b85119b6c04d070907a29559f292e4c",
+        "exactBidirectionalClosure": true,
+        "closureAuthority": "manifest",
+        "manifestDeclaredArtifactCount": 13,
+        "sha256Sums": null
+      },
+      "inputSafetyLocks": {
+        "reviewOnly": true,
+        "accepted": false,
+        "ruleEnabled": false,
+        "packagingGated": true
+      },
+      "artifacts": [
+        {
+          "role": "preview",
+          "path": "steel/preview.png",
+          "sourceName": "browser_qa.png",
+          "size": 440784,
+          "sha256": "68417085c4a5b60c9660f57df6bd93aa83edf65a94969357d8969093de86a814"
+        },
+        {
+          "role": "interactive_review",
+          "path": "steel/review.html",
+          "sourceName": "cliff-villa-three-floor-steel-diagnostic-v112.review.html",
+          "size": 202305,
+          "sha256": "e534f6ea33fdbee55af5392389ca678a57efb517fde618949cbc4db0e9230065"
+        },
+        {
+          "role": "validation_machine",
+          "path": "steel/validation.json",
+          "sourceName": "cliff-villa-three-floor-steel-diagnostic-v112.validation.json",
+          "size": 16351,
+          "sha256": "f31237e23550ce5faf69e94fab6910bd30fdcc1f82d7c659fff7e5912558addd"
+        },
+        {
+          "role": "validation_human",
+          "path": "steel/validation.md",
+          "sourceName": "cliff-villa-three-floor-steel-diagnostic-v112.validation.md",
+          "size": 2067,
+          "sha256": "bebccafdb5159ba5541ab0d5c7895175807a0dca1d4d9b74fe166e578b8e0081"
+        },
+        {
+          "role": "source_manifest",
+          "path": "steel/source-manifest.json",
+          "sourceName": "cliff-villa-three-floor-steel-diagnostic-v112.manifest.json",
+          "size": 2956,
+          "sha256": "9b5fd9078a1f5318e78b009a50801f188b85119b6c04d070907a29559f292e4c"
+        },
+        {
+          "role": "sanitized_review_candidate",
+          "path": "steel/steel-sanitized-review-candidate.zip",
+          "sourceName": "steel-three-floor-diagnostic-v112-981e888344b1",
+          "size": 477474,
+          "sha256": "fff4c030b50557b4492bfdc032c2ddb33a4d56e115f755c6f2f975c5a3d94e36",
+          "memberCount": 10
+        }
+      ]
+    },
+    {
+      "slug": "mechanical",
+      "sourceDirectoryName": "release",
+      "publicScan": {
+        "strictUtf8": true,
+        "privateOrSecretMatches": 2,
+        "forbiddenBrandMatches": 0,
+        "replacementCharacterMatches": 0,
+        "symlinks": 0,
+        "forbiddenFileTypes": 0,
+        "excludedSourceFiles": [
+          "native/autocad/autocad-reopen-console.log",
+          "native/autocad/autocad-save-console.log"
+        ],
+        "publicArchiveFileCount": 115
+      },
+      "sourceManifestClosure": {
+        "schema": "srb160_release_manifest_v1",
+        "status": "pass",
+        "fileCount": 116,
+        "manifestSha256": "c924668d860e068a921c9c783a5c53699b21eaeccf70a0c252df41cbc2ac3530",
+        "exactBidirectionalClosure": true,
+        "closureAuthority": "SHA256SUMS",
+        "manifestDeclaredArtifactCount": 113,
+        "sha256Sums": {
+          "entryCount": 116,
+          "sha256": "27996924b2f983ab7cfec16c3ff27b2d20f634fb44df76271df5003b5b1a6da3",
+          "exactBidirectionalClosure": true
+        }
+      },
+      "inputSafetyLocks": {
+        "reviewOnly": true,
+        "accepted": false,
+        "ruleEnabled": false,
+        "packagingGated": true
+      },
+      "artifacts": [
+        {
+          "role": "preview",
+          "path": "mechanical/preview.png",
+          "sourceName": "review-dashboard.png",
+          "size": 190945,
+          "sha256": "b868066e6f029f6a145ef531a9d13eb11158332e5e884e0072a6aae724d61457"
+        },
+        {
+          "role": "interactive_review",
+          "path": "mechanical/review.html",
+          "sourceName": "review.html",
+          "size": 8327,
+          "sha256": "321651d0d389d247a50348b5d4edb01787192c81aa785010a73f7243668d8676"
+        },
+        {
+          "role": "validation_machine",
+          "path": "mechanical/validation.json",
+          "sourceName": "validation.json",
+          "size": 2522,
+          "sha256": "f7e4971c946de7e229b7db1fe803b2d5183ef7298beac90a3d0ca53614305dfa"
+        },
+        {
+          "role": "validation_human",
+          "path": "mechanical/validation.md",
+          "sourceName": "validation.md",
+          "size": 1571,
+          "sha256": "be8e89d562e1ebfd22004cb3cb3bdae62ac392121f4a88889082a6d89447676c"
+        },
+        {
+          "role": "source_manifest",
+          "path": "mechanical/source-manifest.json",
+          "sourceName": "manifest.json",
+          "size": 25924,
+          "sha256": "c924668d860e068a921c9c783a5c53699b21eaeccf70a0c252df41cbc2ac3530"
+        },
+        {
+          "role": "sanitized_review_candidate",
+          "path": "mechanical/mechanical-sanitized-review-candidate.zip",
+          "sourceName": "release",
+          "size": 1715171,
+          "sha256": "da569f8fbdbf41e543fd4e1bc6088d9674158f3e1f281ff16e393114477dddb7",
+          "memberCount": 115
+        }
+      ]
+    },
+    {
+      "slug": "pcb",
+      "sourceDirectoryName": "public_candidate",
+      "publicScan": {
+        "strictUtf8": true,
+        "privateOrSecretMatches": 0,
+        "forbiddenBrandMatches": 0,
+        "replacementCharacterMatches": 0,
+        "symlinks": 0,
+        "forbiddenFileTypes": 0,
+        "excludedSourceFiles": [],
+        "publicArchiveFileCount": 49
+      },
+      "sourceManifestClosure": {
+        "schema": null,
+        "status": null,
+        "fileCount": 48,
+        "manifestSha256": "27538488df5e133e190eb367f6588ac77280fc4129b4af10dcc32a5821aa0cf5",
+        "exactBidirectionalClosure": true,
+        "closureAuthority": "manifest",
+        "manifestDeclaredArtifactCount": 48,
+        "sha256Sums": null
+      },
+      "inputSafetyLocks": {
+        "reviewOnly": true,
+        "accepted": false,
+        "ruleEnabled": false,
+        "packagingGated": true
+      },
+      "artifacts": [
+        {
+          "role": "preview",
+          "path": "pcb/preview.png",
+          "sourceName": "board_top_white.png",
+          "size": 136586,
+          "sha256": "d7e8371cc5735ceb3e7e3971a94d63120d80cf243d34abe58f149e4b78fe94e6"
+        },
+        {
+          "role": "interactive_review",
+          "path": "pcb/review.html",
+          "sourceName": "index.html",
+          "size": 1746,
+          "sha256": "291265e2b1ea423675c043f9d9310bf85c4e861730a60cc9c2cfc9ad639c7191"
+        },
+        {
+          "role": "validation_machine",
+          "path": "pcb/validation.json",
+          "sourceName": "validation.json",
+          "size": 5478,
+          "sha256": "bec34928f928ecbc082d560351dd804b407a7c6259cbdc991cdb5082f98f1cf2"
+        },
+        {
+          "role": "validation_human",
+          "path": "pcb/validation.md",
+          "sourceName": "validation.md",
+          "size": 2790,
+          "sha256": "62bc3c10ffeb7644ad49d079ac752b25c9be9a13dff14ad6d37ee24d4d8aa4bf"
+        },
+        {
+          "role": "source_manifest",
+          "path": "pcb/source-manifest.json",
+          "sourceName": "manifest.json",
+          "size": 8361,
+          "sha256": "27538488df5e133e190eb367f6588ac77280fc4129b4af10dcc32a5821aa0cf5"
+        },
+        {
+          "role": "sanitized_review_candidate",
+          "path": "pcb/pcb-sanitized-review-candidate.zip",
+          "sourceName": "public_candidate",
+          "size": 387670,
+          "sha256": "6b75aa4270aea57ec2ccb4310cacf76ebb069ca58285c667f0d8e9f0d5ea0627",
+          "memberCount": 49
+        }
+      ]
+    }
+  ],
+  "outputClosure": {
+    "policy": "all_output_files_except_manifest_self",
+    "files": [
+      {
+        "path": "architecture/architecture-sanitized-review-candidate.zip",
+        "size": 1675110,
+        "sha256": "4928e02586ed7fbd96f31d639a012988b4da8d06ba049b1ffa236fa07fbfc28a"
+      },
+      {
+        "path": "architecture/preview.png",
+        "size": 164946,
+        "sha256": "995b4715b390f1b22cd23074f10047b8085c97336fb1846e565c9c020abaf08c"
+      },
+      {
+        "path": "architecture/review.html",
+        "size": 5533387,
+        "sha256": "11bb2118ab468b24234f9da51bed799c16ad278d78b90488c62dcff1ccc1189f"
+      },
+      {
+        "path": "architecture/source-manifest.json",
+        "size": 5812,
+        "sha256": "df17da27b4262b797419e3438ee7f8689e755e2da9bbfde9d43c582a6279170d"
+      },
+      {
+        "path": "architecture/validation.json",
+        "size": 33363,
+        "sha256": "195311d31035f4c1b42f6fbf762b0c54d2a94b7b0bf4935368af88a16921b487"
+      },
+      {
+        "path": "architecture/validation.md",
+        "size": 2968,
+        "sha256": "670ada04105a4da994a3ae39bb4fb26b9dd4b173c1d44b794b3567bbad68918c"
+      },
+      {
+        "path": "mechanical/mechanical-sanitized-review-candidate.zip",
+        "size": 1715171,
+        "sha256": "da569f8fbdbf41e543fd4e1bc6088d9674158f3e1f281ff16e393114477dddb7"
+      },
+      {
+        "path": "mechanical/preview.png",
+        "size": 190945,
+        "sha256": "b868066e6f029f6a145ef531a9d13eb11158332e5e884e0072a6aae724d61457"
+      },
+      {
+        "path": "mechanical/review.html",
+        "size": 8327,
+        "sha256": "321651d0d389d247a50348b5d4edb01787192c81aa785010a73f7243668d8676"
+      },
+      {
+        "path": "mechanical/source-manifest.json",
+        "size": 25924,
+        "sha256": "c924668d860e068a921c9c783a5c53699b21eaeccf70a0c252df41cbc2ac3530"
+      },
+      {
+        "path": "mechanical/validation.json",
+        "size": 2522,
+        "sha256": "f7e4971c946de7e229b7db1fe803b2d5183ef7298beac90a3d0ca53614305dfa"
+      },
+      {
+        "path": "mechanical/validation.md",
+        "size": 1571,
+        "sha256": "be8e89d562e1ebfd22004cb3cb3bdae62ac392121f4a88889082a6d89447676c"
+      },
+      {
+        "path": "pcb/pcb-sanitized-review-candidate.zip",
+        "size": 387670,
+        "sha256": "6b75aa4270aea57ec2ccb4310cacf76ebb069ca58285c667f0d8e9f0d5ea0627"
+      },
+      {
+        "path": "pcb/preview.png",
+        "size": 136586,
+        "sha256": "d7e8371cc5735ceb3e7e3971a94d63120d80cf243d34abe58f149e4b78fe94e6"
+      },
+      {
+        "path": "pcb/review.html",
+        "size": 1746,
+        "sha256": "291265e2b1ea423675c043f9d9310bf85c4e861730a60cc9c2cfc9ad639c7191"
+      },
+      {
+        "path": "pcb/source-manifest.json",
+        "size": 8361,
+        "sha256": "27538488df5e133e190eb367f6588ac77280fc4129b4af10dcc32a5821aa0cf5"
+      },
+      {
+        "path": "pcb/validation.json",
+        "size": 5478,
+        "sha256": "bec34928f928ecbc082d560351dd804b407a7c6259cbdc991cdb5082f98f1cf2"
+      },
+      {
+        "path": "pcb/validation.md",
+        "size": 2790,
+        "sha256": "62bc3c10ffeb7644ad49d079ac752b25c9be9a13dff14ad6d37ee24d4d8aa4bf"
+      },
+      {
+        "path": "README.md",
+        "size": 2881,
+        "sha256": "ec7e4c93accd69f6fa48d444f706c434f27510c284bee99990ce176457c19c74"
+      },
+      {
+        "path": "steel/preview.png",
+        "size": 440784,
+        "sha256": "68417085c4a5b60c9660f57df6bd93aa83edf65a94969357d8969093de86a814"
+      },
+      {
+        "path": "steel/review.html",
+        "size": 202305,
+        "sha256": "e534f6ea33fdbee55af5392389ca678a57efb517fde618949cbc4db0e9230065"
+      },
+      {
+        "path": "steel/source-manifest.json",
+        "size": 2956,
+        "sha256": "9b5fd9078a1f5318e78b009a50801f188b85119b6c04d070907a29559f292e4c"
+      },
+      {
+        "path": "steel/steel-sanitized-review-candidate.zip",
+        "size": 477474,
+        "sha256": "fff4c030b50557b4492bfdc032c2ddb33a4d56e115f755c6f2f975c5a3d94e36"
+      },
+      {
+        "path": "steel/validation.json",
+        "size": 16351,
+        "sha256": "f31237e23550ce5faf69e94fab6910bd30fdcc1f82d7c659fff7e5912558addd"
+      },
+      {
+        "path": "steel/validation.md",
+        "size": 2067,
+        "sha256": "bebccafdb5159ba5541ab0d5c7895175807a0dca1d4d9b74fe166e578b8e0081"
+      }
+    ]
+  }
+}

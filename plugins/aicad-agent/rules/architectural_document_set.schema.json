@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aicad.local/schemas/architectural_document_set.schema.json",
+  "title": "AICAD Architectural Document Set Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "projectId",
+    "deliveryStage",
+    "requestedStoreys",
+    "documents",
+    "axisAuthorityBindings",
+    "modifier",
+    "safetyLocks"
+  ],
+  "properties": {
+    "schema": {"const": "aicad_architectural_document_set_v1"},
+    "projectId": {"type": "string", "minLength": 1},
+    "deliveryStage": {
+      "enum": ["concept_review", "design_development", "construction_candidate", "production"]
+    },
+    "requestedStoreys": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/storey"}
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/document"}
+    },
+    "axisAuthorityBindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/axisAuthorityBinding"}
+    },
+    "modifier": {"$ref": "#/$defs/modifier"},
+    "safetyLocks": {"$ref": "#/$defs/safetyLocks"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "storey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "elevationMm"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"},
+        "title": {"type": "string", "minLength": 1},
+        "elevationMm": {"type": "number"}
+      }
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "documentId",
+        "storeyId",
+        "sheetId",
+        "planPath",
+        "planCanonicalSha256",
+        "viewPackagePath",
+        "viewPackageSha256"
+      ],
+      "properties": {
+        "documentId": {"type": "string", "minLength": 1},
+        "storeyId": {"type": "string", "minLength": 1},
+        "sheetId": {"type": "string", "minLength": 1},
+        "planPath": {"$ref": "#/$defs/path"},
+        "planCanonicalSha256": {"$ref": "#/$defs/sha256"},
+        "viewPackagePath": {"$ref": "#/$defs/path"},
+        "viewPackageSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "axis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "coordinateMm", "supportEntityIds"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "coordinateMm": {"type": "number"},
+        "supportEntityIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    },
+    "axisSets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vertical", "horizontal"],
+      "properties": {
+        "vertical": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/axis"}},
+        "horizontal": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/axis"}}
+      }
+    },
+    "axisAuthorityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storeyId",
+        "mode",
+        "authorityStatus",
+        "sourcePath",
+        "sourceSha256",
+        "sourceRevision",
+        "regularityPolicy",
+        "candidateAxes"
+      ],
+      "properties": {
+        "storeyId": {"type": "string", "minLength": 1},
+        "mode": {
+          "enum": ["external_authority_catalog", "approved_input_catalog", "concept_assumption_catalog"]
+        },
+        "authorityStatus": {
+          "enum": ["project_authority", "approved_input", "concept_assumption"]
+        },
+        "sourcePath": {"$ref": "#/$defs/path"},
+        "sourceSha256": {"$ref": "#/$defs/sha256"},
+        "sourceRevision": {"type": "string", "minLength": 1},
+        "regularityPolicy": {"const": "authority_result_not_assumed"},
+        "candidateAxes": {"$ref": "#/$defs/axisSets"}
+      }
+    },
+    "modifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "artifactRole",
+        "htmlPath",
+        "htmlSha256",
+        "openTargetPath",
+        "openTargetSha256",
+        "embeddedDocumentSetSha256",
+        "storeySelectorIds",
+        "defaultStoreyId",
+        "activeStoreyId",
+        "selectionScopeMode"
+      ],
+      "properties": {
+        "mode": {"const": "document_set_switcher"},
+        "artifactRole": {"const": "interactive_drawing_modifier"},
+        "htmlPath": {"$ref": "#/$defs/path"},
+        "htmlSha256": {"$ref": "#/$defs/sha256"},
+        "openTargetPath": {"$ref": "#/$defs/path"},
+        "openTargetSha256": {"$ref": "#/$defs/sha256"},
+        "embeddedDocumentSetSha256": {"$ref": "#/$defs/sha256"},
+        "storeySelectorIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "defaultStoreyId": {"type": "string", "minLength": 1},
+        "activeStoreyId": {"type": "string", "minLength": 1},
+        "selectionScopeMode": {"const": "document_scoped"}
+      }
+    },
+    "safetyLocks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true}
+      }
+    }
+  }
+}

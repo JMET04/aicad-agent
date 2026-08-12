@@ -1,9 +1,9 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.11.2\github-repository',
-    [string]$Version = '1.11.2',
-    [string]$PluginArchive = 'release\v1.11.2\aicad-agent-1.11.2.zip',
-    [string]$PluginDirectory = 'release\v1.11.2\aicad-agent'
+    [string]$OutputDirectory = 'release\v1.12.0\github-repository',
+    [string]$Version = '1.12.0',
+    [string]$PluginArchive = 'release\v1.12.0\aicad-agent-1.12.0.zip',
+    [string]$PluginDirectory = 'release\v1.12.0\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -23,20 +23,73 @@ function Convert-TreeTextToLf {
     }
 }
 
-$root = Split-Path -Parent $PSScriptRoot
-$releaseRoot = [IO.Path]::GetFullPath((Join-Path $root 'release'))
-$target = [IO.Path]::GetFullPath((Join-Path $root $OutputDirectory))
-if (-not $target.StartsWith($releaseRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
-    throw "Source staging must stay inside release: $target"
-}
-if (Test-Path -LiteralPath $target) {
-    $resolved = (Resolve-Path -LiteralPath $target).Path
-    if (-not $resolved.StartsWith($releaseRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
-        throw "Refusing to clear source staging outside release: $resolved"
+function Get-GitHubSourceInputFiles {
+    param(
+        [Parameter(Mandatory = $true)][string]$RepositoryRoot,
+        [Parameter(Mandatory = $true)][string]$AssembledPlugin,
+        [Parameter(Mandatory = $true)][string]$Archive
+    )
+    $rows = [Collections.Generic.List[IO.FileInfo]]::new()
+    $skipNames = @('__pycache__', '.pytest_cache', 'bin', 'obj')
+    $skipExtensions = @('.pyc', '.pyo')
+    function Add-Tree([string]$Tree) {
+        if (-not (Test-Path -LiteralPath $Tree -PathType Container)) { return }
+        Get-ChildItem -LiteralPath $Tree -Recurse -Force -File | ForEach-Object {
+            $relative = $_.FullName.Substring($RepositoryRoot.Length).TrimStart('\').Replace('\', '/')
+            $parts = $relative.Split('/')
+            if (-not ($parts | Where-Object { $skipNames -contains $_ }) -and $skipExtensions -notcontains $_.Extension.ToLowerInvariant()) {
+                $rows.Add($_)
+            }
+        }
     }
-    Remove-Item -LiteralPath $resolved -Recurse -Force
+    foreach ($relative in @('README.md', 'pyproject.toml', '.gitignore', '.gitattributes')) {
+        $rows.Add((Get-Item -LiteralPath (Join-Path $RepositoryRoot $relative)))
+    }
+    foreach ($relative in @('.github', '.agents', 'src', 'schema', 'examples', 'prompts', 'docs', 'plugin', 'agent-plugin', 'scripts', 'tests', 'tools', 'showcase')) {
+        Add-Tree (Join-Path $RepositoryRoot $relative)
+    }
+    foreach ($relative in @(
+        'solidworks-host\AiCad.SolidWorksHost\Program.cs',
+        'solidworks-host\AiCad.SolidWorksHost\AiCad.SolidWorksHost.csproj'
+    )) {
+        $rows.Add((Get-Item -LiteralPath (Join-Path $RepositoryRoot $relative)))
+    }
+    Add-Tree $AssembledPlugin
+    $rows.Add((Get-Item -LiteralPath $Archive))
+    return @($rows | Sort-Object FullName -Unique)
 }
+
+function Get-SourceInputEntries {
+    param(
+        [Parameter(Mandatory = $true)][string]$RepositoryRoot,
+        [Parameter(Mandatory = $true)][IO.FileInfo[]]$Files
+    )
+    return @($Files | ForEach-Object {
+        [ordered]@{
+            path = $_.FullName.Substring($RepositoryRoot.Length).TrimStart('\').Replace('\', '/')
+            size = $_.Length
+            sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $_.FullName).Hash.ToLowerInvariant()
+        }
+    })
+}
+
+$root = Split-Path -Parent $PSScriptRoot
+$root = [IO.Path]::GetFullPath($root).TrimEnd('\')
+$releaseRoot = [IO.Path]::GetFullPath((Join-Path $root 'release'))
+$finalTarget = [IO.Path]::GetFullPath((Join-Path $root $OutputDirectory))
+if (-not $finalTarget.StartsWith($releaseRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+    throw "Source output must stay inside release: $finalTarget"
+}
+$targetParent = Split-Path -Parent $finalTarget
+New-Item -ItemType Directory -Path $targetParent -Force | Out-Null
+$targetLeaf = Split-Path -Leaf $finalTarget
+$nonce = [Guid]::NewGuid().ToString('N')
+$target = Join-Path $targetParent ".$targetLeaf.$nonce.staging"
+$backupTarget = Join-Path $targetParent ".$targetLeaf.$nonce.backup"
 New-Item -ItemType Directory -Path $target -Force | Out-Null
+[IO.File]::SetAttributes($target, [IO.File]::GetAttributes($target) -bor [IO.FileAttributes]::Hidden)
+$published = $false
+try {
 
 $rootFiles = @('README.md', 'pyproject.toml', '.gitignore', '.gitattributes')
 foreach ($item in $rootFiles) {
@@ -84,6 +137,9 @@ if (-not (Test-Path -LiteralPath $archive -PathType Leaf)) {
 Copy-Item -LiteralPath $archive -Destination $dist -Force
 
 Convert-TreeTextToLf -TreeRoot $target
+# Showcase artifacts are content-addressed review evidence. Copy them only after
+# normalization so the publisher never mutates their already-verified bytes.
+Copy-Item -LiteralPath (Join-Path $root 'showcase') -Destination $target -Recurse -Force
 
 $resolvedTarget = (Resolve-Path -LiteralPath $target).Path
 Get-ChildItem -LiteralPath $target -Directory -Recurse -Force |
@@ -108,7 +164,8 @@ $archiveHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $dist $ar
     [Text.UTF8Encoding]::new($false)
 )
 
-$files = @(Get-ChildItem -LiteralPath $target -Recurse -File | Where-Object Name -ne 'source-manifest.json')
+$rootSourceManifest = [IO.Path]::GetFullPath((Join-Path $target 'source-manifest.json'))
+$files = @(Get-ChildItem -LiteralPath $target -Recurse -File | Where-Object { $_.FullName -ne $rootSourceManifest })
 $entries = @($files | Sort-Object FullName | ForEach-Object {
     [ordered]@{
         path = $_.FullName.Substring($resolvedTarget.Length).TrimStart('\').Replace('\', '/')
@@ -125,6 +182,12 @@ $manifest = [ordered]@{
     releaseStatus = 'engineering-candidate'
     apiKeyRequired = $false
     proprietaryDependenciesRedistributed = $false
+    sourceInputPolicy = 'github_source_builder_v1'
+    sourceBuildInputs = [ordered]@{
+        pluginDirectory = $assembledPlugin.Substring($root.Length).TrimStart('\').Replace('\', '/')
+        pluginArchive = $archive.Substring($root.Length).TrimStart('\').Replace('\', '/')
+    }
+    sourceInputs = Get-SourceInputEntries -RepositoryRoot $root -Files (Get-GitHubSourceInputFiles -RepositoryRoot $root -AssembledPlugin $assembledPlugin -Archive $archive)
     install = [ordered]@{
         marketplace = "codex plugin marketplace add JMET04/aicad-agent --ref v$Version"
         plugin = 'codex plugin add aicad-agent@aicad-agent'
@@ -141,6 +204,8 @@ $manifest = [ordered]@{
         'typed selected line/point/circle/face measurements from compiled model geometry',
         'one synchronized MODEL_XYZ switch across 2D origins and rotating 3D axes',
         'exact source-bound subobject correction and arbitrary semantic sections',
+        'canonical cross-domain normative quality contract with explicit external-verifier boundary',
+        'deterministic sanitized public showcase assembly',
         'optional AutoCAD and SolidWorks native hosts',
         'root-cause, correction and persistent prevention-rule audit'
     )
@@ -155,8 +220,8 @@ $manifest = [ordered]@{
     validationCommands = @(
         'python -B -m unittest discover -s tests -v',
         'python -B -m unittest discover -s agent-plugin/aicad-agent/tests -v',
-        'python -B scripts/verify_release_package.py plugins/aicad-agent',
-        'python -B scripts/verify_github_source.py .'
+        'python -B scripts/verify_release_package.py plugins/aicad-agent --source-root <repository-root>',
+        'python -B scripts/verify_github_source.py . --source-root <repository-root>'
     )
     files = $entries
 }
@@ -166,5 +231,43 @@ $manifest = [ordered]@{
     [Text.UTF8Encoding]::new($false)
 )
 
-Write-Host "GitHub source staging created: $target"
+$sourceVerifier = Join-Path $root 'scripts\verify_github_source.py'
+& python -B $sourceVerifier $target --source-root $root
+if ($LASTEXITCODE -ne 0) {
+    throw 'Staged GitHub source failed independent verification.'
+}
+[IO.File]::SetAttributes(
+    $target,
+    [IO.FileAttributes]([int][IO.File]::GetAttributes($target) -band (-bnot [int][IO.FileAttributes]::Hidden))
+)
+$hadPrevious = $false
+$promoted = $false
+try {
+    if (Test-Path -LiteralPath $finalTarget) {
+        Move-Item -LiteralPath $finalTarget -Destination $backupTarget
+        $hadPrevious = $true
+    }
+    Move-Item -LiteralPath $target -Destination $finalTarget
+    $promoted = $true
+    & python -B $sourceVerifier $finalTarget --source-root $root
+    if ($LASTEXITCODE -ne 0) { throw 'Published GitHub source failed post-rename verification.' }
+    if ($hadPrevious -and (Test-Path -LiteralPath $backupTarget)) {
+        Remove-Item -LiteralPath $backupTarget -Recurse -Force
+    }
+    $published = $true
+} catch {
+    if ($promoted -and (Test-Path -LiteralPath $finalTarget)) {
+        Remove-Item -LiteralPath $finalTarget -Recurse -Force
+    }
+    if ($hadPrevious -and (Test-Path -LiteralPath $backupTarget)) {
+        Move-Item -LiteralPath $backupTarget -Destination $finalTarget
+    }
+    throw
+}
+Write-Host "GitHub source staging created: $finalTarget"
+} finally {
+    if (-not $published -and (Test-Path -LiteralPath $target)) {
+        Remove-Item -LiteralPath $target -Recurse -Force
+    }
+}
 

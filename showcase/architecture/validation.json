@@ -1,0 +1,1263 @@
+{
+  "schema": "cliff_villa_three_floor_diagnostic_validation_v112",
+  "status": "pass",
+  "diagnosticModifierAccepted": true,
+  "productionReleaseAllowed": false,
+  "artifactDisposition": "review_only_diagnostic_modifier",
+  "checks": {
+    "requested_storey_set_bijection": {
+      "pass": true
+    },
+    "three_unique_source_plans": {
+      "pass": true
+    },
+    "modifier_source_freshness": {
+      "pass": true
+    },
+    "per_storey_source_view_packages_fresh": {
+      "pass": true
+    },
+    "design_basis_hash_bound": {
+      "pass": true
+    },
+    "concept_axis_authority_review_only_and_design_basis_bound": {
+      "pass": true
+    },
+    "axis_catalog_matches_design_basis": {
+      "pass": true
+    },
+    "unsupported_equal_module_absent": {
+      "pass": true
+    },
+    "all_axes_depend_on_earlier_supports": {
+      "pass": true
+    },
+    "contract_geometry_and_annotations_bound": {
+      "pass": true
+    },
+    "only_noncompensable_production_blockers_remain": {
+      "pass": true
+    },
+    "native_text_geometry_parity": {
+      "pass": true
+    },
+    "native_dimension_text_parity": {
+      "pass": true
+    },
+    "all_plan_text_visible_before_payload": {
+      "pass": true
+    },
+    "native_svg_text_present": {
+      "pass": true
+    },
+    "floor_switch_controls_present": {
+      "pass": true
+    },
+    "selection_references_document_scoped": {
+      "pass": true
+    },
+    "safety_locks_preserved": {
+      "pass": true
+    },
+    "review_html_utf8_and_structure": {
+      "pass": true
+    },
+    "formal_architectural_document_set_qa": {
+      "pass": true
+    },
+    "formal_document_set_digest_embedded_before_release": {
+      "pass": true
+    },
+    "browser_qa_v2_pass": {
+      "pass": true
+    }
+  },
+  "documents": [
+    {
+      "document_id": "CLIFF_VILLA_LF",
+      "storey_id": "LF",
+      "title": "悬崖下层 -3.600",
+      "elevation_mm": -3600.0,
+      "global_origin": [
+        2100.0,
+        8400.0
+      ],
+      "view_id": "STOREY_LF",
+      "plan_path": "source_plans/lower_floor.source.plan.json",
+      "plan_file_sha256": "0d751a621e448f17604656df5ef113fb600f73a740e31841a8e56947c2685b72",
+      "plan_canonical_sha256": "d163f8a9c913872d150f194d26d7d225f57c81cc87e92334fcb735e3309f0cbd",
+      "source_view_package_path": "source_views/lower_floor.source.views.json",
+      "source_view_package_sha256": "cc07bd75240eddc159dfd5286b820bd0991fc890ad6d7b56f10634c299569030",
+      "semantic_source_sha256": "d163f8a9c913872d150f194d26d7d225f57c81cc87e92334fcb735e3309f0cbd",
+      "entity_counts": {
+        "line": 353,
+        "circle": 39,
+        "arc": 6,
+        "text": 47,
+        "dimension": 22
+      },
+      "view_entity_count": 697,
+      "selection_count": 697,
+      "local_axis_coordinates": {
+        "x": [
+          0.0,
+          8400.0,
+          12600.0,
+          21000.0
+        ],
+        "y": [
+          0.0,
+          2100.0,
+          8400.0
+        ]
+      },
+      "global_axis_coordinates": {
+        "x": [
+          2100.0,
+          10500.0,
+          14700.0,
+          23100.0
+        ],
+        "y": [
+          8400.0,
+          10500.0,
+          16800.0
+        ]
+      },
+      "axis_dependency_pass": true,
+      "axis_dependency_evidence": [
+        {
+          "axisEntityId": "LF_L0317",
+          "supportEntityIds": [
+            "LF_C0018",
+            "LF_C0022"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "LF_L0318",
+          "supportEntityIds": [
+            "LF_C0019",
+            "LF_C0023",
+            "LF_L0033"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "LF_L0319",
+          "supportEntityIds": [
+            "LF_C0020",
+            "LF_C0024",
+            "LF_L0032"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "LF_L0320",
+          "supportEntityIds": [
+            "LF_C0021",
+            "LF_C0025"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "LF_L0321",
+          "supportEntityIds": [
+            "LF_C0018",
+            "LF_C0019",
+            "LF_C0020",
+            "LF_C0021"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "LF_L0322",
+          "supportEntityIds": [
+            "LF_L0031"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "LF_L0323",
+          "supportEntityIds": [
+            "LF_C0022",
+            "LF_C0023",
+            "LF_C0024",
+            "LF_C0025"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        }
+      ],
+      "contract_validation_path": "contracts/lower_floor.architectural-detail-validation.json",
+      "contract_failed_checks": [
+        "production_authority_complete",
+        "production_drawing_set_complete"
+      ],
+      "contract_geometry_bound": true,
+      "contract_evidence": {
+        "equipmentAssignments": [
+          {
+            "equipmentId": "LF-EQ001",
+            "roomId": "LF-R001",
+            "center": [
+              2850.0,
+              1650.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ002",
+            "roomId": "LF-R001",
+            "center": [
+              550.0,
+              1275.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ003",
+            "roomId": "LF-R001",
+            "center": [
+              5150.0,
+              1275.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ004",
+            "roomId": "LF-R004",
+            "center": [
+              17100.0,
+              1650.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ005",
+            "roomId": "LF-R004",
+            "center": [
+              13800.0,
+              1275.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ006",
+            "roomId": "LF-R004",
+            "center": [
+              20350.0,
+              1275.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ007",
+            "roomId": "LF-R003",
+            "center": [
+              10500.0,
+              950.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ009",
+            "roomId": "LF-R001",
+            "center": [
+              2850.0,
+              3300.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ010",
+            "roomId": "LF-R004",
+            "center": [
+              17100.0,
+              3300.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ011",
+            "roomId": "LF-R002",
+            "center": [
+              6375.0,
+              3150.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ012",
+            "roomId": "LF-R002",
+            "center": [
+              7350.0,
+              825.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ013",
+            "roomId": "LF-R002",
+            "center": [
+              7425.0,
+              3075.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ014",
+            "roomId": "LF-R006",
+            "center": [
+              15150.0,
+              5700.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ015",
+            "roomId": "LF-R006",
+            "center": [
+              14400.0,
+              7350.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ016",
+            "roomId": "LF-R007",
+            "center": [
+              19200.0,
+              6150.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ017",
+            "roomId": "LF-R007",
+            "center": [
+              18100.0,
+              7800.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ018",
+            "roomId": "LF-R007",
+            "center": [
+              19000.0,
+              4725.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ019",
+            "roomId": "LF-R005",
+            "center": [
+              3300.0,
+              6000.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ020",
+            "roomId": "LF-R005",
+            "center": [
+              3900.0,
+              8025.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ021",
+            "roomId": "LF-R005",
+            "center": [
+              825.0,
+              7500.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ022",
+            "roomId": "LF-R005",
+            "center": [
+              7275.0,
+              7500.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "LF-EQ023",
+            "roomId": "LF-R005",
+            "center": [
+              3600.0,
+              7300.0
+            ],
+            "method": "center_inside_room"
+          }
+        ]
+      }
+    },
+    {
+      "document_id": "CLIFF_VILLA_MF",
+      "storey_id": "MF",
+      "title": "主层 +0.000",
+      "elevation_mm": 0.0,
+      "global_origin": [
+        0.0,
+        6300.0
+      ],
+      "view_id": "STOREY_MF",
+      "plan_path": "source_plans/main_floor.source.plan.json",
+      "plan_file_sha256": "e7bcb533d3679e5981739089b9071126e5ee94370d360e7dcf4d98e098a7e983",
+      "plan_canonical_sha256": "0821056458ea2b124c43bab80000698039d700a7f13ad4cc2334d7d9df3909c2",
+      "source_view_package_path": "source_views/main_floor.source.views.json",
+      "source_view_package_sha256": "15436ded74de0036556cbcf2cfdf837e1568f719aeee7b1a2faa22f76c67ccea",
+      "semantic_source_sha256": "0821056458ea2b124c43bab80000698039d700a7f13ad4cc2334d7d9df3909c2",
+      "entity_counts": {
+        "line": 529,
+        "circle": 57,
+        "arc": 6,
+        "text": 54,
+        "dimension": 24
+      },
+      "view_entity_count": 904,
+      "selection_count": 904,
+      "local_axis_coordinates": {
+        "x": [
+          0.0,
+          8400.0,
+          10500.0,
+          14700.0,
+          16800.0,
+          25200.0
+        ],
+        "y": [
+          0.0,
+          4200.0,
+          10500.0
+        ]
+      },
+      "global_axis_coordinates": {
+        "x": [
+          0.0,
+          8400.0,
+          10500.0,
+          14700.0,
+          16800.0,
+          25200.0
+        ],
+        "y": [
+          6300.0,
+          10500.0,
+          16800.0
+        ]
+      },
+      "axis_dependency_pass": true,
+      "axis_dependency_evidence": [
+        {
+          "axisEntityId": "MF_L0491",
+          "supportEntityIds": [
+            "MF_C0032",
+            "MF_C0036"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "MF_L0492",
+          "supportEntityIds": [
+            "MF_C0033",
+            "MF_C0037"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "MF_L0493",
+          "supportEntityIds": [
+            "MF_L0032"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "MF_L0494",
+          "supportEntityIds": [
+            "MF_L0030",
+            "MF_L0031"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "MF_L0495",
+          "supportEntityIds": [
+            "MF_C0034",
+            "MF_C0038"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "MF_L0496",
+          "supportEntityIds": [
+            "MF_C0035",
+            "MF_C0039"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "MF_L0497",
+          "supportEntityIds": [
+            "MF_C0032",
+            "MF_C0033",
+            "MF_C0034",
+            "MF_C0035"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "MF_L0498",
+          "supportEntityIds": [
+            "MF_L0029"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "MF_L0499",
+          "supportEntityIds": [
+            "MF_C0036",
+            "MF_C0037",
+            "MF_C0038",
+            "MF_C0039"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        }
+      ],
+      "contract_validation_path": "contracts/main_floor.architectural-detail-validation.json",
+      "contract_failed_checks": [
+        "production_authority_complete",
+        "production_drawing_set_complete"
+      ],
+      "contract_geometry_bound": true,
+      "contract_evidence": {
+        "equipmentAssignments": [
+          {
+            "equipmentId": "MF-EQ001",
+            "roomId": "MF-R001",
+            "center": [
+              2550.0,
+              1500.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ002",
+            "roomId": "MF-R001",
+            "center": [
+              1950.0,
+              2850.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ003",
+            "roomId": "MF-R001",
+            "center": [
+              4725.0,
+              2850.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ004",
+            "roomId": "MF-R001",
+            "center": [
+              5475.0,
+              1500.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ005",
+            "roomId": "MF-R001",
+            "center": [
+              6825.0,
+              1500.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ006",
+            "roomId": "MF-R001",
+            "center": [
+              6150.0,
+              3750.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ007",
+            "roomId": "MF-R002",
+            "center": [
+              11550.0,
+              2100.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ008",
+            "roomId": "MF-R002",
+            "center": [
+              9900.0,
+              675.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ009",
+            "roomId": "MF-R002",
+            "center": [
+              11100.0,
+              675.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ010",
+            "roomId": "MF-R002",
+            "center": [
+              12300.0,
+              675.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ011",
+            "roomId": "MF-R002",
+            "center": [
+              13500.0,
+              675.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ012",
+            "roomId": "MF-R002",
+            "center": [
+              9900.0,
+              3525.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ013",
+            "roomId": "MF-R002",
+            "center": [
+              11100.0,
+              3525.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ014",
+            "roomId": "MF-R002",
+            "center": [
+              12300.0,
+              3525.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ015",
+            "roomId": "MF-R002",
+            "center": [
+              13500.0,
+              3525.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ016",
+            "roomId": "MF-R003",
+            "center": [
+              18450.0,
+              2100.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ017",
+            "roomId": "MF-R006",
+            "center": [
+              8025.0,
+              6450.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ018",
+            "roomId": "MF-R006",
+            "center": [
+              6600.0,
+              6150.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ019",
+            "roomId": "MF-R006",
+            "center": [
+              9900.0,
+              6150.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ020",
+            "roomId": "MF-R005",
+            "center": [
+              3000.0,
+              6900.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ021",
+            "roomId": "MF-R005",
+            "center": [
+              3150.0,
+              5475.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ022",
+            "roomId": "MF-R005",
+            "center": [
+              3150.0,
+              9000.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ023",
+            "roomId": "MF-R006",
+            "center": [
+              8250.0,
+              9000.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ024",
+            "roomId": "MF-R003",
+            "center": [
+              18000.0,
+              2100.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ025",
+            "roomId": "MF-R003",
+            "center": [
+              19500.0,
+              2100.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ026",
+            "roomId": "MF-R003",
+            "center": [
+              21375.0,
+              900.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ027",
+            "roomId": "MF-R004",
+            "center": [
+              23625.0,
+              825.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ028",
+            "roomId": "MF-R004",
+            "center": [
+              23550.0,
+              1950.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ029",
+            "roomId": "MF-R007",
+            "center": [
+              15750.0,
+              4950.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ030",
+            "roomId": "MF-R007",
+            "center": [
+              16800.0,
+              4950.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ031",
+            "roomId": "MF-R007",
+            "center": [
+              18000.0,
+              4950.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ032",
+            "roomId": "MF-R007",
+            "center": [
+              16950.0,
+              6450.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ033",
+            "roomId": "MF-R008",
+            "center": [
+              20550.0,
+              5025.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ034",
+            "roomId": "MF-R008",
+            "center": [
+              19575.0,
+              6450.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ035",
+            "roomId": "MF-R008",
+            "center": [
+              20850.0,
+              6375.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ036",
+            "roomId": "MF-R010",
+            "center": [
+              19350.0,
+              9450.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "MF-EQ037",
+            "roomId": "MF-R009",
+            "center": [
+              24450.0,
+              7350.0
+            ],
+            "method": "center_inside_room"
+          }
+        ]
+      }
+    },
+    {
+      "document_id": "CLIFF_VILLA_UF",
+      "storey_id": "UF",
+      "title": "到达层 +3.600",
+      "elevation_mm": 3600.0,
+      "global_origin": [
+        2100.0,
+        10500.0
+      ],
+      "view_id": "STOREY_UF",
+      "plan_path": "source_plans/upper_floor.source.plan.json",
+      "plan_file_sha256": "d6729ff02bbe422d68dafff5715c5b7522ad166959a53a522167a05577bca287",
+      "plan_canonical_sha256": "626d70d17535d936cea9dfd6b77ee4443cd1628151e6bfa7e314bf0d465c2691",
+      "source_view_package_path": "source_views/upper_floor.source.views.json",
+      "source_view_package_sha256": "b856f2a6085c43995e14b546b69f85d6f1cde1564b4cac35ae848099757e5575",
+      "semantic_source_sha256": "626d70d17535d936cea9dfd6b77ee4443cd1628151e6bfa7e314bf0d465c2691",
+      "entity_counts": {
+        "line": 273,
+        "circle": 46,
+        "arc": 4,
+        "text": 41,
+        "dimension": 19
+      },
+      "view_entity_count": 545,
+      "selection_count": 545,
+      "local_axis_coordinates": {
+        "x": [
+          0.0,
+          8400.0,
+          12600.0,
+          21000.0
+        ],
+        "y": [
+          0.0,
+          6300.0
+        ]
+      },
+      "global_axis_coordinates": {
+        "x": [
+          2100.0,
+          10500.0,
+          14700.0,
+          23100.0
+        ],
+        "y": [
+          10500.0,
+          16800.0
+        ]
+      },
+      "axis_dependency_pass": true,
+      "axis_dependency_evidence": [
+        {
+          "axisEntityId": "UF_L0238",
+          "supportEntityIds": [
+            "UF_C0027",
+            "UF_C0031"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "UF_L0239",
+          "supportEntityIds": [
+            "UF_C0028",
+            "UF_C0032",
+            "UF_L0024"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "UF_L0240",
+          "supportEntityIds": [
+            "UF_C0029",
+            "UF_C0033",
+            "UF_L0022",
+            "UF_L0023"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "UF_L0241",
+          "supportEntityIds": [
+            "UF_C0030",
+            "UF_C0034"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "UF_L0242",
+          "supportEntityIds": [
+            "UF_C0027",
+            "UF_C0028",
+            "UF_C0029",
+            "UF_C0030"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        },
+        {
+          "axisEntityId": "UF_L0243",
+          "supportEntityIds": [
+            "UF_C0031",
+            "UF_C0032",
+            "UF_C0033",
+            "UF_C0034"
+          ],
+          "earlier": true,
+          "dependencyBound": true,
+          "pass": true
+        }
+      ],
+      "contract_validation_path": "contracts/upper_floor.architectural-detail-validation.json",
+      "contract_failed_checks": [
+        "production_authority_complete",
+        "production_drawing_set_complete"
+      ],
+      "contract_geometry_bound": true,
+      "contract_evidence": {
+        "equipmentAssignments": [
+          {
+            "equipmentId": "UF-EQ001",
+            "roomId": "UF-R001",
+            "center": [
+              2850.0,
+              1650.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ002",
+            "roomId": "UF-R001",
+            "center": [
+              550.0,
+              1275.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ003",
+            "roomId": "UF-R001",
+            "center": [
+              5150.0,
+              1275.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ004",
+            "roomId": "UF-R002",
+            "center": [
+              6150.0,
+              1725.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ005",
+            "roomId": "UF-R002",
+            "center": [
+              7950.0,
+              1725.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ006",
+            "roomId": "UF-R003",
+            "center": [
+              2400.0,
+              4875.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ007",
+            "roomId": "UF-R003",
+            "center": [
+              5400.0,
+              5550.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ008",
+            "roomId": "UF-R003",
+            "center": [
+              7050.0,
+              3975.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ009",
+            "roomId": "UF-R003",
+            "center": [
+              7350.0,
+              5475.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ010",
+            "roomId": "UF-R005",
+            "center": [
+              13275.0,
+              600.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ011",
+            "roomId": "UF-R005",
+            "center": [
+              14100.0,
+              1350.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ012",
+            "roomId": "UF-R006",
+            "center": [
+              13150.0,
+              5050.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ013",
+            "roomId": "UF-R006",
+            "center": [
+              14150.0,
+              5050.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ014",
+            "roomId": "UF-R004",
+            "center": [
+              17850.0,
+              5775.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ016",
+            "roomId": "UF-R004",
+            "center": [
+              17100.0,
+              3000.0
+            ],
+            "method": "center_inside_room"
+          },
+          {
+            "equipmentId": "UF-EQ017",
+            "roomId": "UF-R004",
+            "center": [
+              19650.0,
+              3000.0
+            ],
+            "method": "center_inside_room"
+          }
+        ]
+      }
+    }
+  ],
+  "counts": {
+    "sourcePlanEntities": 1520,
+    "viewEntities": 2146,
+    "selections": 2146,
+    "nativePlanText": 142,
+    "nativeDimensionText": 65
+  },
+  "visibleTextMissing": [],
+  "formalDocumentSet": {
+    "contractPath": "cliff-villa-three-floor-diagnostic-v112.document-set.contract.json",
+    "validationPath": "cliff-villa-three-floor-diagnostic-v112.document-set.validation.json",
+    "validationMarkdownPath": "cliff-villa-three-floor-diagnostic-v112.document-set.validation.md",
+    "status": "pass",
+    "documentSetSha256": "bab36bf3a08582742e8042f506257811b34e3603e0aea998cce3c8058f3e75f6",
+    "rulesApplied": [
+      "ARCH-D048",
+      "ARCH-D049",
+      "ARCH-D050",
+      "ARCH-D051"
+    ]
+  },
+  "browserQA": {
+    "path": "browser_qa_v2.json",
+    "status": "pass",
+    "failedChecks": [],
+    "commandExitCode": 0,
+    "stdoutTail": "{\"ok\":true,\"status\":\"pass\",\"reportPath\":\"browser_qa_v2.json\",\"failedChecks\":[]}\n",
+    "stderrTail": ""
+  },
+  "sourceHashes": {
+    "combined": "2348f84b9172e225229853f12ac6a1a91332cd1f96b3793104365284b851c929",
+    "builder": "6394fa195dcb8adfad94ca57dc4cb8d0e65e3b1b38b401ffbdf206cfa4a7c720",
+    "designBasis": "ebb707fa8fd492226aa15ea179db1de3f707a5605a172828bcfc90cf17047d50",
+    "axisAuthorityCatalog": "65adc58a5dc08f6c59d14aadd90765533437b50a01777e464a86991acf9e2bde",
+    "documentSetContract": "6a68b16d90788def174f94b817ef7b7c69562c2f11edc24753420c8262e52d0d",
+    "documentSetValidation": "cc57da41e111f022bee7ec2c0810878cd4b770a607498a90cab94daef66b93bf",
+    "viewmap": "19b31494859120ffd25fa929fc06dbba09931e81d5a1f866cbb44cec7e54b57f",
+    "reviewUi": "771d3738506ca2ba5aad1cae94db40de0bab9a828ca9594e4dbcf45e61d023c9",
+    "browserQaScript": "d07670fe8f35e63ae9561ec146ca0c33d268135a0451c3ded34f1144a26d625d",
+    "browserQaReport": "754963ed79c092992412ae816ce9cf559eeed479994d4ee46ff05532ff317476"
+  },
+  "rootCauseLessons": [
+    {
+      "ruleId": "ARCH-D049",
+      "rootCause": "楼层类别曾被集合化，三个 floor_plan 被错误视为一个图种即可满足。",
+      "preventionRule": "要求楼层 ID 与计划、视图、修改器文档一一双射；重复或缺失任一层立即失败。"
+    },
+    {
+      "ruleId": "ARCH-D050",
+      "rootCause": "旧流程只复制主层 HTML，修改器没有文档集或楼层切换语义。",
+      "preventionRule": "多层任务必须发布 document_set_switcher，切层清空选择并把纠错引用限定在当前 document/storey。"
+    },
+    {
+      "ruleId": "ARCH-D051",
+      "rootCause": "几何验证器未比较实际打开 HTML 的源计划哈希，且把 drawingModifierPreserved 写死。",
+      "preventionRule": "发布与打开前逐层比对 plan、view package、design basis、生成器和 renderer 哈希；全部通过后原子发布。"
+    },
+    {
+      "ruleId": "ARCH-D052",
+      "rootCause": "TEXT 被降为点、DIMENSION 只画三条线，导致中文和尺寸值在修改器中消失。",
+      "preventionRule": "浏览器视图的原生 TEXT/DIMENSION 数量必须与已解析计划完全对应，并在 payload 前的可见 DOM 中逐值核验。"
+    },
+    {
+      "ruleId": "ARCH-D053",
+      "rootCause": "标注虽存在，但模型空间固定偏移未形成语义标注带，缩放后出现低于8px文字和跨owner碰撞。",
+      "preventionRule": "原子发布前必须在1920x1200与1280x800真实浏览器中逐层检查文字最小高度、标注数量和不同owner包围盒零碰撞；失败即拒绝发布。"
+    }
+  ],
+  "productionBlockers": [
+    "production_authority_complete",
+    "production_drawing_set_complete"
+  ],
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "domainGated": true,
+    "packagingGated": true
+  },
+  "generatedAtUtc": "2026-08-12T06:37:32.880090+00:00"
+}

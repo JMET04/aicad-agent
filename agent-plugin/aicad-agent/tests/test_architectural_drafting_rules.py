@@ -62,10 +62,27 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
     def test_rule_pack_records_causes_and_prevention(self) -> None:
         data = json.loads((ROOT / "rules" / "architectural_drafting_rules.json").read_text(encoding="utf-8"))
         ids = {row["id"] for row in data["rules"]}
-        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 48)})
+        self.assertEqual(ids, {f"ARCH-D{i:03d}" for i in range(1, 55)})
         axis_support_rule = next(row for row in data["rules"] if row["id"] == "ARCH-D046")
         self.assertIn("structural column centre", axis_support_rule["requirement"])
+        independent_authority_rule = next(row for row in data["rules"] if row["id"] == "ARCH-D048")
+        self.assertIn("equal-spaced result is valid", independent_authority_rule["requirement"])
+        self.assertIn("independent", independent_authority_rule["prevention"])
+        picker_rule = next(row for row in data["rules"] if row["id"] == "ARCH-D052")
+        annotation_rule = next(row for row in data["rules"] if row["id"] == "ARCH-D053")
+        structure_rule = next(row for row in data["rules"] if row["id"] == "ARCH-D054")
+        self.assertIn("screen distance", picker_rule["requirement"])
+        self.assertIn("8 CSS pixels", annotation_rule["prevention"])
+        self.assertIn("Cartesian product", structure_rule["requirement"])
         self.assertEqual(data["axisCoverageContract"]["unsupportedFixedModulePolicy"], "fail")
+        self.assertEqual(
+            data["axisCoverageContract"]["authorityIndependencePolicy"],
+            "hash_bound_source_outside_candidate_dependency_cycle_required",
+        )
+        self.assertEqual(
+            data["axisCoverageContract"]["observedEqualSpacingPolicy"],
+            "pass_only_when_exact_independent_authority_result",
+        )
         self.assertEqual(data["axisCoverageContract"]["remoteAppendagePolicy"], "explicit_include_or_exclude")
         self.assertEqual(data["reportQualityContract"]["conflictingDuplicatePolicy"], "fail")
         self.assertTrue(all(row["failureCause"] and row["prevention"] for row in data["rules"]))
@@ -80,6 +97,12 @@ class ArchitecturalDraftingRulesTests(unittest.TestCase):
         self.assertEqual(data["architecturalDetailContract"]["failureDisposition"], "blocker_report_only")
         self.assertIn("launch_json", data["architecturalDetailContract"]["requiredBlockerFormats"])
         self.assertEqual(data["architecturalDetailContract"]["reviewLaunchContract"], "persistent_content_addressed_path_plus_idempotent_launch_status")
+        document_set = data["architecturalDocumentSetContract"]
+        self.assertEqual(document_set["schema"], "rules/architectural_document_set.schema.json")
+        self.assertEqual(document_set["qaTool"], "scripts/aicad_architecture_document_set_qa.py")
+        self.assertEqual(document_set["storeySetPolicy"], "exact_bijection")
+        self.assertEqual(document_set["modifierMode"], "document_set_switcher")
+        self.assertEqual(document_set["freshnessPolicy"], "plan_view_modifier_open_target_hash_chain")
         self.assertFalse(data["reviewPolicy"]["accepted"])
         self.assertFalse(data["reviewPolicy"]["ruleEnabled"])
 

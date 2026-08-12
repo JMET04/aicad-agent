@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "1.0.0",
+  "date": "2026-08-12",
+  "status": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true,
+    "fabricationReady": false
+  },
+  "overall": "BLOCKED_FOR_FABRICATION",
+  "publicReviewPackageReady": true,
+  "checks": [
+    {
+      "id": "LOCK-001",
+      "pass": true,
+      "blocking": true,
+      "evidence": "design_contract.json",
+      "note": "Five fixed review locks match exactly."
+    },
+    {
+      "id": "ART-001",
+      "pass": true,
+      "blocking": true,
+      "evidence": [
+        "project/industrial_controller.kicad_pro",
+        "project/industrial_controller.kicad_sch",
+        "project/industrial_controller.kicad_pcb",
+        "project/industrial_controller.kicad_dru",
+        "outputs/bom.csv",
+        "outputs/positions.csv",
+        "outputs/review_drawing.pdf",
+        "preview/board_top_white.svg",
+        "preview/board_top_white.png",
+        "preview/board_isometric_concept.svg",
+        "analysis/schematic.json",
+        "analysis/pcb.json",
+        "analysis/cross.json",
+        "analysis/thermal.json",
+        "analysis/emc.json",
+        "analysis/gerbers.json",
+        "analysis/fab_gate.json",
+        "analysis/independent_drc.json"
+      ],
+      "note": "All required artifacts exist."
+    },
+    {
+      "id": "RAW-001",
+      "pass": true,
+      "blocking": true,
+      "evidence": [
+        "project/industrial_controller.kicad_pcb",
+        "project/industrial_controller.kicad_sch"
+      ],
+      "note": "Parentheses are balanced in both raw files."
+    },
+    {
+      "id": "PCB-001",
+      "pass": true,
+      "blocking": true,
+      "evidence": "analysis/pcb.json",
+      "note": "Four layers; 96 x 72 mm."
+    },
+    {
+      "id": "PCB-002",
+      "pass": false,
+      "blocking": true,
+      "evidence": "analysis/pcb.json",
+      "note": "37 networks unrouted; this is a manufacturing blocker."
+    },
+    {
+      "id": "DRC-ALT-001",
+      "pass": true,
+      "blocking": true,
+      "evidence": "analysis/geometry_classification.json",
+      "note": "Deduplicated explicit tracks: 0 hard copper conflicts and 0 clearance-only conflicts across 11503 unique pairs; native DRC still required."
+    },
+    {
+      "id": "NATIVE-001",
+      "pass": false,
+      "blocking": true,
+      "evidence": "analysis/tool_inventory.json",
+      "note": "Native ERC, DRC, zone refill, plots and 3D were not run."
+    },
+    {
+      "id": "BOM-001",
+      "pass": false,
+      "blocking": true,
+      "evidence": [
+        "analysis/schematic.json",
+        "analysis/fab_gate.json"
+      ],
+      "note": "Manufacturer-part-number coverage below pre-fabrication threshold."
+    },
+    {
+      "id": "EMC-001",
+      "pass": false,
+      "blocking": false,
+      "evidence": "analysis/emc.json",
+      "note": "Risk analyzer has 1 error finding(s); laboratory compliance remains outside scope."
+    },
+    {
+      "id": "THERM-001",
+      "pass": false,
+      "blocking": true,
+      "evidence": "analysis/thermal.json",
+      "note": "Analyzer assessed zero powered components."
+    },
+    {
+      "id": "GERBER-001",
+      "pass": true,
+      "blocking": false,
+      "evidence": "analysis/gerbers.json",
+      "note": "Review Gerber/drill set structurally readable; not native output."
+    },
+    {
+      "id": "PREVIEW-001",
+      "pass": true,
+      "blocking": false,
+      "evidence": [
+        "preview/board_top_white.png",
+        "preview/board_top_white.svg"
+      ],
+      "note": "PNG 1800x1200 mode=RGB; alphaOpaque=true, four RGB corners meet >=245, and SVG has an explicit white backdrop."
+    },
+    {
+      "id": "FAB-GATE-001",
+      "pass": false,
+      "blocking": true,
+      "evidence": "analysis/fab_gate.json",
+      "note": "Gate FAIL: {'total_checks': 12, 'pass': 8, 'warn': 0, 'fail': 4, 'skip': 0}."
+    }
+  ],
+  "requiredArtifacts": [
+    "project/industrial_controller.kicad_pro",
+    "project/industrial_controller.kicad_sch",
+    "project/industrial_controller.kicad_pcb",
+    "project/industrial_controller.kicad_dru",
+    "outputs/bom.csv",
+    "outputs/positions.csv",
+    "outputs/review_drawing.pdf",
+    "preview/board_top_white.svg",
+    "preview/board_top_white.png",
+    "preview/board_isometric_concept.svg",
+    "analysis/schematic.json",
+    "analysis/pcb.json",
+    "analysis/cross.json",
+    "analysis/thermal.json",
+    "analysis/emc.json",
+    "analysis/gerbers.json",
+    "analysis/fab_gate.json",
+    "analysis/independent_drc.json"
+  ],
+  "artifactFacts": {
+    "bomRows": 106,
+    "positionRows": 139,
+    "png": {
+      "signatureValid": true,
+      "widthPx": 1800,
+      "heightPx": 1200,
+      "mode": "RGB",
+      "hasAlpha": false,
+      "alphaOpaque": true,
+      "cornerNearWhiteThreshold": 245,
+      "cornerPixelsRgb": [
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "whiteCornerPixels": true
+    },
+    "svgExplicitWhiteBackdrop": true
+  },
+  "blockerCount": 5,
+  "passCount": 7,
+  "failCount": 6,
+  "evidencePathPolicy": "release-relative",
+  "reviewReady": true
+}
