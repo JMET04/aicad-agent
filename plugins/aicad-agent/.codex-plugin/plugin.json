@@ -1,6 +1,6 @@
 {
   "name": "aicad-agent",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "Agent-native tools for deterministic 2D/3D CAD, calibrated reference reconstruction, and audited host workflows.",
   "author": {
     "name": "AI CAD Constraint Project"
@@ -27,11 +27,14 @@
     "capabilities": [
       "MCP tools",
       "Local CLI",
+      "Cross-domain normative-first preflight",
       "Whole user-requirement conformance",
       "Non-skippable guarded artifact build",
       "2D constraint validation",
       "DXF export",
       "Packaging dieline QA",
+      "Structure-supported architectural axes",
+      "Executable annotation spatial-occupancy QA",
       "Bounded CAD normality proof",
       "Typed top/bottom closure contracts",
       "Aligned edge/corner/face review",

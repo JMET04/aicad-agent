@@ -1,0 +1,164 @@
+{
+  "schema": "aicad_normative_governance_rules_v1",
+  "scope": "all_2d_and_3d_domains",
+  "priority": "first_non_compensatory_gate",
+  "authorityPrecedence": [
+    "selected_standard",
+    "approved_engineering_input",
+    "user_explicit_numeric",
+    "user_explicit_semantic",
+    "reference_cad",
+    "reference_image",
+    "inferred_assumption"
+  ],
+  "rules": [
+    {
+      "id": "NORM-G001",
+      "name": "normative_preflight_before_geometry",
+      "requirement": "Identify the drawing domain, use case, delivery stage, applicable standards and authority order before creating any production geometry.",
+      "failureCause": "Geometry-first generation allows convenient defaults to become hidden design decisions before the governing discipline has been selected.",
+      "prevention": "Freeze a drawing requirement contract and execute the cross-domain normative gate as stage zero; failure prohibits geometry compilation and artifact exposure."
+    },
+    {
+      "id": "NORM-G002",
+      "name": "source_authority_is_non_compensatory",
+      "requirement": "Standards and approved engineering evidence outrank preferences and references; reference CAD, images and inferred defaults may supply context but may not override a higher-authority fact.",
+      "failureCause": "A low-authority visual or default parameter can otherwise drive both the geometry and the check that approves it, creating a self-confirming error.",
+      "prevention": "Validate the source-kind order, retain explicit conflicts, bind every hard requirement to controlled evidence and reject reference-image dimensional authority."
+    },
+    {
+      "id": "NORM-G003",
+      "name": "domain_rule_pack_and_object_proof",
+      "requirement": "After normative preflight, load the selected domain rule pack and prove each critical object against its semantic, mathematical, relational, drafting and stage-specific constraints before output.",
+      "failureCause": "Counting entities or checking only visual appearance does not prove that an object has the correct engineering purpose or relation to neighbouring objects.",
+      "prevention": "Use ordered semantic objects, backward dependencies, per-object constraints, domain QA, whole-drawing comparison and host save/reopen evidence; any hard failure blocks release."
+    },
+    {
+      "id": "NORM-G004",
+      "name": "high_priority_rules_require_executable_closure",
+      "requirement": "Every high-priority normative rule must have a contract/schema field, generation constraint, independent QA gate and negative regression test.",
+      "failureCause": "A prose-only rule can be cited while the generator and validator continue to permit the prohibited geometry.",
+      "prevention": "Treat any missing schema-generation-QA-test link as an unimplemented rule and block release until the four-part proof is complete."
+    }
+  ],
+  "domainPacks": {
+    "architecture": [
+      "axis_support",
+      "wall_opening_topology",
+      "egress",
+      "accessibility",
+      "fire",
+      "annotation",
+      "drawing_set"
+    ],
+    "packaging": [
+      "structure_identity",
+      "panel_flap_topology",
+      "closure",
+      "fold_collision",
+      "material_process",
+      "dieline_drafting"
+    ],
+    "mechanical": [
+      "datum_scheme",
+      "fits_tolerances",
+      "wall_thickness",
+      "interference",
+      "manufacturability",
+      "drawing_standard"
+    ],
+    "sheet_metal": [
+      "material_thickness",
+      "bend_allowance",
+      "minimum_radius",
+      "relief",
+      "flat_pattern",
+      "tool_access"
+    ],
+    "electronics": [
+      "board_outline",
+      "keepout",
+      "electrical_clearance",
+      "connector_access",
+      "thermal",
+      "fabrication_outputs"
+    ],
+    "general": [
+      "declared_domain_extension",
+      "object_roles",
+      "dimensions",
+      "relations",
+      "drafting",
+      "delivery_stage"
+    ],
+    "civil": [
+      "survey",
+      "coordinate_system",
+      "grading",
+      "drainage",
+      "utilities",
+      "drawing_standard"
+    ],
+    "structural": [
+      "load_path",
+      "member_system",
+      "connections",
+      "stability",
+      "detailing",
+      "drawing_standard"
+    ],
+    "electrical": [
+      "single_line",
+      "protection",
+      "cable_sizing",
+      "clearance",
+      "earthing",
+      "schematic_standard"
+    ],
+    "plumbing": [
+      "fixture_demand",
+      "pipe_sizing",
+      "slope",
+      "venting",
+      "access",
+      "drawing_standard"
+    ],
+    "hvac": [
+      "load_basis",
+      "airflow",
+      "duct_pipe_sizing",
+      "clearance",
+      "controls",
+      "drawing_standard"
+    ],
+    "process_piping": [
+      "line_class",
+      "pressure_temperature",
+      "routing",
+      "supports",
+      "isometrics",
+      "drawing_standard"
+    ],
+    "product_design": [
+      "design_intent",
+      "interfaces",
+      "material_process",
+      "tolerances",
+      "assembly",
+      "drawing_standard"
+    ]
+  },
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  },
+  "contractRequirements": [
+    "domain",
+    "deliveryStage",
+    "selectedRulePacks",
+    "applicableStandards",
+    "authorityOrder"
+  ]
+}

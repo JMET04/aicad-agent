@@ -1,9 +1,9 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.11.0\github-repository',
-    [string]$Version = '1.11.0',
-    [string]$PluginArchive = 'release\v1.11.0\aicad-agent-1.11.0.zip',
-    [string]$PluginDirectory = 'release\v1.11.0\aicad-agent'
+    [string]$OutputDirectory = 'release\v1.11.1\github-repository',
+    [string]$Version = '1.11.1',
+    [string]$PluginArchive = 'release\v1.11.1\aicad-agent-1.11.1.zip',
+    [string]$PluginDirectory = 'release\v1.11.1\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -130,11 +130,12 @@ $manifest = [ordered]@{
         plugin = 'codex plugin add aicad-agent@aicad-agent'
     }
     capabilities = @(
+        'cross-domain normative-first preflight with applicable-standard and rule-pack binding',
         'whole user-requirement contract and controlled actualBinding',
         'non-skippable whole-intent, detail-normality and hashed-build gates',
         'origin-anchored deterministic 2D AICAD compilation',
         'fail-closed production-readiness contract with authority, paper-space, furniture, route-clearance, host and release gates',
-        'architectural plan-cut/projection/hidden/datum hierarchy with complete axis groups, stage annotation matrix and native dimension QA',
+        'architectural plan-cut/projection/hidden/datum hierarchy with structure-supported axis groups, executable annotation occupancy and native dimension QA',
         'bounded independent-rank and packaging dieline normality proof',
         'aligned interactive edge/corner/face review surface',
         'typed selected line/point/circle/face measurements from compiled model geometry',

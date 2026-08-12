@@ -22,8 +22,30 @@ EXPECTED_LOCKS = {
     "ruleEnabled": False,
     "packagingGated": True,
 }
-RULE_IDS = ["PKG-G024", "PKG-G025"]
+RULE_IDS = ["NORM-G001", "NORM-G002", "NORM-G003", "NORM-G004", "PKG-G024", "PKG-G025"]
+SOURCE_KIND_PRECEDENCE = {
+    "selected_standard": 0,
+    "approved_engineering_input": 1,
+    "user_explicit_numeric": 2,
+    "user_explicit_semantic": 3,
+    "reference_cad": 4,
+    "reference_image": 5,
+    "inferred_assumption": 6,
+}
+SUPPORTED_DOMAINS = {
+    "architecture", "packaging", "mechanical", "sheet_metal", "electronics", "civil",
+    "structural", "electrical", "plumbing", "hvac", "process_piping", "product_design", "general",
+}
+STANDARD_GOVERNED_CATEGORIES = {
+    "applicable_standard", "design_code", "drawing_standard", "fits_tolerances", "bend_allowance",
+    "minimum_radius", "electrical_clearance", "fire_safety", "accessibility", "egress",
+    "structure_family", "top_closure", "bottom_closure", "process",
+}
 ROOT_CAUSES = {
+    "normative_precedence": (
+        "生成流程虽然列出了输入来源，却没有先按领域规范、工程权威、用户参数、参考资料和推断默认值建立不可逆优先级，低权威默认值可能反过来支配几何和验收。",
+        "任何领域先执行规范预检：适用标准优先，其次是批准工程输入和用户显式参数，参考CAD/图片与推断只可补充；结构族、闭合系统和工艺等规范类别必须绑定 selected_standard，失败时禁止进入几何。",
+    ),
     "contract_integrity": (
         "需求没有被整理成唯一、可追踪且有明确权威顺序的契约，后续几何可能从错误前提开始。",
         "先冻结带来源、优先级、冲突处理和安全锁的需求契约；ID、来源引用或权威顺序不完整时禁止进入绘图。",
@@ -246,6 +268,63 @@ def evaluate(
             )
         )
 
+    sources_by_id = {str(row.get("id")): row for row in contract.get("sources", [])}
+    ordered_source_kinds = [sources_by_id.get(str(source_id), {}).get("kind") for source_id in authority]
+    authority_ranks = [SOURCE_KIND_PRECEDENCE.get(str(kind), math.inf) for kind in ordered_source_kinds]
+    authority_precedence_ok = authority_ranks == sorted(authority_ranks)
+    standard_source_ids = {
+        source_id for source_id, row in sources_by_id.items()
+        if row.get("kind") == "selected_standard"
+    }
+    domain = str(contract.get("domain", ""))
+    selected_rule_packs = set(contract.get("selectedRulePacks", []))
+    domain_rule_pack_ok = domain in SUPPORTED_DOMAINS and {"normative_governance", domain}.issubset(selected_rule_packs)
+    applicable_standards = contract.get("applicableStandards", [])
+    standard_ids = [str(row.get("id", "")) for row in applicable_standards]
+    standard_record_failures = [
+        {
+            "id": row.get("id"), "sourceId": row.get("sourceId"),
+            "reason": "applicable_standard_source_missing_or_not_selected_standard",
+        }
+        for row in applicable_standards
+        if row.get("sourceId") not in standard_source_ids
+    ]
+    applicable_standards_ok = bool(applicable_standards) and len(standard_ids) == len(set(standard_ids)) and not standard_record_failures
+    delivery_stage_ok = contract.get("deliveryStage") in {"concept", "review", "tender", "construction", "fabrication", "manufacturing", "production", "as_built"}
+    unbound_standard_requirements = [
+        row.get("id") for row in contract.get("requirements", [])
+        if row.get("priority") == "hard"
+        and row.get("category") in STANDARD_GOVERNED_CATEGORIES
+        and not (set(row.get("sourceIds", [])) & standard_source_ids)
+    ]
+    normative_ok = (
+        contract_integrity and authority_precedence_ok and domain_rule_pack_ok
+        and applicable_standards_ok and delivery_stage_ok and not unbound_standard_requirements
+    )
+    checks["normativeRulesPrecedePreferencesReferencesAndGeometry"] = normative_ok
+    if not normative_ok:
+        failures.append(
+            _failure(
+                "normative_precedence",
+                {
+                    "requiredSourceKindOrder": list(SOURCE_KIND_PRECEDENCE),
+                    "actualAuthorityOrder": authority,
+                    "actualSourceKinds": ordered_source_kinds,
+                    "authorityPrecedencePass": authority_precedence_ok,
+                    "domain": domain,
+                    "selectedRulePacks": sorted(selected_rule_packs),
+                    "requiredRulePacks": ["normative_governance", domain] if domain else ["normative_governance", "<domain>"],
+                    "domainRulePackPass": domain_rule_pack_ok,
+                    "deliveryStage": contract.get("deliveryStage"),
+                    "deliveryStagePass": delivery_stage_ok,
+                    "applicableStandardIds": standard_ids,
+                    "applicableStandardsPass": applicable_standards_ok,
+                    "applicableStandardFailures": standard_record_failures,
+                    "standardGovernedRequirementsWithoutSelectedStandard": unbound_standard_requirements,
+                },
+            )
+        )
+
     actual_contract_sha = canonical_sha256(contract)
     binding_ok = (
         trace.get("contractId") == contract.get("contractId")
@@ -400,7 +479,6 @@ def evaluate(
             )
         )
 
-    sources_by_id = {str(row.get("id")): row for row in contract.get("sources", [])}
     invalid_image_authority = [
         source_id for source_id, row in sources_by_id.items()
         if row.get("kind") == "reference_image" and row.get("dimensionalAuthority") is not False
@@ -541,6 +619,13 @@ def evaluate(
         },
         "hardRequirementResults": hard_results,
         "failures": failures,
+        "normativeGate": {
+            "stage": 0,
+            "name": "cross_domain_normative_preflight",
+            "nextStageAllowed": normative_ok,
+            "nonCompensatory": True,
+            "meaning": "Applicable domain standards and source authority must be resolved before geometry; visual quality cannot compensate for a normative failure.",
+        },
         "orderedGate": {
             "stage": 1,
             "name": "overall_user_requirement_conformance",

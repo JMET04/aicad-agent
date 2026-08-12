@@ -20,6 +20,10 @@ _ARCHITECTURE_LAYER_STYLES: dict[str, tuple[int, int, str]] = {
     "GRID_TEXT": (7, 18, "CONTINUOUS"), "TAG_TEXT": (7, 18, "CONTINUOUS"),
     "DIMENSION": (7, 18, "CONTINUOUS"), "TEXT": (7, 18, "CONTINUOUS"),
     "OVERHEAD": (7, 18, "DASHED2"),
+    "WALL_TYPE": (2, 18, "CONTINUOUS"), "SECTION_MARK": (1, 25, "CENTER2"),
+    "ELEVATION_MARK": (4, 25, "CONTINUOUS"), "DETAIL_REF": (6, 18, "CONTINUOUS"),
+    "SCHEDULE": (7, 18, "CONTINUOUS"), "TITLEBLOCK": (7, 35, "CONTINUOUS"),
+    "REVISION": (7, 18, "CONTINUOUS"), "STATUS": (1, 35, "CONTINUOUS"),
 }
 
 _LINETYPE_PATTERNS: dict[str, tuple[str, tuple[float, ...]]] = {

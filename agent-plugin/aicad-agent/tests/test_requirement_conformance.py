@@ -51,6 +51,12 @@ def _contract() -> dict:
         "requestSummary": "Top tuck-in opening with a glued automatic crash-lock bottom.",
         "productType": "folding_carton",
         "useCase": "review candidate",
+        "domain": "packaging",
+        "deliveryStage": "review",
+        "selectedRulePacks": ["normative_governance", "packaging"],
+        "applicableStandards": [
+            {"id": "STD.ECMA.A60", "title": "ECMA folding carton style", "edition": "fixture", "scope": "structure and closure", "sourceId": "STANDARD"}
+        ],
         "units": "mm",
         "sources": [
             {
@@ -78,7 +84,7 @@ def _contract() -> dict:
                 "dimensionalAuthority": False,
             },
         ],
-        "authorityOrder": ["USER", "ENGINEERING", "STANDARD", "IMAGE"],
+        "authorityOrder": ["STANDARD", "ENGINEERING", "USER", "IMAGE"],
         "requirements": [
             {
                 "id": "REQ.PRODUCT",
@@ -236,6 +242,42 @@ class RequirementConformanceTests(unittest.TestCase):
         report = MODULE.evaluate(contract, trace, _template(), _instance())
         self.assertEqual(report["status"], "failed")
         self.assertFalse(report["checks"]["everyHardRequirementIndependentlyProven"])
+
+    def test_rejects_user_first_authority_order_before_selected_standard(self):
+        contract = _contract()
+        contract["authorityOrder"] = ["USER", "STANDARD", "ENGINEERING", "IMAGE"]
+        report = MODULE.evaluate(contract, _trace(contract), _template(), _instance())
+        self.assertEqual(report["status"], "failed")
+        self.assertFalse(report["checks"]["normativeRulesPrecedePreferencesReferencesAndGeometry"])
+        self.assertFalse(report["normativeGate"]["nextStageAllowed"])
+
+    def test_rejects_standard_governed_structure_without_standard_source(self):
+        contract = _contract()
+        structure = next(row for row in contract["requirements"] if row["id"] == "REQ.STRUCTURE")
+        structure["sourceIds"] = ["USER"]
+        report = MODULE.evaluate(contract, _trace(contract), _template(), _instance())
+        self.assertEqual(report["status"], "failed")
+        self.assertFalse(report["checks"]["normativeRulesPrecedePreferencesReferencesAndGeometry"])
+
+    def test_rejects_missing_domain_rule_pack(self):
+        contract = _contract()
+        contract["selectedRulePacks"] = ["normative_governance", "mechanical"]
+        report = MODULE.evaluate(contract, _trace(contract), _template(), _instance())
+        self.assertEqual(report["status"], "failed")
+        self.assertFalse(report["checks"]["normativeRulesPrecedePreferencesReferencesAndGeometry"])
+
+    def test_rejects_cross_domain_drawing_standard_without_standard_binding(self):
+        contract = _contract()
+        trace = _trace(contract)
+        contract["requirements"].append({
+            "id": "REQ.DRAWING_STANDARD", "category": "drawing_standard",
+            "statement": "Use the declared mechanical drawing standard.", "priority": "hard",
+            "sourceIds": ["USER"], "mustConfirm": False,
+            "expected": {"kind": "exact", "value": "ISO-128"},
+        })
+        report = MODULE.evaluate(contract, trace, _template(), _instance())
+        self.assertEqual(report["status"], "failed")
+        self.assertFalse(report["checks"]["normativeRulesPrecedePreferencesReferencesAndGeometry"])
 
     def test_rejects_unconfirmed_high_impact_assumption(self):
         contract = _contract()

@@ -11,6 +11,10 @@
     "requestSummary",
     "productType",
     "useCase",
+    "domain",
+    "deliveryStage",
+    "selectedRulePacks",
+    "applicableStandards",
     "units",
     "sources",
     "authorityOrder",
@@ -24,67 +28,174 @@
     "locks"
   ],
   "properties": {
-    "schema": {"const": "aicad_drawing_requirement_contract_v1"},
-    "contractId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
-    "revision": {"type": "integer", "minimum": 1},
-    "requestSummary": {"type": "string", "minLength": 1},
-    "productType": {"type": "string", "minLength": 1},
-    "useCase": {"type": "string", "minLength": 1},
-    "units": {"enum": ["mm", "inch"]},
+    "schema": {
+      "const": "aicad_drawing_requirement_contract_v1"
+    },
+    "contractId": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "requestSummary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "productType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "useCase": {
+      "type": "string",
+      "minLength": 1
+    },
+    "units": {
+      "enum": [
+        "mm",
+        "inch"
+      ]
+    },
     "sources": {
       "type": "array",
       "minItems": 1,
-      "items": {"$ref": "#/$defs/source"}
+      "items": {
+        "$ref": "#/$defs/source"
+      }
     },
     "authorityOrder": {
+      "description": "Highest to lowest authority. selected_standard precedes approved engineering input, explicit user numeric/semantic input, reference CAD/image and inferred assumptions. Conflicts remain explicit; order never silently rewrites a user requirement.",
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"}
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"
+      }
     },
     "requirements": {
       "type": "array",
       "minItems": 1,
-      "items": {"$ref": "#/$defs/requirement"}
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
     },
     "assumptions": {
       "type": "array",
-      "items": {"$ref": "#/$defs/assumption"}
+      "items": {
+        "$ref": "#/$defs/assumption"
+      }
     },
     "conflicts": {
       "type": "array",
-      "items": {"$ref": "#/$defs/conflict"}
+      "items": {
+        "$ref": "#/$defs/conflict"
+      }
     },
     "allowedMajorFeatures": {
       "type": "array",
       "uniqueItems": true,
-      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"}
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"
+      }
     },
     "requiredMajorFeatures": {
       "type": "array",
       "uniqueItems": true,
-      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"}
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"
+      }
     },
     "forbiddenMajorFeatures": {
       "type": "array",
       "uniqueItems": true,
-      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"}
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,127}$"
+      }
     },
     "requiredOutputs": {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": {"enum": ["plan.json", "aicad", "scr", "dxf", "audit.md", "manifest.json"]}
+      "items": {
+        "enum": [
+          "plan.json",
+          "aicad",
+          "scr",
+          "dxf",
+          "audit.md",
+          "manifest.json"
+        ]
+      }
     },
-    "locks": {"$ref": "#/$defs/locks"}
+    "locks": {
+      "$ref": "#/$defs/locks"
+    },
+    "domain": {
+      "enum": [
+        "architecture",
+        "packaging",
+        "mechanical",
+        "sheet_metal",
+        "electronics",
+        "civil",
+        "structural",
+        "electrical",
+        "plumbing",
+        "hvac",
+        "process_piping",
+        "product_design",
+        "general"
+      ]
+    },
+    "deliveryStage": {
+      "enum": [
+        "concept",
+        "review",
+        "tender",
+        "construction",
+        "fabrication",
+        "manufacturing",
+        "production",
+        "as_built"
+      ]
+    },
+    "selectedRulePacks": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_.-]{2,63}$"
+      }
+    },
+    "applicableStandards": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/applicableStandard"
+      }
+    }
   },
   "$defs": {
     "source": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "kind", "description", "dimensionalAuthority"],
+      "required": [
+        "id",
+        "kind",
+        "description",
+        "dimensionalAuthority"
+      ],
       "properties": {
-        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"},
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"
+        },
         "kind": {
           "enum": [
             "user_explicit_numeric",
@@ -96,17 +207,35 @@
             "inferred_assumption"
           ]
         },
-        "description": {"type": "string", "minLength": 1},
-        "path": {"type": "string"},
-        "dimensionalAuthority": {"type": "boolean"}
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string"
+        },
+        "dimensionalAuthority": {
+          "type": "boolean"
+        }
       }
     },
     "requirement": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "category", "statement", "priority", "sourceIds", "mustConfirm", "expected"],
+      "required": [
+        "id",
+        "category",
+        "statement",
+        "priority",
+        "sourceIds",
+        "mustConfirm",
+        "expected"
+      ],
       "properties": {
-        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"
+        },
         "category": {
           "enum": [
             "overall_shape",
@@ -120,73 +249,272 @@
             "annotation",
             "forbidden_feature",
             "output",
-            "safety"
+            "safety",
+            "domain",
+            "delivery_stage",
+            "applicable_standard",
+            "design_code",
+            "drawing_standard",
+            "datum_scheme",
+            "fits_tolerances",
+            "manufacturing_process",
+            "bend_allowance",
+            "minimum_radius",
+            "electrical_clearance",
+            "thermal",
+            "fire_safety",
+            "accessibility",
+            "egress",
+            "coordination",
+            "host_persistence"
           ]
         },
-        "statement": {"type": "string", "minLength": 1},
-        "priority": {"enum": ["hard", "preference"]},
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "priority": {
+          "enum": [
+            "hard",
+            "preference"
+          ]
+        },
         "sourceIds": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
-          "items": {"type": "string"}
+          "items": {
+            "type": "string"
+          }
         },
-        "mustConfirm": {"type": "boolean"},
-        "expected": {"$ref": "#/$defs/expected"}
+        "mustConfirm": {
+          "type": "boolean"
+        },
+        "expected": {
+          "$ref": "#/$defs/expected"
+        }
       }
     },
     "expected": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["kind"],
+      "required": [
+        "kind"
+      ],
       "properties": {
-        "kind": {"enum": ["exact", "one_of", "present", "absent", "set_contains", "range"]},
+        "kind": {
+          "enum": [
+            "exact",
+            "one_of",
+            "present",
+            "absent",
+            "set_contains",
+            "range"
+          ]
+        },
         "value": {},
-        "values": {"type": "array", "minItems": 1},
-        "minimum": {"type": "number"},
-        "maximum": {"type": "number"},
-        "tolerance": {"type": "number", "minimum": 0}
+        "values": {
+          "type": "array",
+          "minItems": 1
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "tolerance": {
+          "type": "number",
+          "minimum": 0
+        }
       },
       "allOf": [
-        {"if": {"properties": {"kind": {"const": "exact"}}}, "then": {"required": ["value"]}},
-        {"if": {"properties": {"kind": {"enum": ["one_of", "set_contains"]}}}, "then": {"required": ["values"]}},
-        {"if": {"properties": {"kind": {"const": "range"}}}, "then": {"required": ["minimum", "maximum"]}}
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "exact"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "one_of",
+                  "set_contains"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "values"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "range"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "minimum",
+              "maximum"
+            ]
+          }
+        }
       ]
     },
     "assumption": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "statement", "impact", "status", "sourceIds"],
+      "required": [
+        "id",
+        "statement",
+        "impact",
+        "status",
+        "sourceIds"
+      ],
       "properties": {
-        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
-        "statement": {"type": "string", "minLength": 1},
-        "impact": {"enum": ["low", "medium", "high"]},
-        "status": {"enum": ["disclosed", "confirmed", "rejected"]},
-        "sourceIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impact": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "status": {
+          "enum": [
+            "disclosed",
+            "confirmed",
+            "rejected"
+          ]
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "conflict": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "statement", "sourceIds", "status"],
+      "required": [
+        "id",
+        "statement",
+        "sourceIds",
+        "status"
+      ],
       "properties": {
-        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
-        "statement": {"type": "string", "minLength": 1},
-        "sourceIds": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string"}},
-        "status": {"enum": ["resolved", "unresolved"]},
-        "resolution": {"type": "string"},
-        "resolvedRequirementId": {"type": "string"}
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "resolved",
+            "unresolved"
+          ]
+        },
+        "resolution": {
+          "type": "string"
+        },
+        "resolvedRequirementId": {
+          "type": "string"
+        }
       }
     },
     "locks": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "required": [
+        "reviewOnly",
+        "accepted",
+        "ruleEnabled",
+        "packagingGated"
+      ],
       "properties": {
-        "reviewOnly": {"const": true},
-        "accepted": {"const": false},
-        "ruleEnabled": {"const": false},
-        "packagingGated": {"const": true}
+        "reviewOnly": {
+          "const": true
+        },
+        "accepted": {
+          "const": false
+        },
+        "ruleEnabled": {
+          "const": false
+        },
+        "packagingGated": {
+          "const": true
+        }
+      }
+    },
+    "applicableStandard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "edition",
+        "scope",
+        "sourceId"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "edition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceId": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"
+        }
       }
     }
   }

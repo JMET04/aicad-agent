@@ -138,6 +138,7 @@ class PackagingDielineRuleRegressionTests(unittest.TestCase):
         self.assertIn("boundActual == observed", macro["requirement"])
         self.assertIn("creates no candidate DXF/AICAD/SCR", order["requirement"])
         for relative in (
+            "rules/normative_governance_rules.json",
             "rules/drawing_requirement_contract.schema.json",
             "rules/drawing_requirement_trace.schema.json",
             "scripts/aicad_requirement_conformance.py",

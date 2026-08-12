@@ -17,7 +17,9 @@
     "doors",
     "rooms",
     "equipment",
+    "maintenanceClearances",
     "dimensionChains",
+    "drawingSheets",
     "annotations",
     "authority",
     "safetyLocks"
@@ -81,6 +83,7 @@
               "direction",
               "coordinate",
               "lineEntityId",
+              "supportEntityIds",
               "bubbleEntityIds",
               "identifierEntityIds"
             ],
@@ -100,6 +103,14 @@
               },
               "lineEntityId": {
                 "$ref": "#/$defs/asciiId"
+              },
+              "supportEntityIds": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/asciiId"
+                }
               },
               "bubbleEntityIds": {
                 "type": "array",
@@ -554,7 +565,8 @@
       "additionalProperties": false,
       "required": [
         "requiredClasses",
-        "providedClasses"
+        "providedClasses",
+        "bindings"
       ],
       "properties": {
         "requiredClasses": {
@@ -572,6 +584,72 @@
           "items": {
             "type": "string",
             "minLength": 1
+          }
+        },
+        "bindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "annotationClass",
+              "entityIds",
+              "targetObjectIds"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/asciiId"
+              },
+              "annotationClass": {
+                "enum": [
+                  "axis_line",
+                  "axis_bubble",
+                  "axis_identifier",
+                  "room_name",
+                  "door_tag",
+                  "window_tag",
+                  "overall_dimension",
+                  "grid_dimension_chain",
+                  "partition_dimension_chain",
+                  "opening_dimension",
+                  "north_indicator",
+                  "level_datum",
+                  "drawing_title",
+                  "sheet_number",
+                  "plot_scale",
+                  "revision_status",
+                  "stair_direction",
+                  "section_reference",
+                  "elevation_reference",
+                  "detail_reference",
+                  "units",
+                  "review_status",
+                  "wall_type_tag",
+                  "opening_schedule_reference"
+                ]
+              },
+              "entityIds": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/asciiId"
+                }
+              },
+              "targetObjectIds": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/semanticObjectId"
+                }
+              },
+              "expectedText": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
           }
         }
       }
@@ -735,12 +813,120 @@
           }
         }
       }
+    },
+    "drawingSheets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "drawingClass",
+          "sheetNumber",
+          "title",
+          "layoutName",
+          "entityIds",
+          "scale",
+          "revisionStatus"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "drawingClass": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "sheetNumber": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "layoutName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "entityIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/asciiId"
+            }
+          },
+          "scale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revisionStatus": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "maintenanceClearances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "roomId",
+          "equipmentIds",
+          "clearBBox",
+          "minimumClearWidthMm",
+          "actualClearWidthMm",
+          "authorityStatus"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "roomId": {
+            "$ref": "#/$defs/asciiId"
+          },
+          "equipmentIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/asciiId"
+            }
+          },
+          "clearBBox": {
+            "$ref": "#/$defs/bbox"
+          },
+          "minimumClearWidthMm": {
+            "type": "number",
+            "minimum": 900
+          },
+          "actualClearWidthMm": {
+            "type": "number",
+            "minimum": 900
+          },
+          "authorityStatus": {
+            "enum": [
+              "concept_rule",
+              "project_authority"
+            ]
+          }
+        }
+      }
     }
   },
   "$defs": {
     "asciiId": {
       "type": "string",
       "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+    },
+    "semanticObjectId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
     },
     "point": {
       "type": "array",

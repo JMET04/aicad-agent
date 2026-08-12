@@ -31,14 +31,15 @@ A GRID centerline is not a complete axis. For every plan view, generate one type
 - two equal-radius continuous axis bubbles on opposite exterior sides, collinear with the axis and tangent to the two line endpoints;
 - two centered, identical axis identifiers whose resolved TEXT/MTEXT content equals the axis ID;
 - stable references/XData from all members to the axis identity;
+- one or more `supportEntityIds` resolving only to earlier column centres, core/structural-wall centres or an authority-bound datum; the axis dependency and mathematical offset must resolve to the declared coordinate;
 - numeric vertical axes ordered west-to-east and uppercase-letter horizontal axes ordered south-to-north;
 - one global-coordinate-to-identifier mapping shared by every storey.
 
-Build the global catalogue before floor-local geometry. Validate local coordinate plus storey transform against the catalogued global coordinate; restarting 1/A on each floor is a failure when it changes the identity of the same datum.
+Build the global catalogue before floor-local geometry. Validate local coordinate plus storey transform against the catalogued global coordinate; restarting 1/A on each floor is a failure when it changes the identity of the same datum. Never generate axes from an unsupported constant module merely because equal spacing looks orderly. Equal spacing is permitted only when the authority input or the resolved structural supports produce it.
 
 The stage profile is also non-compensatory. A concept architectural plan must account for room names, native overall/chain dimensions, door and window tags, stair direction, level datum, north indicator, drawing title, units and review state in addition to the complete axis grid. Construction-plan profiles add section/elevation references, wall/opening schedules, detail references, sheet number and plot scale. Conditional omissions must be declared with a reason; silent omissions fail.
 
-Keep full-content, structural-axis and annotation envelopes separate. Remote equipment, bridges, routes and notes do not stretch the primary grid unless the axis coverage contract explicitly includes them. Reserve space in this order: model content, axis bubbles, chain dimensions, overall dimensions, then sheet notes. Resolve bubble size, text height, lineweight and dash cadence from the declared plot scale. Run geometry-binding and collision checks after every edit, not only at initial generation.
+Keep full-content, structural-axis and annotation envelopes separate. Remote equipment, bridges, routes and notes do not stretch the primary grid unless the axis coverage contract explicitly includes them. Reserve space in this order: model content, axis bubbles, chain dimensions, overall dimensions, then sheet notes. Status notes use a distinct band and may not reuse an overall-dimension band. Resolve bubble size, text height, lineweight and dash cadence from the declared plot scale. Run geometry-binding and collision checks after every edit, not only at initial generation. Collision checks use the resolved full axis extent and real text bounding boxes, reserve already placed labels, and include columns, bubbles, equipment, furniture, dimensions, each door leaf and its sampled opening arc. If no feasible label location exists, fail closed; never place a colliding fallback label.
 
 ## Precompile architectural detail contract
 
@@ -52,6 +53,10 @@ The contract treats the following as one dependency graph:
 - movable furniture, fixed casework, sanitary fixtures and appliances stay on separate semantic layers; each object binds an actual-size closed outline and profile-specific selectable roles such as sofa backs/arms/seat divisions, bed pillows, fixture cores, drains, controls and handles from `rules/architectural_symbol_profiles.json`;
 - every door binds to one host wall and one wall opening; the host wall is segmented around the opening; hinge, opening endpoint, leaf length, arc endpoint, sweep and clearance agree mathematically; vehicles, furniture, casework, sanitary fixtures and appliances all participate in clearance, while any exclusion requires a reviewed non-occupying semantic role;
 - the complete production drawing-set matrix and all annotation/authority evidence are present; strictProductionOnly=true, allowIntermediateCad=false and CAD exposure is limited to production-release candidates.
+- every provided drawing class resolves from `drawingSheets` to a unique sheet/layout and real plan entities; every annotation class resolves from `bindings` to real entities and its room, door, window, axis or dimension targets;
+- every exterior opening has exactly one wall/envelope host, including continuous glazed boundaries; compile the host-minus-opening residual union and reject missing, ambiguous or overlapping ownership;
+- every service equipment unit binds a `maintenanceClearances` rectangle inside its room, clear of every equipment bbox and not narrower than the declared project minimum;
+- annotation occupancy is solved against text, furniture/equipment, door sweeps, structural geometry, axes, dimensions and reserved sheet bands. Text-to-text counting alone is insufficient.
 
 The contract is non-compensatory. A failure produces `artifactDisposition=blocker_report_only`; the generator must not compile, launch or label a review/production drawing. Any wall, opening, door, equipment or dimension edit replays the affected checks.
 
@@ -94,3 +99,7 @@ Schema-2 plans with dimensions use AICAD protocol 4. Every dimension endpoint re
 The first entity at `(0,0)` is a real wall/opening/product segment, never an auxiliary full-span line. If dimension anchors require more endpoints, split only collinear physical segments and prove that their union, ownership and semantic layer are unchanged and non-overlapping.
 
 When the user asks for directly usable construction/production output, `PROD-G010` applies: all non-compensatory drawing-set, authority, host and authorized-release gates must pass or no CAD artifact is exposed. The only permitted failure output is the persistent blocker bundle.
+
+## Whole-drawing review loop
+
+After each semantic or geometric edit, replay one dependency graph in this order: envelope/wall/opening topology, rooms and typed contents, door and service clearances, plan-native annotations, drawing-sheet bindings, scale-aware occupancy, raster/vector parity, then native-host persistence. Record the observed defect, why the previous gate allowed it, the stable prevention-rule ID and the exact artifact rechecked. A failed audit report is evidence only; it never replaces or automatically opens the interactive drawing modifier.

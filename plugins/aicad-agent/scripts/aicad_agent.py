@@ -47,7 +47,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.11.0"
+AGENT_API_VERSION = "1.11.1"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -109,6 +109,34 @@ def _load_plan(value: Any) -> dict[str, Any]:
                         reference["locator"] = str((source_path.parent / locator_path).resolve())
             return parsed
     raise PlanError("plan must be a JSON object, JSON string, or plan file path")
+
+def _normative_governance_capabilities() -> dict[str, Any]:
+    rules_path = PLUGIN_ROOT / "rules" / "normative_governance_rules.json"
+    rules = json.loads(rules_path.read_text(encoding="utf-8"))
+    domain_packs = rules.get("domainPacks", {})
+    return {
+        "available": True,
+        "priority": rules["priority"],
+        "scope": rules["scope"],
+        "rules": str(rules_path.resolve()),
+        "validator": str((PLUGIN_ROOT / "scripts" / "aicad_requirement_conformance.py").resolve()),
+        "contract_schema": str((PLUGIN_ROOT / "rules" / "drawing_requirement_contract.schema.json").resolve()),
+        "rule_ids": [item["id"] for item in rules["rules"]],
+        "governed_domains": sorted(domain_packs),
+        "domain_pack_requirements": domain_packs,
+        "authority_precedence": rules["authorityPrecedence"],
+        "contract_requirements": rules["contractRequirements"],
+        "implementation_proof": [
+            "schema_contract_field",
+            "generation_constraint",
+            "independent_qa",
+            "negative_regression_test",
+        ],
+        "failure_disposition": "blocker_report_only",
+        "safety_locks": rules["safetyLocks"],
+        "review_only": True,
+    }
+
 
 def capabilities() -> dict[str, Any]:
     return {
@@ -203,6 +231,7 @@ def capabilities() -> dict[str, Any]:
             ],
             "review_only": True,
         },
+        "normative_governance": _normative_governance_capabilities(),
         "universal_cad": {
             "core_is_domain_agnostic": True,
             "spaces": ["2d", "3d"],

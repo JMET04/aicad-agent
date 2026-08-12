@@ -283,6 +283,48 @@
       "requirement": "The first entity at origin shall be a real typed physical segment. Splitting it or any wall/opening at dimension anchors shall preserve the exact geometric union and shall not introduce an auxiliary super-line, duplicate coverage, layer conflict or wall-through-opening condition.",
       "failureCause": "A full-width origin baseline was labelled as an opening and overlapped shorter physical wall/opening segments; the overlap became visible only when dimension anchors subdivided the line.",
       "prevention": "Start from the first real wall or opening edge, split only at mathematically collinear interior anchors, compare pre/post unions by semantic layer and reject every exact or partial cross-role overlap before compilation."
+    },
+    {
+      "id": "ARCH-D041",
+      "name": "annotation_class_entity_and_target_bijection",
+      "requirement": "Every declared annotation class shall bind real resolved entities and every room, door, window, axis and dimension target that requires annotation shall be covered exactly through stable semantic IDs.",
+      "failureCause": "The contract accepted providedClasses as self-reported strings, so room names, tags and navigation notes could pass without existing in the constrained plan.",
+      "prevention": "Require annotation bindings with entity IDs, target object IDs, exact text where applicable, semantic layer/type checks and target coverage/placement checks before counting any annotation class."
+    },
+    {
+      "id": "ARCH-D042",
+      "name": "drawing_class_sheet_entity_binding",
+      "requirement": "Every provided production drawing class shall resolve to a unique planned sheet with a sheet number, layout name, scale, revision state and at least one real bound plan entity.",
+      "failureCause": "A list of provided drawing-class names could satisfy completeness without a corresponding sheet, layout or drawing content.",
+      "prevention": "Derive provided classes from drawingSheets, require unique sheet/layout identities and verify every sheet entity ID against the resolved plan before evaluating drawing-set completeness."
+    },
+    {
+      "id": "ARCH-D043",
+      "name": "exterior_opening_host_topology_closure",
+      "requirement": "Every declared door, window, louvre or continuous glazed edge shall bind exactly one host wall or envelope-boundary object; the host shall be split by the opening union and residual wall segments shall be compiled without gaps or overlaps.",
+      "failureCause": "Continuous south glazing was drawn as visible opening lines but the south envelope host was omitted, so north windows entered the opening contract while south glazing silently disappeared from schedules.",
+      "prevention": "Build a closed envelope-host graph before physical lines, synthesize an explicit derived host only from authoritative envelope coordinates, require exactly-one host per opening, and compare the host minus opening union with compiled residual wall segments."
+    },
+    {
+      "id": "ARCH-D044",
+      "name": "annotation_spatial_occupancy_solver",
+      "requirement": "Every planned annotation shall reserve a real text/symbol occupancy box and be solved against other annotations, furniture/equipment, door sweeps, structural lines, dimensions, axes and sheet information bands before export.",
+      "failureCause": "Text-to-text counting reported zero collisions while wall-type notes, section/elevation/detail references and centroid room labels still crossed stairs, furniture and dimension lines.",
+      "prevention": "Resolve actual constrained text positions and font-height boxes, derive forbidden occupancy regions from semantic geometry, place room labels by nearest-free-space search inside their target rooms, and fail if any required annotation has no collision-free solution."
+    },
+    {
+      "id": "ARCH-D045",
+      "name": "service_equipment_maintenance_clearance",
+      "requirement": "Every service equipment unit shall bind an unobstructed in-room maintenance rectangle with actual clear width equal to the declared value and not less than the project minimum; concept defaults shall remain review-only until professional authority confirms them.",
+      "failureCause": "Two equipment blocks filled the equipment room almost wall-to-wall and floor-to-ceiling in plan, leaving neither a maintenance aisle nor a valid room-label position.",
+      "prevention": "Represent maintenance clearance as a first-class semantic object, prove it lies inside the assigned room, reject intersection with every room equipment bbox, require service-equipment coverage, and keep authorityStatus visible in the release gate."
+    },
+    {
+      "id": "ARCH-D046",
+      "name": "axis_structural_support_dependency",
+      "requirement": "Every architectural axis shall be derived from and mathematically anchored to at least one earlier structural column centre or declared structural/core-wall centreline at the same coordinate; equal spacing is permitted only when it is the result of those supports, never a default input.",
+      "failureCause": "One fixed grid constant drove axis coordinates, dimension chains, design metadata and the pass condition, while columns were generated after axes; the system therefore proved its own unsupported assumption.",
+      "prevention": "Generate structural supports first, derive the axis coordinate set from their geometry, bind each axis start_offset and dependency list to real support entity IDs, derive grid dimensions from consecutive supported coordinates, and reject every unsupported axis before compilation."
     }
   ],
   "defaultLayerProfile": {
@@ -431,6 +473,9 @@
     }
   },
   "axisCoverageContract": {
+    "coordinateAuthority": "earlier_structural_support_entities_only",
+    "equalSpacingPolicy": "allowed_only_as_support_derived_result",
+    "unsupportedFixedModulePolicy": "fail",
     "requiredEnvelopes": [
       "fullContentBounds",
       "structuralAxisCoverageBounds",

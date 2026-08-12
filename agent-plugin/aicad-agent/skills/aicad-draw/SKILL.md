@@ -11,6 +11,7 @@ Use the bundled tools as the execution boundary. Do not emit raw AutoCAD command
 
 Use this order. Do not skip or rearrange it:
 
+0. Load `rules/normative_governance_rules.json`. Declare `domain`, `deliveryStage`, `selectedRulePacks`, `applicableStandards` and highest-to-lowest source authority before interpreting preferences or creating geometry. The normative gate is first and non-compensatory in every domain; a missing domain pack, standard edition/scope, or standard-bound governed requirement blocks all later stages.
 1. Understand the whole request before drawing. Separate explicit user facts, approved numeric inputs, selected standards, CAD references, image-only references, preferences, forbidden features and assumptions.
 2. Freeze a `aicad_drawing_requirement_contract_v1` document using `rules/drawing_requirement_contract.schema.json`. Give every hard requirement an ASCII ID, source, typed expected relation and confirmation policy. Declare the product type, use case, units, structure family, top and bottom functions, dimensions, required/allowed/forbidden major features, outputs and safety locks.
 3. Resolve conflicts by the declared source authority. Never derive engineering dimensions from image pixels. A high-impact assumption that changes product type, structure, closure, fit or a critical dimension must be confirmed rather than merely disclosed.

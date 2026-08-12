@@ -1,13 +1,19 @@
-# aicad-agent 1.11.0
+# aicad-agent 1.11.1
+
+## 跨领域规范第一门禁
+
+任何建筑、结构、土木、机械、钣金、包装、电子、电气、给排水、暖通、工艺管道或产品设计任务，都必须先声明领域、交付阶段、适用标准、启用规则包和输入权威顺序。`normative_governance` 与对应领域规则包是阶段 0 非补偿门禁；标准和批准工程输入优先于用户偏好、参考 CAD、图片与推测。缺少适用标准、版本/范围或对应规则包时，只能输出缺项诊断，不能先画几何再用分数补偿。
+
+高优先级规范只有同时具备 schema/contract 字段、生成时约束、独立 QA 和能稳定复现旧错误的负向回归测试，才算真正落地。该原则适用于所有领域，不是建筑专用补丁。
 
 ## 1:1 webpage and image reference reconstruction
 
-Version 1.11.0 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
+Version 1.11.1 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
 
 Portable reference-rebuild output includes annotated DXF, native-text SVG/HTML, validation, manifest, and browser-backed PNG evidence. The main AICAD protocol-4 path emits true native DIMENSION entities with purpose/style XData; DWG save/reopen remains an explicit licensed AutoCAD host gate.
 ## 建筑平面制图语义
 
-建筑图不再使用统一线条。插件按对象语义区分剖切柱/墙粗实线、门窗与可见投影中实线、家具/柜体/洁具/家电和标注细实线、交通/上方构件虚线以及轴网中心线；原生 DIMENSION 使用持久命名 DIMSTYLE。建筑编译前必须通过 strict-production-only 的 `aicad_architectural_detail_contract_v2`，证明轴线坐标/覆盖范围+两端相切轴圈+居中同值轴号的数学绑定、完整生产图纸集、总/轴网/分隔/洞口四类尺寸链、带来源引用的逐房间用途与设备矩阵、门-墙-洞口-开启弧拓扑，以及沙发靠背/扶手/坐垫分缝、床枕、洁具芯体/排水、家电控制等逐实体线稿角色。房间用途不得由已有家具反推；车辆、家具、柜体、洁具和家电默认全部参加门扇/通道净空。任何失败只输出 JSON、单文件 UTF-8 HTML 和白底 PNG 阻断报告，零 CAD 工件。最终 DXF 再由 `scripts/aicad_architecture_qa.py` 检查，二维修改器也会继承每个对象的 `cad_layer`。详见 [建筑制图不变量](docs/ARCHITECTURAL_DRAFTING.md)。
+建筑图不再使用统一线条。插件按对象语义区分剖切柱/墙粗实线、门窗与可见投影中实线、家具/柜体/洁具/家电和标注细实线、交通/上方构件虚线以及轴网中心线；轴线坐标必须由此前已建立的柱中心、核心筒/承重墙中心或权威轴网输入推导，并记录 `supportEntityIds`、依赖和偏移；无支撑的固定模数或“看着整齐”的等距轴网直接失败，等距只能是结构推导后的结果。原生 DIMENSION 使用持久命名 DIMSTYLE。建筑编译前必须通过 strict-production-only 的 `aicad_architectural_detail_contract_v2`，证明轴线坐标/覆盖范围+两端相切轴圈+居中同值轴号的数学绑定、完整生产图纸集、总/轴网/分隔/洞口四类尺寸链、带来源引用的逐房间用途与设备矩阵、门-墙-洞口-开启弧拓扑，以及沙发靠背/扶手/坐垫分缝、床枕、洁具芯体/排水、家电控制等逐实体线稿角色。房间用途不得由已有家具反推；文字占用框必须避让真实轴线全长、柱、轴圈、家具、设备、尺寸、门扇和开启弧；无可行位置时阻断，禁止碰撞回退。车辆、家具、柜体、洁具和家电默认全部参加门扇/通道净空。任何失败只输出 JSON、单文件 UTF-8 HTML 和白底 PNG 阻断报告，零 CAD 工件。最终 DXF 再由 `scripts/aicad_architecture_qa.py` 检查，二维修改器也会继承每个对象的 `cad_layer`。详见 [建筑制图不变量](docs/ARCHITECTURAL_DRAFTING.md)。
 
 ## 生产就绪门禁
 
@@ -21,7 +27,7 @@ Portable reference-rebuild output includes annotated DXF, native-text SVG/HTML, 
 
 The multiview selector addresses individual lines, circles, and faces with stable semantic keys. Corrections are bound to a source hash, explicit preservation policy, shared-pattern fanout, and full downstream dependency replay. Thin visible strokes are separate from the larger click target, so precision and usability do not conflict.
 
-On a licensed SolidWorks 2026 host, version 1.11.0 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
+On a licensed SolidWorks 2026 host, version 1.11.1 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
 
 确定性、原点锚定、面向 Agent 的 CAD 约束插件。它把 2D AICAD 计划编译为 AICAD/SCR/DXF/审计工件，提供包装刀版正常性证明与交互修改器，并通过可选 Windows 宿主支持 AutoCAD 和 SolidWorks。
 
@@ -35,11 +41,12 @@ Clicking a line now shows its compiled-model length and XYZ endpoints; clicking 
 
 The reviewer now exposes one modification list instead of separate user-facing intent and transaction stages. Every compiled 3D feature publishes clickable core parameters; geometric centers, center axes, pitch circles and interface edges remain hidden until hover or selection. The free-section workbench accepts axis planes and arbitrary `normal + point` planes, renders feature-operation intersections, and maps a clicked section curve back to an exact semantic parameter controller. See [CAD modifier interaction contract](docs/MODIFIER_UI_V2.md).
 
-## 不可跳过的三级门禁
+## 不可跳过的四级门禁
 
+0. **跨领域规范治理**：冻结领域、交付阶段、适用标准、启用规则包和输入权威顺序；缺项或冲突不可被其他评分补偿。
 1. **整体要求一致性**：冻结需求契约，校验产品类型、结构族、标准、上下闭合、尺寸、主要功能、输入权威和安全锁。每条硬要求必须满足 `boundActual = observed = expected`。
 2. **细节数学可靠性**：验证逐实体约束、独立雅可比秩、端点归属、单闭合轮廓、功能面、结构公式和耦合参数域。
-3. **隔离候选构建**：前两关通过后才编译；验证必需文件、ASCII 执行通道、manifest 身份和 SHA-256 后才暴露候选目录。
+3. **隔离候选构建**：前三关通过后才编译；验证必需文件、ASCII 执行通道、manifest 身份和 SHA-256 后才暴露候选目录。
 
 任何前级失败都会将后级标记为 `blocked_by_previous_stage`，并且不生成候选 DXF/AICAD/SCR。
 

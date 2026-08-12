@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.11.0',
+    [string]$Version = '1.11.1',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -104,7 +104,7 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.11.0'
+        pythonConstraintCompiler = '1.11.1'
         autocadBundle = '1.6.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
@@ -137,7 +137,9 @@ $releaseManifest = [ordered]@{
     )
     capabilities = @(
         'origin-anchored 2D constraints', 'ASCII AICAD compilation', 'DXF/SCR/audit/manifest output',
-        'architectural plan-cut/projection/hidden/datum hierarchy with complete axis groups, stage annotation matrix and native DIMSTYLE QA',
+        'cross-domain normative-first preflight with declared standards, domain rule packs and non-compensatory authority order',
+        'architectural plan-cut/projection/hidden/datum hierarchy with structure-supported axis groups, stage annotation matrix and native DIMSTYLE QA',
+        'executable annotation occupancy QA against axes, columns, bubbles, equipment, furniture, dimensions, door leaves and swing arcs',
         'protocol-4 native overall/grid/partition/opening DIMENSION entities with purpose XData and AutoCAD save/reopen proof',
         'persistent content-addressed review launch with duplicate auto-tab suppression',
         'direct-production requests fail closed to blocker-only output on any missing gate',

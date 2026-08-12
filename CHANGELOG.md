@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.11.1 - 2026-08-12
+
+- Promoted cross-domain normative governance to the first non-compensatory gate. Requirement contracts now bind domain, delivery stage, applicable standards, domain rule packs and the authority order before geometry.
+- Added `NORM-G004`: every high-priority rule must exist as a schema/contract field, generation constraint, independent QA and negative regression test; prose-only rules do not count.
+- Replaced unsupported equal architectural grid modules with axes derived from prior column/core-wall supports and explicit dependency/offset proof.
+- Made annotation clearance executable against resolved full axes, columns, bubbles, equipment, furniture, dimensions, door leaves and opening arcs; no-solution placement now fails closed and status notes occupy a separate band.
+- Bound every declared architectural annotation class to real plan entities and semantic targets; drawing classes now derive from entity-backed sheet records instead of self-reported names.
+- Added exterior opening host topology closure so continuous glazed edges cannot disappear from wall/opening and schedule contracts.
+- Added annotation spatial-occupancy rules covering text, furniture, door sweeps, dimensions, axes and sheet bands; room names use constrained nearest-free-space placement.
+- Added first-class service-equipment maintenance clearances with in-room, unobstructed and minimum-width proof.
+- Separated interactive drawing-modifier launch from blocker-report generation: audit/blocker bundles default to `never` and no longer replace or repeatedly reopen the modifier UI.
+- Added regression coverage for numeric axis semantic IDs, annotation/sheet entity bindings and service maintenance clearance.
+
 ## 1.11.0 - 2026-08-12
 
 - Added persistent content-addressed review staging and bounded duplicate suppression; automated Agent/CLI calls now default to no browser launch.
