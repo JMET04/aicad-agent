@@ -820,8 +820,8 @@
                          },
                          {
                              "path":  "README.md",
-                             "size":  17279,
-                             "sha256":  "405a8ef7dda99af8816243dd06d4c5ed3c9202b7dc2417ccf4193deb512ffbcc"
+                             "size":  17812,
+                             "sha256":  "929f8e84e3384e6183f3b8d2b878fcd57243e9ae21349cf1a51da3ce9251158e"
                          },
                          {
                              "path":  "release/v1.12.0/aicad-agent/.codex-plugin/plugin.json",
@@ -3816,8 +3816,8 @@
                   },
                   {
                       "path":  "README.md",
-                      "size":  17279,
-                      "sha256":  "405a8ef7dda99af8816243dd06d4c5ed3c9202b7dc2417ccf4193deb512ffbcc"
+                      "size":  17812,
+                      "sha256":  "929f8e84e3384e6183f3b8d2b878fcd57243e9ae21349cf1a51da3ce9251158e"
                   },
                   {
                       "path":  "schema/aicad-3d-plan.schema.json",

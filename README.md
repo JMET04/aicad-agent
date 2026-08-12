@@ -8,6 +8,12 @@
 
 > 当前定位是工程候选与人工审核工具。所有交付继续保持 `reviewOnly=true`、`accepted=false`、`ruleEnabled=false`、`packagingGated=true`。通过插件门禁不等于材料试验、刀模公差、量产可制造性或负责工程师技术验收。
 
+## 四领域工程展示
+
+[进入建筑平面、三层钢结构、复杂机械零件和四层工业控制器 PCB 的完整展示页](showcase/README.md)。每个样例都包含白底预览、交互审核页、中文与机器验证报告，以及经过脱敏和双向哈希闭包校验的确定性审核候选 ZIP。
+
+展示通过只代表相应审核门禁和证据闭包成立；机械样例不自动取得制造验收，PCB 样例在缺少原生 ERC/DRC、SPICE 或仍有未路由网络时继续保持 `fabricationReady=false`。
+
 ## 自动打开审查界面
 
 `generate`、`compile`、`build3d` 和 `multiview` 会生成绑定当前源哈希的审查 HTML 和打开记录；CLI/Agent 默认 `review_launch=never`，不会反复新建浏览器标签。显式使用 `auto` 时，HTML 会先复制到持久内容寻址目录并在 300 秒窗口内对相同内容去重；只有 `always` 才强制再次打开。临时源文件删除后，已打开页面仍有效；打开界面不等于接受设计。
