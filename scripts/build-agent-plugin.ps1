@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.10.1',
+    [string]$Version = '1.11.0',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -104,8 +104,8 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.10.1'
-        autocadBundle = '1.5.0'
+        pythonConstraintCompiler = '1.11.0'
+        autocadBundle = '1.6.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
         viewPackageSchema = '1.1'
@@ -138,6 +138,9 @@ $releaseManifest = [ordered]@{
     capabilities = @(
         'origin-anchored 2D constraints', 'ASCII AICAD compilation', 'DXF/SCR/audit/manifest output',
         'architectural plan-cut/projection/hidden/datum hierarchy with complete axis groups, stage annotation matrix and native DIMSTYLE QA',
+        'protocol-4 native overall/grid/partition/opening DIMENSION entities with purpose XData and AutoCAD save/reopen proof',
+        'persistent content-addressed review launch with duplicate auto-tab suppression',
+        'direct-production requests fail closed to blocker-only output on any missing gate',
         'fail-closed production-readiness contract with paper-space, furniture component, authority, host and release gates',
         'idempotent audit-report inventory with unique stable prevention-rule IDs and conflict rejection',
         'calibrated webpage/SVG/image reference reconstruction', 'direct DOM object evidence and browser-backed annotation QA',
@@ -169,7 +172,7 @@ $releaseManifest = [ordered]@{
     knownLimitations = @(
         'native DWG requires AutoCAD', 'native SLDPRT/STEP and native topology authority require a licensed SolidWorks installation',
         'default package excludes SolidWorks interop binaries', 'raw webpage/image pixels are never dimensional authority',
-        'native AutoCAD DIMENSION/DWG output remains a host post-process', 'packaging QA remains engineering-review evidence, not manufacturing acceptance',
+        'protocol-4 native DIMENSION is emitted in DXF/AICAD; native DWG still requires licensed AutoCAD save/reopen validation', 'packaging QA remains engineering-review evidence, not manufacturing acceptance',
         'production-readiness pass creates a release candidate only; authorized professional or manufacturing acceptance remains external'
     )
     validationCommands = @(

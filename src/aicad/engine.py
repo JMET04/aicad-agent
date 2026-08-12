@@ -119,7 +119,53 @@ class ResolvedText:
         return self.insert
 
 
-ResolvedEntity: TypeAlias = ResolvedLine | ResolvedCircle | ResolvedArc | ResolvedText
+@dataclass(frozen=True)
+class ResolvedDimension:
+    id: str
+    purpose: str
+    reasoning: str
+    first: Point
+    second: Point
+    base: Point
+    dimension_kind: str
+    style_name: str
+    dimension_purpose: str
+    constraints: tuple[dict[str, Any], ...]
+    type: str = "dimension"
+    layer: str = "DIMENSION"
+    roles: tuple[str, ...] = ()
+    editable: bool = True
+    depends_on: tuple[str, ...] = ()
+
+    @property
+    def measurement(self) -> float:
+        dx, dy = self.second[0] - self.first[0], self.second[1] - self.first[1]
+        if self.dimension_kind == "horizontal":
+            return abs(dx)
+        if self.dimension_kind == "vertical":
+            return abs(dy)
+        return math.hypot(dx, dy)
+
+    @property
+    def orientation_deg(self) -> float:
+        if self.dimension_kind == "horizontal":
+            return 0.0
+        if self.dimension_kind == "vertical":
+            return 90.0
+        return math.degrees(math.atan2(self.second[1] - self.first[1], self.second[0] - self.first[0])) % 180.0
+
+    @property
+    def offset_distance(self) -> float:
+        dx, dy = self.second[0] - self.first[0], self.second[1] - self.first[1]
+        length = math.hypot(dx, dy)
+        return ((self.base[0] - self.first[0]) * -dy + (self.base[1] - self.first[1]) * dx) / length
+
+    @property
+    def anchor(self) -> Point:
+        return self.base
+
+
+ResolvedEntity: TypeAlias = ResolvedLine | ResolvedCircle | ResolvedArc | ResolvedText | ResolvedDimension
 
 
 @dataclass(frozen=True)
@@ -136,6 +182,10 @@ class CompiledPlan:
     @property
     def lines(self) -> tuple[ResolvedLine, ...]:
         return tuple(entity for entity in self.entities if isinstance(entity, ResolvedLine))
+
+    @property
+    def dimensions(self) -> tuple[ResolvedDimension, ...]:
+        return tuple(entity for entity in self.entities if isinstance(entity, ResolvedDimension))
 
 
 def _number(value: Any, label: str) -> float:
@@ -185,6 +235,13 @@ def _resolve_ref(ref: str, entities: dict[str, ResolvedEntity], origin: Point) -
         points = {"center": entity.center}
     elif isinstance(entity, ResolvedArc):
         points = {"center": entity.center, "start": entity.start, "end": entity.end}
+    elif isinstance(entity, ResolvedDimension):
+        points = {
+            "first": entity.first,
+            "second": entity.second,
+            "base": entity.base,
+            "midpoint": ((entity.first[0] + entity.second[0]) / 2, (entity.first[1] + entity.second[1]) / 2),
+        }
     else:
         points = {"insert": entity.insert}
     if point_name not in points:
@@ -380,6 +437,48 @@ def _validate_text_constraints(entity: ResolvedText, entities: dict[str, Resolve
     return has_anchor_relation
 
 
+def _orientation_close(actual: float, expected: float, tolerance: float) -> bool:
+    difference = abs(((actual - expected + 90.0) % 180.0) - 90.0)
+    return difference <= tolerance
+
+
+def _validate_dimension_constraints(
+    entity: ResolvedDimension,
+    entities: dict[str, ResolvedEntity],
+    origin: Point,
+    tolerance: float,
+) -> bool:
+    required = {"dimension_measurement", "dimension_orientation", "base_offset"}
+    seen: set[str] = set()
+    has_anchor_relation = False
+    for index, constraint in enumerate(entity.constraints):
+        if not isinstance(constraint, dict) or not isinstance(constraint.get("kind"), str):
+            raise PlanError(f"{entity.id}.constraints[{index}] must contain a kind")
+        kind = constraint["kind"]
+        if kind in seen:
+            raise PlanError(f"{entity.id} repeats {kind} constraint")
+        seen.add(kind)
+        if kind == "dimension_measurement":
+            expected = _positive(constraint.get("value"), f"{entity.id}.dimension_measurement.value")
+            if abs(entity.measurement - expected) > tolerance:
+                raise PlanError(
+                    f"{entity.id} measurement is {entity.measurement:g}, expected {expected:g}"
+                )
+        elif kind == "dimension_orientation":
+            expected = _number(constraint.get("value"), f"{entity.id}.dimension_orientation.value")
+            if not _orientation_close(entity.orientation_deg, expected, tolerance):
+                raise PlanError(f"{entity.id} violates dimension_orientation constraint")
+        elif kind == "base_offset":
+            _validate_offset(entity.base, constraint, entities, origin, tolerance, f"{entity.id}.base_offset")
+            has_anchor_relation = True
+        else:
+            raise PlanError(f"Unsupported constraint kind '{kind}' on {entity.id}")
+    missing = sorted(required - seen)
+    if missing:
+        raise PlanError(f"{entity.id} is missing required native dimension constraints: {missing}")
+    return has_anchor_relation
+
+
 def _entity_points(entity: ResolvedEntity) -> tuple[Point, ...]:
     if isinstance(entity, ResolvedLine):
         return (entity.start, entity.end, ((entity.start[0] + entity.end[0]) / 2, (entity.start[1] + entity.end[1]) / 2))
@@ -387,6 +486,13 @@ def _entity_points(entity: ResolvedEntity) -> tuple[Point, ...]:
         return (entity.center,)
     if isinstance(entity, ResolvedArc):
         return (entity.center, entity.start, entity.end)
+    if isinstance(entity, ResolvedDimension):
+        return (
+            entity.first,
+            entity.second,
+            entity.base,
+            ((entity.first[0] + entity.second[0]) / 2, (entity.first[1] + entity.second[1]) / 2),
+        )
     return (entity.insert,)
 
 
@@ -400,6 +506,19 @@ def _is_duplicate(candidate: ResolvedEntity, prior: ResolvedEntity, tolerance: f
     if isinstance(candidate, ResolvedText) and isinstance(prior, ResolvedText):
         return (_close(candidate.insert, prior.insert, tolerance) and candidate.value == prior.value and
                 abs(candidate.height - prior.height) <= tolerance and abs(candidate.rotation_deg - prior.rotation_deg) <= tolerance)
+    if isinstance(candidate, ResolvedDimension) and isinstance(prior, ResolvedDimension):
+        same_span = (
+            _close(candidate.first, prior.first, tolerance) and _close(candidate.second, prior.second, tolerance)
+        ) or (
+            _close(candidate.first, prior.second, tolerance) and _close(candidate.second, prior.first, tolerance)
+        )
+        return (
+            same_span
+            and _close(candidate.base, prior.base, tolerance)
+            and candidate.dimension_kind == prior.dimension_kind
+            and candidate.style_name == prior.style_name
+            and candidate.dimension_purpose == prior.dimension_purpose
+        )
     return False
 
 
@@ -424,7 +543,7 @@ def _referenced_entity_ids(value: Any) -> tuple[str, ...]:
 
 def _inferred_dependencies(step: dict[str, Any], known: set[str]) -> tuple[str, ...]:
     result: list[str] = []
-    for field in ("start", "center", "insert", "construction", "constraints"):
+    for field in ("start", "center", "insert", "first", "second", "base", "construction", "constraints"):
         for candidate in _referenced_entity_ids(step.get(field)):
             if candidate in known and candidate not in result:
                 result.append(candidate)
@@ -482,10 +601,11 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
         step_type = raw_step.get("type")
         if schema_version == "1.0" and step_type != "line":
             raise PlanError(f"{label}.type must be line in schema 1.0")
-        if step_type not in {"line", "circle", "arc", "text"}:
-            raise PlanError(f"{label}.type must be line, circle, arc, or text")
+        if step_type not in {"line", "circle", "arc", "text", "dimension"}:
+            raise PlanError(f"{label}.type must be line, circle, arc, text, or dimension")
         entity_id, purpose, reasoning, constraints = _common_step(raw_step, label, resolved)
-        layer = raw_step.get("layer", "AICAD_GEOMETRY")
+        default_layer = "AICAD_TEXT" if step_type == "text" else "DIMENSION" if step_type == "dimension" else "AICAD_GEOMETRY"
+        layer = raw_step.get("layer", default_layer)
         if not isinstance(layer, str) or not LAYER_PATTERN.fullmatch(layer):
             raise PlanError(f"{entity_id}.layer must be an ASCII CAD layer name")
         role = raw_step.get("role")
@@ -527,7 +647,7 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
                 raise PlanError(f"{entity_id} arc sweep must be between 0 and 360 degrees")
             entity = ResolvedArc(entity_id, purpose, reasoning, center, radius, start_angle, end_angle, constraints, layer=layer, roles=roles, editable=editable, depends_on=depends_on)
             has_relation = _validate_radial_constraints(entity, resolved, origin, tolerance)
-        else:
+        elif step_type == "text":
             insert = _resolve_anchor(raw_step.get("insert"), resolved, origin, f"{entity_id}.insert")
             value = raw_step.get("value")
             if not isinstance(value, str) or not value:
@@ -538,6 +658,39 @@ def compile_plan(data: dict[str, Any]) -> CompiledPlan:
             rotation = _number(raw_step.get("rotation_deg", 0), f"{entity_id}.rotation_deg")
             entity = ResolvedText(entity_id, purpose, reasoning, insert, value, height, rotation, constraints, layer=layer, roles=roles, editable=editable, depends_on=depends_on)
             has_relation = _validate_text_constraints(entity, resolved, origin, tolerance)
+        else:
+            if layer.upper() != "DIMENSION":
+                raise PlanError(f"{entity_id}.layer must be DIMENSION for a native dimension")
+            for field in ("first", "second"):
+                anchor = raw_step.get(field)
+                if not (
+                    isinstance(anchor, dict)
+                    and set(anchor) == {"ref"}
+                    and isinstance(anchor.get("ref"), str)
+                ):
+                    raise PlanError(f"{entity_id}.{field} must reference earlier resolved geometry")
+            first = _resolve_anchor(raw_step.get("first"), resolved, origin, f"{entity_id}.first")
+            second = _resolve_anchor(raw_step.get("second"), resolved, origin, f"{entity_id}.second")
+            base = _resolve_anchor(raw_step.get("base"), resolved, origin, f"{entity_id}.base")
+            if _close(first, second, tolerance):
+                raise PlanError(f"{entity_id} dimension span is zero within tolerance")
+            dimension_kind = raw_step.get("dimension_kind")
+            if dimension_kind not in {"horizontal", "vertical", "aligned"}:
+                raise PlanError(f"{entity_id}.dimension_kind must be horizontal, vertical, or aligned")
+            style_name = raw_step.get("style_name", "AICAD_ARCH")
+            if not isinstance(style_name, str) or not LAYER_PATTERN.fullmatch(style_name):
+                raise PlanError(f"{entity_id}.style_name must be a non-empty ASCII DIMSTYLE name")
+            dimension_purpose = raw_step.get("dimension_purpose")
+            if dimension_purpose not in {"overall", "grid", "partition", "opening", "general"}:
+                raise PlanError(
+                    f"{entity_id}.dimension_purpose must be overall, grid, partition, opening, or general"
+                )
+            entity = ResolvedDimension(
+                entity_id, purpose, reasoning, first, second, base, dimension_kind, style_name,
+                dimension_purpose, constraints, layer=layer, roles=roles, editable=editable,
+                depends_on=depends_on,
+            )
+            has_relation = _validate_dimension_constraints(entity, resolved, origin, tolerance)
 
         if index == 0 and not _close(entity.anchor, origin, tolerance):
             raise PlanError("The first entity anchor must be origin [0, 0]")

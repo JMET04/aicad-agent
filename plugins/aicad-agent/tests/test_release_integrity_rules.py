@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import unittest
 from pathlib import Path
@@ -20,7 +21,7 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
             {
                 "REL-G001", "REL-G002", "REL-G003", "REL-G004",
                 "REL-G005", "REL-G006", "REL-G007", "REL-G008", "REL-G009", "REL-G010",
-                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017", "REL-G018", "REL-G019", "REL-G020", "REL-G021",
+                "REL-G011", "REL-G012", "REL-G013", "REL-G014", "REL-G015", "REL-G016", "REL-G017", "REL-G018", "REL-G019", "REL-G020", "REL-G021", "REL-G022",
             },
         )
         for rule in rules.values():
@@ -117,6 +118,30 @@ class ReleaseIntegrityRuleTests(unittest.TestCase):
         self.assertIn("evolved independently", rule["root_cause"])
         self.assertIn("stale-version contradictions", rule["prevention"])
         self.assertIn("real-host import-save-reopen evidence", rule["prevention"])
+
+    def test_final_integrity_scan_is_sequenced_after_package_tests(self) -> None:
+        data = json.loads((PLUGIN / "rules" / "release_integrity_rules.json").read_text(encoding="utf-8"))
+        rule = next(item for item in data["rules"] if item["id"] == "REL-G022")
+        self.assertIn("PYTHONDONTWRITEBYTECODE=1", rule["prevention"])
+        self.assertIn("never execute", rule["prevention"])
+        self.assertIn("final hash gate", rule["prevention"])
+
+    def test_protocol4_capability_metadata_matches_packaged_runtime(self) -> None:
+        script = PLUGIN / "scripts" / "aicad_agent.py"
+        spec = importlib.util.spec_from_file_location("packaged_aicad_agent", script)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        payload = module.capabilities()
+        self.assertIn("dimension", payload["entities"])
+        self.assertTrue(
+            {"dimension_measurement", "dimension_orientation", "base_offset"}.issubset(payload["constraints"])
+        )
+        self.assertTrue(any("protocol 4" in item for item in payload["invariants"]))
+        host = payload["universal_cad"]["host_capability_matrix"]["autocad_2025"]
+        self.assertIn("aicad_protocol_v4_native_dimensions", host["supported"])
+        self.assertIn("native_dimension_save_reopen", host["supported"])
 
 
 if __name__ == "__main__":

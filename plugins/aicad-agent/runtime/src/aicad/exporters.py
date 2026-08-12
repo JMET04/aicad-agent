@@ -7,7 +7,7 @@ from pathlib import Path
 import ezdxf
 from ezdxf.enums import TextEntityAlignment
 
-from .engine import CompiledPlan, ResolvedArc, ResolvedCircle, ResolvedEntity, ResolvedLine, ResolvedText
+from .engine import CompiledPlan, ResolvedArc, ResolvedCircle, ResolvedDimension, ResolvedEntity, ResolvedLine, ResolvedText
 
 
 _ARCHITECTURE_LAYER_STYLES: dict[str, tuple[int, int, str]] = {
@@ -49,7 +49,7 @@ def _cad_text(value: str) -> str:
 
 
 def write_execution(plan: CompiledPlan, path: Path) -> None:
-    protocol = "1" if plan.schema_version == "1.0" else "3"
+    protocol = "1" if plan.schema_version == "1.0" else "4" if plan.dimensions else "3"
     records = [f"AICAD|{protocol}|{plan.units.upper()}|{_fmt(plan.tolerance)}|{plan.source_hash}"]
     for entity in plan.entities:
         hashes = [_text_hash(entity.purpose), _text_hash(entity.reasoning)]
@@ -57,22 +57,39 @@ def write_execution(plan: CompiledPlan, path: Path) -> None:
         prefix = [entity.id] if protocol == "1" else [entity.id, entity.layer]
         if isinstance(entity, ResolvedLine):
             values = [_fmt(entity.start[0]), _fmt(entity.start[1]), _fmt(entity.end[0]), _fmt(entity.end[1])]
-            records.append("|".join(["LINE", *prefix, *values, *hashes, *(proof if protocol == "3" else [])]))
+            records.append("|".join(["LINE", *prefix, *values, *hashes, *(proof if protocol in {"3", "4"} else [])]))
         elif isinstance(entity, ResolvedCircle):
             values = [_fmt(entity.center[0]), _fmt(entity.center[1]), _fmt(entity.radius)]
             records.append("|".join(["CIRCLE", *prefix, *values, *hashes, *proof]))
         elif isinstance(entity, ResolvedArc):
             values = [_fmt(entity.center[0]), _fmt(entity.center[1]), _fmt(entity.radius), _fmt(entity.start_angle_deg), _fmt(entity.end_angle_deg)]
             records.append("|".join(["ARC", *prefix, *values, *hashes, *proof]))
-        else:
+        elif isinstance(entity, ResolvedText):
             values = [_fmt(entity.insert[0]), _fmt(entity.insert[1]), _fmt(entity.height), _fmt(entity.rotation_deg), _cad_text(entity.value)]
             records.append("|".join(["TEXT", *prefix, *values, *hashes, *proof]))
+        else:
+            values = [
+                entity.dimension_kind,
+                _fmt(entity.first[0]), _fmt(entity.first[1]),
+                _fmt(entity.second[0]), _fmt(entity.second[1]),
+                _fmt(entity.base[0]), _fmt(entity.base[1]),
+                entity.style_name, entity.dimension_purpose,
+            ]
+            records.append("|".join(["DIMENSION", *prefix, *values, *hashes, *proof]))
     records.append(f"END|{len(plan.entities)}|{plan.source_hash}")
     path.write_text("\n".join(records) + "\n", encoding="ascii", newline="\n")
 
 def write_script(plan: CompiledPlan, path: Path) -> None:
     layers = sorted({entity.layer for entity in plan.entities})
     lines = ["_.UNDO", "_Begin"]
+    if plan.dimensions:
+        for variable, value in (
+            ("DIMTXT", "280"), ("DIMASZ", "180"), ("DIMTSZ", "150"),
+            ("DIMEXO", "100"), ("DIMEXE", "150"), ("DIMGAP", "90"),
+            ("DIMTAD", "1"), ("DIMDEC", "0"), ("DIMZIN", "8"), ("DIMLUNIT", "2"),
+        ):
+            lines.extend(["_.SETVAR", variable, value])
+        lines.extend(["_.-DIMSTYLE", "_Save", "AICAD_ARCH", "_.-DIMSTYLE", "_Restore", "AICAD_ARCH"])
     for linetype in sorted({_layer_style(layer)["linetype"] for layer in layers} - {"CONTINUOUS"}):
         lines.extend(["_.-LINETYPE", "_Load", str(linetype), "acadiso.lin", ""])
     for layer in layers:
@@ -89,13 +106,49 @@ def write_script(plan: CompiledPlan, path: Path) -> None:
             lines.extend(["_.CIRCLE", f"{_fmt(entity.center[0])},{_fmt(entity.center[1])}", _fmt(entity.radius)])
         elif isinstance(entity, ResolvedArc):
             lines.extend(["_.ARC", "_C", f"{_fmt(entity.center[0])},{_fmt(entity.center[1])}", f"{_fmt(entity.start[0])},{_fmt(entity.start[1])}", "_A", _fmt((entity.end_angle_deg - entity.start_angle_deg) % 360)])
-        else:
+        elif isinstance(entity, ResolvedText):
             lines.extend(["_.-TEXT", "_Justify", "_MC", f"{_fmt(entity.insert[0])},{_fmt(entity.insert[1])}", _fmt(entity.height), _fmt(entity.rotation_deg), _cad_text(entity.value)])
+        elif entity.dimension_kind in {"horizontal", "vertical"}:
+            orientation = "_Horizontal" if entity.dimension_kind == "horizontal" else "_Vertical"
+            lines.extend([
+                "_.DIMLINEAR",
+                f"{_fmt(entity.first[0])},{_fmt(entity.first[1])}",
+                f"{_fmt(entity.second[0])},{_fmt(entity.second[1])}",
+                orientation,
+                f"{_fmt(entity.base[0])},{_fmt(entity.base[1])}",
+            ])
+        else:
+            lines.extend([
+                "_.DIMALIGNED",
+                f"{_fmt(entity.first[0])},{_fmt(entity.first[1])}",
+                f"{_fmt(entity.second[0])},{_fmt(entity.second[1])}",
+                f"{_fmt(entity.base[0])},{_fmt(entity.base[1])}",
+            ])
     lines.extend(["_.UNDO", "_End", "_.ZOOM", "_Extents", ""])
     path.write_text("\n".join(lines), encoding="ascii", newline="\n")
 
 def _dxf_pair(code: int, value: str | int | float) -> str:
     return f"{code}\n{value}\n"
+
+
+def _ensure_dimension_styles(document: ezdxf.document.Drawing, plan: CompiledPlan) -> None:
+    if not plan.dimensions:
+        return
+    for style_name in sorted({entity.style_name for entity in plan.dimensions}):
+        style = document.dimstyles.get(style_name) if style_name in document.dimstyles else document.dimstyles.new(style_name)
+        for name, value in {
+            "dimtxt": 280.0,
+            "dimasz": 180.0,
+            "dimtsz": 150.0,
+            "dimexo": 100.0,
+            "dimexe": 150.0,
+            "dimgap": 90.0,
+            "dimtad": 1,
+            "dimdec": 0,
+            "dimzin": 8,
+            "dimlunit": 2,
+        }.items():
+            setattr(style.dxf, name, value)
 
 
 def write_dxf(plan: CompiledPlan, path: Path) -> None:
@@ -128,8 +181,11 @@ def write_dxf(plan: CompiledPlan, path: Path) -> None:
                 linetype=str(style["linetype"]),
                 lineweight=int(style["lineweight"]),
             )
+    _ensure_dimension_styles(document, plan)
+    if "AICAD" not in document.appids:
+        document.appids.add("AICAD")
     modelspace = document.modelspace()
-    for entity in plan.entities:
+    for index, entity in enumerate(plan.entities, 1):
         attributes = {"layer": entity.layer}
         if isinstance(entity, ResolvedLine):
             modelspace.add_line(entity.start, entity.end, dxfattribs=attributes)
@@ -137,14 +193,44 @@ def write_dxf(plan: CompiledPlan, path: Path) -> None:
             modelspace.add_circle(entity.center, entity.radius, dxfattribs=attributes)
         elif isinstance(entity, ResolvedArc):
             modelspace.add_arc(entity.center, entity.radius, entity.start_angle_deg, entity.end_angle_deg, dxfattribs=attributes)
-        else:
-            text = modelspace.add_text(
+        elif isinstance(entity, ResolvedText):
+            text_entity = modelspace.add_text(
                 _cad_text(entity.value),
                 height=entity.height,
                 rotation=entity.rotation_deg,
                 dxfattribs={**attributes, "style": "Standard"},
             )
-            text.set_placement(entity.insert, align=TextEntityAlignment.MIDDLE_CENTER)
+            text_entity.set_placement(entity.insert, align=TextEntityAlignment.MIDDLE_CENTER)
+        else:
+            if entity.dimension_kind in {"horizontal", "vertical"}:
+                override = modelspace.add_linear_dim(
+                    base=entity.base,
+                    p1=entity.first,
+                    p2=entity.second,
+                    angle=0 if entity.dimension_kind == "horizontal" else 90,
+                    dimstyle=entity.style_name,
+                    dxfattribs=attributes,
+                )
+            else:
+                override = modelspace.add_aligned_dim(
+                    p1=entity.first,
+                    p2=entity.second,
+                    distance=entity.offset_distance,
+                    dimstyle=entity.style_name,
+                    dxfattribs=attributes,
+                )
+            override.render()
+            override.dimension.set_xdata(
+                "AICAD",
+                [
+                    (1000, entity.id),
+                    (1000, "DIMENSION"),
+                    (1070, index),
+                    (1000, f"DIM_PURPOSE:{entity.dimension_purpose}"),
+                    (1000, f"DIM_STYLE:{entity.style_name}"),
+                    (1000, f"DIM_KIND:{entity.dimension_kind}"),
+                ],
+            )
     document.saveas(path, encoding="ascii", fmt="asc")
     path.read_bytes().decode("ascii")
 
@@ -170,6 +256,14 @@ def _geometry(entity: ResolvedEntity) -> str:
         return f"C=({_fmt(entity.center[0])}, {_fmt(entity.center[1])}); R={_fmt(entity.radius)}"
     if isinstance(entity, ResolvedArc):
         return f"C=({_fmt(entity.center[0])}, {_fmt(entity.center[1])}); R={_fmt(entity.radius)}; A={_fmt(entity.start_angle_deg)}..{_fmt(entity.end_angle_deg)}"
+    if isinstance(entity, ResolvedDimension):
+        return (
+            f"P1=({_fmt(entity.first[0])}, {_fmt(entity.first[1])}); "
+            f"P2=({_fmt(entity.second[0])}, {_fmt(entity.second[1])}); "
+            f"BASE=({_fmt(entity.base[0])}, {_fmt(entity.base[1])}); "
+            f"KIND={entity.dimension_kind}; PURPOSE={entity.dimension_purpose}; "
+            f"STYLE={entity.style_name}; M={_fmt(entity.measurement)}"
+        )
     return f"P=({_fmt(entity.insert[0])}, {_fmt(entity.insert[1])}); H={_fmt(entity.height)}; R={_fmt(entity.rotation_deg)}; TEXT={entity.value}"
 
 
@@ -196,7 +290,7 @@ def write_manifest(plan: CompiledPlan, output_dir: Path, stem: str) -> None:
         "schema_version": plan.schema_version, "name": plan.name, "domain": plan.domain, "source_sha256": plan.source_hash,
         "units": plan.units, "origin": list(plan.origin), "tolerance": plan.tolerance,
         "entity_count": len(plan.entities),
-        "entity_types": {kind: sum(entity.type == kind for entity in plan.entities) for kind in ("line", "circle", "arc", "text")},
+        "entity_types": {kind: sum(entity.type == kind for entity in plan.entities) for kind in ("line", "circle", "arc", "text", "dimension")},
         "layers": {layer: sum(entity.layer == layer for entity in plan.entities) for layer in sorted({entity.layer for entity in plan.entities})},
         "roles": {role: sum(role in entity.roles for entity in plan.entities) for role in sorted({role for entity in plan.entities for role in entity.roles})},
         "editable_entities": sum(entity.editable for entity in plan.entities),

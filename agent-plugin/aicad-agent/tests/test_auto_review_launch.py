@@ -18,15 +18,22 @@ from aicad.review_launch import launch_review
 
 
 class PackagedAutomaticReviewLaunchTests(unittest.TestCase):
-    def test_existing_local_review_can_launch(self) -> None:
+    def test_existing_local_review_launches_persisted_copy(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            review = Path(directory) / "review.html"
+            root = Path(directory)
+            review = root / "review.html"
             review.write_text("<html><body>review</body></html>", encoding="utf-8")
             opened: list[Path] = []
-            with patch.dict(os.environ, {"AICAD_REVIEW_LAUNCH": ""}, clear=False):
+            with patch.dict(
+                os.environ,
+                {"AICAD_REVIEW_LAUNCH": "", "AICAD_REVIEW_STAGE_DIR": str(root / "stage")},
+                clear=False,
+            ):
                 result = launch_review(review, "always", opener=opened.append)
             self.assertEqual(result["status"], "launched")
-            self.assertEqual(opened, [review.resolve()])
+            self.assertEqual(opened, [Path(str(result["review_html"]))])
+            self.assertNotEqual(opened[0], review.resolve())
+            self.assertEqual(opened[0].read_bytes(), review.read_bytes())
 
     def test_non_ascii_source_uses_ascii_compatibility_stage(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

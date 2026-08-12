@@ -80,6 +80,8 @@ class DomainRuleTests(unittest.TestCase):
         host = HOST_CAPABILITIES["autocad_2025"]
         self.assertIn("text", host["supported"])
         self.assertIn("aicad_protocol_v3_semantic_layers", host["supported"])
+        self.assertIn("aicad_protocol_v4_native_dimensions", host["supported"])
+        self.assertIn("native_dimension_save_reopen", host["supported"])
         self.assertIn("native_linetype_and_lineweight", host["supported"])
         self.assertIn("aicad_xdata_save_reopen", host["supported"])
         self.assertNotIn("per_entity_layer_in_aicad_protocol_v2", host["not_supported"])

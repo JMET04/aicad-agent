@@ -17,6 +17,9 @@ class AutoCadHostHarnessTests(unittest.TestCase):
         self.assertIn("protocol3-text-layer.plan.json", harness)
         self.assertIn("AICAD_V3_PASS", harness)
         self.assertIn("AICAD_V3_PERSISTENCE_PASS", harness)
+        self.assertIn("architecture-dimensions.plan.json", harness)
+        self.assertIn("AICAD_V4_PASS", harness)
+        self.assertIn("AICAD_V4_PERSISTENCE_PASS", harness)
 
 
 if __name__ == "__main__":

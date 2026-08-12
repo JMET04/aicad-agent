@@ -1,0 +1,3 @@
+(load (strcat (getenv "AICAD_TEST_ROOT") "/v4_dimension_test.lsp"))
+(aicad-v4:persistence-run)
+_.QUIT

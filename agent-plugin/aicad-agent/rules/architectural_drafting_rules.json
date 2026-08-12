@@ -1,6 +1,6 @@
 {
   "schema": "aicad_architectural_drafting_rules_v6",
-  "version": "8.1.0",
+  "version": "8.2.0",
   "status": "candidate",
   "scope": "architectural_plan_2d",
   "rules": [
@@ -252,9 +252,9 @@
     {
       "id": "ARCH-D036",
       "name": "verified_blocker_review_launch",
-      "requirement": "A blocker report is not delivered by returning a local path alone; its UTF-8 HTML shall be routed through the non-ASCII compatibility launcher and accompanied by a machine-readable source/staged-path launch result, while browser QA proves that the staged file renders.",
-      "failureCause": "The renderer produced a valid self-contained HTML file, but report generators returned the original Chinese path without invoking the compatibility launcher, so desktop review repeatedly appeared unable to open.",
-      "prevention": "Route every blocker emitter through write_review_bundle, require JSON/HTML/PNG/launch_json, stage non-ASCII paths, record launch status and add an integration test that opens the staged bytes rather than merely checking file existence."
+      "requirement": "A blocker report is not delivered by returning a local path alone; its UTF-8 HTML shall be routed through the persistent compatibility launcher and accompanied by a machine-readable source/staged-path launch result, while browser QA proves that the staged file renders.",
+      "failureCause": "The renderer produced a valid self-contained HTML file, but report generators returned the original path without invoking a persistent launcher, so desktop review repeatedly appeared unable to open.",
+      "prevention": "Route every blocker emitter through write_review_bundle, require JSON/HTML/PNG/launch_json, persist every launched path regardless of character set, record launch status and add an integration test that opens the staged bytes rather than merely checking file existence."
     },
     {
       "id": "ARCH-D037",
@@ -262,6 +262,27 @@
       "requirement": "Every overall, grid, partition and opening dimension-chain ID shall resolve to one native DIMENSION inventory entity on DIMENSION with the declared purpose and persisted named style; four self-reported purpose names are not dimension proof.",
       "failureCause": "The contract counted dimension-chain purposes but never resolved their entity IDs, allowing nonexistent dimensions to pass the precompile matrix.",
       "prevention": "Bind every declared dimension ID to the native entity inventory, verify type/layer/purpose/style and require the post-save/reopen host report to preserve the same ID set before production release."
+    },
+    {
+      "id": "ARCH-D038",
+      "name": "persistent_idempotent_review_launch",
+      "requirement": "A browser shall receive only a persistent content-addressed review copy; automated compile and QA calls shall default to no window launch, repeated auto-launch of identical bytes shall be suppressed, and only an explicit always request may force another tab.",
+      "failureCause": "ASCII temporary paths bypassed compatibility staging and every auto invocation called the system opener; the temporary directory was deleted while many stale browser tabs remained.",
+      "prevention": "Stage every launched HTML regardless of source characters, default Agent and CLI launch mode to never, persist a digest launch ledger with a bounded duplicate window, and regression-test source deletion plus repeated auto and explicit always behavior."
+    },
+    {
+      "id": "ARCH-D039",
+      "name": "headless_and_desktop_native_dimension_parity",
+      "requirement": "Native dimensions shall be created and verified through an execution path available in both desktop AutoCAD and accoreconsole.exe; the runtime shall not assume that an Application COM object exists in a headless host.",
+      "failureCause": "The first protocol-4 implementation called vlax-get-acad-object, which returned nil in AutoCAD 2025 Core Console even though DXF-native dimensions were valid.",
+      "prevention": "Probe the real host capability, use the AutoCAD native DIMSTYLE and DIMLINEAR/DIMALIGNED command path when COM is unavailable, and require protocol save/reopen tests in both execution modes before release."
+    },
+    {
+      "id": "ARCH-D040",
+      "name": "physical_origin_segment_and_union_invariance",
+      "requirement": "The first entity at origin shall be a real typed physical segment. Splitting it or any wall/opening at dimension anchors shall preserve the exact geometric union and shall not introduce an auxiliary super-line, duplicate coverage, layer conflict or wall-through-opening condition.",
+      "failureCause": "A full-width origin baseline was labelled as an opening and overlapped shorter physical wall/opening segments; the overlap became visible only when dimension anchors subdivided the line.",
+      "prevention": "Start from the first real wall or opening edge, split only at mathematically collinear interior anchors, compare pre/post unions by semantic layer and reject every exact or partial cross-role overlap before compilation."
     }
   ],
   "defaultLayerProfile": {
@@ -457,6 +478,6 @@
       "launch_json"
     ],
     "nonCompensatory": true,
-    "reviewLaunchContract": "source_path_plus_ascii_staged_path_plus_launch_status"
+    "reviewLaunchContract": "persistent_content_addressed_path_plus_idempotent_launch_status"
   }
 }

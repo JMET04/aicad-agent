@@ -42,7 +42,7 @@ For architectural plans, read `rules/architectural_drafting_rules.json` and [ARC
 1. Classify every object as plan-cut, visible projection, hidden/overhead, datum, symbolic route, movable furniture, fixed casework, sanitary fixture, appliance, dimension or text. Layer names and colors alone are not proof.
 2. Apply the typed default hierarchy unless a supplied office standard has higher authority: column/wall 0.70/0.60 mm continuous; opening/projection 0.30/0.25 mm continuous; furniture/casework/sanitary/appliance/dimension 0.18 mm continuous; route/overhead 0.18 mm dashed; grid 0.13 mm centerline.
 3. Install the linetype table and set a model-space linetype scale that makes dashes visibly distinct at the intended plot scale. Reject an all-continuous drawing.
-4. Keep dimensions as native DIMENSION entities driven by a persisted named style. Require distinct overall, grid, major-partition and opening-purpose chains. Reserve an annotation envelope, place local chains closest and overall dimensions farther out, and reject text or dimension collisions.
+4. Keep dimensions as plan-native DIMENSION entities driven by a persisted named style and protocol 4. Bind both endpoints to earlier physical geometry, require measurement/orientation/base-offset proof, and require distinct overall, grid, major-partition and opening-purpose chains. Reserve an annotation envelope, place local chains closest and overall dimensions farther out, and reject text or dimension collisions.
 5. Preserve the same layer semantics in DXF/DWG, raster/PDF preview and the interactive reviewer. A uniform review renderer is a delivery failure even if the DXF layer table is correct.
 6. Build a global axis catalogue before floor-local geometry. Every axis needs one centerline, two tangent axis bubbles and two centered identical identifiers; verify local coordinate plus storey transform, identifier uniqueness and cross-floor consistency. A centerline without bubbles/identifiers is a delivery failure.
 7. Expand the stage-specific annotation completeness matrix. A concept plan accounts for room names, dimensions, door/window tags, stair direction, level datum, north indicator, title, units and review state; construction plans additionally require section/elevation/detail and schedule references, sheet number and plot scale. Declare conditional omissions explicitly.
@@ -65,7 +65,7 @@ For each entity, determine before submitting the plan:
 
 Anchor the first line start or first radial center at `origin`. Prefer references to earlier endpoints, midpoints, and centers. Use an explicit origin-relative offset only when no earlier geometric point is appropriate.
 
-The origin protocol must not deform the product. If the real production contour has no valid first entity at (0,0), add a named non-production origin bootstrap, exclude it from the production catalog and prove the exclusion in the normality template.
+The origin protocol must not deform the product. Translate the model coordinate system so a real typed physical segment starts at (0,0). Never add a full-span auxiliary super-line that overlaps walls/openings; any anchor split must preserve the exact semantic union and reject duplicate or cross-role coverage.
 
 ## Three non-compensatory proof levels
 

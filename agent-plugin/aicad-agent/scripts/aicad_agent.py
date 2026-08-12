@@ -22,8 +22,10 @@ SCRIPT_ROOT = Path(__file__).resolve().parent
 if str(SCRIPT_ROOT) not in sys.path:
     sys.path.insert(0, str(SCRIPT_ROOT))
 RUNTIME_CANDIDATES = [
-    PLUGIN_ROOT / "runtime" / "src",
+    # In a source checkout the repository runtime is authoritative; packaged
+    # releases have no sibling src tree and therefore fall back to runtime/src.
     PLUGIN_ROOT.parents[1] / "src",
+    PLUGIN_ROOT / "runtime" / "src",
 ]
 for candidate in RUNTIME_CANDIDATES:
     if (candidate / "aicad" / "engine.py").is_file():
@@ -45,7 +47,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.10.1"
+AGENT_API_VERSION = "1.11.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -113,13 +115,14 @@ def capabilities() -> dict[str, Any]:
         "ok": True,
         "api_version": AGENT_API_VERSION,
         "purpose": "Convert 2D/3D CAD intent into deterministic, origin-anchored, audited geometry and SolidWorks parts.",
-        "entities": ["line", "circle", "arc", "text"],
+        "entities": ["line", "circle", "arc", "text", "dimension"],
         "units": ["mm", "inch"],
         "constraints": [
             "horizontal", "vertical", "length", "parallel", "perpendicular", "collinear",
             "start_coincident", "end_coincident", "start_offset", "radius", "diameter",
             "center_coincident", "center_offset", "start_angle", "end_angle",
             "position_coincident", "position_offset", "text_height", "rotation",
+            "dimension_measurement", "dimension_orientation", "base_offset",
         ],
         "artifacts": ["plan.json", "aicad", "scr", "dxf", "audit.md", "manifest.json"],
         "agent_native": {
@@ -137,8 +140,8 @@ def capabilities() -> dict[str, Any]:
             "drawing origin is [0,0]",
             "first entity anchor is origin",
             "every entity has purpose, reasoning, and mathematical constraints",
-            "AutoCAD execution channel is ASCII and accepts LINE/CIRCLE/ARC/TEXT records",
-            "schema 2.0 compiles to layer-preserving AICAD protocol 3",
+            "AutoCAD execution channel is ASCII and accepts LINE/CIRCLE/ARC/TEXT/DIMENSION records",
+            "schema 2.0 compiles to AICAD protocol 3, or protocol 4 when native dimensions are present",
             "semantic architecture layers preserve normative linetype and lineweight through DXF, SCR, and AutoCAD",
         ],
         "architectural_drafting_qa": {
@@ -147,7 +150,7 @@ def capabilities() -> dict[str, Any]:
             "rules": str((PLUGIN_ROOT / "rules" / "architectural_drafting_rules.json").resolve()),
             "complete_axis_groups": True,
             "axis_identifiers_are_plan_entities": True,
-            "semantic_layer_style_transport": ["aicad-v3", "scr", "dxf", "autocad"],
+            "semantic_layer_style_transport": ["aicad-v3", "aicad-v4", "scr", "dxf", "autocad"],
             "annotation_completeness_matrix": True,
             "review_only": True,
         },
@@ -256,7 +259,7 @@ def capabilities() -> dict[str, Any]:
                 "annotation text and calibrated placement", "lineweight hierarchy", "mojibake", "overlap",
             ],
             "outputs": ["reference.json", "annotated.dxf", "preview.svg", "preview.html", "validation.json", "validation.md", "manifest.json"],
-            "native_autocad_dimension_and_dwg": "host postprocess required",
+            "native_autocad_dimension_and_dwg": "schema-2 plans emit native DIMENSION through protocol 4; reference-annotation postprocess remains a separate compatibility path",
             "schema_path": str(_runtime_file("schema", "aicad-reference-rebuild.schema.json").resolve()),
             "review_only": True,
         },
@@ -523,7 +526,7 @@ TOOLS: list[dict[str, Any]] = [
                 "request": {"type": "string", "minLength": 1},
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
                 "provider": {"type": "string", "enum": ["offline", "auto", "openai"], "default": "offline"},
-                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "auto"},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "never"},
             },
         },
     },
@@ -543,7 +546,7 @@ TOOLS: list[dict[str, Any]] = [
             "properties": {
                 "plan": {"description": "Plan object, JSON string, or UTF-8 plan file path"},
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
-                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "auto"},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "never"},
             },
         },
     },
@@ -609,7 +612,7 @@ TOOLS: list[dict[str, Any]] = [
                 "space": {"type": "string", "enum": ["2d", "3d"]},
                 "domain": {"type": "string", "default": "general"},
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
-                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "auto"},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "never"},
             },
         },
     },
@@ -686,7 +689,7 @@ TOOLS: list[dict[str, Any]] = [
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
                 "execute": {"type": "boolean", "default": True},
                 "timeout_seconds": {"type": "integer", "minimum": 30, "maximum": 1800, "default": 300},
-                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "auto"},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "never"},
             },
         },
     },
@@ -703,11 +706,11 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_validate_architecture_detail_contract":
         return validate_architecture_detail_contract_value(arguments.get("contract"), arguments.get("plan"))
     if name == "aicad_generate":
-        return generate(arguments.get("request", ""), arguments.get("output_dir"), arguments.get("name"), arguments.get("provider", "offline"), arguments.get("review_launch", "auto"))
+        return generate(arguments.get("request", ""), arguments.get("output_dir"), arguments.get("name"), arguments.get("provider", "offline"), arguments.get("review_launch", "never"))
     if name == "aicad_validate_plan":
         return validate_plan_value(arguments.get("plan"))
     if name == "aicad_compile_plan":
-        return compile_plan_value(arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"), arguments.get("review_launch", "auto"))
+        return compile_plan_value(arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"), arguments.get("review_launch", "never"))
     if name == "aicad_get_semantic_schema":
         return get_aux_schema("semantic")
     if name == "aicad_get_correction_schema":
@@ -730,7 +733,7 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_build_multiview_review":
         return build_multiview_value(
             arguments.get("plan"), arguments.get("space", "2d"), arguments.get("domain", "general"),
-            arguments.get("output_dir"), arguments.get("name"), arguments.get("review_launch", "auto"),
+            arguments.get("output_dir"), arguments.get("name"), arguments.get("review_launch", "never"),
         )
     if name == "aicad_get_reference_rebuild_schema":
         return get_aux_schema("reference")
@@ -749,7 +752,7 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_build_solidworks_part":
         return build_solidworks_part(
             arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"),
-            arguments.get("execute", True), arguments.get("timeout_seconds", 300), arguments.get("review_launch", "auto"),
+            arguments.get("execute", True), arguments.get("timeout_seconds", 300), arguments.get("review_launch", "never"),
         )
     raise PlanError(f"Unknown tool '{name}'")
 
@@ -893,14 +896,14 @@ def _parser() -> argparse.ArgumentParser:
     generate_parser.add_argument("--out")
     generate_parser.add_argument("--name")
     generate_parser.add_argument("--provider", choices=["offline", "auto", "openai"], default="offline")
-    generate_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
+    generate_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
     validate_parser = commands.add_parser("validate")
     validate_parser.add_argument("--plan", required=True)
     compile_parser = commands.add_parser("compile")
     compile_parser.add_argument("--plan", required=True)
     compile_parser.add_argument("--out")
     compile_parser.add_argument("--name")
-    compile_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
+    compile_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
     validate3d_parser = commands.add_parser("validate3d")
     validate3d_parser.add_argument("--plan", required=True)
     build3d_parser = commands.add_parser("build3d")
@@ -909,7 +912,7 @@ def _parser() -> argparse.ArgumentParser:
     build3d_parser.add_argument("--name")
     build3d_parser.add_argument("--no-execute", action="store_true")
     build3d_parser.add_argument("--timeout", type=int, default=300)
-    build3d_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
+    build3d_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
     describe_parser = commands.add_parser("describe")
     describe_parser.add_argument("--plan", required=True)
     describe_parser.add_argument("--space", choices=["2d", "3d"], required=True)
@@ -936,7 +939,7 @@ def _parser() -> argparse.ArgumentParser:
     multiview_parser.add_argument("--domain", default="general")
     multiview_parser.add_argument("--out")
     multiview_parser.add_argument("--name")
-    multiview_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
+    multiview_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
     return parser
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.11.0 - 2026-08-12
+
+- Added persistent content-addressed review staging and bounded duplicate suppression; automated Agent/CLI calls now default to no browser launch.
+- Added protocol-4 native DIMENSION plan/compiler/export/AutoCAD support with overall/grid/partition/opening purpose binding and real AutoCAD 2025 save/reopen XData proof.
+- Replaced headless-incompatible AutoCAD Application COM usage with the native command execution path after a real Core Console capability probe returned nil.
+- Added `ARCH-D038` through `ARCH-D040` and `PROD-G010` for idempotent review launch, cross-host dimension parity, physical origin-segment union invariance and blocker-only direct-production behavior.
+
 ## 1.10.1 - 2026-08-12
 
 - Added `ARCH-D036`: blocker reviews now invoke the non-ASCII compatibility launcher and emit a source/staged-path launch record; returning a local path alone no longer counts as delivery.

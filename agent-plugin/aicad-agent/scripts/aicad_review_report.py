@@ -181,7 +181,7 @@ def write_review_bundle(
     html_path: Path,
     png_path: Path | None = None,
     title: str = "AICAD 审核报告",
-    review_launch: str = "auto",
+    review_launch: str = "never",
     *,
     opener: Callable[[Path], None] | None = None,
 ) -> dict[str, Any]:
@@ -207,7 +207,7 @@ def main() -> int:
     parser.add_argument("--html", required=True, type=Path)
     parser.add_argument("--png", type=Path)
     parser.add_argument("--title", default="AICAD 审核报告")
-    parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="auto")
+    parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
     args = parser.parse_args()
     report = json.loads(args.report.read_text(encoding="utf-8-sig"))
     result = write_review_bundle(report, args.html, args.png, args.title, args.review_launch)

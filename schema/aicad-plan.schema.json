@@ -101,6 +101,9 @@
           },
           {
             "$ref": "#/$defs/text"
+          },
+          {
+            "$ref": "#/$defs/dimension"
           }
         ]
       }
@@ -751,6 +754,197 @@
           "type": "string",
           "pattern": "^[A-Za-z0-9_.-]+$",
           "default": "AICAD_TEXT"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "editable": {
+          "type": "boolean",
+          "default": true
+        },
+        "depends_on": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_]+$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "dimension_constraint": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "dimension_measurement",
+                "dimension_orientation"
+              ]
+            },
+            "value": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "target",
+            "dx",
+            "dy"
+          ],
+          "properties": {
+            "kind": {
+              "const": "base_offset"
+            },
+            "target": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dx": {
+              "type": "number"
+            },
+            "dy": {
+              "type": "number"
+            }
+          }
+        }
+      ]
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "purpose",
+        "reasoning",
+        "first",
+        "second",
+        "base",
+        "dimension_kind",
+        "dimension_purpose",
+        "constraints"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+$"
+        },
+        "type": {
+          "const": "dimension"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reasoning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first": {
+          "$ref": "#/$defs/anchor"
+        },
+        "second": {
+          "$ref": "#/$defs/anchor"
+        },
+        "base": {
+          "$ref": "#/$defs/anchor"
+        },
+        "dimension_kind": {
+          "enum": [
+            "horizontal",
+            "vertical",
+            "aligned"
+          ]
+        },
+        "style_name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "default": "AICAD_ARCH"
+        },
+        "dimension_purpose": {
+          "enum": [
+            "overall",
+            "grid",
+            "partition",
+            "opening",
+            "general"
+          ]
+        },
+        "constraints": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/dimension_constraint"
+          },
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "kind": {
+                    "const": "dimension_measurement"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "kind": {
+                    "const": "dimension_orientation"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "kind": {
+                    "const": "base_offset"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        },
+        "layer": {
+          "const": "DIMENSION",
+          "default": "DIMENSION"
         },
         "role": {
           "type": "string",

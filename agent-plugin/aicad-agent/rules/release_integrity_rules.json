@@ -147,6 +147,13 @@
       "symptom": "The same capabilities response advertised AICAD protocol 3 semantic-layer transport while its AutoCAD matrix retained a protocol 2 per-entity-layer limitation.",
       "root_cause": "Top-level invariants and the host capability matrix evolved independently, and no regression compared both declarations with native-host persistence evidence.",
       "prevention": "Derive public capability surfaces from the same versioned implementation facts; reject stale-version contradictions and require every newly advertised host feature to be asserted by source tests, packaged tests and real-host import-save-reopen evidence."
+    },
+    {
+      "id": "REL-G022",
+      "name": "package_tests_and_final_integrity_scan_are_sequential",
+      "symptom": "An unchanged release package failed final verification because its test process generated __pycache__ files while the integrity scanner was reading the same directory.",
+      "root_cause": "Mutation-producing package tests and the supposedly read-only final manifest scan ran concurrently against one staging tree, so the artifact set changed during verification.",
+      "prevention": "Run package behavior tests first with PYTHONDONTWRITEBYTECODE=1, rebuild or clean the staging directory, then run the final manifest/privacy scan alone; never execute a mutating test or compiler concurrently with the final hash gate."
     }
   ]
 }

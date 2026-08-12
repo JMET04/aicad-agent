@@ -92,13 +92,14 @@ DOMAIN_RULE_PACKS: dict[str, dict[str, Any]] = {
 
 HOST_CAPABILITIES: dict[str, dict[str, Any]] = {
     "portable_2d": {
-        "supported": ["line", "circle", "arc", "ordered_dependencies", "layers", "utf8_audit", "ascii_execution"],
+        "supported": ["line", "circle", "arc", "text", "dimension", "native_dimension_dxf", "ordered_dependencies", "layers", "utf8_audit", "ascii_execution"],
         "not_supported": ["native_dwg_persistence", "associative_dimensions", "native_bim_semantics", "pcb_netlist"],
     },
     "autocad_2025": {
         "supported": [
-            "line", "circle", "arc", "text", "scr_layers", "dxf_layers",
-            "aicad_protocol_v3_semantic_layers", "native_linetype_and_lineweight",
+            "line", "circle", "arc", "text", "dimension", "scr_layers", "dxf_layers",
+            "aicad_protocol_v3_semantic_layers", "aicad_protocol_v4_native_dimensions",
+            "native_linetype_and_lineweight", "native_dimension_save_reopen",
             "aicad_xdata_save_reopen",
         ],
         "not_supported": ["native_bim_semantics", "pcb_netlist"],

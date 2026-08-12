@@ -1,0 +1,132 @@
+{
+  "schema_version": "2.0",
+  "drawing": {
+    "name": "native_dimension_fixture",
+    "domain": "architecture",
+    "units": "mm",
+    "origin": [0, 0],
+    "tolerance": 0.000001
+  },
+  "steps": [
+    {
+      "id": "L001",
+      "type": "line",
+      "purpose": "bottom wall datum",
+      "reasoning": "The fixture begins at origin and establishes the horizontal measurement datum.",
+      "start": {"ref": "origin"},
+      "construction": {"kind": "vector", "dx": 1000, "dy": 0},
+      "constraints": [{"kind": "horizontal"}, {"kind": "length", "value": 1000}],
+      "layer": "WALL"
+    },
+    {
+      "id": "L002",
+      "type": "line",
+      "purpose": "right wall datum",
+      "reasoning": "The right datum is perpendicular to the bottom datum and fixes the vertical extent.",
+      "start": {"ref": "L001.end"},
+      "construction": {"kind": "vector", "dx": 0, "dy": 800},
+      "constraints": [{"kind": "start_coincident", "target": "L001.end"}, {"kind": "vertical"}, {"kind": "length", "value": 800}],
+      "layer": "WALL"
+    },
+    {
+      "id": "L003",
+      "type": "line",
+      "purpose": "top wall datum",
+      "reasoning": "The top datum closes the horizontal span in the opposite direction.",
+      "start": {"ref": "L002.end"},
+      "construction": {"kind": "vector", "dx": -1000, "dy": 0},
+      "constraints": [{"kind": "start_coincident", "target": "L002.end"}, {"kind": "parallel", "target": "L001"}, {"kind": "length", "value": 1000}],
+      "layer": "WALL"
+    },
+    {
+      "id": "L004",
+      "type": "line",
+      "purpose": "left wall datum",
+      "reasoning": "The left datum returns to origin and completes the rectangular reference geometry.",
+      "start": {"ref": "L003.end"},
+      "construction": {"kind": "to_point", "target": {"ref": "origin"}},
+      "constraints": [{"kind": "start_coincident", "target": "L003.end"}, {"kind": "end_coincident", "target": "origin"}, {"kind": "vertical"}, {"kind": "length", "value": 800}],
+      "layer": "WALL"
+    },
+    {
+      "id": "L005",
+      "type": "line",
+      "purpose": "aligned dimension datum",
+      "reasoning": "A 3-4-5 diagonal proves that aligned dimensions preserve non-orthogonal measurement.",
+      "start": {"ref": "origin"},
+      "construction": {"kind": "vector", "dx": 300, "dy": 400},
+      "constraints": [{"kind": "length", "value": 500}, {"kind": "start_coincident", "target": "origin"}],
+      "layer": "OPENING"
+    },
+    {
+      "id": "D_OVERALL_X",
+      "type": "dimension",
+      "purpose": "overall width",
+      "reasoning": "The outermost horizontal chain locates the full building width from the bottom wall endpoints.",
+      "first": {"ref": "L001.start"},
+      "second": {"ref": "L001.end"},
+      "base": {"point": [0, -500]},
+      "dimension_kind": "horizontal",
+      "dimension_purpose": "overall",
+      "style_name": "AICAD_ARCH",
+      "constraints": [{"kind": "dimension_measurement", "value": 1000}, {"kind": "dimension_orientation", "value": 0}, {"kind": "base_offset", "target": "L001.start", "dx": 0, "dy": -500}],
+      "layer": "DIMENSION"
+    },
+    {
+      "id": "D_GRID_X",
+      "type": "dimension",
+      "purpose": "grid width",
+      "reasoning": "A separate grid-purpose chain proves that purpose is attached to the native entity rather than inferred from count.",
+      "first": {"ref": "L001.start"},
+      "second": {"ref": "L001.end"},
+      "base": {"point": [0, -800]},
+      "dimension_kind": "horizontal",
+      "dimension_purpose": "grid",
+      "style_name": "AICAD_ARCH",
+      "constraints": [{"kind": "dimension_measurement", "value": 1000}, {"kind": "dimension_orientation", "value": 0}, {"kind": "base_offset", "target": "L001.start", "dx": 0, "dy": -800}],
+      "layer": "DIMENSION"
+    },
+    {
+      "id": "D_PARTITION_Y",
+      "type": "dimension",
+      "purpose": "partition height",
+      "reasoning": "The vertical chain binds the right wall endpoints and locates a major partition extent.",
+      "first": {"ref": "L001.end"},
+      "second": {"ref": "L002.end"},
+      "base": {"point": [1400, 0]},
+      "dimension_kind": "vertical",
+      "dimension_purpose": "partition",
+      "style_name": "AICAD_ARCH",
+      "constraints": [{"kind": "dimension_measurement", "value": 800}, {"kind": "dimension_orientation", "value": 90}, {"kind": "base_offset", "target": "L001.end", "dx": 400, "dy": 0}],
+      "layer": "DIMENSION"
+    },
+    {
+      "id": "D_OPENING_X",
+      "type": "dimension",
+      "purpose": "opening width",
+      "reasoning": "The opening-purpose chain uses top datum endpoints and a dedicated annotation band.",
+      "first": {"ref": "L003.end"},
+      "second": {"ref": "L002.end"},
+      "base": {"point": [0, 1200]},
+      "dimension_kind": "horizontal",
+      "dimension_purpose": "opening",
+      "style_name": "AICAD_ARCH",
+      "constraints": [{"kind": "dimension_measurement", "value": 1000}, {"kind": "dimension_orientation", "value": 0}, {"kind": "base_offset", "target": "L003.end", "dx": 0, "dy": 400}],
+      "layer": "DIMENSION"
+    },
+    {
+      "id": "D_ALIGNED",
+      "type": "dimension",
+      "purpose": "aligned diagonal",
+      "reasoning": "The general aligned dimension proves true-length transport and signed perpendicular placement.",
+      "first": {"ref": "L005.start"},
+      "second": {"ref": "L005.end"},
+      "base": {"point": [-80, 60]},
+      "dimension_kind": "aligned",
+      "dimension_purpose": "general",
+      "style_name": "AICAD_ARCH",
+      "constraints": [{"kind": "dimension_measurement", "value": 500}, {"kind": "dimension_orientation", "value": 53.13010235415598}, {"kind": "base_offset", "target": "L005.start", "dx": -80, "dy": 60}],
+      "layer": "DIMENSION"
+    }
+  ]
+}

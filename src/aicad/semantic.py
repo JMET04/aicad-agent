@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass
 from typing import Any, Iterable
 
-from .engine import PlanError, ResolvedArc, ResolvedCircle, ResolvedLine, compile_plan
+from .engine import PlanError, ResolvedArc, ResolvedCircle, ResolvedDimension, ResolvedLine, ResolvedText, compile_plan
 from .engine3d import compile_plan3d
 
 
@@ -176,12 +176,25 @@ def _semantic_from_2d(data: dict[str, Any], domain: str) -> SemanticDocument:
         elif isinstance(entity, ResolvedCircle):
             parameters = {"center": list(entity.center), "radius": entity.radius, "diameter": entity.radius * 2.0}
             fallback_role = "feature"
-        else:
+        elif isinstance(entity, ResolvedArc):
             parameters = {
                 "center": list(entity.center), "radius": entity.radius,
                 "start_angle_deg": entity.start_angle_deg, "end_angle_deg": entity.end_angle_deg,
             }
             fallback_role = "boundary"
+        elif isinstance(entity, ResolvedText):
+            parameters = {
+                "insert": list(entity.insert), "value": entity.value,
+                "height": entity.height, "rotation_deg": entity.rotation_deg,
+            }
+            fallback_role = "annotation"
+        else:
+            parameters = {
+                "first": list(entity.first), "second": list(entity.second), "base": list(entity.base),
+                "measurement": entity.measurement, "dimension_kind": entity.dimension_kind,
+                "style_name": entity.style_name, "dimension_purpose": entity.dimension_purpose,
+            }
+            fallback_role = "annotation"
         objects.append(SemanticObject(
             entity.id, entity.type, "2d", entity.purpose, entity.reasoning, dependencies,
             tuple(entity.anchor), parameters,

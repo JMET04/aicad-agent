@@ -22,6 +22,7 @@ Available point references:
 - circle: `.center`;
 - arc: `.center`, `.start`, `.end`;
 - text: `.insert`;
+- dimension: `.first`, `.second`, `.base`, `.midpoint`;
 - global: `origin`.
 
 ## Line
@@ -56,7 +57,13 @@ Required fields: `insert`, non-empty `value`, positive `height`, and `constraint
 
 Text constraints: `position_coincident`, `position_offset`, `text_height`, and `rotation`. Unicode BMP text is escaped as ASCII `\U+XXXX` in `.aicad`, `.scr`, and `.dxf`, while the UTF-8 plan and audit retain the original string. Control characters, the record separator `|`, backslash input, and non-BMP characters fail closed.
 
-For architecture, use semantic layers such as `GRID`, `GRID_BUBBLE`, `GRID_TEXT`, `WALL`, `OPENING`, `FURNITURE`, `DIMENSION`, and `OVERHEAD`. Schema 2.0 compiles to AICAD protocol 3, which transports the actual layer; DXF, SCR, and AutoCAD resolve the same normative linetype/lineweight profile. A complete axis is one line, two tangent bubbles, and two identical centred text entities generated from one axis record.
+For architecture, use semantic layers such as `GRID`, `GRID_BUBBLE`, `GRID_TEXT`, `WALL`, `OPENING`, `FURNITURE`, `DIMENSION`, and `OVERHEAD`. Schema 2.0 compiles to AICAD protocol 3 when no native dimension is present and protocol 4 when native dimensions are present, which transports the actual layer; DXF, SCR, and AutoCAD resolve the same normative linetype/lineweight profile. A complete axis is one line, two tangent bubbles, and two identical centred text entities generated from one axis record.
+
+## Dimension
+
+Required fields: `first`, `second`, `base`, `dimension_kind`, `dimension_purpose`, and exactly three constraints. `first` and `second` must reference earlier resolved geometry; free coordinate endpoints are rejected. Use layer `DIMENSION` and a named ASCII `style_name` such as `AICAD_ARCH`.
+
+Kinds are `horizontal`, `vertical`, and `aligned`. Purposes are `overall`, `grid`, `partition`, `opening`, and `general`. Required constraints are one each of `dimension_measurement`, `dimension_orientation`, and `base_offset`. Protocol 4 preserves the entity ID, purpose, style, kind and proof through DXF/AICAD/SCR, AutoCAD creation, XData and save/reopen.
 
 ## Offset constraints
 

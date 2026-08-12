@@ -35,6 +35,13 @@ def contract(passed: bool = True) -> dict:
 
 
 class ProductionReadinessRulesTests(unittest.TestCase):
+    def test_direct_production_contract_forbids_half_finished_cad(self) -> None:
+        rules = json.loads((ROOT / "rules" / "production_readiness_rules.json").read_text(encoding="utf-8"))
+        self.assertIn("PROD-G010", {row["id"] for row in rules["rules"]})
+        self.assertEqual(rules["deliveryDisposition"]["directProductionRequestedAndAnyGateFails"], "blocker_report_only")
+        self.assertEqual(rules["artifactExposureContract"]["directProductionRequest"], "all_non_compensatory_gates_or_zero_cad_artifacts")
+        self.assertTrue(rules["artifactExposureContract"]["reviewPreviewCannotSatisfyProduction"])
+
     def test_all_gates_create_release_candidate_but_not_auto_acceptance(self) -> None:
         result = QA.evaluate(contract())
         self.assertEqual(result["status"], "pass")

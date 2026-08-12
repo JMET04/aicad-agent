@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 from pathlib import Path
 import shutil
 import subprocess
 import sys
+import time
 from typing import Callable
 
 from .engine import PlanError
@@ -13,6 +15,7 @@ from .engine import PlanError
 
 REVIEW_LAUNCH_MODES = ("auto", "always", "never")
 _TRUE = {"1", "true", "yes", "on"}
+_DEFAULT_AUTO_DEDUP_SECONDS = 300.0
 
 
 def _environment_mode(requested: str) -> str:
@@ -42,12 +45,7 @@ def _system_open(path: Path) -> None:
     subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
-def _needs_ascii_stage(path: Path) -> bool:
-    forced = os.environ.get("AICAD_REVIEW_FORCE_STAGE", "").strip().lower() in _TRUE
-    return forced or (os.name == "nt" and any(ord(character) > 127 for character in str(path)))
-
-
-def _stage_review_for_compatibility(path: Path) -> Path:
+def _review_stage_root() -> Path:
     configured = os.environ.get("AICAD_REVIEW_STAGE_DIR", "").strip()
     if configured:
         root = Path(configured).expanduser()
@@ -55,13 +53,68 @@ def _stage_review_for_compatibility(path: Path) -> Path:
         system_drive = Path(os.environ.get("SystemDrive", "C:"))
         public = Path(os.environ.get("PUBLIC") or (system_drive / "Users" / "Public"))
         root = public / "AICADReview"
+    return root.resolve()
+
+
+def _stage_review_for_compatibility(path: Path) -> Path:
+    root = _review_stage_root()
     source_bytes = path.read_bytes()
     digest = hashlib.sha256(source_bytes).hexdigest()[:16]
     destination = root / digest / "review.html"
     destination.parent.mkdir(parents=True, exist_ok=True)
-    if not destination.is_file() or destination.read_bytes() != source_bytes:
+    if path.resolve() != destination.resolve() and (
+        not destination.is_file() or destination.read_bytes() != source_bytes
+    ):
         shutil.copy2(path, destination)
     return destination.resolve()
+
+
+def _dedup_seconds() -> float:
+    raw = os.environ.get("AICAD_REVIEW_AUTO_DEDUP_SECONDS", "").strip()
+    if not raw:
+        return _DEFAULT_AUTO_DEDUP_SECONDS
+    try:
+        value = float(raw)
+    except ValueError as exc:
+        raise PlanError("AICAD_REVIEW_AUTO_DEDUP_SECONDS must be a non-negative number") from exc
+    if value < 0:
+        raise PlanError("AICAD_REVIEW_AUTO_DEDUP_SECONDS must be a non-negative number")
+    return value
+
+
+def _launch_state_path() -> Path:
+    configured = os.environ.get("AICAD_REVIEW_LAUNCH_STATE", "").strip()
+    return Path(configured).expanduser().resolve() if configured else _review_stage_root() / "launch-state.json"
+
+
+def _load_launch_state(path: Path) -> dict[str, object]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, dict) else {}
+
+
+def _write_launch_state(path: Path, digest: str, review_html: Path, mode: str) -> bool:
+    payload = {
+        "schema_version": "1.0",
+        "digest": digest,
+        "review_html": str(review_html),
+        "mode": mode,
+        "launched_at_epoch": time.time(),
+    }
+    temporary = path.with_name(path.name + ".tmp")
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        os.replace(temporary, path)
+    except OSError:
+        try:
+            temporary.unlink(missing_ok=True)
+        except OSError:
+            pass
+        return False
+    return True
 
 
 def launch_review(
@@ -96,38 +149,47 @@ def launch_review(
             "staged_for_compatibility": False,
         }
 
-    launch_path = _stage_review_for_compatibility(path) if _needs_ascii_stage(path) else path
+    # A browser must never receive an ephemeral build/test path. Persist every
+    # launched report, including an ASCII path, before handing it to the GUI.
+    launch_path = _stage_review_for_compatibility(path)
+    digest = hashlib.sha256(launch_path.read_bytes()).hexdigest()
+    state_path = _launch_state_path()
+    if resolved_mode == "auto":
+        state = _load_launch_state(state_path)
+        launched_at = state.get("launched_at_epoch")
+        if (
+            state.get("digest") == digest
+            and isinstance(launched_at, (int, float))
+            and time.time() - float(launched_at) <= _dedup_seconds()
+            and launch_path.is_file()
+        ):
+            return {
+                "status": "skipped",
+                "mode": resolved_mode,
+                "reason": "duplicate_auto_launch",
+                "review_html": str(launch_path),
+                "source_review_html": str(path),
+                "staged_for_compatibility": launch_path != path,
+                "staged_for_persistence": launch_path != path,
+                "launch_state": str(state_path),
+            }
     open_review = opener or _system_open
     try:
         open_review(launch_path)
-    except OSError as first_error:
-        if launch_path == path:
-            try:
-                launch_path = _stage_review_for_compatibility(path)
-                open_review(launch_path)
-            except OSError as second_error:
-                message = f"direct launch failed: {first_error}; compatibility launch failed: {second_error}"
-                if resolved_mode == "always":
-                    raise PlanError(f"review UI launch failed: {message}") from second_error
-                return {
-                    "status": "failed",
-                    "mode": resolved_mode,
-                    "reason": message,
-                    "review_html": str(launch_path),
-                    "source_review_html": str(path),
-                    "staged_for_compatibility": True,
-                }
-        else:
-            if resolved_mode == "always":
-                raise PlanError(f"review UI launch failed: {first_error}") from first_error
-            return {
-                "status": "failed",
-                "mode": resolved_mode,
-                "reason": str(first_error),
-                "review_html": str(launch_path),
-                "source_review_html": str(path),
-                "staged_for_compatibility": True,
-            }
+    except OSError as error:
+        if resolved_mode == "always":
+            raise PlanError(f"review UI launch failed: {error}") from error
+        return {
+            "status": "failed",
+            "mode": resolved_mode,
+            "reason": str(error),
+            "review_html": str(launch_path),
+            "source_review_html": str(path),
+            "staged_for_compatibility": launch_path != path,
+            "staged_for_persistence": launch_path != path,
+            "launch_state": str(state_path),
+        }
+    state_persisted = _write_launch_state(state_path, digest, launch_path, resolved_mode)
     return {
         "status": "launched",
         "mode": resolved_mode,
@@ -135,4 +197,7 @@ def launch_review(
         "review_html": str(launch_path),
         "source_review_html": str(path),
         "staged_for_compatibility": launch_path != path,
+        "staged_for_persistence": launch_path != path,
+        "launch_state": str(state_path),
+        "launch_state_persisted": state_persisted,
     }

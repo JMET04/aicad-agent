@@ -1,6 +1,6 @@
 {
   "schema": "aicad_production_readiness_rules_v2",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "status": "candidate",
   "policy": "non_compensatory_fail_closed",
   "rules": [
@@ -66,6 +66,13 @@
       "requirement": "Production gates shall be read from real hash-fixed evidence files; machine reports shall be evaluated through declared JSON Pointers, native-host reports and professional releases shall bind the exact candidate artifact-set SHA-256, and passed=true self-reporting is forbidden.",
       "failureCause": "The first production contract accepted a Boolean and arbitrary evidence string, so a caller could claim that axes, host reopen or professional review passed without supplying the report that proved it.",
       "prevention": "Use aicad_production_readiness_contract_v2 and aicad_production_readiness_qa_v2.py; verify every file path and SHA-256, read the expected machine value, and expose zero artifacts on any evidence or artifact-set mismatch."
+    },
+    {
+      "id": "PROD-G010",
+      "name": "no_half_finished_artifact_delivery",
+      "requirement": "When the user requests directly producible output, every non-compensatory geometry, drafting, sheet, authority, native-host and authorized-release gate shall pass before any CAD artifact is exposed; a review drawing, attractive preview or high partial score is never a substitute.",
+      "failureCause": "An incomplete floor-plan candidate was opened as if additional visual detail could make it a construction deliverable, shifting repeated correction work to the user.",
+      "prevention": "Resolve the requested delivery class before generation; if any production gate is missing, stop before CAD compilation and expose only a readable blocker bundle listing exact missing evidence, root causes and disabled prevention-rule candidates."
     }
   ],
   "architectureProductionProfile": {
@@ -118,7 +125,9 @@
     "allRequiredGatesPass": "production_release_candidate",
     "anyRequiredGateFailsAndStrictProductionOnly": "blocker_report_only",
     "reviewOrCoordinationRequest": "review_candidate",
-    "automaticAcceptanceAllowed": false
+    "automaticAcceptanceAllowed": false,
+    "directProductionRequestedAndAnyGateFails": "blocker_report_only",
+    "directProductionRequestedAndAllGatesPass": "production_release_candidate"
   },
   "safetyLocks": {
     "reviewOnly": true,
@@ -135,5 +144,16 @@
     "professionalReleaseBinding": "artifact_set_sha256",
     "failedDisposition": "blocker_report_only",
     "failedArtifactsExposed": 0
+  },
+  "artifactExposureContract": {
+    "directProductionRequest": "all_non_compensatory_gates_or_zero_cad_artifacts",
+    "reviewPreviewCannotSatisfyProduction": true,
+    "partialScoreCannotOverrideFailure": true,
+    "blockerBundleRequiredOnFailure": [
+      "json",
+      "utf8_html",
+      "opaque_png",
+      "launch_json"
+    ]
   }
 }

@@ -1,14 +1,16 @@
-# Automatic review launch
+# Review launch policy
 
-Every interactive `generate`, `compile`, `build3d`, and `multiview` command now creates a review HTML artifact and opens it after the validated artifacts have been written. This is an inspection boundary, not an acceptance action.
+Every `generate`, `compile`, `build3d`, and `multiview` command creates a local review HTML artifact. Window opening is a separate inspection action, not acceptance.
 
 ## Modes
 
-- `auto` (default for CLI and Agent tools): open on a desktop host; skip in CI, `AICAD_NO_GUI=1`, or a host without a graphical display.
-- `always`: require launch and fail explicitly when the host cannot open the page.
-- `never`: still generate the review artifact but do not open a window.
+- `never` (default for CLI and Agent tools): generate the review artifact and launch record without opening another browser tab.
+- `auto`: open on a desktop host, but suppress a repeated launch of identical bytes inside the bounded deduplication window; skip in CI, `AICAD_NO_GUI=1`, or a host without a graphical display.
+- `always`: explicit user-requested reopen; require launch and allow a new tab even when the same bytes were opened recently.
 
-Use `--review-launch auto|always|never` in the CLI or the `review_launch` property in Agent tool calls. `AICAD_REVIEW_LAUNCH` may centrally override the requested mode.
+Use `--review-launch auto|always|never` in the CLI or the `review_launch` property in Agent tool calls. `AICAD_REVIEW_LAUNCH` may centrally override the requested mode. `AICAD_REVIEW_AUTO_DEDUP_SECONDS` controls the `auto` duplicate window and defaults to 300 seconds.
+
+Before any GUI launch, the launcher copies the HTML to a persistent content-addressed path below `%PUBLIC%\AICADReview` on Windows (or `AICAD_REVIEW_STAGE_DIR`). This applies to ASCII temporary paths as well as Chinese paths, so deletion of a build/test directory cannot invalidate an open browser page. A launch-state JSON record makes identical `auto` calls idempotent.
 
 The launcher accepts only an existing local `.html` file. It never opens a remote URL and never marks the drawing accepted. Safety locks remain `reviewOnly=true`, `accepted=false`, `ruleEnabled=false`, and `packagingGated=true`.
 

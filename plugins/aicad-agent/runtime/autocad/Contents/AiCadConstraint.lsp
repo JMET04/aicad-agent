@@ -1,4 +1,4 @@
-; AI CAD Constraint Drawer 1.5.0
+; AI CAD Constraint Drawer 1.6.0
 ; Intentionally ASCII-only. UTF-8 is used only for user request/result files.
 ; Commands: AICAD_AI, AICAD_DRAW, AICAD_VALIDATE, AICAD_INFO, AICAD_SETUP, AICAD_DOCTOR
 
@@ -6,7 +6,9 @@
 
 (setq aicad:*layer* "AICAD_GEOMETRY")
 (setq aicad:*regapp* "AICAD")
-(setq aicad:*version* "1.5.0")
+(setq aicad:*version* "1.6.0")
+(setq aicad:*last-error* nil)
+(setq aicad:*dimstyles-ready* '())
 
 (defun aicad:split (text delimiter / position result)
   (setq result '())
@@ -61,36 +63,40 @@
     (setq index (1+ index)))
   valid)
 
+(defun aicad:protocol-layered-p (version)
+  (or (= version "3") (= version "4"))
+)
+
 (defun aicad:parse-point4 (parts first / a b c d)
   (setq a (aicad:number (nth first parts)) b (aicad:number (nth (1+ first) parts))
         c (aicad:number (nth (+ first 2) parts)) d (aicad:number (nth (+ first 3) parts)))
   (if (and a b c d) (list (list a b) (list c d)) nil)
 )
 
-(defun aicad:parse-record (parts version / kind id layer offset values cx cy radius start-angle end-angle height rotation text-value proof)
+(defun aicad:parse-record (parts version / kind id layer offset values cx cy radius start-angle end-angle height rotation text-value proof dim-kind base-x base-y style-name dimension-purpose)
   (setq kind (car parts) id (nth 1 parts)
-        layer (if (= version "3") (nth 2 parts) aicad:*layer*)
-        offset (if (= version "3") 1 0))
+        layer (if (aicad:protocol-layered-p version) (nth 2 parts) aicad:*layer*)
+        offset (if (aicad:protocol-layered-p version) 1 0))
   (cond
     ((and (= kind "LINE")
-          (>= (length parts) (cond ((= version "3") 13) ((= version "2") 12) (T 8)))
+          (>= (length parts) (cond ((aicad:protocol-layered-p version) 13) ((= version "2") 12) (T 8)))
           (aicad:id-valid-p id) (aicad:layer-valid-p layer)
           (setq values (aicad:parse-point4 parts (+ 2 offset))))
-      (if (or (= version "2") (= version "3"))
+      (if (or (= version "2") (aicad:protocol-layered-p version))
         (setq proof (aicad:parse-point4 parts (+ 8 offset)))
         (setq proof nil))
       (if (or (= version "1") proof)
         (list "LINE" id (car values) (cadr values) (if proof (car proof) nil) (if proof (cadr proof) nil) layer) nil))
-    ((and (or (= version "2") (= version "3")) (= kind "CIRCLE")
-          (>= (length parts) (if (= version "3") 12 11))
+    ((and (or (= version "2") (aicad:protocol-layered-p version)) (= kind "CIRCLE")
+          (>= (length parts) (if (aicad:protocol-layered-p version) 12 11))
           (aicad:id-valid-p id) (aicad:layer-valid-p layer)
           (setq cx (aicad:number (nth (+ 2 offset) parts)))
           (setq cy (aicad:number (nth (+ 3 offset) parts)))
           (setq radius (aicad:number (nth (+ 4 offset) parts))) (> radius 0.0)
           (setq proof (aicad:parse-point4 parts (+ 7 offset))))
       (list "CIRCLE" id (list cx cy) radius (car proof) (cadr proof) layer))
-    ((and (or (= version "2") (= version "3")) (= kind "ARC")
-          (>= (length parts) (if (= version "3") 14 13))
+    ((and (or (= version "2") (aicad:protocol-layered-p version)) (= kind "ARC")
+          (>= (length parts) (if (aicad:protocol-layered-p version) 14 13))
           (aicad:id-valid-p id) (aicad:layer-valid-p layer)
           (setq cx (aicad:number (nth (+ 2 offset) parts)))
           (setq cy (aicad:number (nth (+ 3 offset) parts)))
@@ -100,7 +106,7 @@
           (not (equal (rem (- end-angle start-angle) 360.0) 0.0 0.000000001))
           (setq proof (aicad:parse-point4 parts (+ 9 offset))))
       (list "ARC" id (list cx cy) radius start-angle end-angle (car proof) (cadr proof) layer))
-    ((and (= version "3") (= kind "TEXT") (>= (length parts) 14)
+    ((and (aicad:protocol-layered-p version) (= kind "TEXT") (>= (length parts) 14)
           (aicad:id-valid-p id) (aicad:layer-valid-p layer)
           (setq cx (aicad:number (nth 3 parts))) (setq cy (aicad:number (nth 4 parts)))
           (setq height (aicad:number (nth 5 parts))) (> height 0.0)
@@ -108,6 +114,17 @@
           (setq text-value (nth 7 parts)) (> (strlen text-value) 0)
           (setq proof (aicad:parse-point4 parts 10)))
       (list "TEXT" id (list cx cy) height rotation text-value (car proof) (cadr proof) layer))
+    ((and (= version "4") (= kind "DIMENSION") (>= (length parts) 18)
+          (aicad:id-valid-p id) (= (strcase layer) "DIMENSION")
+          (setq dim-kind (nth 3 parts)) (member dim-kind '("horizontal" "vertical" "aligned"))
+          (setq values (aicad:parse-point4 parts 4))
+          (not (aicad:point-close-p (car values) (cadr values) 0.000000001))
+          (setq base-x (aicad:number (nth 8 parts))) (setq base-y (aicad:number (nth 9 parts)))
+          (setq style-name (nth 10 parts)) (aicad:layer-valid-p style-name)
+          (setq dimension-purpose (nth 11 parts))
+          (member dimension-purpose '("overall" "grid" "partition" "opening" "general"))
+          (setq proof (aicad:parse-point4 parts 14)))
+      (list "DIMENSION" id (list base-x base-y) (car values) (cadr values) dim-kind style-name dimension-purpose (car proof) (cadr proof) layer))
     (T nil)))
 
 (defun aicad:anchor (record) (nth 2 record))
@@ -116,19 +133,22 @@
   (cond ((= (car record) "LINE") (nth 4 record))
         ((= (car record) "CIRCLE") (nth 4 record))
         ((= (car record) "ARC") (nth 6 record))
-        ((= (car record) "TEXT") (nth 6 record))))
+        ((= (car record) "TEXT") (nth 6 record))
+        ((= (car record) "DIMENSION") (nth 8 record))))
 
 (defun aicad:proof-offset (record)
   (cond ((= (car record) "LINE") (nth 5 record))
         ((= (car record) "CIRCLE") (nth 5 record))
         ((= (car record) "ARC") (nth 7 record))
-        ((= (car record) "TEXT") (nth 7 record))))
+        ((= (car record) "TEXT") (nth 7 record))
+        ((= (car record) "DIMENSION") (nth 9 record))))
 
 (defun aicad:record-layer (record)
   (cond ((= (car record) "LINE") (nth 6 record))
         ((= (car record) "CIRCLE") (nth 6 record))
         ((= (car record) "ARC") (nth 8 record))
-        ((= (car record) "TEXT") (nth 8 record))))
+        ((= (car record) "TEXT") (nth 8 record))
+        ((= (car record) "DIMENSION") (nth 10 record))))
 
 (defun aicad:proof-valid-p (record known-points tolerance / base offset expected)
   (setq base (aicad:proof-base record) offset (aicad:proof-offset record))
@@ -142,7 +162,7 @@
   (list (+ (car center) (* radius (cos radians))) (+ (cadr center) (* radius (sin radians))))
 )
 
-(defun aicad:record-points (record / kind center radius)
+(defun aicad:record-points (record / kind center radius first second)
   (setq kind (car record))
   (cond
     ((= kind "LINE")
@@ -155,6 +175,11 @@
       (list center (aicad:arc-point center radius (nth 4 record))
                    (aicad:arc-point center radius (nth 5 record))))
     ((= kind "TEXT") (list (nth 2 record)))
+    ((= kind "DIMENSION")
+      (setq first (nth 3 record) second (nth 4 record))
+      (list first second (nth 2 record)
+            (list (/ (+ (car first) (car second)) 2.0)
+                  (/ (+ (cadr first) (cadr second)) 2.0))))
   )
 )
 
@@ -182,6 +207,18 @@
                    (equal (nth 3 candidate) (nth 3 current) tolerance)
                    (equal (nth 4 candidate) (nth 4 current) tolerance)
                    (= (nth 5 candidate) (nth 5 current))) (setq found T)))
+        ((= kind "DIMENSION")
+          (if (and
+                (or
+                  (and (aicad:point-close-p (nth 3 candidate) (nth 3 current) tolerance)
+                       (aicad:point-close-p (nth 4 candidate) (nth 4 current) tolerance))
+                  (and (aicad:point-close-p (nth 3 candidate) (nth 4 current) tolerance)
+                       (aicad:point-close-p (nth 4 candidate) (nth 3 current) tolerance)))
+                (aicad:point-close-p (nth 2 candidate) (nth 2 current) tolerance)
+                (= (nth 5 candidate) (nth 5 current))
+                (= (nth 6 candidate) (nth 6 current))
+                (= (nth 7 candidate) (nth 7 current)))
+            (setq found T)))
       )
     )
     (setq records (cdr records))
@@ -198,7 +235,7 @@
       (setq header (read-line stream) line-number 1)
       (if header (setq fields (aicad:split header "|")))
       (if (not (and fields (>= (length fields) 5) (= (nth 0 fields) "AICAD")
-                    (or (= (nth 1 fields) "1") (= (nth 1 fields) "2") (= (nth 1 fields) "3"))))
+                    (or (= (nth 1 fields) "1") (= (nth 1 fields) "2") (= (nth 1 fields) "3") (= (nth 1 fields) "4"))))
         (setq error-message "Invalid AICAD header or unsupported version.")
         (progn
           (setq version (nth 1 fields) tolerance (aicad:number (nth 3 fields)) source-hash (nth 4 fields))
@@ -217,7 +254,7 @@
             (setq error-message (strcat "Zero-length entity " (nth 1 parsed) ".")))
           ((and (= version "1") records (not (aicad:known-point-p (aicad:anchor parsed) known-points tolerance)))
             (setq error-message (strcat "Disconnected start point on " (nth 1 parsed) ".")))
-          ((and (or (= version "2") (= version "3")) (not (aicad:proof-valid-p parsed known-points tolerance)))
+          ((and (or (= version "2") (= version "3") (= version "4")) (not (aicad:proof-valid-p parsed known-points tolerance)))
             (setq error-message (strcat "Invalid mathematical anchor proof on " (nth 1 parsed) ".")))
           ((aicad:duplicate-p parsed records tolerance)
             (setq error-message (strcat "Duplicate geometry on " (nth 1 parsed) ".")))
@@ -288,11 +325,79 @@
   (entmod data)
   (regapp aicad:*regapp*))
 
-(defun aicad:xdata (record index)
-  (list -3 (list aicad:*regapp* (cons 1000 (nth 1 record)) (cons 1000 (car record)) (cons 1070 index)))
+(defun aicad:xdata (record index / payload)
+  (setq payload (list aicad:*regapp* (cons 1000 (nth 1 record)) (cons 1000 (car record)) (cons 1070 index)))
+  (if (= (car record) "DIMENSION")
+    (setq payload (append payload
+      (list (cons 1000 (strcat "DIM_PURPOSE:" (nth 7 record)))
+            (cons 1000 (strcat "DIM_STYLE:" (nth 6 record)))
+            (cons 1000 (strcat "DIM_KIND:" (nth 5 record)))))))
+  (list -3 payload)
 )
 
-(defun aicad:create-entity (record index / kind center layer insert)
+(defun aicad:attach-xdata (entity record index / data result)
+  (setq data (entget entity) result (entmod (append data (list (aicad:xdata record index)))))
+  (if result (progn (entupd entity) entity) nil)
+)
+
+(defun aicad:set-dimension-vars ()
+  (setvar "DIMTXT" 280.0) (setvar "DIMASZ" 180.0) (setvar "DIMTSZ" 150.0)
+  (setvar "DIMEXO" 100.0) (setvar "DIMEXE" 150.0) (setvar "DIMGAP" 90.0)
+  (setvar "DIMTAD" 1) (setvar "DIMDEC" 0) (setvar "DIMZIN" 8) (setvar "DIMLUNIT" 2)
+)
+
+(defun aicad:ensure-dimstyle (name / result ok)
+  ; accoreconsole.exe intentionally exposes no Application COM object. Use the
+  ; native command path so desktop AutoCAD and Core Console share one runtime.
+  (setq ok T)
+  (if (not (member name aicad:*dimstyles-ready*))
+    (progn
+      (if (tblsearch "DIMSTYLE" name)
+        (progn
+          (setq result (vl-catch-all-apply 'vl-cmdf (list "_.-DIMSTYLE" "_Restore" name)))
+          (if (vl-catch-all-error-p result)
+            (progn (setq aicad:*last-error* (vl-catch-all-error-message result)) (setq ok nil)))))
+      (if ok
+        (progn
+          (aicad:set-dimension-vars)
+          (setq result (if (tblsearch "DIMSTYLE" name)
+            (vl-catch-all-apply 'vl-cmdf (list "_.-DIMSTYLE" "_Save" name "_Yes"))
+            (vl-catch-all-apply 'vl-cmdf (list "_.-DIMSTYLE" "_Save" name))))
+          (if (vl-catch-all-error-p result)
+            (progn (setq aicad:*last-error* (vl-catch-all-error-message result)) (setq ok nil)))))
+      (if (and ok (not (= (getvar "DIMSTYLE") name)))
+        (progn
+          (setq result (vl-catch-all-apply 'vl-cmdf (list "_.-DIMSTYLE" "_Restore" name)))
+          (if (vl-catch-all-error-p result)
+            (progn (setq aicad:*last-error* (vl-catch-all-error-message result)) (setq ok nil)))))
+      (if ok (setq aicad:*dimstyles-ready* (cons name aicad:*dimstyles-ready*)))))
+  (if ok name nil)
+)
+
+(defun aicad:create-dimension (record index / old-layer before entity result command-name)
+  (if (not (aicad:ensure-dimstyle (nth 6 record)))
+    nil
+    (progn
+      (setq old-layer (getvar "CLAYER")
+            before (entlast)
+            command-name (if (= (nth 5 record) "aligned") "_.DIMALIGNED" "_.DIMLINEAR"))
+      (setvar "CLAYER" (nth 10 record))
+      (setq result (vl-catch-all-apply 'vl-cmdf
+        (list command-name
+              (append (nth 3 record) (list 0.0))
+              (append (nth 4 record) (list 0.0))
+              (append (nth 2 record) (list 0.0)))))
+      (setvar "CLAYER" old-layer)
+      (if (vl-catch-all-error-p result)
+        (progn (setq aicad:*last-error* (vl-catch-all-error-message result)) nil)
+        (progn
+          (setq entity (entlast))
+          (if (or (not entity) (equal entity before) (not (= (cdr (assoc 0 (entget entity))) "DIMENSION")))
+            (progn (setq aicad:*last-error* "Native dimension command did not create a DIMENSION entity") nil)
+            (aicad:attach-xdata entity record index))))))
+)
+
+(defun aicad:create-entity (record index / kind center layer insert result)
   (setq kind (car record) layer (aicad:record-layer record))
   (aicad:ensure-layer layer)
   (cond
@@ -315,7 +420,12 @@
                       (cons 10 insert) (cons 40 (nth 3 record)) (cons 1 (nth 5 record))
                       (cons 50 (* (nth 4 record) (/ pi 180.0))) '(7 . "Standard")
                       (cons 11 insert) '(72 . 1) '(73 . 2)
-                      (aicad:xdata record index))))))
+                      (aicad:xdata record index))))
+    ((= kind "DIMENSION")
+      (setq result (vl-catch-all-apply 'aicad:create-dimension (list record index)))
+      (if (vl-catch-all-error-p result)
+        (progn (setq aicad:*last-error* (vl-catch-all-error-message result)) nil)
+        result))))
 
 (defun aicad:choose-plan () (getfiled "Select compiled AI CAD plan" "" "aicad" 0))
 (defun aicad:validate-file (filename) (aicad:read-plan filename))
@@ -325,7 +435,7 @@
   (if (not (car result))
     (list nil (cadr result))
     (progn
-      (setq records (car result) created '() index 1 failure nil)
+      (setq records (car result) created '() index 1 failure nil aicad:*last-error* nil aicad:*dimstyles-ready* '())
       (regapp aicad:*regapp*)
       (while (and records (not failure))
         (setq entity (aicad:create-entity (car records) index))
@@ -333,7 +443,11 @@
           (setq created (cons entity created) records (cdr records) index (1+ index))
           (setq failure T)))
       (if failure
-        (progn (foreach entity created (if (entget entity) (entdel entity))) (list nil "Entity creation failed; batch rolled back."))
+        (progn
+          (foreach entity created (if (entget entity) (entdel entity)))
+          (list nil (strcat "Entity creation failed on " (nth 1 (car records))
+                            (if aicad:*last-error* (strcat ": " aicad:*last-error*) "")
+                            "; batch rolled back.")))
         (list T (length created) (reverse created)))
     )
   )

@@ -18,9 +18,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from aicad.cli import main
-from aicad.engine import PlanError, ResolvedArc, ResolvedCircle, ResolvedText, compile_plan
+from aicad.engine import PlanError, ResolvedArc, ResolvedCircle, ResolvedDimension, ResolvedText, compile_plan
 from aicad.exporters import _layer_style, export_all
 from aicad.natural import UnsupportedRequest, draft_to_plan, offline_plan
+from aicad.semantic import semantic_from_plan
+from aicad.viewmap import build_multiview_review
 from aicad import provider as provider_module
 from aicad.settings import DEFAULT_CONFIG
 
@@ -182,6 +184,64 @@ class EngineTests(unittest.TestCase):
             manifest = json.loads((output / "axis.manifest.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["entity_types"]["text"], 1)
 
+    def test_native_dimension_compiles_through_protocol_dxf_semantic_and_review(self) -> None:
+        data = json.loads((ROOT / "examples" / "architecture-dimensions.plan.json").read_text(encoding="utf-8"))
+        plan = compile_plan(data)
+        self.assertEqual(len(plan.dimensions), 5)
+        self.assertTrue(all(isinstance(entity, ResolvedDimension) for entity in plan.dimensions))
+        self.assertEqual([entity.dimension_purpose for entity in plan.dimensions], ["overall", "grid", "partition", "opening", "general"])
+        self.assertEqual([entity.measurement for entity in plan.dimensions], [1000.0, 1000.0, 800.0, 1000.0, 500.0])
+        self.assertEqual(plan.dimensions[-1].orientation_deg, 53.13010235415598)
+
+        semantic = semantic_from_plan(data, "2d", "architecture")
+        dimension_objects = [entity for entity in semantic.objects if entity.kind == "dimension"]
+        self.assertEqual(len(dimension_objects), 5)
+        self.assertEqual(dimension_objects[0].parameters["style_name"], "AICAD_ARCH")
+
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            export_all(plan, output, "native-dimensions")
+            execution = (output / "native-dimensions.aicad").read_text(encoding="ascii")
+            self.assertTrue(execution.startswith("AICAD|4|"))
+            records = [row.split("|") for row in execution.splitlines() if row.startswith("DIMENSION|")]
+            self.assertEqual(len(records), 5)
+            self.assertTrue(all(len(row) == 18 for row in records))
+            self.assertEqual(records[0][3:12], ["horizontal", "0", "0", "1000", "0", "0", "-500", "AICAD_ARCH", "overall"])
+
+            document = ezdxf.readfile(output / "native-dimensions.dxf")
+            dimensions = list(document.modelspace().query('DIMENSION[layer=="DIMENSION"]'))
+            self.assertEqual(len(dimensions), 5)
+            self.assertEqual([round(entity.get_measurement(), 6) for entity in dimensions], [1000.0, 1000.0, 800.0, 1000.0, 500.0])
+            style = document.dimstyles.get("AICAD_ARCH")
+            self.assertEqual(style.dxf.dimtxt, 280.0)
+            self.assertEqual(style.dxf.dimtsz, 150.0)
+            xdata = [[value for _, value in entity.get_xdata("AICAD")] for entity in dimensions]
+            self.assertEqual([row[0] for row in xdata], ["D_OVERALL_X", "D_GRID_X", "D_PARTITION_Y", "D_OPENING_X", "D_ALIGNED"])
+            self.assertEqual(xdata[0][3:], ["DIM_PURPOSE:overall", "DIM_STYLE:AICAD_ARCH", "DIM_KIND:horizontal"])
+            script = (output / "native-dimensions.scr").read_text(encoding="ascii")
+            self.assertEqual(script.count("_.DIMLINEAR\n"), 4)
+            self.assertEqual(script.count("_.DIMALIGNED\n"), 1)
+            manifest = json.loads((output / "native-dimensions.manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["entity_types"]["dimension"], 5)
+            self.assertIn("D_OVERALL_X", (output / "native-dimensions.audit.md").read_text(encoding="utf-8"))
+
+            review = build_multiview_review(data, "2d", "architecture", output, "native-dimensions")
+            self.assertEqual(review["status"], "pass")
+            package = json.loads(Path(review["artifacts"]["view_package"]).read_text(encoding="utf-8"))
+            dimension_views = [entity for entity in package["views"][0]["entities"] if entity["source_object_id"].startswith("D_")]
+            self.assertEqual(len(dimension_views), 15)
+
+    def test_native_dimension_rejects_false_measurement_and_unbound_points(self) -> None:
+        data = json.loads((ROOT / "examples" / "architecture-dimensions.plan.json").read_text(encoding="utf-8"))
+        false_measurement = copy.deepcopy(data)
+        false_measurement["steps"][5]["constraints"][0]["value"] = 999
+        with self.assertRaisesRegex(PlanError, "measurement is 1000"):
+            compile_plan(false_measurement)
+        unbound = copy.deepcopy(data)
+        unbound["steps"][5]["first"] = {"point": [0, 0]}
+        with self.assertRaisesRegex(PlanError, "must reference earlier resolved geometry"):
+            compile_plan(unbound)
+
     def test_natural_cli_writes_plan_execution_and_result_contract(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -198,7 +258,7 @@ class EngineTests(unittest.TestCase):
 
     def test_bundle_manifest_lisp_and_installer_are_production_version(self) -> None:
         manifest = ET.parse(ROOT / "plugin" / "AiCadConstraint.bundle" / "PackageContents.xml")
-        self.assertEqual(manifest.getroot().attrib["AppVersion"], "1.5.0")
+        self.assertEqual(manifest.getroot().attrib["AppVersion"], "1.6.0")
         source = (ROOT / "plugin" / "AiCadConstraint.bundle" / "Contents" / "AiCadConstraint.lsp").read_bytes()
         text = source.decode("ascii")
         depth, in_string, escaped, in_comment = 0, False, False, False
@@ -222,11 +282,19 @@ class EngineTests(unittest.TestCase):
         self.assertIn("(defun c:AICAD_AI", text)
         self.assertIn("(defun c:AICAD_DOCTOR", text)
         self.assertIn('(= version "3")', text)
+        self.assertIn('(= version "4")', text)
         self.assertIn('(= kind "TEXT")', text)
+        self.assertIn('(= kind "DIMENSION")', text)
+        self.assertIn('"_.DIMLINEAR"', text)
+        self.assertIn('"_.DIMALIGNED"', text)
+        self.assertIn('"_.-DIMSTYLE"', text)
+        self.assertNotIn('(vla-AddDimRotated', text)
+        self.assertNotIn('(vla-AddDimAligned', text)
+        self.assertIn('DIM_PURPOSE:', text)
         self.assertIn('(cons 8 layer)', text)
         self.assertIn('(defun aicad:layer-style', text)
         self.assertIn('(cons 370 (nth 1 style))', text)
-        self.assertIn('(setq aicad:*version* "1.5.0")', text)
+        self.assertIn('(setq aicad:*version* "1.6.0")', text)
         self.assertNotIn('(command "_.UNDO"', text)
         installer = (ROOT / "scripts" / "install.ps1").read_text(encoding="utf-8")
         self.assertIn("AICAD_RUNNER", installer)

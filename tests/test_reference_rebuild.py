@@ -108,6 +108,11 @@ class ReferenceRebuildTests(unittest.TestCase):
         self.assertFalse(result["checks"]["source_text_encoding_valid"])
         self.assertTrue(result["text_encoding_issues"])
 
+    def test_native_dimension_plan_fails_closed_in_legacy_reference_renderer(self) -> None:
+        native = json.loads((ROOT / "examples" / "architecture-dimensions.plan.json").read_text(encoding="utf-8"))
+        with self.assertRaisesRegex(PlanError, "native TEXT/DIMENSION"):
+            validate_reference_rebuild(native, self.spec)
+
     def test_build_writes_ascii_safe_annotated_dxf_and_native_svg_text(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             result = build_reference_reconstruction(self.plan_data, self.spec, Path(directory), "plate")

@@ -220,6 +220,12 @@ def normalize_resolved_entities(compiled: Any) -> dict[str, dict[str, Any]]:
             row.update({"center": list(entity.center), "radius": float(entity.radius), "startAngleDeg": float(entity.start_angle_deg), "endAngleDeg": float(entity.end_angle_deg)})
         elif entity.type == "text":
             row.update({"insert": list(entity.insert), "text": entity.value, "height": float(entity.height), "rotationDeg": float(entity.rotation_deg)})
+        elif entity.type == "dimension":
+            row.update({
+                "first": list(entity.first), "second": list(entity.second), "base": list(entity.base),
+                "measurement": float(entity.measurement), "dimensionKind": entity.dimension_kind,
+                "purpose": entity.dimension_purpose, "styleName": entity.style_name,
+            })
         rows[entity.id] = row
     return rows
 
@@ -625,7 +631,7 @@ def main() -> int:
     parser.add_argument("--markdown", type=Path)
     parser.add_argument("--html", type=Path)
     parser.add_argument("--png", type=Path)
-    parser.add_argument("--review-launch", choices=("auto", "always", "never"), default="auto")
+    parser.add_argument("--review-launch", choices=("auto", "always", "never"), default="never")
     args = parser.parse_args()
     contract = json.loads(args.contract.read_text(encoding="utf-8"))
     from aicad_agent import _load_plan

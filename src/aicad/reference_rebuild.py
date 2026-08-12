@@ -212,6 +212,19 @@ def _entity_map(plan: CompiledPlan) -> dict[str, Any]:
     return {entity.id: entity for entity in plan.entities}
 
 
+def _require_reference_geometry_subset(plan: CompiledPlan) -> None:
+    unsupported = [
+        f"{entity.id}:{type(entity).__name__}"
+        for entity in plan.entities
+        if not isinstance(entity, (ResolvedLine, ResolvedCircle, ResolvedArc))
+    ]
+    if unsupported:
+        raise PlanError(
+            "reference reconstruction accepts only line/circle/arc source geometry; "
+            "native TEXT/DIMENSION must remain in the main AICAD export path: " + ", ".join(unsupported)
+        )
+
+
 def _source_geometry(binding: dict[str, Any], transform: SimilarityTransform) -> dict[str, Any]:
     geometry = binding.get("source_geometry")
     if not isinstance(geometry, dict):
@@ -344,6 +357,7 @@ def validate_reference_rebuild(plan_data: dict[str, Any], spec: dict[str, Any]) 
     if policy.get("reviewOnly") is not True or policy.get("accepted") is not False or policy.get("ruleEnabled") is not False:
         raise PlanError("reference rebuild must remain reviewOnly=true, accepted=false, ruleEnabled=false")
     plan = compile_plan(plan_data)
+    _require_reference_geometry_subset(plan)
     reference = spec.get("reference", {})
     locator = reference.get("locator")
     source_hash_verified: bool | None = None

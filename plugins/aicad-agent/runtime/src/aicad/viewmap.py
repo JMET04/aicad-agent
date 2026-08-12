@@ -7,7 +7,7 @@ import math
 from pathlib import Path
 from typing import Any
 
-from .engine import PlanError, ResolvedArc, ResolvedCircle, ResolvedLine, compile_plan
+from .engine import PlanError, ResolvedArc, ResolvedCircle, ResolvedDimension, ResolvedLine, ResolvedText, compile_plan
 from .engine3d import ResolvedFeature3D, ResolvedProfile3D, compile_plan3d
 from .semantic import describe_plan
 from .measurements import coordinate_system, selector_measurement, view_measurement
@@ -176,7 +176,7 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
                 f"PLAN_{item.id}", "PLAN", item.id, item.center, item.radius, "geometry", False,
                 ["center", "radius"], "entity",
             ))
-        else:
+        elif isinstance(item, ResolvedArc):
             segments = 32
             start = math.radians(item.start_angle_deg)
             sweep = math.radians((item.end_angle_deg - item.start_angle_deg) % 360)
@@ -191,6 +191,25 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
                 )
                 for index in range(segments)
             )
+        elif isinstance(item, ResolvedText):
+            entities.append({
+                "id": f"PLAN_{item.id}", "view_id": "PLAN", "source_object_id": item.id,
+                "source_subobject": "entity.insert", "geometry": {"type": "point", "point": list(item.insert)},
+                "role": "annotation", "derived": False, "selectable": True,
+                "edit_paths": ["insert", "value", "height", "rotation_deg"],
+            })
+        else:
+            dx, dy = item.second[0] - item.first[0], item.second[1] - item.first[1]
+            length = math.hypot(dx, dy)
+            nx, ny = -dy / length, dx / length
+            offset = item.offset_distance
+            first_base = (item.first[0] + nx * offset, item.first[1] + ny * offset)
+            second_base = (item.second[0] + nx * offset, item.second[1] + ny * offset)
+            entities.extend([
+                _line(f"PLAN_{item.id}_D", "PLAN", item.id, first_base, second_base, "annotation", False, ["base", "dimension_purpose"], "dimension.line"),
+                _line(f"PLAN_{item.id}_E1", "PLAN", item.id, item.first, first_base, "annotation", True, ["first", "base"], "dimension.extension.1"),
+                _line(f"PLAN_{item.id}_E2", "PLAN", item.id, item.second, second_base, "annotation", True, ["second", "base"], "dimension.extension.2"),
+            ])
     return [_view("PLAN", "二维设计视图", "native_2d", ["x", "y"], None, "authoritative_2d_geometry", entities)]
 
 

@@ -83,6 +83,14 @@ A complete axis grid is necessary but not sufficient. Construction-stage drawing
 
 ## Verified blocker-report launch
 
-Creating an HTML file is not delivery proof. Every strict-production blocker emitter must use `write_review_bundle`, include JSON, UTF-8 self-contained HTML, opaque PNG and an automatically persisted `*.review-launch.json`, and record both the source path and the compatibility-staged path. On Windows, any non-ASCII source path is staged before launch. Browser QA must open the staged bytes and record a rendered screenshot or equivalent DOM evidence; returning a path string alone fails `ARCH-D036`.
+Creating an HTML file is not delivery proof. Every strict-production blocker emitter must use `write_review_bundle`, include JSON, UTF-8 self-contained HTML, opaque PNG and an automatically persisted `*.review-launch.json`, and record both the source path and the compatibility-staged path. Every launched source path, including an ASCII temporary path, is first copied to a persistent content-addressed directory. Browser QA must open those persisted bytes and record a rendered screenshot or equivalent DOM evidence; returning a path string alone fails `ARCH-D036`. Automated compile and QA calls default to `never`, and repeated identical `auto` launches are suppressed by `ARCH-D038`; use `always` only for an explicit reopen request.
 
 Dimension-chain completeness is also entity-bound. Every declared overall, grid, partition and opening dimension ID must resolve to a native `DIMENSION` inventory row on `DIMENSION`, with matching purpose and named style. The native host save/reopen report must preserve the same ID set; purpose counts without entities fail `ARCH-D037`.
+
+## Native dimension host parity and physical origin
+
+Schema-2 plans with dimensions use AICAD protocol 4. Every dimension endpoint references earlier physical geometry and carries measurement, orientation and base-offset proof. AutoCAD creation must use a path shared by desktop AutoCAD and `accoreconsole.exe`; Core Console may return no Application COM object. Release therefore requires a real native-command save/reopen regression that proves DIMSTYLE, entity subtype, measurement, layer and XData.
+
+The first entity at `(0,0)` is a real wall/opening/product segment, never an auxiliary full-span line. If dimension anchors require more endpoints, split only collinear physical segments and prove that their union, ownership and semantic layer are unchanged and non-overlapping.
+
+When the user asks for directly usable construction/production output, `PROD-G010` applies: all non-compensatory drawing-set, authority, host and authorized-release gates must pass or no CAD artifact is exposed. The only permitted failure output is the persistent blocker bundle.
