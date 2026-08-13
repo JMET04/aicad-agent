@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+## 1.13.0 - 2026-08-13
+
+- Added the canonical v3 mechanical/PCB evidence-contract schema and verifier inside the existing production rule inventory while retaining the architectural v2 compatibility entry point.
+- Added exact subject/expected/candidate closure. Artifact IDs and case-folded paths are unique, kinds may repeat, and the digest binds artifact ID, part/subject identity, revision, path, size and hash; selectors require complete artifact-ID maps.
+- Added candidate-declared closure consistency: canonical QA parses normalized mechanical BOM subject rows and final KiCad board copper/PTH/NPTH inventory, then requires product-structure, board-inventory and CAM manifests to match exact artifact-ID/hash sets without claiming external authority.
+- Persisted mechanical gates for authoritative units and inputs, independent recalculation, load paths, fasteners/joints/edges, bearing life, thermal envelope, manufacturing definition, inspection trace, model/drawing/inspection parity and native source/material persistence.
+- Persisted PCB gates for per-PCB native schematic/project/board, schematic PDF, BOM, CPL, assembly drawing, independent fabrication drawing, 3D board and same-revision CAM closure; bidirectional pad/net and footprint parity; official package/datasheet/Pin 1 authority; placement/edge/keepout checks; zero final unconnected and ignored/excluded ERC/DRC items; and functional/thermal/EMC/integrity analysis.
+- Limited the generic v3 conclusion to `evidenceContractReady`: it never authenticates evidence, replays native tools, grants `technicalPackageReady`, exposes candidate artifacts or authorizes production.
+- Added deterministic failure-to-lesson harvesting with exact report/event/hash closure and a strict prevention-rule/failure-alias catalog for current mechanical, electronics and release failures.
+- Kept learning candidate-only: JSON writes are confined below `learning/`; recorded reviewer IDs are not authenticated by the tool, promotion eligibility and every technical/release/manufacturing authorization remain false pending external authenticated review.
+
 ## 1.12.0 - 2026-08-12
 
 - Added one canonical cross-domain normative quality contract and derived QA for support-pair transfer, forward annotation reservations, dual viewport readability, semantic candidate cycling, document isolation, and native UTF-8 evidence.

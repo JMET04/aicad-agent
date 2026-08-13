@@ -1,0 +1,1680 @@
+{
+  "schema": "aicad_continuous_learning_rules_v1",
+  "scope": "test_and_gate_failures_across_all_aicad_domains",
+  "canonicalEventPolicy": "no_implicit_timestamp_no_absolute_machine_path_hash_bound_safe_relative_evidence",
+  "controls": [
+    {
+      "id": "CL-G001",
+      "name": "every_failed_check_becomes_one_complete_lesson_event",
+      "requirement": "Every declared failed test or gate has one lesson event containing the stable failure alias, failing check, symptom, root cause, correction, prevention candidate, reproducer, evidence, source-input closure and affected-artifact closure.",
+      "requiredRegression": "Delete one lesson or add an unreported lesson and require the exact-closure audit to fail."
+    },
+    {
+      "id": "CL-G002",
+      "name": "failure_and_lesson_sets_close_bidirectionally",
+      "requirement": "For each hash-bound source report, declared failure IDs and failure-to-lesson mappings are equal sets, and every stored lesson is referenced by at least one source report.",
+      "requiredRegression": "Mutate either side of the mapping and require a hard failure."
+    },
+    {
+      "id": "CL-G003",
+      "name": "learning_evidence_is_portable_and_hash_bound",
+      "requirement": "Persist only canonical POSIX relative regular-file paths with exact size and lowercase SHA-256; reject absolute paths, drive paths, backslashes, dot traversal, case-fold duplicates, symlinks and junction escapes.",
+      "requiredRegression": "Exercise absolute, parent traversal, wrong hash, wrong size and link-escape fixtures."
+    },
+    {
+      "id": "CL-G004",
+      "name": "lesson_identity_is_deterministic_and_conflicts_fail",
+      "requirement": "Derive lesson IDs from stable failure identity without current time or host data, collapse byte-equivalent repeats, sort output deterministically and reject conflicting content under one ID.",
+      "requiredRegression": "Harvest the same report twice for byte-identical output, then alter correction under the same identity and require conflict failure."
+    },
+    {
+      "id": "CL-G005",
+      "name": "candidate_rules_remain_disabled",
+      "requirement": "Every generated rule candidate and bundle retains reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.",
+      "requiredRegression": "Flip each lock independently and require schema and runtime audit failure."
+    },
+    {
+      "id": "CL-G006",
+      "name": "promotion_requires_red_green_and_unrelated_regression_evidence",
+      "requirement": "A manual promotion preflight can verify only hash-bound recorded evidence of red-before-fix, green-after-fix and all unrelated suites passing; prose claims are insufficient and external authenticated review remains mandatory.",
+      "requiredRegression": "Set each regression result false or alter the evidence hash and require recorded preconditions to fail while eligibility remains false."
+    },
+    {
+      "id": "CL-G007",
+      "name": "promotion_is_manual_versioned_and_independently_recorded",
+      "requirement": "Recorded promotion preconditions require two distinct reviewer IDs in different roles, both bound to the same bundle SHA-256, target rule ID and strictly newer target version; this tool does not authenticate those identities or grant promotion eligibility.",
+      "requiredRegression": "Reuse a reviewer ID, change any binding, or use the source version and require preflight failure; even a structural pass must leave eligibility false."
+    },
+    {
+      "id": "CL-G008",
+      "name": "learning_tools_never_self_modify_authority",
+      "requirement": "Harvest and QA tools may write only the requested candidate or audit output; they never edit authoritative rules, delete tests, modify an installed plugin, change versions, package, install, publish or promote.",
+      "requiredRegression": "Hash rules, tests and plugin manifest before and after each tool invocation and require exact equality."
+    },
+    {
+      "id": "CL-G009",
+      "name": "only_structured_trusted_failure_reports_are_harvested",
+      "requirement": "Reject pass reports, arbitrary prose and incomplete records; harvest only aicad_test_failure_report_v1 with exact candidate locks and verified closures.",
+      "requiredRegression": "Feed prose, a pass report and an incomplete report and require failure without an output bundle."
+    }
+  ],
+  "preventionRules": [
+    {
+      "id": "REL-G023",
+      "domain": "release",
+      "name": "relative_cli_paths_resolve_against_explicit_root",
+      "symptom": "A command launched from another working directory read or wrote a sibling tree.",
+      "rootCause": "Relative arguments were interpreted against process CWD instead of the declared evidence root.",
+      "prevention": "Normalize every persisted path as safe-relative and resolve every CLI input/output against explicit root; cover execution from a different CWD.",
+      "requiredRegression": "Run the CLI from a foreign CWD and prove all artifacts remain under root; reject traversal and absolute paths."
+    },
+    {
+      "id": "REL-G024",
+      "domain": "release",
+      "name": "artifact_manifests_have_exact_bidirectional_hash_closure",
+      "symptom": "A passing report or checksum set could be mixed with artifacts from another candidate, omit files, or use a different inventory field.",
+      "rootCause": "Only one direction or one anchor artifact was checked instead of role/path/size/hash equality for the entire set.",
+      "prevention": "Require one canonical artifact inventory and exact role/path/size/SHA-256 closure in both directions across reports, manifests, files and checksums.",
+      "requiredRegression": "Replace, omit, add and role-swap one non-anchor artifact while retaining the old passing report and require failure."
+    },
+    {
+      "id": "REL-G025",
+      "domain": "release",
+      "name": "one_canonical_contract_without_errata_or_parallel_versions",
+      "symptom": "An errata overlay or simultaneous R1/R2/R3 contract let different validators consume different requirements.",
+      "rootCause": "Corrections were layered beside the canonical contract rather than atomically incorporated and old authority removed.",
+      "prevention": "Bind exactly one canonical contract path/hash/version; reject overlays and competing active revisions.",
+      "requiredRegression": "Add an errata file or second active contract revision and require the authority gate to fail."
+    },
+    {
+      "id": "REL-G026",
+      "domain": "release",
+      "name": "source_and_reports_are_machine_portable",
+      "symptom": "A clean build depended on a developer-local D:/Temp path or emitted an absolute source path.",
+      "rootCause": "Source imports and report emitters captured workstation locations.",
+      "prevention": "Scan source and persisted reports for personal/absolute paths and prove a clean isolated build using only hash-declared inputs.",
+      "requiredRegression": "Inject a drive-qualified path and require portability QA and clean-build replay to fail."
+    },
+    {
+      "id": "REL-G027",
+      "domain": "release",
+      "name": "source_input_freshness_is_closed",
+      "symptom": "A package manifest was internally valid but stale relative to changed source inputs.",
+      "rootCause": "Payload hashes were verified without an exact source-input inventory and freshness comparison.",
+      "prevention": "Bind all canonical source inputs by relative path, size and hash, reject extra/unlisted/stale inputs, and rebuild after any source change.",
+      "requiredRegression": "Mutate one source after staging and require source-input verification failure."
+    },
+    {
+      "id": "REL-G028",
+      "domain": "release",
+      "name": "public_outputs_are_atomic_and_post_verified",
+      "symptom": "A final/public directory could expose a partially written candidate.",
+      "rootCause": "Files were written directly into the public destination before all gates completed.",
+      "prevention": "Build in an isolated staging directory, verify it, atomically promote it, then repeat read-only verification; restore the previous release on failure.",
+      "requiredRegression": "Force a late validation error and prove no partial public tree or lost prior release."
+    },
+    {
+      "id": "REL-G029",
+      "domain": "release",
+      "name": "showcase_is_sanitized_exact_role_closure",
+      "symptom": "A showcase accepted an empty manifest, arbitrary directories, sensitive binaries, symlinks, stale files, incomplete roles or duplicate slugs.",
+      "rootCause": "Showcase verification trusted declared rows without deriving and closing the physical tree and role inventory.",
+      "prevention": "Enforce fixed unique slugs, exact required roles, non-empty manifests, allowed directories, no links/sensitive binaries/stale outputs and bidirectional hash closure.",
+      "requiredRegression": "Independently inject each forbidden showcase condition and require failure."
+    },
+    {
+      "id": "REL-G030",
+      "domain": "release",
+      "name": "published_document_links_resolve_to_packaged_artifacts",
+      "symptom": "A README or copied review page named an artifact that existed in its source tree but was absent after role-based publication.",
+      "rootCause": "Documentation links were validated only before packaging, without resolving the same links against the final published role tree.",
+      "prevention": "Parse safe-relative local links in README and every published HTML/Markdown role, then require each target to exist in the exact final package closure.",
+      "requiredRegression": "Reference a source-only gallery or stale download from a copied review role and require the post-publication link gate to fail."
+    },
+    {
+      "id": "REL-G031",
+      "domain": "release",
+      "name": "mutating_tests_finish_before_final_read_only_integrity",
+      "symptom": "Concurrent tests created __pycache__ or changed files while the final hash scan ran.",
+      "rootCause": "Mutation-producing execution and the final read-only gate shared one staging tree or ran concurrently.",
+      "prevention": "Run tests sequentially with bytecode disabled, recreate/clean staging, then run the final manifest/privacy/hash scan alone and reject residue.",
+      "requiredRegression": "Create cache residue or overlap a writer with the final scan and require failure."
+    },
+    {
+      "id": "MECH-G024",
+      "domain": "mechanical",
+      "name": "native_material_mass_density_and_readback_agree",
+      "symptom": "SolidWorks default material mass disagreed with analysis density, or a custom property was presented as native material assignment.",
+      "rootCause": "Material authority was inferred from metadata or volume-times-density instead of native database assignment and save/reopen readback.",
+      "prevention": "Bind native material database name/configuration/density, native mass properties and independent Hydro/volume density within tolerance after reopen; custom properties never satisfy the gate.",
+      "requiredRegression": "Use the default material, spoof a custom property and mutate density independently; all must fail."
+    },
+    {
+      "id": "MECH-G025",
+      "domain": "mechanical",
+      "name": "bearing_life_meets_frozen_duty_and_design_life",
+      "symptom": "A selected 6306 bearing passed geometry but missed required life.",
+      "rootCause": "Bearing selection was not recomputed from frozen load spectrum, speed, duty and reliability target.",
+      "prevention": "Recompute equivalent load and adjusted life from authoritative catalog ratings for every duty case and block below-design-life margins.",
+      "requiredRegression": "Use the insufficient 6306 case and require the life gate to fail."
+    },
+    {
+      "id": "MECH-G026",
+      "domain": "mechanical",
+      "name": "all_load_offsets_and_combinations_are_recomputed",
+      "symptom": "Omitting an 80 mm eccentric moment made an 18 mm base plate appear to pass.",
+      "rootCause": "The load model retained force magnitude but dropped the line-of-action offset and coupled moment.",
+      "prevention": "Freeze vector loads and application coordinates, derive eccentric moments, combine abnormal cases, and bind equations/inputs/outputs/margins to evidence.",
+      "requiredRegression": "Toggle the 80 mm offset and require the thin-plate false pass to become a failure."
+    },
+    {
+      "id": "MECH-G027",
+      "domain": "mechanical",
+      "name": "engineering_checks_use_artifact_derived_parameters",
+      "symptom": "Anchor, through-bore, thread-root or grease parameters were hardcoded, so geometry mutation still passed.",
+      "rootCause": "The validator compared constants to constants instead of reading the candidate artifact or source-bound measurements.",
+      "prevention": "Derive critical dimensions/features from native artifacts and require mutation tests that change each parameter independently.",
+      "requiredRegression": "Mutate every critical parameter one at a time and require the corresponding gate to fail."
+    },
+    {
+      "id": "MECH-G028",
+      "domain": "mechanical",
+      "name": "intersection_allowances_are_role_and_volume_specific",
+      "symptom": "An allowed part-pair whitelist permitted arbitrary solid overlap between the pair.",
+      "rootCause": "Allowance identity was only a pair name and did not constrain feature roles, expected region or maximum volume.",
+      "prevention": "Bind each intentional contact/interference to semantic feature IDs, expected region/type and bounded volume; reject every unclassified overlap.",
+      "requiredRegression": "Move an allowed pair into an unintended overlap and require interference failure."
+    },
+    {
+      "id": "MECH-G029",
+      "domain": "mechanical",
+      "name": "assembly_imports_are_clean_hash_bound_and_unambiguous",
+      "symptom": "A same-named imported component resolved to an old part and polluted the assembly.",
+      "rootCause": "Native assembly import searched ambient paths and names instead of exact source hashes in an isolated workspace.",
+      "prevention": "Use isolated import directories, unique identities, exact component source hashes and native reopen inventory equality with no ambient fallback.",
+      "requiredRegression": "Place a stale same-name part on a search path and require import/reopen failure."
+    },
+    {
+      "id": "MECH-G030",
+      "domain": "mechanical",
+      "name": "thermal_fit_checks_bind_correct_path_sign_and_margin",
+      "symptom": "A thermal installation check inspected the wrong object, reversed the temperature sign or accepted a just-touching clearance.",
+      "rootCause": "The assembly path, expansion convention and positive residual-clearance margin were not explicit inputs.",
+      "prevention": "Bind exact mating features, signed component temperatures, coefficients and worst-case tolerances; require strictly positive residual installation and operating clearance.",
+      "requiredRegression": "Swap the object, reverse temperature delta and set zero residual margin; each must fail."
+    },
+    {
+      "id": "MECH-G031",
+      "domain": "mechanical",
+      "name": "every_manufactured_subject_has_native_neutral_drawing_and_assembly_closure",
+      "symptom": "An accessory carrier lacked native CAD, STEP, drawing or assembly closure.",
+      "rootCause": "Package-level artifacts were allowed to stand in for a manufactured subject.",
+      "prevention": "Declare every part/assembly subject and require its exact native CAD, neutral STEP, manufacturing drawing, BOM/source binding and native reopen evidence.",
+      "requiredRegression": "Remove each carrier artifact role independently and require subject closure failure."
+    },
+    {
+      "id": "MECH-G032",
+      "domain": "mechanical",
+      "name": "manufacturing_drawings_use_native_feature_bound_dimensions",
+      "symptom": "DXF TEXT labels were treated as native dimensions or the drawing lacked feature/datum closure.",
+      "rootCause": "Visual annotation presence was substituted for native dimension entities and semantic feature binding.",
+      "prevention": "Require native dimension objects with measured feature references, datums, tolerances/GD&T and save/reopen parity; text-only labels fail.",
+      "requiredRegression": "Replace a native dimension with visually identical text and require failure."
+    },
+    {
+      "id": "MECH-G033",
+      "domain": "mechanical",
+      "name": "native_cad_metadata_is_sanitized",
+      "symptom": "A DWG retained private author/workstation metadata.",
+      "rootCause": "Content privacy scanning did not inspect native document properties and embedded dictionaries.",
+      "prevention": "Sanitize and reopen-inspect native properties, summaries, paths and custom dictionaries; bind a zero-findings report to the artifact hash.",
+      "requiredRegression": "Inject author and workstation metadata and require privacy closure failure."
+    },
+    {
+      "id": "MECH-G034",
+      "domain": "mechanical",
+      "name": "native_host_processes_are_bounded_and_reaped",
+      "symptom": "AutoCAD or Core host processes remained after test completion.",
+      "rootCause": "Host lifecycle ownership and finally-block cleanup were incomplete.",
+      "prevention": "Record launched process IDs, enforce bounded close/kill cleanup in finally, and gate completion on zero owned residual processes.",
+      "requiredRegression": "Force timeout/error exits and verify every owned host process is reaped."
+    },
+    {
+      "id": "ELEC-G024",
+      "domain": "electronics",
+      "name": "downstream_stages_require_one_accepted_stage_a_closure",
+      "symptom": "Stage B imported an old Stage A or silently fell back when the accepted manifest was missing.",
+      "rootCause": "Downstream loading used discovery/legacy fallback rather than one exact accepted manifest and artifact closure.",
+      "prevention": "Stage B accepts only one explicit Stage-A manifest whose full artifact closure and gate hashes pass; missing, multiple, stale or fallback inputs block.",
+      "requiredRegression": "Remove the accepted manifest, add a second candidate and retain an old Stage A; all must block Stage B."
+    },
+    {
+      "id": "ELEC-G025",
+      "domain": "electronics",
+      "name": "native_erc_zero_has_no_ignored_items_and_does_not_replace_datasheet_passives",
+      "symptom": "ERC passed through severity/ignored compensation or stayed at zero while required local passives were absent.",
+      "rootCause": "Tool-native connectivity checks were treated as complete electrical design authority.",
+      "prevention": "Require zero violations, zero ignored/excluded items and separate datasheet-derived circuit rules for mandatory bias, filtering and decoupling components.",
+      "requiredRegression": "Ignore an ERC item and remove a datasheet-required passive while ERC remains zero; both must fail."
+    },
+    {
+      "id": "ELEC-G026",
+      "domain": "electronics",
+      "name": "ordered_mpn_symbol_pin_and_footprint_are_datasheet_exact",
+      "symptom": "THVD1450 package alias, STM32 VBUS pin or connector footprint mapping was ambiguous or wrong.",
+      "rootCause": "Aliases and nominal package names replaced ordered-part pin and land-pattern resolution.",
+      "prevention": "Bind exact MPN to authoritative pin number/function/type and verified footprint/pitch; reject aliases without explicit equivalence evidence.",
+      "requiredRegression": "Swap a pin, package suffix or pitch-compatible-looking footprint and require failure."
+    },
+    {
+      "id": "ELEC-G027",
+      "domain": "electronics",
+      "name": "unpowered_and_fault_limits_include_clamps_and_backpower",
+      "symptom": "BAV199 topology back-powered rails or OPA4388 unpowered differential input exceeded limits.",
+      "rootCause": "Nominal powered operation was checked without unpowered injection current, clamp current paths and absolute maximum differential/common-mode cases.",
+      "prevention": "Analyze powered, unpowered, hot-plug, short and sequence states against datasheet limits and block any rail back-power or unsupported clamp path.",
+      "requiredRegression": "Exercise BAV199 rail injection and OPA4388 power-off VID cases and require failure."
+    },
+    {
+      "id": "ELEC-G028",
+      "domain": "electronics",
+      "name": "surge_is_derated_and_local_return_loops_are_modeled_separately",
+      "symptom": "TVS3301 failed 85 C surge margin or four local channels were incorrectly modeled as one 80 A common neck.",
+      "rootCause": "Temperature derating and actual local differential current return paths were replaced by a package-level aggregate assumption.",
+      "prevention": "Use authoritative temperature/impulse ratings and compute each local source-to-protection-to-return loop; model only residual/common current in the shared tie.",
+      "requiredRegression": "Apply the 85 C rating and distinguish four local loops from the shared tie; aggregate-neck and under-rated cases must fail."
+    },
+    {
+      "id": "ELEC-G029",
+      "domain": "electronics",
+      "name": "adc_signal_and_aingnd_networks_are_matched_across_corners",
+      "symptom": "ADS8684A AIN_GND bias or matching model was incomplete.",
+      "rootCause": "Only the signal divider was analyzed, omitting return-side Thevenin impedance, tolerance and temperature tracking.",
+      "prevention": "Bind mirrored signal/AIN_GND networks and recompute input, offset, impedance and clamp margins over resistance, temperature and source corners.",
+      "requiredRegression": "Unmatch one AIN_GND resistor or omit its temperature corner and require failure."
+    },
+    {
+      "id": "ELEC-G030",
+      "domain": "electronics",
+      "name": "accuracy_bandwidth_and_input_impedance_claims_are_noncontradictory",
+      "symptom": "A 100 ohm/input or 1 kHz accuracy statement conflicted with the actual divider/filter response.",
+      "rootCause": "DC accuracy, AC droop, source loading and protection resistance were combined into one ambiguous requirement.",
+      "prevention": "State and verify separate DC accuracy, AC response, source impedance and sampling assumptions; never extend a DC pass to unsupported AC amplitude accuracy.",
+      "requiredRegression": "Introduce the conflicting 100 ohm or 1 kHz claim and require contract failure."
+    },
+    {
+      "id": "ELEC-G031",
+      "domain": "electronics",
+      "name": "references_are_legal_stable_and_native_read_back",
+      "symptom": "An illegal NT_AGND designator was silently renamed by KiCad.",
+      "rootCause": "Generated logical names were assumed to survive native annotation rules.",
+      "prevention": "Use legal unique reference syntax and compare the saved/reopened native reference and footprint inventory exactly.",
+      "requiredRegression": "Generate an illegal reference and require native readback mismatch failure."
+    },
+    {
+      "id": "ELEC-G032",
+      "domain": "electronics",
+      "name": "every_ic_power_pin_group_has_datasheet_local_decoupling",
+      "symptom": "MCU VDDA/VSSA lacked the required 10 nF plus 1 uF, or the RS485 transceiver lacked local 100 nF, while ERC remained zero.",
+      "rootCause": "Net connectivity and package-level bulk capacitance were allowed to substitute for pin-local datasheet requirements.",
+      "prevention": "Create a per-IC/per-supply-pin-group decoupling matrix from datasheets, bind exact values and local topology, and verify independently of ERC.",
+      "requiredRegression": "Remove MCU analog 10 nF/1 uF and RS485 100 nF independently with ERC zero; both must fail."
+    },
+    {
+      "id": "ELEC-G033",
+      "domain": "electronics",
+      "name": "schematic_pdf_is_native_readable_and_collision_free",
+      "symptom": "A one-page schematic had tiny text, clipping and collisions despite producing a PDF.",
+      "rootCause": "Artifact existence replaced page-aware readability, font-size, bounds and collision checks.",
+      "prevention": "Use logical native sheets and require per-page minimum font, bounds, collision and human visual review gates.",
+      "requiredRegression": "Flatten the design to one overcrowded page and require readability failure."
+    },
+    {
+      "id": "ELEC-G034",
+      "domain": "electronics",
+      "name": "electronics_contract_authority_is_one_canonical_revision",
+      "symptom": "Contract errata overlay and simultaneous R1/R2/R3 inputs produced ambiguous authority.",
+      "rootCause": "Generator and gate referenced different contract layers or revisions.",
+      "prevention": "Atomically merge corrections into one canonical revision and bind generator, analysis, gate and accepted manifest to its exact hash.",
+      "requiredRegression": "Add an overlay or second active revision and require authority failure."
+    },
+    {
+      "id": "ELEC-G035",
+      "domain": "electronics",
+      "name": "eda_generation_is_portable_and_rooted",
+      "symptom": "Generation imported D:/Temp/KiCad10 or wrote relative Stage-A output beside the job when launched from another CWD.",
+      "rootCause": "Local source imports and CWD-based path resolution leaked into the canonical flow.",
+      "prevention": "Use packaged/declared sources only, invoke native EDA commands from the candidate/root context, resolve every input/output against explicit root, and reject or normalize derived native evidence containing host absolute source paths before clean closure.",
+      "requiredRegression": "Run from a foreign CWD without the developer temp tree, then inject an absolute source field into a native netlist; require clean portability failure and exact artifact hashes under root."
+    },
+    {
+      "id": "ELEC-G036",
+      "domain": "electronics",
+      "name": "accepted_stage_a_binds_every_role_from_one_candidate",
+      "symptom": "A passing schematic/gate could be combined with analysis, BOM, contract or authority evidence from another candidate.",
+      "rootCause": "Acceptance anchored one artifact instead of an exact role/path/size/hash closure.",
+      "prevention": "Gate output and accepted manifest must contain identical bidirectional closure for every required Stage-A role from one candidate root.",
+      "requiredRegression": "Replace each non-schematic role while retaining the passing gate and require loader failure."
+    },
+    {
+      "id": "ELEC-G037",
+      "domain": "electronics",
+      "name": "bom_model_native_and_procurement_views_are_independently_derived",
+      "symptom": "Stage-A model, native and procurement BOM parity could pass because all views came from one source.",
+      "rootCause": "Three labels were applied to one generated inventory rather than independent derivations.",
+      "prevention": "Derive native symbols/footprints from EDA files, model intent from the contract and procurement rows from ordered MPN data, then compare bidirectionally.",
+      "requiredRegression": "Mutate one independent source and require three-way parity failure."
+    },
+    {
+      "id": "ELEC-G038",
+      "domain": "electronics",
+      "name": "every_physical_footprint_has_real_courtyard_authority",
+      "symptom": "allow_missing_courtyard let a custom net-tie footprint pass without physical placement clearance.",
+      "rootCause": "A waiver bypassed a required physical artifact instead of proving a justified alternative.",
+      "prevention": "Require explicit valid courtyard geometry for every populated/custom physical footprint; no missing-courtyard bypass in production candidates.",
+      "requiredRegression": "Remove the net-tie courtyard or add a waiver and require physical gate failure."
+    },
+    {
+      "id": "ELEC-G039",
+      "domain": "electronics",
+      "name": "native_netlist_parity_is_bidirectional",
+      "symptom": "Expected nets/pins were present but extra or misrouted native connections were not rejected.",
+      "rootCause": "Topology validation checked only contract-to-netlist inclusion.",
+      "prevention": "Compare native net/pin edges, component pins and no-connects to the model in both directions with exact allowed exceptions.",
+      "requiredRegression": "Add one extra native edge and remove one expected edge independently; both must fail."
+    },
+    {
+      "id": "ELEC-G040",
+      "domain": "electronics",
+      "name": "stackup_and_mechanical_icd_require_external_authority",
+      "symptom": "Board stackup, outline, mounting or enclosure dimensions were unknown but physical work could continue.",
+      "rootCause": "Engineering assumptions were not separated from fabricator and enclosure authority.",
+      "prevention": "Block fabrication authorization until controlled stackup and mechanical ICD evidence is hash-bound; assumptions remain explicit review-only inputs.",
+      "requiredRegression": "Remove stackup or enclosure authority and require fabrication lock."
+    },
+    {
+      "id": "ELEC-G041",
+      "domain": "electronics",
+      "name": "interface_protection_is_coordinated_with_exact_receiver_limits",
+      "symptom": "A surge protector and RS485 receiver were treated as compatible without closing dynamic clamp, fault voltage, current, energy and temperature margins for the exact ordered pair.",
+      "rootCause": "Protector marketing class or a family-level transceiver limit was allowed to replace worst-case coordination of the exact protection network and receiver.",
+      "prevention": "Coordinate the exact TVS/transceiver pair over surge waveform/current, dynamic clamp, series impedance, receiver absolute/fault limits, temperature and energy; keep IEC/energy qualification external until its controlled evidence exists.",
+      "requiredRegression": "Exercise both the legacy SM712/THVD1450 failing corner and an unqualified SM712/THVD2410 claim; require a failed coordination margin or external-qualification lock."
+    },
+    {
+      "id": "ELEC-G042",
+      "domain": "electronics",
+      "name": "connector_contract_pins_and_pitch_match_native_design",
+      "symptom": "The interface required SHIELD/CHASSIS but J3 exposed only A/B/GND, or a Phoenix 5.08 mm order code used a KiCad P5.00 footprint.",
+      "rootCause": "Connector functional contacts and exact mechanical pitch were not closed against the ordered part and native footprint.",
+      "prevention": "Bind every required interface role and exact ordered connector pitch/pin numbering to the schematic, footprint and mechanical ICD.",
+      "requiredRegression": "Omit shield/chassis and substitute 5.00 for 5.08 mm; both must fail."
+    },
+    {
+      "id": "ELEC-G043",
+      "domain": "electronics",
+      "name": "authority_ledger_covers_the_full_system",
+      "symptom": "Authority evidence covered only the analog subset while the complete controller was evaluated.",
+      "rootCause": "Subsystem evidence inventory was generalized to uncovered power, MCU, USB and RS485 circuits.",
+      "prevention": "Require an exact circuit/block authority matrix covering every component and rule-owned claim; uncovered blocks remain failed.",
+      "requiredRegression": "Remove authority for one non-analog block and require the system gate to fail."
+    },
+    {
+      "id": "ELEC-G044",
+      "domain": "electronics",
+      "name": "power_capability_is_derived_from_board_limits_not_input_protection_hold",
+      "symptom": "maximumContinuousLoadW=10.5 treated 30 V times PPTC hold current as board output capability.",
+      "rootCause": "An input protection rating was multiplied into a power claim without regulator, copper, thermal and load-path limits.",
+      "prevention": "Derive continuous load from the complete worst-case conversion/current/thermal path and keep protection hold current as a separate constraint.",
+      "requiredRegression": "Use the 30 V times PPTC-hold shortcut and require capability failure."
+    },
+    {
+      "id": "ELEC-G045",
+      "domain": "electronics",
+      "name": "production_contract_contains_only_current_components_and_rates",
+      "symptom": "The contract still referenced deleted TPS2116/TLVH431 parts, an old USB divider or 10 ksps behavior.",
+      "rootCause": "Architecture changes did not invalidate and regenerate the entire contract inventory.",
+      "prevention": "Derive contract component/rate references from one current architecture closure and reject deleted MPNs, nets and stale operating values.",
+      "requiredRegression": "Insert each deleted component or stale rate and require contract/native mismatch."
+    },
+    {
+      "id": "ELEC-G046",
+      "domain": "electronics",
+      "name": "subsystem_pass_never_implies_full_system_pass",
+      "symptom": "A local analog analysis pass was generalized to full-system technical readiness.",
+      "rootCause": "Aggregate status ignored uncovered or failed power, digital, interface and physical gates.",
+      "prevention": "Use non-compensatory per-block coverage and allow system pass only when every required block and cross-interface gate passes.",
+      "requiredRegression": "Pass analog while failing one other block and require full-system status to remain failed."
+    },
+    {
+      "id": "ELEC-G047",
+      "domain": "electronics",
+      "name": "nonisolated_field_returns_have_explicit_common_mode_and_installation_domain",
+      "symptom": "Multiple field returns were treated as independent despite a shared non-isolated analog ground.",
+      "rootCause": "Local return routing was confused with galvanic isolation and common-mode authority.",
+      "prevention": "Declare non-isolation, bound normal return-to-AGND envelope and restrict installation to one local equipotential SELV/PELV domain unless external isolation is added.",
+      "requiredRegression": "Apply independent remote-earth returns without isolation and require interface failure."
+    },
+    {
+      "id": "ELEC-G048",
+      "domain": "electronics",
+      "name": "authority_annotations_match_exact_native_reference_and_pin",
+      "symptom": "A U5 pin-authority comment mislabeled the component as D8.",
+      "rootCause": "Human-readable authority annotations were not closed against the native reference, MPN and pin inventory they described.",
+      "prevention": "Bind every authority/comment row to exact native reference, ordered MPN, pin number/function and source citation; compare annotations and native design bidirectionally.",
+      "requiredRegression": "Relabel the U5 pin1..8 authority row as D8 and require the documentation/native authority parity gate to fail."
+    },
+    {
+      "id": "ELEC-G049",
+      "domain": "electronics",
+      "name": "linear_regulator_thermal_margin_uses_actual_board_copper",
+      "symptom": "TLV755 thermal margin was declared without binding the actual exposed-pad copper, thermal-via array, 85 C ambient and at least 20 C junction margin.",
+      "rootCause": "A datasheet evaluation-board thermal value or schematic intent substituted for the fabricated board heat path.",
+      "prevention": "Extract actual footprint pad, connected copper area/layers, via count/geometry, dissipation and worst-case ambient; recompute junction temperature and require at least 20 C margin to the qualified limit.",
+      "requiredRegression": "Remove exposed-pad copper/vias or set 85 C ambient such that margin drops below 20 C and require thermal failure."
+    },
+    {
+      "id": "ELEC-G050",
+      "domain": "electronics",
+      "name": "24v_input_surge_chain_is_coordinated_end_to_end",
+      "symptom": "The 24 V SMBJ33A/S1M/F1/LMR/capacitor chain lacked all-temperature surge, I-squared-t, hot-plug and thermal closure.",
+      "rootCause": "Individual component ratings were listed without coordinating transient energy, clamp voltage/current, fuse response, reverse protection, regulator absolute limits and capacitor inrush.",
+      "prevention": "Analyze the exact 24 V protection/conversion chain over input, temperature, surge waveform, hot-plug and fault cases; bind TVS, diode, fuse/PPTC, regulator and capacitor limits with positive margins.",
+      "requiredRegression": "Exercise the minimum-temperature hot-plug, maximum-temperature surge and fuse/TVS I-squared-t corners; any uncoordinated link must fail."
+    },
+    {
+      "id": "ELEC-G051",
+      "domain": "electronics",
+      "name": "usb_vbus_contract_matches_native_active_low_detect_topology",
+      "symptom": "The USB VBUS contract still described an active-high divider while the native design used an NMOS plus pull-up driving PA9 active-low.",
+      "rootCause": "Firmware/interface semantics were not regenerated from the current schematic topology and polarity.",
+      "prevention": "Bind the contract and firmware polarity to the exact native VBUS-detect components, PA9 net and truth table; reject stale divider or active-high descriptions.",
+      "requiredRegression": "Keep the NMOS/pull-up circuit while declaring an active-high divider and require contract/native truth-table failure."
+    },
+    {
+      "id": "ELEC-G052",
+      "domain": "electronics",
+      "name": "every_bom_row_uses_one_exact_orderable_part_number",
+      "symptom": "Q1 was called only 2N7002, a family/generic name rather than one exact orderable OPN.",
+      "rootCause": "Electrical family equivalence was allowed to replace manufacturer, suffix, package and qualification-specific procurement identity.",
+      "prevention": "Require manufacturer plus exact orderable OPN for every populated BOM row and bind it to datasheet, symbol, footprint, rating and procurement evidence.",
+      "requiredRegression": "Replace Q1's exact OPN with generic 2N7002 and require BOM/authority closure failure."
+    },
+    {
+      "id": "ELEC-G053",
+      "domain": "electronics",
+      "name": "usb_type_c_cc_pins_have_explicit_esd_coverage",
+      "symptom": "USB CC1 and CC2 lacked explicit ESD protection coverage.",
+      "rootCause": "D+/D- and VBUS protection was generalized to all externally accessible Type-C contacts.",
+      "prevention": "Inventory every exposed USB contact and bind CC1/CC2 to suitably rated low-capacitance ESD devices, return path and layout placement, or a controlled documented authority-approved exception.",
+      "requiredRegression": "Remove CC1 or CC2 from the protection matrix while other USB nets remain protected and require interface ESD failure."
+    },
+    {
+      "id": "ELEC-G054",
+      "domain": "electronics",
+      "name": "repair_claim_requires_native_artifact_delta_and_fresh_reaudit",
+      "symptom": "A connector or topology repair was reported complete while the native BOM/netlist still contained the pre-repair part, pitch or connectivity.",
+      "rootCause": "The repair status followed an edited narrative or generator intent instead of the saved native artifact and freshly derived independent evidence.",
+      "prevention": "Before claiming a repair, require the intended native file hash/content to change where applicable, regenerate independent BOM/netlist evidence, and rerun the exact failing gate against one candidate closure.",
+      "requiredRegression": "Change only the contract or repair note while leaving the native BOM/netlist unchanged and require the repair-status gate to fail."
+    },
+    {
+      "id": "ELEC-G055",
+      "domain": "electronics",
+      "name": "public_netlist_is_sanitized_and_semantically_equal_to_private_native_export",
+      "symptom": "A raw native netlist carried a machine-absolute source path, while a separately published netlist could drift from the actual native reference/pin/net topology.",
+      "rootCause": "Portability sanitization and native topology proof were treated as alternatives instead of a two-view contract over one export.",
+      "prevention": "Keep raw native export as private scratch, publish only a deterministic path-sanitized derivative, and prove exact bidirectional reference/pin/net multiset equality plus source-hash binding before release.",
+      "requiredRegression": "Inject an absolute source path into the public view or alter one reference/pin/net tuple after sanitization and require privacy/parity failure."
+    },
+    {
+      "id": "ELEC-G056",
+      "domain": "electronics",
+      "name": "hierarchical_native_schematics_have_exact_dependency_closure",
+      "symptom": "A multi-sheet KiCad design hash-bound only its root schematic while a child schematic could change after acceptance.",
+      "rootCause": "The artifact contract modeled a schematic as one file instead of a closed native dependency graph.",
+      "prevention": "Enumerate the root and every transitive child .kicad_sch as unique roles with safe relative path, size and SHA-256; reject missing, extra, duplicate, nested-unapproved or changed sheets in both directions.",
+      "requiredRegression": "Change or remove a child schematic while preserving the root hash and require accepted-artifact closure failure."
+    },
+    {
+      "id": "ELEC-G057",
+      "domain": "electronics",
+      "name": "eda_tool_identity_is_independent_of_candidate_contracts",
+      "symptom": "A historical or candidate-authored contract could silently change which KiCad version counted as valid native evidence.",
+      "rootCause": "The artifact under review also supplied the authority used to validate its producing toolchain.",
+      "prevention": "Pin product, exact version and executable identity in an independent gate authority; bind commands and raw native reports to it and reject legacy contracts that attempt to redefine the tool floor.",
+      "requiredRegression": "Change only a candidate or legacy contract's KiCad version while native evidence stays fixed and require tool-authority failure."
+    },
+    {
+      "id": "ELEC-G058",
+      "domain": "electronics",
+      "name": "candidate_authority_manifests_are_bound_by_separate_requirements",
+      "symptom": "A candidate authority manifest self-declared both a PDF digest and the MPNs that digest supposedly covered.",
+      "rootCause": "Evidence identity and evidence meaning came from the same mutable candidate document.",
+      "prevention": "Bind every authority document's path, size, SHA-256 and unique MPN coverage in a separate canonical requirements contract, then require exact projection parity with the candidate manifest and physical files.",
+      "requiredRegression": "Rewrite a manifest PDF hash and MPN list together without changing canonical requirements and require authority failure."
+    },
+    {
+      "id": "ELEC-G059",
+      "domain": "electronics",
+      "name": "pcb_pad_net_parity_is_a_physical_occurrence_multiset",
+      "symptom": "A set comparison accepted a missing or extra repeated pad occurrence and could overlook an unbound pad, wrong MPN or wrong land pattern.",
+      "rootCause": "Logical pin names were treated as unique even when a physical footprint legitimately repeated pad numbers or shell contacts.",
+      "prevention": "Compare (reference, physical pad number, net) as an exact bidirectional multiset including unconnected pads, and bind each reference to exact manufacturer, MPN, footprint and land-pattern authority.",
+      "requiredRegression": "Delete one repeated USB contact, add one unbound pad-net, or swap one footprint/MPN while logical nets remain present; every mutation must fail."
+    },
+    {
+      "id": "ELEC-G060",
+      "domain": "electronics",
+      "name": "downstream_pcb_consumers_use_only_accepted_native_artifacts",
+      "symptom": "Stage B could execute or import a mutable Stage-A generator and consume topology different from the accepted native netlist and BOM.",
+      "rootCause": "A convenient source model was allowed to replace the immutable accepted artifact interface.",
+      "prevention": "Downstream stages parse only the accepted native netlist, independently matched BOM and exact role/hash manifest; generator imports, candidate discovery, role aliases and legacy fallbacks are forbidden.",
+      "requiredRegression": "Make the generator disagree with the accepted native netlist and prove Stage B ignores it; remove acceptance or use an old role alias and require failure before output creation."
+    },
+    {
+      "id": "ELEC-G061",
+      "domain": "electronics",
+      "name": "downstream_drc_policy_cannot_weaken_accepted_severity",
+      "symptom": "A PCB validator could appear green by downgrading accepted DRC severities or adding exclusions while copying the design forward.",
+      "rootCause": "The consumer was allowed to rewrite verification policy instead of preserving the accepted project byte-for-byte.",
+      "prevention": "Copy accepted project and library tables byte-exact, reject severity/exclusion drift, and require native DRC zero violations, zero warnings, zero ignored checks and zero exclusions; only explicitly staged unrouted items may defer to routing.",
+      "requiredRegression": "Downgrade one error to warning or add one exclusion in Stage B and require policy-integrity failure even if native DRC exits successfully."
+    },
+    {
+      "id": "ELEC-G062",
+      "domain": "electronics",
+      "name": "authority_pdf_files_are_real_parseable_documents",
+      "symptom": "Files named with a .pdf suffix were actually short Access Denied HTML responses but still passed path, size and SHA-256 checks.",
+      "rootCause": "Artifact identity checks did not validate the media type and parseability required by the authority role.",
+      "prevention": "For every PDF authority require %PDF- magic, strict parser success, at least one page, nontrivial page content where cited, exact size/SHA-256 and an allowed source binding; HTML or error payloads are never PDF evidence.",
+      "requiredRegression": "Store an Access Denied HTML body under a .pdf name with matching declared size/hash and require authority-document failure before any engineering claim."
+    },
+    {
+      "id": "REL-G032",
+      "domain": "release",
+      "name": "machine_rule_catalogs_parse_before_semantic_audit",
+      "symptom": "The continuous-learning rule catalog became invalid JSON when a new rule object was appended without a separator comma.",
+      "rootCause": "Semantic inventory edits were exercised before a strict machine parse/schema gate, leaving the shared rule source temporarily unreadable.",
+      "prevention": "Parse every changed machine-readable catalog with strict UTF-8 JSON and its schema as the first focused gate before semantic tests, build integration or publication.",
+      "requiredRegression": "Remove the separator between two rule objects and require strict JSON parsing to fail before catalog semantics run."
+    },
+    {
+      "id": "REL-G033",
+      "domain": "release",
+      "name": "stage_gate_selection_is_manifest_driven_without_stale_candidate_paths",
+      "symptom": "A stage gate matrix still named an older versioned output directory, requirements contract or accepted generator after the canonical candidate changed.",
+      "rootCause": "Gate selection was hardcoded to transient candidate path/version names instead of resolving exact roles from the accepted candidate manifest.",
+      "prevention": "Drive every stage gate from one explicit accepted-candidate manifest and role/hash closure; reject versioned path literals or generator allowlists that do not equal the selected candidate. Every failed check or issuance exception must, in the same finalizer transaction, retract any old accepted manifest and replace or delete stale learning evidence.",
+      "requiredRegression": "Run actual subprocess regression test_actual_finalizer_failure_retracts_stale_acceptance_end_to_end with a pre-seeded stale accepted manifest and learning report; force evaluate failure, require exit code 5, manifest deletion, replacement failure report and exact failure-to-lesson closure."
+    },
+    {
+      "id": "REL-G034",
+      "domain": "release",
+      "name": "regression_temp_space_is_run_owned_capacity_checked_and_cleaned",
+      "symptom": "An otherwise green regression suite failed while creating tiny fixtures because the shared system temporary volume returned no-space-left-on-device.",
+      "rootCause": "The test run inherited an unbounded shared OS temp location without capacity preflight, run ownership or deterministic cleanup.",
+      "prevention": "Allocate an isolated same-workspace temporary root for each regression run, preflight free capacity, bind child TMP/TEMP variables to it, and verify cleanup before the final integrity scan; report infrastructure exhaustion separately from product assertions.",
+      "requiredRegression": "Make the shared system temp unavailable while a workspace temp root has capacity; the suite must use the owned root, pass its assertions and leave no residue."
+    },
+    {
+      "id": "REL-G035",
+      "domain": "release",
+      "name": "subprocess_text_protocol_encoding_is_explicit",
+      "symptom": "A successful child command emitted JSON but a Windows locale decoder raised UnicodeDecodeError before the test could inspect it.",
+      "rootCause": "The parent forced UTF-8 decoding while the child inherited a different console encoding.",
+      "prevention": "For machine-readable child protocols, set PYTHONUTF8/PYTHONIOENCODING or consume bytes with a declared protocol encoding; require UTF-8 JSON independent of the host locale.",
+      "requiredRegression": "Run the child under a non-UTF-8 Windows locale with non-ASCII paths and require deterministic UTF-8 decode plus a zero exit code."
+    },
+    {
+      "id": "REL-G036",
+      "domain": "release",
+      "name": "frozen_file_aggregates_are_independently_recomputed",
+      "symptom": "Files and their per-file manifest rows could change together while a stale or candidate-rewritten aggregate digest still appeared frozen.",
+      "rootCause": "The gate trusted a supplied aggregate instead of deriving it from physical filenames and bytes under an independently pinned digest.",
+      "prevention": "Recompute a canonical filename-NUL-content-NUL aggregate from the physical exact file set and compare it with a separately controlled frozen digest; candidate manifests cannot redefine either the algorithm or expected value.",
+      "requiredRegression": "Change one file and its manifest row together while keeping or rewriting the supplied aggregate; both cases must fail the independent frozen comparison."
+    },
+    {
+      "id": "REL-G037",
+      "domain": "release",
+      "name": "independent_verdicts_cannot_be_overwritten_by_evidence_fields",
+      "symptom": "An evidence dictionary containing pass=true overwrote a false independent gate verdict during object expansion.",
+      "rootCause": "Untrusted evidence and authoritative result fields shared names and merge precedence.",
+      "prevention": "Namespace evidence-only booleans, construct the authoritative id/status/pass fields last, and schema-reject duplicate or shadowing verdict keys before serialization.",
+      "requiredRegression": "Inject pass=true and status=passed into otherwise failing evidence and require the serialized independent verdict to remain failed."
+    },
+    {
+      "id": "REL-G038",
+      "domain": "release",
+      "name": "acceptance_preconditions_run_before_any_output_mutation",
+      "symptom": "A downstream build created directories or overwrote a historical baseline before discovering that its accepted input manifest was missing or invalid.",
+      "rootCause": "Input acceptance was validated after initialization side effects.",
+      "prevention": "Resolve and fully validate accepted manifests, contracts, hashes and target non-aliasing before mkdir, copy, cache creation or any other write; failures leave both destination and immutable baselines byte-identical.",
+      "requiredRegression": "Run with a missing or stale acceptance manifest and require failure with no new path, timestamp change or baseline-byte mutation."
+    },
+    {
+      "id": "REL-G039",
+      "domain": "release",
+      "name": "canonical_source_trees_exclude_probe_next_and_cache_alternates",
+      "symptom": "Probe scripts, .next/.fixed variants and bytecode caches left multiple plausible implementations in the evidence tree.",
+      "rootCause": "Temporary debugging artifacts were not scoped to run-owned scratch space or rejected by final source closure.",
+      "prevention": "Keep probes and generated variants outside canonical source roots, enforce one AST-identified entrypoint per responsibility, avoid lexical self-matches from the audit policy's own forbidden-token definitions, and fail final closure on real forbidden imports plus probe, next, fixed, cache, reject or backup residues.",
+      "requiredRegression": "Audit the scanner itself without a policy-literal self-hit; then independently add a forbidden generator import, a second entrypoint, a probe, .next.py alternate or __pycache__ file and require source-closure failure."
+    },
+    {
+      "id": "REL-G040",
+      "domain": "release",
+      "name": "continuous_learning_catalog_has_independent_semantic_closure",
+      "symptom": "A release verifier accepted a structurally incomplete or internally inconsistent learning catalog because it checked only safety locks and duplicate alias names.",
+      "rootCause": "The release boundary delegated catalog semantics to code shipped inside the same candidate and did not independently verify schema, control/rule inventories, alias-to-rule bindings, orphan coverage or required regressions.",
+      "prevention": "Both package and GitHub-source verifiers must independently enforce the exact catalog top level and control set, exact row fields, non-empty regressions, unique disjoint IDs, stable domain-matched aliases, known ruleId bindings, complete prevention-rule alias coverage and fail-closed promotion policy. Guarded concurrent edits and exact inventory tests must merge rather than replace already accepted alias entries.",
+      "requiredRegression": "Mutate schema, remove a control, duplicate an ID, dangle or domain-swap an alias, orphan a prevention rule, remove requiredRegression, weaken promotion policy, or drop a pre-existing alias while adding new aliases; require the exact inventory test and both independent release boundaries to fail."
+    },
+    {
+      "id": "REL-G041",
+      "domain": "release",
+      "name": "learning_json_schema_documents_are_independently_structurally_verified",
+      "symptom": "A release could include malformed or weakened learning-event and approval-ledger schema documents while the verifier checked only that the files existed.",
+      "rootCause": "Schema files were exercised only by in-tree happy-path tests and were not independently parsed or structurally audited at package and GitHub-source boundaries.",
+      "prevention": "Both release verifiers must strictly decode and parse each learning schema, require Draft 2020-12 identity and exact definition inventory, resolve every local $ref, and enforce required/property consistency and valid schema types.",
+      "requiredRegression": "Corrupt JSON, change the schema draft or $id, remove a definition, add a dangling local $ref, remove a required property definition, or use an invalid type; require both release boundaries to fail."
+    },
+    {
+      "id": "REL-G042",
+      "domain": "release",
+      "name": "runtime_failure_aliases_are_stable_and_domain_qualified",
+      "symptom": "A failure report, lesson bundle, or novel review-only alias could carry uppercase, whitespace-bearing, or cross-domain alias text even though the catalog auditor rejected the same form.",
+      "rootCause": "The controlled-learning core treated failureAlias as arbitrary non-empty text and the novel-alias path did not reuse the catalog's stable domain-qualified grammar.",
+      "prevention": "Canonicalize no alias text: require exact lowercase dotted grammar and an exact declared-domain prefix in failure reports, persisted lesson bundles, and novel alias classification before any candidate output is written.",
+      "requiredRegression": "Inject uppercase, embedded or surrounding whitespace, and a valid alias from the wrong domain into report, bundle, and novel-alias paths; require every runtime path to fail closed."
+    },
+    {
+      "id": "REL-G043",
+      "domain": "release",
+      "name": "learning_runtime_enforces_exact_schema_keys_without_projection",
+      "symptom": "Runtime canonicalizers accepted payloads containing undeclared fields because they projected known fields into a clean object while happy-path JSON Schema tests still passed.",
+      "rootCause": "Schema additionalProperties constraints were not enforced by deterministic runtime code for reports, bundles, ledgers, and their nested objects.",
+      "prevention": "Use shared standard-library exact-key validators at every controlled-learning object boundary, then apply the existing semantic, hash, path, closure, and policy checks; never sanitize unknown fields away.",
+      "requiredRegression": "Add one undeclared key at top-level and nested report, file, closure, candidate-rule, bundle, mapping, lesson, coverage, approval, regression, and change-policy objects; require runtime rejection."
+    },
+    {
+      "id": "REL-G044",
+      "domain": "release",
+      "name": "lesson_candidates_are_audited_in_memory_before_atomic_publication",
+      "symptom": "The lesson harvester atomically published a candidate and only then audited it, so a failed audit could leave an invalid candidate at the requested path.",
+      "rootCause": "The side-effect order placed atomic write before full bundle re-audit instead of treating audit success as a publication precondition.",
+      "prevention": "Harvest and fully audit the candidate in memory before creating an output directory, temporary file, or destination; only an audited candidate may enter the atomic replace path.",
+      "requiredRegression": "Force the in-memory bundle audit to fail and assert the atomic writer is never called and neither the candidate file nor its new output directory is left behind."
+    },
+    {
+      "id": "REL-G045",
+      "domain": "release",
+      "name": "installer_selects_only_independently_verified_expected_version",
+      "symptom": "The installer preferred an older materialized plugins directory over a newly built release and could silently install the stale version.",
+      "rootCause": "Candidate selection was based on path existence and order rather than an exact expected-version match across plugin and integration manifests plus a fresh release-verifier pass.",
+      "prevention": "Select the verified release directory first, require plugin and integration manifests to equal the explicit expected version, run the official package verifier before any destination mutation, reject source templates and stale fallbacks, and recheck the installed manifest.",
+      "requiredRegression": "Place a stale materialized plugin before a valid target release and prove the target release is chosen; remove the target or supply a mismatched explicit source and prove installation fails before the destination is created or replaced."
+    },
+    {
+      "id": "REL-G046",
+      "domain": "release",
+      "name": "release_verifier_requires_explicit_expected_version_across_components",
+      "symptom": "A package whose plugin and integration manifests agreed with each other could pass even when both declared a stale version.",
+      "rootCause": "The verifier checked only internal equality and did not bind the requested release version or componentVersions to an independent expected value.",
+      "prevention": "Every official build, install and external verification command passes an explicit expected version; the verifier requires plugin.version, manifest.version, agentPlugin and Python compiler component versions to equal it.",
+      "requiredRegression": "Mutate both plugin and manifest to the same stale version, or mutate either component version, and require the verifier to fail; prove the builder and installer pass their requested version explicitly."
+    },
+    {
+      "id": "ELEC-G063",
+      "domain": "electronics",
+      "name": "physical_capacity_and_partition_geometry_are_contract_bound",
+      "symptom": "A legacy 100 x 80 mm board or mutated holes, service zones, functional partitions and overlapping courtyards could be reused despite exceeding controlled physical capacity.",
+      "rootCause": "Board size and placement geometry were treated as adjustable implementation details instead of an exact capacity-and-containment contract.",
+      "prevention": "Bind the selected 160 x 100 mm outline, four exact 3.2 mm M3 NPTH locations, connector service rectangles, transient/quiet/digital zone rectangles and real F.CrtYd geometry; require zero courtyard overlap and reject the legacy capacity candidate.",
+      "requiredRegression": "Independently mutate legacy-100x80 acceptance, one M3 hole to PTH, one service rectangle, one functional rectangle or two courtyards into overlap; every mutation must fail the physical gate."
+    },
+    {
+      "id": "ELEC-G064",
+      "domain": "electronics",
+      "name": "technical_acceptance_preserves_complete_non_authorization_boundary",
+      "symptom": "A true Stage-A or Stage-B technical pass could be read as external qualification, fabrication readiness, fabrication authorization or manufacturing authorization.",
+      "rootCause": "Authorization locks were checked incompletely or only in one report layer.",
+      "prevention": "Require externalQualificationCompleted, fabricationReady, fabricationAuthorized and manufacturingAuthorized to be explicitly false in requirements, independent gate, accepted manifest, physical/mechanical contracts and every downstream consumer report until separate external gates authorize them.",
+      "requiredRegression": "Flip each authorization boolean independently in every manifest, gate, requirements and contract layer and require failure; inspect downstream report constructors for all four explicit false locks."
+    },
+    {
+      "id": "REL-G047",
+      "domain": "release",
+      "name": "release_boundaries_execute_authorization_and_metadata_contracts",
+      "symptom": "A release verifier accepted executable authorization grants or unsafe output routing because expected words existed in source, and malformed non-object metadata could crash instead of returning a failed verification result.",
+      "rootCause": "The release boundary treated source-string presence and optimistic object shape assumptions as proof of runtime behavior.",
+      "prevention": "At both package and GitHub boundaries, parse authorization-producing Python with AST, require every controlled-learning grant assignment to be literal false, prove the harvester write destination flows from the controlled learning path guard, execute importable runtime rejection probes for report/bundle/ledger exact keys and schemas plus authoritative output paths, and type-check release metadata before field access.",
+      "requiredRegression": "test_learning_authorization_assignments_are_checked_by_ast_not_strings, test_github_source_learning_harvester_output_boundary_mutation_fails, test_runtime_boundary_rejects_exact_key_schema_and_authoritative_paths and test_release_verify_returns_structured_errors_for_non_object_metadata must fail closed for executable true grants, raw args.output writes, authoritative paths, malformed runtime schemas/keys and array/scalar release metadata."
+    },
+    {
+      "id": "ELEC-G065",
+      "domain": "electronics",
+      "name": "native_schematic_label_scope_is_part_of_topology_and_visual_contract",
+      "symptom": "Replacing canonical global labels with local labels preserved an ERC-zero result but broke the independently recognized native topology and increased PDF collisions from 162 to 187.",
+      "rootCause": "The schematic label scope was treated as interchangeable presentation syntax even though native topology extraction and rendered-sheet readability depended on the canonical global/local semantics.",
+      "prevention": "Treat every global/local label scope and named internal net as a contract field. Any scope substitution, physical rewire, hide flag, or label-lane reroute must simultaneously pass fresh independent native-topology recognition and PDF visual QA; the fresh PDF collision count must improve monotonically and the total gate must pass. ERC zero alone never proves the change safe.",
+      "requiredRegression": "test_stage_a_local_label_substitution_preserves_erc_but_fails_native_topology_and_pdf_qa proves ERC-zero scope/rewire mutations drop all 16 AINx_LIM native names and regress PDF collisions 162 to 187; test_hidden_global_labels_remain_in_pdf_text_and_collisions proves hide leaves extracted colliding text; test_independent_label_lane_reroute_must_improve_fresh_pdf_collisions rejects the ERC/topology-green 105 to 140 collision regression."
+    }
+  ],
+  "failureAliases": [
+    {
+      "alias": "mechanical.sw_default_material_mass_vs_hydro_density",
+      "domain": "mechanical",
+      "ruleId": "MECH-G024",
+      "failingCheck": "native material/mass/density parity"
+    },
+    {
+      "alias": "mechanical.custom_property_claimed_as_native_material",
+      "domain": "mechanical",
+      "ruleId": "MECH-G024",
+      "failingCheck": "native material database readback"
+    },
+    {
+      "alias": "mechanical.6306_bearing_life_shortfall",
+      "domain": "mechanical",
+      "ruleId": "MECH-G025",
+      "failingCheck": "bearing adjusted life margin"
+    },
+    {
+      "alias": "mechanical.eccentric_80mm_moment_omitted",
+      "domain": "mechanical",
+      "ruleId": "MECH-G026",
+      "failingCheck": "load combination/eccentric moment"
+    },
+    {
+      "alias": "mechanical.hardcoded_anchor_bore_thread_grease_parameters",
+      "domain": "mechanical",
+      "ruleId": "MECH-G027",
+      "failingCheck": "artifact-derived critical parameters"
+    },
+    {
+      "alias": "mechanical.allowed_pair_whitelist_arbitrary_overlap",
+      "domain": "mechanical",
+      "ruleId": "MECH-G028",
+      "failingCheck": "role/region/volume-specific interference"
+    },
+    {
+      "alias": "mechanical.same_name_assembly_import_pollution",
+      "domain": "mechanical",
+      "ruleId": "MECH-G029",
+      "failingCheck": "isolated hash-bound assembly import"
+    },
+    {
+      "alias": "mechanical.thermal_fit_wrong_object_path",
+      "domain": "mechanical",
+      "ruleId": "MECH-G030",
+      "failingCheck": "thermal mating feature binding"
+    },
+    {
+      "alias": "mechanical.thermal_fit_wrong_temperature_sign",
+      "domain": "mechanical",
+      "ruleId": "MECH-G030",
+      "failingCheck": "signed thermal expansion"
+    },
+    {
+      "alias": "mechanical.thermal_fit_touchline_zero_margin",
+      "domain": "mechanical",
+      "ruleId": "MECH-G030",
+      "failingCheck": "strictly positive residual clearance"
+    },
+    {
+      "alias": "mechanical.carrier_missing_native_step_drawing_assembly_closure",
+      "domain": "mechanical",
+      "ruleId": "MECH-G031",
+      "failingCheck": "per-subject artifact closure"
+    },
+    {
+      "alias": "mechanical.dxf_text_claimed_as_native_dimension",
+      "domain": "mechanical",
+      "ruleId": "MECH-G032",
+      "failingCheck": "native feature-bound drawing dimensions"
+    },
+    {
+      "alias": "mechanical.native_drawing_dimension_closure_incomplete",
+      "domain": "mechanical",
+      "ruleId": "MECH-G032",
+      "failingCheck": "drawing/datum/tolerance closure"
+    },
+    {
+      "alias": "mechanical.dwg_private_author_metadata",
+      "domain": "mechanical",
+      "ruleId": "MECH-G033",
+      "failingCheck": "native metadata privacy"
+    },
+    {
+      "alias": "mechanical.autocad_core_process_residual",
+      "domain": "mechanical",
+      "ruleId": "MECH-G034",
+      "failingCheck": "owned native-host lifecycle cleanup"
+    },
+    {
+      "alias": "mechanical.release_manifest_artifacts_files_scope_mismatch",
+      "domain": "mechanical",
+      "ruleId": "REL-G024",
+      "failingCheck": "manifest/artifacts/files exact closure"
+    },
+    {
+      "alias": "electronics.stage_b_imported_old_stage_a",
+      "domain": "electronics",
+      "ruleId": "ELEC-G024",
+      "failingCheck": "accepted Stage-A dependency"
+    },
+    {
+      "alias": "electronics.stage_b_fallback_when_accepted_a_missing",
+      "domain": "electronics",
+      "ruleId": "ELEC-G024",
+      "failingCheck": "no legacy Stage-A fallback"
+    },
+    {
+      "alias": "electronics.erc_severity_or_ignored_compensation",
+      "domain": "electronics",
+      "ruleId": "ELEC-G025",
+      "failingCheck": "native ERC zero/no ignores"
+    },
+    {
+      "alias": "electronics.erc_zero_missing_datasheet_passive",
+      "domain": "electronics",
+      "ruleId": "ELEC-G025",
+      "failingCheck": "datasheet circuit rules independent of ERC"
+    },
+    {
+      "alias": "electronics.thvd1450_drb_footprint_alias_ambiguity",
+      "domain": "electronics",
+      "ruleId": "ELEC-G026",
+      "failingCheck": "ordered MPN/package resolution"
+    },
+    {
+      "alias": "electronics.stm32_vbus_wrong_pin",
+      "domain": "electronics",
+      "ruleId": "ELEC-G026",
+      "failingCheck": "datasheet pin number/function"
+    },
+    {
+      "alias": "electronics.bav199_dual_diode_wrong_clamp",
+      "domain": "electronics",
+      "ruleId": "ELEC-G027",
+      "failingCheck": "fault clamp topology"
+    },
+    {
+      "alias": "electronics.bav199_rail_backpower",
+      "domain": "electronics",
+      "ruleId": "ELEC-G027",
+      "failingCheck": "unpowered injection/backpower"
+    },
+    {
+      "alias": "electronics.opa4388_unpowered_vid_exceeded",
+      "domain": "electronics",
+      "ruleId": "ELEC-G027",
+      "failingCheck": "unpowered differential input absolute maximum"
+    },
+    {
+      "alias": "electronics.tvs3301_85c_surge_rating_shortfall",
+      "domain": "electronics",
+      "ruleId": "ELEC-G028",
+      "failingCheck": "temperature-derated surge margin"
+    },
+    {
+      "alias": "electronics.four_local_surges_modeled_as_80a_common_neck",
+      "domain": "electronics",
+      "ruleId": "ELEC-G028",
+      "failingCheck": "local differential surge return loops"
+    },
+    {
+      "alias": "electronics.ads_aingnd_bias_matching_model_incomplete",
+      "domain": "electronics",
+      "ruleId": "ELEC-G029",
+      "failingCheck": "ADS signal/AIN_GND matched network"
+    },
+    {
+      "alias": "electronics.input_100ohm_accuracy_definition_conflict",
+      "domain": "electronics",
+      "ruleId": "ELEC-G030",
+      "failingCheck": "DC/AC/loading requirement separation"
+    },
+    {
+      "alias": "electronics.illegal_nt_agnd_reference_renamed",
+      "domain": "electronics",
+      "ruleId": "ELEC-G031",
+      "failingCheck": "native legal reference readback"
+    },
+    {
+      "alias": "electronics.per_ic_local_decoupling_not_closed",
+      "domain": "electronics",
+      "ruleId": "ELEC-G032",
+      "failingCheck": "per-IC local decoupling matrix"
+    },
+    {
+      "alias": "electronics.mcu_vdda_vssa_missing_10n_1u_with_erc_zero",
+      "domain": "electronics",
+      "ruleId": "ELEC-G032",
+      "failingCheck": "MCU analog supply decoupling"
+    },
+    {
+      "alias": "electronics.dedicated_power_pair_decoupling_missing_with_erc_zero",
+      "domain": "electronics",
+      "ruleId": "ELEC-G032",
+      "failingCheck": "dedicated supply-pin-pair local decoupling independent of ERC"
+    },
+    {
+      "alias": "electronics.native_netlist_source_absolute_path",
+      "domain": "electronics",
+      "ruleId": "ELEC-G035",
+      "failingCheck": "native netlist source path portability"
+    },
+    {
+      "alias": "electronics.rs485_missing_local_100n_with_erc_zero",
+      "domain": "electronics",
+      "ruleId": "ELEC-G032",
+      "failingCheck": "RS485 local supply decoupling"
+    },
+    {
+      "alias": "electronics.one_page_schematic_tiny_font_collisions",
+      "domain": "electronics",
+      "ruleId": "ELEC-G033",
+      "failingCheck": "native PDF per-page readability"
+    },
+    {
+      "alias": "electronics.two_page_schematic_duplicate_or_blank_overview",
+      "domain": "electronics",
+      "ruleId": "ELEC-G033",
+      "failingCheck": "two distinct semantic A3 pages with fixed role groups"
+    },
+    {
+      "alias": "electronics.contract_errata_overlay",
+      "domain": "electronics",
+      "ruleId": "ELEC-G034",
+      "failingCheck": "single canonical requirements contract"
+    },
+    {
+      "alias": "electronics.contract_r1_r2_r3_coexistence",
+      "domain": "electronics",
+      "ruleId": "ELEC-G034",
+      "failingCheck": "one active contract revision"
+    },
+    {
+      "alias": "electronics.absolute_d_temp_kicad_dependency",
+      "domain": "electronics",
+      "ruleId": "ELEC-G035",
+      "failingCheck": "portable isolated generation"
+    },
+    {
+      "alias": "electronics.relative_cli_path_resolved_against_cwd",
+      "domain": "electronics",
+      "ruleId": "ELEC-G035",
+      "failingCheck": "root-relative EDA paths"
+    },
+    {
+      "alias": "electronics.gate_report_mixed_artifact_candidate",
+      "domain": "electronics",
+      "ruleId": "ELEC-G036",
+      "failingCheck": "accepted Stage-A exact artifact closure"
+    },
+    {
+      "alias": "electronics.stage_a_model_native_proc_bom_same_source_risk",
+      "domain": "electronics",
+      "ruleId": "ELEC-G037",
+      "failingCheck": "independent three-way BOM derivation"
+    },
+    {
+      "alias": "electronics.allow_missing_courtyard_bypass",
+      "domain": "electronics",
+      "ruleId": "ELEC-G038",
+      "failingCheck": "real footprint courtyard"
+    },
+    {
+      "alias": "electronics.netlist_parity_not_bidirectional",
+      "domain": "electronics",
+      "ruleId": "ELEC-G039",
+      "failingCheck": "exact native/model topology parity"
+    },
+    {
+      "alias": "electronics.fabricator_stackup_authority_unknown",
+      "domain": "electronics",
+      "ruleId": "ELEC-G040",
+      "failingCheck": "controlled board stackup authority"
+    },
+    {
+      "alias": "electronics.mechanical_icd_authority_unknown",
+      "domain": "electronics",
+      "ruleId": "ELEC-G040",
+      "failingCheck": "controlled enclosure/mechanical ICD"
+    },
+    {
+      "alias": "electronics.sm712_clamp_exceeds_thvd1450_absmax",
+      "domain": "electronics",
+      "ruleId": "ELEC-G041",
+      "failingCheck": "protection/receiver coordination"
+    },
+    {
+      "alias": "electronics.thvd2410_sm712_coordination_unqualified",
+      "domain": "electronics",
+      "ruleId": "ELEC-G041",
+      "failingCheck": "exact THVD2410DR/SM712 voltage-current-energy-temperature coordination"
+    },
+    {
+      "alias": "electronics.j3_missing_shield_chassis_contract_pins",
+      "domain": "electronics",
+      "ruleId": "ELEC-G042",
+      "failingCheck": "interface connector functional pin closure"
+    },
+    {
+      "alias": "electronics.shield_conductor_collapsed_into_signal_gnd",
+      "domain": "electronics",
+      "ruleId": "ELEC-G042",
+      "failingCheck": "physical shield/chassis conductor distinct from signal ground"
+    },
+    {
+      "alias": "electronics.phoenix_5p08_order_code_on_p5p00_footprint",
+      "domain": "electronics",
+      "ruleId": "ELEC-G042",
+      "failingCheck": "connector ordered pitch/footprint parity"
+    },
+    {
+      "alias": "electronics.connector_exact_opn_pitch_accumulated_error",
+      "domain": "electronics",
+      "ruleId": "ELEC-G042",
+      "failingCheck": "exact connector OPN pin count pitch and accumulated span"
+    },
+    {
+      "alias": "electronics.full_system_authority_only_covers_analog_subset",
+      "domain": "electronics",
+      "ruleId": "ELEC-G043",
+      "failingCheck": "full-system authority coverage"
+    },
+    {
+      "alias": "electronics.j1_p5p08_claimed_but_actual_bom_p5p00",
+      "domain": "electronics",
+      "ruleId": "ELEC-G042",
+      "failingCheck": "J1 ordered pitch versus actual BOM/footprint"
+    },
+    {
+      "alias": "electronics.u5_pin_authority_comment_mislabels_d8",
+      "domain": "electronics",
+      "ruleId": "ELEC-G048",
+      "failingCheck": "authority annotation/native reference and pin parity"
+    },
+    {
+      "alias": "electronics.maximum_load_uses_30v_times_pptc_hold",
+      "domain": "electronics",
+      "ruleId": "ELEC-G044",
+      "failingCheck": "complete power-path continuous capability"
+    },
+    {
+      "alias": "electronics.power_contract_ambiguous_continuous_load_shortcut",
+      "domain": "electronics",
+      "ruleId": "ELEC-G044",
+      "failingCheck": "explicit board-only rail load efficiency input current fuse and connector budget"
+    },
+    {
+      "alias": "electronics.contract_references_deleted_tps2116_tlvh431",
+      "domain": "electronics",
+      "ruleId": "ELEC-G045",
+      "failingCheck": "current architecture component closure"
+    },
+    {
+      "alias": "electronics.contract_references_old_usb_divider",
+      "domain": "electronics",
+      "ruleId": "ELEC-G045",
+      "failingCheck": "current architecture net/value closure"
+    },
+    {
+      "alias": "electronics.contract_references_old_10ksps_rate",
+      "domain": "electronics",
+      "ruleId": "ELEC-G045",
+      "failingCheck": "current architecture operating-rate closure"
+    },
+    {
+      "alias": "electronics.local_analog_pass_generalized_to_system_pass",
+      "domain": "electronics",
+      "ruleId": "ELEC-G046",
+      "failingCheck": "non-compensatory whole-system aggregation"
+    },
+    {
+      "alias": "electronics.erc_bom_pass_generalized_to_full_system_pass",
+      "domain": "electronics",
+      "ruleId": "ELEC-G046",
+      "failingCheck": "ERC and BOM subsystem results versus complete system gate"
+    },
+    {
+      "alias": "electronics.nonisolated_returns_treated_as_independent",
+      "domain": "electronics",
+      "ruleId": "ELEC-G047",
+      "failingCheck": "field-return common-mode/isolation domain"
+    },
+    {
+      "alias": "electronics.tlv755_actual_board_thermal_margin_not_bound",
+      "domain": "electronics",
+      "ruleId": "ELEC-G049",
+      "failingCheck": "actual-board TLV755 thermal margin at 85 C"
+    },
+    {
+      "alias": "electronics.24v_input_surge_chain_not_closed",
+      "domain": "electronics",
+      "ruleId": "ELEC-G050",
+      "failingCheck": "all-temperature 24 V surge/I2t/hot-plug chain"
+    },
+    {
+      "alias": "electronics.usb_vbus_contract_stale_active_high_divider",
+      "domain": "electronics",
+      "ruleId": "ELEC-G051",
+      "failingCheck": "native USB VBUS detect topology/polarity contract"
+    },
+    {
+      "alias": "electronics.q1_family_name_not_exact_orderable_opn",
+      "domain": "electronics",
+      "ruleId": "ELEC-G052",
+      "failingCheck": "exact orderable Q1 OPN"
+    },
+    {
+      "alias": "electronics.usb_cc1_cc2_esd_coverage_missing",
+      "domain": "electronics",
+      "ruleId": "ELEC-G053",
+      "failingCheck": "USB Type-C external-contact ESD matrix"
+    },
+    {
+      "alias": "electronics.repair_claim_precedes_native_bom_netlist_change",
+      "domain": "electronics",
+      "ruleId": "ELEC-G054",
+      "failingCheck": "repair claim versus native artifact delta and fresh independent audit"
+    },
+    {
+      "alias": "electronics.canonical_private_netlist_separation_missing",
+      "domain": "electronics",
+      "ruleId": "ELEC-G055",
+      "failingCheck": "private raw export/public sanitized netlist semantic equality and privacy"
+    },
+    {
+      "alias": "electronics.q1_candidate_contract_reauthored_exact_opn",
+      "domain": "electronics",
+      "ruleId": "ELEC-G052",
+      "failingCheck": "independent Q1 exact-orderable authority floor"
+    },
+    {
+      "alias": "electronics.usb_cc_esd_array_bypassed_while_other_usb_checks_green",
+      "domain": "electronics",
+      "ruleId": "ELEC-G053",
+      "failingCheck": "CC1/CC2 connector-side and termination-side flow-through"
+    },
+    {
+      "alias": "electronics.hierarchical_child_schematic_omitted_from_acceptance_hash",
+      "domain": "electronics",
+      "ruleId": "ELEC-G056",
+      "failingCheck": "root and child native schematic exact closure"
+    },
+    {
+      "alias": "electronics.unbound_contract_reauthored_kicad_version",
+      "domain": "electronics",
+      "ruleId": "ELEC-G057",
+      "failingCheck": "independent KiCad product/version authority"
+    },
+    {
+      "alias": "electronics.authority_manifest_self_declared_pdf_hash_and_mpn_coverage",
+      "domain": "electronics",
+      "ruleId": "ELEC-G058",
+      "failingCheck": "contract-bound authority document projection"
+    },
+    {
+      "alias": "electronics.authority_pdf_suffix_contains_access_denied_html",
+      "domain": "electronics",
+      "ruleId": "ELEC-G062",
+      "failingCheck": "PDF magic parse page and cited-content authority"
+    },
+    {
+      "alias": "electronics.pad_net_parity_collapsed_duplicate_pad_occurrences",
+      "domain": "electronics",
+      "ruleId": "ELEC-G059",
+      "failingCheck": "physical pad/net occurrence multiset"
+    },
+    {
+      "alias": "electronics.stage_b_extra_unbound_pad_mpn_or_land_pattern",
+      "domain": "electronics",
+      "ruleId": "ELEC-G059",
+      "failingCheck": "pad/net plus MPN/footprint authority closure"
+    },
+    {
+      "alias": "electronics.stage_b_executed_stage_a_generator",
+      "domain": "electronics",
+      "ruleId": "ELEC-G060",
+      "failingCheck": "accepted native artifacts are the only downstream input"
+    },
+    {
+      "alias": "electronics.accepted_manifest_old_role_alias_accepted",
+      "domain": "electronics",
+      "ruleId": "ELEC-G060",
+      "failingCheck": "exact accepted role set and cardinality"
+    },
+    {
+      "alias": "electronics.drc_consumer_downgraded_severity_or_added_exclusion",
+      "domain": "electronics",
+      "ruleId": "ELEC-G061",
+      "failingCheck": "accepted DRC policy byte integrity"
+    },
+    {
+      "alias": "electronics.stage_a_technical_acceptance_misread_as_fabrication_authorization",
+      "domain": "electronics",
+      "ruleId": "ELEC-G064",
+      "failingCheck": "technical versus fabrication/manufacturing authorization boundary"
+    },
+    {
+      "alias": "electronics.stage_b_reused_compact_legacy_board_without_zone_authority",
+      "domain": "electronics",
+      "ruleId": "ELEC-G063",
+      "failingCheck": "controlled outline courtyard service and functional zones"
+    },
+    {
+      "alias": "release.relative_path_wrong_working_directory",
+      "domain": "release",
+      "ruleId": "REL-G023",
+      "failingCheck": "explicit-root path resolution"
+    },
+    {
+      "alias": "release.mixed_artifact_closure",
+      "domain": "release",
+      "ruleId": "REL-G024",
+      "failingCheck": "role/path/size/hash exact closure"
+    },
+    {
+      "alias": "release.manifest_sha_one_way_only",
+      "domain": "release",
+      "ruleId": "REL-G024",
+      "failingCheck": "manifest/checksum bidirectional closure"
+    },
+    {
+      "alias": "release.errata_overlay_canonical_contract",
+      "domain": "release",
+      "ruleId": "REL-G025",
+      "failingCheck": "single canonical authority"
+    },
+    {
+      "alias": "release.nonportable_machine_absolute_path",
+      "domain": "release",
+      "ruleId": "REL-G026",
+      "failingCheck": "portable source/report path scan"
+    },
+    {
+      "alias": "release.source_input_freshness_missing",
+      "domain": "release",
+      "ruleId": "REL-G027",
+      "failingCheck": "exact source-input freshness"
+    },
+    {
+      "alias": "release.public_final_written_before_complete",
+      "domain": "release",
+      "ruleId": "REL-G028",
+      "failingCheck": "atomic staged publication"
+    },
+    {
+      "alias": "release.showcase_empty_manifest",
+      "domain": "release",
+      "ruleId": "REL-G029",
+      "failingCheck": "non-empty showcase manifest"
+    },
+    {
+      "alias": "release.showcase_arbitrary_directory",
+      "domain": "release",
+      "ruleId": "REL-G029",
+      "failingCheck": "showcase directory allowlist"
+    },
+    {
+      "alias": "release.showcase_sensitive_binary",
+      "domain": "release",
+      "ruleId": "REL-G029",
+      "failingCheck": "showcase sensitive-artifact rejection"
+    },
+    {
+      "alias": "release.showcase_symlink_escape",
+      "domain": "release",
+      "ruleId": "REL-G029",
+      "failingCheck": "showcase no-link containment"
+    },
+    {
+      "alias": "release.showcase_stale_output_residue",
+      "domain": "release",
+      "ruleId": "REL-G029",
+      "failingCheck": "showcase exact physical tree closure"
+    },
+    {
+      "alias": "release.showcase_incomplete_roles",
+      "domain": "release",
+      "ruleId": "REL-G029",
+      "failingCheck": "showcase required-role bijection"
+    },
+    {
+      "alias": "release.showcase_duplicate_slug",
+      "domain": "release",
+      "ruleId": "REL-G029",
+      "failingCheck": "showcase unique fixed slugs"
+    },
+    {
+      "alias": "release.rule_catalog_invalid_json",
+      "domain": "release",
+      "ruleId": "REL-G032",
+      "failingCheck": "strict UTF-8 JSON parse before semantic rule audit"
+    },
+    {
+      "alias": "release.stage_gate_matrix_stale_candidate_path_hardcoded",
+      "domain": "release",
+      "ruleId": "REL-G033",
+      "failingCheck": "manifest-selected stage candidate roles versus hardcoded stale paths"
+    },
+    {
+      "alias": "release.system_temp_capacity_exhausted_during_regression",
+      "domain": "release",
+      "ruleId": "REL-G034",
+      "failingCheck": "run-owned regression temp capacity and residue cleanup"
+    },
+    {
+      "alias": "release.windows_subprocess_utf8_decode_implicit_locale",
+      "domain": "release",
+      "ruleId": "REL-G035",
+      "failingCheck": "explicit machine-protocol subprocess encoding"
+    },
+    {
+      "alias": "release.failed_stage_a_finalization_left_stale_manifest_live",
+      "domain": "release",
+      "ruleId": "REL-G033",
+      "failingCheck": "canonical path and unconditional stale-manifest invalidation"
+    },
+    {
+      "alias": "release.stage_b_matrix_and_files_rewritten_together_without_independent_aggregate",
+      "domain": "release",
+      "ruleId": "REL-G036",
+      "failingCheck": "physical file aggregate versus independent frozen digest"
+    },
+    {
+      "alias": "release.evidence_pass_field_overwrote_independent_verdict",
+      "domain": "release",
+      "ruleId": "REL-G037",
+      "failingCheck": "unshadowable independent gate verdict"
+    },
+    {
+      "alias": "release.accepted_gate_requirements_matrix_mixed_revisions",
+      "domain": "release",
+      "ruleId": "REL-G024",
+      "failingCheck": "gate requirements matrix exact revision closure"
+    },
+    {
+      "alias": "release.stage_b_missing_acceptance_wrote_before_failure",
+      "domain": "release",
+      "ruleId": "REL-G038",
+      "failingCheck": "precondition-before-write ordering"
+    },
+    {
+      "alias": "release.preacceptance_test_overwrote_historical_stage_b_baseline",
+      "domain": "release",
+      "ruleId": "REL-G038",
+      "failingCheck": "immutable baseline before accepted input"
+    },
+    {
+      "alias": "release.stage_b_probe_next_cache_alternate_implementations",
+      "domain": "release",
+      "ruleId": "REL-G039",
+      "failingCheck": "single canonical consumer source closure"
+    },
+    {
+      "alias": "release.continuous_learning_catalog_schema_unverified",
+      "domain": "release",
+      "ruleId": "REL-G040",
+      "failingCheck": "independent catalog schema and exact top-level contract"
+    },
+    {
+      "alias": "release.continuous_learning_catalog_duplicate_rule_id",
+      "domain": "release",
+      "ruleId": "REL-G040",
+      "failingCheck": "unique disjoint control and prevention-rule IDs"
+    },
+    {
+      "alias": "release.continuous_learning_alias_dangling_or_domain_mismatched",
+      "domain": "release",
+      "ruleId": "REL-G040",
+      "failingCheck": "stable alias to known same-domain prevention rule"
+    },
+    {
+      "alias": "release.continuous_learning_prevention_rule_unaliased",
+      "domain": "release",
+      "ruleId": "REL-G040",
+      "failingCheck": "every prevention rule has at least one observed failure alias"
+    },
+    {
+      "alias": "release.continuous_learning_required_regression_missing",
+      "domain": "release",
+      "ruleId": "REL-G040",
+      "failingCheck": "non-empty regression requirement on every control and prevention rule"
+    },
+    {
+      "alias": "release.continuous_learning_minimal_fixture_bypassed_semantics",
+      "domain": "release",
+      "ruleId": "REL-G040",
+      "failingCheck": "release-verifier fixture exercises the complete catalog contract"
+    },
+    {
+      "alias": "release.concurrent_learning_alias_inventory_merge_dropped_existing_entries",
+      "domain": "release",
+      "ruleId": "REL-G040",
+      "failingCheck": "guarded concurrent alias merge preserves exact pre-existing inventory"
+    },
+    {
+      "alias": "release.readme_links_not_verified",
+      "domain": "release",
+      "ruleId": "REL-G030",
+      "failingCheck": "packaged README target resolution"
+    },
+    {
+      "alias": "release.showcase_review_local_links_not_copied",
+      "domain": "release",
+      "ruleId": "REL-G030",
+      "failingCheck": "published review role target resolution"
+    },
+    {
+      "alias": "release.mutating_tests_parallel_with_final_scan",
+      "domain": "release",
+      "ruleId": "REL-G031",
+      "failingCheck": "sequential final integrity gate"
+    },
+    {
+      "alias": "release.pycache_polluted_release",
+      "domain": "release",
+      "ruleId": "REL-G031",
+      "failingCheck": "zero cache/residue package closure"
+    },
+    {
+      "alias": "release.learning_schema_document_presence_without_structure_validation",
+      "domain": "release",
+      "ruleId": "REL-G041",
+      "failingCheck": "independent learning schema document structural audit"
+    },
+    {
+      "alias": "release.learning_schema_dangling_local_ref",
+      "domain": "release",
+      "ruleId": "REL-G041",
+      "failingCheck": "all local JSON Schema references resolve to declared definitions"
+    },
+    {
+      "alias": "release.learning_schema_required_property_not_declared",
+      "domain": "release",
+      "ruleId": "REL-G041",
+      "failingCheck": "required keys are unique and declared by the same object schema"
+    },
+    {
+      "alias": "release.continuous_learning_runtime_alias_unstable_or_wrong_domain",
+      "domain": "release",
+      "ruleId": "REL-G042",
+      "failingCheck": "runtime failureAlias lowercase grammar and exact domain prefix"
+    },
+    {
+      "alias": "release.continuous_learning_runtime_extra_key_bypassed_schema",
+      "domain": "release",
+      "ruleId": "REL-G043",
+      "failingCheck": "runtime exact-key enforcement across every learning schema object"
+    },
+    {
+      "alias": "release.continuous_learning_postwrite_audit_left_invalid_candidate",
+      "domain": "release",
+      "ruleId": "REL-G044",
+      "failingCheck": "in-memory candidate audit is a strict pre-write condition"
+    },
+    {
+      "alias": "release.installer_preferred_stale_materialized_plugin",
+      "domain": "release",
+      "ruleId": "REL-G045",
+      "failingCheck": "verified expected-version install source selection"
+    },
+    {
+      "alias": "release.installer_accepted_plugin_integration_version_mismatch",
+      "domain": "release",
+      "ruleId": "REL-G045",
+      "failingCheck": "plugin and integration manifest expected-version equality"
+    },
+    {
+      "alias": "release.installer_mutated_destination_before_source_verification",
+      "domain": "release",
+      "ruleId": "REL-G045",
+      "failingCheck": "official package verification before destination mutation"
+    },
+    {
+      "alias": "release.plugin_and_manifest_agreed_on_stale_version",
+      "domain": "release",
+      "ruleId": "REL-G046",
+      "failingCheck": "independent expected release version"
+    },
+    {
+      "alias": "release.component_versions_not_bound_to_requested_release",
+      "domain": "release",
+      "ruleId": "REL-G046",
+      "failingCheck": "agent-plugin and Python component version closure"
+    },
+    {
+      "alias": "electronics.drc_warning_severity_downgrade_accepted",
+      "domain": "electronics",
+      "ruleId": "ELEC-G061",
+      "failingCheck": "native DRC any-severity violation closure"
+    },
+    {
+      "alias": "electronics.drc_ignored_check_or_exclusion_accepted",
+      "domain": "electronics",
+      "ruleId": "ELEC-G061",
+      "failingCheck": "native DRC ignored-check and exclusion zero closure"
+    },
+    {
+      "alias": "electronics.stage_b_accepted_project_byte_drift",
+      "domain": "electronics",
+      "ruleId": "ELEC-G061",
+      "failingCheck": "accepted project and table byte integrity"
+    },
+    {
+      "alias": "electronics.stage_b_legacy_100x80_capacity_reaccepted",
+      "domain": "electronics",
+      "ruleId": "ELEC-G063",
+      "failingCheck": "controlled physical capacity selection"
+    },
+    {
+      "alias": "electronics.stage_b_m3_npth_or_service_zone_mutated",
+      "domain": "electronics",
+      "ruleId": "ELEC-G063",
+      "failingCheck": "exact hole and connector service geometry"
+    },
+    {
+      "alias": "electronics.stage_b_functional_zone_or_courtyard_overlap_mutated",
+      "domain": "electronics",
+      "ruleId": "ELEC-G063",
+      "failingCheck": "functional containment and zero courtyard overlap"
+    },
+    {
+      "alias": "electronics.technical_gate_authorization_boolean_true",
+      "domain": "electronics",
+      "ruleId": "ELEC-G064",
+      "failingCheck": "complete cross-layer non-authorization boundary"
+    },
+    {
+      "alias": "release.valid_acceptance_targeted_immutable_stage_b_baseline",
+      "domain": "release",
+      "ruleId": "REL-G038",
+      "failingCheck": "valid-input target non-aliasing before write"
+    },
+    {
+      "alias": "release.stage_bc_extra_consumer_entrypoint",
+      "domain": "release",
+      "ruleId": "REL-G039",
+      "failingCheck": "exact canonical consumer source and executable-entrypoint closure"
+    },
+    {
+      "alias": "release.source_closure_policy_literals_self_matched",
+      "domain": "release",
+      "ruleId": "REL-G039",
+      "failingCheck": "AST-aware source closure without audit-policy lexical self-match"
+    },
+    {
+      "alias": "release.guarded_patch_self_created_duplicate_anchor",
+      "domain": "release",
+      "ruleId": "REL-G040",
+      "failingCheck": "guarded transformation cannot make newly inserted text participate in the old anchor match"
+    },
+    {
+      "alias": "release.continuous_learning_authorization_source_string_only",
+      "domain": "release",
+      "ruleId": "REL-G047",
+      "failingCheck": "AST and importable-runtime authorization boundary rejects executable true grants despite false decoy strings"
+    },
+    {
+      "alias": "release.continuous_learning_harvester_guard_call_presence_only",
+      "domain": "release",
+      "ruleId": "REL-G047",
+      "failingCheck": "harvester atomic destination is data-flow bound to controlled learning output"
+    },
+    {
+      "alias": "release.release_metadata_non_object_crashed_verifier",
+      "domain": "release",
+      "ruleId": "REL-G047",
+      "failingCheck": "non-object plugin and integration metadata returns structured verifier errors"
+    },
+    {
+      "alias": "electronics.local_label_substitution_preserved_erc_but_broke_native_topology_and_visual_qa",
+      "domain": "electronics",
+      "ruleId": "ELEC-G065",
+      "failingCheck": "global/local label-scope mutation passes ERC but must fail native topology and PDF QA"
+    },
+    {
+      "alias": "electronics.hidden_kicad_labels_remained_pdf_text_and_increased_collisions",
+      "domain": "electronics",
+      "ruleId": "ELEC-G065",
+      "failingCheck": "hidden KiCad global labels remain in PDF-extracted text and increase collisions despite ERC zero"
+    },
+    {
+      "alias": "electronics.physical_series_rewire_preserved_erc_but_dropped_named_native_nets",
+      "domain": "electronics",
+      "ruleId": "ELEC-G065",
+      "failingCheck": "physical series rewire preserves ERC zero but drops all 16 named AINx_LIM native nets"
+    },
+    {
+      "alias": "electronics.independent_label_lane_reroute_increased_pdf_collisions_despite_erc",
+      "domain": "electronics",
+      "ruleId": "ELEC-G065",
+      "failingCheck": "independent label-lane reroute keeps ERC and topology green but regresses fresh PDF collisions from 105 to 140"
+    }
+  ],
+  "candidateSafetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  },
+  "promotionPolicy": {
+    "automaticPromotion": false,
+    "authoritativeRuleMutationByTool": false,
+    "installedPluginMutationByTool": false,
+    "testDeletionAllowed": false,
+    "ruleWeakeningAllowed": false,
+    "requiresTwoDistinctRecordedReviewerIds": true,
+    "requiresExternalAuthenticatedReview": true,
+    "requiresBundleRuleVersionBinding": true,
+    "requiresStrictlyNewerVersion": true,
+    "requiresRedBeforeFixGreenAfterFix": true,
+    "requiresUnrelatedSuitesPass": true
+  }
+}

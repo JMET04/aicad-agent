@@ -47,7 +47,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.12.0"
+AGENT_API_VERSION = "1.13.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -200,15 +200,34 @@ def capabilities() -> dict[str, Any]:
         },
         "production_readiness_qa": {
             "available": True,
-            "script": str((PLUGIN_ROOT / "scripts" / "aicad_production_readiness_qa_v2.py").resolve()),
+            "script": str((PLUGIN_ROOT / "scripts" / "aicad_production_readiness_qa_v3.py").resolve()),
             "rules": str((PLUGIN_ROOT / "rules" / "production_readiness_rules.json").resolve()),
-            "contract_schema": str((PLUGIN_ROOT / "rules" / "production_readiness_contract_v2.schema.json").resolve()),
+            "contract_schema": str((PLUGIN_ROOT / "rules" / "production_readiness_contract_v3.schema.json").resolve()),
+            "disciplines": ["mechanical", "electronics"],
             "policy": "evidence_bound_non_compensatory_fail_closed",
             "self_reported_boolean_allowed": False,
             "machine_evidence": "sha256_plus_json_pointer",
-            "host_and_professional_binding": "artifact_set_sha256",
+            "native_host_evidence_binding": "artifact_set_sha256",
+            "recorded_approval_evidence_binding": "artifact_set_sha256_evidence_only",
+            "artifact_set_binding": "artifact_id_plus_kind_plus_part_id_plus_revision_plus_normalized_relative_path_plus_size_plus_sha256",
+            "expected_artifact_closure": "exact_artifact_id_kind_part_id_revision_and_path_inventory",
+            "candidate_declared_closure_consistency": "parsed_machine_bom_subject_rows_and_parsed_kicad_board_copper_and_drill_inventory_to_exact_candidate_artifact_id_sha256_sets",
+            "repeated_artifact_kinds_allowed": True,
+            "per_subject_source_closure": True,
+            "source_artifact_binding": "rule_owned_selector_to_exact_artifact_id_sha256_map",
+            "conclusion": "evidence_contract_ready_only",
+            "independent_evidence_authenticity_verified": False,
+            "native_execution_replayed_by_this_qa": False,
+            "technical_package_ready_granted_by_this_qa": False,
+            "candidate_artifacts_exposed_by_this_qa": False,
+            "technical_readiness_is_release_authorization": False,
+            "release_authorization_requires_independent_trust_chain": True,
             "strict_production_failure_disposition": "blocker_report_only",
             "automatic_acceptance": False,
+            "architecture_compatibility": {
+                "script": str((PLUGIN_ROOT / "scripts" / "aicad_production_readiness_qa_v2.py").resolve()),
+                "contract_schema": str((PLUGIN_ROOT / "rules" / "production_readiness_contract_v2.schema.json").resolve()),
+            },
         },
         "report_quality_qa": {
             "available": True,
@@ -217,6 +236,40 @@ def capabilities() -> dict[str, Any]:
             "conflicting_duplicates_fail": True,
             "repeat_run_idempotence_required": True,
             "review_only": True,
+        },
+        "controlled_continuous_learning": {
+            "available": True,
+            "harvester": str((PLUGIN_ROOT / "scripts" / "aicad_lesson_harvester.py").resolve()),
+            "qa": str((PLUGIN_ROOT / "scripts" / "aicad_continuous_learning_qa.py").resolve()),
+            "rules": str((PLUGIN_ROOT / "rules" / "continuous_learning_rules.json").resolve()),
+            "event_schema": str((PLUGIN_ROOT / "rules" / "learning_event.schema.json").resolve()),
+            "approval_schema": str((PLUGIN_ROOT / "rules" / "learning_approval_ledger.schema.json").resolve()),
+            "workflow": [
+                "hash-bind every failed test or gate",
+                "normalize one lesson per declared failure",
+                "prove exact failure-to-lesson closure",
+                "deduplicate deterministically and reject conflicts",
+                "require a negative regression plus red-before-fix and green-after-fix",
+                "verify two distinct recorded reviewer IDs bound to bundle, target rule and newer version",
+                "require external authenticated review before any manual promotion decision",
+            ],
+            "canonical_event_contains_current_time": False,
+            "canonical_event_contains_absolute_machine_paths": False,
+            "candidate_safety_locks": {
+                "reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True
+            },
+            "candidate_output_scope": "learning/**/*.json_only",
+            "automatic_promotion": False,
+            "authoritative_rule_mutation": False,
+            "installed_plugin_mutation": False,
+            "readiness_or_authorization_unlock": False,
+            "external_authenticated_review_required": True,
+            "external_authenticated_review_verified": False,
+            "promotion_eligible_for_manual_application": False,
+            "technical_package_ready": False,
+            "production_release_eligible": False,
+            "manufacturing_authorized": False,
+            "fabrication_authorized": False,
         },
         "packaging_dieline_qa": {
             "available": True,

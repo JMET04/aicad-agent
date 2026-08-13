@@ -1,9 +1,9 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.12.0\github-repository',
-    [string]$Version = '1.12.0',
-    [string]$PluginArchive = 'release\v1.12.0\aicad-agent-1.12.0.zip',
-    [string]$PluginDirectory = 'release\v1.12.0\aicad-agent'
+    [string]$OutputDirectory = 'release\v1.13.0\github-repository',
+    [string]$Version = '1.13.0',
+    [string]$PluginArchive = 'release\v1.13.0\aicad-agent-1.13.0.zip',
+    [string]$PluginDirectory = 'release\v1.13.0\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -31,7 +31,7 @@ function Get-GitHubSourceInputFiles {
     )
     $rows = [Collections.Generic.List[IO.FileInfo]]::new()
     $skipNames = @('__pycache__', '.pytest_cache', 'bin', 'obj')
-    $skipExtensions = @('.pyc', '.pyo')
+    $skipExtensions = @('.pyc', '.pyo', '.rej', '.orig')
     function Add-Tree([string]$Tree) {
         if (-not (Test-Path -LiteralPath $Tree -PathType Container)) { return }
         Get-ChildItem -LiteralPath $Tree -Recurse -Force -File | ForEach-Object {
@@ -153,7 +153,7 @@ Get-ChildItem -LiteralPath $target -Directory -Recurse -Force |
         Remove-Item -LiteralPath $candidate -Recurse -Force
     }
 Get-ChildItem -LiteralPath $target -File -Recurse -Force |
-    Where-Object Extension -In @('.pyc', '.pyo') |
+    Where-Object Extension -In @('.pyc', '.pyo', '.rej', '.orig') |
     Remove-Item -Force
 
 $archiveName = Split-Path -Leaf $archive
@@ -198,12 +198,14 @@ $manifest = [ordered]@{
         'non-skippable whole-intent, detail-normality and hashed-build gates',
         'origin-anchored deterministic 2D AICAD compilation',
         'fail-closed production-readiness contract with authority, paper-space, furniture, route-clearance, host and release gates',
+        'canonical mechanical and PCB evidence-contract QA with mechanical BOM/native-board reverse closure and per-PCB fabrication artifacts; concludes only evidenceContractReady and never grants readiness or authorization',
         'architectural plan-cut/projection/hidden/datum hierarchy with structure-supported axis groups, executable annotation occupancy and native dimension QA',
         'bounded independent-rank and packaging dieline normality proof',
         'aligned interactive edge/corner/face review surface',
         'typed selected line/point/circle/face measurements from compiled model geometry',
         'one synchronized MODEL_XYZ switch across 2D origins and rotating 3D axes',
         'exact source-bound subobject correction and arbitrary semantic sections',
+        'controlled hash-bound failure-to-lesson loop with exact closure, disabled candidates and no automatic promotion or readiness unlock',
         'canonical cross-domain normative quality contract with explicit external-verifier boundary',
         'deterministic sanitized public showcase assembly',
         'optional AutoCAD and SolidWorks native hosts',

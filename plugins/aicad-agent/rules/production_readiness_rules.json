@@ -1,6 +1,6 @@
 {
-  "schema": "aicad_production_readiness_rules_v2",
-  "version": "2.1.0",
+  "schema": "aicad_production_readiness_rules_v3",
+  "version": "3.0.0",
   "status": "candidate",
   "policy": "non_compensatory_fail_closed",
   "rules": [
@@ -56,23 +56,44 @@
     {
       "id": "PROD-G008",
       "name": "authorized_release",
-      "requirement": "A production release candidate shall retain reviewOnly=true and accepted=false until the authorized professional or manufacturing reviewer records approval.",
+      "requirement": "A v3 evidence-contract pass shall retain reviewOnly=true and accepted=false and shall not claim technical-package readiness, production candidacy, manufacturing/fabrication readiness or authorization; recorded approval metadata is evidence only.",
       "failureCause": "Automated QA was misrepresented as legal, engineering or manufacturing acceptance.",
-      "prevention": "Separate technical candidate readiness from authorized acceptance and never let a generator self-sign."
+      "prevention": "Expose only evidenceContractReady from v3. Keep technicalPackageReady, productionReleaseEligible, manufacturingAuthorized and fabricationAuthorized false; never let a generator self-sign."
     },
     {
       "id": "PROD-G009",
       "name": "evidence_file_hash_and_artifact_set_binding",
-      "requirement": "Production gates shall be read from real hash-fixed evidence files; machine reports shall be evaluated through declared JSON Pointers, native-host reports and professional releases shall bind the exact candidate artifact-set SHA-256, and passed=true self-reporting is forbidden.",
+      "requirement": "Production gates shall be read from real hash-fixed evidence files; machine reports shall be evaluated through rule-owned JSON Pointers; every artifact shall have a unique artifactId and exact expected-closure identity; repeated kinds shall remain granular by partId/revision/path; native source maps and recorded approval evidence shall bind the exact candidate artifact-set SHA-256; and passed=true self-reporting is forbidden.",
       "failureCause": "The first production contract accepted a Boolean and arbitrary evidence string, so a caller could claim that axes, host reopen or professional review passed without supplying the report that proved it.",
-      "prevention": "Use aicad_production_readiness_contract_v2 and aicad_production_readiness_qa_v2.py; verify every file path and SHA-256, read the expected machine value, and expose zero artifacts on any evidence or artifact-set mismatch."
+      "prevention": "Use the canonical domain contract and QA version; verify every portable relative path and SHA-256, require exact expected-artifact closure, apply rule-owned per-subject matrices, bind every selected source artifact by artifactId, and expose zero technical artifacts on any non-release gate mismatch."
     },
     {
       "id": "PROD-G010",
       "name": "no_half_finished_artifact_delivery",
-      "requirement": "When the user requests directly producible output, every non-compensatory geometry, drafting, sheet, authority, native-host and authorized-release gate shall pass before any CAD artifact is exposed; a review drawing, attractive preview or high partial score is never a substitute.",
+      "requirement": "When direct production is requested, a v3 pass may expose only its evidence-contract report; it shall never expose candidate CAD/EDA artifacts or grant a technical/manufacturing/fabrication conclusion.",
       "failureCause": "An incomplete floor-plan candidate was opened as if additional visual detail could make it a construction deliverable, shifting repeated correction work to the user.",
-      "prevention": "Resolve the requested delivery class before generation; if any production gate is missing, stop before CAD compilation and expose only a readable blocker bundle listing exact missing evidence, root causes and disabled prevention-rule candidates."
+      "prevention": "Use v3 solely as a portable evidence-contract verifier. Any real technical-readiness or release process must independently replay native tools, authenticate evidence and evaluate the project-specific engineering model."
+    },
+    {
+      "id": "PROD-G011",
+      "name": "mechanical_manufacturing_definition",
+      "requirement": "Mechanical evidence contracts shall bind authoritative input units, operating envelope, design life and provenance; independently recomputed load paths, strength/stiffness/fatigue/FoS, joints/edges, bearing life, thermal envelope and fits; feature-bound drawing definition, native material assignment, model/drawing/inspection parity and native source hashes to one artifact set.",
+      "failureCause": "A geometrically complete part was mistaken for a manufacturable definition even though the shop and inspector could not determine material state, allowable variation, surface condition or acceptance method.",
+      "prevention": "Require every non-release canonical v3 mechanical evidence gate and mutation regression. Recorded approval fields are a separate optional evidence class; a Boolean report or attractive drawing is not independent proof and v3 never grants technical-package readiness."
+    },
+    {
+      "id": "PROD-G012",
+      "name": "pcb_fabrication_and_assembly_definition",
+      "requirement": "PCB evidence contracts shall bind native schematic/project/board sources; exact symbol pin/function/electrical-type, bidirectional pad-net and reference-footprint parity; verified footprints/Pin 1/BOM-CPL; power, derating, transient, interface and protection analysis; audited ERC/DRC configuration; courtyard/edge/keepout/access placement; zero final unconnected nets; function/thermal/EMC/integrity analysis and same-revision CAM outputs.",
+      "failureCause": "Gerbers or an attractive routed preview were treated as proof of electrical, sourcing, thermal, EMC and assembly readiness.",
+      "prevention": "Require every non-release canonical v3 electronics evidence gate and mutation regression. Recorded approval fields are a separate optional evidence class; a routed preview, Gerber archive or zero headline error count is not enough and v3 never grants fabrication readiness."
+    },
+    {
+      "id": "PROD-G013",
+      "name": "no_score_no_waiver_for_required_fabrication_gates",
+      "requirement": "Required manufacturing and fabrication gates are a conjunction: no score, waiver, visual approval, portable export or unrelated passing analysis may offset one failed or unavailable gate.",
+      "failureCause": "A mostly green dashboard concealed a missing native check or engineering analysis and presented the result as ready.",
+      "prevention": "Derive the result from the exact domain profile, reject missing and extra gate inventories, expose zero production artifacts on any failure, and preserve reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true."
     }
   ],
   "architectureProductionProfile": {
@@ -121,32 +142,297 @@
       "releaseSignature"
     ]
   },
+  "mechanicalManufacturingProfileV3": {
+    "intent": {
+      "wholeIntent": {"kind": "authority_document", "jsonPointer": "/intent/wholeIntent", "expectedValue": true, "bindArtifactSet": true},
+      "dimensionalAuthority": {"kind": "authority_document", "jsonPointer": "/intent/dimensionalAuthority", "expectedValue": true, "bindArtifactSet": true},
+      "materialAuthority": {"kind": "authority_document", "jsonPointer": "/intent/materialAuthority", "expectedValue": true, "bindArtifactSet": true},
+      "processAuthority": {"kind": "authority_document", "jsonPointer": "/intent/processAuthority", "expectedValue": true, "bindArtifactSet": true},
+      "standardsApplicabilityAndEditionResolved": {"kind": "authority_document", "jsonPointer": "/standards/applicabilityAndEditionResolved", "expectedValue": true, "bindArtifactSet": true},
+      "materialAndFastenerPropertySourcesBound": {"kind": "authority_document", "jsonPointer": "/standards/materialAndFastenerPropertySourcesBound", "expectedValue": true, "bindArtifactSet": true},
+      "operatingEnvelopeDutyCycleAndDesignLifeAuthority": {"kind": "authority_document", "jsonPointer": "/intent/operatingEnvelopeDutyCycleAndDesignLifeAuthority", "expectedValue": true, "bindArtifactSet": true},
+      "assemblyConfigurationAndInterfaceAuthority": {"kind": "authority_document", "jsonPointer": "/intent/assemblyConfigurationAndInterfaceAuthority", "expectedValue": true, "bindArtifactSet": true},
+      "safetyRegulatoryAndRiskApplicabilityResolved": {"kind": "authority_document", "jsonPointer": "/intent/safetyRegulatoryAndRiskApplicabilityResolved", "expectedValue": true, "bindArtifactSet": true},
+      "currentStandardsLedger": {"kind": "authority_document", "jsonPointer": "/standards/requiredCurrentBaselines", "expectedValue": [{"standard": "ISO 8015:2011", "status": "published", "applicability": "GPS fundamentals"},{"standard": "ISO 14405-1:2025", "status": "published", "applicability": "dimensional tolerancing"},{"standard": "ISO 5459:2024", "status": "published", "applicability": "datums and datum systems"},{"standard": "ISO 1101:2017", "status": "published", "applicability": "geometrical tolerancing"},{"standard": "ISO 22081:2021", "status": "published", "applicability": "general geometrical and size specifications"},{"standard": "ISO 13715:2017", "status": "published", "applicability": "edges of undefined shape"},{"standard": "ISO 21920-1:2021", "status": "published", "applicability": "surface texture indication"},{"standard": "ISO 1:2022", "status": "published", "applicability": "reference temperature for specification and verification"},{"standard": "ISO 2768-1:1989", "status": "published", "applicability": "general linear and angular tolerances when invoked"},{"standard": "ISO 286-1:2010", "status": "published", "applicability": "limits and fits basis when invoked"},{"standard": "ISO 286-2:2010", "status": "published", "applicability": "limit deviations for holes and shafts when invoked"},{"standard": "ISO 965-1:2026", "status": "published", "applicability": "metric thread tolerances when invoked"},{"standard": "ISO 898-1:2013", "status": "published", "applicability": "steel fastener properties when invoked"},{"standard": "ISO 16047:2005+Amd 1:2012", "status": "published", "applicability": "fastener torque-clamp testing when invoked"}], "bindArtifactSet": true, "predicate": "contains_expected_rows"},
+      "noRetiredSoleAuthority": {"kind": "authority_document", "jsonPointer": "/standards/retiredOrWithdrawnSoleAuthorityCount", "expectedValue": 0, "bindArtifactSet": true}
+    },
+    "design": {
+      "constraintCompile": {"kind": "machine_report", "jsonPointer": "/design/constraintCompile", "expectedValue": true, "bindArtifactSet": true},
+      "detailProof": {"kind": "machine_report", "jsonPointer": "/design/detailProof", "expectedValue": true, "bindArtifactSet": true},
+      "loadCasesAndServiceConditions": {"kind": "analysis_report", "jsonPointer": "/engineering/loadCasesAndServiceConditionsDefined", "expectedValue": true, "bindArtifactSet": true},
+      "analysisInputUnitsAndProvenance": {"kind": "analysis_report", "jsonPointer": "/engineering/inputUnitsAndProvenanceComplete", "expectedValue": true, "bindArtifactSet": true},
+      "analysisRecomputedFromDeclaredInputs": {"kind": "analysis_report", "jsonPointer": "/engineering/resultsIndependentlyRecomputedFromDeclaredInputs", "expectedValue": true, "bindArtifactSet": true},
+      "criticalLoadPathCoverage": {"kind": "analysis_report", "jsonPointer": "/engineering/criticalLoadPathsComplete", "expectedValue": true, "bindArtifactSet": true},
+      "loadCombinationAndAbnormalCaseCoverage": {"kind": "analysis_report", "jsonPointer": "/engineering/loadCombinationAndAbnormalCaseCoverageComplete", "expectedValue": true, "bindArtifactSet": true},
+      "analysisEquationInputOutputMarginTrace": {"kind": "analysis_report", "jsonPointer": "/engineering/equationInputOutputMarginTraceComplete", "expectedValue": true, "bindArtifactSet": true},
+      "strength": {"kind": "analysis_report", "jsonPointer": "/engineering/strengthPass", "expectedValue": true, "bindArtifactSet": true},
+      "stiffness": {"kind": "analysis_report", "jsonPointer": "/engineering/stiffnessPass", "expectedValue": true, "bindArtifactSet": true},
+      "fatigueApplicabilityAndResult": {"kind": "analysis_report", "jsonPointer": "/engineering/fatigueApplicabilityAndResultValid", "expectedValue": true, "bindArtifactSet": true},
+      "factorOfSafety": {"kind": "analysis_report", "jsonPointer": "/engineering/factorOfSafetyMeetsAuthority", "expectedValue": true, "bindArtifactSet": true},
+      "jointBearingAndEdgeChecks": {"kind": "analysis_report", "jsonPointer": "/engineering/jointBearingAndEdgeChecksComplete", "expectedValue": true, "bindArtifactSet": true},
+      "fastenerPreloadSlipAndCapacity": {"kind": "analysis_report", "jsonPointer": "/engineering/fastenerPreloadSlipAndCapacityPass", "expectedValue": true, "bindArtifactSet": true},
+      "bearingLife": {"kind": "analysis_report", "jsonPointer": "/engineering/bearingLifePass", "expectedValue": true, "bindArtifactSet": true},
+      "thermalEnvelope": {"kind": "analysis_report", "jsonPointer": "/engineering/thermalEnvelopePass", "expectedValue": true, "bindArtifactSet": true},
+      "fitAndMatingInterfaces": {"kind": "analysis_report", "jsonPointer": "/engineering/fitAndMatingInterfacesPass", "expectedValue": true, "bindArtifactSet": true},
+      "toleranceStack": {"kind": "analysis_report", "jsonPointer": "/design/toleranceStackPass", "expectedValue": true, "bindArtifactSet": true},
+      "failureModesAndResidualRiskControls": {"kind": "analysis_report", "jsonPointer": "/engineering/failureModesAndResidualRiskControlsPass", "expectedValue": true, "bindArtifactSet": true},
+      "assemblyServiceAndToolClearance": {"kind": "analysis_report", "jsonPointer": "/engineering/assemblyServiceAndToolClearancePass", "expectedValue": true, "bindArtifactSet": true}
+    },
+    "manufacturingDefinition": {
+      "materialDesignation": {"kind": "machine_report", "jsonPointer": "/definition/materialDesignationPresent", "expectedValue": true, "bindArtifactSet": true},
+      "materialConditionAndHeatTreatment": {"kind": "machine_report", "jsonPointer": "/definition/materialConditionAndHeatTreatmentDefined", "expectedValue": true, "bindArtifactSet": true},
+      "materialCertificateRequirementAndIncomingInspection": {"kind": "machine_report", "jsonPointer": "/definition/materialCertificateRequirementAndIncomingInspectionDefined", "expectedValue": true, "bindArtifactSet": true},
+      "generalAndFeatureTolerances": {"kind": "machine_report", "jsonPointer": "/definition/toleranceCoveragePercent", "expectedValue": 100, "bindArtifactSet": true},
+      "gdandtDatumScheme": {"kind": "machine_report", "jsonPointer": "/definition/gdandtDatumSchemeValid", "expectedValue": true, "bindArtifactSet": true},
+      "surfaceRoughness": {"kind": "machine_report", "jsonPointer": "/definition/roughnessCoveragePercent", "expectedValue": 100, "bindArtifactSet": true},
+      "stockAndPrimaryProcess": {"kind": "machine_report", "jsonPointer": "/definition/stockAndPrimaryProcessDefined", "expectedValue": true, "bindArtifactSet": true},
+      "fixturingFeasibility": {"kind": "analysis_report", "jsonPointer": "/manufacturability/fixturingPass", "expectedValue": true, "bindArtifactSet": true},
+      "toolAccessibility": {"kind": "analysis_report", "jsonPointer": "/manufacturability/toolAccessibilityPass", "expectedValue": true, "bindArtifactSet": true},
+      "coatingDimensionalCompensation": {"kind": "analysis_report", "jsonPointer": "/manufacturability/coatingDimensionalCompensationPass", "expectedValue": true, "bindArtifactSet": true},
+      "processAndFinish": {"kind": "machine_report", "jsonPointer": "/definition/processAndFinishDefined", "expectedValue": true, "bindArtifactSet": true},
+      "threadsStandardPartsAndFastenerDefinition": {"kind": "machine_report", "jsonPointer": "/definition/threadsStandardPartsAndFastenersComplete", "expectedValue": true, "bindArtifactSet": true},
+      "undefinedEdgesDeburrAndSharpEdgeControl": {"kind": "machine_report", "jsonPointer": "/definition/undefinedEdgesDeburrAndSharpEdgeControlComplete", "expectedValue": true, "bindArtifactSet": true},
+      "assemblyBomItemRevisionAndQuantityClosure": {"kind": "machine_report", "jsonPointer": "/definition/assemblyBomItemRevisionAndQuantityClosurePass", "expectedValue": true, "bindArtifactSet": true},
+      "criticalCharacteristicProcessCapabilityAndMeasurementMethod": {"kind": "analysis_report", "jsonPointer": "/manufacturability/criticalCharacteristicProcessCapabilityAndMeasurementMethodPass", "expectedValue": true, "bindArtifactSet": true},
+      "inspectionPlan": {"kind": "machine_report", "jsonPointer": "/definition/inspectionCharacteristicCoveragePercent", "expectedValue": 100, "bindArtifactSet": true}
+    },
+    "verification": {
+      "drawingCompleteness": {"kind": "machine_report", "jsonPointer": "/verification/drawingCompleteness", "expectedValue": true, "bindArtifactSet": true},
+      "drawingFeatureBoundDimensionsDatumsFcfsFitsAndRoughness": {"kind": "machine_report", "jsonPointer": "/verification/drawingFeatureBoundDimensionsDatumsFcfsFitsAndRoughness", "expectedValue": true, "bindArtifactSet": true},
+      "drawingVisualLegibilityCollisionScaleAndSheetClosure": {"kind": "machine_report", "jsonPointer": "/verification/drawingVisualLegibilityCollisionScaleAndSheetClosure", "expectedValue": true, "bindArtifactSet": true},
+      "drawingModelInspectionCharacteristicParity": {"kind": "machine_report", "jsonPointer": "/verification/drawingModelInspectionCharacteristicParity", "expectedValue": true, "bindArtifactSet": true},
+      "modelDrawingInspectionRevisionAndConfigurationIdentity": {"kind": "machine_report", "jsonPointer": "/verification/modelDrawingInspectionRevisionAndConfigurationIdentity", "expectedValue": true, "bindArtifactSet": true},
+      "inspectionCharacteristicTrace": {"kind": "analysis_report", "jsonPointer": "/verification/inspectionTraceComplete", "expectedValue": true, "bindArtifactSet": true},
+      "massAndMaterialReadback": {"kind": "native_host_report", "jsonPointer": "/verification/massAndMaterialReadbackMatches", "expectedValue": true, "bindArtifactSet": true},
+      "nativeMaterialIdentityPersistence": {"kind": "native_host_report", "jsonPointer": "/verification/nativeMaterialIdentityPersistence", "expectedValue": true, "bindArtifactSet": true},
+      "nativeMaterialDatabaseAssignmentAndReadback": {"kind": "native_host_report", "jsonPointer": "/verification/nativeMaterialDatabaseAssignmentAndReadback", "expectedValue": true, "bindArtifactSet": true},
+      "derivedOnlyOrCustomPropertyMaterialEvidenceCount": {"kind": "native_host_report", "jsonPointer": "/verification/derivedOnlyOrCustomPropertyMaterialEvidenceCount", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeCadSourceHashBinding": {"kind": "native_host_report", "jsonPointer": "/verification/nativeCadArtifactSha256ById", "expectedValue": true, "predicate": "artifact_sha256_map", "artifactSelector": {"kind": "native_cad", "subjectTypes": ["manufactured_part", "mechanical_assembly"]}, "bindArtifactSet": true},
+      "neutralStepSourceHashBinding": {"kind": "native_host_report", "jsonPointer": "/verification/neutralStepArtifactSha256ById", "expectedValue": true, "predicate": "artifact_sha256_map", "artifactSelector": {"kind": "neutral_step", "subjectTypes": ["manufactured_part", "mechanical_assembly"]}, "bindArtifactSet": true},
+      "manufacturingDrawingSourceHashBinding": {"kind": "native_host_report", "jsonPointer": "/verification/manufacturingDrawingArtifactSha256ById", "expectedValue": true, "predicate": "artifact_sha256_map", "artifactSelector": {"kind": "manufacturing_drawing", "subjectTypes": ["manufactured_part", "mechanical_assembly"]}, "bindArtifactSet": true}
+    },
+    "host": {
+      "nativeCadSaveReopen": {"kind": "native_host_report", "jsonPointer": "/host/nativeCadSaveReopenByArtifactId", "expectedValue": true, "predicate": "artifact_true_map", "artifactSelector": {"kind": "native_cad", "subjectTypes": ["manufactured_part", "mechanical_assembly"]}, "bindArtifactSet": true},
+      "nativeSourceSaveHash": {"kind": "native_host_report", "jsonPointer": "/host/nativeSourceSaveHashMatchesArtifact", "expectedValue": true, "bindArtifactSet": true},
+      "nativeDrawingAssociativitySaveReopen": {"kind": "native_host_report", "jsonPointer": "/host/nativeDrawingAssociativitySaveReopenByArtifactId", "expectedValue": true, "predicate": "artifact_true_map", "artifactSelector": {"kind": "manufacturing_drawing", "subjectTypes": ["manufactured_part", "mechanical_assembly"]}, "bindArtifactSet": true},
+      "semanticAnnotationPersistence": {"kind": "native_host_report", "jsonPointer": "/host/semanticAnnotationPersistence", "expectedValue": true, "bindArtifactSet": true},
+      "topologyPersistence": {"kind": "native_host_report", "jsonPointer": "/host/topologyPersistence", "expectedValue": true, "bindArtifactSet": true}
+    },
+    "release": {
+      "manufacturingReviewRecorded": {"kind": "review_release", "jsonPointer": "/release/manufacturingReviewRecorded", "expectedValue": true, "bindArtifactSet": true},
+      "reviewerIdentityPresent": {"kind": "review_release", "jsonPointer": "/release/reviewerIdentityPresent", "expectedValue": true, "bindArtifactSet": true},
+      "reviewerCredentialPresent": {"kind": "review_release", "jsonPointer": "/release/reviewerCredentialPresent", "expectedValue": true, "bindArtifactSet": true},
+      "reviewScopeMatchesArtifactSet": {"kind": "review_release", "jsonPointer": "/release/reviewScopeMatchesArtifactSet", "expectedValue": true, "bindArtifactSet": true},
+      "approvalRecordIdentifierPresent": {"kind": "review_release", "jsonPointer": "/release/approvalRecordIdentifierPresent", "expectedValue": true, "bindArtifactSet": true},
+      "recordedApprovalSignaturePresent": {"kind": "review_release", "jsonPointer": "/release/recordedApprovalSignaturePresent", "expectedValue": true, "bindArtifactSet": true}
+    }
+  },
+  "electronicsFabricationProfileV3": {
+    "intent": {
+      "wholeIntent": {"kind": "authority_document", "jsonPointer": "/intent/wholeIntent", "expectedValue": true, "bindArtifactSet": true},
+      "schematicAuthority": {"kind": "authority_document", "jsonPointer": "/intent/schematicAuthority", "expectedValue": true, "bindArtifactSet": true},
+      "stackupAndFabCapability": {"kind": "authority_document", "jsonPointer": "/intent/stackupAndFabCapability", "expectedValue": true, "bindArtifactSet": true},
+      "fabricatorCapabilitySnapshotAndOrderTimeRecheckPolicy": {"kind": "authority_document", "jsonPointer": "/intent/fabricatorCapabilitySnapshotAndOrderTimeRecheckPolicy", "expectedValue": true, "bindArtifactSet": true},
+      "currentStandardsLedger": {"kind": "authority_document", "jsonPointer": "/standards/requiredCurrentBaselines", "expectedValue": [{"standard": "IPC-2221C", "status": "current", "applicability": "generic PCB design"},{"standard": "IPC-2222B", "status": "current", "applicability": "rigid organic PCB design"},{"standard": "IPC-6012F", "status": "current", "applicability": "rigid PCB qualification/performance"},{"standard": "IPC-A-600M", "status": "current", "applicability": "bare board acceptability"},{"standard": "IPC J-STD-001J", "status": "current", "applicability": "soldered assembly requirements"},{"standard": "IPC-A-610J", "status": "current", "applicability": "electronic assembly acceptability"},{"standard": "IPC-7352", "status": "current", "applicability": "land pattern design"}], "bindArtifactSet": true, "predicate": "contains_expected_rows"},
+      "noRetiredSoleAuthority": {"kind": "authority_document", "jsonPointer": "/standards/retiredOrNoLongerMaintainedSoleAuthorityCount", "expectedValue": 0, "bindArtifactSet": true},
+      "officialPackageAuthority": {"kind": "authority_document", "jsonPointer": "/standards/officialComponentPackageSourcesComplete", "expectedValue": true, "bindArtifactSet": true},
+      "officialFootprintDatasheetPin1AuthorityComplete": {"kind": "authority_document", "jsonPointer": "/standards/officialFootprintDatasheetPin1AuthorityComplete", "expectedValue": true, "bindArtifactSet": true},
+      "powerEnvironmentInterfacesAndAcceptanceAuthority": {"kind": "authority_document", "jsonPointer": "/intent/powerEnvironmentInterfacesAndAcceptanceAuthority", "expectedValue": true, "bindArtifactSet": true},
+      "regulatorySafetyAndEnvironmentalApplicabilityResolved": {"kind": "authority_document", "jsonPointer": "/intent/regulatorySafetyAndEnvironmentalApplicabilityResolved", "expectedValue": true, "bindArtifactSet": true},
+      "productClassAssemblyClassAndAcceptanceCriteriaResolved": {"kind": "authority_document", "jsonPointer": "/intent/productClassAssemblyClassAndAcceptanceCriteriaResolved", "expectedValue": true, "bindArtifactSet": true},
+      "transientAbnormalAndImmunityProfilesFrozen": {"kind": "authority_document", "jsonPointer": "/intent/transientAbnormalAndImmunityProfilesFrozen", "expectedValue": true, "bindArtifactSet": true}
+    },
+    "design": {
+      "schematicPcbNetlistParity": {"kind": "machine_report", "jsonPointer": "/design/schematicPcbNetlistParity", "expectedValue": true, "bindArtifactSet": true},
+      "padNetBidirectionalParity": {"kind": "machine_report", "jsonPointer": "/design/padNetBidirectionalParity", "expectedValue": true, "bindArtifactSet": true},
+      "physicalReferenceFootprintParity": {"kind": "machine_report", "jsonPointer": "/design/physicalReferenceFootprintParity", "expectedValue": true, "bindArtifactSet": true},
+      "footprintDatasheetPin1Parity": {"kind": "machine_report", "jsonPointer": "/design/footprintDatasheetPin1Parity", "expectedValue": true, "bindArtifactSet": true},
+      "symbolPinNumberFunctionElectricalTypeParity": {"kind": "machine_report", "jsonPointer": "/design/symbolPinNumberFunctionElectricalTypeParity", "expectedValue": true, "bindArtifactSet": true},
+      "exactOrderedMpnAndSymbolAliasResolution": {"kind": "machine_report", "jsonPointer": "/design/exactOrderedMpnAndSymbolAliasResolution", "expectedValue": true, "bindArtifactSet": true},
+      "netclassAssignmentCoverage": {"kind": "machine_report", "jsonPointer": "/design/netclassAssignmentCoveragePercent", "expectedValue": 100, "bindArtifactSet": true},
+      "creepageAndClearance": {"kind": "analysis_report", "jsonPointer": "/design/creepageAndClearancePass", "expectedValue": true, "bindArtifactSet": true},
+      "stackup": {"kind": "machine_report", "jsonPointer": "/design/stackupMatchesFabricator", "expectedValue": true, "bindArtifactSet": true},
+      "controlledImpedance": {"kind": "analysis_report", "jsonPointer": "/design/controlledImpedancePass", "expectedValue": true, "bindArtifactSet": true},
+      "completeRouting": {"kind": "machine_report", "jsonPointer": "/design/unroutedCount", "expectedValue": 0, "bindArtifactSet": true},
+      "finalUnconnected": {"kind": "machine_report", "jsonPointer": "/design/finalUnconnectedCount", "expectedValue": 0, "bindArtifactSet": true},
+      "zoneRefillCurrent": {"kind": "native_host_report", "jsonPointer": "/design/zoneRefillCurrent", "expectedValue": true, "bindArtifactSet": true},
+      "zoneFillConnectivity": {"kind": "machine_report", "jsonPointer": "/design/zoneFillConnectivity", "expectedValue": true, "bindArtifactSet": true},
+      "boardOutline": {"kind": "machine_report", "jsonPointer": "/design/boardOutlineClosedAndValid", "expectedValue": true, "bindArtifactSet": true},
+      "courtyardAndBoardEdgePlacement": {"kind": "machine_report", "jsonPointer": "/design/courtyardAndBoardEdgePlacementPass", "expectedValue": true, "bindArtifactSet": true},
+      "connectorKeepoutMountingGeometryFreeze": {"kind": "machine_report", "jsonPointer": "/design/connectorKeepoutMountingGeometryFrozen", "expectedValue": true, "bindArtifactSet": true},
+      "connectorTerminalWireToolAndEnclosureAccessibility": {"kind": "machine_report", "jsonPointer": "/design/connectorTerminalWireToolAndEnclosureAccessibilityPass", "expectedValue": true, "bindArtifactSet": true},
+      "mountingFastenerHeadKeepoutAndHeightEnvelope": {"kind": "machine_report", "jsonPointer": "/design/mountingFastenerHeadKeepoutAndHeightEnvelopePass", "expectedValue": true, "bindArtifactSet": true},
+      "powerDomainsAndReturnPaths": {"kind": "analysis_report", "jsonPointer": "/design/powerDomainsAndReturnPathsPass", "expectedValue": true, "bindArtifactSet": true},
+      "componentRatingsDeratingAndWorstCase": {"kind": "analysis_report", "jsonPointer": "/design/componentRatingsDeratingAndWorstCasePass", "expectedValue": true, "bindArtifactSet": true},
+      "powerBudgetStartupSequencingAndFaultRecovery": {"kind": "analysis_report", "jsonPointer": "/design/powerBudgetStartupSequencingAndFaultRecoveryPass", "expectedValue": true, "bindArtifactSet": true},
+      "protectionCoordinationAndTransientEnergy": {"kind": "analysis_report", "jsonPointer": "/design/protectionCoordinationAndTransientEnergyPass", "expectedValue": true, "bindArtifactSet": true},
+      "analogAccuracyFilterClampAndAdcDriveBudget": {"kind": "analysis_report", "jsonPointer": "/design/analogAccuracyFilterClampAndAdcDriveBudgetPass", "expectedValue": true, "bindArtifactSet": true},
+      "clockResetProgrammingAndProtocolConstraints": {"kind": "analysis_report", "jsonPointer": "/design/clockResetProgrammingAndProtocolConstraintsPass", "expectedValue": true, "bindArtifactSet": true},
+      "groundingIsolationAndCommonModeBoundary": {"kind": "analysis_report", "jsonPointer": "/design/groundingIsolationAndCommonModeBoundaryPass", "expectedValue": true, "bindArtifactSet": true},
+      "testProgrammingAndDebugAccess": {"kind": "machine_report", "jsonPointer": "/design/testProgrammingAndDebugAccessPass", "expectedValue": true, "bindArtifactSet": true}
+    },
+    "manufacturingDefinition": {
+      "bomComplete": {"kind": "machine_report", "jsonPointer": "/manufacturing/bomCoveragePercent", "expectedValue": 100, "bindArtifactSet": true},
+      "mpnCoverage": {"kind": "machine_report", "jsonPointer": "/manufacturing/mpnCoveragePercent", "expectedValue": 100, "bindArtifactSet": true},
+      "bomValueQuantityFootprintMpnParity": {"kind": "machine_report", "jsonPointer": "/manufacturing/bomValueQuantityFootprintMpnParity", "expectedValue": true, "bindArtifactSet": true},
+      "gerberClosure": {"kind": "machine_report", "jsonPointer": "/manufacturing/gerberLayerClosurePass", "expectedValue": true, "bindArtifactSet": true},
+      "drillClosure": {"kind": "machine_report", "jsonPointer": "/manufacturing/drillClosurePass", "expectedValue": true, "bindArtifactSet": true},
+      "jobFileClosure": {"kind": "machine_report", "jsonPointer": "/manufacturing/jobFileClosurePass", "expectedValue": true, "bindArtifactSet": true},
+      "pickAndPlaceClosure": {"kind": "machine_report", "jsonPointer": "/manufacturing/pickAndPlaceClosurePass", "expectedValue": true, "bindArtifactSet": true},
+      "assemblyDrawingClosure": {"kind": "machine_report", "jsonPointer": "/manufacturing/assemblyDrawingClosurePass", "expectedValue": true, "bindArtifactSet": true},
+      "fabricationPlots": {"kind": "machine_report", "jsonPointer": "/manufacturing/fabricationPlotsComplete", "expectedValue": true, "bindArtifactSet": true},
+      "assemblyOutputs": {"kind": "machine_report", "jsonPointer": "/manufacturing/assemblyOutputsComplete", "expectedValue": true, "bindArtifactSet": true},
+      "native3dBoard": {"kind": "native_host_report", "jsonPointer": "/manufacturing/native3dBoardComplete", "expectedValue": true, "bindArtifactSet": true},
+      "bomCplReferenceParity": {"kind": "machine_report", "jsonPointer": "/manufacturing/bomCplReferenceParity", "expectedValue": true, "bindArtifactSet": true},
+      "pin1RotationSideAudit": {"kind": "machine_report", "jsonPointer": "/manufacturing/pin1RotationSideAuditPass", "expectedValue": true, "bindArtifactSet": true},
+      "dnpPopulationLedger": {"kind": "machine_report", "jsonPointer": "/manufacturing/dnpPopulationLedgerComplete", "expectedValue": true, "bindArtifactSet": true},
+      "solderMaskPasteSilkscreenPolarityAndFabNotes": {"kind": "machine_report", "jsonPointer": "/manufacturing/solderMaskPasteSilkscreenPolarityAndFabNotesPass", "expectedValue": true, "bindArtifactSet": true},
+      "platedNonplatedDrillSlotAndCastellationSemantics": {"kind": "machine_report", "jsonPointer": "/manufacturing/platedNonplatedDrillSlotAndCastellationSemanticsPass", "expectedValue": true, "bindArtifactSet": true},
+      "supplierLifecycleAndOrderTimeRecheckPolicy": {"kind": "authority_document", "jsonPointer": "/manufacturing/supplierLifecycleAndOrderTimeRecheckPolicy", "expectedValue": true, "bindArtifactSet": true}
+    },
+    "verification": {
+      "kicadVersionRecorded": {"kind": "native_host_report", "jsonPointer": "/verification/kicadVersion", "expectedValue": true, "predicate": "non_empty_string", "bindArtifactSet": true},
+      "nativeProjectSourceHashBinding": {"kind": "native_host_report", "jsonPointer": "/verification/projectArtifactSha256ById", "expectedValue": true, "predicate": "artifact_sha256_map", "artifactSelector": {"kind": "kicad_project", "subjectTypes": ["pcb_design"]}, "bindArtifactSet": true},
+      "nativeSchematicSourceHashBinding": {"kind": "native_host_report", "jsonPointer": "/verification/schematicArtifactSha256ById", "expectedValue": true, "predicate": "artifact_sha256_map", "artifactSelector": {"kind": "kicad_schematic", "subjectTypes": ["pcb_design"]}, "bindArtifactSet": true},
+      "nativeBoardSourceHashBinding": {"kind": "native_host_report", "jsonPointer": "/verification/boardArtifactSha256ById", "expectedValue": true, "predicate": "artifact_sha256_map", "artifactSelector": {"kind": "kicad_board", "subjectTypes": ["pcb_design"]}, "bindArtifactSet": true},
+      "nativeErcErrors": {"kind": "native_host_report", "jsonPointer": "/verification/nativeErcErrors", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeErcUnmanagedWarnings": {"kind": "native_host_report", "jsonPointer": "/verification/nativeErcUnmanagedWarnings", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeErcIgnoredCheckCount": {"kind": "native_host_report", "jsonPointer": "/verification/nativeErcIgnoredCheckCount", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeErcIgnoredChecksAudited": {"kind": "native_host_report", "jsonPointer": "/verification/nativeErcIgnoredChecksAudited", "expectedValue": true, "bindArtifactSet": true},
+      "nativeProjectExclusionsEmptyOrAudited": {"kind": "native_host_report", "jsonPointer": "/verification/nativeProjectExclusionsEmptyOrAudited", "expectedValue": true, "bindArtifactSet": true},
+      "nativeDrcErrors": {"kind": "native_host_report", "jsonPointer": "/verification/nativeDrcErrors", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeDrcUnmanagedWarnings": {"kind": "native_host_report", "jsonPointer": "/verification/nativeDrcUnmanagedWarnings", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeDrcIgnoredCheckCount": {"kind": "native_host_report", "jsonPointer": "/verification/nativeDrcIgnoredCheckCount", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeProjectExclusionCount": {"kind": "native_host_report", "jsonPointer": "/verification/nativeProjectExclusionCount", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeDrcSchematicParityErrors": {"kind": "native_host_report", "jsonPointer": "/verification/nativeDrcSchematicParityErrors", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeDrcFootprintSymbolMismatchErrors": {"kind": "native_host_report", "jsonPointer": "/verification/nativeDrcFootprintSymbolMismatchErrors", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeDrcNetConflictErrors": {"kind": "native_host_report", "jsonPointer": "/verification/nativeDrcNetConflictErrors", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeSymbolPinMappingErrors": {"kind": "native_host_report", "jsonPointer": "/verification/nativeSymbolPinMappingErrors", "expectedValue": 0, "bindArtifactSet": true},
+      "nativeFootprintPadNumberMappingErrors": {"kind": "native_host_report", "jsonPointer": "/verification/nativeFootprintPadNumberMappingErrors", "expectedValue": 0, "bindArtifactSet": true},
+      "exclusionWaiverLedgerAllowedTypes": {"kind": "native_host_report", "jsonPointer": "/verification/disallowedExclusionWaiverTypes", "expectedValue": [], "bindArtifactSet": true},
+      "ercAndDrcAfterRefill": {"kind": "native_host_report", "jsonPointer": "/verification/ercAndDrcRunAfterLatestRefill", "expectedValue": true, "bindArtifactSet": true},
+      "thermalAnalysis": {"kind": "analysis_report", "jsonPointer": "/verification/thermalPass", "expectedValue": true, "bindArtifactSet": true},
+      "emcAnalysis": {"kind": "analysis_report", "jsonPointer": "/verification/emcPass", "expectedValue": true, "bindArtifactSet": true},
+      "signalIntegrity": {"kind": "analysis_report", "jsonPointer": "/verification/signalIntegrityPass", "expectedValue": true, "bindArtifactSet": true},
+      "powerIntegrity": {"kind": "analysis_report", "jsonPointer": "/verification/powerIntegrityPass", "expectedValue": true, "bindArtifactSet": true},
+      "circuitSimulation": {"kind": "analysis_report", "jsonPointer": "/verification/simulationPass", "expectedValue": true, "bindArtifactSet": true},
+      "simulationBoundaryDefined": {"kind": "analysis_report", "jsonPointer": "/verification/simulationBoundaryAndModelsDefined", "expectedValue": true, "bindArtifactSet": true},
+      "functionalVerification": {"kind": "analysis_report", "jsonPointer": "/verification/functionalVerificationPass", "expectedValue": true, "bindArtifactSet": true},
+      "camSourceRevisionBinding": {"kind": "machine_report", "jsonPointer": "/verification/camSourceRevisionBindingPass", "expectedValue": true, "bindArtifactSet": true},
+      "schematicVisualLegibilityAndPageUse": {"kind": "machine_report", "jsonPointer": "/verification/schematicVisualLegibilityAndPageUsePass", "expectedValue": true, "bindArtifactSet": true},
+      "pcbFunctionalPlacementZonesAndAccessibility": {"kind": "machine_report", "jsonPointer": "/verification/pcbFunctionalPlacementZonesAndAccessibilityPass", "expectedValue": true, "bindArtifactSet": true},
+      "board3dEnclosureConnectorAndHeightCollision": {"kind": "native_host_report", "jsonPointer": "/verification/board3dEnclosureConnectorAndHeightCollisionPass", "expectedValue": true, "bindArtifactSet": true},
+      "camIndependentReadbackAndLayerDrillClosure": {"kind": "machine_report", "jsonPointer": "/verification/camIndependentReadbackAndLayerDrillClosurePass", "expectedValue": true, "bindArtifactSet": true},
+      "outputManifestBidirectionalClosure": {"kind": "machine_report", "jsonPointer": "/verification/outputManifestBidirectionalClosurePass", "expectedValue": true, "bindArtifactSet": true}
+    },
+    "host": {
+      "nativeProjectSaveReopen": {"kind": "native_host_report", "jsonPointer": "/host/nativeProjectSaveReopenByArtifactId", "expectedValue": true, "predicate": "artifact_true_map", "artifactSelector": {"kind": "kicad_project", "subjectTypes": ["pcb_design"]}, "bindArtifactSet": true},
+      "nativeSourceSaveHash": {"kind": "native_host_report", "jsonPointer": "/host/nativeSourceSaveHashMatchesArtifact", "expectedValue": true, "bindArtifactSet": true},
+      "plotSourceBinding": {"kind": "native_host_report", "jsonPointer": "/host/plotSourceBinding", "expectedValue": true, "bindArtifactSet": true},
+      "native3dReopen": {"kind": "native_host_report", "jsonPointer": "/host/native3dReopenByArtifactId", "expectedValue": true, "predicate": "artifact_true_map", "artifactSelector": {"kind": "board_3d", "subjectTypes": ["pcb_design"]}, "bindArtifactSet": true}
+    },
+    "release": {
+      "electricalReviewRecorded": {"kind": "review_release", "jsonPointer": "/release/electricalReviewRecorded", "expectedValue": true, "bindArtifactSet": true},
+      "reviewerIdentityPresent": {"kind": "review_release", "jsonPointer": "/release/reviewerIdentityPresent", "expectedValue": true, "bindArtifactSet": true},
+      "reviewerCredentialPresent": {"kind": "review_release", "jsonPointer": "/release/reviewerCredentialPresent", "expectedValue": true, "bindArtifactSet": true},
+      "reviewScopeMatchesArtifactSet": {"kind": "review_release", "jsonPointer": "/release/reviewScopeMatchesArtifactSet", "expectedValue": true, "bindArtifactSet": true},
+      "approvalRecordIdentifierPresent": {"kind": "review_release", "jsonPointer": "/release/approvalRecordIdentifierPresent", "expectedValue": true, "bindArtifactSet": true},
+      "recordedApprovalSignaturePresent": {"kind": "review_release", "jsonPointer": "/release/recordedApprovalSignaturePresent", "expectedValue": true, "bindArtifactSet": true}
+    }
+  },
+  "requiredArtifactKindsV3": {
+    "mechanical": ["native_cad", "neutral_step", "manufacturing_drawing", "mechanical_bom", "product_structure_manifest", "material_database", "inspection_plan", "engineering_analysis", "standards_ledger"],
+    "electronics": ["kicad_project", "kicad_schematic", "kicad_board", "native_board_inventory", "gerber_layer", "drill", "job_file", "cam_output_manifest", "bom", "pick_and_place", "assembly_drawing", "fabrication_drawing", "schematic_pdf", "board_3d", "engineering_analysis", "standards_ledger"]
+  },
+  "artifactClosureProfilesV3": {
+    "mechanical": {
+      "allowedSubjectTypes": ["manufactured_part", "mechanical_assembly"],
+      "requiredSubjectTypeAtLeastOne": "manufactured_part",
+      "requireAssemblyWhenManufacturedPartCountGreaterThan": 1,
+      "perSubjectRequiredKinds": {
+        "manufactured_part": ["native_cad", "neutral_step", "manufacturing_drawing"],
+        "mechanical_assembly": ["native_cad", "neutral_step", "manufacturing_drawing"]
+      },
+      "subjectScopedKinds": ["native_cad", "neutral_step", "manufacturing_drawing"],
+      "packageRequiredKinds": ["mechanical_bom", "product_structure_manifest", "material_database", "inspection_plan", "engineering_analysis", "standards_ledger"],
+      "machineReadableBom": {
+        "kind": "mechanical_bom",
+        "schema": "aicad_machine_mechanical_bom_v1",
+        "scope": "package_exact_subject_rows_parsed_by_canonical_qa"
+      },
+      "candidateClosureManifest": {
+        "kind": "product_structure_manifest",
+        "schema": "aicad_product_structure_manifest_v1",
+        "sourceKind": "mechanical_bom",
+        "scope": "candidate_declared_package_exact_subject_set_consistency"
+      }
+    },
+    "electronics": {
+      "allowedSubjectTypes": ["pcb_design"],
+      "requiredSubjectTypeAtLeastOne": "pcb_design",
+      "perSubjectRequiredKinds": {
+        "pcb_design": ["kicad_project", "kicad_schematic", "kicad_board", "native_board_inventory", "job_file", "cam_output_manifest", "bom", "pick_and_place", "assembly_drawing", "fabrication_drawing", "schematic_pdf", "board_3d"]
+      },
+      "perSubjectRequiredKindAtLeastOne": {
+        "pcb_design": ["gerber_layer", "drill"]
+      },
+      "subjectScopedKinds": ["kicad_project", "kicad_schematic", "kicad_board", "native_board_inventory", "gerber_layer", "drill", "job_file", "cam_output_manifest", "bom", "pick_and_place", "assembly_drawing", "fabrication_drawing", "schematic_pdf", "board_3d"],
+      "packageRequiredKinds": ["engineering_analysis", "standards_ledger"],
+      "granularRepeatableKinds": ["gerber_layer", "drill"],
+      "candidateBoardInventory": {
+        "kind": "native_board_inventory",
+        "schema": "aicad_native_board_fabrication_inventory_v1",
+        "sourceKind": "kicad_board",
+        "scope": "candidate_inventory_must_match_canonical_qa_kicad_board_copper_and_drill_parse"
+      },
+      "candidateClosureManifest": {
+        "kind": "cam_output_manifest",
+        "schema": "aicad_cam_output_manifest_v1",
+        "sourceKind": "job_file",
+        "scope": "candidate_declared_per_pcb_exact_cam_set_consistency"
+      }
+    }
+  },
   "deliveryDisposition": {
-    "allRequiredGatesPass": "production_release_candidate",
+    "allRequiredV3EvidenceContractGatesPass": "evidence_contract_review_only",
     "anyRequiredGateFailsAndStrictProductionOnly": "blocker_report_only",
     "reviewOrCoordinationRequest": "review_candidate",
     "automaticAcceptanceAllowed": false,
     "directProductionRequestedAndAnyGateFails": "blocker_report_only",
-    "directProductionRequestedAndAllGatesPass": "production_release_candidate"
+    "directProductionRequestedAndAllV3EvidenceContractGatesPass": "evidence_contract_review_only"
   },
   "safetyLocks": {
     "reviewOnly": true,
     "accepted": false,
     "ruleEnabled": false,
-    "packagingGated": true
+    "packagingGated": true,
+    "comparativeSuperiorityClaimAllowed": false
   },
   "evidenceBinding": {
-    "contract": "rules/production_readiness_contract_v2.schema.json",
-    "qaTool": "scripts/aicad_production_readiness_qa_v2.py",
+    "canonicalContract": "rules/production_readiness_contract_v3.schema.json",
+    "canonicalQaTool": "scripts/aicad_production_readiness_qa_v3.py",
+    "architectureCompatibilityContract": "rules/production_readiness_contract_v2.schema.json",
+    "architectureCompatibilityQaTool": "scripts/aicad_production_readiness_qa_v2.py",
     "selfReportedBooleanAllowed": false,
     "machineEvidence": "sha256_plus_json_pointer",
     "hostBinding": "artifact_set_sha256",
-    "professionalReleaseBinding": "artifact_set_sha256",
+    "artifactIdentityBinding": "artifact_id_plus_kind_plus_part_id_plus_revision_plus_normalized_relative_path_plus_size_plus_sha256",
+    "expectedArtifactClosure": "exact_artifact_id_kind_part_id_revision_and_path_inventory",
+    "candidateDeclaredClosureConsistency": "parsed_machine_bom_subject_rows_and_parsed_kicad_board_copper_and_drill_inventory_to_exact_candidate_artifact_id_sha256_sets",
+    "sourceArtifactBinding": "rule_owned_selector_to_exact_artifact_id_sha256_map",
+    "recordedApprovalEvidenceBinding": "artifact_set_sha256_evidence_only",
     "failedDisposition": "blocker_report_only",
-    "failedArtifactsExposed": 0
+    "failedArtifactsExposed": 0,
+    "canonicalQaConclusion": "evidenceContractReady_only",
+    "independentEvidenceAuthenticityVerified": false,
+    "nativeExecutionReplayedByCanonicalQa": false,
+    "technicalPackageReadyGrantedByCanonicalQa": false
   },
   "artifactExposureContract": {
+    "technicalCandidateExposure": "never_granted_by_v3_evidence_contract_qa",
     "directProductionRequest": "all_non_compensatory_gates_or_zero_cad_artifacts",
+    "productionReleaseExposure": "requires_independently_verified_cryptographic_trust_chain",
+    "productionReleaseEligibleWithoutIndependentTrustChain": false,
     "reviewPreviewCannotSatisfyProduction": true,
     "partialScoreCannotOverrideFailure": true,
     "blockerBundleRequiredOnFailure": [
@@ -154,6 +440,7 @@
       "utf8_html",
       "opaque_png",
       "launch_json"
-    ]
+    ],
+    "v3EvidenceContractReportExposure": "report_only_no_candidate_artifacts"
   }
 }

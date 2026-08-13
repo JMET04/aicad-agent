@@ -1,0 +1,351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aicad.local/schema/production-readiness-contract-v3.json",
+  "title": "Canonical AICAD mechanical and PCB evidence contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "project",
+    "requestedStage",
+    "discipline",
+    "strictProductionOnly",
+    "evidence",
+    "artifactSubjects",
+    "expectedArtifactClosure",
+    "candidateArtifacts",
+    "safetyLocks"
+  ],
+  "properties": {
+    "schema": {
+      "const": "aicad_production_readiness_contract_v3"
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "requestedStage": {
+      "enum": [
+        "manufacturing",
+        "fabrication"
+      ]
+    },
+    "discipline": {
+      "enum": [
+        "mechanical",
+        "electronics"
+      ]
+    },
+    "strictProductionOnly": {
+      "const": true
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intent",
+        "design",
+        "manufacturingDefinition",
+        "verification",
+        "host",
+        "release"
+      ],
+      "properties": {
+        "intent": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "design": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "manufacturingDefinition": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "verification": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "host": {
+          "$ref": "#/$defs/gateGroup"
+        },
+        "release": {
+          "$ref": "#/$defs/gateGroup"
+        }
+      }
+    },
+    "artifactSubjects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifactSubject"
+      }
+    },
+    "expectedArtifactClosure": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/expectedArtifact"
+      }
+    },
+    "candidateArtifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/candidateArtifact"
+      }
+    },
+    "safetyLocks": {
+      "$ref": "#/$defs/safetyLocks"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "discipline": {
+            "const": "mechanical"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requestedStage": {
+            "const": "manufacturing"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "discipline": {
+            "const": "electronics"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requestedStage": {
+            "const": "fabrication"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "artifactId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "partId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "revision": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$"
+    },
+    "artifactKind": {
+      "enum": [
+        "native_cad",
+        "neutral_step",
+        "manufacturing_drawing",
+        "mechanical_bom",
+        "product_structure_manifest",
+        "material_database",
+        "inspection_plan",
+        "engineering_analysis",
+        "standards_ledger",
+        "kicad_project",
+        "kicad_schematic",
+        "kicad_board",
+        "native_board_inventory",
+        "gerber_layer",
+        "gerber_archive",
+        "drill",
+        "job_file",
+        "cam_output_manifest",
+        "bom",
+        "pick_and_place",
+        "assembly_drawing",
+        "fabrication_drawing",
+        "schematic_pdf",
+        "board_3d"
+      ]
+    },
+    "artifactSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "partId",
+        "subjectType",
+        "revision"
+      ],
+      "properties": {
+        "partId": {
+          "$ref": "#/$defs/partId"
+        },
+        "subjectType": {
+          "enum": [
+            "manufactured_part",
+            "mechanical_assembly",
+            "pcb_design"
+          ]
+        },
+        "revision": {
+          "$ref": "#/$defs/revision"
+        }
+      }
+    },
+    "expectedArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "kind",
+        "path",
+        "revision"
+      ],
+      "properties": {
+        "artifactId": {
+          "$ref": "#/$defs/artifactId"
+        },
+        "partId": {
+          "$ref": "#/$defs/partId"
+        },
+        "kind": {
+          "$ref": "#/$defs/artifactKind"
+        },
+        "path": {
+          "$ref": "#/$defs/portablePath"
+        },
+        "revision": {
+          "$ref": "#/$defs/revision"
+        }
+      }
+    },
+    "candidateArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "kind",
+        "path",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "artifactId": {
+          "$ref": "#/$defs/artifactId"
+        },
+        "partId": {
+          "$ref": "#/$defs/partId"
+        },
+        "kind": {
+          "$ref": "#/$defs/artifactKind"
+        },
+        "path": {
+          "$ref": "#/$defs/portablePath"
+        },
+        "revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        }
+      }
+    },
+    "gateGroup": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidenceRef"
+        ],
+        "properties": {
+          "evidenceRef": {
+            "$ref": "#/$defs/evidenceRef"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "machine_report",
+            "authority_document",
+            "native_host_report",
+            "analysis_report",
+            "review_release"
+          ]
+        },
+        "path": {
+          "$ref": "#/$defs/portablePath"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        }
+      }
+    },
+    "portablePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"
+    },
+    "safetyLocks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewOnly",
+        "accepted",
+        "ruleEnabled",
+        "packagingGated",
+        "comparativeSuperiorityClaimAllowed"
+      ],
+      "properties": {
+        "reviewOnly": {
+          "const": true
+        },
+        "accepted": {
+          "const": false
+        },
+        "ruleEnabled": {
+          "const": false
+        },
+        "packagingGated": {
+          "const": true
+        },
+        "comparativeSuperiorityClaimAllowed": {
+          "const": false
+        }
+      }
+    }
+  }
+}

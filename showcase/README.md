@@ -8,10 +8,10 @@
 
 | 领域 | 预览 | 主要证明 | 审核与下载 |
 |---|---|---|---|
-| 三层建筑平面 | [预览](architecture/preview.png) | 三层独立文档、支承派生非等距轴网、原生尺寸/中文、双视口零碰撞 | [交互审核](architecture/review.html) · [验证](architecture/validation.md) · [公开候选包](architecture/architecture-sanitized-review-candidate.zip) |
-| 三层钢结构 | [预览](steel/preview.png) | 建筑柱心与核心筒点集双向绑定、禁止轴坐标笛卡尔扩增、楼层/视图/剖切选择 | [交互审核](steel/review.html) · [验证](steel/validation.md) · [公开候选包](steel/steel-sanitized-review-candidate.zip) |
-| 复杂机械零件 | [预览](mechanical/preview.png) | 逐特征三维模型、规范二维多视图/剖视、尺寸与制造语义、真实宿主保存重开 | [交互审核](mechanical/review.html) · [验证](mechanical/validation.md) · [公开候选包](mechanical/mechanical-sanitized-review-candidate.zip) |
-| 四层工业控制器 PCB | [预览](pcb/preview.png) | 电源树、MCU/USB/CAN/模拟前端、四层布线与平面、DFM/连通性/标准审计 | [交互审核](pcb/review.html) · [验证](pcb/validation.md) · [公开候选包](pcb/pcb-sanitized-review-candidate.zip) |
+| 三层建筑平面 | [预览](architecture/preview.png) | 三层独立文档、支承派生非等距轴网、原生尺寸/中文、双视口零碰撞 | [交互审核](architecture/review.html) · [人工验证](architecture/validation.md) · [机器验证](architecture/validation.json) · [源闭包](architecture/source-manifest.json) · [公开候选包](architecture/architecture-sanitized-review-candidate.zip) |
+| 三层钢结构 | [预览](steel/preview.png) | 建筑柱心与核心筒点集双向绑定、禁止轴坐标笛卡尔扩增、楼层/视图/剖切选择 | [交互审核](steel/review.html) · [人工验证](steel/validation.md) · [机器验证](steel/validation.json) · [源闭包](steel/source-manifest.json) · [公开候选包](steel/steel-sanitized-review-candidate.zip) |
+| 复杂机械零件 | [预览](mechanical/preview.png) | 逐特征三维模型、规范二维多视图/剖视、尺寸与制造语义、真实宿主保存重开 | [交互审核](mechanical/review.html) · [人工验证](mechanical/validation.md) · [机器验证](mechanical/validation.json) · [源闭包](mechanical/source-manifest.json) · [公开候选包](mechanical/mechanical-sanitized-review-candidate.zip) |
+| 四层工业控制器 PCB | [预览](pcb/preview.png) | 电源树、MCU/USB/CAN/模拟前端、四层布线与平面、DFM/连通性/标准审计 | [交互审核](pcb/review.html) · [人工验证](pcb/validation.md) · [机器验证](pcb/validation.json) · [源闭包](pcb/source-manifest.json) · [公开候选包](pcb/pcb-sanitized-review-candidate.zip) |
 
 ### 三层建筑平面
 

@@ -32,9 +32,12 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.12.0")
+        self.assertEqual(manifest["version"], "1.13.0")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
+        self.assertIn("Canonical mechanical and PCB evidence-contract QA", manifest["interface"]["capabilities"])
+        self.assertTrue(any("fabrication" in item and "Per-PCB" in item for item in manifest["interface"]["capabilities"]))
+        self.assertIn("Controlled hash-bound failure-to-lesson learning loop", manifest["interface"]["capabilities"])
         mcp = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
         self.assertEqual(mcp["mcpServers"]["aicad-agent"]["command"], "python")
         skill = (PLUGIN / "skills" / "aicad-draw" / "SKILL.md").read_text(encoding="utf-8")
@@ -49,7 +52,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.12.0")
+        self.assertEqual(payload["api_version"], "1.13.0")
         self.assertEqual(payload["entities"], ["line", "circle", "arc", "text", "dimension"])
         self.assertTrue({"position_coincident", "position_offset", "text_height", "rotation", "dimension_measurement", "dimension_orientation", "base_offset"}.issubset(payload["constraints"]))
         self.assertIn("schema 2.0 compiles to AICAD protocol 3, or protocol 4 when native dimensions are present", payload["invariants"])
@@ -68,11 +71,80 @@ class AgentPluginTests(unittest.TestCase):
         self.assertTrue(payload["report_quality_qa"]["available"])
         self.assertTrue(Path(payload["report_quality_qa"]["script"]).is_file())
         self.assertTrue(payload["report_quality_qa"]["unique_prevention_rule_ids"])
+        learning = payload["controlled_continuous_learning"]
+        self.assertTrue(learning["available"])
+        for field in ("harvester", "qa", "rules", "event_schema", "approval_schema"):
+            self.assertTrue(Path(learning[field]).is_file(), field)
+        self.assertFalse(learning["canonical_event_contains_current_time"])
+        self.assertFalse(learning["canonical_event_contains_absolute_machine_paths"])
+        self.assertEqual(
+            learning["candidate_safety_locks"],
+            {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "packagingGated": True},
+        )
+        self.assertFalse(learning["automatic_promotion"])
+        self.assertFalse(learning["authoritative_rule_mutation"])
+        self.assertFalse(learning["installed_plugin_mutation"])
+        self.assertFalse(learning["readiness_or_authorization_unlock"])
+        self.assertIn("prove exact failure-to-lesson closure", learning["workflow"])
+        self.assertIn(
+            "verify two distinct recorded reviewer IDs bound to bundle, target rule and newer version",
+            learning["workflow"],
+        )
+        self.assertIn(
+            "require external authenticated review before any manual promotion decision",
+            learning["workflow"],
+        )
+        self.assertEqual(learning["candidate_output_scope"], "learning/**/*.json_only")
+        self.assertTrue(learning["external_authenticated_review_required"])
+        for field in (
+            "external_authenticated_review_verified",
+            "promotion_eligible_for_manual_application",
+            "technical_package_ready",
+            "production_release_eligible",
+            "manufacturing_authorized",
+            "fabrication_authorized",
+        ):
+            self.assertFalse(learning[field], field)
         self.assertTrue(payload["packaging_dieline_qa"]["available"])
         self.assertTrue(Path(payload["packaging_dieline_qa"]["script"]).is_file())
         self.assertTrue(Path(payload["packaging_dieline_qa"]["rules"]).is_file())
         self.assertTrue(payload["packaging_dieline_qa"]["review_only"])
         self.assertTrue(Path(payload["solidworks_3d"]["schema_path"]).is_file())
+        production = payload["production_readiness_qa"]
+        self.assertTrue(production["available"])
+        self.assertEqual(Path(production["script"]).name, "aicad_production_readiness_qa_v3.py")
+        self.assertEqual(Path(production["contract_schema"]).name, "production_readiness_contract_v3.schema.json")
+        self.assertEqual(production["disciplines"], ["mechanical", "electronics"])
+        self.assertEqual(
+            production["artifact_set_binding"],
+            "artifact_id_plus_kind_plus_part_id_plus_revision_plus_normalized_relative_path_plus_size_plus_sha256",
+        )
+        self.assertEqual(production["expected_artifact_closure"], "exact_artifact_id_kind_part_id_revision_and_path_inventory")
+        self.assertEqual(
+            production["candidate_declared_closure_consistency"],
+            "parsed_machine_bom_subject_rows_and_parsed_kicad_board_copper_and_drill_inventory_to_exact_candidate_artifact_id_sha256_sets",
+        )
+        self.assertTrue(production["repeated_artifact_kinds_allowed"])
+        self.assertTrue(production["per_subject_source_closure"])
+        self.assertEqual(
+            production["source_artifact_binding"],
+            "rule_owned_selector_to_exact_artifact_id_sha256_map",
+        )
+        self.assertEqual(production["native_host_evidence_binding"], "artifact_set_sha256")
+        self.assertEqual(
+            production["recorded_approval_evidence_binding"],
+            "artifact_set_sha256_evidence_only",
+        )
+        self.assertNotIn("host_and_professional_binding", production)
+        self.assertEqual(production["conclusion"], "evidence_contract_ready_only")
+        self.assertFalse(production["independent_evidence_authenticity_verified"])
+        self.assertFalse(production["native_execution_replayed_by_this_qa"])
+        self.assertFalse(production["technical_package_ready_granted_by_this_qa"])
+        self.assertFalse(production["candidate_artifacts_exposed_by_this_qa"])
+        self.assertFalse(production["technical_readiness_is_release_authorization"])
+        self.assertTrue(production["release_authorization_requires_independent_trust_chain"])
+        self.assertEqual(Path(production["architecture_compatibility"]["script"]).name, "aicad_production_readiness_qa_v2.py")
+        self.assertEqual(Path(production["architecture_compatibility"]["contract_schema"]).name, "production_readiness_contract_v2.schema.json")
         normative = payload["normative_governance"]
         self.assertTrue(normative["available"])
         self.assertEqual(normative["priority"], "first_non_compensatory_gate")
@@ -286,6 +358,65 @@ class AgentPluginTests(unittest.TestCase):
         self.assertIn("Unsafe integration-manifest path", installer)
         self.assertIn("integration-manifest.json", installer)
         self.assertNotIn("Get-ChildItem -LiteralPath $source -Force", installer)
+        self.assertIn("[string]$ExpectedVersion = '1.13.0'", installer)
+        self.assertLess(
+            installer.index("release\\v1.13.0\\aicad-agent"),
+            installer.index("plugins\\aicad-agent"),
+        )
+        self.assertNotIn("agent-plugin\\aicad-agent", installer)
+        self.assertIn("Refusing to install version mismatch", installer)
+        self.assertIn("$sourcePlugin.version -ne $ExpectedVersion", installer)
+        self.assertIn("$sourceIntegration.version -ne $ExpectedVersion", installer)
+        self.assertIn("verify_release_package.py", installer)
+        self.assertIn("--source-root $repositoryRoot", installer)
+        self.assertLess(
+            installer.index("Source package verification failed"),
+            installer.index("New-Item -ItemType Directory -Path $pluginsRoot"),
+        )
+        self.assertIn("$installedManifest.version -ne $ExpectedVersion", installer)
+        verifier = (ROOT / "scripts" / "verify_release_package.py").read_text(encoding="utf-8")
+        builder = (ROOT / "scripts" / "build-agent-plugin.ps1").read_text(encoding="utf-8-sig")
+        self.assertIn('EXPECTED_VERSION = "1.13.0"', verifier)
+        self.assertIn('"expected-version-mismatch"', verifier)
+        self.assertIn('"component-version-mismatch"', verifier)
+        self.assertIn("--expected-version $Version", builder)
+        self.assertIn("--expected-version $ExpectedVersion", installer)
+
+    def test_installer_rejects_explicit_stale_source_before_copy(self) -> None:
+        scratch_root = ROOT.parents[1] / ".tmp"
+        scratch_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=scratch_root) as temporary:
+            source = Path(temporary) / "stale-plugin"
+            manifest = source / ".codex-plugin" / "plugin.json"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(
+                json.dumps({"name": "aicad-agent", "version": "1.12.0"}) + "\n",
+                encoding="utf-8",
+            )
+            (source / "integration-manifest.json").write_text(
+                json.dumps({"version": "1.12.0", "files": []}) + "\n",
+                encoding="utf-8",
+            )
+            marker = source / "must-not-change.txt"
+            marker.write_text("unchanged\n", encoding="utf-8")
+            before = {path.relative_to(source).as_posix(): path.read_bytes() for path in source.rglob("*") if path.is_file()}
+            completed = subprocess.run(
+                [
+                    "powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
+                    "-File", str(ROOT / "scripts" / "install-agent-plugin.ps1"),
+                    "-SourceDirectory", str(source), "-ExpectedVersion", "1.13.0",
+                ],
+                cwd=ROOT,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                capture_output=True,
+                check=False,
+            )
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertIn("Refusing to install version mismatch", completed.stdout + completed.stderr)
+            after = {path.relative_to(source).as_posix(): path.read_bytes() for path in source.rglob("*") if path.is_file()}
+            self.assertEqual(before, after)
 
 if __name__ == "__main__":
     unittest.main()

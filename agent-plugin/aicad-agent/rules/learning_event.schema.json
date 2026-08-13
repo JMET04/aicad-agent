@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JMET04/aicad-agent/rules/learning_event.schema.json",
+  "title": "aicad controlled learning report or bundle",
+  "oneOf": [
+    { "$ref": "#/$defs/failureReport" },
+    { "$ref": "#/$defs/lessonBundle" }
+  ],
+  "$defs": {
+    "safetyLocks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": { "const": true },
+        "accepted": { "const": false },
+        "ruleEnabled": { "const": false },
+        "packagingGated": { "const": true }
+      }
+    },
+    "fileEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "size", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.\\.?/)(?!.*(?:^|/)\\.\\.?$)[^\\u0000]+$"
+        },
+        "size": { "type": "integer", "minimum": 0 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy", "entries"],
+      "properties": {
+        "policy": {
+          "enum": ["exact_declared_evidence", "exact_declared_inputs", "exact_declared_artifacts"]
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/fileEntry" }
+        }
+      }
+    },
+    "candidateRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "requirement", "prevention", "regressionTest", "safetyLocks"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+(?:/[A-Z0-9]+)*$" },
+        "requirement": { "type": "string", "minLength": 1 },
+        "prevention": { "type": "string", "minLength": 1 },
+        "regressionTest": { "type": "string", "minLength": 1 },
+        "safetyLocks": { "$ref": "#/$defs/safetyLocks" }
+      }
+    },
+    "failedCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "failureId", "failureAlias", "domain", "failingCheck", "symptom", "rootCause",
+        "correction", "candidateRule", "reproducer", "evidenceClosure",
+        "sourceInputClosure", "affectedArtifactClosure"
+      ],
+      "properties": {
+        "failureId": { "type": "string", "pattern": "^FAIL-[A-Z0-9][A-Z0-9._-]*$" },
+        "failureAlias": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z0-9_]+)+$" },
+        "domain": {
+          "enum": ["general", "software", "release", "cad", "architecture", "packaging", "mechanical", "electronics"]
+        },
+        "failingCheck": { "type": "string", "minLength": 1 },
+        "symptom": { "type": "string", "minLength": 1 },
+        "rootCause": { "type": "string", "minLength": 1 },
+        "correction": { "type": "string", "minLength": 1 },
+        "candidateRule": { "$ref": "#/$defs/candidateRule" },
+        "reproducer": { "$ref": "#/$defs/fileEntry" },
+        "evidenceClosure": { "$ref": "#/$defs/closure" },
+        "sourceInputClosure": { "$ref": "#/$defs/closure" },
+        "affectedArtifactClosure": { "$ref": "#/$defs/closure" }
+      }
+    },
+    "failureReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "reportId", "status", "failedChecks", "safetyLocks"],
+      "properties": {
+        "schema": { "const": "aicad_test_failure_report_v1" },
+        "reportId": { "type": "string", "pattern": "^REPORT-[A-Z0-9][A-Z0-9._-]*$" },
+        "status": { "const": "failed" },
+        "failedChecks": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/failedCheck" } },
+        "safetyLocks": { "$ref": "#/$defs/safetyLocks" }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failureId", "lessonId"],
+      "properties": {
+        "failureId": { "type": "string", "pattern": "^FAIL-[A-Z0-9][A-Z0-9._-]*$" },
+        "lessonId": { "type": "string", "pattern": "^LESSON-[0-9A-F]{24}$" }
+      }
+    },
+    "sourceReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reportId", "reportArtifact", "declaredFailureIds", "mappings", "exactBidirectionalClosure"],
+      "properties": {
+        "reportId": { "type": "string", "pattern": "^REPORT-[A-Z0-9][A-Z0-9._-]*$" },
+        "reportArtifact": { "$ref": "#/$defs/fileEntry" },
+        "declaredFailureIds": {
+          "type": "array", "minItems": 1,
+          "items": { "type": "string", "pattern": "^FAIL-[A-Z0-9][A-Z0-9._-]*$" }
+        },
+        "mappings": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/mapping" } },
+        "exactBidirectionalClosure": { "const": true }
+      }
+    },
+    "lesson": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lessonId", "sourceFailureId", "failureAlias", "domain", "failingCheck", "symptom",
+        "rootCause", "correction", "candidateRule", "reproducer", "evidenceClosure",
+        "sourceInputClosure", "affectedArtifactClosure"
+      ],
+      "properties": {
+        "lessonId": { "type": "string", "pattern": "^LESSON-[0-9A-F]{24}$" },
+        "sourceFailureId": { "type": "string", "pattern": "^FAIL-[A-Z0-9][A-Z0-9._-]*$" },
+        "failureAlias": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z0-9_]+)+$" },
+        "domain": {
+          "enum": ["general", "software", "release", "cad", "architecture", "packaging", "mechanical", "electronics"]
+        },
+        "failingCheck": { "type": "string", "minLength": 1 },
+        "symptom": { "type": "string", "minLength": 1 },
+        "rootCause": { "type": "string", "minLength": 1 },
+        "correction": { "type": "string", "minLength": 1 },
+        "candidateRule": { "$ref": "#/$defs/candidateRule" },
+        "reproducer": { "$ref": "#/$defs/fileEntry" },
+        "evidenceClosure": { "$ref": "#/$defs/closure" },
+        "sourceInputClosure": { "$ref": "#/$defs/closure" },
+        "affectedArtifactClosure": { "$ref": "#/$defs/closure" }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declaredFailureKeys", "mappedFailureKeys", "unreferencedLessonIds", "missingLessonIds", "exactBidirectionalClosure"],
+      "properties": {
+        "declaredFailureKeys": { "type": "array", "items": { "type": "string" } },
+        "mappedFailureKeys": { "type": "array", "items": { "type": "string" } },
+        "unreferencedLessonIds": { "type": "array", "maxItems": 0 },
+        "missingLessonIds": { "type": "array", "maxItems": 0 },
+        "exactBidirectionalClosure": { "const": true }
+      }
+    },
+    "lessonBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "sourceReports", "lessons", "failureLessonClosure", "safetyLocks"],
+      "properties": {
+        "schema": { "const": "aicad_lesson_bundle_v1" },
+        "sourceReports": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/sourceReport" } },
+        "lessons": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/lesson" } },
+        "failureLessonClosure": { "$ref": "#/$defs/coverage" },
+        "safetyLocks": { "$ref": "#/$defs/safetyLocks" }
+      }
+    }
+  }
+}

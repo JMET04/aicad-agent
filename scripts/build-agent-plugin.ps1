@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.12.0',
+    [string]$Version = '1.13.0',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -29,7 +29,7 @@ function Get-CanonicalSourceInputFiles {
     )
     $rows = [Collections.Generic.List[IO.FileInfo]]::new()
     $skipNames = @('__pycache__', '.pytest_cache')
-    $skipExtensions = @('.pyc', '.pyo')
+    $skipExtensions = @('.pyc', '.pyo', '.rej', '.orig')
     function Add-Tree([string]$RelativePath) {
         $tree = Join-Path $RepositoryRoot $RelativePath
         if (-not (Test-Path -LiteralPath $tree -PathType Container)) { return }
@@ -155,7 +155,7 @@ Get-ChildItem -LiteralPath $stage -Directory -Recurse -Force |
         }
         Remove-Item -LiteralPath $candidate -Recurse -Force
     }
-Get-ChildItem -LiteralPath $stage -Filter '*.pyc' -File -Recurse -Force | Remove-Item -Force
+Get-ChildItem -LiteralPath $stage -File -Recurse -Force | Where-Object Extension -In @('.pyc', '.pyo', '.rej', '.orig') | Remove-Item -Force
 
 $pluginManifest = Get-Content -Raw -Encoding UTF8 -LiteralPath (Join-Path $stage '.codex-plugin\plugin.json') | ConvertFrom-Json
 if ([string]$pluginManifest.version -ne $Version) {
@@ -175,7 +175,7 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.12.0'
+        pythonConstraintCompiler = '1.13.0'
         autocadBundle = '1.6.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
@@ -207,7 +207,7 @@ $releaseManifest = [ordered]@{
         'aicad_get_reference_rebuild_schema', 'aicad_validate_reference_rebuild', 'aicad_build_reference_reconstruction',
         'aicad_solidworks_doctor',
         'aicad_get_3d_plan_schema', 'aicad_validate_3d_plan', 'aicad_build_solidworks_part',
-        'scripts/aicad_packaging_qa.py', 'scripts/aicad_architecture_detail_qa.py', 'scripts/aicad_architecture_qa.py', 'scripts/aicad_review_report.py', 'scripts/aicad_production_readiness_qa.py', 'scripts/aicad_production_readiness_qa_v2.py', 'scripts/aicad_report_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
+        'scripts/aicad_packaging_qa.py', 'scripts/aicad_architecture_detail_qa.py', 'scripts/aicad_architecture_qa.py', 'scripts/aicad_review_report.py', 'scripts/aicad_production_readiness_qa.py', 'scripts/aicad_production_readiness_qa_v2.py', 'scripts/aicad_production_readiness_qa_v3.py', 'scripts/aicad_report_qa.py', 'scripts/aicad_lesson_harvester.py', 'scripts/aicad_continuous_learning_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
         'scripts/aicad_requirement_conformance.py', 'scripts/aicad_guarded_delivery.py', 'scripts/aicad_modifier_ui_qa.cjs',
         'scripts/aicad_modifier_measurement_qa.cjs', 'scripts/aicad_architecture_document_set_qa.py',
         'scripts/aicad_normative_quality_qa.py'
@@ -222,8 +222,10 @@ $releaseManifest = [ordered]@{
         'protocol-4 native overall/grid/partition/opening DIMENSION entities with purpose XData and AutoCAD save/reopen proof',
         'persistent content-addressed review launch with duplicate auto-tab suppression',
         'direct-production requests fail closed to blocker-only output on any missing gate',
-        'fail-closed production-readiness contract with paper-space, furniture component, authority, host and release gates',
+        'fail-closed architecture v2 compatibility contract with paper-space, furniture component, authority, host and release gates',
+        'canonical v3 evidence-contract verifier with exact multi-artifact closure, mechanical BOM subject rows, per-PCB BOM/CPL/assembly/fabrication/PDF/3D/CAM closure, native-board drill authority, repeated kinds, per-subject source/reopen binding and a full-identity digest; concludes only evidenceContractReady and never exposes candidate artifacts or grants readiness/authorization',
         'idempotent audit-report inventory with unique stable prevention-rule IDs and conflict rejection',
+        'controlled deterministic failure-to-lesson harvesting with exact hash closure, disabled candidates, conflict rejection and recorded-precondition-only promotion QA that never authenticates reviewers or grants eligibility',
         'calibrated webpage/SVG/image reference reconstruction', 'direct DOM object evidence and browser-backed annotation QA',
         'packaging dieline global QA and prevention rules', 'bounded CAD normality proof and typed top/bottom closure families',
         'whole user-requirement conformance before geometry', 'non-skippable whole-intent detail-proof and hashed candidate-build order',
@@ -254,7 +256,8 @@ $releaseManifest = [ordered]@{
         'native DWG requires AutoCAD', 'native SLDPRT/STEP and native topology authority require a licensed SolidWorks installation',
         'default package excludes SolidWorks interop binaries', 'raw webpage/image pixels are never dimensional authority',
         'protocol-4 native DIMENSION is emitted in DXF/AICAD; native DWG still requires licensed AutoCAD save/reopen validation', 'packaging QA remains engineering-review evidence, not manufacturing acceptance',
-        'production-readiness pass creates a release candidate only; authorized professional or manufacturing acceptance remains external'
+        'v3 evidence-contract pass produces a review report only; technical readiness, release eligibility and manufacturing/fabrication authorization remain external and false',
+        'continuous-learning tools never authenticate approvers, grant promotion eligibility, mutate authoritative rules/tests or installed plugins, or unlock readiness/authorization'
     )
     validationCommands = @(
         'PYTHONDONTWRITEBYTECODE=1 python -B -m unittest discover -s tests -v',
@@ -262,6 +265,9 @@ $releaseManifest = [ordered]@{
         'python agent-plugin/aicad-agent/scripts/aicad_agent.py capabilities',
         'python agent-plugin/aicad-agent/scripts/aicad_report_qa.py <validation.json> --output <report-qa.json>',
         'python agent-plugin/aicad-agent/scripts/aicad_production_readiness_qa_v2.py <production-contract-v2.json> --output <production-validation.json> --markdown <production-validation.md> --html <production-validation.review.html> --png <production-validation.review.png>',
+        'python agent-plugin/aicad-agent/scripts/aicad_production_readiness_qa_v3.py <production-contract-v3.json> --output <production-validation-v3.json> --markdown <production-validation-v3.md>',
+        'python agent-plugin/aicad-agent/scripts/aicad_lesson_harvester.py <failure-report.json> --root <evidence-root> --output learning/<lesson-bundle.json>',
+        'python agent-plugin/aicad-agent/scripts/aicad_continuous_learning_qa.py learning/<lesson-bundle.json> --root <evidence-root> --output learning/<learning-audit.json>',
         'node agent-plugin/aicad-agent/scripts/aicad_reference_visual_qa.cjs --help-or-preview-arguments',
         'node agent-plugin/aicad-agent/scripts/aicad_modifier_ui_qa.cjs <review.html> <report.json> <screenshot.png>',
         'node agent-plugin/aicad-agent/scripts/aicad_modifier_measurement_qa.cjs <review.html> <report.json> <screenshot.png>',
@@ -278,7 +284,7 @@ $sumLines = @($sumFiles | Sort-Object FullName | ForEach-Object {
 })
 [IO.File]::WriteAllText((Join-Path $stage 'SHA256SUMS'), ($sumLines -join "`n") + "`n", [Text.UTF8Encoding]::new($false))
 $releaseVerifier = Join-Path $root 'scripts\verify_release_package.py'
-& python -B $releaseVerifier $stage --source-root $root
+& python -B $releaseVerifier $stage --source-root $root --expected-version $Version
 if ($LASTEXITCODE -ne 0) {
     throw 'Staged agent plugin failed independent release verification.'
 }

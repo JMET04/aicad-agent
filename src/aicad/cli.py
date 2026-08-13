@@ -15,7 +15,7 @@ from .provider import generate_plan
 from .settings import config_path, get_api_key, load_config, save_config, set_api_key
 
 
-VERSION = "1.12.0"
+VERSION = "1.13.0"
 
 
 def _parser() -> argparse.ArgumentParser:

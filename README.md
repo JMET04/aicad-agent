@@ -1,4 +1,4 @@
-# aicad-agent 1.12.0
+# aicad-agent 1.13.0
 
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
@@ -62,7 +62,7 @@ flowchart LR
 准备：Codex CLI 或 Codex 桌面版、Git、Python 3.10+。
 
 ```powershell
-codex plugin marketplace add JMET04/aicad-agent --ref v1.12.0
+codex plugin marketplace add JMET04/aicad-agent --ref v1.13.0
 codex plugin add aicad-agent@aicad-agent
 codex plugin list
 ```
@@ -86,13 +86,13 @@ codex plugin remove aicad-agent
 
 从 [GitHub Releases](https://github.com/JMET04/aicad-agent/releases) 或仓库的 [`dist`](dist/) 目录下载：
 
-- `aicad-agent-1.12.0.zip`
+- `aicad-agent-1.13.0.zip`
 - `SHA256SUMS`
 
 先核对哈希：
 
 ```powershell
-Get-FileHash .\aicad-agent-1.12.0.zip -Algorithm SHA256
+Get-FileHash .\aicad-agent-1.13.0.zip -Algorithm SHA256
 Get-Content .\SHA256SUMS
 ```
 
@@ -297,17 +297,17 @@ python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.12.0
+.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.13.0
 python -B scripts/verify_release_package.py release/ci/aicad-agent --source-root .
 .\scripts\build-github-source.ps1 `
   -OutputDirectory release/ci/github-repository `
-  -Version 1.12.0 `
-  -PluginArchive release/ci/aicad-agent-1.12.0.zip `
+  -Version 1.13.0 `
+  -PluginArchive release/ci/aicad-agent-1.13.0.zip `
   -PluginDirectory release/ci/aicad-agent
 python -B scripts/verify_github_source.py release/ci/github-repository --source-root .
 ```
 
-当前 1.12.0 增加跨领域规范质量合同、建筑文档集隔离、原生 UTF-8 标注、语义距离拾取、双视口零碰撞门禁、确定性公开 showcase，以及同卷隐藏 staging、输入哈希与双向清单闭包。CI 会在每次 push 和 pull request 中从源码重建并独立验证插件与 GitHub 发布源。
+当前 1.13.0 在跨领域规范、建筑文档集、原生标注、语义拾取、双视口零碰撞、确定性 showcase 和原子发布闭包基础上，新增机械/电子非补偿证据合同 v3：每个制造件、装配体和 PCB 都必须具有精确的工件 ID、路径、大小、SHA-256、BOM/产品结构或 CAM 反向权威及负向回归。版本还加入受控失败→经验学习闭环；测试和门禁失败会被收敛为带复现证据、根因、修复、候选预防规则和最小负测的哈希记录，但候选始终禁用且不能自行修改权威规则、测试、已安装插件或任何技术/制造/投板授权。CI 会在每次 push 和 pull request 中从源码重建并独立验证插件与 GitHub 发布源。
 
 ## 文档索引
 
@@ -327,3 +327,19 @@ python -B scripts/verify_github_source.py release/ci/github-repository --source-
 项目采用 [MIT License](LICENSE)。SolidWorks 专有互操作程序集不会随仓库或默认发布包分发。
 
 - Architectural QA now treats complete axis groups and the stage-specific annotation matrix as mandatory, not as optional presentation polish.
+
+## Mechanical and PCB evidence-contract gates
+
+The canonical v3 QA is deliberately narrower than a readiness assessor. It verifies that declared mechanical or PCB evidence satisfies the rule inventory, uses portable hash-correct artifacts, and has an exact bijection between `expectedArtifactClosure` and `candidateArtifacts`. Repeated artifact kinds are supported through unique `artifactId`, `partId`, revision and case-insensitive path identity, so multi-part assemblies and granular CAM do not have to be hidden in one archive. It does not authenticate evidence origin, replay native CAD/EDA tools, independently reproduce engineering analyses, expose candidate artifacts, or grant technical/manufacturing/fabrication readiness.
+
+Mechanical gates cover frozen operating envelope, duty cycle, design life, load combinations and abnormal cases; equation/input/output/margin trace; strength, stiffness, fatigue, factors of safety, fasteners, joints, bearings and thermal behavior; risk controls; fits, threads, undefined edges, GD&T, roughness, process capability and measurement method; native material-database assignment; revision/BOM/inspection parity; and feature-bound drawing annotations. Every manufactured part and required assembly must contribute its own native CAD, STEP and manufacturing drawing, with artifact-ID source binding and native reopen evidence. Canonical QA parses one `aicad_machine_mechanical_bom_v1` JSON BOM: it requires one positive-quantity row per subject with exact subject type, revision and artifact IDs, then requires the hash-bound product-structure manifest to repeat those subject-scoped BOM rows exactly. PCB gates cover exact MPN-to-symbol pin number/function/type resolution; ratings, derating, power/startup/fault recovery, transient protection, analog accuracy, clocks/reset/programming, grounding/isolation, connector and test access; bidirectional net/pad and BOM/footprint parity; zero final unconnected or ignored/excluded ERC/DRC items; enclosure/height checks; and granular Gerber/drill/CAM outputs from the same revision. Every `pcb_design` must independently own its KiCad project/schematic/board, schematic PDF, BOM, CPL, assembly drawing, fabrication drawing, 3D board, job file, CAM manifest and all Gerber/PTH/NPTH drill outputs; one package-level document cannot stand in for another PCB. Canonical QA parses each final `.kicad_pcb` S-expression to derive its copper-layer set and PTH/NPTH presence; the candidate board inventory must match that parse, and the CAM manifest must close every named Gerber layer, typed drill output and job artifact ID/hash in both directions. These checks establish candidate-declared consistency only, not external source authority or evidence authenticity.
+
+Artifact-set SHA-256 binds each artifact ID, part ID, subject type, kind, revision, normalized relative path, byte size and content hash. Artifact IDs and case-folded paths must be unique; kinds may repeat. Rule-owned predicates and source-artifact selectors require complete artifact-ID/hash maps and cannot be replaced by one hash per kind. Required standards are checked as a minimum subset so project-specific standards remain permitted.
+
+`evidenceContractReady=true` means only that this declared evidence contract passed. `independentEvidenceAuthenticityVerified`, `nativeExecutionReplayedByThisQA`, `technicalPackageReady`, `productionReleaseEligible`, `manufacturingAuthorized`, and `fabricationAuthorized` always remain `false`; `exposedArtifacts` remains empty. Recorded approval metadata is reported only as hash-bound evidence, never as an independently verified trust chain or authorization.
+
+## Controlled continuous learning
+
+The plugin now has a fail-closed experience loop for structured test and gate failures. It maps every declared failed check to one deterministic, hash-bound lesson containing symptom, root cause, correction, disabled prevention candidate, negative regression and exact safe-relative evidence/source/artifact closure. The inventory rejects missing/extra/mixed lessons, conflicting event IDs, absolute or escaping paths, stale hashes and unsafe links.
+
+This does not make the plugin silently rewrite itself. Candidate rules stay review-only and disabled, and both CLIs may write only explicit JSON outputs below `learning/`; authority, tests, plugin metadata and package surfaces are rejected as destinations. The promotion QA only verifies recorded prerequisites: red-before-fix/green-after-fix plus unrelated suites, two distinct recorded reviewer IDs bound to one bundle/rule/newer version, and no rule weakening or test deletion. It does not authenticate reviewer identity or grant eligibility; external authenticated review remains mandatory. It never edits rules/tests, changes an installed plugin, packages/publishes, accepts a design or grants technical/manufacturing/fabrication authorization.

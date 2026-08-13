@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JMET04/aicad-agent/rules/learning_approval_ledger.schema.json",
+  "title": "aicad controlled learning recorded approval ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "candidateBundle", "sourceVersion", "targetVersion", "targetRuleId",
+    "approvalRecords", "regressionEvidence", "changePolicy", "safetyLocks"
+  ],
+  "properties": {
+    "schema": { "const": "aicad_learning_approval_ledger_v1" },
+    "candidateBundle": { "$ref": "#/$defs/fileEntry" },
+    "sourceVersion": { "$ref": "#/$defs/semver" },
+    "targetVersion": { "$ref": "#/$defs/semver" },
+    "targetRuleId": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+(?:/[A-Z0-9]+)*$" },
+    "approvalRecords": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/approval" }
+    },
+    "regressionEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["report", "redBeforeFix", "greenAfterFix", "unrelatedSuitesPass"],
+      "properties": {
+        "report": { "$ref": "#/$defs/fileEntry" },
+        "redBeforeFix": { "const": true },
+        "greenAfterFix": { "const": true },
+        "unrelatedSuitesPass": { "const": true }
+      }
+    },
+    "changePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["weakensExistingRules", "deletesTests", "removesAuthoritativeRules", "modifiesInstalledPlugin", "automaticPromotion"],
+      "properties": {
+        "weakensExistingRules": { "const": false },
+        "deletesTests": { "const": false },
+        "removesAuthoritativeRules": { "const": false },
+        "modifiesInstalledPlugin": { "const": false },
+        "automaticPromotion": { "const": false }
+      }
+    },
+    "safetyLocks": { "$ref": "#/$defs/safetyLocks" }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "fileEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "size", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.\\.?/)(?!.*(?:^|/)\\.\\.?$)[^\\u0000]+$"
+        },
+        "size": { "type": "integer", "minimum": 0 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "safetyLocks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": { "const": true },
+        "accepted": { "const": false },
+        "ruleEnabled": { "const": false },
+        "packagingGated": { "const": true }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role", "reviewerId", "decision", "candidateBundleSha256",
+        "targetRuleId", "targetVersion", "approvalEvidence"
+      ],
+      "properties": {
+        "role": { "enum": ["candidate_rule_reviewer", "regression_reviewer"] },
+        "reviewerId": { "type": "string", "minLength": 1 },
+        "decision": { "const": "approved" },
+        "candidateBundleSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "targetRuleId": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+(?:/[A-Z0-9]+)*$" },
+        "targetVersion": { "$ref": "#/$defs/semver" },
+        "approvalEvidence": { "$ref": "#/$defs/fileEntry" }
+      }
+    }
+  }
+}

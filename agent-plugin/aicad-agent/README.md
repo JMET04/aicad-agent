@@ -1,4 +1,4 @@
-# aicad-agent 1.12.0
+# aicad-agent 1.13.0
 
 ## 跨领域规范第一门禁
 
@@ -8,7 +8,7 @@
 
 ## 1:1 webpage and image reference reconstruction
 
-Version 1.12.0 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
+Version 1.13.0 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
 
 Portable reference-rebuild output includes annotated DXF, native-text SVG/HTML, validation, manifest, and browser-backed PNG evidence. The main AICAD protocol-4 path emits true native DIMENSION entities with purpose/style XData; DWG save/reopen remains an explicit licensed AutoCAD host gate.
 ## 建筑平面制图语义
@@ -27,7 +27,7 @@ Portable reference-rebuild output includes annotated DXF, native-text SVG/HTML, 
 
 The multiview selector addresses individual lines, circles, and faces with stable semantic keys. Corrections are bound to a source hash, explicit preservation policy, shared-pattern fanout, and full downstream dependency replay. Thin visible strokes are separate from the larger click target, so precision and usability do not conflict.
 
-On a licensed SolidWorks 2026 host, version 1.12.0 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
+On a licensed SolidWorks 2026 host, version 1.13.0 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
 
 确定性、原点锚定、面向 Agent 的 CAD 约束插件。它把 2D AICAD 计划编译为 AICAD/SCR/DXF/审计工件，提供包装刀版正常性证明与交互修改器，并通过可选 Windows 宿主支持 AutoCAD 和 SolidWorks。
 
@@ -80,7 +80,7 @@ The reviewer now exposes one modification list instead of separate user-facing i
 
 ```powershell
 python scripts/aicad_agent.py capabilities
-python scripts/aicad_production_readiness_qa_v2.py production-contract-v2.json --output production-validation.json --markdown production-validation.md --html production-validation.review.html --png production-validation.review.png
+python scripts/aicad_production_readiness_qa_v3.py production-contract-v3.json --output production-validation-v3.json --markdown production-validation-v3.md
 python scripts/aicad_agent.py compile --plan runtime/examples/rectangle.plan.json --out smoke --name rectangle
 python scripts/aicad_agent.py build3d --plan runtime/examples/mounting_plate_3d.plan.json --out smoke3d --name plate --no-execute
 python -B -m unittest discover -s tests -p "test_*.py" -v
@@ -98,3 +98,24 @@ packagingGated=true
 ```
 
 MIT License。
+
+## Mechanical and PCB evidence-contract gates
+
+The canonical v3 contract is fail-closed and non-compensatory, but its conclusion is intentionally limited to `evidenceContractReady`. It verifies the declared file hashes, rule-owned values, required-standard subset, exact `expectedArtifactClosure`/candidate bijection, complete artifact-ID source maps and one artifact-set binding. Repeated artifact kinds are supported through unique artifact IDs, part/subject identity, revision and case-insensitive path identity. It does not authenticate evidence origin, replay native CAD/EDA execution, independently reproduce an engineering analysis, expose candidate artifacts, or grant technical/manufacturing/fabrication readiness.
+
+Mechanical evidence covers the frozen operating envelope, duty cycle and design life; recomputed load combinations and abnormal cases; equation/input/output/margin trace; strength, stiffness, fatigue, fastener/joint/bearing and thermal margins; risk controls; fits, threads, undefined edges, GD&T, roughness, process capability and measurement method; native material-database assignment; BOM/revision/inspection parity; and feature-bound drawing annotations. Every manufactured part and required assembly has separate native CAD, STEP, drawing, source binding and reopen evidence. Canonical QA parses one `aicad_machine_mechanical_bom_v1` JSON BOM with one positive-quantity row per subject and exact subject type, revision and artifact IDs, then checks that the hash-bound product-structure manifest repeats those subject-scoped BOM rows. PCB evidence covers exact MPN-to-symbol pin number/function/type resolution; ratings/derating, power/startup/fault, transient, analog, clock/reset/programming, grounding/isolation, connector and test access; bidirectional net/pad and BOM/footprint parity; enclosure/height checks; zero final unconnected or ignored/excluded ERC/DRC items; and granular Gerber/drill/CAM outputs bound to the same revision. Every `pcb_design` independently owns its KiCad project/schematic/board, schematic PDF, BOM, CPL, assembly drawing, fabrication drawing, 3D board, job file, CAM manifest and all Gerber/PTH/NPTH drill outputs. Canonical QA parses each final `.kicad_pcb` S-expression for the copper-layer set and PTH/NPTH presence; the candidate board inventory must match that parse, and each CAM manifest must close every named Gerber layer, typed drill output and job artifact ID/hash. This is candidate-declared consistency, not external source authority or evidence authenticity.
+
+Every artifact-set digest includes artifact ID, part ID, subject type, kind, revision, normalized relative path, byte size and content SHA-256. Artifact IDs and case-folded paths are unique while kinds may repeat. Reports persist portable paths only. `independentEvidenceAuthenticityVerified`, `nativeExecutionReplayedByThisQA`, `technicalPackageReady`, `productionReleaseEligible`, `manufacturingAuthorized`, `fabricationAuthorized` and every candidate-artifact exposure field remain `false`. Recorded approval metadata is hash-bound evidence only, never an independently verified trust chain.
+
+## Controlled failure-to-lesson loop
+
+Every structured failed test/gate can be harvested into a deterministic lesson bundle. The bundle stores no implicit time or machine absolute path: each failed check has one stable alias/event, a failing-check name, symptom/root cause/correction, a disabled candidate rule, a minimal negative regression, and safe-relative size/SHA-256 closures for its reproducer, evidence, source inputs and affected artifacts. The QA recomputes all files and requires exact bidirectional failure-to-lesson closure; missing, extra, mixed, stale, traversal or link-backed records fail.
+
+```powershell
+python scripts/aicad_lesson_harvester.py reports/failures.json --root . --output learning/candidates.json
+python scripts/aicad_continuous_learning_qa.py learning/candidates.json --root . --output learning/audit.json
+```
+
+Candidates always retain `reviewOnly=true`, `accepted=false`, `ruleEnabled=false`, `packagingGated=true`. Both CLIs accept output only as explicit JSON below `learning/`; authority, tests, plugin metadata and package surfaces cannot be destinations. Optional promotion QA verifies recorded prerequisites only: red-before-fix, green-after-fix, unrelated-suite pass, two distinct reviewer IDs bound to the same bundle hash/rule/newer version, and a no-weakening/no-test-deletion policy. It does not authenticate reviewer identity and always leaves manual-promotion eligibility false pending external authenticated review. It never edits authoritative rules or tests, changes/installs/publishes the plugin, or unlocks technical/manufacturing/fabrication status.
+
+The seeded inventory captures the mechanical, electronics and release failures found during production-level validation, including artifact/source closure, native CAD/EDA readback, datasheet-required electronics, surge/return/isolation models, per-IC decoupling, schematic readability, Stage-A acceptance, Stage-B fallback prevention, portable paths, atomic release publication and sanitized showcase closure.
