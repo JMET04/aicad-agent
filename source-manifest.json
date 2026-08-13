@@ -1740,8 +1740,8 @@
                          },
                          {
                              "path":  "scripts/build_showcase.py",
-                             "size":  19587,
-                             "sha256":  "a48783faf510277ba0dce88061e7ab95a3630598307e4f7b35928d2b9e3c2736"
+                             "size":  19781,
+                             "sha256":  "91a944f1a1f10f07c423ce7c82b87578ab5e7e456bfbb374f80fe00354679eef"
                          },
                          {
                              "path":  "scripts/build-agent-plugin.ps1",
@@ -2140,8 +2140,8 @@
                          },
                          {
                              "path":  "tests/test_auto_review_launch.py",
-                             "size":  6923,
-                             "sha256":  "afb3685710a1777d9606e5a5b0a544473bb54bbd7d2ef37ec22769f545f429ff"
+                             "size":  6985,
+                             "sha256":  "5d4ed54525567a0e0795c6b53f85779eb698b5e4cd9a1b9a336e18b6e9f44277"
                          },
                          {
                              "path":  "tests/test_autocad_host_harness.py",
@@ -2150,8 +2150,8 @@
                          },
                          {
                              "path":  "tests/test_build_showcase.py",
-                             "size":  9827,
-                             "sha256":  "b45b9d0938d08ce201027d43a3ba618d94188ff67b991d4ae15e34750c28a6b0"
+                             "size":  9837,
+                             "sha256":  "2519d09e778b51289cb2493150f24e8388438c0b56f24543508deff4c2192e54"
                          },
                          {
                              "path":  "tests/test_compile_auto_review.py",
@@ -4093,8 +4093,8 @@
                   },
                   {
                       "path":  "scripts/build_showcase.py",
-                      "size":  19587,
-                      "sha256":  "a48783faf510277ba0dce88061e7ab95a3630598307e4f7b35928d2b9e3c2736"
+                      "size":  19781,
+                      "sha256":  "91a944f1a1f10f07c423ce7c82b87578ab5e7e456bfbb374f80fe00354679eef"
                   },
                   {
                       "path":  "scripts/build-agent-plugin.ps1",
@@ -4498,8 +4498,8 @@
                   },
                   {
                       "path":  "tests/test_auto_review_launch.py",
-                      "size":  6923,
-                      "sha256":  "afb3685710a1777d9606e5a5b0a544473bb54bbd7d2ef37ec22769f545f429ff"
+                      "size":  6985,
+                      "sha256":  "5d4ed54525567a0e0795c6b53f85779eb698b5e4cd9a1b9a336e18b6e9f44277"
                   },
                   {
                       "path":  "tests/test_autocad_host_harness.py",
@@ -4508,8 +4508,8 @@
                   },
                   {
                       "path":  "tests/test_build_showcase.py",
-                      "size":  9827,
-                      "sha256":  "b45b9d0938d08ce201027d43a3ba618d94188ff67b991d4ae15e34750c28a6b0"
+                      "size":  9837,
+                      "sha256":  "2519d09e778b51289cb2493150f24e8388438c0b56f24543508deff4c2192e54"
                   },
                   {
                       "path":  "tests/test_compile_auto_review.py",

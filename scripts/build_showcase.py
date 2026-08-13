@@ -74,6 +74,7 @@ def source_files(root: Path) -> list[Path]:
 
 
 def scan_public_text(root: Path, files: Iterable[Path]) -> list[dict[str, str]]:
+    root = root.resolve()
     findings: list[dict[str, str]] = []
     for path in files:
         if path.suffix.casefold() not in TEXT_SUFFIXES and path.name not in {"LICENSE", "SHA256SUMS"}:
@@ -136,6 +137,8 @@ def _manifest_entries(manifest: dict[str, object]) -> dict[str, tuple[int, str]]
 
 
 def _validate_sums_closure(root: Path, files: list[Path], sums_path: Path) -> dict[str, object]:
+    root = root.resolve()
+    sums_path = sums_path.resolve()
     declared: dict[str, str] = {}
     for line in sums_path.read_text(encoding="utf-8").splitlines():
         if "  " not in line:
@@ -161,6 +164,8 @@ def _validate_sums_closure(root: Path, files: list[Path], sums_path: Path) -> di
 
 
 def validate_manifest_closure(root: Path, files: list[Path], manifest_path: Path) -> dict[str, object]:
+    root = root.resolve()
+    manifest_path = manifest_path.resolve()
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     declared = _manifest_entries(manifest)
     actual = {
@@ -205,6 +210,7 @@ def _select(files: list[Path], patterns: tuple[str, ...], *, prefer_largest: boo
 
 
 def write_deterministic_zip(root: Path, files: list[Path], target: Path) -> None:
+    root = root.resolve()
     with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in files:
             relative = path.relative_to(root).as_posix()
@@ -215,7 +221,7 @@ def write_deterministic_zip(root: Path, files: list[Path], target: Path) -> None
 
 
 def _root_role(source: Path, files: list[Path], name: str) -> Path | None:
-    candidate = source / name
+    candidate = source.resolve() / name
     return candidate if candidate in files else None
 
 

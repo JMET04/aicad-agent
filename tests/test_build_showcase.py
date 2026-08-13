@@ -37,7 +37,7 @@ class BuildShowcaseTests(unittest.TestCase):
             json.dumps({"schema": "fixture", "status": "pass", "files": entries}) + "\n",
             encoding="utf-8",
         )
-        return source
+        return source.resolve()
 
     def test_bundle_is_deterministic_portable_closed_and_complete(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

@@ -107,6 +107,8 @@ class AutomaticReviewLaunchTests(unittest.TestCase):
                 "AICAD_REVIEW_LAUNCH": "",
                 "AICAD_REVIEW_STAGE_DIR": str(root / "stage"),
                 "AICAD_REVIEW_AUTO_DEDUP_SECONDS": "3600",
+                "AICAD_NO_GUI": "",
+                "CI": "",
             }
             with patch.dict(os.environ, environment, clear=False):
                 first = launch_review(review, "auto", opener=opened.append)
