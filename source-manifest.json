@@ -679,6 +679,11 @@
                              "sha256":  "27030f5bc35e2b28bbb82bf6a0b07f711ccb6b8e53c90e34a38353af8341dac8"
                          },
                          {
+                             "path":  "docs/PRODUCT_OVERVIEW.zh-CN.md",
+                             "size":  6740,
+                             "sha256":  "dd90a5c5a54bd83c0c2b54cea1cbb2417a9411366f0c6d7558f376bc41bc8152"
+                         },
+                         {
                              "path":  "docs/protocol.md",
                              "size":  1126,
                              "sha256":  "70ceedea9a330078f601fe6aec81a549a7c4c618bf519a7fc08ed2d01ee1a3f2"
@@ -875,8 +880,8 @@
                          },
                          {
                              "path":  "README.md",
-                             "size":  23117,
-                             "sha256":  "9f9f65bca6c91e9c510a55cdc134760b9972c7ef0d894bd0bafac7ae1e5dfc6d"
+                             "size":  24500,
+                             "sha256":  "aade83c37098347d03b0664d98dac4801c662c88395199412dd8243106f9ff78"
                          },
                          {
                              "path":  "release/ci/aicad-agent/.codex-plugin/plugin.json",
@@ -3032,6 +3037,11 @@
                       "sha256":  "27030f5bc35e2b28bbb82bf6a0b07f711ccb6b8e53c90e34a38353af8341dac8"
                   },
                   {
+                      "path":  "docs/PRODUCT_OVERVIEW.zh-CN.md",
+                      "size":  6740,
+                      "sha256":  "dd90a5c5a54bd83c0c2b54cea1cbb2417a9411366f0c6d7558f376bc41bc8152"
+                  },
+                  {
                       "path":  "docs/protocol.md",
                       "size":  1126,
                       "sha256":  "70ceedea9a330078f601fe6aec81a549a7c4c618bf519a7fc08ed2d01ee1a3f2"
@@ -4048,8 +4058,8 @@
                   },
                   {
                       "path":  "README.md",
-                      "size":  23117,
-                      "sha256":  "9f9f65bca6c91e9c510a55cdc134760b9972c7ef0d894bd0bafac7ae1e5dfc6d"
+                      "size":  24500,
+                      "sha256":  "aade83c37098347d03b0664d98dac4801c662c88395199412dd8243106f9ff78"
                   },
                   {
                       "path":  "schema/aicad-3d-plan.schema.json",

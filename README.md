@@ -4,6 +4,19 @@
 
 **默认不需要 API Key。** 当前 Codex Agent 负责理解任务，本地插件负责约束验证、编译、审查和宿主适配。
 
+## 产品介绍
+
+`aicad-agent` 是安装在 Codex 中的本地工程流水线：它先冻结领域、交付阶段、标准和输入权威顺序，再生成带稳定 ID、用途、依赖和数学约束的 CAD/EDA 候选，最后交付可点击修改器、中文审计、机器验证和 SHA-256 文件清单。它面向需要“可编辑、可复核、可追溯”结果的设计与工程流程，而不是只输出一张看起来相似的图片。
+
+产品覆盖通用 2D、建筑制图、包装刀版、参考图重建、受控 SolidWorks 3D，以及机械技术包和 PCB 证据合同检查。没有原生宿主或专业证据时会明确降级，绝不把候选一致性冒充制造、施工或投板授权。
+
+| 快速入口 | 内容 |
+|---|---|
+| [完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md) | 适用人群、工作方式、核心模块、支持范围、交付物和安全边界 |
+| [四领域工程展示](showcase/README.md) | 建筑、钢结构、机械和 PCB 的预览、交互审查与验证材料 |
+| [安装和使用指南](docs/INSTALL.zh-CN.md) | Marketplace、Release ZIP、首次使用和更新流程 |
+| [v1.13.0 Release](https://github.com/JMET04/aicad-agent/releases/tag/v1.13.0) | 发布说明、插件 ZIP 与 SHA256SUMS |
+
 ![aicad-agent 多视图修改器：点击线、点、圆查看模型数值](docs/images/modifier-measurements-v3.png)
 
 > 当前定位是工程候选与人工审核工具。所有交付继续保持 `reviewOnly=true`、`accepted=false`、`ruleEnabled=false`、`packagingGated=true`。通过插件门禁不等于材料试验、刀模公差、量产可制造性或负责工程师技术验收。
@@ -311,6 +324,7 @@ python -B scripts/verify_github_source.py release/ci/github-repository --source-
 
 ## 文档索引
 
+- [完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)
 - [详细功能说明](docs/FUNCTIONS.zh-CN.md)
 - [安装和使用指南](docs/INSTALL.zh-CN.md)
 - [选择测量与坐标系契约](docs/SELECTION_MEASUREMENT_UI_V3.md)
@@ -322,13 +336,11 @@ python -B scripts/verify_github_source.py release/ci/github-repository --source-
 - [安全策略](SECURITY.md)
 - [第三方依赖说明](THIRD_PARTY_NOTICES.md)
 
-## 许可证
+## v1.13.0 技术说明
 
-项目采用 [MIT License](LICENSE)。SolidWorks 专有互操作程序集不会随仓库或默认发布包分发。
+以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.13.0.md)。
 
-- Architectural QA now treats complete axis groups and the stage-specific annotation matrix as mandatory, not as optional presentation polish.
-
-## Mechanical and PCB evidence-contract gates
+## 机械与 PCB 证据合同门禁
 
 The canonical v3 QA is deliberately narrower than a readiness assessor. It verifies that declared mechanical or PCB evidence satisfies the rule inventory, uses portable hash-correct artifacts, and has an exact bijection between `expectedArtifactClosure` and `candidateArtifacts`. Repeated artifact kinds are supported through unique `artifactId`, `partId`, revision and case-insensitive path identity, so multi-part assemblies and granular CAM do not have to be hidden in one archive. It does not authenticate evidence origin, replay native CAD/EDA tools, independently reproduce engineering analyses, expose candidate artifacts, or grant technical/manufacturing/fabrication readiness.
 
@@ -338,8 +350,12 @@ Artifact-set SHA-256 binds each artifact ID, part ID, subject type, kind, revisi
 
 `evidenceContractReady=true` means only that this declared evidence contract passed. `independentEvidenceAuthenticityVerified`, `nativeExecutionReplayedByThisQA`, `technicalPackageReady`, `productionReleaseEligible`, `manufacturingAuthorized`, and `fabricationAuthorized` always remain `false`; `exposedArtifacts` remains empty. Recorded approval metadata is reported only as hash-bound evidence, never as an independently verified trust chain or authorization.
 
-## Controlled continuous learning
+## 受控持续学习
 
 The plugin now has a fail-closed experience loop for structured test and gate failures. It maps every declared failed check to one deterministic, hash-bound lesson containing symptom, root cause, correction, disabled prevention candidate, negative regression and exact safe-relative evidence/source/artifact closure. The inventory rejects missing/extra/mixed lessons, conflicting event IDs, absolute or escaping paths, stale hashes and unsafe links.
 
 This does not make the plugin silently rewrite itself. Candidate rules stay review-only and disabled, and both CLIs may write only explicit JSON outputs below `learning/`; authority, tests, plugin metadata and package surfaces are rejected as destinations. The promotion QA only verifies recorded prerequisites: red-before-fix/green-after-fix plus unrelated suites, two distinct recorded reviewer IDs bound to one bundle/rule/newer version, and no rule weakening or test deletion. It does not authenticate reviewer identity or grant eligibility; external authenticated review remains mandatory. It never edits rules/tests, changes an installed plugin, packages/publishes, accepts a design or grants technical/manufacturing/fabrication authorization.
+
+## 许可证
+
+项目采用 [MIT License](LICENSE)。SolidWorks 专有互操作程序集不会随仓库或默认发布包分发。
