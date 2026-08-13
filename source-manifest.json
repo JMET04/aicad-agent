@@ -1740,8 +1740,8 @@
                          },
                          {
                              "path":  "scripts/build_showcase.py",
-                             "size":  19781,
-                             "sha256":  "91a944f1a1f10f07c423ce7c82b87578ab5e7e456bfbb374f80fe00354679eef"
+                             "size":  19811,
+                             "sha256":  "1cfeffb6369b5cd602d43e7743b4e26cfd0596bba6dde3fffc6b3c1cc705c4bf"
                          },
                          {
                              "path":  "scripts/build-agent-plugin.ps1",
@@ -4093,8 +4093,8 @@
                   },
                   {
                       "path":  "scripts/build_showcase.py",
-                      "size":  19781,
-                      "sha256":  "91a944f1a1f10f07c423ce7c82b87578ab5e7e456bfbb374f80fe00354679eef"
+                      "size":  19811,
+                      "sha256":  "1cfeffb6369b5cd602d43e7743b4e26cfd0596bba6dde3fffc6b3c1cc705c4bf"
                   },
                   {
                       "path":  "scripts/build-agent-plugin.ps1",

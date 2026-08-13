@@ -77,6 +77,7 @@ def scan_public_text(root: Path, files: Iterable[Path]) -> list[dict[str, str]]:
     root = root.resolve()
     findings: list[dict[str, str]] = []
     for path in files:
+        path = path.resolve()
         if path.suffix.casefold() not in TEXT_SUFFIXES and path.name not in {"LICENSE", "SHA256SUMS"}:
             continue
         relative = path.relative_to(root).as_posix()
