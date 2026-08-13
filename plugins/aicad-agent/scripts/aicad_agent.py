@@ -47,7 +47,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.13.0"
+AGENT_API_VERSION = "1.14.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -229,6 +229,23 @@ def capabilities() -> dict[str, Any]:
                 "contract_schema": str((PLUGIN_ROOT / "rules" / "production_readiness_contract_v2.schema.json").resolve()),
             },
         },
+        "engineering_normative_preflight": {
+            "available": True,
+            "domains": ["mechanical", "electronics"],
+            "canonical_rules": str((PLUGIN_ROOT / "rules" / "production_readiness_rules.json").resolve()),
+            "contract_schema": str((PLUGIN_ROOT / "rules" / "engineering_normative_preflight.schema.json").resolve()),
+            "validator": str((PLUGIN_ROOT / "scripts" / "aicad_engineering_preflight.py").resolve()),
+            "canonical_sections": ["intent", "design", "manufacturingDefinition"],
+            "mechanical_gate_count": 54,
+            "electronics_gate_count": 63,
+            "exact_gate_inventory_required": True,
+            "embedded_contract_required_for_domain_compile": True,
+            "conclusion": "normative_preflight_ready_for_controlled_generation_only",
+            "artifact_exposure_allowed_by_preflight": False,
+            "technical_readiness_granted": False,
+            "manufacturing_authorized": False,
+            "fabrication_authorized": False,
+        },
         "report_quality_qa": {
             "available": True,
             "script": str((PLUGIN_ROOT / "scripts" / "aicad_report_qa.py").resolve()),
@@ -371,10 +388,12 @@ def validate_plan_value(value: Any) -> dict[str, Any]:
     data = _load_plan(value)
     plan = compile_plan(data)
     architecture_detail = _require_architecture_detail_contract(data, plan)
+    engineering_preflight = _require_engineering_normative_preflight(data, str(data.get("drawing", {}).get("domain", "general")))
     return {
         "ok": True,
         "valid": True,
         "architecture_detail_validation": architecture_detail,
+        "engineering_normative_preflight": engineering_preflight,
         "name": plan.name,
         "schema_version": plan.schema_version,
         "units": plan.units,
@@ -389,6 +408,7 @@ def validate_plan_value(value: Any) -> dict[str, Any]:
 def _compile_data(data: dict[str, Any], output_dir: str | None, name: str | None) -> dict[str, Any]:
     plan = compile_plan(data)
     architecture_detail = _require_architecture_detail_contract(data, plan)
+    engineering_preflight = _require_engineering_normative_preflight(data, str(data.get("drawing", {}).get("domain", "general")))
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
     stem = _safe_name(name or plan.name)
     directory.mkdir(parents=True, exist_ok=True)
@@ -412,6 +432,7 @@ def _compile_data(data: dict[str, Any], output_dir: str | None, name: str | None
         "manifest": str(directory / f"{stem}.manifest.json"),
         "artifacts": [str(path.resolve()) for path in artifacts],
         "architecture_detail_validation": architecture_detail,
+        "engineering_normative_preflight": engineering_preflight,
     }
 
 
@@ -489,6 +510,39 @@ def _require_architecture_detail_contract(data: dict[str, Any], plan: Any) -> di
     return report
 
 
+def get_engineering_preflight_schema() -> dict[str, Any]:
+    path = PLUGIN_ROOT / "rules" / "engineering_normative_preflight.schema.json"
+    return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
+def get_engineering_preflight_template_value(domain: str) -> dict[str, Any]:
+    from aicad_engineering_preflight import build_template
+    if domain not in {"mechanical", "electronics"}:
+        raise PlanError("engineering normative preflight domain must be mechanical or electronics")
+    return {"ok": True, "status": "draft", "domain": domain, "template": build_template(domain)}
+
+
+def validate_engineering_preflight_value(value: Any) -> dict[str, Any]:
+    from aicad_engineering_preflight import evaluate
+    report = evaluate(_load_plan(value))
+    return {"ok": report["status"] == "pass", **report}
+
+
+def _require_engineering_normative_preflight(data: dict[str, Any], domain: str) -> dict[str, Any] | None:
+    if domain not in {"mechanical", "electronics"}:
+        return None
+    contract = data.get("engineering_normative_preflight")
+    if not isinstance(contract, dict):
+        raise PlanError(f"{domain} plans require an embedded engineering_normative_preflight before validation or compilation")
+    from aicad_engineering_preflight import evaluate
+    report = evaluate(contract)
+    if report["status"] != "pass" or not report.get("generationGate", {}).get("nextStageAllowed"):
+        failed = [item["code"] for item in report.get("failures", [])]
+        detail = ", ".join(failed) if failed else "normative_preflight_not_ready"
+        raise PlanError(f"{domain} normative precompile gate failed; blocker_report_only: {detail}")
+    return report
+
+
 def get_aux_schema(name: str) -> dict[str, Any]:
     filenames = {
         "semantic": "aicad-semantic-document.schema.json",
@@ -554,7 +608,11 @@ def build_reference_reconstruction_value(
 
 
 def validate_3d_plan_value(value: Any) -> dict[str, Any]:
-    return validate_3d_plan(_load_plan(value))
+    data = _load_plan(value)
+    result = validate_3d_plan(data)
+    domain = str(data.get("part", {}).get("domain", "general"))
+    result["engineering_normative_preflight"] = _require_engineering_normative_preflight(data, domain)
+    return result
 
 
 def build_solidworks_part(
@@ -567,8 +625,10 @@ def build_solidworks_part(
 ) -> dict[str, Any]:
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
     data = _load_plan(value)
-    result = compile_3d_plan(data, directory, name, execute, timeout_seconds)
     domain = str(data.get("part", {}).get("domain", "general"))
+    engineering_preflight = _require_engineering_normative_preflight(data, domain)
+    result = compile_3d_plan(data, directory, name, execute, timeout_seconds)
+    result["engineering_normative_preflight"] = engineering_preflight
     return _attach_review(data, result, "3d", domain, name, review_launch)
 
 
@@ -582,6 +642,29 @@ TOOLS: list[dict[str, Any]] = [
         "name": "aicad_get_plan_schema",
         "description": "Return the complete schema_version 2.0 JSON Schema for arbitrary caller-authored CAD plans.",
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_engineering_preflight_schema",
+        "description": "Return the canonical mechanical/electronics generation-preflight contract schema derived from the v3 production rule inventory.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_engineering_preflight_template",
+        "description": "Create an exact unresolved mechanical or electronics rule-application template; every gate must be source-bound before generation.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["domain"],
+            "properties": {"domain": {"type": "string", "enum": ["mechanical", "electronics"]}},
+        },
+    },
+    {
+        "name": "aicad_validate_engineering_preflight",
+        "description": "Fail closed before geometry when any canonical mechanical/electronics intent, design or manufacturing-definition rule is missing, unresolved, unbound or waived without authority.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["contract"],
+            "properties": {
+                "contract": {"description": "Engineering normative preflight object, JSON string, or UTF-8 file path"}
+            },
+        },
     },
     {
         "name": "aicad_get_architecture_detail_contract_schema",
@@ -783,6 +866,12 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         return capabilities()
     if name == "aicad_get_plan_schema":
         return get_schema()
+    if name == "aicad_get_engineering_preflight_schema":
+        return get_engineering_preflight_schema()
+    if name == "aicad_get_engineering_preflight_template":
+        return get_engineering_preflight_template_value(str(arguments.get("domain", "")))
+    if name == "aicad_validate_engineering_preflight":
+        return validate_engineering_preflight_value(arguments.get("contract"))
     if name == "aicad_get_architecture_detail_contract_schema":
         return get_architecture_detail_schema()
     if name == "aicad_validate_architecture_detail_contract":

@@ -42,56 +42,19 @@ STANDARD_GOVERNED_CATEGORIES = {
     "structure_family", "top_closure", "bottom_closure", "process",
 }
 ROOT_CAUSES = {
-    "normative_precedence": (
-        "生成流程虽然列出了输入来源，却没有先按领域规范、工程权威、用户参数、参考资料和推断默认值建立不可逆优先级，低权威默认值可能反过来支配几何和验收。",
-        "任何领域先执行规范预检：适用标准优先，其次是批准工程输入和用户显式参数，参考CAD/图片与推断只可补充；结构族、闭合系统和工艺等规范类别必须绑定 selected_standard，失败时禁止进入几何。",
-    ),
-    "contract_integrity": (
-        "需求没有被整理成唯一、可追踪且有明确权威顺序的契约，后续几何可能从错误前提开始。",
-        "先冻结带来源、优先级、冲突处理和安全锁的需求契约；ID、来源引用或权威顺序不完整时禁止进入绘图。",
-    ),
-    "contract_binding": (
-        "设计证据没有绑定当前需求契约，可能拿旧版本或另一任务的证据证明当前图纸。",
-        "追踪文件必须同时匹配 contractId 和规范化 SHA-256；需求变化后必须重建全部证据。",
-    ),
-    "hard_requirements": (
-        "至少一条用户硬要求没有被实际值独立证明，或者仅用自报的 satisfied 状态代替数值/枚举比对。",
-        "每条硬要求必须恰有一条证据，验证器重新计算 expected 与 observed 的关系；任一失败都不得被其他得分抵消。",
-    ),
-    "actual_binding": (
-        "至少一条硬要求的 observed 只是追踪文件自报值，没有解析到当前结构模板、实际参数实例或契约中的受控字段，或者解析值与自报值不一致。",
-        "每条硬要求必须声明可解析的 actualBinding；验证器从当前受控对象重取 boundActual，并强制 boundActual == observed == expected。模板、实例或字段变化后必须重跑第一关。",
-    ),
-    "assumptions": (
-        "影响产品类型、结构或关键尺寸的高影响假设仍未获确认，生成器擅自替用户作了设计决定。",
-        "高影响假设必须明确确认为 confirmed；仅 disclosed、被拒绝或缺失均阻断绘图。",
-    ),
-    "conflicts": (
-        "不同输入来源对尺寸或结构的说法冲突，但没有按权威顺序形成可审计的解决结论。",
-        "每个冲突必须标为 resolved，写明采用来源和对应需求 ID；未解决冲突不得进入几何阶段。",
-    ),
-    "dimension_authority": (
-        "尺寸来自无尺寸权威的来源，或把参考图片像素当成了工程尺寸真值。",
-        "每个关键尺寸都要追到 dimensionalAuthority=true 的非图片来源；图片只能提供拓扑和视觉语义。",
-    ),
-    "design_identity": (
-        "实际产品、结构族、标准或上下闭合方式与需求契约/正常性模板不一致，属于几何正确但产品选错。",
-        "在逐线检查前先锁定 typed design identity，并与结构族模板的 profile、standard、top、bottom 逐项相等。",
-    ),
-    "major_features": (
-        "实际设计含有用户未要求的主要功能，或遗漏契约要求的主要功能。",
-        "主要功能必须满足 required ⊆ actual ⊆ allowed，且 actual 与 forbidden 不相交；新增结构必须先回写契约。",
-    ),
-    "outputs": (
-        "计划输出与用户要求不一致，可能缺少审计源文件或额外输出未经同意。",
-        "契约要求的每种输出都必须在 outputsPlanned 中声明；构建阶段再逐个校验存在性和哈希。",
-    ),
-    "locks": (
-        "审阅安全锁被打开或契约与设计追踪的锁状态不一致。",
-        "所有阶段强制 reviewOnly=true、accepted=false、ruleEnabled=false、packagingGated=true。",
-    ),
+    "normative_precedence": ("The workflow did not establish standard-first authority before geometry.", "Run normative preflight first; standards and approved engineering inputs outrank references and defaults."),
+    "contract_integrity": ("The requirements are not one complete traceable contract.", "Freeze one source-bound contract and block drawing when IDs, references or authority order are incomplete."),
+    "contract_binding": ("Evidence is not bound to the exact contract revision and hash.", "Require matching contractId and canonical SHA-256 before downstream evaluation."),
+    "hard_requirements": ("A hard requirement lacks independently recomputed evidence.", "Bind each hard requirement to evidence and recompute expected-versus-observed conformance non-compensatorily."),
+    "actual_binding": ("An observed value is self-reported instead of parsed from controlled data.", "Require actualBinding and enforce boundActual == observed == expected."),
+    "assumptions": ("A high-impact design assumption remains unconfirmed.", "Require high-impact assumptions to be confirmed; otherwise block geometry."),
+    "conflicts": ("Conflicting sources lack an auditable resolution.", "Resolve each conflict by authority order and bind it to a known requirement."),
+    "dimension_authority": ("A critical dimension lacks authority or came from image pixels.", "Trace every critical dimension to a non-image source with dimensionalAuthority=true."),
+    "design_identity": ("The actual typed design identity differs from the contract.", "Freeze typed design identity before detail checks and prove equality with the governed template."),
+    "major_features": ("A required major feature is missing or an undeclared feature was added.", "Enforce required subset actual subset allowed and reject forbidden features."),
+    "outputs": ("Planned outputs do not cover the required delivery artifacts.", "Declare every required output before build and verify its existence and hash afterward."),
+    "locks": ("Review safety locks are open or inconsistent.", "Keep reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true."),
 }
-
 
 def canonical_sha256(payload: dict[str, Any]) -> str:
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -639,54 +602,35 @@ def evaluate(
 
 def write_markdown(report: dict[str, Any], target: Path) -> None:
     lines = [
-        "# AICAD 整体需求一致性报告",
-        "",
-        f"- 总状态：**{report['status'].upper()}**",
-        f"- 需求契约：{report['contract'].get('id')} / revision {report['contract'].get('revision')}",
-        f"- 契约规范化 SHA-256：{report['contract'].get('canonicalSha256')}",
-        f"- 硬要求：{report['counts']['hardRequirementsPassed']}/{report['counts']['hardRequirements']} 通过。",
-        f"- 受控实际值绑定：{report['counts'].get('actualBindingsPassed', 0)}/{report['counts'].get('actualBindings', 0)} 通过。",
-        "",
-        "## 第一阶段硬门禁",
-        "",
+        "# AICAD whole-requirement conformance report", "",
+        f"- Status: **{report['status'].upper()}**",
+        f"- Contract: {report['contract'].get('id')} / revision {report['contract'].get('revision')}",
+        f"- Canonical SHA-256: {report['contract'].get('canonicalSha256')}",
+        f"- Hard requirements: {report['counts']['hardRequirementsPassed']}/{report['counts']['hardRequirements']} passed",
+        f"- Controlled actual bindings: {report['counts'].get('actualBindingsPassed', 0)}/{report['counts'].get('actualBindings', 0)} passed",
+        "", "## First-stage hard gates", "",
     ]
     labels = {
-        "contractCompleteAndAuthorityOrdered": "需求完整且输入权威顺序封闭",
-        "traceBindsExactContractRevision": "证据绑定当前契约版本",
-        "everyHardRequirementActualBoundToControlledSource": "每条硬要求均绑定当前受控模板/实例/契约字段",
-        "everyHardRequirementIndependentlyProven": "每条硬要求均由实际值独立证明",
-        "highImpactAssumptionsConfirmed": "高影响假设已确认",
-        "allSourceConflictsResolved": "输入冲突已按优先级解决",
-        "dimensionsUseAuthoritativeNonPixelSources": "尺寸来自权威非像素来源",
-        "typedDesignIdentityMatchesContractAndTemplate": "产品/结构族/上下闭合类型一致",
-        "majorFeaturesAreRequiredOrExplicitlyAllowed": "主要功能无遗漏、无擅自增加",
-        "requiredOutputsPlanned": "输出清单覆盖用户要求",
-        "reviewSafetyLocksClosed": "审阅安全锁保持关闭",
+        "contractCompleteAndAuthorityOrdered": "contract completeness and authority order",
+        "traceBindsExactContractRevision": "trace binds the exact contract revision",
+        "everyHardRequirementActualBoundToControlledSource": "hard requirements bind controlled actual values",
+        "everyHardRequirementIndependentlyProven": "hard requirements have independent proof",
+        "highImpactAssumptionsConfirmed": "high-impact assumptions are confirmed",
+        "allSourceConflictsResolved": "source conflicts are resolved",
+        "dimensionsUseAuthoritativeNonPixelSources": "dimensions use authoritative non-pixel sources",
+        "typedDesignIdentityMatchesContractAndTemplate": "typed design identity matches contract and template",
+        "majorFeaturesAreRequiredOrExplicitlyAllowed": "major features are required or explicitly allowed",
+        "requiredOutputsPlanned": "required outputs are planned",
+        "reviewSafetyLocksClosed": "review safety locks remain closed",
     }
     for key, passed in report.get("checks", {}).items():
-        lines.append(f"- {'PASS' if passed else 'FAIL'} — {labels.get(key, key)}")
-    lines.extend(["", "## 错误根因与下次预防规则", ""])
+        lines.append(f"- {'PASS' if passed else 'FAIL'} - {labels.get(key, key)}")
+    lines.extend(["", "## Root causes and prevention rules", ""])
     if not report.get("failures"):
-        lines.append("本次整体意图门禁全部通过，才允许进入逐线、拓扑、功能面和参数域的细节证明。")
+        lines.append("All whole-intent gates passed; detail proof may proceed.")
     for failure in report.get("failures", []):
-        lines.extend(
-            [
-                f"### {failure['gate']}",
-                "",
-                f"- 为什么出现：{failure['rootCause']}",
-                f"- 下次如何避免：{failure['preventionRule']}",
-                "",
-            ]
-        )
-    lines.extend(
-        [
-            "## 顺序约束",
-            "",
-            "本报告仅是第一阶段。只有本阶段 PASS，才可运行第二阶段细节正常性证明；两阶段均 PASS 后才允许构建候选工件。任何后级高分都不能抵消本阶段失败。",
-            "",
-            "当前仍是审阅候选，不代表量产、强度、设备公差或技术验收。",
-        ]
-    )
+        lines.extend([f"### {failure['gate']}", "", f"- Root cause: {failure['rootCause']}", f"- Prevention: {failure['preventionRule']}", ""])
+    lines.extend(["## Ordered constraint", "", "This first gate must pass before detail checks; no downstream score can compensate for a failure.", "", "The result is not manufacturing, fabrication, technical or regulatory acceptance."])
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text("\n".join(lines) + "\n", encoding="utf-8")
 

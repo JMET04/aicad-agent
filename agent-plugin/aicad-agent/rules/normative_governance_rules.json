@@ -65,7 +65,9 @@
       "wall_thickness",
       "interference",
       "manufacturability",
-      "drawing_standard"
+      "drawing_standard",
+      "canonical_v3_generation_preflight",
+      "post_generation_evidence_contract_v3"
     ],
     "sheet_metal": [
       "material_thickness",
@@ -81,7 +83,9 @@
       "electrical_clearance",
       "connector_access",
       "thermal",
-      "fabrication_outputs"
+      "fabrication_outputs",
+      "canonical_v3_generation_preflight",
+      "post_generation_evidence_contract_v3"
     ],
     "general": [
       "declared_domain_extension",

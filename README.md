@@ -1,4 +1,4 @@
-# aicad-agent 1.13.0
+# aicad-agent 1.14.0
 
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
@@ -15,7 +15,7 @@
 | [完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md) | 适用人群、工作方式、核心模块、支持范围、交付物和安全边界 |
 | [四领域工程展示](showcase/README.md) | 建筑、钢结构、机械和 PCB 的预览、交互审查与验证材料 |
 | [安装和使用指南](docs/INSTALL.zh-CN.md) | Marketplace、Release ZIP、首次使用和更新流程 |
-| [v1.13.0 Release](https://github.com/JMET04/aicad-agent/releases/tag/v1.13.0) | 发布说明、插件 ZIP 与 SHA256SUMS |
+| [v1.14.0 Release](https://github.com/JMET04/aicad-agent/releases/tag/v1.14.0) | 发布说明、插件 ZIP 与 SHA256SUMS |
 
 ![aicad-agent 多视图修改器：点击线、点、圆查看模型数值](docs/images/modifier-measurements-v3.png)
 
@@ -75,7 +75,7 @@ flowchart LR
 准备：Codex CLI 或 Codex 桌面版、Git、Python 3.10+。
 
 ```powershell
-codex plugin marketplace add JMET04/aicad-agent --ref v1.13.0
+codex plugin marketplace add JMET04/aicad-agent --ref v1.14.0
 codex plugin add aicad-agent@aicad-agent
 codex plugin list
 ```
@@ -99,13 +99,13 @@ codex plugin remove aicad-agent
 
 从 [GitHub Releases](https://github.com/JMET04/aicad-agent/releases) 或仓库的 [`dist`](dist/) 目录下载：
 
-- `aicad-agent-1.13.0.zip`
+- `aicad-agent-1.14.0.zip`
 - `SHA256SUMS`
 
 先核对哈希：
 
 ```powershell
-Get-FileHash .\aicad-agent-1.13.0.zip -Algorithm SHA256
+Get-FileHash .\aicad-agent-1.14.0.zip -Algorithm SHA256
 Get-Content .\SHA256SUMS
 ```
 
@@ -310,17 +310,17 @@ python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.13.0
+.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.14.0
 python -B scripts/verify_release_package.py release/ci/aicad-agent --source-root .
 .\scripts\build-github-source.ps1 `
   -OutputDirectory release/ci/github-repository `
-  -Version 1.13.0 `
-  -PluginArchive release/ci/aicad-agent-1.13.0.zip `
+  -Version 1.14.0 `
+  -PluginArchive release/ci/aicad-agent-1.14.0.zip `
   -PluginDirectory release/ci/aicad-agent
 python -B scripts/verify_github_source.py release/ci/github-repository --source-root .
 ```
 
-当前 1.13.0 在跨领域规范、建筑文档集、原生标注、语义拾取、双视口零碰撞、确定性 showcase 和原子发布闭包基础上，新增机械/电子非补偿证据合同 v3：每个制造件、装配体和 PCB 都必须具有精确的工件 ID、路径、大小、SHA-256、BOM/产品结构或 CAM 反向权威及负向回归。版本还加入受控失败→经验学习闭环；测试和门禁失败会被收敛为带复现证据、根因、修复、候选预防规则和最小负测的哈希记录，但候选始终禁用且不能自行修改权威规则、测试、已安装插件或任何技术/制造/投板授权。CI 会在每次 push 和 pull request 中从源码重建并独立验证插件与 GitHub 发布源。
+当前 1.14.0 新增机械/电子生成前规范门禁：它从同一份生产规则清单派生精确的 54 条机械和 63 条电子规则，在任何 2D/3D 几何或构建产物写出前检查规则完整性、适用标准、来源绑定、冲突和安全锁。v1.13.0 的 71/99 条生成后证据门禁继续保留；两层门禁分别约束“先按规范生成”和“生成后证据闭包”，均不授予技术、制造或投板批准。
 
 ## 文档索引
 
@@ -336,9 +336,17 @@ python -B scripts/verify_github_source.py release/ci/github-repository --source-
 - [安全策略](SECURITY.md)
 - [第三方依赖说明](THIRD_PARTY_NOTICES.md)
 
-## v1.13.0 技术说明
+## v1.14.0 技术说明
 
-以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.13.0.md)。
+以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.14.0.md)。
+
+## Mechanical/electronics normative generation preflight
+
+Mechanical and electronics work now has a real pre-geometry gate, not only a post-generation evidence checklist. The gate derives one exact inventory from `production_readiness_rules.json`: 54 mechanical generation rules and 63 electronics generation rules, including seven shared authority/detail/drafting/sheet/discipline/non-compensation rules. Missing, extra, duplicate, unresolved, reference-only or unauthorized `not_applicable` rows block 2D validation/compilation and 3D validation/SolidWorks build before artifacts are written.
+
+Use the MCP tools `aicad_get_engineering_preflight_schema`, `aicad_get_engineering_preflight_template` and `aicad_validate_engineering_preflight`, then embed the pass in the plan as `engineering_normative_preflight`. The CLI equivalent is `scripts/aicad_engineering_preflight.py`. See [the complete preflight contract and coverage](docs/ENGINEERING_NORMATIVE_PREFLIGHT.md).
+
+A preflight pass means only that controlled generation may start. It does not expose artifacts or grant technical, manufacturing, fabrication or release readiness. The post-generation v3 evidence contract remains mandatory.
 
 ## 机械与 PCB 证据合同门禁
 

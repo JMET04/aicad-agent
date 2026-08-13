@@ -84,6 +84,9 @@
     "architecture_detail_contract": {
       "type": "object"
     },
+    "engineering_normative_preflight": {
+      "type": "object"
+    },
     "steps": {
       "type": "array",
       "minItems": 1,

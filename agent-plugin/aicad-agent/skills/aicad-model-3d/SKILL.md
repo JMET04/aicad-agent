@@ -10,6 +10,7 @@ Model slowly and transactionally: reason about one feature, validate it, execute
 ## Workflow
 
 1. Call `aicad_capabilities` and `aicad_solidworks_doctor`.
+1a. For a mechanical part, call `aicad_get_engineering_preflight_template` with `domain=mechanical`, source-bind and resolve all 54 canonical shared/mechanical gates, validate with `aicad_validate_engineering_preflight`, and embed the pass as `engineering_normative_preflight`. The 3D validator and SolidWorks builder fail before execution when it is missing or incomplete.
 2. Decompose the part into an ordered feature graph. Start the base sketch at `[0,0,0]`.
 3. For every feature, state:
    - purpose;
@@ -44,6 +45,8 @@ Read [failure-recovery.md](references/failure-recovery.md) when execution fails.
 When the user selects a specific edge, circle, or face, read [subobject-correction.md](references/subobject-correction.md) before drafting a change. Bind the transaction to the current source hash and exact semantic reference, require an explicit preserve policy and shared-pattern scope where applicable, replay all downstream dependencies, and fail closed on any product-level invariant. Do not claim native persistent BREP authority without host readback evidence.
 
 ## Mechanical evidence-contract preparation
+
+The generation preflight and evidence contract are distinct mandatory stages. The preflight freezes applicable standards, authority, calculations, manufacturing definition and drawing intent before features exist; its pass permits controlled modeling only. After the model exists, the evidence contract below binds the actual native model, STEP, drawing, BOM, analysis, inspection and host readback. Neither pass is an engineering approval.
 
 For a mechanical job, prepare the canonical v3 evidence contract named by `rules/production_readiness_rules.json`. Geometry and topology alone are insufficient: bind authoritative inputs and units; operating envelope, duty cycle and design life; independently recomputed load combinations and abnormal cases; equation/input/output/margin trace; strength, stiffness, fatigue, fastener, joint, bearing and thermal margins; risk controls; mating fits, threads, undefined edges, tolerances/GD&T/roughness; stock/process/fixturing/tool access/coating compensation; process capability and measurement method; native material-database assignment; BOM/revision/inspection parity; and feature-bound drawing annotations. Declare each manufactured part and required assembly as an artifact subject and provide separate native CAD, STEP and manufacturing drawing artifacts with source-hash and native-reopen evidence. Supply one `aicad_machine_mechanical_bom_v1` JSON BOM with a positive-quantity row for every exact subject type/revision/artifact-ID set, then bind its hash and repeat those rows in `aicad_product_structure_manifest_v1`. Generic QA parses both for candidate-declared consistency; it does not establish external authority. Custom properties or volume-times-density do not substitute for native material evidence.
 

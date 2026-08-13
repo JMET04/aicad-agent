@@ -17,6 +17,7 @@ Use this order. Do not skip or rearrange it:
 3. Resolve conflicts by the declared source authority. Never derive engineering dimensions from image pixels. A high-impact assumption that changes product type, structure, closure, fit or a critical dimension must be confirmed rather than merely disclosed.
 4. Create a `aicad_drawing_requirement_trace_v1` document using `rules/drawing_requirement_trace.schema.json`. Record the actual typed design identity and one observed value, resolvable actualBinding and evidence path for every hard requirement. Bind identity/features to the selected template and dimensions to the bound parameter instance; copied self-reported values are not proof.
 5. Run `scripts/aicad_requirement_conformance.py`. If it fails, stop: do not load geometry, add more line constraints or create DXF/AICAD/SCR. A geometrically perfect wrong product is still wrong.
+5a. For `mechanical` or `electronics`, call `aicad_get_engineering_preflight_template`, resolve every rule application from the canonical shared rules plus the domain profile, run `aicad_validate_engineering_preflight`, and embed the passing contract as `engineering_normative_preflight` in the plan. Missing, extra, duplicate, unresolved, reference-only or authority-free rules block validation and compilation before any output directory is created. Never hand-author a shorter checklist.
 6. Select the exact versioned structure-family normality template. Author the origin-anchored schema 2.0 plan and logical geometry catalog. Every entity still needs purpose, reasoning, dependencies and sufficient mathematical constraints. Axis identifiers and geometry-bound tags must be real constrained TEXT steps; post-processed labels cannot satisfy the contract. Semantic architectural layers must preserve the normative linetype and lineweight through AICAD protocol 3, SCR, DXF and host readback.
 7. Run `scripts/aicad_normality_prover.py`. Require plan/geometry bijection, one named owner per endpoint, full independent constraint rank, one simple closed contour when applicable, complete feature/face contracts, functional formulas, bounding box and coupled parameter-domain regression.
 8. Use `scripts/aicad_guarded_delivery.py` as the candidate-output boundary. It reruns stage 1 and stage 2 in order, compiles only after both pass, verifies every required artifact, enforces ASCII execution channels and audits hashes before exposing the output directory. For architecture with strictProductionOnly=true, also require `aicad_architectural_detail_contract_v2`, typed object profiles from `architectural_symbol_profiles.json`, the full production drawing-set matrix and evidence-bound production readiness v2. Concept/review CAD is not exposed.
@@ -123,6 +124,18 @@ python scripts/aicad_production_readiness_qa_v2.py production-contract-v2.json -
 ```
 
 Parse stdout as one JSON object. A successful call has `ok: true`; failures are JSON on stderr with a stable `error.code`.
+
+## Mechanical/electronics normative generation preflight
+
+`rules/production_readiness_rules.json` is the only authoritative mechanical/electronics inventory. Before geometry, derive an exact preflight from its seven shared rules (`PROD-G001..G006`, `PROD-G013`) and the selected profile's `intent`, `design` and `manufacturingDefinition` gates. The result is 54 generation gates for mechanical and 63 for electronics. Each gate must declare a controlled requirement, authoritative source binding, generation constraint, verification method and any standard binding. `not_applicable` is forbidden for shared and intent gates; other gates require an engineering/standard authority and a specific rationale.
+
+Use `aicad_get_engineering_preflight_schema`, `aicad_get_engineering_preflight_template` and `aicad_validate_engineering_preflight`, or the equivalent CLI:
+
+`python scripts/aicad_engineering_preflight.py --template mechanical --output mechanical-preflight.json`
+
+`python scripts/aicad_engineering_preflight.py --contract mechanical-preflight.json --output mechanical-preflight.report.json --markdown mechanical-preflight.report.md`
+
+A pass authorizes only controlled generation. It does not prove the finished design, expose an artifact, replay CAD/EDA tools or set any technical/manufacturing/fabrication/release authorization. After generation, the v3 evidence contract below remains mandatory.
 
 ## Canonical mechanical/PCB evidence-contract gate
 

@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/aicad/engineering_normative_preflight.schema.json",
+  "title": "AICAD mechanical/electronics normative generation preflight",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "contractId", "revision", "domain", "deliveryStage",
+    "canonicalRulesSchema", "canonicalRulesVersion", "authorityOrder",
+    "sources", "applicableStandards", "ruleApplications", "conflicts", "locks"
+  ],
+  "properties": {
+    "schema": {"const": "aicad_engineering_normative_preflight_v1"},
+    "contractId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{2,127}$"},
+    "revision": {"type": "integer", "minimum": 1},
+    "domain": {"enum": ["mechanical", "electronics"]},
+    "deliveryStage": {"enum": ["concept", "review", "manufacturing", "fabrication", "production"]},
+    "canonicalRulesSchema": {"const": "aicad_production_readiness_rules_v3"},
+    "canonicalRulesVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "authorityOrder": {
+      "type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "sources": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/source"}},
+    "applicableStandards": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/standard"}},
+    "ruleApplications": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/ruleApplication"}},
+    "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflict"}},
+    "locks": {"$ref": "#/$defs/locks"}
+  },
+  "$defs": {
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "description"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"},
+        "kind": {"enum": [
+          "selected_standard", "approved_engineering_input", "user_explicit_numeric",
+          "user_explicit_semantic", "reference_cad", "reference_image", "inferred_assumption"
+        ]},
+        "description": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "dependentRequired": {"path": ["sha256"], "sha256": ["path"]}
+    },
+    "standard": {
+      "type": "object", "additionalProperties": false,
+      "required": ["standard", "applicability", "sourceId"],
+      "properties": {
+        "standard": {"type": "string", "minLength": 1},
+        "applicability": {"type": "string", "minLength": 1},
+        "sourceId": {"type": "string", "minLength": 1},
+        "scopeDecision": {"type": "string", "minLength": 1}
+      }
+    },
+    "ruleApplication": {
+      "type": "object", "additionalProperties": false,
+      "required": ["gatePath", "disposition", "requirement", "sourceIds", "verificationMethod"],
+      "properties": {
+        "gatePath": {
+          "type": "string",
+          "pattern": "^((mechanical|electronics)\\.(intent|design|manufacturingDefinition)\\.[A-Za-z][A-Za-z0-9]*|shared\\.rules\\.PROD-G[0-9]{3})$"
+        },
+        "disposition": {"enum": ["unresolved", "constrained", "not_applicable"]},
+        "requirement": {"type": "string", "minLength": 1},
+        "generationConstraint": {"type": "string", "minLength": 1},
+        "sourceIds": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "standardIds": {
+          "type": "array", "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "verificationMethod": {"type": "string", "minLength": 1},
+        "notApplicableRationale": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"disposition": {"const": "constrained"}}},
+          "then": {"required": ["generationConstraint"]}
+        },
+        {
+          "if": {"properties": {"disposition": {"const": "not_applicable"}}},
+          "then": {"required": ["notApplicableRationale"]}
+        }
+      ]
+    },
+    "conflict": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "sourceIds", "status"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "sourceIds": {
+          "type": "array", "minItems": 2, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "status": {"enum": ["resolved", "unresolved"]},
+        "resolution": {"type": "string", "minLength": 1}
+      }
+    },
+    "locks": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "reviewOnly", "accepted", "ruleEnabled", "packagingGated",
+        "technicalPackageReady", "productionReleaseEligible",
+        "manufacturingAuthorized", "fabricationAuthorized"
+      ],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true},
+        "technicalPackageReady": {"const": false},
+        "productionReleaseEligible": {"const": false},
+        "manufacturingAuthorized": {"const": false},
+        "fabricationAuthorized": {"const": false}
+      }
+    }
+  }
+}

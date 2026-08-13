@@ -3,6 +3,36 @@
   "version": "3.0.0",
   "status": "candidate",
   "policy": "non_compensatory_fail_closed",
+  "generationPreflightPolicy": {
+    "schema": "aicad_engineering_normative_preflight_v1",
+    "contractSchema": "rules/engineering_normative_preflight.schema.json",
+    "qaTool": "scripts/aicad_engineering_preflight.py",
+    "canonicalProfileByDomain": {
+      "mechanical": "mechanicalManufacturingProfileV3",
+      "electronics": "electronicsFabricationProfileV3"
+    },
+    "includedSections": [
+      "intent",
+      "design",
+      "manufacturingDefinition"
+    ],
+    "sharedRuleIds": [
+      "PROD-G001",
+      "PROD-G002",
+      "PROD-G003",
+      "PROD-G004",
+      "PROD-G005",
+      "PROD-G006",
+      "PROD-G013"
+    ],
+    "exactGateInventoryRequired": true,
+    "unresolvedGateAllowed": false,
+    "intentGateNotApplicableAllowed": false,
+    "notApplicableRequiresRationaleAndAuthoritativeSource": true,
+    "preflightConclusion": "normative_preflight_ready_for_controlled_generation_only",
+    "technicalReadinessGranted": false,
+    "artifactExposureGranted": false
+  },
   "rules": [
     {
       "id": "PROD-G001",

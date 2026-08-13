@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 1.14.0 - 2026-08-14
+
+- Added a canonical pre-geometry normative contract derived from the existing production rule inventory: exactly 54 mechanical gates and 63 electronics gates, including seven shared authority, detail, drafting, sheet, discipline and non-compensation rules.
+- Added schema-backed MCP/CLI template, validation and exact-inventory QA; missing, extra, duplicate, unresolved, reference-only, cross-domain, standard-drift, conflict and unauthorized `not_applicable` mutations fail closed.
+- Required an embedded passing normative preflight before mechanical/electronics 2D validation or compilation and mechanical 3D validation or SolidWorks build, before artifact directories are created.
+- Kept the generation gate deliberately separate from the v3 post-generation 71/99 evidence gates; neither layer grants technical readiness or production, manufacturing or fabrication authorization.
+- Repaired double-encoded requirement-conformance report literals and added an explicit UTF-8/mojibake regression.
+
 ## 1.13.0 - 2026-08-13
 
 - Added the canonical v3 mechanical/PCB evidence-contract schema and verifier inside the existing production rule inventory while retaining the architectural v2 compatibility entry point.

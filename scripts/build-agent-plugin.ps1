@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.13.0',
+    [string]$Version = '1.14.0',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -175,13 +175,13 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.13.0'
+        pythonConstraintCompiler = '1.14.0'
         autocadBundle = '1.6.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
         viewPackageSchema = '1.1'
     }
-    releaseDate = '2026-08-12'
+    releaseDate = '2026-08-14'
     license = 'MIT'
     repository = 'https://github.com/JMET04/aicad-agent'
     apiKeyRequired = $false
@@ -199,6 +199,7 @@ $releaseManifest = [ordered]@{
     sourceInputs = Get-SourceInputEntries -RepositoryRoot $root -Files (Get-CanonicalSourceInputFiles -RepositoryRoot $root -IncludeInterop ([bool]$IncludeSolidWorksInterop))
     tools = @(
         'aicad_capabilities', 'aicad_get_plan_schema',
+        'aicad_get_engineering_preflight_schema', 'aicad_get_engineering_preflight_template', 'aicad_validate_engineering_preflight',
         'aicad_get_architecture_detail_contract_schema', 'aicad_validate_architecture_detail_contract', 'aicad_generate',
         'aicad_validate_plan', 'aicad_compile_plan',
         'aicad_get_semantic_schema', 'aicad_get_correction_schema', 'aicad_get_view_package_schema',
@@ -207,6 +208,7 @@ $releaseManifest = [ordered]@{
         'aicad_get_reference_rebuild_schema', 'aicad_validate_reference_rebuild', 'aicad_build_reference_reconstruction',
         'aicad_solidworks_doctor',
         'aicad_get_3d_plan_schema', 'aicad_validate_3d_plan', 'aicad_build_solidworks_part',
+        'scripts/aicad_engineering_preflight.py',
         'scripts/aicad_packaging_qa.py', 'scripts/aicad_architecture_detail_qa.py', 'scripts/aicad_architecture_qa.py', 'scripts/aicad_review_report.py', 'scripts/aicad_production_readiness_qa.py', 'scripts/aicad_production_readiness_qa_v2.py', 'scripts/aicad_production_readiness_qa_v3.py', 'scripts/aicad_report_qa.py', 'scripts/aicad_lesson_harvester.py', 'scripts/aicad_continuous_learning_qa.py', 'scripts/aicad_normality_prover.py', 'scripts/aicad_normality_review.py',
         'scripts/aicad_requirement_conformance.py', 'scripts/aicad_guarded_delivery.py', 'scripts/aicad_modifier_ui_qa.cjs',
         'scripts/aicad_modifier_measurement_qa.cjs', 'scripts/aicad_architecture_document_set_qa.py',
@@ -222,6 +224,7 @@ $releaseManifest = [ordered]@{
         'protocol-4 native overall/grid/partition/opening DIMENSION entities with purpose XData and AutoCAD save/reopen proof',
         'persistent content-addressed review launch with duplicate auto-tab suppression',
         'direct-production requests fail closed to blocker-only output on any missing gate',
+        'canonical pre-geometry mechanical/electronics normative preflight with exact 54/63 rule inventories and compile-time blocking',
         'fail-closed architecture v2 compatibility contract with paper-space, furniture component, authority, host and release gates',
         'canonical v3 evidence-contract verifier with exact multi-artifact closure, mechanical BOM subject rows, per-PCB BOM/CPL/assembly/fabrication/PDF/3D/CAM closure, native-board drill authority, repeated kinds, per-subject source/reopen binding and a full-identity digest; concludes only evidenceContractReady and never exposes candidate artifacts or grants readiness/authorization',
         'idempotent audit-report inventory with unique stable prevention-rule IDs and conflict rejection',
@@ -263,6 +266,7 @@ $releaseManifest = [ordered]@{
         'PYTHONDONTWRITEBYTECODE=1 python -B -m unittest discover -s tests -v',
         'PYTHONDONTWRITEBYTECODE=1 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -v',
         'python agent-plugin/aicad-agent/scripts/aicad_agent.py capabilities',
+        'python agent-plugin/aicad-agent/scripts/aicad_engineering_preflight.py --contract <engineering-preflight.json> --output <engineering-preflight-report.json>',
         'python agent-plugin/aicad-agent/scripts/aicad_report_qa.py <validation.json> --output <report-qa.json>',
         'python agent-plugin/aicad-agent/scripts/aicad_production_readiness_qa_v2.py <production-contract-v2.json> --output <production-validation.json> --markdown <production-validation.md> --html <production-validation.review.html> --png <production-validation.review.png>',
         'python agent-plugin/aicad-agent/scripts/aicad_production_readiness_qa_v3.py <production-contract-v3.json> --output <production-validation-v3.json> --markdown <production-validation-v3.md>',

@@ -1,4 +1,4 @@
-# aicad-agent 1.13.0
+# aicad-agent 1.14.0
 
 ## 跨领域规范第一门禁
 
@@ -8,7 +8,7 @@
 
 ## 1:1 webpage and image reference reconstruction
 
-Version 1.13.0 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
+Version 1.14.0 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
 
 Portable reference-rebuild output includes annotated DXF, native-text SVG/HTML, validation, manifest, and browser-backed PNG evidence. The main AICAD protocol-4 path emits true native DIMENSION entities with purpose/style XData; DWG save/reopen remains an explicit licensed AutoCAD host gate.
 ## 建筑平面制图语义
@@ -27,7 +27,7 @@ Portable reference-rebuild output includes annotated DXF, native-text SVG/HTML, 
 
 The multiview selector addresses individual lines, circles, and faces with stable semantic keys. Corrections are bound to a source hash, explicit preservation policy, shared-pattern fanout, and full downstream dependency replay. Thin visible strokes are separate from the larger click target, so precision and usability do not conflict.
 
-On a licensed SolidWorks 2026 host, version 1.13.0 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
+On a licensed SolidWorks 2026 host, version 1.14.0 maps required sketch primitives and uniquely classified BREP edges/faces to native `GetPersistReference3` bytes. The catalog is embedded in the SLDPRT, saved, reopened, and resolved record by record. Only that live gate may report `native_topology_authority=true`; offline review remains explicitly semantic. See [native SolidWorks topology readback](docs/NATIVE_SOLIDWORKS_TOPOLOGY.md) and [exact subobject correction](docs/EXACT_SUBOBJECT_CORRECTION.md).
 
 确定性、原点锚定、面向 Agent 的 CAD 约束插件。它把 2D AICAD 计划编译为 AICAD/SCR/DXF/审计工件，提供包装刀版正常性证明与交互修改器，并通过可选 Windows 宿主支持 AutoCAD 和 SolidWorks。
 
@@ -80,6 +80,8 @@ The reviewer now exposes one modification list instead of separate user-facing i
 
 ```powershell
 python scripts/aicad_agent.py capabilities
+python scripts/aicad_engineering_preflight.py --template mechanical --output mechanical-preflight.json
+python scripts/aicad_engineering_preflight.py --contract mechanical-preflight.json --output mechanical-preflight.report.json --markdown mechanical-preflight.report.md
 python scripts/aicad_production_readiness_qa_v3.py production-contract-v3.json --output production-validation-v3.json --markdown production-validation-v3.md
 python scripts/aicad_agent.py compile --plan runtime/examples/rectangle.plan.json --out smoke --name rectangle
 python scripts/aicad_agent.py build3d --plan runtime/examples/mounting_plate_3d.plan.json --out smoke3d --name plate --no-execute
@@ -98,6 +100,12 @@ packagingGated=true
 ```
 
 MIT License。
+
+## Mechanical/electronics normative generation preflight
+
+Mechanical and electronics plans derive one exact pre-geometry checklist from `rules/production_readiness_rules.json`: 54 mechanical gates and 63 electronics gates. The checklist covers shared authority/detail/drafting/sheet controls plus the selected profile's intent, design and manufacturing-definition rules. Missing, extra, duplicate, unresolved or non-authoritative rows block both 2D and 3D generation before artifacts are written.
+
+Call `aicad_get_engineering_preflight_template`, resolve and source-bind every row, validate with `aicad_validate_engineering_preflight`, and embed the pass as `engineering_normative_preflight`. See [the preflight guide](docs/ENGINEERING_NORMATIVE_PREFLIGHT.md). A pass permits controlled generation only and grants no technical/manufacturing/fabrication/release status.
 
 ## Mechanical and PCB evidence-contract gates
 

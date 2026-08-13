@@ -1,6 +1,6 @@
 {
   "name": "aicad-agent",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Agent-native tools for deterministic 2D/3D CAD, calibrated reference reconstruction, and audited host workflows.",
   "author": {
     "name": "AI CAD Constraint Project"
@@ -66,6 +66,7 @@
       "No-window content-addressed blocker review staging",
       "SHA-bound design-basis and global axis-catalog freshness QA",
       "Direct-production blocker-only gate",
+      "Mechanical/electronics normative generation preflight",
       "Canonical mechanical and PCB evidence-contract QA",
       "Per-PCB native, BOM, CPL, assembly, fabrication, PDF, 3D and CAM artifact closure",
       "Controlled hash-bound failure-to-lesson learning loop"

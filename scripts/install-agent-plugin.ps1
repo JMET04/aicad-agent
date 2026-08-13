@@ -1,14 +1,14 @@
 [CmdletBinding()]
 param(
     [string]$SourceDirectory,
-    [string]$ExpectedVersion = '1.13.0'
+    [string]$ExpectedVersion = '1.14.0'
 )
 
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 if (-not $SourceDirectory) {
     $candidates = @(
-        (Join-Path $repositoryRoot 'release\v1.13.0\aicad-agent'),
+        (Join-Path $repositoryRoot 'release\v1.14.0\aicad-agent'),
         (Join-Path $repositoryRoot 'plugins\aicad-agent')
     )
     foreach ($candidate in $candidates) {

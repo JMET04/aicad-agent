@@ -32,9 +32,10 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.13.0")
+        self.assertEqual(manifest["version"], "1.14.0")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
+        self.assertIn("Mechanical/electronics normative generation preflight", manifest["interface"]["capabilities"])
         self.assertIn("Canonical mechanical and PCB evidence-contract QA", manifest["interface"]["capabilities"])
         self.assertTrue(any("fabrication" in item and "Per-PCB" in item for item in manifest["interface"]["capabilities"]))
         self.assertIn("Controlled hash-bound failure-to-lesson learning loop", manifest["interface"]["capabilities"])
@@ -52,7 +53,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.13.0")
+        self.assertEqual(payload["api_version"], "1.14.0")
         self.assertEqual(payload["entities"], ["line", "circle", "arc", "text", "dimension"])
         self.assertTrue({"position_coincident", "position_offset", "text_height", "rotation", "dimension_measurement", "dimension_orientation", "base_offset"}.issubset(payload["constraints"]))
         self.assertIn("schema 2.0 compiles to AICAD protocol 3, or protocol 4 when native dimensions are present", payload["invariants"])
@@ -145,6 +146,21 @@ class AgentPluginTests(unittest.TestCase):
         self.assertTrue(production["release_authorization_requires_independent_trust_chain"])
         self.assertEqual(Path(production["architecture_compatibility"]["script"]).name, "aicad_production_readiness_qa_v2.py")
         self.assertEqual(Path(production["architecture_compatibility"]["contract_schema"]).name, "production_readiness_contract_v2.schema.json")
+        preflight = payload["engineering_normative_preflight"]
+        self.assertTrue(preflight["available"])
+        self.assertEqual(preflight["domains"], ["mechanical", "electronics"])
+        self.assertEqual(preflight["canonical_sections"], ["intent", "design", "manufacturingDefinition"])
+        self.assertEqual(preflight["mechanical_gate_count"], 54)
+        self.assertEqual(preflight["electronics_gate_count"], 63)
+        self.assertTrue(preflight["exact_gate_inventory_required"])
+        self.assertTrue(preflight["embedded_contract_required_for_domain_compile"])
+        self.assertEqual(preflight["conclusion"], "normative_preflight_ready_for_controlled_generation_only")
+        self.assertFalse(preflight["artifact_exposure_allowed_by_preflight"])
+        self.assertFalse(preflight["technical_readiness_granted"])
+        self.assertFalse(preflight["manufacturing_authorized"])
+        self.assertFalse(preflight["fabrication_authorized"])
+        for field in ("canonical_rules", "contract_schema", "validator"):
+            self.assertTrue(Path(preflight[field]).is_file(), field)
         normative = payload["normative_governance"]
         self.assertTrue(normative["available"])
         self.assertEqual(normative["priority"], "first_non_compensatory_gate")
@@ -222,6 +238,8 @@ class AgentPluginTests(unittest.TestCase):
         names = {tool["name"] for tool in listing["result"]["tools"]}
         self.assertEqual(names, {
             "aicad_capabilities", "aicad_get_plan_schema",
+            "aicad_get_engineering_preflight_schema", "aicad_get_engineering_preflight_template",
+            "aicad_validate_engineering_preflight",
             "aicad_get_architecture_detail_contract_schema", "aicad_validate_architecture_detail_contract",
             "aicad_generate",
             "aicad_validate_plan", "aicad_compile_plan", "aicad_solidworks_doctor",
@@ -238,6 +256,72 @@ class AgentPluginTests(unittest.TestCase):
             "params": {"name": "aicad_capabilities", "arguments": {}},
         })
         self.assertTrue(call["result"]["structuredContent"]["ok"])
+
+    def test_engineering_normative_preflight_tools_and_2d_compile_gate(self) -> None:
+        schema_call = self.agent._handle_mcp({
+            "jsonrpc": "2.0", "id": 90, "method": "tools/call",
+            "params": {"name": "aicad_get_engineering_preflight_schema", "arguments": {}},
+        })["result"]["structuredContent"]
+        self.assertTrue(schema_call["ok"])
+        self.assertEqual(schema_call["schema"]["properties"]["domain"]["enum"], ["mechanical", "electronics"])
+
+        template_call = self.agent._handle_mcp({
+            "jsonrpc": "2.0", "id": 91, "method": "tools/call",
+            "params": {"name": "aicad_get_engineering_preflight_template", "arguments": {"domain": "mechanical"}},
+        })["result"]["structuredContent"]
+        self.assertTrue(template_call["ok"])
+        self.assertEqual(len(template_call["template"]["ruleApplications"]), 54)
+        self.assertTrue(all(row["disposition"] == "unresolved" for row in template_call["template"]["ruleApplications"]))
+
+        validation_call = self.agent._handle_mcp({
+            "jsonrpc": "2.0", "id": 92, "method": "tools/call",
+            "params": {"name": "aicad_validate_engineering_preflight", "arguments": {"contract": template_call["template"]}},
+        })["result"]["structuredContent"]
+        self.assertFalse(validation_call["ok"])
+        self.assertEqual(validation_call["conclusion"], "normative_preflight_blocked")
+
+        plan = json.loads((ROOT / "examples" / "arc.plan.json").read_text(encoding="utf-8"))
+        plan["drawing"]["domain"] = "mechanical"
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "must-not-exist"
+            with self.assertRaisesRegex(self.agent.PlanError, "engineering_normative_preflight"):
+                self.agent.compile_plan_value(plan, str(output), "blocked-mechanical")
+            self.assertFalse(output.exists())
+
+        contract = template_call["template"]
+        first_standard = contract["applicableStandards"][0]["standard"]
+        for row in contract["ruleApplications"]:
+            row["disposition"] = "constrained"
+            row["generationConstraint"] = f"Generate only after resolving {row['gatePath']}."
+            row["verificationMethod"] = f"Independently verify {row['gatePath']}."
+            row["standardIds"] = [first_standard]
+        plan["engineering_normative_preflight"] = contract
+        with tempfile.TemporaryDirectory() as directory:
+            payload = self.agent.compile_plan_value(plan, directory, "preflight-pass")
+            self.assertTrue(payload["ok"])
+            self.assertEqual(payload["engineering_normative_preflight"]["status"], "pass")
+            self.assertFalse(payload["engineering_normative_preflight"]["generationGate"]["artifactExposureAllowed"])
+
+    def test_mechanical_3d_validation_requires_same_embedded_preflight(self) -> None:
+        plan = json.loads((ROOT / "examples" / "mounting_plate_3d.plan.json").read_text(encoding="utf-8"))
+        plan["part"]["domain"] = "mechanical"
+        with self.assertRaisesRegex(self.agent.PlanError, "engineering_normative_preflight"):
+            self.agent.validate_3d_plan_value(plan)
+
+        contract = self.agent.get_engineering_preflight_template_value("mechanical")["template"]
+        first_standard = contract["applicableStandards"][0]["standard"]
+        for row in contract["ruleApplications"]:
+            row["disposition"] = "constrained"
+            row["generationConstraint"] = f"Generate only after resolving {row['gatePath']}."
+            row["verificationMethod"] = f"Independently verify {row['gatePath']}."
+            row["standardIds"] = [first_standard]
+        plan["engineering_normative_preflight"] = contract
+        validated = self.agent.validate_3d_plan_value(plan)
+        self.assertTrue(validated["valid"])
+        self.assertEqual(validated["engineering_normative_preflight"]["status"], "pass")
+        self.assertFalse(
+            validated["engineering_normative_preflight"]["readinessBoundary"]["manufacturingAuthorized"]
+        )
 
     def test_universal_semantic_correction_and_multiview_tools(self) -> None:
         plan = json.loads((ROOT / "examples" / "mounting_plate_3d.plan.json").read_text(encoding="utf-8"))
@@ -358,9 +442,9 @@ class AgentPluginTests(unittest.TestCase):
         self.assertIn("Unsafe integration-manifest path", installer)
         self.assertIn("integration-manifest.json", installer)
         self.assertNotIn("Get-ChildItem -LiteralPath $source -Force", installer)
-        self.assertIn("[string]$ExpectedVersion = '1.13.0'", installer)
+        self.assertIn("[string]$ExpectedVersion = '1.14.0'", installer)
         self.assertLess(
-            installer.index("release\\v1.13.0\\aicad-agent"),
+            installer.index("release\\v1.14.0\\aicad-agent"),
             installer.index("plugins\\aicad-agent"),
         )
         self.assertNotIn("agent-plugin\\aicad-agent", installer)
@@ -376,7 +460,7 @@ class AgentPluginTests(unittest.TestCase):
         self.assertIn("$installedManifest.version -ne $ExpectedVersion", installer)
         verifier = (ROOT / "scripts" / "verify_release_package.py").read_text(encoding="utf-8")
         builder = (ROOT / "scripts" / "build-agent-plugin.ps1").read_text(encoding="utf-8-sig")
-        self.assertIn('EXPECTED_VERSION = "1.13.0"', verifier)
+        self.assertIn('EXPECTED_VERSION = "1.14.0"', verifier)
         self.assertIn('"expected-version-mismatch"', verifier)
         self.assertIn('"component-version-mismatch"', verifier)
         self.assertIn("--expected-version $Version", builder)
@@ -404,7 +488,7 @@ class AgentPluginTests(unittest.TestCase):
                 [
                     "powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
                     "-File", str(ROOT / "scripts" / "install-agent-plugin.ps1"),
-                    "-SourceDirectory", str(source), "-ExpectedVersion", "1.13.0",
+                    "-SourceDirectory", str(source), "-ExpectedVersion", "1.14.0",
                 ],
                 cwd=ROOT,
                 text=True,

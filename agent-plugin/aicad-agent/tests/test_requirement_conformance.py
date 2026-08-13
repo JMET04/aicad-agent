@@ -338,6 +338,21 @@ class RequirementConformanceTests(unittest.TestCase):
         jsonschema.Draft202012Validator(contract_schema).validate(contract)
         jsonschema.Draft202012Validator(trace_schema).validate(trace)
 
+    def test_active_root_cause_and_prevention_text_is_stable_utf8_without_mojibake(self):
+        source = SCRIPT.read_text(encoding="utf-8")
+        source.encode("utf-8").decode("utf-8")
+        for root_cause, prevention in MODULE.ROOT_CAUSES.values():
+            self.assertTrue(root_cause.isascii(), root_cause)
+            self.assertTrue(prevention.isascii(), prevention)
+        bad_sequences = (
+            "".join(map(chr, (0x00E7, 0x201D, 0x0178))),
+            "".join(map(chr, (0x00E9, 0x0153, 0x20AC))),
+            "".join(map(chr, (0x00E5, 0x00A5, 0x2018))),
+            chr(0x9225),
+        )
+        for token in bad_sequences:
+            self.assertNotIn(token, source)
+
 
 if __name__ == "__main__":
     unittest.main()
