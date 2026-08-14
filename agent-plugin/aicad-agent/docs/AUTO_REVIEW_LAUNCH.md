@@ -2,6 +2,12 @@
 
 Every `generate`, `compile`, `build3d`, and `multiview` command creates a local review HTML artifact. Window opening is a separate inspection action, not acceptance.
 
+## Reviewer-first request boundary
+
+Generic requests such as **open**, **show**, **view**, **inspect**, or **let me look** must call `aicad_open_review_request` and open only a current HTML carrying `data-artifact-role=interactive_drawing_modifier`. Supplying a PDF, PNG, DWG, DXF, STEP, SLDPRT/SLDASM, or KiCad path does not authorize opening it. Raw PDF/image artifacts are never native-CAD targets.
+
+Set `open_native_cad=true` only when the user explicitly asks for native CAD editing or output. An allowlisted existing CAD path is then required, the modifier must launch first, and the response records `open_order=[interactive_drawing_modifier,native_cad]`. If the modifier does not launch, the CAD launch is blocked. CLI equivalent: `python scripts/aicad_agent.py open-review --review-html <modifier.html> [--cad-path <drawing.dwg> --open-native-cad]`.
+
 ## Modes
 
 - `never` (default for CLI and Agent tools): generate the review artifact and launch record without opening another browser tab.

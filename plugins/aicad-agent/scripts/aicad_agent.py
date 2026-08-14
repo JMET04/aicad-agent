@@ -39,7 +39,7 @@ try:
     from aicad.exporters import export_all
     from aicad.provider import ProviderError, generate_plan
     from aicad.reference_rebuild import build_reference_reconstruction, validate_reference_rebuild
-    from aicad.review_launch import REVIEW_LAUNCH_MODES, launch_review
+    from aicad.review_launch import REVIEW_LAUNCH_MODES, launch_review, open_review_request
     from aicad.semantic import describe_plan, domain_capabilities
     from aicad.solidworks3d import compile_3d_plan, solidworks_doctor, validate_3d_plan
     from aicad.viewmap import build_multiview_review
@@ -47,7 +47,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.15.0"
+AGENT_API_VERSION = "1.15.1"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -153,6 +153,13 @@ def capabilities() -> dict[str, Any]:
             "dimension_measurement", "dimension_orientation", "base_offset",
         ],
         "artifacts": ["plan.json", "aicad", "scr", "dxf", "audit.md", "manifest.json"],
+        "review_opening": {
+            "policy": "reviewer_first",
+            "default_target": "interactive_drawing_modifier",
+            "generic_open_blocks_raw_artifacts": True,
+            "native_cad_requires_explicit_user_request": True,
+            "native_cad_order": ["interactive_drawing_modifier", "native_cad"],
+        },
         "agent_native": {
             "default": True,
             "api_key_required": False,
@@ -594,6 +601,18 @@ def build_multiview_value(
     return result
 
 
+def open_review_request_value(
+    review_html: str, cad_path: str | None = None, open_native_cad: bool = False,
+    review_launch: str = "always",
+) -> dict[str, Any]:
+    return open_review_request(
+        review_html,
+        cad_path=cad_path,
+        open_native_cad=open_native_cad,
+        review_mode=review_launch,
+    )
+
+
 def validate_reference_rebuild_value(plan_value: Any, reference_value: Any) -> dict[str, Any]:
     return validate_reference_rebuild(_load_plan(plan_value), _load_plan(reference_value))
 
@@ -782,6 +801,19 @@ TOOLS: list[dict[str, Any]] = [
         },
     },
     {
+        "name": "aicad_open_review_request",
+        "description": "Open the current content-bound interactive drawing modifier for every generic view request. Native CAD is blocked unless open_native_cad=true reflects an explicit user request, and then opens only after the modifier.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["review_html"],
+            "properties": {
+                "review_html": {"type": "string", "description": "Existing local HTML carrying data-artifact-role=interactive_drawing_modifier"},
+                "cad_path": {"type": "string", "description": "Optional native CAD path; supplying it alone never authorizes launch"},
+                "open_native_cad": {"type": "boolean", "default": False, "description": "Set true only for an explicit user request for native CAD editing/output"},
+                "review_launch": {"type": "string", "enum": ["auto", "always"], "default": "always"},
+            },
+        },
+    },
+    {
         "name": "aicad_get_reference_rebuild_schema",
         "description": "Return the calibrated webpage/image-to-CAD reconstruction contract schema; raw pixels are never dimension truth.",
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
@@ -905,6 +937,13 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         return build_multiview_value(
             arguments.get("plan"), arguments.get("space", "2d"), arguments.get("domain", "general"),
             arguments.get("output_dir"), arguments.get("name"), arguments.get("review_launch", "never"),
+        )
+    if name == "aicad_open_review_request":
+        return open_review_request_value(
+            str(arguments.get("review_html", "")),
+            arguments.get("cad_path"),
+            bool(arguments.get("open_native_cad", False)),
+            str(arguments.get("review_launch", "always")),
         )
     if name == "aicad_get_reference_rebuild_schema":
         return get_aux_schema("reference")
@@ -1111,6 +1150,11 @@ def _parser() -> argparse.ArgumentParser:
     multiview_parser.add_argument("--out")
     multiview_parser.add_argument("--name")
     multiview_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
+    open_review_parser = commands.add_parser("open-review")
+    open_review_parser.add_argument("--review-html", required=True)
+    open_review_parser.add_argument("--cad-path")
+    open_review_parser.add_argument("--open-native-cad", action="store_true")
+    open_review_parser.add_argument("--review-launch", choices=["auto", "always"], default="always")
     return parser
 
 
@@ -1148,6 +1192,9 @@ def main(argv: list[str] | None = None) -> int:
         "preview-correction": lambda: preview_correction_value(args.plan, args.correction, args.domain),
         "apply-correction": lambda: apply_correction_value(args.plan, args.correction, args.out, args.name, args.domain),
         "multiview": lambda: build_multiview_value(args.plan, args.space, args.domain, args.out, args.name, args.review_launch),
+        "open-review": lambda: open_review_request_value(
+            args.review_html, args.cad_path, args.open_native_cad, args.review_launch,
+        ),
     }
     try:
         payload = actions[args.command]()

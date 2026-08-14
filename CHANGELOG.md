@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 1.15.1 - 2026-08-14
+
+- Added a fail-closed reviewer-first open boundary for generic drawing view requests.
+- Added the `aicad_open_review_request` MCP/CLI tool; raw PDF/image/CAD paths never imply native-host intent.
+- Required an explicit native-CAD switch, an allowlisted CAD suffix, and recorded modifier-before-CAD launch order.
+- Added negative regression coverage for ambiguous CAD paths, raw PDFs, unmarked HTML, headless launch, MCP defaults, and CLI defaults.
+
 ## 1.15.0 - 2026-08-14
 
 - Published deterministic standardized-regeneration review archives for the mechanical servo-reducer bracket and industrial-controller electronics packages.

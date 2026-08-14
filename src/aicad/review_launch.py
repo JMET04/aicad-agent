@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import re
 import sys
 import time
 from typing import Callable
@@ -14,6 +15,13 @@ from .engine import PlanError
 
 
 REVIEW_LAUNCH_MODES = ("auto", "stage", "always", "never")
+REVIEW_REQUEST_MODES = ("auto", "always")
+NATIVE_CAD_SUFFIXES = frozenset({
+    ".aicad", ".dwg", ".dxf", ".kicad_pcb", ".kicad_pro", ".kicad_sch",
+    ".sldasm", ".sldprt", ".step", ".stp",
+})
+_MODIFIER_ROLE = re.compile(r"data-artifact-role\s*=\s*['\"]interactive_drawing_modifier['\"]", re.IGNORECASE)
+
 _TRUE = {"1", "true", "yes", "on"}
 _DEFAULT_AUTO_DEDUP_SECONDS = 300.0
 
@@ -213,3 +221,74 @@ def launch_review(
         "launch_state": str(state_path),
         "launch_state_persisted": state_persisted,
     }
+
+
+def open_review_request(
+    review_html: str | Path,
+    *,
+    cad_path: str | Path | None = None,
+    open_native_cad: bool = False,
+    review_mode: str = "always",
+    review_opener: Callable[[Path], None] | None = None,
+    native_opener: Callable[[Path], None] | None = None,
+) -> dict[str, object]:
+    """Open a content-bound modifier first and native CAD only on explicit intent.
+
+    Generic open/show/view requests must leave ``open_native_cad`` false. Merely
+    supplying a CAD or PDF path never counts as intent to launch a native host.
+    """
+    if review_mode not in REVIEW_REQUEST_MODES:
+        raise PlanError("review request mode must be auto or always")
+    modifier = Path(review_html).expanduser().resolve()
+    if not modifier.is_file() or modifier.suffix.lower() != ".html":
+        raise PlanError(f"review request requires an existing local HTML modifier: {modifier}")
+    try:
+        modifier_head = modifier.read_text(encoding="utf-8")[:262144]
+    except (OSError, UnicodeError) as exc:
+        raise PlanError(f"review modifier cannot be read as UTF-8: {modifier}") from exc
+    if not _MODIFIER_ROLE.search(modifier_head):
+        raise PlanError("review request requires data-artifact-role=interactive_drawing_modifier")
+
+    native: Path | None = None
+    if open_native_cad:
+        if cad_path is None:
+            raise PlanError("explicit native CAD opening requires cad_path")
+        native = Path(cad_path).expanduser().resolve()
+        if not native.is_file():
+            raise PlanError(f"native CAD opening requires an existing local file: {native}")
+        if native.suffix.lower() not in NATIVE_CAD_SUFFIXES:
+            allowed = ", ".join(sorted(NATIVE_CAD_SUFFIXES))
+            raise PlanError(f"native CAD opening rejects non-CAD artifacts; allowed suffixes: {allowed}")
+
+    review_result = launch_review(modifier, review_mode, opener=review_opener)
+    result: dict[str, object] = {
+        "policy": "reviewer_first",
+        "reviewer_role": "interactive_drawing_modifier",
+        "native_cad_policy": "explicit_user_request_only_after_reviewer",
+        "review": review_result,
+        "open_order": ["interactive_drawing_modifier"]
+        if review_result.get("status") == "launched" else [],
+    }
+    if not open_native_cad:
+        result["native_cad"] = {
+            "status": "blocked" if cad_path is not None else "not_requested",
+            "reason": "explicit_native_cad_request_required" if cad_path is not None else None,
+            "cad_path": str(Path(cad_path).expanduser().resolve()) if cad_path is not None else None,
+        }
+        return result
+    if review_result.get("status") != "launched":
+        result["native_cad"] = {
+            "status": "blocked",
+            "reason": "reviewer_must_launch_before_native_cad",
+            "cad_path": str(native),
+        }
+        return result
+
+    open_native = native_opener or _system_open
+    try:
+        open_native(native)  # type: ignore[arg-type]
+    except OSError as exc:
+        raise PlanError(f"native CAD UI launch failed after reviewer launch: {exc}") from exc
+    result["native_cad"] = {"status": "launched", "reason": None, "cad_path": str(native)}
+    result["open_order"] = ["interactive_drawing_modifier", "native_cad"]
+    return result

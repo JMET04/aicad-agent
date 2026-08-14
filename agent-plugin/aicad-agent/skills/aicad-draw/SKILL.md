@@ -25,6 +25,12 @@ Use this order. Do not skip or rearrange it:
 
 For a trivial rectangle, circle, arc, or rectangular plate with one centered hole, `aicad_generate` remains available as a low-risk shortcut. A caller-supplied low-risk schema 2.0 plan can still use `aicad_compile_plan`. Do not use either shortcut for packaging, closure systems, multi-face products, fit-critical parts or any request with reference material and conflicting sources.
 
+## Opening and result presentation policy
+
+Treat `open`, `show`, `view`, `inspect`, `look at`, and equivalent requests as requests for the current interactive drawing modifier. Call `aicad_open_review_request` with a source-bound HTML containing `data-artifact-role=interactive_drawing_modifier`. Never use an OS file opener directly on PDF, PNG, DWG, DXF, STEP, SLDPRT/SLDASM, or KiCad artifacts for a generic view request, and never substitute a stale showcase reviewer. Merely receiving a raw artifact path is not explicit native-CAD intent.
+
+Open native CAD only when the user explicitly asks for native CAD editing or output. In that case pass the allowlisted existing CAD path and set `open_native_cad=true`; the tool must launch the modifier first and block CAD if that launch does not occur. Keep `open_native_cad=false` for every ambiguous request.
+
 ## Webpage and image reference reconstruction
 
 When the request is to reproduce a drawing from a webpage, SVG, PDF, screenshot, or image:
@@ -104,6 +110,7 @@ When MCP tools are unavailable, invoke the bundled script from the plugin root:
 
 ```powershell
 python scripts/aicad_agent.py capabilities
+python scripts/aicad_agent.py open-review --review-html build/job/drawing.modifier.html
 python scripts/aicad_agent.py generate --request "120x80 plate with centered diameter 20 hole" --out build/job
 python scripts/aicad_agent.py generate --request-file request-utf8.txt --out build/job
 python scripts/aicad_agent.py validate --plan drawing.plan.json

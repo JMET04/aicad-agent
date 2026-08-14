@@ -1,4 +1,4 @@
-# aicad-agent 1.15.0
+# aicad-agent 1.15.1
 
 ## 跨领域规范第一门禁
 
@@ -22,6 +22,8 @@ Portable reference-rebuild output includes annotated DXF, native-text SVG/HTML, 
 ## 自动打开审查界面
 
 `generate`、`compile`、`build3d` 和 `multiview` 会生成绑定当前源哈希的审查 HTML 和打开记录；CLI/Agent 默认 `review_launch=never`，不会反复新建浏览器标签。显式使用 `auto` 时，HTML 会先复制到持久内容寻址目录并在 300 秒窗口内对相同内容去重；只有 `always` 才强制再次打开。临时源文件删除后，已打开页面仍有效；打开界面不等于接受设计。
+
+普通“打开/看看/预览”请求必须调用 `aicad_open_review_request`，并且只打开带 `data-artifact-role=interactive_drawing_modifier` 的当前交互修改器；即使参数中有 PDF、DWG、STEP 或 KiCad 路径，也不得直接打开。只有用户明确要求原生 CAD 编辑或输出时才设置 `open_native_cad=true`，而且修改器必须先成功打开，否则原生 CAD 被阻断。
 
 ## Exact 3D subobject correction and native topology
 

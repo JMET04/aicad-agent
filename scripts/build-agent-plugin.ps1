@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.15.0',
+    [string]$Version = '1.15.1',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -175,7 +175,7 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.15.0'
+        pythonConstraintCompiler = '1.15.1'
         autocadBundle = '1.6.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
@@ -203,7 +203,7 @@ $releaseManifest = [ordered]@{
         'aicad_get_architecture_detail_contract_schema', 'aicad_validate_architecture_detail_contract', 'aicad_generate',
         'aicad_validate_plan', 'aicad_compile_plan',
         'aicad_get_semantic_schema', 'aicad_get_correction_schema', 'aicad_get_view_package_schema',
-        'aicad_describe_plan', 'aicad_preview_correction', 'aicad_apply_correction', 'aicad_build_multiview_review',
+        'aicad_describe_plan', 'aicad_preview_correction', 'aicad_apply_correction', 'aicad_build_multiview_review', 'aicad_open_review_request',
         'aicad_get_domain_validation_schema', 'aicad_validate_domain_plan',
         'aicad_get_reference_rebuild_schema', 'aicad_validate_reference_rebuild', 'aicad_build_reference_reconstruction',
         'aicad_solidworks_doctor',

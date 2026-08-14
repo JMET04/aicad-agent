@@ -1,6 +1,6 @@
 {
   "schema": "aicad_automatic_review_rules_v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "rules": [
     {
       "id": "REVIEW-G001",
@@ -9,8 +9,8 @@
     },
     {
       "id": "REVIEW-G002",
-      "requirement": "Desktop workflows open the review automatically after artifact validation.",
-      "prevention": "Use review_launch=auto by default for CLI and Agent tools, with explicit always and never modes."
+      "requirement": "Generation must create the current review artifact without surprise GUI launches; an explicit user view request must open that reviewer through the reviewer-first boundary.",
+      "prevention": "Keep generation tools at review_launch=never by default, then use aicad_open_review_request with review_launch=always for an explicit desktop view request."
     },
     {
       "id": "REVIEW-G003",
@@ -26,6 +26,21 @@
       "id": "REVIEW-G005",
       "requirement": "Every 2D and 3D review surface must provide one synchronized coordinate-system visibility switch whose last choice survives reopening.",
       "prevention": "The switch controls all 2D axes, origin marks and the rotating 3D triad together; store only the boolean visibility preference and never use screen pixels as model coordinates."
+    },
+    {
+      "id": "REVIEW-G006",
+      "requirement": "Every generic open, show, view, inspect, or look-at request must open the current content-bound interactive drawing modifier, never a raw PDF, image, DWG, DXF, STEP, SolidWorks, or KiCad artifact.",
+      "prevention": "Route the request through aicad_open_review_request; require the HTML role marker interactive_drawing_modifier and keep open_native_cad=false by default even when a raw artifact path is supplied."
+    },
+    {
+      "id": "REVIEW-G007",
+      "requirement": "A native CAD host may open only after an explicit user request for native CAD editing or output, and only after the interactive modifier has launched.",
+      "prevention": "Require open_native_cad=true plus an allowlisted existing CAD path; record reviewer-first order and block the native launch if the modifier did not launch."
+    },
+    {
+      "id": "REVIEW-G008",
+      "requirement": "A review HTML must prove that it is a current interactive drawing modifier rather than an arbitrary wrapper or stale showcase page.",
+      "prevention": "Validate data-artifact-role=interactive_drawing_modifier and bind the modifier manifest to the exact current source artifacts before opening."
     }
   ]
 }
