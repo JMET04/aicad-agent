@@ -47,7 +47,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.15.1"
+AGENT_API_VERSION = "1.15.2"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -802,11 +802,11 @@ TOOLS: list[dict[str, Any]] = [
     },
     {
         "name": "aicad_open_review_request",
-        "description": "Open the current content-bound interactive drawing modifier for every generic view request. Native CAD is blocked unless open_native_cad=true reflects an explicit user request, and then opens only after the modifier.",
+        "description": "Open only a source-bound selectable-vector drawing modifier for every generic view request. Raster-only wrappers fail closed. Native CAD is blocked unless open_native_cad=true reflects an explicit user request, and then opens only after the modifier.",
         "inputSchema": {
             "type": "object", "additionalProperties": False, "required": ["review_html"],
             "properties": {
-                "review_html": {"type": "string", "description": "Existing local HTML carrying data-artifact-role=interactive_drawing_modifier"},
+                "review_html": {"type": "string", "description": "Existing local HTML satisfying aicad_selectable_vector_modifier_v1; the role marker alone is insufficient"},
                 "cad_path": {"type": "string", "description": "Optional native CAD path; supplying it alone never authorizes launch"},
                 "open_native_cad": {"type": "boolean", "default": False, "description": "Set true only for an explicit user request for native CAD editing/output"},
                 "review_launch": {"type": "string", "enum": ["auto", "always"], "default": "always"},

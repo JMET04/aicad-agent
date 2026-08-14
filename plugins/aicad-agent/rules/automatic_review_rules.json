@@ -1,6 +1,6 @@
 {
   "schema": "aicad_automatic_review_rules_v1",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "rules": [
     {
       "id": "REVIEW-G001",
@@ -41,6 +41,16 @@
       "id": "REVIEW-G008",
       "requirement": "A review HTML must prove that it is a current interactive drawing modifier rather than an arbitrary wrapper or stale showcase page.",
       "prevention": "Validate data-artifact-role=interactive_drawing_modifier and bind the modifier manifest to the exact current source artifacts before opening."
+    },
+    {
+      "id": "REVIEW-G009",
+      "requirement": "An interactive drawing modifier must expose source-bound vector CAD entities with semantic IDs, separate wide hit geometry, layer identity, model measurements, and a typed correction preview; a raster PDF/image browser never satisfies the modifier contract.",
+      "prevention": "Validate cad-view SVG, view-hit geometry, data-view-entity-id, data-source-id, data-source-subobject, a semantic entity catalog, measurement inspector, reviewOnly=true, accepted=false, and the correction surface before launch. Reject role-marker-only HTML."
+    },
+    {
+      "id": "REVIEW-G010",
+      "requirement": "Raster content may appear only as a declared secondary underlay beneath a complete selectable vector entity set; it may never be the sole or authoritative drawing geometry.",
+      "prevention": "When an IMG exists, require data-vector-source-bound=true, data-raster-only=false, and more selectable vector hit targets than raster images. Keep source hashes and CAD layer semantics attached to every selectable entity."
     }
   ]
 }

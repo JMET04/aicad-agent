@@ -18,10 +18,10 @@ jobs:
       - run: python -B -m unittest discover -s tests -v
       - run: python -B -m unittest discover -s agent-plugin/aicad-agent/tests -v
       - shell: powershell
-        run: ./scripts/build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.15.1
+        run: ./scripts/build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.15.2
       - run: python -B scripts/verify_release_package.py release/ci/aicad-agent --source-root .
       - shell: powershell
-        run: ./scripts/build-github-source.ps1 -OutputDirectory release/ci/github-repository -Version 1.15.1 -PluginArchive release/ci/aicad-agent-1.15.1.zip -PluginDirectory release/ci/aicad-agent
+        run: ./scripts/build-github-source.ps1 -OutputDirectory release/ci/github-repository -Version 1.15.2 -PluginArchive release/ci/aicad-agent-1.15.2.zip -PluginDirectory release/ci/aicad-agent
       - run: python -B scripts/verify_github_source.py release/ci/github-repository --source-root .
       - shell: powershell
         working-directory: release/ci/github-repository/plugins/aicad-agent

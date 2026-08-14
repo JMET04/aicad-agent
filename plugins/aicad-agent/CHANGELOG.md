@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 1.15.2 - 2026-08-14
+
+- Replaced role-marker-only reviewer validation with the fail-closed `aicad_selectable_vector_modifier_v1` structural contract.
+- Require source-bound `cad-view` SVG entities, separate wide `view-hit` geometry, stable source/subobject IDs, semantic catalogs, model measurements, typed correction preview, and review safety locks.
+- Reject raster-only PDF/image wrappers; raster content is permitted only as a declared secondary underlay beneath a complete selectable vector entity set.
+- Added REVIEW-G009/G010 and negative regressions for raster wrappers, missing hit geometry, and unbound hit targets while retaining compatibility with the canonical civil/architecture modifier.
 ## 1.15.1 - 2026-08-14
 
 - Added a fail-closed reviewer-first open boundary for generic drawing view requests.

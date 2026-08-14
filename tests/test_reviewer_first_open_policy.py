@@ -15,7 +15,17 @@ from aicad.engine import PlanError
 from aicad.review_launch import open_review_request
 
 
-MODIFIER = '<html data-artifact-role="interactive_drawing_modifier"><body>review</body></html>'
+MODIFIER = """<html data-artifact-role="interactive_drawing_modifier"
+ data-selection-contract="aicad_semantic_selection_v1"
+ data-correction-contract="aicad_typed_correction_preview_v1">
+<body><svg class="cad-view"><g class="entity-pair">
+<line class="view-entity" x1="0" y1="0" x2="10" y2="0"/>
+<line class="view-hit" data-view-entity-id="V1" data-source-id="L1"
+ data-source-subobject="entity" x1="0" y1="0" x2="10" y2="0"/>
+</g></svg><div class="measurement-card"></div>
+<script type="application/json">{"selection_map":{"V1":{"source_object_id":"L1"}}}</script>
+<script>function formalCorrection(){return {reviewOnly:true,accepted:false};}</script>
+</body></html>"""
 
 
 class ReviewerFirstOpenPolicyTests(unittest.TestCase):
@@ -91,6 +101,41 @@ class ReviewerFirstOpenPolicyTests(unittest.TestCase):
                 with self.assertRaisesRegex(PlanError, "interactive_drawing_modifier"):
                     open_review_request(review)
 
+    def test_raster_only_role_marker_cannot_masquerade_as_modifier(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            review = root / "raster-wrapper.html"
+            review.write_text(
+                '<html data-artifact-role="interactive_drawing_modifier"><body><img src="drawing.png"></body></html>',
+                encoding="utf-8",
+            )
+            with patch.dict(os.environ, self.environment(root), clear=False):
+                with self.assertRaisesRegex(PlanError, "selectable vector CAD modifier"):
+                    open_review_request(review)
+
+    def test_svg_without_separate_hit_geometry_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            review = root / "no-hit.html"
+            review.write_text(
+                MODIFIER.replace('class="view-hit"', 'class="view-entity"'),
+                encoding="utf-8",
+            )
+            with patch.dict(os.environ, self.environment(root), clear=False):
+                with self.assertRaisesRegex(PlanError, "separate view-hit target"):
+                    open_review_request(review)
+
+    def test_hit_geometry_without_source_identity_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            review = root / "unbound-hit.html"
+            review.write_text(
+                MODIFIER.replace('data-source-id="L1"', 'data-placeholder="L1"'),
+                encoding="utf-8",
+            )
+            with patch.dict(os.environ, self.environment(root), clear=False):
+                with self.assertRaisesRegex(PlanError, "source object identifier"):
+                    open_review_request(review)
     def test_native_open_is_blocked_if_reviewer_did_not_launch(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

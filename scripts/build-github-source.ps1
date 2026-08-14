@@ -1,9 +1,9 @@
 [CmdletBinding()]
 param(
-    [string]$OutputDirectory = 'release\v1.15.1\github-repository',
-    [string]$Version = '1.15.1',
-    [string]$PluginArchive = 'release\v1.15.1\aicad-agent-1.15.1.zip',
-    [string]$PluginDirectory = 'release\v1.15.1\aicad-agent'
+    [string]$OutputDirectory = 'release\v1.15.2\github-repository',
+    [string]$Version = '1.15.2',
+    [string]$PluginArchive = 'release\v1.15.2\aicad-agent-1.15.2.zip',
+    [string]$PluginDirectory = 'release\v1.15.2\aicad-agent'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -272,4 +272,3 @@ Write-Host "GitHub source staging created: $finalTarget"
         Remove-Item -LiteralPath $target -Recurse -Force
     }
 }
-

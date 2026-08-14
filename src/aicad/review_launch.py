@@ -21,6 +21,19 @@ NATIVE_CAD_SUFFIXES = frozenset({
     ".sldasm", ".sldprt", ".step", ".stp",
 })
 _MODIFIER_ROLE = re.compile(r"data-artifact-role\s*=\s*['\"]interactive_drawing_modifier['\"]", re.IGNORECASE)
+_CAD_VIEW = re.compile(r"<svg\b[^>]*class\s*=\s*['\"][^'\"]*\bcad-view\b[^'\"]*['\"]", re.IGNORECASE)
+_VIEW_HIT = re.compile(r"class\s*=\s*['\"][^'\"]*\bview-hit\b[^'\"]*['\"]", re.IGNORECASE)
+_SOURCE_ID = re.compile(r"data-source-id\s*=", re.IGNORECASE)
+_SOURCE_SUBOBJECT = re.compile(r"data-source-subobject\s*=", re.IGNORECASE)
+_VIEW_ENTITY_ID = re.compile(r"data-view-entity-id\s*=", re.IGNORECASE)
+_SEMANTIC_CATALOG = re.compile(r"aicad-semantic-entity-catalog|selection_map", re.IGNORECASE)
+_MEASUREMENT_SURFACE = re.compile(r"measurement-card|metric-card", re.IGNORECASE)
+_CORRECTION_SURFACE = re.compile(r"formalCorrection|data-correction-contract\s*=", re.IGNORECASE)
+_REVIEW_ONLY = re.compile(r"reviewOnly\s*[:=]\s*true", re.IGNORECASE)
+_NOT_ACCEPTED = re.compile(r"accepted\s*[:=]\s*false", re.IGNORECASE)
+_RASTER_IMAGE = re.compile(r"<img\b", re.IGNORECASE)
+_VECTOR_SOURCE_BOUND = re.compile(r"data-vector-source-bound\s*=\s*['\"]true['\"]", re.IGNORECASE)
+_RASTER_ONLY_FALSE = re.compile(r"data-raster-only\s*=\s*['\"]false['\"]", re.IGNORECASE)
 
 _TRUE = {"1", "true", "yes", "on"}
 _DEFAULT_AUTO_DEDUP_SECONDS = 300.0
@@ -123,6 +136,48 @@ def _write_launch_state(path: Path, digest: str, review_html: Path, mode: str) -
             pass
         return False
     return True
+
+
+def validate_interactive_modifier_contract(modifier_text: str) -> dict[str, object]:
+    """Reject raster wrappers and prove source-bound selectable CAD geometry."""
+    missing: list[str] = []
+    checks = (
+        ("interactive_drawing_modifier role", _MODIFIER_ROLE),
+        ("SVG cad-view", _CAD_VIEW),
+        ("separate view-hit target", _VIEW_HIT),
+        ("view entity identifier", _VIEW_ENTITY_ID),
+        ("source object identifier", _SOURCE_ID),
+        ("source subobject identifier", _SOURCE_SUBOBJECT),
+        ("semantic entity catalog", _SEMANTIC_CATALOG),
+        ("model measurement inspector", _MEASUREMENT_SURFACE),
+        ("typed correction surface", _CORRECTION_SURFACE),
+        ("reviewOnly=true safety lock", _REVIEW_ONLY),
+        ("accepted=false safety lock", _NOT_ACCEPTED),
+    )
+    for label, pattern in checks:
+        if not pattern.search(modifier_text):
+            missing.append(label)
+    image_count = len(_RASTER_IMAGE.findall(modifier_text))
+    hit_count = len(_VIEW_HIT.findall(modifier_text))
+    if image_count and not (
+        _VECTOR_SOURCE_BOUND.search(modifier_text)
+        and _RASTER_ONLY_FALSE.search(modifier_text)
+        and hit_count > image_count
+    ):
+        missing.append("raster underlay must be secondary to declared source-bound vector entities")
+    if missing:
+        raise PlanError(
+            "review request requires a selectable vector CAD modifier; missing: "
+            + ", ".join(missing)
+        )
+    return {
+        "contract": "aicad_selectable_vector_modifier_v1",
+        "vector_source_bound": True,
+        "raster_only": False,
+        "svg_view_count": len(_CAD_VIEW.findall(modifier_text)),
+        "view_hit_count": hit_count,
+        "raster_image_count": image_count,
+    }
 
 
 def launch_review(
@@ -243,11 +298,10 @@ def open_review_request(
     if not modifier.is_file() or modifier.suffix.lower() != ".html":
         raise PlanError(f"review request requires an existing local HTML modifier: {modifier}")
     try:
-        modifier_head = modifier.read_text(encoding="utf-8")[:262144]
+        modifier_text = modifier.read_text(encoding="utf-8")
     except (OSError, UnicodeError) as exc:
         raise PlanError(f"review modifier cannot be read as UTF-8: {modifier}") from exc
-    if not _MODIFIER_ROLE.search(modifier_head):
-        raise PlanError("review request requires data-artifact-role=interactive_drawing_modifier")
+    modifier_contract = validate_interactive_modifier_contract(modifier_text)
 
     native: Path | None = None
     if open_native_cad:
@@ -265,6 +319,7 @@ def open_review_request(
         "policy": "reviewer_first",
         "reviewer_role": "interactive_drawing_modifier",
         "native_cad_policy": "explicit_user_request_only_after_reviewer",
+        "modifier_contract": modifier_contract,
         "review": review_result,
         "open_order": ["interactive_drawing_modifier"]
         if review_result.get("status") == "launched" else [],

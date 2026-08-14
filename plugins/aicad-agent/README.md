@@ -1,4 +1,4 @@
-# aicad-agent 1.15.1
+# aicad-agent 1.15.2
 
 ## 跨领域规范第一门禁
 
@@ -23,7 +23,7 @@ Portable reference-rebuild output includes annotated DXF, native-text SVG/HTML, 
 
 `generate`、`compile`、`build3d` 和 `multiview` 会生成绑定当前源哈希的审查 HTML 和打开记录；CLI/Agent 默认 `review_launch=never`，不会反复新建浏览器标签。显式使用 `auto` 时，HTML 会先复制到持久内容寻址目录并在 300 秒窗口内对相同内容去重；只有 `always` 才强制再次打开。临时源文件删除后，已打开页面仍有效；打开界面不等于接受设计。
 
-普通“打开/看看/预览”请求必须调用 `aicad_open_review_request`，并且只打开带 `data-artifact-role=interactive_drawing_modifier` 的当前交互修改器；即使参数中有 PDF、DWG、STEP 或 KiCad 路径，也不得直接打开。只有用户明确要求原生 CAD 编辑或输出时才设置 `open_native_cad=true`，而且修改器必须先成功打开，否则原生 CAD 被阻断。
+普通“打开/看看/预览”请求必须调用 `aicad_open_review_request`，并且只打开通过 `aicad_selectable_vector_modifier_v1` 的当前交互修改器：真实 `cad-view` SVG、独立宽 `view-hit`、源对象/子对象 ID、图层、语义目录、模型测量和受控纠错缺一不可；单有 `data-artifact-role` 标签的 PDF/图片浏览器必须失败关闭。栅格内容只能作为已声明的次要底图。即使参数中有 PDF、DWG、STEP 或 KiCad 路径，也不得直接打开。只有用户明确要求原生 CAD 编辑或输出时才设置 `open_native_cad=true`，而且修改器必须先成功打开，否则原生 CAD 被阻断。
 
 ## Exact 3D subobject correction and native topology
 

@@ -27,7 +27,9 @@ For a trivial rectangle, circle, arc, or rectangular plate with one centered hol
 
 ## Opening and result presentation policy
 
-Treat `open`, `show`, `view`, `inspect`, `look at`, and equivalent requests as requests for the current interactive drawing modifier. Call `aicad_open_review_request` with a source-bound HTML containing `data-artifact-role=interactive_drawing_modifier`. Never use an OS file opener directly on PDF, PNG, DWG, DXF, STEP, SLDPRT/SLDASM, or KiCad artifacts for a generic view request, and never substitute a stale showcase reviewer. Merely receiving a raw artifact path is not explicit native-CAD intent.
+Treat `open`, `show`, `view`, `inspect`, `look at`, and equivalent requests as requests for the current interactive drawing modifier. Call `aicad_open_review_request` only with a source-bound HTML that satisfies `aicad_selectable_vector_modifier_v1`: real `cad-view` SVG entities, one separate wide `view-hit` target per selectable entity, stable `data-view-entity-id`, `data-source-id`, `data-source-subobject`, CAD layer identity, a semantic entity catalog, model measurements, and typed correction preview with `reviewOnly=true` and `accepted=false`. The role marker `data-artifact-role=interactive_drawing_modifier` is necessary but never sufficient. A PDF/image browser with pins or comments is not a CAD modifier and must fail closed. Raster content is permitted only as an explicitly declared secondary underlay beneath a complete selectable vector entity set.
+
+Never use an OS file opener directly on PDF, PNG, DWG, DXF, STEP, SLDPRT/SLDASM, or KiCad artifacts for a generic view request, and never substitute a stale showcase reviewer. Merely receiving a raw artifact path is not explicit native-CAD intent.
 
 Open native CAD only when the user explicitly asks for native CAD editing or output. In that case pass the allowlisted existing CAD path and set `open_native_cad=true`; the tool must launch the modifier first and block CAD if that launch does not occur. Keep `open_native_cad=false` for every ambiguous request.
 

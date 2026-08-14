@@ -32,7 +32,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.15.1")
+        self.assertEqual(manifest["version"], "1.15.2")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         self.assertIn("Mechanical/electronics normative generation preflight", manifest["interface"]["capabilities"])
@@ -53,7 +53,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.15.1")
+        self.assertEqual(payload["api_version"], "1.15.2")
         self.assertEqual(payload["entities"], ["line", "circle", "arc", "text", "dimension"])
         self.assertTrue({"position_coincident", "position_offset", "text_height", "rotation", "dimension_measurement", "dimension_orientation", "base_offset"}.issubset(payload["constraints"]))
         self.assertIn("schema 2.0 compiles to AICAD protocol 3, or protocol 4 when native dimensions are present", payload["invariants"])
@@ -442,9 +442,9 @@ class AgentPluginTests(unittest.TestCase):
         self.assertIn("Unsafe integration-manifest path", installer)
         self.assertIn("integration-manifest.json", installer)
         self.assertNotIn("Get-ChildItem -LiteralPath $source -Force", installer)
-        self.assertIn("[string]$ExpectedVersion = '1.15.1'", installer)
+        self.assertIn("[string]$ExpectedVersion = '1.15.2'", installer)
         self.assertLess(
-            installer.index("release\\v1.15.1\\aicad-agent"),
+            installer.index("release\\v1.15.2\\aicad-agent"),
             installer.index("plugins\\aicad-agent"),
         )
         self.assertNotIn("agent-plugin\\aicad-agent", installer)
@@ -460,7 +460,7 @@ class AgentPluginTests(unittest.TestCase):
         self.assertIn("$installedManifest.version -ne $ExpectedVersion", installer)
         verifier = (ROOT / "scripts" / "verify_release_package.py").read_text(encoding="utf-8")
         builder = (ROOT / "scripts" / "build-agent-plugin.ps1").read_text(encoding="utf-8-sig")
-        self.assertIn('EXPECTED_VERSION = "1.15.1"', verifier)
+        self.assertIn('EXPECTED_VERSION = "1.15.2"', verifier)
         self.assertIn('"expected-version-mismatch"', verifier)
         self.assertIn('"component-version-mismatch"', verifier)
         self.assertIn("--expected-version $Version", builder)
@@ -488,7 +488,7 @@ class AgentPluginTests(unittest.TestCase):
                 [
                     "powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
                     "-File", str(ROOT / "scripts" / "install-agent-plugin.ps1"),
-                    "-SourceDirectory", str(source), "-ExpectedVersion", "1.15.1",
+                    "-SourceDirectory", str(source), "-ExpectedVersion", "1.15.2",
                 ],
                 cwd=ROOT,
                 text=True,
