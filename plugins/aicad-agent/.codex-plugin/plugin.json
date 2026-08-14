@@ -1,6 +1,6 @@
 {
   "name": "aicad-agent",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "Agent-native tools for deterministic 2D/3D CAD, calibrated reference reconstruction, and audited host workflows.",
   "author": {
     "name": "AI CAD Constraint Project"

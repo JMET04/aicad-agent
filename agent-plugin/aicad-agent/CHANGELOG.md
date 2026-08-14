@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 1.15.0 - 2026-08-14
+
+- Published deterministic standardized-regeneration review archives for the mechanical servo-reducer bracket and industrial-controller electronics packages.
+- Bound the mechanical package to 54-rule preflight, native SolidWorks/AutoCAD save-reopen, drawings, BOM, analysis, and v3 evidence closure while retaining all technical/manufacturing authorization locks.
+- Bound the electronics package to 63-rule preflight, accepted schematic, complete placement/pad-net parity, native KiCad ERC/DRC, constrained routing, documentation, and renders.
+- Failed the electronics package closed at 37 native unconnected items; withheld Gerber, drill, and job outputs and retained every fabrication/manufacturing authorization lock.
+- Added reproducible public-showcase assembly, exact SHA-256 manifests, and v1.15.0 release/source verification.
+
 ## 1.14.0 - 2026-08-14
 
 - Added a canonical pre-geometry normative contract derived from the existing production rule inventory: exactly 54 mechanical gates and 63 electronics gates, including seven shared authority, detail, drafting, sheet, discipline and non-compensation rules.

@@ -12,7 +12,7 @@ from collections import Counter
 from pathlib import Path, PurePosixPath
 
 
-EXPECTED_VERSION = "1.14.0"
+EXPECTED_VERSION = "1.15.0"
 
 EXPECTED_LOCKS = {
     "reviewOnly": True,
@@ -482,7 +482,7 @@ def _validate_learning_runtime_behavior(plugin_root: Path, errors: list[str]) ->
             wrong_schema = dict(payload)
             wrong_schema["schema"] = "aicad_untrusted_v0"
             invoke = (
-                (lambda value: function(plugin_root, value, current_version="1.14.0"))
+                (lambda value: function(plugin_root, value, current_version="1.15.0"))
                 if surface == "ledger" else (lambda value: function(plugin_root, value))
             )
             _runtime_rejects(module, lambda value=extra, call=invoke: call(value), f"{surface}-extra-key", errors)

@@ -6,6 +6,8 @@
 
 ## 样例
 
+> **当前标准化重生成：** [v1.15.0 机械与电子审查证据](standardized-regeneration-v1.15.0/README.md)。机械包完成证据闭包但不授予制造批准；电子包仍有 37 个原生未连接项，已扣留 Gerber、钻孔和 job 文件。
+
 | 领域 | 预览 | 主要证明 | 审核与下载 |
 |---|---|---|---|
 | 三层建筑平面 | [预览](architecture/preview.png) | 三层独立文档、支承派生非等距轴网、原生尺寸/中文、双视口零碰撞 | [交互审核](architecture/review.html) · [人工验证](architecture/validation.md) · [机器验证](architecture/validation.json) · [源闭包](architecture/source-manifest.json) · [公开候选包](architecture/architecture-sanitized-review-candidate.zip) |

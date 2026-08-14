@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "release": "v1.15.0",
+  "status": "STANDARDIZED_REGENERATION_REVIEW_EVIDENCE",
+  "packages": [
+    {
+      "discipline": "mechanical",
+      "path": "mechanical-standardized-review.zip",
+      "files": 52,
+      "bytes": 922244,
+      "sha256": "672aa360fd1ff2ac164b17f907c01cde2aa17bf4175a5e5798ee9a815b423791",
+      "evidenceContractReady": true,
+      "technicalPackageReady": false
+    },
+    {
+      "discipline": "electronics",
+      "path": "electronics-blocked-review.zip",
+      "files": 50,
+      "bytes": 4769683,
+      "sha256": "e1977102778c3599c68c358a686827e6f0c797f840216d1302587ef213bb27b7",
+      "nativeErcViolations": 0,
+      "nativeDrcGeometryViolations": 0,
+      "nativeDrcUnconnectedItems": 37,
+      "camOutputsWithheld": true,
+      "evidenceContractReady": false,
+      "technicalPackageReady": false
+    }
+  ],
+  "thirdPartyRuntimePolicy": {
+    "freeroutingJarIncluded": false,
+    "javaRuntimeIncluded": false,
+    "kicadRuntimeIncluded": false,
+    "reason": "The evidence binds versions, commands, and hashes without redistributing third-party runtimes."
+  },
+  "productionReleaseEligible": false,
+  "fabricationAuthorized": false,
+  "manufacturingAuthorized": false
+}

@@ -427,8 +427,43 @@
       },
       {
         "path": "README.md",
-        "size": 3261,
-        "sha256": "65dade4d84efbf9c3d26e1c951e95e3ae4b027757cb389317a5b617877d11a3c"
+        "size": 3521,
+        "sha256": "973b8e622f65f05c70aab8dc97f0c5b7f1fb6921d612014b33b87fba39b2179d"
+      },
+      {
+        "path": "standardized-regeneration-v1.15.0/electronics-blocked-review.zip",
+        "size": 4769683,
+        "sha256": "e1977102778c3599c68c358a686827e6f0c797f840216d1302587ef213bb27b7"
+      },
+      {
+        "path": "standardized-regeneration-v1.15.0/electronics-preview.png",
+        "size": 354347,
+        "sha256": "0275f7c94a07a02771c23b8d6f919fd565662e221b531a8e0093d0108d5f3c6e"
+      },
+      {
+        "path": "standardized-regeneration-v1.15.0/manifest.json",
+        "size": 1267,
+        "sha256": "6e92cf617ad5c09613a4ed135166bdae639088735128de843f551bd56ff83580"
+      },
+      {
+        "path": "standardized-regeneration-v1.15.0/mechanical-preview.png",
+        "size": 190945,
+        "sha256": "b868066e6f029f6a145ef531a9d13eb11158332e5e884e0072a6aae724d61457"
+      },
+      {
+        "path": "standardized-regeneration-v1.15.0/mechanical-standardized-review.zip",
+        "size": 922244,
+        "sha256": "672aa360fd1ff2ac164b17f907c01cde2aa17bf4175a5e5798ee9a815b423791"
+      },
+      {
+        "path": "standardized-regeneration-v1.15.0/README.md",
+        "size": 843,
+        "sha256": "3208ab86a2ad049dcba03c7225a5da66cb53d10db713bdd74118ce09c70ad29b"
+      },
+      {
+        "path": "standardized-regeneration-v1.15.0/SHA256SUMS",
+        "size": 200,
+        "sha256": "ae5a899a6b3ebbf4eb47ea45f4a80f9b3572a29fdbe1f5150ec612a4a9dcd17a"
       },
       {
         "path": "steel/preview.png",
