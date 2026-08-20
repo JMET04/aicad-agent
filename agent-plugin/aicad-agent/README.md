@@ -1,4 +1,4 @@
-# aicad-agent 1.15.2
+# aicad-agent 1.16.0
 
 ## 跨领域规范第一门禁
 
@@ -41,7 +41,7 @@ Clicking a line now shows its compiled-model length and XYZ endpoints; clicking 
 
 ## Single-flow CAD modifier and free sections
 
-The reviewer now exposes one modification list instead of separate user-facing intent and transaction stages. Every compiled 3D feature publishes clickable core parameters; geometric centers, center axes, pitch circles and interface edges remain hidden until hover or selection. The free-section workbench accepts axis planes and arbitrary `normal + point` planes, renders feature-operation intersections, and maps a clicked section curve back to an exact semantic parameter controller. See [CAD modifier interaction contract](docs/MODIFIER_UI_V2.md).
+The reviewer now exposes one modification list instead of separate user-facing intent and transaction stages. “Copy and submit to AI” emits clipboard, browser-event, parent-frame and WebView handoff channels. The agent validates the schema and current source hash, previews the exact transaction, applies it, writes audit/receipt artifacts and regenerates the corrected selectable modifier; stale, notes-only and invalid requests fail before output writes. Every compiled 3D feature publishes clickable core parameters; geometric centers, center axes, pitch circles and interface edges remain hidden until hover or selection. The free-section workbench accepts axis planes and arbitrary `normal + point` planes, renders feature-operation intersections, and maps a clicked section curve back to an exact semantic parameter controller. See [CAD modifier interaction contract](docs/MODIFIER_UI_V2.md).
 
 ## 不可跳过的四级门禁
 

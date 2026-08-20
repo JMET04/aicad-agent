@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.15.2',
+    [string]$Version = '1.16.0',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -175,13 +175,13 @@ $releaseManifest = [ordered]@{
     version = $Version
     componentVersions = [ordered]@{
         agentPlugin = $Version
-        pythonConstraintCompiler = '1.15.2'
+        pythonConstraintCompiler = '1.16.0'
         autocadBundle = '1.6.0'
         plan2dSchema = '2.0'
         plan3dSchema = '1.0'
         viewPackageSchema = '1.1'
     }
-    releaseDate = '2026-08-14'
+    releaseDate = '2026-08-20'
     license = 'MIT'
     repository = 'https://github.com/JMET04/aicad-agent'
     apiKeyRequired = $false
@@ -202,8 +202,10 @@ $releaseManifest = [ordered]@{
         'aicad_get_engineering_preflight_schema', 'aicad_get_engineering_preflight_template', 'aicad_validate_engineering_preflight',
         'aicad_get_architecture_detail_contract_schema', 'aicad_validate_architecture_detail_contract', 'aicad_generate',
         'aicad_validate_plan', 'aicad_compile_plan',
-        'aicad_get_semantic_schema', 'aicad_get_correction_schema', 'aicad_get_view_package_schema',
-        'aicad_describe_plan', 'aicad_preview_correction', 'aicad_apply_correction', 'aicad_build_multiview_review', 'aicad_open_review_request',
+        'aicad_get_semantic_schema', 'aicad_get_correction_schema', 'aicad_get_view_package_schema', 'aicad_get_review_handoff_schema',
+        'aicad_describe_plan', 'aicad_preview_correction', 'aicad_apply_correction',
+        'aicad_validate_review_handoff', 'aicad_apply_review_handoff',
+        'aicad_build_multiview_review', 'aicad_open_review_request',
         'aicad_get_domain_validation_schema', 'aicad_validate_domain_plan',
         'aicad_get_reference_rebuild_schema', 'aicad_validate_reference_rebuild', 'aicad_build_reference_reconstruction',
         'aicad_solidworks_doctor',
@@ -234,7 +236,8 @@ $releaseManifest = [ordered]@{
         'whole user-requirement conformance before geometry', 'non-skippable whole-intent detail-proof and hashed candidate-build order',
         'aligned direct-selection review surface with edge/corner/face labels', 'exact edge/circle/face correction transactions with preserve policies',
         'shared-pattern fanout protection and full dependency replay', 'positive residual-wall product invariant',
-        'single-flow CAD modifier with clickable core parameters', 'arbitrary semantic section planes and selectable section curves',
+        'single-flow CAD modifier with clickable core parameters', 'source-hash-gated reviewer handoff validation and corrected-modifier regeneration',
+        'arbitrary semantic section planes and selectable section curves',
         'hover-discovered centers, axes, pitch circles and interface edges',
         'typed line/point/circle/face measurements in right-handed MODEL_XYZ',
         'synchronized coordinate-system visibility across SVG and rotating 3D views', 'transactional SolidWorks feature planning',
@@ -266,6 +269,9 @@ $releaseManifest = [ordered]@{
         'PYTHONDONTWRITEBYTECODE=1 python -B -m unittest discover -s tests -v',
         'PYTHONDONTWRITEBYTECODE=1 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -v',
         'python agent-plugin/aicad-agent/scripts/aicad_agent.py capabilities',
+        'python agent-plugin/aicad-agent/scripts/aicad_agent.py review-handoff-schema',
+        'python agent-plugin/aicad-agent/scripts/aicad_agent.py validate-review-handoff --plan <plan.json> --handoff <review-handoff.json> --domain <domain>',
+        'python agent-plugin/aicad-agent/scripts/aicad_agent.py apply-review-handoff --plan <plan.json> --handoff <review-handoff.json> --out <corrected-review-directory> --domain <domain>',
         'python agent-plugin/aicad-agent/scripts/aicad_engineering_preflight.py --contract <engineering-preflight.json> --output <engineering-preflight-report.json>',
         'python agent-plugin/aicad-agent/scripts/aicad_report_qa.py <validation.json> --output <report-qa.json>',
         'python agent-plugin/aicad-agent/scripts/aicad_production_readiness_qa_v2.py <production-contract-v2.json> --output <production-validation.json> --markdown <production-validation.md> --html <production-validation.review.html> --png <production-validation.review.png>',

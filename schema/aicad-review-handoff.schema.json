@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicad-review-handoff.schema.json",
+  "title": "AICAD interactive reviewer handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "handoff_schema_version",
+    "source_sha256",
+    "space",
+    "domain",
+    "instructions",
+    "exact_transaction",
+    "agent_action",
+    "review_policy"
+  ],
+  "properties": {
+    "handoff_schema_version": { "const": "1.0" },
+    "source_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "space": { "enum": ["2d", "3d"] },
+    "domain": { "type": "string", "minLength": 1 },
+    "instructions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["text", "selected_refs"],
+        "properties": {
+          "text": { "type": "string", "minLength": 1 },
+          "selected_refs": { "type": "array", "items": { "type": "object" } }
+        }
+      }
+    },
+    "exact_transaction": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "object" }
+      ]
+    },
+    "agent_action": { "type": "string", "minLength": 1 },
+    "review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled"],
+      "properties": {
+        "reviewOnly": { "const": true },
+        "accepted": { "const": false },
+        "ruleEnabled": { "const": false }
+      }
+    }
+  }
+}

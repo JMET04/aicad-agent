@@ -1,4 +1,4 @@
-# aicad-agent 1.15.2
+# aicad-agent 1.16.0
 
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
@@ -171,7 +171,7 @@ Get-Content .\SHA256SUMS
 7. **文字修改**：也可以直接描述“让这两条线共线，孔径改成 18 mm，其他关键尺寸保持不变”。
 8. **自由截面**：三维任务可使用轴向截面或 `法向量 + 经过点` 定义任意截面，并把截面曲线映射回语义参数。
 
-修改器记录的是受控修改请求。Agent 会重新求解几何并重跑全部门禁，不会用一次点击绕过整体结构检查。
+修改器记录的是受控修改请求。“复制并回传给 AI”会同时复制 JSON、发送浏览器/WebView 回传事件；Agent 必须先校验 handoff schema 与当前源 SHA-256，再预览、应用、写审计并重新生成可点选修改器。旧源、纯文字且无精确事务或约束失败都会在写文件前阻断，不能用一次点击绕过整体结构检查。
 
 ### 第 5 步：要求最终复核
 
@@ -315,12 +315,12 @@ python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.15.2
+.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.16.0
 python -B scripts/verify_release_package.py release/ci/aicad-agent --source-root .
 .\scripts\build-github-source.ps1 `
   -OutputDirectory release/ci/github-repository `
-  -Version 1.15.2 `
-  -PluginArchive release/ci/aicad-agent-1.15.2.zip `
+  -Version 1.16.0 `
+  -PluginArchive release/ci/aicad-agent-1.16.0.zip `
   -PluginDirectory release/ci/aicad-agent
 python -B scripts/verify_github_source.py release/ci/github-repository --source-root .
 ```
@@ -343,7 +343,7 @@ python -B scripts/verify_github_source.py release/ci/github-repository --source-
 
 ## v1.14.0 技术说明
 
-以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.15.2.md)。
+以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.16.0.md)。
 
 ## Mechanical/electronics normative generation preflight
 

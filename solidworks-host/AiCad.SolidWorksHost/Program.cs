@@ -117,6 +117,9 @@ namespace AiCad.SolidWorksHost
         [DataMember] public int explicit_radius_dimension_count;
         [DataMember] public int explicit_center_dimension_count;
         [DataMember] public int explicit_center_relation_count;
+        [DataMember] public int explicit_rectangle_size_dimension_count;
+        [DataMember] public int explicit_rectangle_position_dimension_count;
+        [DataMember] public int explicit_rectangle_position_relation_count;
         [DataMember] public bool used_fixed_fallback;
         [DataMember] public int feature_error_code;
         [DataMember] public bool feature_warning;
@@ -471,6 +474,11 @@ namespace AiCad.SolidWorksHost
                 model.GraphicsRedraw2();
             }
             report.profile_segment_count = profileSegments == null ? 0 : profileSegments.Count;
+            AddExplicitRectangleConstraints(
+                app, model, sketch, datumPoint, featurePlan.profile, featurePlan.support_top_z_mm, profileSegments,
+                out report.explicit_rectangle_size_dimension_count,
+                out report.explicit_rectangle_position_dimension_count,
+                out report.explicit_rectangle_position_relation_count);
             AddExplicitCircleConstraints(
                 app, model, sketch, datumPoint, featurePlan.profile, featurePlan.support_top_z_mm, profileSegments,
                 out report.explicit_radius_dimension_count,
@@ -760,6 +768,119 @@ namespace AiCad.SolidWorksHost
                 ReleaseCom(modelPoint);
                 ReleaseCom(transform);
                 ReleaseCom(utility);
+            }
+        }
+
+        private static void AddExplicitRectangleConstraints(
+            SldWorks app,
+            ModelDoc2 model,
+            Sketch sketch,
+            SketchPoint datumPoint,
+            ProfilePlan profile,
+            double supportTopZmm,
+            IList<SketchSegment> segments,
+            out int sizeDimensions,
+            out int positionDimensions,
+            out int positionRelations)
+        {
+            sizeDimensions = 0;
+            positionDimensions = 0;
+            positionRelations = 0;
+            if (profile.kind != "center_rectangle") return;
+            if (segments == null || segments.Count != 4)
+                throw new InvalidOperationException("Rectangle profile must contain four ordered segments before explicit constraints.");
+            SketchLine bottomLine = segments[0] as SketchLine;
+            SketchLine rightLine = segments[1] as SketchLine;
+            if (bottomLine == null || rightLine == null)
+                throw new InvalidOperationException("Rectangle profile segments are not native SketchLine objects.");
+            SketchPoint lowerLeft = bottomLine.GetStartPoint2() as SketchPoint;
+            SketchPoint lowerRight = bottomLine.GetEndPoint2() as SketchPoint;
+            SketchPoint upperRight = rightLine.GetEndPoint2() as SketchPoint;
+            if (lowerLeft == null || lowerRight == null || upperRight == null)
+                throw new InvalidOperationException("Rectangle profile corner points could not be resolved for explicit constraints.");
+
+            double[] center = ModelPointToSketch(app, sketch, profile.center_x_mm, profile.center_y_mm, supportTopZmm);
+            double[] lowerLeftCoordinate = ModelPointToSketch(
+                app, sketch,
+                profile.center_x_mm - profile.width_mm.Value / 2.0,
+                profile.center_y_mm - profile.height_mm.Value / 2.0,
+                supportTopZmm);
+            double[] lowerRightCoordinate = ModelPointToSketch(
+                app, sketch,
+                profile.center_x_mm + profile.width_mm.Value / 2.0,
+                profile.center_y_mm - profile.height_mm.Value / 2.0,
+                supportTopZmm);
+            double[] upperRightCoordinate = ModelPointToSketch(
+                app, sketch,
+                profile.center_x_mm + profile.width_mm.Value / 2.0,
+                profile.center_y_mm + profile.height_mm.Value / 2.0,
+                supportTopZmm);
+            double offset = Math.Max(Math.Max(profile.width_mm.Value, profile.height_mm.Value) * 0.2 / MillimetersPerMeter, 0.002);
+            double zeroTolerance = 1e-10;
+            int preference = (int)swUserPreferenceToggle_e.swInputDimValOnCreate;
+            bool originalInputDimensionValue = app.GetUserPreferenceToggle(preference);
+            try
+            {
+                app.SetUserPreferenceToggle(preference, false);
+
+                SelectPointPair(model, lowerLeft, lowerRight, "rectangle width dimension");
+                object widthDimension = model.AddHorizontalDimension2(
+                    center[0], lowerLeftCoordinate[1] - offset, 0.0);
+                if (widthDimension == null)
+                    throw new InvalidOperationException("SolidWorks could not create the explicit rectangle width dimension.");
+                ReleaseCom(widthDimension);
+                sizeDimensions++;
+
+                SelectPointPair(model, lowerRight, upperRight, "rectangle height dimension");
+                object heightDimension = model.AddVerticalDimension2(
+                    lowerRightCoordinate[0] + offset, center[1], 0.0);
+                if (heightDimension == null)
+                    throw new InvalidOperationException("SolidWorks could not create the explicit rectangle height dimension.");
+                ReleaseCom(heightDimension);
+                sizeDimensions++;
+
+                if (Math.Abs(lowerLeftCoordinate[0]) <= zeroTolerance)
+                {
+                    SelectPointPair(model, datumPoint, lowerLeft, "rectangle lower-left vertical relation");
+                    model.SketchAddConstraints("sgVERTICALPOINTS2D");
+                    positionRelations++;
+                }
+                else
+                {
+                    SelectPointPair(model, datumPoint, lowerLeft, "rectangle lower-left X dimension");
+                    object xDimension = model.AddHorizontalDimension2(
+                        lowerLeftCoordinate[0] * 0.5,
+                        lowerLeftCoordinate[1] - offset,
+                        0.0);
+                    if (xDimension == null)
+                        throw new InvalidOperationException("SolidWorks could not create the explicit rectangle X-position dimension.");
+                    ReleaseCom(xDimension);
+                    positionDimensions++;
+                }
+
+                if (Math.Abs(lowerLeftCoordinate[1]) <= zeroTolerance)
+                {
+                    SelectPointPair(model, datumPoint, lowerLeft, "rectangle lower-left horizontal relation");
+                    model.SketchAddConstraints("sgHORIZONTALPOINTS2D");
+                    positionRelations++;
+                }
+                else
+                {
+                    SelectPointPair(model, datumPoint, lowerLeft, "rectangle lower-left Y dimension");
+                    object yDimension = model.AddVerticalDimension2(
+                        lowerLeftCoordinate[0] - offset,
+                        lowerLeftCoordinate[1] * 0.5,
+                        0.0);
+                    if (yDimension == null)
+                        throw new InvalidOperationException("SolidWorks could not create the explicit rectangle Y-position dimension.");
+                    ReleaseCom(yDimension);
+                    positionDimensions++;
+                }
+                model.ClearSelection2(true);
+            }
+            finally
+            {
+                app.SetUserPreferenceToggle(preference, originalInputDimensionValue);
             }
         }
 

@@ -39,6 +39,7 @@ try:
     from aicad.exporters import export_all
     from aicad.provider import ProviderError, generate_plan
     from aicad.reference_rebuild import build_reference_reconstruction, validate_reference_rebuild
+    from aicad.review_handoff import apply_review_handoff, validate_review_handoff
     from aicad.review_launch import REVIEW_LAUNCH_MODES, launch_review, open_review_request
     from aicad.semantic import describe_plan, domain_capabilities
     from aicad.solidworks3d import compile_3d_plan, solidworks_doctor, validate_3d_plan
@@ -47,7 +48,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.15.2"
+AGENT_API_VERSION = "1.16.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -351,7 +352,15 @@ def capabilities() -> dict[str, Any]:
                 },
             },
             "review_policy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "domainGated": True},
-            "schemas": ["semantic-document", "correction", "view-package", "domain-validation"],
+            "schemas": ["semantic-document", "correction", "review-handoff", "view-package", "domain-validation"],
+            "review_handoff": {
+                "schema_version": "1.0",
+                "browser_bridges": ["clipboard", "aicad:review-handoff", "parent.postMessage", "chrome.webview.postMessage"],
+                "tools": ["aicad_validate_review_handoff", "aicad_apply_review_handoff"],
+                "source_hash_gate": True,
+                "notes_only_apply": False,
+                "corrected_reviewer_regenerated": True,
+            },
             "domain_rule_packs": sorted(DOMAIN_RULE_PACKS),
             "host_capability_matrix": HOST_CAPABILITIES,
         },
@@ -554,6 +563,7 @@ def get_aux_schema(name: str) -> dict[str, Any]:
     filenames = {
         "semantic": "aicad-semantic-document.schema.json",
         "correction": "aicad-correction.schema.json",
+        "handoff": "aicad-review-handoff.schema.json",
         "view": "aicad-view-package.schema.json",
         "domain": "aicad-domain-validation.schema.json",
         "reference": "aicad-reference-rebuild.schema.json",
@@ -589,6 +599,21 @@ def apply_correction_value(
 ) -> dict[str, Any]:
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
     return apply_correction(_load_plan(plan_value), _load_plan(correction_value), directory, _safe_name(name or "correction"), domain)
+
+
+def validate_review_handoff_value(plan_value: Any, handoff_value: Any, domain: str = "general") -> dict[str, Any]:
+    return validate_review_handoff(_load_plan(plan_value), _load_plan(handoff_value), domain)
+
+
+def apply_review_handoff_value(
+    plan_value: Any, handoff_value: Any, output_dir: str | None = None,
+    name: str | None = None, domain: str = "general",
+) -> dict[str, Any]:
+    directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
+    return apply_review_handoff(
+        _load_plan(plan_value), _load_plan(handoff_value), directory,
+        _safe_name(name or "review-handoff"), domain,
+    )
 
 
 def build_multiview_value(
@@ -745,6 +770,11 @@ TOOLS: list[dict[str, Any]] = [
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
     },
     {
+        "name": "aicad_get_review_handoff_schema",
+        "description": "Return the source-hash-bound interactive reviewer handoff schema.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
         "name": "aicad_get_view_package_schema",
         "description": "Return the synchronized multi-view and semantic selection-map schema.",
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
@@ -785,6 +815,31 @@ TOOLS: list[dict[str, Any]] = [
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
             },
         },
+    },
+    {
+        "name": "aicad_validate_review_handoff",
+        "description": "Validate a reviewer handoff against the current plan source hash and preview its exact transaction. Notes-only handoffs remain non-actionable.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["plan", "handoff"],
+            "properties": {
+                "plan": {"description": "2D/3D plan object, JSON string, or file path"},
+                "handoff": {"description": "Reviewer handoff object, JSON string, or file path"},
+                "domain": {"type": "string", "default": "general"}
+            }
+        }
+    },
+    {
+        "name": "aicad_apply_review_handoff",
+        "description": "Apply an actionable source-current reviewer handoff, replay dependencies, and write a corrected plan, audit, receipt, and fresh selectable modifier.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["plan", "handoff"],
+            "properties": {
+                "plan": {"description": "2D/3D plan object, JSON string, or file path"},
+                "handoff": {"description": "Reviewer handoff object, JSON string, or file path"},
+                "domain": {"type": "string", "default": "general"},
+                "output_dir": {"type": "string"}, "name": {"type": "string"}
+            }
+        }
     },
     {
         "name": "aicad_build_multiview_review",
@@ -918,6 +973,8 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         return get_aux_schema("semantic")
     if name == "aicad_get_correction_schema":
         return get_aux_schema("correction")
+    if name == "aicad_get_review_handoff_schema":
+        return get_aux_schema("handoff")
     if name == "aicad_get_domain_validation_schema":
         return get_aux_schema("domain")
     if name == "aicad_validate_domain_plan":
@@ -931,6 +988,15 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_apply_correction":
         return apply_correction_value(
             arguments.get("plan"), arguments.get("correction"), arguments.get("output_dir"),
+            arguments.get("name"), arguments.get("domain", "general"),
+        )
+    if name == "aicad_validate_review_handoff":
+        return validate_review_handoff_value(
+            arguments.get("plan"), arguments.get("handoff"), arguments.get("domain", "general"),
+        )
+    if name == "aicad_apply_review_handoff":
+        return apply_review_handoff_value(
+            arguments.get("plan"), arguments.get("handoff"), arguments.get("output_dir"),
             arguments.get("name"), arguments.get("domain", "general"),
         )
     if name == "aicad_build_multiview_review":
@@ -1022,6 +1088,7 @@ def _handle_mcp(message: dict[str, Any]) -> dict[str, Any] | None:
                 {"uri": "aicad://3d-plan-schema", "name": "AICAD 3D Plan Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://semantic-schema", "name": "AICAD Semantic Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://correction-schema", "name": "AICAD Correction Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://review-handoff-schema", "name": "AICAD Review Handoff Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://view-package-schema", "name": "AICAD View Package Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://domain-validation-schema", "name": "AICAD Domain Validation Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://reference-rebuild-schema", "name": "AICAD Reference Rebuild Schema", "mimeType": "application/schema+json"},
@@ -1037,6 +1104,8 @@ def _handle_mcp(message: dict[str, Any]) -> dict[str, Any] | None:
                 payload = get_aux_schema("semantic")["schema"]
             elif uri == "aicad://correction-schema":
                 payload = get_aux_schema("correction")["schema"]
+            elif uri == "aicad://review-handoff-schema":
+                payload = get_aux_schema("handoff")["schema"]
             elif uri == "aicad://domain-validation-schema":
                 payload = get_aux_schema("domain")["schema"]
             elif uri == "aicad://view-package-schema":
@@ -1086,6 +1155,7 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("schema3d")
     commands.add_parser("semantic-schema")
     commands.add_parser("correction-schema")
+    commands.add_parser("review-handoff-schema")
     commands.add_parser("view-schema")
     commands.add_parser("domain-schema")
     commands.add_parser("reference-schema")
@@ -1143,6 +1213,16 @@ def _parser() -> argparse.ArgumentParser:
     apply_parser.add_argument("--domain", default="general")
     apply_parser.add_argument("--out")
     apply_parser.add_argument("--name")
+    validate_handoff_parser = commands.add_parser("validate-review-handoff")
+    validate_handoff_parser.add_argument("--plan", required=True)
+    validate_handoff_parser.add_argument("--handoff", required=True)
+    validate_handoff_parser.add_argument("--domain", default="general")
+    apply_handoff_parser = commands.add_parser("apply-review-handoff")
+    apply_handoff_parser.add_argument("--plan", required=True)
+    apply_handoff_parser.add_argument("--handoff", required=True)
+    apply_handoff_parser.add_argument("--domain", default="general")
+    apply_handoff_parser.add_argument("--out")
+    apply_handoff_parser.add_argument("--name")
     multiview_parser = commands.add_parser("multiview")
     multiview_parser.add_argument("--plan", required=True)
     multiview_parser.add_argument("--space", choices=["2d", "3d"], required=True)
@@ -1176,6 +1256,7 @@ def main(argv: list[str] | None = None) -> int:
         "schema3d": get_3d_schema,
         "semantic-schema": lambda: get_aux_schema("semantic"),
         "correction-schema": lambda: get_aux_schema("correction"),
+        "review-handoff-schema": lambda: get_aux_schema("handoff"),
         "view-schema": lambda: get_aux_schema("view"),
         "domain-schema": lambda: get_aux_schema("domain"),
         "reference-schema": lambda: get_aux_schema("reference"),
@@ -1191,6 +1272,8 @@ def main(argv: list[str] | None = None) -> int:
         "domain-validate": lambda: validate_domain_value(args.plan, args.space, args.domain, args.out, args.name),
         "preview-correction": lambda: preview_correction_value(args.plan, args.correction, args.domain),
         "apply-correction": lambda: apply_correction_value(args.plan, args.correction, args.out, args.name, args.domain),
+        "validate-review-handoff": lambda: validate_review_handoff_value(args.plan, args.handoff, args.domain),
+        "apply-review-handoff": lambda: apply_review_handoff_value(args.plan, args.handoff, args.out, args.name, args.domain),
         "multiview": lambda: build_multiview_value(args.plan, args.space, args.domain, args.out, args.name, args.review_launch),
         "open-review": lambda: open_review_request_value(
             args.review_html, args.cad_path, args.open_native_cad, args.review_launch,

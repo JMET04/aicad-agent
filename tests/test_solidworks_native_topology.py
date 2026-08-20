@@ -39,6 +39,20 @@ class SolidWorksNativeTopologyTests(unittest.TestCase):
         ):
             self.assertIn(token, source)
 
+    def test_host_explicitly_dimensions_negative_offset_rectangles_before_autodefine(self) -> None:
+        source = (ROOT / "solidworks-host" / "AiCad.SolidWorksHost" / "Program.cs").read_text(encoding="utf-8")
+        for token in (
+            "AddExplicitRectangleConstraints",
+            "explicit_rectangle_size_dimension_count",
+            "explicit_rectangle_position_dimension_count",
+            "explicit_rectangle_position_relation_count",
+            "rectangle lower-left X dimension",
+            "rectangle lower-left Y dimension",
+            "Rectangle profile segments are not native SketchLine objects.",
+        ):
+            self.assertIn(token, source)
+        self.assertLess(source.index("AddExplicitRectangleConstraints("), source.index("sketchManager.FullyDefineSketch("))
+
 
 if __name__ == "__main__":
     unittest.main()

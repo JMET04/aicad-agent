@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from aicad.correction import preview_correction
 from aicad.engine3d import compile_plan3d
+from aicad.review_launch import validate_interactive_modifier_contract
 from aicad.viewmap import generate_view_package, render_review_html, validate_review_html
 
 
@@ -44,6 +45,11 @@ class ModifierUiV2Tests(unittest.TestCase):
     def test_visible_ui_is_simplified_and_contains_free_section(self) -> None:
         page = render_review_html(self.package())
         self.assertEqual(validate_review_html(page, "3d"), [])
+        contract = validate_interactive_modifier_contract(page)
+        self.assertTrue(contract["vector_source_bound"])
+        self.assertFalse(contract["raster_only"])
+        self.assertIn('data-aicad-modifier-mode="single_document"', page)
+        self.assertIn('data-artifact-role="interactive_drawing_modifier"', page)
         self.assertIn("修改清单", page)
         self.assertIn("核心参数", page)
         self.assertIn("自由截面", page)
@@ -152,6 +158,19 @@ class ModifierUiV2Tests(unittest.TestCase):
         self.assertNotIn("axis-bubble-label", page)
         self.assertIn('class="native-text role-annotation layer-grid-text"', page)
         self.assertIn(">1</text>", page)
+
+    def test_dimension_text_height_and_sheet_layout_are_domain_appropriate(self) -> None:
+        plan = json.loads((ROOT / "examples" / "architecture-dimensions.plan.json").read_text(encoding="utf-8"))
+        architecture_page = render_review_html(generate_view_package(plan, "2d", "architecture"))
+        self.assertIn('font-size="280"', architecture_page)
+        plan["drawing"]["domain"] = "mechanical"
+        mechanical_page = render_review_html(generate_view_package(plan, "2d", "mechanical"))
+        self.assertIn('font-size="4"', mechanical_page)
+        self.assertNotIn('font-size="280"', mechanical_page)
+        self.assertIn('class="view-card drawing-sheet-card"', mechanical_page)
+        self.assertIn('.view-entity.layer-outline{stroke:#132433;stroke-width:1.55}', mechanical_page)
+        self.assertIn('.view-entity.layer-hidden{stroke:#61717d;stroke-width:.62;stroke-dasharray:7 3}', mechanical_page)
+        self.assertIn('.view-entity.layer-center{stroke:#b85b22;stroke-width:.52;stroke-dasharray:12 3 2 3}', mechanical_page)
 
 
 if __name__ == "__main__":

@@ -164,18 +164,37 @@ def _view(
 
 def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
     plan = compile_plan(data)
+    drawing = data.get("drawing", {}) if isinstance(data.get("drawing"), dict) else {}
+    domain = str(drawing.get("domain", "")).strip().lower()
+    dimension_text_height = 280.0 if domain == "architecture" else 4.0
+    source_by_id = {
+        str(item.get("id")): item
+        for item in data.get("steps", [])
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    }
     entities: list[dict[str, Any]] = []
     for item in plan.entities:
         if isinstance(item, ResolvedLine):
-            entities.append(_line(
+            source = source_by_id.get(item.id, {})
+            construction = source.get("construction", {}) if isinstance(source, dict) else {}
+            edit_paths = ["start"]
+            if isinstance(construction, dict) and construction.get("kind") in {"polar", "parallel", "perpendicular"}:
+                edit_paths.append("construction.length")
+            entity = _line(
                 f"PLAN_{item.id}", "PLAN", item.id, item.start, item.end, "geometry", False,
-                ["start", "construction"], "entity",
-            ))
+                edit_paths, "entity",
+            )
+            entity["placement_path"] = "start"
+            entity["placement_point"] = list(item.start)
+            entities.append(entity)
         elif isinstance(item, ResolvedCircle):
-            entities.append(_circle(
+            entity = _circle(
                 f"PLAN_{item.id}", "PLAN", item.id, item.center, item.radius, "geometry", False,
                 ["center", "radius"], "entity",
-            ))
+            )
+            entity["placement_path"] = "center"
+            entity["placement_point"] = list(item.center)
+            entities.append(entity)
         elif isinstance(item, ResolvedArc):
             segments = 32
             start = math.radians(item.start_angle_deg)
@@ -184,13 +203,17 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
                 (item.center[0] + item.radius * math.cos(start + sweep * index / segments), item.center[1] + item.radius * math.sin(start + sweep * index / segments))
                 for index in range(segments + 1)
             ]
-            entities.extend(
+            arc_entities = [
                 _line(
                     f"PLAN_{item.id}_A{index + 1:02d}", "PLAN", item.id, points[index], points[index + 1],
                     "geometry", True, ["center", "radius", "start_angle_deg", "end_angle_deg"], f"arc.segment.{index + 1}",
                 )
                 for index in range(segments)
-            )
+            ]
+            for entity in arc_entities:
+                entity["placement_path"] = "center"
+                entity["placement_point"] = list(item.center)
+            entities.extend(arc_entities)
         elif isinstance(item, ResolvedText):
             entities.append({
                 "id": f"PLAN_{item.id}", "view_id": "PLAN", "source_object_id": item.id,
@@ -203,6 +226,7 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
                 },
                 "role": "annotation", "derived": False, "selectable": True,
                 "edit_paths": ["insert", "value", "height", "rotation_deg"],
+                "placement_path": "insert", "placement_point": list(item.insert),
             })
         else:
             dx, dy = item.second[0] - item.first[0], item.second[1] - item.first[1]
@@ -213,20 +237,20 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
             second_base = (item.second[0] + nx * offset, item.second[1] + ny * offset)
             dimension_line = _line(
                 f"PLAN_{item.id}_D", "PLAN", item.id, first_base, second_base,
-                "annotation", False, ["base", "dimension_purpose"], "dimension.line",
+                "annotation", False, ["dimension_purpose"], "dimension.line",
             )
             dimension_line["geometry"]["display"] = {
                 "kind": "dimension", "measurement": item.measurement,
                 "orientation_deg": item.orientation_deg, "unit": "mm",
                 "style_name": item.style_name,
                 "dimension_purpose": item.dimension_purpose,
-                "text_height": 280.0,
+                "text_height": dimension_text_height,
                 "owner_id": item.id,
             }
             entities.extend([
                 dimension_line,
-                _line(f"PLAN_{item.id}_E1", "PLAN", item.id, item.first, first_base, "annotation", True, ["first", "base"], "dimension.extension.1"),
-                _line(f"PLAN_{item.id}_E2", "PLAN", item.id, item.second, second_base, "annotation", True, ["second", "base"], "dimension.extension.2"),
+                _line(f"PLAN_{item.id}_E1", "PLAN", item.id, item.first, first_base, "annotation", True, [], "dimension.extension.1"),
+                _line(f"PLAN_{item.id}_E2", "PLAN", item.id, item.second, second_base, "annotation", True, [], "dimension.extension.2"),
             ])
     return [_view("PLAN", "二维设计视图", "native_2d", ["x", "y"], None, "authoritative_2d_geometry", entities)]
 
@@ -428,6 +452,9 @@ def generate_view_package(data: dict[str, Any], space: str, domain: str = "gener
                 "edit_paths": entity["edit_paths"], "back_projection": view["back_projection"],
                 "measurement": view_measurement(view, entity, space, selector_objects_by_id),
             }
+            if entity.get("placement_path") and entity.get("placement_point") is not None:
+                selection["placement_path"] = entity["placement_path"]
+                selection["placement_point"] = list(entity["placement_point"])
             if space == "2d":
                 geometry_type = entity["geometry"]["type"]
                 layer = layer_by_id.get(entity["source_object_id"], "0")
