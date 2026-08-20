@@ -1,0 +1,309 @@
+{
+  "errors": [ ],
+  "features": [
+    {
+      "actual_volume_delta_mm3": 2862.776305583699,
+      "after": {
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0,
+          13.5,
+          13.5,
+          5
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 1569.2255304681016,
+        "volume_mm3": 2862.776305583699
+      },
+      "before": {
+        "bbox_mm": null,
+        "body_fault_count": 0,
+        "solid_body_count": 0,
+        "surface_area_mm2": 0,
+        "volume_mm3": 0
+      },
+      "checks": [
+        "PASS:volume_before",
+        "PASS:feature_error_code",
+        "PASS:sketch_fully_constrained",
+        "PASS:body_valid",
+        "PASS:support_plane_not_applicable",
+        "PASS:solid_body_count",
+        "PASS:volume_after",
+        "PASS:volume_delta",
+        "PASS:bbox",
+        "PASS:persistent_reference",
+        "PASS:native_topology_required_refs"
+      ],
+      "expected_volume_after_mm3": 2862.776305583704,
+      "explicit_center_dimension_count": 0,
+      "explicit_center_relation_count": 1,
+      "explicit_radius_dimension_count": 1,
+      "explicit_rectangle_position_dimension_count": 0,
+      "explicit_rectangle_position_relation_count": 0,
+      "explicit_rectangle_size_dimension_count": 0,
+      "feature_error_code": 0,
+      "feature_warning": false,
+      "id": "F001",
+      "native_topology": [
+        {
+          "classification": "ordered_profile_circle",
+          "custom_property_name": "AICAD_REF_0001",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEACwBzZ0FyY0hhbmRsZQAA\/\/\/\/\/wAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.circle.1",
+          "required": true,
+          "semantic_geometry_type": "circle",
+          "signature_mm": [
+            0,
+            0,
+            0,
+            13.5
+          ]
+        },
+        {
+          "classification": "opposite_circular_face",
+          "custom_property_name": "AICAD_REF_0002",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAADAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4zAAIAAOAuh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABQAAAA4S6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABQAAAA4S6HagEAAAAAAAAAAAAAAAAAOEoAAAAAAAAAAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -13.5,
+            -13.5,
+            5,
+            13.5,
+            13.5,
+            5
+          ]
+        },
+        {
+          "classification": "opposite_circular_edge",
+          "custom_property_name": "AICAD_REF_0003",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4zAAIAAOAuh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABQAAAA4S6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABQAAAA4S6HagEAAAAMgAAABYAIAFAAAADhLodqAQAAAAyAAAAFgAgAUAAAAOEuh2oBAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.circle.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "circle",
+          "signature_mm": [
+            0,
+            0,
+            5,
+            13.5
+          ]
+        },
+        {
+          "classification": "cylindrical_face",
+          "custom_property_name": "AICAD_REF_0004",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAFAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4zAAIAAOAuh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABQAAAA4S6HagEAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFAAAADhLodqAQAAAAAAAAAAAAyAAAAFgAgAUAAAAOEuh2oAAAAAAAAAAAAAAAAAAAAAAAA4SgAAAAAAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.cylindrical.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -13.5,
+            -13.5,
+            0,
+            13.5,
+            13.5,
+            5
+          ]
+        }
+      ],
+      "passed": true,
+      "persistent_reference_base64": null,
+      "persistent_reference_resolved": false,
+      "persistent_reference_status": 0,
+      "profile_segment_count": 1,
+      "purpose": "Create the rear exposed nonconductive flange.",
+      "selected_support_plane_z_mm": null,
+      "sketch_autodim_status": 0,
+      "sketch_constraint_status": 3,
+      "sketch_name": "AICAD_SKETCH_F001",
+      "support_face_selection_method": null,
+      "support_feature": null,
+      "type": "base_extrude",
+      "used_fixed_fallback": false
+    },
+    {
+      "actual_volume_delta_mm3": 1604.5998637475236,
+      "after": {
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0,
+          13.5,
+          13.5,
+          9.0000000000000018
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 1853.2255063526188,
+        "volume_mm3": 4467.3761693312226
+      },
+      "before": {
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0,
+          13.5,
+          13.5,
+          5
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 1569.2255304681016,
+        "volume_mm3": 2862.776305583699
+      },
+      "checks": [
+        "PASS:volume_before",
+        "PASS:feature_error_code",
+        "PASS:sketch_fully_constrained",
+        "PASS:body_valid",
+        "PASS:support_plane_feature_and_z",
+        "PASS:solid_body_count",
+        "PASS:volume_after",
+        "PASS:volume_delta",
+        "PASS:bbox",
+        "PASS:persistent_reference",
+        "PASS:native_topology_required_refs"
+      ],
+      "expected_volume_after_mm3": 4467.37616933123,
+      "explicit_center_dimension_count": 0,
+      "explicit_center_relation_count": 1,
+      "explicit_radius_dimension_count": 1,
+      "explicit_rectangle_position_dimension_count": 0,
+      "explicit_rectangle_position_relation_count": 0,
+      "explicit_rectangle_size_dimension_count": 0,
+      "feature_error_code": 0,
+      "feature_warning": false,
+      "id": "F002",
+      "native_topology": [
+        {
+          "classification": "ordered_profile_circle",
+          "custom_property_name": "AICAD_REF_0005",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFEAAAD\/\/wEACwBzZ0FyY0hhbmRsZQAA\/\/\/\/\/wAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|profile.circle.1",
+          "required": true,
+          "semantic_geometry_type": "circle",
+          "signature_mm": [
+            0,
+            0,
+            5,
+            11.3
+          ]
+        },
+        {
+          "classification": "opposite_circular_face",
+          "custom_property_name": "AICAD_REF_0006",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAADAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMwACAADgLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAWAAAAOIuh2oBAAAAAAAAAAAAAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAAWACABYAAAA4i6HagEAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAAAA4SgAAAAAAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.face.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -11.3,
+            -11.3,
+            9.0000000000000018,
+            11.3,
+            11.3,
+            9.0000000000000018
+          ]
+        },
+        {
+          "classification": "opposite_circular_edge",
+          "custom_property_name": "AICAD_REF_0007",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMwACAADgLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAWAAAAOIuh2oBAAAAAAAAAAAAAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAAWACABYAAAA4i6HagEAAAD\/\/\/\/\/AAAAAAyAAAAFgAgAWAAAAOIuh2oBAAAA\/\/\/\/\/wAAAAAMgAAABYAIAFgAAADiLodqAQAAAP\/\/\/\/8AAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.circle.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "circle",
+          "signature_mm": [
+            0,
+            0,
+            9.0000000000000018,
+            11.3
+          ]
+        },
+        {
+          "classification": "cylindrical_face",
+          "custom_property_name": "AICAD_REF_0008",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAFAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMwACAADgLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAWAAAAOIuh2oBAAAA\/\/\/\/\/wAAAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAAWACABYAAAA4i6HagEAAAAAAAAAAAAAAAAA\/\/8BABQAbW9FbmRGYWNlU3VyZklkUmVwX2MAAAWACABQAAAA4S6HagEAAAAAAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.face.cylindrical.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -11.3,
+            -11.3,
+            5,
+            11.3,
+            11.3,
+            9.0000000000000018
+          ]
+        }
+      ],
+      "passed": true,
+      "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAADAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4zAAIAAOAuh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABQAAAA4S6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABQAAAA4S6HagEAAAAAAAAAAAAAAAAAOEoAAAAAAAAAAAAA",
+      "persistent_reference_resolved": true,
+      "persistent_reference_status": 0,
+      "profile_segment_count": 1,
+      "purpose": "Create the concentric sliding plug.",
+      "selected_support_plane_z_mm": 5,
+      "sketch_autodim_status": 0,
+      "sketch_constraint_status": 3,
+      "sketch_name": "AICAD_SKETCH_F002",
+      "support_face_selection_method": "named_feature_exact_z",
+      "support_feature": "F001",
+      "type": "boss_extrude",
+      "used_fixed_fallback": false
+    }
+  ],
+  "final_state": {
+    "bbox_mm": [
+      -13.5,
+      -13.5,
+      0,
+      13.5,
+      13.5,
+      9.0000000000000018
+    ],
+    "body_fault_count": 0,
+    "solid_body_count": 1,
+    "surface_area_mm2": 1853.2255063526188,
+    "volume_mm3": 4467.3761693312226
+  },
+  "native_topology_reference_count": 8,
+  "output_sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\rear_end_cap\\rear_end_cap.SLDPRT",
+  "output_step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\rear_end_cap\\rear_end_cap.step",
+  "protocol": "AICAD_SOLIDWORKS_REPORT_2",
+  "required_native_topology_reference_count": 2,
+  "sldprt_save_errors": 0,
+  "sldprt_save_warnings": 0,
+  "solidworks_revision": "34.0.0",
+  "source_sha256": "41a17046bb7cf6b3c34a528382386abd39773c14573b12e429e8d6f72702f691",
+  "status": "passed",
+  "step_save_errors": 0,
+  "step_save_warnings": 0,
+  "unresolved_required_native_topology_reference_count": 0
+}

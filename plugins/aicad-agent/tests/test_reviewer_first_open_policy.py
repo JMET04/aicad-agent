@@ -16,7 +16,23 @@ from aicad.engine import PlanError
 from aicad.review_launch import open_review_request
 
 
-MODIFIER = '<html data-artifact-role="interactive_drawing_modifier"><body>review</body></html>'
+MODIFIER = """<!doctype html>
+<html data-artifact-role="interactive_drawing_modifier">
+<body>
+  <svg class="cad-view" aria-label="source-bound selectable CAD">
+    <g class="view-hit"
+       data-view-entity-id="view-entity-1"
+       data-source-id="source-object-1"
+       data-source-subobject="Edge1"></g>
+  </svg>
+  <section class="measurement-card">12.0 mm</section>
+  <script id="aicad-semantic-entity-catalog" type="application/json">{}</script>
+  <script>
+    const formalCorrection = {reviewOnly: true, accepted: false};
+  </script>
+</body>
+</html>
+"""
 
 
 class ReviewerFirstOpenPolicyTests(unittest.TestCase):

@@ -1,0 +1,110 @@
+{
+  "protocol": "AICAD_SOLIDWORKS_1",
+  "source_sha256": "41a17046bb7cf6b3c34a528382386abd39773c14573b12e429e8d6f72702f691",
+  "part_name": "magic_wand_rear_nonconductive_end_cap_prototype",
+  "units": "mm",
+  "tolerance_mm": 0.001,
+  "template_path": "C:\\ProgramData\\SOLIDWORKS\\SOLIDWORKS 2026\\templates\\gb_part.prtdot",
+  "output_sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\rear_end_cap\\rear_end_cap.SLDPRT",
+  "output_step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\rear_end_cap\\rear_end_cap.step",
+  "features": [
+    {
+      "id": "F001",
+      "type": "base_extrude",
+      "purpose": "Create the rear exposed nonconductive flange.",
+      "reasoning": "The flange closes the rear grip end and preserves the full handle diameter at the antenna end.",
+      "roles": [
+        "outline"
+      ],
+      "editable": true,
+      "depends_on": [],
+      "support_feature": null,
+      "support_top_z_mm": 0.0,
+      "resulting_top_z_mm": 5.0,
+      "depth_mm": 5.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 13.5,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 13.5
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 0.0,
+        "volume_after_mm3": 2862.776305583704,
+        "volume_delta_mm3": 2862.776305583704,
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0.0,
+          13.5,
+          13.5,
+          5.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F002",
+      "type": "boss_extrude",
+      "purpose": "Create the concentric sliding plug.",
+      "reasoning": "The smaller boss fits inside the shell bore with the declared diametral prototype clearance.",
+      "roles": [
+        "boss"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 5.0,
+      "resulting_top_z_mm": 9.0,
+      "depth_mm": 4.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 11.3,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 11.3
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 2862.776305583704,
+        "volume_after_mm3": 4467.37616933123,
+        "volume_delta_mm3": 1604.599863747526,
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0.0,
+          13.5,
+          13.5,
+          9.0
+        ],
+        "solid_body_count": 1
+      }
+    }
+  ]
+}

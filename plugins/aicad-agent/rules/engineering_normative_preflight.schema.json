@@ -30,7 +30,7 @@
   "$defs": {
     "source": {
       "type": "object", "additionalProperties": false,
-      "required": ["id", "kind", "description"],
+      "required": ["id", "kind", "description", "path", "size", "sha256", "mediaType", "authorityRevision"],
       "properties": {
         "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{1,63}$"},
         "kind": {"enum": [
@@ -39,41 +39,46 @@
         ]},
         "description": {"type": "string", "minLength": 1},
         "path": {"type": "string", "minLength": 1},
-        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
-      },
-      "dependentRequired": {"path": ["sha256"], "sha256": ["path"]}
+        "size": {"type": "integer", "minimum": 0},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "mediaType": {"type": "string", "minLength": 3},
+        "authorityRevision": {"type": "string", "minLength": 1}
+      }
     },
     "standard": {
       "type": "object", "additionalProperties": false,
-      "required": ["standard", "applicability", "sourceId"],
+      "required": ["standard", "status", "applicability", "sourceId", "scopeDecision"],
       "properties": {
         "standard": {"type": "string", "minLength": 1},
+        "status": {"enum": ["published", "current"]},
         "applicability": {"type": "string", "minLength": 1},
         "sourceId": {"type": "string", "minLength": 1},
-        "scopeDecision": {"type": "string", "minLength": 1}
+        "scopeDecision": {"type": "string", "minLength": 16}
       }
     },
     "ruleApplication": {
       "type": "object", "additionalProperties": false,
-      "required": ["gatePath", "disposition", "requirement", "sourceIds", "verificationMethod"],
+      "required": ["gatePath", "disposition", "requirement", "canonicalGateSha256", "sourceIds", "standardIds", "verificationMethod", "verifierId"],
       "properties": {
         "gatePath": {
           "type": "string",
           "pattern": "^((mechanical|electronics)\\.(intent|design|manufacturingDefinition)\\.[A-Za-z][A-Za-z0-9]*|shared\\.rules\\.PROD-G[0-9]{3})$"
         },
         "disposition": {"enum": ["unresolved", "constrained", "not_applicable"]},
-        "requirement": {"type": "string", "minLength": 1},
-        "generationConstraint": {"type": "string", "minLength": 1},
+        "requirement": {"type": "string", "minLength": 24},
+        "canonicalGateSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "generationConstraint": {"type": "string", "minLength": 24},
         "sourceIds": {
-          "type": "array", "minItems": 1, "uniqueItems": true,
+          "type": "array", "minItems": 2, "uniqueItems": true,
           "items": {"type": "string", "minLength": 1}
         },
         "standardIds": {
-          "type": "array", "uniqueItems": true,
+          "type": "array", "minItems": 1, "uniqueItems": true,
           "items": {"type": "string", "minLength": 1}
         },
-        "verificationMethod": {"type": "string", "minLength": 1},
-        "notApplicableRationale": {"type": "string", "minLength": 1}
+        "verificationMethod": {"type": "string", "minLength": 24},
+        "verifierId": {"enum": ["unresolved", "canonical_rule_check", "calculation", "native_host", "inspection", "test", "authority_review"]},
+        "notApplicableRationale": {"type": "string", "minLength": 24}
       },
       "allOf": [
         {

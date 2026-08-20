@@ -1,0 +1,33 @@
+# Magic wand mechanical general arrangement review drawing - AI CAD audit
+
+- Schema: `2.0`
+- Domain: `mechanical`
+- Units: `mm`
+- Origin: `(0, 0)`
+- Tolerance: `0.001`
+- Source SHA-256: `a44c169d66fb4428d47157ebb5f1ed12e35b47fa0da465d0f91d6c7ebb471a5d`
+- Entity count: `21`
+
+| # | ID | Type | Layer | Roles | Depends on | Editable | Purpose | Geometry | Constraints | Reasoning |
+|---:|---|---|---|---|---|---|---|---|---|---|
+| 1 | `G1` | `line` | `OUTLINE` | outline | origin | `true` | grip envelope lower edge | `(0, 0) -> (115, 0); L=115` | horizontal; length=115.0 | Starts the closed typed outline from a controlled datum. |
+| 2 | `G2` | `line` | `OUTLINE` | outline | G1 | `true` | grip envelope far edge | `(115, 0) -> (115, 27); L=27` | start_coincident=G1.end; vertical; length=27.0 | Continues from the preceding endpoint and fixes the transverse extent. |
+| 3 | `G3` | `line` | `OUTLINE` | outline | G2 | `true` | grip envelope upper edge | `(115, 27) -> (0, 27); L=115` | start_coincident=G2.end; horizontal; length=115.0 | Returns parallel to the first edge with the same exact length. |
+| 4 | `G4` | `line` | `OUTLINE` | outline | G3 | `true` | grip envelope closing edge | `(0, 27) -> (0, 0); L=27` | start_coincident=G3.end; vertical; length=27.0; end_coincident=origin | Closes the outline at the controlled start point. |
+| 5 | `T1` | `line` | `SHAFT` | shaft | origin | `true` | Show the transition lower edge. | `(115, 0) -> (125, 0); L=10` | start_offset=origin + (115.0, 0); length=10.0; horizontal | The explicit origin-relative start and exact endpoint make this connector edge deterministic. |
+| 6 | `T2` | `line` | `SHAFT` | shaft | origin | `true` | Show the transition far edge. | `(125, 0) -> (125, 27); L=27` | start_offset=origin + (125.0, 0); length=27.0; vertical | The explicit origin-relative start and exact endpoint make this connector edge deterministic. |
+| 7 | `T3` | `line` | `SHAFT` | shaft | origin | `true` | Show the transition upper edge. | `(125, 27) -> (115, 27); L=10` | start_offset=origin + (125.0, 27.0); length=10.0; horizontal | The explicit origin-relative start and exact endpoint make this connector edge deterministic. |
+| 8 | `R1` | `line` | `SHAFT` | shaft | origin | `true` | Show the lower exposed GFRP rod edge. | `(125, 10) -> (315, 10); L=190` | start_offset=origin + (125.0, 10.0); length=190.0; horizontal | The explicit origin-relative start and exact endpoint make this rod edge deterministic. |
+| 9 | `R2` | `line` | `SHAFT` | shaft | origin | `true` | Close the rod tip envelope. | `(315, 10) -> (315, 17); L=7` | start_offset=origin + (315.0, 10.0); length=7.0; vertical | The explicit origin-relative start and exact endpoint make this rod tip deterministic. |
+| 10 | `R3` | `line` | `SHAFT` | shaft | origin | `true` | Show the upper exposed GFRP rod edge. | `(315, 17) -> (125, 17); L=190` | start_offset=origin + (315.0, 17.0); length=190.0; horizontal | The explicit origin-relative start and exact endpoint make this rod edge deterministic. |
+| 11 | `C1` | `line` | `CENTER` | datum | origin | `true` | Show the full wand reference axis. | `(0, 13.5) -> (315, 13.5); L=315` | start_offset=origin + (0, 13.5); length=315.0; horizontal | The explicit origin-relative start and exact endpoint make this assembly centerline deterministic. |
+| 12 | `K1` | `line` | `KEEP_OUT` | interface | origin | `true` | Mark the axial RF keepout start and end. | `(5, 2) -> (30, 2); L=25` | start_offset=origin + (5.0, 2); length=25.0; horizontal | The explicit origin-relative start and exact endpoint make this keepout boundary deterministic. |
+| 13 | `D1` | `dimension` | `DIMENSION` | interface | G1, R2 | `true` | Control the total assembled length. | `P1=(0, 0); P2=(315, 17); BASE=(0, -12); KIND=horizontal; PURPOSE=overall; STYLE=AICAD_MECH; M=315` | dimension_measurement=315.0; dimension_orientation=0; base_offset=G1.start + (0.0, -12.0) | The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset. |
+| 14 | `D2` | `dimension` | `DIMENSION` | interface | G1 | `true` | Control the grip segment length. | `P1=(0, 0); P2=(115, 0); BASE=(0, -19); KIND=horizontal; PURPOSE=general; STYLE=AICAD_MECH; M=115` | dimension_measurement=115.0; dimension_orientation=0; base_offset=G1.start + (0.0, -19.0) | The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset. |
+| 15 | `D3` | `dimension` | `DIMENSION` | interface | T1 | `true` | Control the exposed transition length. | `P1=(115, 0); P2=(125, 0); BASE=(115, -26); KIND=horizontal; PURPOSE=general; STYLE=AICAD_MECH; M=10` | dimension_measurement=10.0; dimension_orientation=0; base_offset=T1.start + (0.0, -26) | The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset. |
+| 16 | `D4` | `dimension` | `DIMENSION` | interface | R1 | `true` | Control the exposed rod length. | `P1=(125, 10); P2=(315, 10); BASE=(125, -33); KIND=horizontal; PURPOSE=general; STYLE=AICAD_MECH; M=190` | dimension_measurement=190.0; dimension_orientation=0; base_offset=R1.start + (0.0, -43.0) | The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset. |
+| 17 | `N1` | `line` | `NOTE_FRAME` | interface | origin | `true` | bounded note frame lower edge | `(0, 43) -> (315, 43); L=315` | horizontal; length=315.0; start_offset=origin + (0, 43.0) | Starts the closed typed outline from a controlled datum. |
+| 18 | `N2` | `line` | `NOTE_FRAME` | interface | N1 | `true` | bounded note frame far edge | `(315, 43) -> (315, 55); L=12` | start_coincident=N1.end; vertical; length=12.0 | Continues from the preceding endpoint and fixes the transverse extent. |
+| 19 | `N3` | `line` | `NOTE_FRAME` | interface | N2 | `true` | bounded note frame upper edge | `(315, 55) -> (0, 55); L=315` | start_coincident=N2.end; horizontal; length=315.0 | Returns parallel to the first edge with the same exact length. |
+| 20 | `N4` | `line` | `NOTE_FRAME` | interface | N3, N1 | `true` | bounded note frame closing edge | `(0, 55) -> (0, 43); L=12` | start_coincident=N3.end; vertical; length=12.0; end_coincident=N1.start | Closes the outline at the controlled start point. |
+| 21 | `NT` | `text` | `NOTES` | interface | origin | `true` | Place the review limitation inside its note frame. | `P=(157.5, 49); H=2.5; R=0; TEXT=REVIEW PROTOTYPE - PRESS TO ARM AT Z72 - RF KEEP OUT Z5 TO Z30` | position_offset=origin + (157.5, 49.0); text_height=2.5; rotation=0 | Middle-center alignment and the frame dimensions keep the complete text inside the declared card. |

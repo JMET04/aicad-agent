@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml" viewBox="0 0 1600 1000" role="img" aria-labelledby="svg-title svg-desc">
+  <title id="svg-title">Magic wand system and release review overview</title>
+  <desc id="svg-desc">Review-only system interface diagram. Power, RF, safety and signal paths use different line weights and dash patterns.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker>
+    <style>
+      :root { color-scheme: light; }
+      .canvas { fill:#f5f7fb; }
+      .panel { fill:#ffffff; stroke:#26364d; stroke-width:3; }
+      .node.titlebox rect { fill:#13243a; stroke:#13243a; stroke-width:3; }
+      .node rect { fill:#ffffff; stroke:#26364d; stroke-width:3; rx:14; }
+      .node.mechanical rect { fill:#eef4ff; stroke:#245ea8; stroke-width:4; }
+      .node.electronics rect { fill:#effbf5; stroke:#217a4b; stroke-width:4; }
+      .node.external rect { fill:#fff8e8; stroke:#9a6712; stroke-width:4; stroke-dasharray:12 7; }
+      .node.blocker rect { fill:#fff0f1; stroke:#ad2532; stroke-width:5; }
+      .boxtext { font: 18px/1.18 "Segoe UI", "Microsoft YaHei", sans-serif; color:#15243a; box-sizing:border-box; padding:4px 8px; overflow:hidden; }
+      .boxtext strong { font-size:20px; }
+      .small { font-size:15px; line-height:1.18; }
+      .titlebox .boxtext { padding:3px 8px; }
+      .white { color:#ffffff; }
+      .path { fill:none; marker-end:url(#arrow); }
+      .power { stroke:#d47b00; stroke-width:7; }
+      .rf { stroke:#6b42c1; stroke-width:5; stroke-dasharray:16 9; }
+      .safety { stroke:#c12f3c; stroke-width:6; stroke-dasharray:14 6 3 6; }
+      .signal { stroke:#2a6f98; stroke-width:3; }
+      .mechanical-link { stroke:#526579; stroke-width:4; stroke-dasharray:3 7; }
+    </style>
+  </defs>
+  <rect class="canvas" x="0" y="0" width="1600" height="1000"/>
+  <g class="node titlebox" data-node-id="TITLE"><rect x="40" y="28" width="1520" height="86"/><foreignObject x="58" y="38" width="1484" height="66"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext white"><strong>魔法棒系统 / 整机审查总览 · Rev A</strong><br/><span class="small">REVIEW ONLY · PRE-EVT · 所有制造/投板/生产授权锁关闭</span></xhtml:div></foreignObject></g>
+
+  <path class="path safety" d="M 350 296 L 455 296"/>
+  <path class="path signal" d="M 350 425 L 455 425"/>
+  <path class="path power" d="M 350 580 L 455 580"/>
+  <path class="path mechanical-link" d="M 350 725 L 455 725"/>
+  <path class="path rf" d="M 785 385 L 900 385"/>
+  <path class="path signal" d="M 1230 286 L 1320 286"/>
+  <path class="path signal" d="M 1230 385 L 1320 385"/>
+  <path class="path power" d="M 1230 494 L 1320 494"/>
+  <path class="path safety" d="M 1480 385 L 1510 385 L 1510 760 L 1230 760"/>
+
+  <g class="node mechanical" data-node-id="MECH"><rect x="55" y="150" width="295" height="118"/><foreignObject x="70" y="165" width="265" height="88"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext"><strong>机械包</strong><br/><span class="small">315 mm · Ø27 grip · 190 mm GFRP<br/>4 个原生零件；无 SLDASM/干涉结论</span></xhtml:div></foreignObject></g>
+  <g class="node mechanical" data-node-id="ARM"><rect x="55" y="285" width="295" height="118"/><foreignObject x="70" y="300" width="265" height="88"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext"><strong>Press-to-arm</strong><br/><span class="small">Z=72 ±0.5 mm · recessed ≥0.6 mm<br/>侧孔 BREP 尚缺；连续按住才允许</span></xhtml:div></foreignObject></g>
+  <g class="node electronics" data-node-id="IMU"><rect x="55" y="420" width="295" height="108"/><foreignObject x="70" y="435" width="265" height="78"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext"><strong>LSM6DSV16X</strong><br/><span class="small">相对姿态/短窗手势<br/>不声称绝对位置或精确 3D 轨迹</span></xhtml:div></foreignObject></g>
+  <g class="node electronics" data-node-id="POWER"><rect x="55" y="545" width="295" height="128"/><foreignObject x="70" y="560" width="265" height="98"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext"><strong>Wand 电源</strong><br/><span class="small">USB-C 5 V sink → BQ25185<br/>protected 1S LiPo + NTC<br/>TPS63900 → 3.3 V</span></xhtml:div></foreignObject></g>
+  <g class="node mechanical" data-node-id="RFMECH"><rect x="55" y="690" width="295" height="118"/><foreignObject x="70" y="705" width="265" height="88"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext"><strong>RF 机械边界</strong><br/><span class="small">非导电后端 · Z=5..30 keepout<br/>最终 PCB/手握/壳体 RF 实测未做</span></xhtml:div></foreignObject></g>
+
+  <g class="node electronics" data-node-id="WANDMCU"><rect x="455" y="225" width="330" height="510"/><foreignObject x="475" y="245" width="290" height="470"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext"><strong>Wand NINA-B302 / nRF52840</strong><br/><br/><span class="small">输入：专用 ARM_N、IMU I²C/INT、充电状态<br/><br/>输出：DRV2605L haptic、状态反馈、BLE 命令<br/><br/>安全契约：低置信度无动作；松手撤销；stuck-low 报错；会话/方向/设备/序列绑定<br/><br/><b>未闭环：</b>目标编译、烧录、HIL、packet capture、安全评审</span></xhtml:div></foreignObject></g>
+
+  <g class="node electronics" data-node-id="RXMCU"><rect x="900" y="225" width="330" height="510"/><foreignObject x="920" y="245" width="290" height="470"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext"><strong>Receiver NINA-B302 / nRF52840</strong><br/><br/><span class="small">BLE 1M + LE Secure Connections<br/>应用层 AES-CCM + monotonic anti-replay<br/><br/>仅在 ARM lease、fresh command、allow-list 和认证全部成立时输出<br/><br/>boot/reset/brownout/watchdog/link loss → 全输出 inactive / high-Z<br/><br/><b>未闭环：</b>KiCad、ERC/DRC、CAM、板测与 HIL</span></xhtml:div></foreignObject></g>
+
+  <g class="node external" data-node-id="LOGIC"><rect x="1320" y="225" width="230" height="105"/><foreignObject x="1333" y="238" width="204" height="79"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext small"><strong>UART / PWM AUX</strong><br/>3.3/5 V VREF · signal only</xhtml:div></foreignObject></g>
+  <g class="node external" data-node-id="ISO"><rect x="1320" y="345" width="230" height="105"/><foreignObject x="1333" y="358" width="204" height="79"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext small"><strong>Isolated OC</strong><br/>floating C/E · ≤10 mA target</xhtml:div></foreignObject></g>
+  <g class="node external" data-node-id="LOAD"><rect x="1320" y="465" width="230" height="105"/><foreignObject x="1333" y="478" width="204" height="79"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext small"><strong>SELV low-side</strong><br/>5–12 V · 1 A provisional</xhtml:div></foreignObject></g>
+  <g class="node external" data-node-id="MAINS"><rect x="1320" y="595" width="230" height="120"/><foreignObject x="1333" y="608" width="204" height="94"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext small"><strong>外部 certified relay</strong><br/>只接低压控制；市电完全在产品外</xhtml:div></foreignObject></g>
+  <g class="node external" data-node-id="DRONE"><rect x="1320" y="720" width="230" height="120"/><foreignObject x="1333" y="733" width="204" height="94"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext small"><strong>Autopilot AUX</strong><br/>非飞行关键；禁止武装/动力/主飞控</xhtml:div></foreignObject></g>
+
+  <g class="node blocker" data-node-id="BLOCKERS"><rect x="455" y="770" width="775" height="150"/><foreignObject x="475" y="790" width="735" height="110"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext"><strong>系统级硬阻塞</strong><br/><span class="small">无原生装配干涉 · 无最终材料/结构 · 无 KiCad/ERC/DRC/CAM · 无目标固件/HIL/security · 无最终 RF/热/电池/法规 · 无独立放行</span></xhtml:div></foreignObject></g>
+  <g class="node" data-node-id="LEGEND"><rect x="55" y="835" width="295" height="150"/><foreignObject x="70" y="850" width="265" height="120"><xhtml:div xmlns="http://www.w3.org/1999/xhtml" class="boxtext small"><strong>线型图例</strong><br/>粗橙实线 = power<br/>紫虚线 = authenticated RF<br/>红点划粗线 = safety<br/>蓝细实线 = ordinary signal</xhtml:div></foreignObject></g>
+</svg>

@@ -1,0 +1,110 @@
+{
+  "protocol": "AICAD_SOLIDWORKS_1",
+  "source_sha256": "2fe4fc4542cb540ab73bc338e05c8c1e7971837e2a26f49991a8e61e079e1e0a",
+  "part_name": "magic_wand_handle_shell_axial_prototype",
+  "units": "mm",
+  "tolerance_mm": 0.001,
+  "template_path": "C:\\ProgramData\\SOLIDWORKS\\SOLIDWORKS 2026\\templates\\gb_part.prtdot",
+  "output_sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\handle_shell\\handle_shell.SLDPRT",
+  "output_step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\handle_shell\\handle_shell.step",
+  "features": [
+    {
+      "id": "F001",
+      "type": "base_extrude",
+      "purpose": "Create the nonconductive cylindrical grip shell envelope.",
+      "reasoning": "The origin-centered outer cylinder establishes the common wand axis and the positive-Z shell length.",
+      "roles": [
+        "outline"
+      ],
+      "editable": true,
+      "depends_on": [],
+      "support_feature": null,
+      "support_top_z_mm": 0.0,
+      "resulting_top_z_mm": 110.0,
+      "depth_mm": 110.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 13.5,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 13.5
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 0.0,
+        "volume_after_mm3": 62981.078722841485,
+        "volume_delta_mm3": 62981.078722841485,
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0.0,
+          13.5,
+          13.5,
+          110.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F002",
+      "type": "cut_extrude",
+      "purpose": "Create the axial electronics and carrier cavity.",
+      "reasoning": "A concentric through cut leaves the exact declared radial wall and an open tube for sliding assembly.",
+      "roles": [
+        "hole"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 110.0,
+      "resulting_top_z_mm": 110.0,
+      "depth_mm": 110.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 11.5,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 11.5
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 62981.078722841485,
+        "volume_after_mm3": 17278.7595947438,
+        "volume_delta_mm3": -45702.31912809769,
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0.0,
+          13.5,
+          13.5,
+          110.0
+        ],
+        "solid_body_count": 1
+      }
+    }
+  ]
+}

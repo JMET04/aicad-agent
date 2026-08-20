@@ -1,0 +1,217 @@
+{
+  "schema": "aicad_magic_wand_system_blockers_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "status": "open_blockers_release_prohibited",
+  "blockers": [
+    {
+      "id": "BLK-EDA-001",
+      "severity": "blocker",
+      "finding": "`kicad-cli` not present on PATH or checked common paths. No native KiCad source, ERC, DRC, schematic PDF, PCB render, Gerber, drill, BOM or CPL output exists.",
+      "requiredClosure": "Capture both CSV connection tables in a supported KiCad release; peer-check symbols/footprints; run ERC/DRC; archive exact tool version, reports and plots.",
+      "sourcePaths": [
+        "projects/magic-wand/electronics/review-report.md"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "BLK-FW-001",
+      "severity": "blocker",
+      "finding": "`arm-none-eabi-gcc` / nRF Connect SDK toolchain not present. Firmware skeleton was not target-compiled or flashed.",
+      "requiredClosure": "Pin SDK/tool versions, compile with warnings-as-errors, run unit/HIL tests, sign an EVT image and archive logs.",
+      "sourcePaths": [
+        "projects/magic-wand/electronics/review-report.md"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "BLK-MECH-001",
+      "severity": "blocker",
+      "finding": "Enclosure, exact battery pack, haptic actuator and receiver load harness are not frozen. Antenna and thermal constraints cannot be closed.",
+      "requiredClosure": "Mechanical stack-up, battery/NTC characterization, antenna pre-scan and thermal test reports.",
+      "sourcePaths": [
+        "projects/magic-wand/electronics/review-report.md"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "BLK-SAFE-001",
+      "severity": "blocker",
+      "finding": "No product-level hazard analysis, regulatory test or external relay/flight-controller integration qualification has been completed.",
+      "requiredClosure": "Independent safety review plus applicable radio/EMC/electrical/battery/regional compliance evidence.",
+      "sourcePaths": [
+        "projects/magic-wand/electronics/review-report.md"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "BLK-SIM-001",
+      "severity": "blocker",
+      "finding": "`ngspice` not present. Charger thermal, converter transient and output switching behavior have not been simulated.",
+      "requiredClosure": "Run worst-case vendor-model simulations and bench correlation.",
+      "sourcePaths": [
+        "projects/magic-wand/electronics/review-report.md"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "ENV-KICAD-001",
+      "severity": "environment blocker",
+      "finding": "KiCad 10.0.5 is the official stable target but the 967,270,176-byte Windows x64 installer cannot be safely downloaded/installed with the observed free space (C: 2,037,940,224 B; D: 891,183,104 B); `winget` is absent. No user files were deleted.",
+      "requiredClosure": "Provision a separate environment with adequate disk; run and archive the exact commands/acceptance criteria in `native-validation.md`.",
+      "sourcePaths": [
+        "projects/magic-wand/electronics/review-report.md"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "INT-BLK-001",
+      "severity": "blocker",
+      "finding": "Exact PCB outlines, battery, actuator and harness have not been proven against a native assembly interference model.",
+      "requiredClosure": "Freeze exact ordered parts and board outlines; build the native assembly; prove fits, clearances, button alignment and serviceability after reopen.",
+      "sourcePaths": [
+        "projects/magic-wand/mechanical/assembly-layout.json",
+        "projects/magic-wand/electronics/interface-control.md"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "INT-BLK-002",
+      "severity": "blocker",
+      "finding": "Press-to-arm release, reset, brownout, watchdog and link-loss safe timing have no target-hardware HIL or oscilloscope evidence.",
+      "requiredClosure": "Run timestamped HIL fault injection and archive output waveforms proving the 100 ms release target and 250 ms link-loss target.",
+      "sourcePaths": [
+        "projects/magic-wand/system-requirements.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "INT-BLK-003",
+      "severity": "blocker",
+      "finding": "Authenticated command protocol, monotonic persistence and gesture rejection have not been target-compiled, packet-captured or security-reviewed.",
+      "requiredClosure": "Target-build and flash pinned firmware; run replay, nonce, stale-session, cross-device, fuzz and power-loss persistence tests with an independent security review.",
+      "sourcePaths": [
+        "projects/magic-wand/system-requirements.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "INT-BLK-004",
+      "severity": "blocker",
+      "finding": "Antenna keepout is not backed by final PCB/enclosure/hand-effect RF evidence.",
+      "requiredClosure": "Bind the current u-blox integration authority to the final stack and complete representative radiated or conducted comparison tests.",
+      "sourcePaths": [
+        "projects/magic-wand/mechanical/REQUIREMENTS_INTERFACES_TOLERANCES.md",
+        "projects/magic-wand/electronics/system-architecture.md"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "INT-BLK-005",
+      "severity": "blocker",
+      "finding": "External mains relay and drone AUX integrations have no qualified installer/integrator evidence; applicable radio, EMC, battery and regional obligations are not closed.",
+      "requiredClosure": "Obtain qualified electrical and flight-system reviews and complete the applicable compliance plan and staged tests.",
+      "sourcePaths": [
+        "projects/magic-wand/system-requirements.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "INT-BLK-006",
+      "severity": "blocker",
+      "finding": "Factory release evidence is incomplete across native drawings, KiCad/CAM, target firmware, materials, process capability and physical validation.",
+      "requiredClosure": "Complete every EVT/DVT/PVT exit criterion and independent approval; regenerate this manifest from the frozen revisions before release consideration.",
+      "sourcePaths": [
+        "projects/magic-wand/system-requirements.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "MW-BLK-001",
+      "severity": "blocker",
+      "finding": "AICAD 3D schema 1.0 cannot author a radial side-plane cut.",
+      "requiredClosure": "Add a native side-plane cut at Z=72 +/-0.5 mm, bind diameter and guard recess, then rerun save/reopen topology and drawing parity.",
+      "sourcePaths": [
+        "projects/magic-wand/mechanical/CAPABILITY_BLOCKERS.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "MW-BLK-002",
+      "severity": "blocker",
+      "finding": "No native assembly mates, isolated component import or interference solver is available in this package.",
+      "requiredClosure": "Create hash-bound SLDASM in an isolated workspace and prove mate, component, interference, clearance and reopen inventories.",
+      "sourcePaths": [
+        "projects/magic-wand/mechanical/CAPABILITY_BLOCKERS.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "MW-BLK-003",
+      "severity": "blocker",
+      "finding": "Final polymer, GFRP and adhesive properties are not selected or assigned in the native material database; no load calculation or physical proof exists.",
+      "requiredClosure": "Freeze certified material/process inputs, assign/read back native materials, calculate loads and margins, and run representative coupon and handling tests.",
+      "sourcePaths": [
+        "projects/magic-wand/mechanical/CAPABILITY_BLOCKERS.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "MW-BLK-004",
+      "severity": "blocker",
+      "finding": "The keepout is a conservative mechanical envelope and not a current vendor integration sign-off.",
+      "requiredClosure": "Bind current NINA-B302 integration authority, host PCB/enclosure geometry and representative hand-effect RF results.",
+      "sourcePaths": [
+        "projects/magic-wand/mechanical/CAPABILITY_BLOCKERS.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "MW-BLK-005",
+      "severity": "blocker",
+      "finding": "Portable DXF dimensions are present, but native SolidWorks drawing feature binding, GD&T, roughness, process capability and native drawing reopen are absent.",
+      "requiredClosure": "Create one native manufacturing drawing per part with feature-bound dimensions/datums/tolerances and host reopen evidence.",
+      "sourcePaths": [
+        "projects/magic-wand/mechanical/CAPABILITY_BLOCKERS.json"
+      ],
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "MW-BLK-006",
+      "severity": "blocker",
+      "finding": "Press-to-arm electronics, firmware disarm behavior, battery abuse and wireless failure handling belong to separate packages.",
+      "requiredClosure": "Close electronics, firmware, battery and system hazard evidence without treating this mechanical package as proof.",
+      "sourcePaths": [
+        "projects/magic-wand/mechanical/CAPABILITY_BLOCKERS.json"
+      ],
+      "status": "open",
+      "closed": false
+    }
+  ],
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}

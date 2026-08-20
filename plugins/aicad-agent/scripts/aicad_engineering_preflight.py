@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from collections import Counter
@@ -35,6 +36,7 @@ AUTHORITATIVE_SOURCE_KINDS = {
 }
 NA_AUTHORITY_KINDS = {"selected_standard", "approved_engineering_input"}
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
+PLACEHOLDER_TEXT = re.compile(r"(?:placeholder|replace with|todo|tbd|unresolved)", re.IGNORECASE)
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -42,6 +44,73 @@ def _load_json(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError(f"{path.name} must contain a JSON object")
     return value
+
+def _canonical_json(value: object) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def _gate_fingerprint(path: str, gate: dict[str, Any]) -> str:
+    return hashlib.sha256(
+        _canonical_json({"gatePath": path, "canonicalGate": gate}).encode("utf-8")
+    ).hexdigest()
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _controlled_evidence_root(value: str | Path | None) -> tuple[Path | None, str | None]:
+    if value is None:
+        return None, "controlled_evidence_root_required"
+    raw = Path(value).expanduser()
+    try:
+        is_junction = getattr(raw, "is_junction", lambda: False)
+        if raw.is_symlink() or is_junction():
+            return None, "evidence_root_link_or_junction_forbidden"
+        root = raw.resolve(strict=True)
+    except OSError:
+        return None, "evidence_root_missing"
+    if not root.is_dir():
+        return None, "evidence_root_not_directory"
+    return root, None
+
+
+def _source_evidence_errors(root: Path, row: dict[str, Any]) -> list[str]:
+    value = row["path"]
+    if not _portable_source_path(value):
+        return ["unsafe_or_nonportable_path"]
+    relative = PurePosixPath(value)
+    if relative.as_posix() != value:
+        return ["noncanonical_path"]
+    candidate = root.joinpath(*relative.parts)
+    cursor = root
+    for part in relative.parts:
+        cursor = cursor / part
+        is_junction = getattr(cursor, "is_junction", lambda: False)
+        if cursor.is_symlink() or is_junction():
+            return ["link_or_junction_forbidden"]
+    try:
+        resolved = candidate.resolve(strict=True)
+    except OSError:
+        return ["source_file_missing"]
+    if not candidate.is_file() or (resolved != root and root not in resolved.parents):
+        return ["source_not_regular_file_or_outside_root"]
+    reasons: list[str] = []
+    actual_size = resolved.stat().st_size
+    if row["size"] != actual_size:
+        reasons.append(f"size_mismatch:{row['size']}:{actual_size}")
+    actual_sha256 = _sha256_file(resolved)
+    if row["sha256"] != actual_sha256:
+        reasons.append("sha256_mismatch")
+    if str(row["authorityRevision"]).strip().casefold().startswith("unresolved"):
+        reasons.append("authority_revision_unresolved")
+    if str(row["mediaType"]).strip().casefold().startswith("unresolved"):
+        reasons.append("media_type_unresolved")
+    return reasons
 
 
 def _canonical_context(domain: str) -> tuple[dict[str, Any], dict[str, Any], list[str], dict[str, dict[str, Any]]]:
@@ -86,6 +155,7 @@ def build_template(domain: str) -> dict[str, Any]:
     standards = profile.get("intent", {}).get("currentStandardsLedger", {}).get("expectedValue", [])
     if not isinstance(standards, list) or not standards:
         raise ValueError(f"{domain} canonical standards ledger is missing")
+    first_standard = standards[0]["standard"]
     return {
         "schema": "aicad_engineering_normative_preflight_v1",
         "contractId": f"{domain.upper()}_NORMATIVE_PREFLIGHT_DRAFT",
@@ -100,16 +170,27 @@ def build_template(domain: str) -> dict[str, Any]:
                 "id": "STD_AUTHORITY",
                 "kind": "selected_standard",
                 "description": "Replace with the controlled standards source and edition/scope evidence.",
+                "path": "UNRESOLVED/selected-standard.bin",
+                "size": 0,
+                "sha256": "0" * 64,
+                "mediaType": "application/octet-stream",
+                "authorityRevision": "UNRESOLVED",
             },
             {
                 "id": "ENG_INPUT",
                 "kind": "approved_engineering_input",
                 "description": "Replace with the approved design basis, calculations, interfaces and process capability.",
+                "path": "UNRESOLVED/approved-engineering-input.json",
+                "size": 0,
+                "sha256": "0" * 64,
+                "mediaType": "application/json",
+                "authorityRevision": "UNRESOLVED",
             },
         ],
         "applicableStandards": [
             {
                 "standard": row["standard"],
+                "status": row["status"],
                 "applicability": row["applicability"],
                 "sourceId": "STD_AUTHORITY",
                 "scopeDecision": "Confirm applicability and edition against the controlled project design basis.",
@@ -121,8 +202,11 @@ def build_template(domain: str) -> dict[str, Any]:
                 "gatePath": path,
                 "disposition": "unresolved",
                 "requirement": _requirement_text(path, gate),
+                "canonicalGateSha256": _gate_fingerprint(path, gate),
                 "sourceIds": ["STD_AUTHORITY", "ENG_INPUT"],
+                "standardIds": [first_standard],
                 "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method.",
+                "verifierId": "unresolved",
             }
             for path, gate in inventory.items()
         ],
@@ -177,7 +261,7 @@ def _failed_report(domain: str | None, failures: list[dict[str, Any]], checks: d
     }
 
 
-def evaluate(contract: dict[str, Any]) -> dict[str, Any]:
+def evaluate(contract: dict[str, Any], evidence_root: str | Path | None = None) -> dict[str, Any]:
     if not isinstance(contract, dict):
         return _failed_report(None, [_failure("contract_not_object", {}, None)], {"schemaValid": False}, {})
     domain = contract.get("domain") if contract.get("domain") in DOMAIN_RULE_ID else None
@@ -217,37 +301,46 @@ def evaluate(contract: dict[str, Any]) -> dict[str, Any]:
     duplicate_sources = sorted(key for key, count in source_counts.items() if count != 1)
     sources_by_id = {row["id"]: row for row in contract["sources"]}
     source_kinds = {row["kind"] for row in contract["sources"]}
-    invalid_source_paths = []
-    invalid_source_hashes = []
+    root, root_error = _controlled_evidence_root(evidence_root)
     seen_paths: set[str] = set()
     duplicate_paths: list[str] = []
+    source_evidence_errors: dict[str, list[str]] = {}
     for row in contract["sources"]:
-        path = row.get("path")
-        if path is None:
-            continue
-        if not _portable_source_path(path):
-            invalid_source_paths.append(row["id"])
+        path = row["path"]
         normalized = str(PurePosixPath(path)).casefold()
         if normalized in seen_paths:
             duplicate_paths.append(path)
         seen_paths.add(normalized)
-        if not HEX64.fullmatch(row.get("sha256", "")):
-            invalid_source_hashes.append(row["id"])
+        reasons = [root_error] if root_error is not None else _source_evidence_errors(root, row)
+        if reasons:
+            source_evidence_errors[row["id"]] = reasons
+    required_source_kinds = {"selected_standard", "approved_engineering_input"}
     sources_ok = (
-        not duplicate_sources and not duplicate_paths and not invalid_source_paths and not invalid_source_hashes
-        and {"selected_standard", "approved_engineering_input"}.issubset(source_kinds)
+        not duplicate_sources
+        and not duplicate_paths
+        and not source_evidence_errors
+        and required_source_kinds.issubset(source_kinds)
     )
     checks["sourcesAreUniquePortableAndAuthoritative"] = sources_ok
+    checks["sourceFilesExistAndMatchDeclaredHashes"] = root_error is None and not source_evidence_errors
     if not sources_ok:
         failures.append(_failure("source_inventory_invalid", {
-            "duplicateIds": duplicate_sources, "duplicatePaths": duplicate_paths,
-            "invalidPortablePaths": invalid_source_paths, "invalidHashes": invalid_source_hashes,
-            "missingRequiredKinds": sorted({"selected_standard", "approved_engineering_input"} - source_kinds),
+            "duplicateIds": duplicate_sources,
+            "duplicatePaths": duplicate_paths,
+            "evidenceRootError": root_error,
+            "sourceEvidenceErrors": source_evidence_errors,
+            "missingRequiredKinds": sorted(required_source_kinds - source_kinds),
         }, domain))
 
     required_standards = profile["intent"]["currentStandardsLedger"]["expectedValue"]
-    expected_standard_rows = {(row["standard"], row["applicability"]) for row in required_standards}
-    actual_standard_rows = {(row["standard"], row["applicability"]) for row in contract["applicableStandards"]}
+    expected_standard_rows = {
+        (row["standard"], row["status"], row["applicability"])
+        for row in required_standards
+    }
+    actual_standard_rows = {
+        (row["standard"], row["status"], row["applicability"])
+        for row in contract["applicableStandards"]
+    }
     duplicate_standard_names = sorted(
         key for key, count in Counter(row["standard"] for row in contract["applicableStandards"]).items() if count != 1
     )
@@ -285,6 +378,10 @@ def evaluate(contract: dict[str, Any]) -> dict[str, Any]:
     invalid_na: list[str] = []
     invalid_bindings: list[str] = []
     unknown_standard_refs: list[str] = []
+    canonical_requirement_mismatch: list[str] = []
+    canonical_fingerprint_mismatch: list[str] = []
+    invalid_verifiers: list[str] = []
+    placeholder_fields: list[str] = []
     standard_names = {row["standard"] for row in contract["applicableStandards"]}
     for row in applications:
         path = row["gatePath"]
@@ -295,20 +392,53 @@ def evaluate(contract: dict[str, Any]) -> dict[str, Any]:
             invalid_na.append(path)
         referenced_sources = [sources_by_id.get(source_id) for source_id in row["sourceIds"]]
         known_sources = [item for item in referenced_sources if item is not None]
-        allowed_kinds = NA_AUTHORITY_KINDS if disposition == "not_applicable" else AUTHORITATIVE_SOURCE_KINDS
-        if len(known_sources) != len(referenced_sources) or not any(item["kind"] in allowed_kinds for item in known_sources):
+        known_kinds = {item["kind"] for item in known_sources}
+        required_kinds = {"selected_standard", "approved_engineering_input"}
+        if len(known_sources) != len(referenced_sources) or not required_kinds.issubset(known_kinds):
             invalid_bindings.append(path)
-        for standard_id in row.get("standardIds", []):
+        for standard_id in row["standardIds"]:
             if standard_id not in standard_names:
                 unknown_standard_refs.append(f"{path}:{standard_id}")
-    applications_ok = not unresolved and not invalid_na and not invalid_bindings and not unknown_standard_refs
+        canonical_gate = inventory.get(path)
+        if canonical_gate is not None:
+            if row["requirement"] != _requirement_text(path, canonical_gate):
+                canonical_requirement_mismatch.append(path)
+            if row["canonicalGateSha256"] != _gate_fingerprint(path, canonical_gate):
+                canonical_fingerprint_mismatch.append(path)
+        verifier_id = row["verifierId"]
+        if (
+            (disposition == "constrained" and verifier_id == "unresolved")
+            or (disposition == "not_applicable" and verifier_id != "authority_review")
+        ):
+            invalid_verifiers.append(path)
+        if disposition == "constrained":
+            for field in ("generationConstraint", "verificationMethod"):
+                if PLACEHOLDER_TEXT.search(str(row.get(field, ""))):
+                    placeholder_fields.append(f"{path}:{field}")
+    applications_ok = not any((
+        unresolved,
+        invalid_na,
+        invalid_bindings,
+        unknown_standard_refs,
+        canonical_requirement_mismatch,
+        canonical_fingerprint_mismatch,
+        invalid_verifiers,
+        placeholder_fields,
+    ))
     checks["everyGateIsSourceBoundAndGenerationConstrained"] = applications_ok
+    checks["canonicalGateContentAndFingerprintMatch"] = (
+        not canonical_requirement_mismatch and not canonical_fingerprint_mismatch
+    )
     if not applications_ok:
         failures.append(_failure("gate_application_invalid", {
             "unresolved": unresolved,
             "intentMarkedNotApplicable": invalid_na,
             "missingAuthoritativeSourceBinding": invalid_bindings,
             "unknownStandardReferences": unknown_standard_refs,
+            "canonicalRequirementMismatch": canonical_requirement_mismatch,
+            "canonicalGateFingerprintMismatch": canonical_fingerprint_mismatch,
+            "invalidVerifier": invalid_verifiers,
+            "placeholderFields": placeholder_fields,
         }, domain))
 
     conflict_errors = []
@@ -404,6 +534,7 @@ def main() -> None:
     group.add_argument("--contract", type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--markdown", type=Path)
+    parser.add_argument("--evidence-root", type=Path)
     args = parser.parse_args()
     if args.template:
         payload = build_template(args.template)
@@ -413,7 +544,7 @@ def main() -> None:
         return
     try:
         contract = _load_json(args.contract)
-        report = evaluate(contract)
+        report = evaluate(contract, args.evidence_root or args.contract.parent)
     except Exception as exc:
         report = _failed_report(None, [_failure("contract_read_error", {"error": str(exc)}, None)], {"contractReadable": False}, {})
     args.output.parent.mkdir(parents=True, exist_ok=True)

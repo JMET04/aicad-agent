@@ -1,0 +1,98 @@
+ref,pin,pin_name,net,electrical_role,voltage_domain,connection_requirement,evidence
+J1,"A4,A9,B4,B9",VBUS,USB_VBUS_RAW,power_in,5V_USB,All four receptacle VBUS contacts joined,USBIF-TYPEC-R2-5
+J1,A5,CC1,USB_CC1,passive,5V_tolerant,Independent CC1 termination; do not short to CC2,USBIF-TYPEC-R2-5
+J1,B5,CC2,USB_CC2,passive,5V_tolerant,Independent CC2 termination; do not short to CC1,USBIF-TYPEC-R2-5
+R_CC1,1,1,USB_CC1,passive,5V_tolerant,5.1 kOhm 1 percent,Rd design
+R_CC1,2,2,GND,passive,0V,Ground return,Rd design
+R_CC2,1,1,USB_CC2,passive,5V_tolerant,5.1 kOhm 1 percent,Rd design
+R_CC2,2,2,GND,passive,0V,Ground return,Rd design
+J1,"A6,B6",D+,USB_DP_RAW,bidirectional,USB2,Join same-polarity receptacle contacts before ESD,USBIF-TYPEC-R2-5
+J1,"A7,B7",D-,USB_DM_RAW,bidirectional,USB2,Join same-polarity receptacle contacts before ESD,USBIF-TYPEC-R2-5
+J1,"A1,A12,B1,B12",GND,GND,power_return,0V,Join ground plane,USBIF-TYPEC-R2-5
+J1,SH,SHIELD,USB_SHIELD,shield,chassis_option,RC or direct option selected only after EMC review,design-choice
+F1,1,IN,USB_VBUS_RAW,power_in,5V_USB,Resettable input fuse,design-choice
+F1,2,OUT,USB_VBUS_5V,power_out,5V_USB,Protected VBUS net,design-choice
+U6,1,I/O1,USB_DP_RAW,bidirectional,USB2,Connector side; verify exact package orientation,ST-USBLC6-2-DS4260-R7
+U6,6,I/O1,USB_DP_PROT,bidirectional,USB2,Module side; verify exact package orientation,ST-USBLC6-2-DS4260-R7
+U6,3,I/O2,USB_DM_RAW,bidirectional,USB2,Connector side; verify exact package orientation,ST-USBLC6-2-DS4260-R7
+U6,4,I/O2,USB_DM_PROT,bidirectional,USB2,Module side; verify exact package orientation,ST-USBLC6-2-DS4260-R7
+U6,2,GND,GND,power_return,0V,Shortest possible return to connector ground,ST-USBLC6-2-DS4260-R7
+U6,5,VBUS,USB_VBUS_5V,bias,5V_USB,Add local 100 nF if required by selected layout,ST-USBLC6-2-DS4260-R7
+U1,54,USB_DP,USB_DP_PROT,bidirectional,USB2,Differential pair to ESD device,UBX-NINA-B3-DS-R15
+U1,55,USB_DM,USB_DM_PROT,bidirectional,USB2,Differential pair to ESD device,UBX-NINA-B3-DS-R15
+U1,31,VBUS,USB_VBUS_5V,input,5V_USB,USB VBUS detect only; never join to VCC,UBX-NINA-B3-DS-R15
+U1,9,VCC_IO,3V3,power_in,3V3,Must connect to VCC,UBX-NINA-B3-DS-R15
+U1,10,VCC,3V3,power_in,3V3,Local 100 nF plus bulk decoupling,UBX-NINA-B3-DS-R15
+U1,"6,12,14,26,30,53,EGP",GND,GND,power_return,0V,All grounds and exposed pads joined to uninterrupted ground,UBX-NINA-B3-DS-R15
+U1,13,ANT,NC,no_connect,RF,Intentional NC for NINA-B302 internal PIFA only,UBX-NINA-B3-DS-R15
+U1,32,P0.11,I2C_SCL,open_drain,3V3,Shared IMU/haptic clock with one pull-up,design-choice
+U1,33,P1.09,I2C_SDA,open_drain,3V3,Shared IMU/haptic data with one pull-up,design-choice
+U1,42,P0.26,IMU_INT1,input,3V3,Dedicated interrupt input,design-choice
+U1,43,P0.06,ARM_N,input,3V3,Dedicated active-low physical arm input; no alternate function,design-choice
+U1,44,P0.27,HAPTIC_EN,output,3V3,Default low through 100 kOhm pull-down,design-choice
+U1,5,P0.24,CHG_STAT1_N,input,3V3,Open-drain charger status with 10 kOhm pull-up,TI-BQ25185-SLUSF65A
+U1,7,P0.25,CHG_STAT2_N,input,3V3,Open-drain charger status with 10 kOhm pull-up,TI-BQ25185-SLUSF65A
+U1,11,SWDCLK,SWDCLK,input,3V3,Route to service test pad away from antenna,UBX-NINA-B3-SIM-R15
+U1,15,SWDIO,SWDIO,bidirectional,3V3,Route to service test pad away from antenna,UBX-NINA-B3-SIM-R15
+U1,8,SWO,SWO,output,3V3,Optional trace test pad,UBX-NINA-B3-DS-R15
+U1,19,RESET_N,RESET_N,input,3V3,10 kOhm pull-up and service test pad,UBX-NINA-B3-DS-R15
+U1,"1,2,3,4,16,17,18,20,21,22,23,24,25,27,28,29,34,35,36,37,38,39,40,41,45,46,47,48,49,50,51,52",GPIO_UNUSED,NC,no_connect,3V3,Unused in EVT; exact low-leak state set in firmware; do not route under antenna,UBX-NINA-B3-DS-R15
+R_I2C_SCL,1,1,3V3,passive,3V3,4.7 kOhm 1 percent,design-calculations
+R_I2C_SCL,2,2,I2C_SCL,passive,3V3,Single bus pull-up,design-calculations
+R_I2C_SDA,1,1,3V3,passive,3V3,4.7 kOhm 1 percent,design-calculations
+R_I2C_SDA,2,2,I2C_SDA,passive,3V3,Single bus pull-up,design-calculations
+SW1,1,ARM_SWITCH,ARM_SW,passive,3V3,Normally open momentary contact,design-choice
+SW1,2,GND,GND,passive,0V,Grounded contact,design-choice
+R_ARM_SER,1,1,ARM_SW,passive,3V3,1 kOhm series,design-choice
+R_ARM_SER,2,2,ARM_N,passive,3V3,At MCU side,design-choice
+R_ARM,1,1,3V3,passive,3V3,100 kOhm pull-up,design-choice
+R_ARM,2,2,ARM_N,passive,3V3,Stuck-low detected by firmware,design-choice
+U3,10,IN,USB_VBUS_5V,power_in,5V_USB,At least 1 uF local bypass plus 4.7 uF design margin,TI-BQ25185-SLUSF65A
+U3,1,SYS,SYS_RAIL,power_out,3V_to_5V,10 uF nominal with at least 1 uF effective after bias,TI-BQ25185-SLUSF65A
+U3,2,BAT,BAT_POS,bidirectional,1S_LIPO,At least 1 uF local bypass; keyed protected battery,TI-BQ25185-SLUSF65A
+U3,3,STAT2,CHG_STAT2_N,open_drain,3V3,10 kOhm pull-up to 3V3,TI-BQ25185-SLUSF65A
+U3,4,/CE,GND,input,0V,0 Ohm tie enables charging when valid source present; depopulate only by reviewed ECO,TI-BQ25185-SLUSF65A
+U3,5,GND,GND,power_return,0V,Ground plane,TI-BQ25185-SLUSF65A
+U3,6,TS/MR,BAT_NTC,input,NTC_bias,Direct 10 kOhm beta3435 battery NTC to pack ground; no general pushbutton,TI-BQ25185-SLUSF65A
+U3,7,ILIM/VSET,R_ILIM_NODE,analog,program,18.0 kOhm 1 percent to GND,TI-BQ25185-SLUSF65A
+U3,8,ISET,R_ISET_NODE,analog,program,1.00 kOhm 1 percent to GND,TI-BQ25185-SLUSF65A
+U3,9,STAT1,CHG_STAT1_N,open_drain,3V3,10 kOhm pull-up to 3V3,TI-BQ25185-SLUSF65A
+U3,EP,THERMAL_PAD,GND,power_return,0V,Soldered thermal pad with via/copper pattern from exact package,TI-BQ25185-SLUSF65A
+J2,1,BAT+,BAT_POS,power_bidir,1S_LIPO,Keyed pack positive,design-choice
+J2,2,NTC,BAT_NTC,analog,NTC_bias,10 kOhm at 25 C beta3435 pack thermistor,TI-BQ25185-SLUSF65A
+J2,3,GND,GND,power_return,0V,Keyed pack negative,design-choice
+U4,10,VIN,SYS_RAIL,power_in,1S_system,10 uF local input capacitor,TI-TPS63900-SLVSFJ2D
+U4,9,LX1,LX1,switching,1S_system,One end of 2.2 uH inductor; keep tiny,TI-TPS63900-SLVSFJ2D
+U4,7,LX2,LX2,switching,3V3_switch,Other end of 2.2 uH inductor; keep tiny,TI-TPS63900-SLVSFJ2D
+L1,1,1,LX1,power_switching,1S_system,2.2 uH rated for worst-case current,TI-TPS63900-SLVSFJ2D
+L1,2,2,LX2,power_switching,3V3_switch,Place adjacent U4,TI-TPS63900-SLVSFJ2D
+U4,6,VOUT,3V3,power_out,3V3,22 uF output capacitor at pin,TI-TPS63900-SLVSFJ2D
+U4,1,EN,SYS_RAIL,input,1S_system,1 MOhm pull-up; defined high while battery present,TI-TPS63900-SLVSFJ2D
+U4,2,SEL,GND,input,0V,Select VOUT1; both output options programmed 3.3 V,TI-TPS63900-SLVSFJ2D
+U4,3,CFG1,R_CFG1_NODE,analog,program,36.5 kOhm 1 percent to GND,TI-TPS63900-SLVSFJ2D
+U4,4,CFG2,GND,analog,0V,0 Ohm to GND for unlimited programmed input-current setting,TI-TPS63900-SLVSFJ2D
+U4,5,CFG3,R_CFG3_NODE,analog,program,16.2 kOhm 1 percent to GND,TI-TPS63900-SLVSFJ2D
+U4,"8,EP",GND,GND,power_return,0V,Solid ground and exposed pad,TI-TPS63900-SLVSFJ2D
+U2,8,VDD,3V3,power_in,3V3,100 nF at pin,ST-LSM6DSV16X-DS13510-R4
+U2,5,VDD_IO,3V3,power_in,3V3,100 nF at pin,ST-LSM6DSV16X-DS13510-R4
+U2,"6,7",GND,GND,power_return,0V,Ground plane,ST-LSM6DSV16X-DS13510-R4
+U2,13,SCL,I2C_SCL,input,3V3,Shared 100 kHz I2C,ST-LSM6DSV16X-DS13510-R4
+U2,14,SDA,I2C_SDA,bidirectional,3V3,Shared 100 kHz I2C,ST-LSM6DSV16X-DS13510-R4
+U2,12,CS,3V3,input,3V3,Tie high for I2C mode,ST-LSM6DSV16X-DS13510-R4
+U2,1,SDO/SA0,GND,input,0V,I2C address select low,ST-LSM6DSV16X-DS13510-R4
+U2,4,INT1,IMU_INT1,output,3V3,Dedicated interrupt,ST-LSM6DSV16X-DS13510-R4
+U2,9,INT2,TP_IMU_INT2,output,3V3,Test pad only; no host connection in EVT,ST-LSM6DSV16X-DS13510-R4
+U2,"2,3",SDx/SCx,GND,input,0V,Qvar and auxiliary bus disabled termination,ST-LSM6DSV16X-DS13510-R4
+U2,"10,11",OCS_Aux/SDO_Aux,3V3,input,3V3,Selected supported inactive termination; recheck before auxiliary bus use,ST-LSM6DSV16X-DS13510-R4
+U5,10,VDD,3V3,power_in,3V3,1 uF plus 100 nF local bypass,TI-DRV2605L-SLOS854D
+U5,6,VDD/NC,3V3,power_in,3V3,Tie to VDD for selected DGS package,TI-DRV2605L-SLOS854D
+U5,8,GND,GND,power_return,0V,Ground plane,TI-DRV2605L-SLOS854D
+U5,1,REG,HAPTIC_REG,analog,internal_reg,1 uF to GND only; no external load,TI-DRV2605L-SLOS854D
+U5,2,SCL,I2C_SCL,input,3V3,Shared I2C,TI-DRV2605L-SLOS854D
+U5,3,SDA,I2C_SDA,bidirectional,3V3,Shared I2C,TI-DRV2605L-SLOS854D
+U5,4,IN/TRIG,GND,input,0V,Ground because external trigger unused,TI-DRV2605L-SLOS854D
+U5,5,EN,HAPTIC_EN,input,3V3,100 kOhm pull-down keeps disabled at reset,TI-DRV2605L-SLOS854D
+U5,7,OUT+,HAPTIC_P,power_out,differential,Actuator positive; never ground,TI-DRV2605L-SLOS854D
+U5,9,OUT-,HAPTIC_N,power_out,differential,Actuator negative; never ground,TI-DRV2605L-SLOS854D
+J3,1,HAPTIC+,HAPTIC_P,power_load,differential,Keyed actuator lead,TI-DRV2605L-SLOS854D
+J3,2,HAPTIC-,HAPTIC_N,power_load,differential,Keyed actuator lead,TI-DRV2605L-SLOS854D

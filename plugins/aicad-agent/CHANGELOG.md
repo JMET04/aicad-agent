@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+## 1.17.0 - 2026-08-21
+
+- Made engineering-domain maturity code-authoritative: registry text is only a declaration, while code ceilings, non-placeholder executable probes and exact regular-file SHA-256 evidence closure determine the effective boundary.
+- Added constrained, source-bound civil review-candidate validation and authority-first experience recall with exact evidence coverage; foundation domains remain hard-blocked from specialist generation.
+- Added provider usage/cost reporting with OpenAI and DeepSeek API estimates while keeping deterministic offline generation as the default.
+- Upgraded the operational review console with visible drafting hierarchy, contained text at desktop/mobile widths and synchronized 2D/3D review views.
+- Added rollback-safe atomic public-plugin synchronization and exact fresh/tracked/staged version plus file-closure verification.
+
+## 1.16.0 - 2026-08-20
+
+- Added a schema-backed reviewer-to-agent handoff for both 2D and 3D: browser/WebView submission, exact source-hash validation, correction preview, atomic apply, audit/receipt output, and regenerated selectable review HTML.
+- Added safe 2D anchor, text-height and rotation synchronization so direct reviewer edits update the controlling constraint graph rather than becoming display-only metadata.
+- Preserved exact 3D subobject transactions, dependency replay, shared-pattern scope guards, and reviewer-only safety locks across regenerated outputs.
+- Hardened destination promotion against stale, notes-only, malformed, non-empty and partially written handoffs; no artifacts are exposed before all validation and regeneration stages succeed.
+- Added MCP, CLI, schema, packaging, packaged-runtime and regression coverage for the complete handoff lifecycle.
+
 ## 1.15.2 - 2026-08-14
 
 - Replaced role-marker-only reviewer validation with the fail-closed `aicad_selectable_vector_modifier_v1` structural contract.

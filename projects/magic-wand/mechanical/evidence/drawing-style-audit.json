@@ -1,0 +1,210 @@
+{
+  "schema": "aicad_magic_wand_mechanical_drawing_style_audit_v1",
+  "revision": "A",
+  "status": "passed",
+  "profile": "drawing-style-profile.json",
+  "files": [
+    {
+      "path": "artifacts/2d/handle_shell/handle_shell.dxf",
+      "size": 26089,
+      "sha256": "8909d671535101328a9d303a544f0937bbe839744909d501d67314ed11b7f077",
+      "layers": {
+        "OUTLINE": {
+          "color": 7,
+          "lineweight": 50,
+          "linetype": "CONTINUOUS"
+        },
+        "HOLE": {
+          "color": 2,
+          "lineweight": 35,
+          "linetype": "CONTINUOUS"
+        },
+        "CENTER": {
+          "color": 4,
+          "lineweight": 13,
+          "linetype": "CENTER2"
+        },
+        "HIDDEN": {
+          "color": 8,
+          "lineweight": 18,
+          "linetype": "DASHED2"
+        },
+        "DIMENSION": {
+          "color": 3,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTE_FRAME": {
+          "color": 6,
+          "lineweight": 25,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTES": {
+          "color": 7,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        }
+      }
+    },
+    {
+      "path": "artifacts/2d/internal_carrier/internal_carrier.dxf",
+      "size": 31209,
+      "sha256": "fb3a96dc0f836ce59570c0973afb6042290604c562b82d9ad5e2a5b3ea0349df",
+      "layers": {
+        "OUTLINE": {
+          "color": 7,
+          "lineweight": 50,
+          "linetype": "CONTINUOUS"
+        },
+        "CENTER": {
+          "color": 4,
+          "lineweight": 13,
+          "linetype": "CENTER2"
+        },
+        "HIDDEN": {
+          "color": 8,
+          "lineweight": 18,
+          "linetype": "DASHED2"
+        },
+        "DIMENSION": {
+          "color": 3,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTE_FRAME": {
+          "color": 6,
+          "lineweight": 25,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTES": {
+          "color": 7,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        }
+      }
+    },
+    {
+      "path": "artifacts/2d/rear_end_cap/rear_end_cap.dxf",
+      "size": 27813,
+      "sha256": "51b4aa5b1e2dbeb70bda139cdca8233ebc78672d000099f314cc954006f0589d",
+      "layers": {
+        "OUTLINE": {
+          "color": 7,
+          "lineweight": 50,
+          "linetype": "CONTINUOUS"
+        },
+        "CENTER": {
+          "color": 4,
+          "lineweight": 13,
+          "linetype": "CENTER2"
+        },
+        "DIMENSION": {
+          "color": 3,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTE_FRAME": {
+          "color": 6,
+          "lineweight": 25,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTES": {
+          "color": 7,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        }
+      }
+    },
+    {
+      "path": "artifacts/2d/rod_connector/rod_connector.dxf",
+      "size": 28282,
+      "sha256": "12c07d0e3915184684689380c6e0da770f9a48c3c7ed490b9d5ae7b363c8ecc3",
+      "layers": {
+        "OUTLINE": {
+          "color": 7,
+          "lineweight": 50,
+          "linetype": "CONTINUOUS"
+        },
+        "CENTER": {
+          "color": 4,
+          "lineweight": 13,
+          "linetype": "CENTER2"
+        },
+        "HIDDEN": {
+          "color": 8,
+          "lineweight": 18,
+          "linetype": "DASHED2"
+        },
+        "DIMENSION": {
+          "color": 3,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTE_FRAME": {
+          "color": 6,
+          "lineweight": 25,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTES": {
+          "color": 7,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        }
+      }
+    },
+    {
+      "path": "artifacts/2d/wand_general_arrangement/wand_general_arrangement.dxf",
+      "size": 30532,
+      "sha256": "82a8a491bb301bff94fa574e2f968c6535094ebba22af2fc3cfc84dcbcc5b819",
+      "layers": {
+        "OUTLINE": {
+          "color": 7,
+          "lineweight": 50,
+          "linetype": "CONTINUOUS"
+        },
+        "SHAFT": {
+          "color": 7,
+          "lineweight": 35,
+          "linetype": "CONTINUOUS"
+        },
+        "CENTER": {
+          "color": 4,
+          "lineweight": 13,
+          "linetype": "CENTER2"
+        },
+        "KEEP_OUT": {
+          "color": 1,
+          "lineweight": 18,
+          "linetype": "DASHED"
+        },
+        "DIMENSION": {
+          "color": 3,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTE_FRAME": {
+          "color": 6,
+          "lineweight": 25,
+          "linetype": "CONTINUOUS"
+        },
+        "NOTES": {
+          "color": 7,
+          "lineweight": 18,
+          "linetype": "CONTINUOUS"
+        }
+      }
+    }
+  ],
+  "assertions": {
+    "outline_heavier_than_center": true,
+    "centerline_noncontinuous": true,
+    "hidden_line_noncontinuous_where_present": true,
+    "keepout_noncontinuous_where_present": true,
+    "entity_properties_by_layer": true
+  },
+  "locks": {
+    "reviewOnly": true,
+    "manufacturingAuthorized": false,
+    "sharedExporterModified": false
+  }
+}

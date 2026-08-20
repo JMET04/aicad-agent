@@ -7,14 +7,13 @@ import shutil
 import sys
 import tempfile
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 
 SCRIPT_ROOT = Path(__file__).resolve().parent
 if str(SCRIPT_ROOT) not in sys.path:
     sys.path.insert(0, str(SCRIPT_ROOT))
 
-from aicad_agent import compile_plan_value  # noqa: E402
 from aicad_normality_prover import _write_markdown as write_normality_markdown  # noqa: E402
 from aicad_normality_prover import evaluate as evaluate_normality  # noqa: E402
 from aicad_normality_prover import load_and_compile  # noqa: E402
@@ -111,6 +110,7 @@ def run_pipeline(
     output_dir: Path,
     report_dir: Path,
     name: str,
+    compile_plan_fn: Callable[..., dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     output_dir = output_dir.resolve()
     report_dir = report_dir.resolve()
@@ -193,7 +193,13 @@ def run_pipeline(
     output_dir.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=f".{name}.staging-", dir=output_dir.parent))
     try:
-        compile_result = compile_plan_value(str(plan_path), str(staging), name)
+        if compile_plan_fn is None:
+            # Import lazily so the MCP agent can expose this pipeline without a
+            # circular import. Standalone CLI use still resolves the same
+            # deterministic compiler at the only stage where artifacts may be
+            # created.
+            from aicad_agent import compile_plan_value as compile_plan_fn
+        compile_result = compile_plan_fn(str(plan_path), str(staging), name)
         required_outputs = list(contract.get("requiredOutputs", []))
         rows: list[dict[str, Any]] = []
         missing: list[str] = []

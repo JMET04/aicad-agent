@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "name": "magic_wand_rear_nonconductive_end_cap_prototype",
+  "domain": "mechanical",
+  "source_sha256": "41a17046bb7cf6b3c34a528382386abd39773c14573b12e429e8d6f72702f691",
+  "feature_count": 2,
+  "feature_types": {
+    "base_extrude": 1,
+    "boss_extrude": 1,
+    "cut_extrude": 0
+  },
+  "roles": {
+    "boss": 1,
+    "outline": 1
+  },
+  "editable_features": 2,
+  "expected_final_volume_mm3": 4467.37616933123,
+  "expected_final_bbox_mm": [
+    -13.5,
+    -13.5,
+    0.0,
+    13.5,
+    13.5,
+    9.0
+  ],
+  "artifacts": {
+    "source": "projects/magic-wand/mechanical/artifacts/3d/rear_end_cap/rear_end_cap.aicad3d.plan.json",
+    "execution": "projects/magic-wand/mechanical/artifacts/3d/rear_end_cap/rear_end_cap.swplan.json",
+    "audit": "projects/magic-wand/mechanical/artifacts/3d/rear_end_cap/rear_end_cap.3d.audit.md",
+    "sldprt": "projects/magic-wand/mechanical/artifacts/3d/rear_end_cap/rear_end_cap.SLDPRT",
+    "step": "projects/magic-wand/mechanical/artifacts/3d/rear_end_cap/rear_end_cap.step",
+    "host_report": "projects/magic-wand/mechanical/artifacts/3d/rear_end_cap/rear_end_cap.solidworks-report.json",
+    "reopen_report": "projects/magic-wand/mechanical/artifacts/3d/rear_end_cap/rear_end_cap.reopen-report.json"
+  },
+  "native_host_validation": {
+    "status": "passed",
+    "solidworks_revision": "34.0.0",
+    "host_protocol": "AICAD_SOLIDWORKS_REPORT_2",
+    "reopen_protocol": "AICAD_SOLIDWORKS_REOPEN_REPORT_2",
+    "native_topology_authority": true,
+    "native_topology_stability": "solidworks_persist_reference_save_reopen_verified",
+    "saved_reference_count": 8,
+    "reopened_reference_count": 8,
+    "required_reference_count": 2,
+    "unresolved_required_reference_count": 0,
+    "reference_keys": [
+      "F001|feature.circle.opposite.1",
+      "F001|feature.face.cylindrical.1",
+      "F001|feature.face.opposite.1",
+      "F001|profile.circle.1",
+      "F002|feature.circle.opposite.1",
+      "F002|feature.face.cylindrical.1",
+      "F002|feature.face.opposite.1",
+      "F002|profile.circle.1"
+    ],
+    "file_sha256": {
+      "sldprt": "efcd8a41e2805600fc264b04c985ee17cbfbae509a204b9fa9e48fcc75fe1d49",
+      "step": "f0cb136e9d08f75edc7f2f67b7fa8b944770ef38ba354fb40d821191d836077d",
+      "solidworks_report": "4ca5d9eb7236dcf18f3dfd0e523f10607be5439db7a284653420098635c9f198",
+      "reopen_report": "1c9b2c8741c97ba352c8ee5be76d5927138a252a42350045e2a135e3b1d71edd"
+    },
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

@@ -1,0 +1,98 @@
+ref,pin,pin_name,net,electrical_role,voltage_domain,connection_requirement,evidence
+J1,"A4,A9,B4,B9",VBUS,USB_VBUS_RAW,power_in,5V_USB,All four VBUS contacts joined,USBIF-TYPEC-R2-5
+J1,A5,CC1,USB_CC1,passive,5V_tolerant,Independent 5.1 kOhm Rd to GND,USBIF-TYPEC-R2-5
+J1,B5,CC2,USB_CC2,passive,5V_tolerant,Independent 5.1 kOhm Rd to GND,USBIF-TYPEC-R2-5
+J1,"A6,B6",D+,USB_DP_RAW,bidirectional,USB2,Join same-polarity contacts,USBIF-TYPEC-R2-5
+J1,"A7,B7",D-,USB_DM_RAW,bidirectional,USB2,Join same-polarity contacts,USBIF-TYPEC-R2-5
+J1,"A1,A12,B1,B12",GND,GND,power_return,0V,Join ground plane,USBIF-TYPEC-R2-5
+R_CC1,"1;2",USB_CC1;GND,USB_CC1;GND,passive,5V_tolerant,5.1 kOhm 1 percent,USBIF-TYPEC-R2-5
+R_CC2,"1;2",USB_CC2;GND,USB_CC2;GND,passive,5V_tolerant,5.1 kOhm 1 percent,USBIF-TYPEC-R2-5
+F1,"1;2",IN;OUT,USB_VBUS_RAW;USB_VBUS_5V,power,5V_USB,Resettable fuse boundary,design-choice
+U6,1,I/O1,USB_DP_RAW,bidirectional,USB2,Connector side; verify exact package orientation,ST-USBLC6-2-DS4260-R7
+U6,6,I/O1,USB_DP_PROT,bidirectional,USB2,Module side; verify exact package orientation,ST-USBLC6-2-DS4260-R7
+U6,3,I/O2,USB_DM_RAW,bidirectional,USB2,Connector side; verify exact package orientation,ST-USBLC6-2-DS4260-R7
+U6,4,I/O2,USB_DM_PROT,bidirectional,USB2,Module side; verify exact package orientation,ST-USBLC6-2-DS4260-R7
+U6,2,GND,GND,power_return,0V,Shortest connector ground return,ST-USBLC6-2-DS4260-R7
+U6,5,VBUS,USB_VBUS_5V,bias,5V_USB,VBUS bias connection,ST-USBLC6-2-DS4260-R7
+U2,2,VIN,USB_VBUS_5V,power_in,5V_USB,Input ceramic capacitor at pin,TI-TPS62162-SLVSAJ1E
+U2,1,PGND,GND,power_return,0V,Power-ground return,TI-TPS62162-SLVSAJ1E
+U2,3,EN,USB_VBUS_5V,input,5V_USB,Defined high through 100 kOhm; never float,TI-TPS62162-SLVSAJ1E
+U2,4,AGND,GND,power_return,0V,Quiet ground connection,TI-TPS62162-SLVSAJ1E
+U2,5,FB,GND,input,0V,Fixed 3.3 V version connection per data sheet,TI-TPS62162-SLVSAJ1E
+U2,6,VOS,3V3,input,3V3,Kelvin sense after inductor at output capacitor,TI-TPS62162-SLVSAJ1E
+U2,7,SW,BUCK_SW,power_switching,5V_switch,Shortest path to 2.2 uH inductor,TI-TPS62162-SLVSAJ1E
+U2,8,PG,PWR_GOOD_N,open_drain,3V3,10 kOhm pull-up and NINA input,TI-TPS62162-SLVSAJ1E
+U2,EP,THERMAL_PAD,GND,power_return,0V,Soldered exposed pad,TI-TPS62162-SLVSAJ1E
+L1,1,1,BUCK_SW,power_switching,5V_switch,2.2 uH value to be confirmed against exact reference circuit,TI-TPS62162-SLVSAJ1E
+L1,2,2,3V3,power_out,3V3,Output capacitor at this node,TI-TPS62162-SLVSAJ1E
+U1,9,VCC_IO,3V3,power_in,3V3,Must connect to VCC,UBX-NINA-B3-DS-R15
+U1,10,VCC,3V3,power_in,3V3,Local 100 nF and bulk decoupling,UBX-NINA-B3-DS-R15
+U1,"6,12,14,26,30,53,EGP",GND,GND,power_return,0V,All ground pads joined,UBX-NINA-B3-DS-R15
+U1,13,ANT,NC,no_connect,RF,Intentional NC for selected B302 internal PIFA,UBX-NINA-B3-DS-R15
+U1,31,VBUS,USB_VBUS_5V,input,5V_USB,USB VBUS sense only,UBX-NINA-B3-DS-R15
+U1,54,USB_DP,USB_DP_PROT,bidirectional,USB2,Controlled pair,UBX-NINA-B3-DS-R15
+U1,55,USB_DM,USB_DM_PROT,bidirectional,USB2,Controlled pair,UBX-NINA-B3-DS-R15
+U1,32,P0.11,UART_TX_3V3,output,3V3,Default low/inactive until armed,design-choice
+U1,33,P1.09,UART_RX_3V3,input,3V3,Translator-protected receive input,design-choice
+U1,42,P0.26,PWM_3V3,output,3V3,Default low/inactive until armed,design-choice
+U1,43,P0.06,OPTO_DRV,output,3V3,Default low,design-choice
+U1,44,P0.27,LOAD_GATE_CTL,output,3V3,Default low; hardware 100 kOhm gate pull-down,design-choice
+U1,46,P0.12,PWR_GOOD_N,input,3V3,Monitor buck power-good,design-choice
+U1,11,SWDCLK,SWDCLK,input,3V3,Service test pad away from antenna,UBX-NINA-B3-SIM-R15
+U1,15,SWDIO,SWDIO,bidirectional,3V3,Service test pad away from antenna,UBX-NINA-B3-SIM-R15
+U1,8,SWO,SWO,output,3V3,Optional test pad,UBX-NINA-B3-DS-R15
+U1,19,RESET_N,RESET_N,input,3V3,10 kOhm pull-up and service test pad,UBX-NINA-B3-DS-R15
+U1,"1,2,3,4,5,7,16,17,18,20,21,22,23,24,25,27,28,29,34,35,36,37,38,39,40,41,45,47,48,49,50,51,52",GPIO_UNUSED,NC,no_connect,3V3,Unused in EVT; configure safe low-leak state; do not route antenna area,UBX-NINA-B3-DS-R15
+U3,1,VCCA,3V3,power_in,3V3,100 nF local decoupling,TI-SN74LVC2T45-SCES516N
+U3,8,VCCB,VREF_IO,power_in,3V3_or_5V,External controller reference only; 100 nF local decoupling,TI-SN74LVC2T45-SCES516N
+U3,2,A1,UART_TX_3V3,input,3V3,A-to-B channel,TI-SN74LVC2T45-SCES516N
+U3,3,A2,PWM_3V3,input,3V3,A-to-B channel,TI-SN74LVC2T45-SCES516N
+U3,7,B1,UART_TX_XLAT,output,VREF_IO,33 Ohm series to connector,TI-SN74LVC2T45-SCES516N
+U3,6,B2,PWM_XLAT,output,VREF_IO,33 Ohm series to connector,TI-SN74LVC2T45-SCES516N
+U3,4,GND,GND,power_return,0V,Ground,TI-SN74LVC2T45-SCES516N
+U3,5,DIR,3V3,input,3V3,Fixed A-to-B; never float,TI-SN74LVC2T45-SCES516N
+U4,1,VCCA,3V3,power_in,3V3,100 nF local decoupling,TI-SN74LVC2T45-SCES516N
+U4,8,VCCB,VREF_IO,power_in,3V3_or_5V,External controller reference only,TI-SN74LVC2T45-SCES516N
+U4,2,A1,UART_RX_3V3,output,3V3,B-to-A channel,TI-SN74LVC2T45-SCES516N
+U4,3,A2,NC,no_connect,3V3,Unused output; no copper beyond pad,TI-SN74LVC2T45-SCES516N
+U4,7,B1,UART_RX_VREF,input,VREF_IO,Connector input,TI-SN74LVC2T45-SCES516N
+U4,6,B2,GND,input,VREF_IO,Unused input tied low so it cannot float,TI-SN74LVC2T45-SCES516N
+U4,4,GND,GND,power_return,0V,Ground,TI-SN74LVC2T45-SCES516N
+U4,5,DIR,GND,input,0V,Fixed B-to-A; never float,TI-SN74LVC2T45-SCES516N
+R_TX,1,1,UART_TX_XLAT,passive,VREF_IO,33 Ohm source resistor,design-choice
+R_TX,2,2,UART_TX_VREF,passive,VREF_IO,Connector side,design-choice
+R_PWM,1,1,PWM_XLAT,passive,VREF_IO,33 Ohm source resistor,design-choice
+R_PWM,2,2,PWM_VREF,passive,VREF_IO,Connector side,design-choice
+R_TX_PD,1,1,UART_TX_3V3,passive,3V3,100 kOhm reset-state pull-down,design-choice
+R_TX_PD,2,2,GND,passive,0V,Ground,design-choice
+R_PWM_PD,1,1,PWM_3V3,passive,3V3,100 kOhm reset-state pull-down,design-choice
+R_PWM_PD,2,2,GND,passive,0V,Ground,design-choice
+R_RX_PD,1,1,UART_RX_VREF,passive,VREF_IO,100 kOhm disconnected-input pull-down,design-choice
+R_RX_PD,2,2,GND,passive,0V,Ground,design-choice
+J2,1,GND,GND,power_return,0V,Signal reference only,interface-control
+J2,2,VREF_IO,VREF_IO,power_in,3V3_or_5V,External 3.3 V or 5 V reference; not an output,interface-control
+J2,3,UART_TX,UART_TX_VREF,output,VREF_IO,CRSF or non-inverted UART output,interface-control
+J2,4,UART_RX,UART_RX_VREF,input,VREF_IO,CRSF or non-inverted UART input,interface-control
+J2,5,PWM_AUX,PWM_VREF,output,VREF_IO,PWM/AUX signal only,interface-control
+R_OPTO,1,1,OPTO_DRV,passive,3V3,430 Ohm LED current resistor,design-calculations
+R_OPTO,2,2,OPTO_ANODE,passive,LED,To optocoupler anode,design-calculations
+U5,1,ANODE,OPTO_ANODE,input,LED,Approximately 5 mA design current,TOSHIBA-TLP291-SE-DS
+U5,2,CATHODE,GND,power_return,0V,Local logic return only on LED side,TOSHIBA-TLP291-SE-DS
+U5,3,EMITTER,ISO_OC_EMIT,isolated_output,floating,Never join receiver ground,TOSHIBA-TLP291-SE-DS
+U5,4,COLLECTOR,ISO_OC_COL,isolated_output,floating,External pull-up; target <=10 mA,TOSHIBA-TLP291-SE-DS
+J3,1,ISO_OC_COL,ISO_OC_COL,isolated_output,floating,External low-voltage input only; no board pull-up,interface-control
+J3,2,ISO_OC_EMIT,ISO_OC_EMIT,isolated_output,floating,External low-voltage return only,interface-control
+R_GATE,1,1,LOAD_GATE_CTL,passive,3V3,33 Ohm series at MOSFET gate,design-calculations
+R_GATE,2,2,LOAD_GATE,passive,3V3,Gate node,design-calculations
+R_GATE_PD,1,1,LOAD_GATE,passive,3V3,100 kOhm pull-down,design-calculations
+R_GATE_PD,2,2,GND,passive,0V,Keep output off during reset,design-calculations
+Q1,G,GATE,LOAD_GATE,input,3V3,Logic-level gate; validate at 3.3 V,TI-CSD17313Q2-SLPS260E
+Q1,S,SOURCE,GND,power_return,0V,Common-ground non-isolated output,TI-CSD17313Q2-SLPS260E
+Q1,D,DRAIN,LOAD_DRAIN,power_output,5V_to_12V,EVT 1 A continuous limit pending physical validation,TI-CSD17313Q2-SLPS260E
+D1,K,CATHODE,LOAD_SUPPLY_5_12V,flyback,5V_to_12V,Fit for inductive load; stripe/cathode to supply positive,design-choice
+D1,A,ANODE,LOAD_DRAIN,flyback,switched,Anode to MOSFET drain,design-choice
+D2,K,CATHODE,LOAD_SUPPLY_5_12V,transient,5V_to_12V,DNF until load transient review,design-choice
+D2,A,ANODE,GND,transient,0V,Unidirectional TVS return; DNF default,design-choice
+J4,1,LOAD_SUPPLY_5_12V,LOAD_SUPPLY_5_12V,power_in,5V_to_12V,External protected low-voltage load supply positive,interface-control
+J4,2,LOAD_DRAIN,LOAD_DRAIN,power_output,5V_to_12V,Connect load negative; switched low side,interface-control
+J4,3,LOAD_GND,GND,power_return,0V,External supply return shared with receiver,interface-control

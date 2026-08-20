@@ -1,0 +1,68 @@
+{
+  "schema": "aicad_magic_wand_mechanical_assembly_layout_v1",
+  "revision": "A",
+  "units": "mm",
+  "datum": "A rear cap outer plane at global Z=0; B common wand axis",
+  "placements": [
+    {
+      "part_number": "MW-M-003",
+      "role": "rear cap",
+      "global_z_min": 0.0,
+      "global_z_max": 9.0,
+      "intended_overlap": "plug overlaps shell from Z5 to Z9"
+    },
+    {
+      "part_number": "MW-M-001",
+      "role": "handle shell",
+      "global_z_min": 5.0,
+      "global_z_max": 115.0,
+      "intended_overlap": "end cap and connector plugs occupy portions of shell bore"
+    },
+    {
+      "part_number": "MW-M-002",
+      "role": "electronics carrier",
+      "global_z_min": 8.0,
+      "global_z_max": 100.0,
+      "intended_overlap": "inside nonconductive shell bore"
+    },
+    {
+      "part_number": "MW-M-004",
+      "role": "rod connector",
+      "global_z_min": 100.0,
+      "global_z_max": 125.0,
+      "intended_overlap": "plug overlaps shell from Z100 to Z115"
+    },
+    {
+      "part_number": "MW-P-001",
+      "role": "GFRP spine",
+      "global_z_min": 95.0,
+      "global_z_max": 315.0,
+      "intended_overlap": "30 mm insertion from Z95 to Z125"
+    }
+  ],
+  "functional_datums": {
+    "press_to_arm_center_z": 72.0,
+    "antenna_keepout": {
+      "global_z_min": 5.0,
+      "global_z_max": 30.0,
+      "radial_radius": 11.5
+    },
+    "provisional_module_body_z": [
+      10.0,
+      25.0
+    ],
+    "provisional_battery_z": [
+      40.0,
+      80.0
+    ]
+  },
+  "derived_checks": {
+    "overall_stack_mm": 315.0,
+    "carrier_corner_diagonal_mm": 21.924416,
+    "carrier_minimum_radial_corner_clearance_mm": 0.537792,
+    "battery_axial_clearance_from_keepout_mm": 10.0,
+    "spine_axial_clearance_from_keepout_mm": 65.0
+  },
+  "assembly_authority": false,
+  "reason": "AICAD 3D schema 1.0 has no native assembly mates or interference solver; placements are review datums only."
+}

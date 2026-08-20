@@ -1,0 +1,43 @@
+{
+  "schema_version": "2.0",
+  "name": "Magic wand mechanical general arrangement review drawing",
+  "domain": "mechanical",
+  "source_sha256": "a44c169d66fb4428d47157ebb5f1ed12e35b47fa0da465d0f91d6c7ebb471a5d",
+  "units": "mm",
+  "origin": [
+    0.0,
+    0.0
+  ],
+  "tolerance": 0.001,
+  "entity_count": 21,
+  "entity_types": {
+    "line": 16,
+    "circle": 0,
+    "arc": 0,
+    "text": 1,
+    "dimension": 4
+  },
+  "layers": {
+    "CENTER": 1,
+    "DIMENSION": 4,
+    "KEEP_OUT": 1,
+    "NOTES": 1,
+    "NOTE_FRAME": 4,
+    "OUTLINE": 4,
+    "SHAFT": 6
+  },
+  "roles": {
+    "datum": 1,
+    "interface": 10,
+    "outline": 4,
+    "shaft": 6
+  },
+  "editable_entities": 21,
+  "dependency_edges": 12,
+  "artifacts": [
+    "wand_general_arrangement.aicad",
+    "wand_general_arrangement.scr",
+    "wand_general_arrangement.dxf",
+    "wand_general_arrangement.audit.md"
+  ]
+}

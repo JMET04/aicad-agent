@@ -1,0 +1,63 @@
+{
+  "schema": "aicad_magic_wand_integration_status_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "overallStatus": "review_only_pre_evt_open_blockers",
+  "openBlockerCount": 18,
+  "domainStatus": {
+    "mechanical": "native_parts_and_portable_drawings_reviewed_but_assembly_material_and_manufacturing_gates_open",
+    "electronics": "logical_connectivity_only_no_native_kicad_erc_drc_cam_or_bench_evidence",
+    "firmware": "host_c11_compile_and_contract_smoke_passed_but_no_target_build_flash_hil_or_security_review",
+    "system": "traceable_review_package_complete_but_evt_dvt_pvt_and_independent_release_gates_open"
+  },
+  "firmwareEvidenceFiles": [
+    "projects/magic-wand/firmware/CMakeLists.txt",
+    "projects/magic-wand/firmware/gesture-dictionary.yaml",
+    "projects/magic-wand/firmware/host-review-evidence.json",
+    "projects/magic-wand/firmware/include/mw_gesture.h",
+    "projects/magic-wand/firmware/include/mw_protocol.h",
+    "projects/magic-wand/firmware/include/mw_state_machine.h",
+    "projects/magic-wand/firmware/protocol.md",
+    "projects/magic-wand/firmware/README.md",
+    "projects/magic-wand/firmware/src/main.c",
+    "projects/magic-wand/firmware/src/mw_gesture.c",
+    "projects/magic-wand/firmware/src/mw_protocol.c",
+    "projects/magic-wand/firmware/src/mw_state_machine.c",
+    "projects/magic-wand/firmware/state-machine.md"
+  ],
+  "firmwareHostReview": {
+    "path": "projects/magic-wand/firmware/host-review-evidence.json",
+    "compileAndLink": "PASSED_6_OF_6_BUILD_STEPS",
+    "ctest": "PASSED_1_OF_1",
+    "targetCompile": "NOT_RUN_NO_ARM_NONE_EABI_GCC_OR_NRF_CONNECT_SDK",
+    "claimLimits": [
+      "Not an nRF52840 or NINA-B302 target build.",
+      "Not a BLE stack, radio, timing, watchdog, GPIO, flash endurance or hardware test.",
+      "The host_noncrypto_decrypt callback deliberately tests plumbing only and is not cryptography or a security proof.",
+      "Does not prove AES-CCM, LE Secure Connections, OOB provisioning, signed boot, regulatory compliance or functional safety."
+    ]
+  },
+  "canDo": [
+    "requirements and interface review",
+    "mechanical STEP/DXF quote-only DFM discussion",
+    "KiCad capture planning from connectivity tables",
+    "host-side firmware contract review",
+    "EVT/DVT/PVT planning and rough budgeting"
+  ],
+  "cannotDo": [
+    "claim factory or production readiness",
+    "fabricate PCBs from this package",
+    "claim ERC/DRC, target firmware, HIL, RF, structural, battery or regulatory pass",
+    "switch mains directly",
+    "control drone arming, propulsion or primary flight functions"
+  ],
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}

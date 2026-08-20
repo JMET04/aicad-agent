@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 1.17.0 - 2026-08-21
+
+- Made engineering-domain maturity code-authoritative: registry text is only a declaration, while code ceilings, non-placeholder executable probes and exact regular-file SHA-256 evidence closure determine the effective boundary.
+- Added constrained, source-bound civil review-candidate validation and authority-first experience recall with exact evidence coverage; foundation domains remain hard-blocked from specialist generation.
+- Added provider usage/cost reporting with OpenAI and DeepSeek API estimates while keeping deterministic offline generation as the default.
+- Upgraded the operational review console with visible drafting hierarchy, contained text at desktop/mobile widths and synchronized 2D/3D review views.
+- Added rollback-safe atomic public-plugin synchronization and exact fresh/tracked/staged version plus file-closure verification.
+
 ## 1.16.0 - 2026-08-20
 
 - Added a schema-backed reviewer-to-agent handoff for both 2D and 3D: browser/WebView submission, exact source-hash validation, correction preview, atomic apply, audit/receipt output, and regenerated selectable review HTML.

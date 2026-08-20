@@ -1,0 +1,339 @@
+{
+  "schema": "aicad_magic_wand_system_fmea_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "scale": "1 low to 5 high; RPN is triage only and never overrides a severity-5 hazard gate",
+  "rows": [
+    {
+      "id": "FMEA-001",
+      "linkedRequirements": [
+        "SYS-002"
+      ],
+      "failureMode": "Press-to-arm switch stuck low or mechanically jammed",
+      "effect": "Unexpected armed request",
+      "severity": 5,
+      "occurrence": 3,
+      "detectability": 3,
+      "rpn": 45,
+      "currentControls": "Recessed momentary switch; stuck-low fault; continuous-hold lease",
+      "requiredVerification": "Switch fault injection and release timing HIL",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-002",
+      "linkedRequirements": [
+        "SYS-002",
+        "SYS-003"
+      ],
+      "failureMode": "Firmware fails to disarm on release/reset/watchdog",
+      "effect": "Receiver output remains active",
+      "severity": 5,
+      "occurrence": 2,
+      "detectability": 4,
+      "rpn": 40,
+      "currentControls": "Independent raw input; bounded lease; watchdog; safe defaults",
+      "requiredVerification": "Oscilloscope capture over release/reset/brownout/watchdog",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-003",
+      "linkedRequirements": [
+        "SYS-003"
+      ],
+      "failureMode": "Receiver output glitches during boot or brownout",
+      "effect": "Uncommanded load pulse",
+      "severity": 5,
+      "occurrence": 3,
+      "detectability": 4,
+      "rpn": 60,
+      "currentControls": "Gate pulldown; inactive GPIO initialization; power-good monitor",
+      "requiredVerification": "Repeated power ramp and reset fault injection at all outputs",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-004",
+      "linkedRequirements": [
+        "SYS-003"
+      ],
+      "failureMode": "BLE link loss is not detected in budget",
+      "effect": "Stale command persists",
+      "severity": 5,
+      "occurrence": 2,
+      "detectability": 4,
+      "rpn": 40,
+      "currentControls": "Freshness window, arm lease and link watchdog",
+      "requiredVerification": "RF attenuation/disconnect HIL with output waveform",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-005",
+      "linkedRequirements": [
+        "SYS-005"
+      ],
+      "failureMode": "Replay, cross-device or stale-session packet accepted",
+      "effect": "Unauthorized output activation",
+      "severity": 5,
+      "occurrence": 2,
+      "detectability": 5,
+      "rpn": 50,
+      "currentControls": "LE Secure Connections plus AES-CCM/session/direction/sequence binding",
+      "requiredVerification": "Negative vectors, packet capture, reboot/power-loss sequence tests",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-006",
+      "linkedRequirements": [
+        "SYS-005"
+      ],
+      "failureMode": "Nonce or monotonic counter reused after power loss",
+      "effect": "Authentication confidentiality/integrity weakened",
+      "severity": 5,
+      "occurrence": 2,
+      "detectability": 5,
+      "rpn": 50,
+      "currentControls": "Persistent sequence epoch and fail-closed recovery",
+      "requiredVerification": "Power-cut campaign and storage wear/corruption tests",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-007",
+      "linkedRequirements": [
+        "SYS-004"
+      ],
+      "failureMode": "False gesture classification",
+      "effect": "Wrong but authenticated command",
+      "severity": 4,
+      "occurrence": 4,
+      "detectability": 3,
+      "rpn": 48,
+      "currentControls": "Confidence threshold, rejection class, press-to-arm gating",
+      "requiredVerification": "Representative-user confusion matrix and false-activation study",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-008",
+      "linkedRequirements": [
+        "SYS-004"
+      ],
+      "failureMode": "Relative IMU estimate represented as exact 3D path",
+      "effect": "Unsafe or misleading application behavior",
+      "severity": 4,
+      "occurrence": 3,
+      "detectability": 2,
+      "rpn": 24,
+      "currentControls": "Explicit no-absolute-position contract",
+      "requiredVerification": "Requirements/UI/content audit and algorithm review",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-009",
+      "linkedRequirements": [
+        "SYS-006"
+      ],
+      "failureMode": "Wrong cell, NTC or charger setting",
+      "effect": "Cell overheating, swelling or fire",
+      "severity": 5,
+      "occurrence": 3,
+      "detectability": 4,
+      "rpn": 60,
+      "currentControls": "Protected keyed pack; NTC supervision; current/thermal limits",
+      "requiredVerification": "Ordered-part audit, abuse-aware bench charge and thermal test",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-010",
+      "linkedRequirements": [
+        "SYS-006"
+      ],
+      "failureMode": "Haptic/BLE transient collapses 3.3 V rail",
+      "effect": "Reset, lost safety state or erratic feedback",
+      "severity": 4,
+      "occurrence": 3,
+      "detectability": 4,
+      "rpn": 48,
+      "currentControls": "Buck-boost margin and decoupling; brownout-safe logic",
+      "requiredVerification": "Worst-state transient waveform and hot/cold battery test",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-011",
+      "linkedRequirements": [
+        "SYS-007"
+      ],
+      "failureMode": "Antenna detuned by ground, battery, GFRP, hand or enclosure",
+      "effect": "Intermittent link and delayed safe-state detection",
+      "severity": 4,
+      "occurrence": 4,
+      "detectability": 4,
+      "rpn": 64,
+      "currentControls": "Nonconductive end and conservative mechanical keepout",
+      "requiredVerification": "Final layout overlay and representative RF comparison/pre-scan",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-012",
+      "linkedRequirements": [
+        "SYS-008"
+      ],
+      "failureMode": "VREF_IO or connector is miswired",
+      "effect": "Damage or unexpected logic state",
+      "severity": 4,
+      "occurrence": 3,
+      "detectability": 3,
+      "rpn": 36,
+      "currentControls": "Keyed labels, voltage-domain contract and translator direction",
+      "requiredVerification": "Connector fault injection and voltage sweep",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-013",
+      "linkedRequirements": [
+        "SYS-008"
+      ],
+      "failureMode": "Optocoupler CTR insufficient or isolation pins grounded",
+      "effect": "Output fails or isolation boundary is lost",
+      "severity": 4,
+      "occurrence": 3,
+      "detectability": 4,
+      "rpn": 48,
+      "currentControls": "Floating collector/emitter and conservative current target",
+      "requiredVerification": "Exact-bin review, DRC and min/max temperature load test",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-014",
+      "linkedRequirements": [
+        "SYS-008"
+      ],
+      "failureMode": "MOSFET short, copper overheats or flyback omitted",
+      "effect": "Load remains active or board overheats",
+      "severity": 5,
+      "occurrence": 3,
+      "detectability": 4,
+      "rpn": 60,
+      "currentControls": "Gate pulldown, provisional current limit and external flyback",
+      "requiredVerification": "DRC/current-density review, thermal test and inductive fault test",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-015",
+      "linkedRequirements": [
+        "SYS-009"
+      ],
+      "failureMode": "Mains conductor or uncertified relay is brought inside product",
+      "effect": "Shock, fire or regulatory breach",
+      "severity": 5,
+      "occurrence": 2,
+      "detectability": 3,
+      "rpn": 30,
+      "currentControls": "Hard SELV boundary and external certified enclosed relay only",
+      "requiredVerification": "Qualified installer design/installation inspection",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-016",
+      "linkedRequirements": [
+        "SYS-010"
+      ],
+      "failureMode": "Receiver assigned to arming, propulsion or primary flight control",
+      "effect": "Loss of vehicle control or injury",
+      "severity": 5,
+      "occurrence": 2,
+      "detectability": 4,
+      "rpn": 40,
+      "currentControls": "AUX/telemetry-only contract; no propulsion wiring",
+      "requiredVerification": "Integrator config audit, ground and restrained-prop failsafe test",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-017",
+      "linkedRequirements": [
+        "SYS-001",
+        "SYS-007"
+      ],
+      "failureMode": "Shell, rod or adhesive interface fails",
+      "effect": "Parts detach; antenna stack shifts; impact hazard",
+      "severity": 4,
+      "occurrence": 3,
+      "detectability": 4,
+      "rpn": 48,
+      "currentControls": "GFRP insertion and prototype fit definitions",
+      "requiredVerification": "Material freeze, coupon/pull test, drop/fatigue and first-article inspection",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-018",
+      "linkedRequirements": [
+        "SYS-011"
+      ],
+      "failureMode": "Feedback pattern is ambiguous or indicates success on fault",
+      "effect": "User repeats or misinterprets command",
+      "severity": 3,
+      "occurrence": 4,
+      "detectability": 3,
+      "rpn": 36,
+      "currentControls": "Distinct paired/armed/accepted/rejected/fault patterns",
+      "requiredVerification": "Blinded usability and state-machine fault tests",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-019",
+      "linkedRequirements": [
+        "SYS-012"
+      ],
+      "failureMode": "Stale drawing/BOM/firmware revision reaches factory",
+      "effect": "Wrong product or latent safety defect",
+      "severity": 5,
+      "occurrence": 3,
+      "detectability": 3,
+      "rpn": 45,
+      "currentControls": "Hash manifest, revision parity and release locks",
+      "requiredVerification": "Independent manifest/revision audit at every handoff",
+      "status": "open",
+      "closed": false
+    },
+    {
+      "id": "FMEA-020",
+      "linkedRequirements": [
+        "SYS-012"
+      ],
+      "failureMode": "Unqualified substitute or malformed MPN ordered",
+      "effect": "Assembly, safety or lifecycle failure",
+      "severity": 4,
+      "occurrence": 4,
+      "detectability": 3,
+      "rpn": 48,
+      "currentControls": "Exact MPN/footprint review and order-time lifecycle recheck",
+      "requiredVerification": "Procurement AVL review and incoming inspection",
+      "status": "open",
+      "closed": false
+    }
+  ],
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}

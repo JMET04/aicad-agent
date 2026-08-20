@@ -34,11 +34,15 @@ for candidate in RUNTIME_CANDIDATES:
 
 try:
     from aicad.correction import apply_correction, preview_correction
+    from aicad.civil import validate_civil_review_candidate
+    from aicad.domain_maturity import assess_domain_registry
     from aicad.domain_rules import DOMAIN_RULE_PACKS, HOST_CAPABILITIES, evaluate_domain_plan, write_domain_validation
     from aicad.engine import PlanError, compile_plan
+    from aicad.experience import recall_experience, validate_coverage_ledger
     from aicad.exporters import export_all
-    from aicad.provider import ProviderError, generate_plan
+    from aicad.provider import ProviderError, generate_plan, generate_plan_with_usage
     from aicad.reference_rebuild import build_reference_reconstruction, validate_reference_rebuild
+    from aicad.review_handoff import apply_review_handoff, validate_review_handoff
     from aicad.review_launch import REVIEW_LAUNCH_MODES, launch_review, open_review_request
     from aicad.semantic import describe_plan, domain_capabilities
     from aicad.solidworks3d import compile_3d_plan, solidworks_doctor, validate_3d_plan
@@ -47,7 +51,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.15.2"
+AGENT_API_VERSION = "1.17.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -109,6 +113,20 @@ def _load_plan(value: Any) -> dict[str, Any]:
                         reference["locator"] = str((source_path.parent / locator_path).resolve())
             return parsed
     raise PlanError("plan must be a JSON object, JSON string, or plan file path")
+def _source_parent(value: Any) -> Path | None:
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    if not text or len(text) >= 1024:
+        return None
+    try:
+        candidate = Path(text)
+        return candidate.resolve(strict=True).parent if candidate.is_file() else None
+    except OSError:
+        return None
+
+
+
 
 def _normative_governance_capabilities() -> dict[str, Any]:
     rules_path = PLUGIN_ROOT / "rules" / "normative_governance_rules.json"
@@ -144,6 +162,24 @@ def capabilities() -> dict[str, Any]:
         "api_version": AGENT_API_VERSION,
         "purpose": "Convert 2D/3D CAD intent into deterministic, origin-anchored, audited geometry and SolidWorks parts.",
         "entities": ["line", "circle", "arc", "text", "dimension"],
+        "experience_recall_and_coverage": {
+            "available": True,
+            "workflow_position": "after domain resolution and before geometry",
+            "domain_registry": str((PLUGIN_ROOT / "rules" / "engineering_domain_registry.json").resolve()),
+            "catalog": str((PLUGIN_ROOT / "rules" / "experience_recall_catalog.json").resolve()),
+            "context_schema": str(_runtime_file("schema", "aicad-experience-context.schema.json").resolve()),
+            "coverage_schema": str(_runtime_file("schema", "aicad-review-coverage-ledger.schema.json").resolve()),
+            "registered_domains": sorted(
+                json.loads(
+                    (PLUGIN_ROOT / "rules" / "engineering_domain_registry.json").read_text(encoding="utf-8")
+                )["domains"]
+            ),
+            "exact_coverage_inventory_required": True,
+            "rule_source_hash_closure_required": True,
+            "evidence_file_hash_revalidation_required": True,
+            "candidate_lessons_may_satisfy_coverage": False,
+            "professional_release_granted": False,
+        },
         "units": ["mm", "inch"],
         "constraints": [
             "horizontal", "vertical", "length", "parallel", "perpendicular", "collinear",
@@ -299,6 +335,16 @@ def capabilities() -> dict[str, Any]:
             "available": True,
             "script": str((PLUGIN_ROOT / "scripts" / "aicad_packaging_qa.py").resolve()),
             "rules": str((PLUGIN_ROOT / "rules" / "packaging_dieline_rules.json").resolve()),
+            "guarded_delivery": {
+                "tool": "aicad_guarded_packaging_delivery",
+                "script": str((PLUGIN_ROOT / "scripts" / "aicad_guarded_delivery.py").resolve()),
+                "ordered_non_compensatory_stages": [
+                    "overall_user_requirement_conformance",
+                    "detail_mathematical_reliability",
+                    "deterministic_artifact_build_and_hash_audit",
+                ],
+                "candidate_exposed_on_failure": False,
+            },
             "workflow": [
                 "detect defect",
                 "explain root cause",
@@ -351,7 +397,15 @@ def capabilities() -> dict[str, Any]:
                 },
             },
             "review_policy": {"reviewOnly": True, "accepted": False, "ruleEnabled": False, "domainGated": True},
-            "schemas": ["semantic-document", "correction", "view-package", "domain-validation"],
+            "schemas": ["semantic-document", "correction", "review-handoff", "view-package", "domain-validation"],
+            "review_handoff": {
+                "schema_version": "1.0",
+                "browser_bridges": ["clipboard", "aicad:review-handoff", "parent.postMessage", "chrome.webview.postMessage"],
+                "tools": ["aicad_validate_review_handoff", "aicad_apply_review_handoff"],
+                "source_hash_gate": True,
+                "notes_only_apply": False,
+                "corrected_reviewer_regenerated": True,
+            },
             "domain_rule_packs": sorted(DOMAIN_RULE_PACKS),
             "host_capability_matrix": HOST_CAPABILITIES,
         },
@@ -391,17 +445,78 @@ def capabilities() -> dict[str, Any]:
     }
 
 
-def validate_plan_value(value: Any) -> dict[str, Any]:
+def _require_civil_review_candidate(
+    data: dict[str, Any],
+    domain: str,
+    evidence_root: str | Path | None,
+) -> dict[str, Any] | None:
+    if domain != "civil":
+        return None
+    contract = data.get("civil_review_candidate")
+    if not isinstance(contract, dict):
+        raise PlanError(
+            "civil plans require an embedded civil_review_candidate before validation or compilation"
+        )
+    if evidence_root is None:
+        raise PlanError("civil review candidate requires a controlled evidence_root")
+    report = validate_civil_review_candidate(contract, evidence_root)
+    if (
+        report.get("status") != "review_candidate"
+        or report.get("authorizedOutput") != "review_candidate"
+    ):
+        failures = [
+            str(item.get("code"))
+            for item in report.get("failures", [])
+            if isinstance(item, dict)
+        ]
+        detail = ", ".join(failures[:12]) if failures else "civil_review_candidate_not_ready"
+        raise PlanError(
+            "civil constrained precompile gate failed; blocker_report_only: " + detail
+        )
+    return report
+
+
+def _require_domain_validation(
+    data: dict[str, Any],
+    space: str,
+    domain: str,
+    specialist_validation: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    report = evaluate_domain_plan(data, space, domain, specialist_validation)
+    if report.get("status") == "failed":
+        failures = [
+            str(item.get("id"))
+            for item in report.get("checks", [])
+            if isinstance(item, dict) and item.get("status") == "fail"
+        ]
+        detail = ", ".join(failures) if failures else "domain_validation_not_ready"
+        raise PlanError(
+            f"{domain} {space} domain gate failed before artifact generation: {detail}"
+        )
+    return report
+
+
+def validate_plan_value(
+    value: Any, evidence_root: str | None = None
+) -> dict[str, Any]:
+    root = Path(evidence_root).expanduser() if evidence_root else _source_parent(value)
     data = _load_plan(value)
     plan = compile_plan(data)
+    domain = str(data.get("drawing", {}).get("domain", "general"))
+    civil_validation = _require_civil_review_candidate(data, domain, root)
+    domain_validation = _require_domain_validation(data, "2d", domain, civil_validation)
     architecture_detail = _require_architecture_detail_contract(data, plan)
-    engineering_preflight = _require_engineering_normative_preflight(data, str(data.get("drawing", {}).get("domain", "general")))
+    engineering_preflight = _require_engineering_normative_preflight(
+        data, str(data.get("drawing", {}).get("domain", "general")), root
+    )
     return {
         "ok": True,
         "valid": True,
         "architecture_detail_validation": architecture_detail,
+        "civil_review_validation": civil_validation,
         "engineering_normative_preflight": engineering_preflight,
         "name": plan.name,
+        "domain_validation": domain_validation,
         "schema_version": plan.schema_version,
         "units": plan.units,
         "origin": list(plan.origin),
@@ -412,10 +527,17 @@ def validate_plan_value(value: Any) -> dict[str, Any]:
     }
 
 
-def _compile_data(data: dict[str, Any], output_dir: str | None, name: str | None) -> dict[str, Any]:
+def _compile_data(
+    data: dict[str, Any], output_dir: str | None, name: str | None, evidence_root: str | Path | None = None
+) -> dict[str, Any]:
     plan = compile_plan(data)
+    domain = str(data.get("drawing", {}).get("domain", "general"))
+    civil_validation = _require_civil_review_candidate(data, domain, evidence_root)
+    domain_validation = _require_domain_validation(data, "2d", domain, civil_validation)
     architecture_detail = _require_architecture_detail_contract(data, plan)
-    engineering_preflight = _require_engineering_normative_preflight(data, str(data.get("drawing", {}).get("domain", "general")))
+    engineering_preflight = _require_engineering_normative_preflight(
+        data, str(data.get("drawing", {}).get("domain", "general")), evidence_root
+    )
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
     stem = _safe_name(name or plan.name)
     directory.mkdir(parents=True, exist_ok=True)
@@ -439,6 +561,8 @@ def _compile_data(data: dict[str, Any], output_dir: str | None, name: str | None
         "manifest": str(directory / f"{stem}.manifest.json"),
         "artifacts": [str(path.resolve()) for path in artifacts],
         "architecture_detail_validation": architecture_detail,
+        "civil_review_validation": civil_validation,
+        "domain_validation": domain_validation,
         "engineering_normative_preflight": engineering_preflight,
     }
 
@@ -458,10 +582,11 @@ def _attach_review(
 
 def compile_plan_value(
     value: Any, output_dir: str | None = None, name: str | None = None,
-    review_launch: str = "never",
+    review_launch: str = "never", evidence_root: str | None = None,
 ) -> dict[str, Any]:
+    root = Path(evidence_root).expanduser() if evidence_root else _source_parent(value)
     data = _load_plan(value)
-    result = _compile_data(data, output_dir, name)
+    result = _compile_data(data, output_dir, name, root)
     domain = str(data.get("drawing", {}).get("domain", "general"))
     return _attach_review(data, result, "2d", domain, name, review_launch)
 
@@ -472,10 +597,19 @@ def generate(
 ) -> dict[str, Any]:
     if not isinstance(request, str) or not request.strip():
         raise PlanError("request must be a non-empty string")
-    data, used_provider = generate_plan(request.strip(), provider)
+    generation = generate_plan_with_usage(request.strip(), provider)
+    data = generation["plan"]
+    used_provider = str(generation["provider"])
     result = _compile_data(data, output_dir, name)
     result["provider"] = used_provider
+    result["model"] = generation["model"]
     result["request_interpreted"] = True
+    provider_run = Path(str(result["output_dir"])) / f"{_safe_name(name or result['name'])}.provider-run.json"
+    _write_json(provider_run, generation["runLedger"])
+    result["provider_run"] = str(provider_run.resolve())
+    result["usage"] = generation["runLedger"]["usage"]
+    result["cost"] = generation["runLedger"]["cost"]
+    result["artifacts"].append(str(provider_run.resolve()))
     domain = str(data.get("drawing", {}).get("domain", "general"))
     return _attach_review(data, result, "2d", domain, name, review_launch)
 
@@ -521,6 +655,149 @@ def get_engineering_preflight_schema() -> dict[str, Any]:
     path = PLUGIN_ROOT / "rules" / "engineering_normative_preflight.schema.json"
     return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
 
+def get_experience_context_schema() -> dict[str, Any]:
+    path = _runtime_file("schema", "aicad-experience-context.schema.json")
+    return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
+def get_review_coverage_schema() -> dict[str, Any]:
+    path = _runtime_file("schema", "aicad-review-coverage-ledger.schema.json")
+    return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
+def get_civil_review_candidate_schema() -> dict[str, Any]:
+    path = _runtime_file("schema", "aicad-civil-review-candidate.schema.json")
+    return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
+def validate_civil_review_candidate_value(
+    value: Any, evidence_root: str | None = None
+) -> dict[str, Any]:
+    root = Path(evidence_root).expanduser() if evidence_root else _source_parent(value)
+    report = validate_civil_review_candidate(_load_plan(value), root)
+    return {"ok": report.get("status") == "review_candidate", **report}
+
+
+def get_engineering_domain_registry() -> dict[str, Any]:
+    path = PLUGIN_ROOT / "rules" / "engineering_domain_registry.json"
+    registry = json.loads(path.read_text(encoding="utf-8"))
+    maturity = assess_domain_registry(registry, plugin_root=PLUGIN_ROOT)
+    if not maturity["ok"]:
+        raise PlanError(
+            "engineering domain maturity verification failed: "
+            + "; ".join(maturity["issues"][:12])
+        )
+    return {
+        "ok": True,
+        "registry": maturity["effectiveRegistry"],
+        "maturityAssessment": {
+            "ok": True,
+            "issues": [],
+            "domains": maturity["domains"],
+        },
+        "path": str(path.resolve()),
+    }
+
+
+def recall_experience_value(
+    context_value: Any,
+    max_cards: int = 12,
+    candidate_lesson_bundles: list[str] | None = None,
+) -> dict[str, Any]:
+    return recall_experience(
+        _load_plan(context_value),
+        PLUGIN_ROOT / "rules" / "experience_recall_catalog.json",
+        PLUGIN_ROOT / "rules",
+        max_cards=max_cards,
+        candidate_lesson_bundles=candidate_lesson_bundles or (),
+    )
+
+
+def validate_review_coverage_value(
+    recall_value: Any, ledger_value: Any, evidence_root: str
+) -> dict[str, Any]:
+    if not isinstance(evidence_root, str) or not evidence_root.strip():
+        raise PlanError("review coverage validation requires a controlled evidence_root")
+    return validate_coverage_ledger(
+        _load_plan(recall_value),
+        _load_plan(ledger_value),
+        evidence_root=Path(evidence_root).expanduser(),
+    )
+
+
+def guarded_packaging_delivery_value(
+    contract: str,
+    trace: str,
+    plan: str,
+    geometry: str,
+    template: str,
+    instance: str,
+    output_dir: str | None = None,
+    report_dir: str | None = None,
+    name: str | None = None,
+) -> dict[str, Any]:
+    """Run the non-skippable packaging review/build boundary through MCP or CLI."""
+    inputs = {
+        "contract": contract,
+        "trace": trace,
+        "plan": plan,
+        "geometry": geometry,
+        "template": template,
+        "instance": instance,
+    }
+    paths: dict[str, Path] = {}
+    for key, value in inputs.items():
+        if not isinstance(value, str) or not value.strip():
+            raise PlanError(f"guarded packaging delivery requires {key} file path")
+        candidate = Path(value).expanduser().resolve()
+        if not candidate.is_file():
+            raise PlanError(f"guarded packaging delivery {key} file does not exist: {candidate}")
+        paths[key] = candidate
+
+    safe_name = _safe_name(name or "packaging-candidate")
+    if output_dir:
+        candidate_dir = Path(output_dir).expanduser().resolve()
+        reports = (
+            Path(report_dir).expanduser().resolve()
+            if report_dir
+            else candidate_dir.parent / f"{safe_name}.reports"
+        )
+    else:
+        job = _new_job_dir().resolve()
+        candidate_dir = job / "candidate"
+        reports = Path(report_dir).expanduser().resolve() if report_dir else job / "reports"
+
+    from aicad_guarded_delivery import (
+        _write_delivery_markdown,
+        _write_json as write_guarded_json,
+        run_pipeline,
+    )
+
+    report = run_pipeline(
+        paths["contract"],
+        paths["trace"],
+        paths["plan"],
+        paths["geometry"],
+        paths["template"],
+        paths["instance"],
+        candidate_dir,
+        reports,
+        safe_name,
+        compile_plan_fn=compile_plan_value,
+    )
+    report_json = reports / "guarded_delivery.json"
+    report_markdown = reports / "guarded_delivery.md"
+    write_guarded_json(report_json, report)
+    _write_delivery_markdown(report, report_markdown)
+    return {
+        "ok": report["status"] == "pass",
+        **report,
+        "reportJson": str(report_json),
+        "reportMarkdown": str(report_markdown),
+    }
+
+
+
 
 def get_engineering_preflight_template_value(domain: str) -> dict[str, Any]:
     from aicad_engineering_preflight import build_template
@@ -529,20 +806,25 @@ def get_engineering_preflight_template_value(domain: str) -> dict[str, Any]:
     return {"ok": True, "status": "draft", "domain": domain, "template": build_template(domain)}
 
 
-def validate_engineering_preflight_value(value: Any) -> dict[str, Any]:
+def validate_engineering_preflight_value(
+    value: Any, evidence_root: str | None = None
+) -> dict[str, Any]:
     from aicad_engineering_preflight import evaluate
-    report = evaluate(_load_plan(value))
+    root = Path(evidence_root).expanduser() if evidence_root else _source_parent(value)
+    report = evaluate(_load_plan(value), root)
     return {"ok": report["status"] == "pass", **report}
 
 
-def _require_engineering_normative_preflight(data: dict[str, Any], domain: str) -> dict[str, Any] | None:
+def _require_engineering_normative_preflight(
+    data: dict[str, Any], domain: str, evidence_root: str | Path | None
+) -> dict[str, Any] | None:
     if domain not in {"mechanical", "electronics"}:
         return None
     contract = data.get("engineering_normative_preflight")
     if not isinstance(contract, dict):
         raise PlanError(f"{domain} plans require an embedded engineering_normative_preflight before validation or compilation")
     from aicad_engineering_preflight import evaluate
-    report = evaluate(contract)
+    report = evaluate(contract, evidence_root)
     if report["status"] != "pass" or not report.get("generationGate", {}).get("nextStageAllowed"):
         failed = [item["code"] for item in report.get("failures", [])]
         detail = ", ".join(failed) if failed else "normative_preflight_not_ready"
@@ -554,6 +836,7 @@ def get_aux_schema(name: str) -> dict[str, Any]:
     filenames = {
         "semantic": "aicad-semantic-document.schema.json",
         "correction": "aicad-correction.schema.json",
+        "handoff": "aicad-review-handoff.schema.json",
         "view": "aicad-view-package.schema.json",
         "domain": "aicad-domain-validation.schema.json",
         "reference": "aicad-reference-rebuild.schema.json",
@@ -570,10 +853,14 @@ def describe_plan_value(value: Any, space: str, domain: str = "general") -> dict
 
 def validate_domain_value(
     value: Any, space: str, domain: str = "general", output_dir: str | None = None, name: str | None = None,
+    evidence_root: str | None = None,
 ) -> dict[str, Any]:
     data = _load_plan(value)
-    report = evaluate_domain_plan(data, space, domain)
+    root = Path(evidence_root).expanduser() if evidence_root else _source_parent(value)
+    civil_validation = _require_civil_review_candidate(data, domain, root)
+    report = evaluate_domain_plan(data, space, domain, civil_validation)
     result: dict[str, Any] = {"ok": report["status"] != "failed", **report}
+    result["civil_review_validation"] = civil_validation
     if output_dir is not None:
         directory = Path(output_dir).expanduser().resolve()
         result["artifacts"] = write_domain_validation(data, space, directory, _safe_name(name or "domain-validation"), domain)
@@ -589,6 +876,21 @@ def apply_correction_value(
 ) -> dict[str, Any]:
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
     return apply_correction(_load_plan(plan_value), _load_plan(correction_value), directory, _safe_name(name or "correction"), domain)
+
+
+def validate_review_handoff_value(plan_value: Any, handoff_value: Any, domain: str = "general") -> dict[str, Any]:
+    return validate_review_handoff(_load_plan(plan_value), _load_plan(handoff_value), domain)
+
+
+def apply_review_handoff_value(
+    plan_value: Any, handoff_value: Any, output_dir: str | None = None,
+    name: str | None = None, domain: str = "general",
+) -> dict[str, Any]:
+    directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
+    return apply_review_handoff(
+        _load_plan(plan_value), _load_plan(handoff_value), directory,
+        _safe_name(name or "review-handoff"), domain,
+    )
 
 
 def build_multiview_value(
@@ -626,11 +928,19 @@ def build_reference_reconstruction_value(
     return build_reference_reconstruction(data, reference, directory, _safe_name(name or "reference-rebuild"))
 
 
-def validate_3d_plan_value(value: Any) -> dict[str, Any]:
+def validate_3d_plan_value(
+    value: Any, evidence_root: str | None = None
+) -> dict[str, Any]:
+    root = Path(evidence_root).expanduser() if evidence_root else _source_parent(value)
     data = _load_plan(value)
     result = validate_3d_plan(data)
     domain = str(data.get("part", {}).get("domain", "general"))
-    result["engineering_normative_preflight"] = _require_engineering_normative_preflight(data, domain)
+    civil_validation = _require_civil_review_candidate(data, domain, root)
+    result["civil_review_validation"] = civil_validation
+    result["domain_validation"] = _require_domain_validation(data, "3d", domain, civil_validation)
+    result["engineering_normative_preflight"] = _require_engineering_normative_preflight(
+        data, domain, root
+    )
     return result
 
 
@@ -641,13 +951,19 @@ def build_solidworks_part(
     execute: bool = True,
     timeout_seconds: int = 300,
     review_launch: str = "never",
+    evidence_root: str | None = None,
 ) -> dict[str, Any]:
     directory = Path(output_dir).expanduser().resolve() if output_dir else _new_job_dir().resolve()
+    root = Path(evidence_root).expanduser() if evidence_root else _source_parent(value)
     data = _load_plan(value)
     domain = str(data.get("part", {}).get("domain", "general"))
-    engineering_preflight = _require_engineering_normative_preflight(data, domain)
+    civil_validation = _require_civil_review_candidate(data, domain, root)
+    domain_validation = _require_domain_validation(data, "3d", domain, civil_validation)
+    engineering_preflight = _require_engineering_normative_preflight(data, domain, root)
     result = compile_3d_plan(data, directory, name, execute, timeout_seconds)
     result["engineering_normative_preflight"] = engineering_preflight
+    result["civil_review_validation"] = civil_validation
+    result["domain_validation"] = domain_validation
     return _attach_review(data, result, "3d", domain, name, review_launch)
 
 
@@ -681,7 +997,8 @@ TOOLS: list[dict[str, Any]] = [
         "inputSchema": {
             "type": "object", "additionalProperties": False, "required": ["contract"],
             "properties": {
-                "contract": {"description": "Engineering normative preflight object, JSON string, or UTF-8 file path"}
+                "contract": {"description": "Engineering normative preflight object, JSON string, or UTF-8 file path"},
+                "evidence_root": {"type": "string", "description": "Controlled root for source paths; file inputs default to their parent directory"}
             },
         },
     },
@@ -709,7 +1026,7 @@ TOOLS: list[dict[str, Any]] = [
             "properties": {
                 "request": {"type": "string", "minLength": 1},
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
-                "provider": {"type": "string", "enum": ["offline", "auto", "openai"], "default": "offline"},
+                "provider": {"type": "string", "enum": ["offline", "auto", "openai", "deepseek"], "default": "offline"},
                 "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "never"},
             },
         },
@@ -719,7 +1036,10 @@ TOOLS: list[dict[str, Any]] = [
         "description": "Validate an origin-anchored plan without writing CAD artifacts.",
         "inputSchema": {
             "type": "object", "additionalProperties": False, "required": ["plan"],
-            "properties": {"plan": {"description": "Plan object, JSON string, or UTF-8 plan file path"}},
+            "properties": {
+                "plan": {"description": "Plan object, JSON string, or UTF-8 plan file path"},
+                "evidence_root": {"type": "string"}
+            },
         },
     },
     {
@@ -730,6 +1050,7 @@ TOOLS: list[dict[str, Any]] = [
             "properties": {
                 "plan": {"description": "Plan object, JSON string, or UTF-8 plan file path"},
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
+                "evidence_root": {"type": "string"},
                 "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "never"},
             },
         },
@@ -742,6 +1063,11 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "aicad_get_correction_schema",
         "description": "Return the bounded typed correction transaction schema shared by 2D and 3D.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_review_handoff_schema",
+        "description": "Return the source-hash-bound interactive reviewer handoff schema.",
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
     },
     {
@@ -785,6 +1111,31 @@ TOOLS: list[dict[str, Any]] = [
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
             },
         },
+    },
+    {
+        "name": "aicad_validate_review_handoff",
+        "description": "Validate a reviewer handoff against the current plan source hash and preview its exact transaction. Notes-only handoffs remain non-actionable.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["plan", "handoff"],
+            "properties": {
+                "plan": {"description": "2D/3D plan object, JSON string, or file path"},
+                "handoff": {"description": "Reviewer handoff object, JSON string, or file path"},
+                "domain": {"type": "string", "default": "general"}
+            }
+        }
+    },
+    {
+        "name": "aicad_apply_review_handoff",
+        "description": "Apply an actionable source-current reviewer handoff, replay dependencies, and write a corrected plan, audit, receipt, and fresh selectable modifier.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["plan", "handoff"],
+            "properties": {
+                "plan": {"description": "2D/3D plan object, JSON string, or file path"},
+                "handoff": {"description": "Reviewer handoff object, JSON string, or file path"},
+                "domain": {"type": "string", "default": "general"},
+                "output_dir": {"type": "string"}, "name": {"type": "string"}
+            }
+        }
     },
     {
         "name": "aicad_build_multiview_review",
@@ -855,7 +1206,8 @@ TOOLS: list[dict[str, Any]] = [
                 "plan": {"description": "2D/3D plan object, JSON string, or UTF-8 file path"},
                 "space": {"type": "string", "enum": ["2d", "3d"]},
                 "domain": {"type": "string", "default": "general"},
-                "output_dir": {"type": "string"}, "name": {"type": "string"}
+                "output_dir": {"type": "string"}, "name": {"type": "string"},
+                "evidence_root": {"type": "string"}
             },
         },
     },    {
@@ -873,7 +1225,10 @@ TOOLS: list[dict[str, Any]] = [
         "description": "Validate a feature graph and all declared mathematical constraints without opening SolidWorks or writing artifacts.",
         "inputSchema": {
             "type": "object", "additionalProperties": False, "required": ["plan"],
-            "properties": {"plan": {"description": "3D plan object, JSON string, or UTF-8 plan file path"}},
+            "properties": {
+                "plan": {"description": "3D plan object, JSON string, or UTF-8 plan file path"},
+                "evidence_root": {"type": "string"}
+            },
         },
     },
     {
@@ -886,7 +1241,91 @@ TOOLS: list[dict[str, Any]] = [
                 "output_dir": {"type": "string"}, "name": {"type": "string"},
                 "execute": {"type": "boolean", "default": True},
                 "timeout_seconds": {"type": "integer", "minimum": 30, "maximum": 1800, "default": 300},
+                "evidence_root": {"type": "string"},
                 "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "never"},
+            },
+        },
+    },
+    {
+        "name": "aicad_get_experience_context_schema",
+        "description": "Return the strict authority-first design-context schema used before engineering geometry.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_review_coverage_schema",
+        "description": "Return the exact evidence-bearing review coverage ledger schema.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_engineering_domain_registry",
+        "description": "Return registered engineering domains, honest maturity boundaries, validators and native generation limits.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_recall_experience",
+        "description": "Recall authority-first rules and advisory lessons, then build an exact change-aware coverage inventory before geometry.",
+        "inputSchema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["context"],
+            "properties": {
+                "context": {"description": "Design context object, JSON string, or UTF-8 file path"},
+                "max_cards": {"type": "integer", "minimum": 1, "maximum": 50, "default": 12},
+                "candidate_lesson_bundles": {
+                    "type": "array", "items": {"type": "string"}, "default": []
+                },
+            },
+        },
+    },
+    {
+        "name": "aicad_validate_review_coverage",
+        "description": "Fail closed unless every recalled coverage key has current real-file evidence under a controlled root.",
+        "inputSchema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["recall", "ledger", "evidence_root"],
+            "properties": {
+                "recall": {"description": "Recall result object, JSON string, or UTF-8 file path"},
+                "ledger": {"description": "Coverage ledger object, JSON string, or UTF-8 file path"},
+                "evidence_root": {"type": "string", "minLength": 1},
+            },
+        },
+    },
+    {
+        "name": "aicad_guarded_packaging_delivery",
+        "description": "Run packaging whole-requirement, mathematical-normality, deterministic build and SHA-256 gates in order; no candidate directory is exposed when an upstream gate fails.",
+        "inputSchema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["contract", "trace", "plan", "geometry", "template", "instance"],
+            "properties": {
+                "contract": {"type": "string", "minLength": 1},
+                "trace": {"type": "string", "minLength": 1},
+                "plan": {"type": "string", "minLength": 1},
+                "geometry": {"type": "string", "minLength": 1},
+                "template": {"type": "string", "minLength": 1},
+                "instance": {"type": "string", "minLength": 1},
+                "output_dir": {"type": "string"},
+                "report_dir": {"type": "string"},
+                "name": {"type": "string"},
+            },
+        },
+    },
+    {
+        "name": "aicad_get_civil_review_candidate_schema",
+        "description": "Return the strict source-bound civil coordination review-candidate schema.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_validate_civil_review_candidate",
+        "description": "Validate jurisdiction, CRS/datum, field controls, alignment/profile/drainage and utility/geotechnical evidence; authorizes review_candidate only.",
+        "inputSchema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["candidate"],
+            "properties": {
+                "candidate": {"description": "Civil candidate object, JSON string, or UTF-8 file path"},
+                "evidence_root": {"type": "string", "description": "Controlled source root; file inputs default to their parent directory"},
             },
         },
     },
@@ -896,6 +1335,40 @@ TOOLS: list[dict[str, Any]] = [
 def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_capabilities":
         return capabilities()
+    if name == "aicad_get_experience_context_schema":
+        return get_experience_context_schema()
+    if name == "aicad_get_review_coverage_schema":
+        return get_review_coverage_schema()
+    if name == "aicad_get_engineering_domain_registry":
+        return get_engineering_domain_registry()
+    if name == "aicad_get_civil_review_candidate_schema":
+        return get_civil_review_candidate_schema()
+    if name == "aicad_validate_civil_review_candidate":
+        return validate_civil_review_candidate_value(arguments.get("candidate"), arguments.get("evidence_root"))
+    if name == "aicad_recall_experience":
+        return recall_experience_value(
+            arguments.get("context"),
+            arguments.get("max_cards", 12),
+            arguments.get("candidate_lesson_bundles", []),
+        )
+    if name == "aicad_validate_review_coverage":
+        return validate_review_coverage_value(
+            arguments.get("recall"),
+            arguments.get("ledger"),
+            str(arguments.get("evidence_root", "")),
+        )
+    if name == "aicad_guarded_packaging_delivery":
+        return guarded_packaging_delivery_value(
+            str(arguments.get("contract", "")),
+            str(arguments.get("trace", "")),
+            str(arguments.get("plan", "")),
+            str(arguments.get("geometry", "")),
+            str(arguments.get("template", "")),
+            str(arguments.get("instance", "")),
+            arguments.get("output_dir"),
+            arguments.get("report_dir"),
+            arguments.get("name"),
+        )
     if name == "aicad_get_plan_schema":
         return get_schema()
     if name == "aicad_get_engineering_preflight_schema":
@@ -903,7 +1376,7 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_get_engineering_preflight_template":
         return get_engineering_preflight_template_value(str(arguments.get("domain", "")))
     if name == "aicad_validate_engineering_preflight":
-        return validate_engineering_preflight_value(arguments.get("contract"))
+        return validate_engineering_preflight_value(arguments.get("contract"), arguments.get("evidence_root"))
     if name == "aicad_get_architecture_detail_contract_schema":
         return get_architecture_detail_schema()
     if name == "aicad_validate_architecture_detail_contract":
@@ -911,17 +1384,25 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_generate":
         return generate(arguments.get("request", ""), arguments.get("output_dir"), arguments.get("name"), arguments.get("provider", "offline"), arguments.get("review_launch", "never"))
     if name == "aicad_validate_plan":
-        return validate_plan_value(arguments.get("plan"))
+        return validate_plan_value(arguments.get("plan"), arguments.get("evidence_root"))
     if name == "aicad_compile_plan":
-        return compile_plan_value(arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"), arguments.get("review_launch", "never"))
+        return compile_plan_value(
+            arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"),
+            arguments.get("review_launch", "never"), arguments.get("evidence_root"),
+        )
     if name == "aicad_get_semantic_schema":
         return get_aux_schema("semantic")
     if name == "aicad_get_correction_schema":
         return get_aux_schema("correction")
+    if name == "aicad_get_review_handoff_schema":
+        return get_aux_schema("handoff")
     if name == "aicad_get_domain_validation_schema":
         return get_aux_schema("domain")
     if name == "aicad_validate_domain_plan":
-        return validate_domain_value(arguments.get("plan"), arguments.get("space", "2d"), arguments.get("domain", "general"), arguments.get("output_dir"), arguments.get("name"))
+        return validate_domain_value(
+            arguments.get("plan"), arguments.get("space", "2d"), arguments.get("domain", "general"),
+            arguments.get("output_dir"), arguments.get("name"), arguments.get("evidence_root"),
+        )
     if name == "aicad_get_view_package_schema":
         return get_aux_schema("view")
     if name == "aicad_describe_plan":
@@ -931,6 +1412,15 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_apply_correction":
         return apply_correction_value(
             arguments.get("plan"), arguments.get("correction"), arguments.get("output_dir"),
+            arguments.get("name"), arguments.get("domain", "general"),
+        )
+    if name == "aicad_validate_review_handoff":
+        return validate_review_handoff_value(
+            arguments.get("plan"), arguments.get("handoff"), arguments.get("domain", "general"),
+        )
+    if name == "aicad_apply_review_handoff":
+        return apply_review_handoff_value(
+            arguments.get("plan"), arguments.get("handoff"), arguments.get("output_dir"),
             arguments.get("name"), arguments.get("domain", "general"),
         )
     if name == "aicad_build_multiview_review":
@@ -958,11 +1448,12 @@ def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_get_3d_plan_schema":
         return get_3d_schema()
     if name == "aicad_validate_3d_plan":
-        return validate_3d_plan_value(arguments.get("plan"))
+        return validate_3d_plan_value(arguments.get("plan"), arguments.get("evidence_root"))
     if name == "aicad_build_solidworks_part":
         return build_solidworks_part(
             arguments.get("plan"), arguments.get("output_dir"), arguments.get("name"),
             arguments.get("execute", True), arguments.get("timeout_seconds", 300), arguments.get("review_launch", "never"),
+            arguments.get("evidence_root"),
         )
     raise PlanError(f"Unknown tool '{name}'")
 
@@ -1022,9 +1513,14 @@ def _handle_mcp(message: dict[str, Any]) -> dict[str, Any] | None:
                 {"uri": "aicad://3d-plan-schema", "name": "AICAD 3D Plan Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://semantic-schema", "name": "AICAD Semantic Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://correction-schema", "name": "AICAD Correction Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://review-handoff-schema", "name": "AICAD Review Handoff Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://view-package-schema", "name": "AICAD View Package Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://domain-validation-schema", "name": "AICAD Domain Validation Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://reference-rebuild-schema", "name": "AICAD Reference Rebuild Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://experience-context-schema", "name": "AICAD Experience Context Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://review-coverage-schema", "name": "AICAD Review Coverage Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://civil-review-candidate-schema", "name": "AICAD Civil Review Candidate Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://engineering-domain-registry", "name": "AICAD Engineering Domain Registry", "mimeType": "application/json"},
                 {"uri": "aicad://capabilities", "name": "AICAD Capabilities", "mimeType": "application/json"},
             ]}
         elif method == "resources/read":
@@ -1037,17 +1533,41 @@ def _handle_mcp(message: dict[str, Any]) -> dict[str, Any] | None:
                 payload = get_aux_schema("semantic")["schema"]
             elif uri == "aicad://correction-schema":
                 payload = get_aux_schema("correction")["schema"]
+            elif uri == "aicad://review-handoff-schema":
+                payload = get_aux_schema("handoff")["schema"]
             elif uri == "aicad://domain-validation-schema":
                 payload = get_aux_schema("domain")["schema"]
             elif uri == "aicad://view-package-schema":
                 payload = get_aux_schema("view")["schema"]
             elif uri == "aicad://reference-rebuild-schema":
                 payload = get_aux_schema("reference")["schema"]
+            elif uri == "aicad://experience-context-schema":
+                payload = get_experience_context_schema()["schema"]
+            elif uri == "aicad://review-coverage-schema":
+                payload = get_review_coverage_schema()["schema"]
+            elif uri == "aicad://civil-review-candidate-schema":
+                payload = get_civil_review_candidate_schema()["schema"]
+            elif uri == "aicad://engineering-domain-registry":
+                payload = get_engineering_domain_registry()["registry"]
             elif uri == "aicad://capabilities":
                 payload = capabilities()
             else:
                 raise PlanError(f"Unknown resource '{uri}'")
-            response["result"] = {"contents": [{"uri": uri, "mimeType": "application/json", "text": json.dumps(payload, ensure_ascii=False)}]}
+            schema_resources = {
+                "aicad://plan-schema",
+                "aicad://3d-plan-schema",
+                "aicad://semantic-schema",
+                "aicad://correction-schema",
+                "aicad://review-handoff-schema",
+                "aicad://view-package-schema",
+                "aicad://domain-validation-schema",
+                "aicad://reference-rebuild-schema",
+                "aicad://experience-context-schema",
+                "aicad://review-coverage-schema",
+                "aicad://civil-review-candidate-schema",
+            }
+            mime_type = "application/schema+json" if uri in schema_resources else "application/json"
+            response["result"] = {"contents": [{"uri": uri, "mimeType": mime_type, "text": json.dumps(payload, ensure_ascii=False)}]}
         else:
             response["error"] = {"code": -32601, "message": f"Method not found: {method}"}
     except Exception as exc:
@@ -1086,8 +1606,34 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("schema3d")
     commands.add_parser("semantic-schema")
     commands.add_parser("correction-schema")
+    commands.add_parser("review-handoff-schema")
     commands.add_parser("view-schema")
     commands.add_parser("domain-schema")
+    commands.add_parser("experience-context-schema")
+    commands.add_parser("review-coverage-schema")
+    commands.add_parser("domain-registry")
+    commands.add_parser("civil-review-schema")
+    civil_review_parser = commands.add_parser("civil-review-validate")
+    civil_review_parser.add_argument("--candidate", required=True)
+    civil_review_parser.add_argument("--evidence-root")
+    experience_parser = commands.add_parser("experience-recall")
+    experience_parser.add_argument("--context", required=True)
+    experience_parser.add_argument("--max-cards", type=int, default=12)
+    experience_parser.add_argument("--candidate-lesson-bundle", action="append", default=[])
+    coverage_parser = commands.add_parser("coverage-validate")
+    coverage_parser.add_argument("--recall", required=True)
+    coverage_parser.add_argument("--ledger", required=True)
+    coverage_parser.add_argument("--evidence-root", required=True)
+    guarded_packaging_parser = commands.add_parser("guarded-packaging-delivery")
+    guarded_packaging_parser.add_argument("--contract", required=True)
+    guarded_packaging_parser.add_argument("--trace", required=True)
+    guarded_packaging_parser.add_argument("--plan", required=True)
+    guarded_packaging_parser.add_argument("--geometry", required=True)
+    guarded_packaging_parser.add_argument("--template", required=True)
+    guarded_packaging_parser.add_argument("--instance", required=True)
+    guarded_packaging_parser.add_argument("--out")
+    guarded_packaging_parser.add_argument("--report-dir")
+    guarded_packaging_parser.add_argument("--name")
     commands.add_parser("reference-schema")
     reference_validate_parser = commands.add_parser("reference-validate")
     reference_validate_parser.add_argument("--plan", required=True)
@@ -1105,18 +1651,21 @@ def _parser() -> argparse.ArgumentParser:
     request_group.add_argument("--request-file", type=Path, help="UTF-8 text file, recommended for non-ASCII requests")
     generate_parser.add_argument("--out")
     generate_parser.add_argument("--name")
-    generate_parser.add_argument("--provider", choices=["offline", "auto", "openai"], default="offline")
+    generate_parser.add_argument("--provider", choices=["offline", "auto", "openai", "deepseek"], default="offline")
     generate_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
     validate_parser = commands.add_parser("validate")
     validate_parser.add_argument("--plan", required=True)
     compile_parser = commands.add_parser("compile")
+    validate_parser.add_argument("--evidence-root")
     compile_parser.add_argument("--plan", required=True)
     compile_parser.add_argument("--out")
     compile_parser.add_argument("--name")
     compile_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
     validate3d_parser = commands.add_parser("validate3d")
+    compile_parser.add_argument("--evidence-root")
     validate3d_parser.add_argument("--plan", required=True)
     build3d_parser = commands.add_parser("build3d")
+    validate3d_parser.add_argument("--evidence-root")
     build3d_parser.add_argument("--plan", required=True)
     build3d_parser.add_argument("--out")
     build3d_parser.add_argument("--name")
@@ -1124,6 +1673,7 @@ def _parser() -> argparse.ArgumentParser:
     build3d_parser.add_argument("--timeout", type=int, default=300)
     build3d_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
     describe_parser = commands.add_parser("describe")
+    build3d_parser.add_argument("--evidence-root")
     describe_parser.add_argument("--plan", required=True)
     describe_parser.add_argument("--space", choices=["2d", "3d"], required=True)
     describe_parser.add_argument("--domain", default="general")
@@ -1133,6 +1683,7 @@ def _parser() -> argparse.ArgumentParser:
     domain_parser.add_argument("--domain", default="general")
     domain_parser.add_argument("--out")
     domain_parser.add_argument("--name")
+    domain_parser.add_argument("--evidence-root")
     preview_parser = commands.add_parser("preview-correction")
     preview_parser.add_argument("--plan", required=True)
     preview_parser.add_argument("--correction", required=True)
@@ -1143,6 +1694,16 @@ def _parser() -> argparse.ArgumentParser:
     apply_parser.add_argument("--domain", default="general")
     apply_parser.add_argument("--out")
     apply_parser.add_argument("--name")
+    validate_handoff_parser = commands.add_parser("validate-review-handoff")
+    validate_handoff_parser.add_argument("--plan", required=True)
+    validate_handoff_parser.add_argument("--handoff", required=True)
+    validate_handoff_parser.add_argument("--domain", default="general")
+    apply_handoff_parser = commands.add_parser("apply-review-handoff")
+    apply_handoff_parser.add_argument("--plan", required=True)
+    apply_handoff_parser.add_argument("--handoff", required=True)
+    apply_handoff_parser.add_argument("--domain", default="general")
+    apply_handoff_parser.add_argument("--out")
+    apply_handoff_parser.add_argument("--name")
     multiview_parser = commands.add_parser("multiview")
     multiview_parser.add_argument("--plan", required=True)
     multiview_parser.add_argument("--space", choices=["2d", "3d"], required=True)
@@ -1176,21 +1737,37 @@ def main(argv: list[str] | None = None) -> int:
         "schema3d": get_3d_schema,
         "semantic-schema": lambda: get_aux_schema("semantic"),
         "correction-schema": lambda: get_aux_schema("correction"),
+        "review-handoff-schema": lambda: get_aux_schema("handoff"),
         "view-schema": lambda: get_aux_schema("view"),
         "domain-schema": lambda: get_aux_schema("domain"),
+        "experience-context-schema": get_experience_context_schema,
+        "review-coverage-schema": get_review_coverage_schema,
+        "domain-registry": get_engineering_domain_registry,
+        "civil-review-schema": get_civil_review_candidate_schema,
+        "civil-review-validate": lambda: validate_civil_review_candidate_value(args.candidate, args.evidence_root),
+        "experience-recall": lambda: recall_experience_value(args.context, args.max_cards, args.candidate_lesson_bundle),
+        "coverage-validate": lambda: validate_review_coverage_value(
+            args.recall, args.ledger, args.evidence_root,
+        ),
+        "guarded-packaging-delivery": lambda: guarded_packaging_delivery_value(
+            args.contract, args.trace, args.plan, args.geometry, args.template, args.instance,
+            args.out, args.report_dir, args.name,
+        ),
         "reference-schema": lambda: get_aux_schema("reference"),
         "reference-validate": lambda: validate_reference_rebuild_value(args.plan, args.reference),
         "reference-build": lambda: build_reference_reconstruction_value(args.plan, args.reference, args.out, args.name),
         "solidworks-doctor": solidworks_doctor,
         "generate": generate_action,
-        "validate": lambda: validate_plan_value(args.plan),
-        "compile": lambda: compile_plan_value(args.plan, args.out, args.name, args.review_launch),
-        "validate3d": lambda: validate_3d_plan_value(args.plan),
-        "build3d": lambda: build_solidworks_part(args.plan, args.out, args.name, not args.no_execute, args.timeout, args.review_launch),
+        "validate": lambda: validate_plan_value(args.plan, args.evidence_root),
+        "compile": lambda: compile_plan_value(args.plan, args.out, args.name, args.review_launch, args.evidence_root),
+        "validate3d": lambda: validate_3d_plan_value(args.plan, args.evidence_root),
+        "build3d": lambda: build_solidworks_part(args.plan, args.out, args.name, not args.no_execute, args.timeout, args.review_launch, args.evidence_root),
         "describe": lambda: describe_plan_value(args.plan, args.space, args.domain),
-        "domain-validate": lambda: validate_domain_value(args.plan, args.space, args.domain, args.out, args.name),
+        "domain-validate": lambda: validate_domain_value(args.plan, args.space, args.domain, args.out, args.name, args.evidence_root),
         "preview-correction": lambda: preview_correction_value(args.plan, args.correction, args.domain),
         "apply-correction": lambda: apply_correction_value(args.plan, args.correction, args.out, args.name, args.domain),
+        "validate-review-handoff": lambda: validate_review_handoff_value(args.plan, args.handoff, args.domain),
+        "apply-review-handoff": lambda: apply_review_handoff_value(args.plan, args.handoff, args.out, args.name, args.domain),
         "multiview": lambda: build_multiview_value(args.plan, args.space, args.domain, args.out, args.name, args.review_launch),
         "open-review": lambda: open_review_request_value(
             args.review_html, args.cad_path, args.open_native_cad, args.review_launch,

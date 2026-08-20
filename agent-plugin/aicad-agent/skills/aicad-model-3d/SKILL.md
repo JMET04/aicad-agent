@@ -9,7 +9,8 @@ Model slowly and transactionally: reason about one feature, validate it, execute
 
 ## Workflow
 
-1. Call `aicad_capabilities` and `aicad_solidworks_doctor`.
+0. Resolve the registered engineering domain with `aicad_get_engineering_domain_registry`. Build the strict experience context, call `aicad_recall_experience`, and validate exact real-file coverage before authoring features. Unknown domains and `foundation` profiles may produce only intent/obligation blocker reports, never specialist 3D.
+1. Call `aicad_capabilities` and `aicad_solidworks_doctor`. Treat unsupported features, assemblies or host evidence as hard boundaries rather than approximating them silently.
 1a. For a mechanical part, call `aicad_get_engineering_preflight_template` with `domain=mechanical`, source-bind and resolve all 54 canonical shared/mechanical gates, validate with `aicad_validate_engineering_preflight`, and embed the pass as `engineering_normative_preflight`. The 3D validator and SolidWorks builder fail before execution when it is missing or incomplete.
 2. Decompose the part into an ordered feature graph. Start the base sketch at `[0,0,0]`.
 3. For every feature, state:

@@ -1,0 +1,65 @@
+{
+  "schema": "aicad_magic_wand_mechanical_capability_blockers_v1",
+  "revision": "A",
+  "status": "review_only",
+  "resolved_digital_evidence": [
+    "four constrained 3D part plans validate with zero domain warnings",
+    "five constrained 2D drawing plans validate and compile",
+    "four SLDPRT and four STEP artifacts exist",
+    "four SolidWorks host reports pass",
+    "four save-reopen reports pass",
+    "required native persistent reference unresolved count is zero for every modeled part"
+  ],
+  "blockers": [
+    {
+      "id": "MW-BLK-001",
+      "severity": "blocker",
+      "scope": "handle shell press-to-arm side aperture",
+      "reason": "AICAD 3D schema 1.0 cannot author a radial side-plane cut.",
+      "required_closure": "Add a native side-plane cut at Z=72 +/-0.5 mm, bind diameter and guard recess, then rerun save/reopen topology and drawing parity."
+    },
+    {
+      "id": "MW-BLK-002",
+      "severity": "blocker",
+      "scope": "assembly authority",
+      "reason": "No native assembly mates, isolated component import or interference solver is available in this package.",
+      "required_closure": "Create hash-bound SLDASM in an isolated workspace and prove mate, component, interference, clearance and reopen inventories."
+    },
+    {
+      "id": "MW-BLK-003",
+      "severity": "blocker",
+      "scope": "materials and structural safety",
+      "reason": "Final polymer, GFRP and adhesive properties are not selected or assigned in the native material database; no load calculation or physical proof exists.",
+      "required_closure": "Freeze certified material/process inputs, assign/read back native materials, calculate loads and margins, and run representative coupon and handling tests."
+    },
+    {
+      "id": "MW-BLK-004",
+      "severity": "blocker",
+      "scope": "antenna integration",
+      "reason": "The keepout is a conservative mechanical envelope and not a current vendor integration sign-off.",
+      "required_closure": "Bind current NINA-B302 integration authority, host PCB/enclosure geometry and representative hand-effect RF results."
+    },
+    {
+      "id": "MW-BLK-005",
+      "severity": "blocker",
+      "scope": "manufacturing drawing authority",
+      "reason": "Portable DXF dimensions are present, but native SolidWorks drawing feature binding, GD&T, roughness, process capability and native drawing reopen are absent.",
+      "required_closure": "Create one native manufacturing drawing per part with feature-bound dimensions/datums/tolerances and host reopen evidence."
+    },
+    {
+      "id": "MW-BLK-006",
+      "severity": "blocker",
+      "scope": "system safety",
+      "reason": "Press-to-arm electronics, firmware disarm behavior, battery abuse and wireless failure handling belong to separate packages.",
+      "required_closure": "Close electronics, firmware, battery and system hazard evidence without treating this mechanical package as proof."
+    }
+  ],
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false
+  }
+}

@@ -55,10 +55,14 @@ class UniversalSemanticTests(unittest.TestCase):
             hashes.add(payload["document"]["source_sha256"])
         self.assertEqual(len(hashes), 1, "domain profiles must not rewrite source geometry")
 
-    def test_custom_domain_profile_id_is_allowed_without_weakening_core(self) -> None:
-        payload = describe_plan(self.plan2d, "2d", "hydraulics")
-        self.assertFalse(payload["domain_profile"]["built_in"])
-        self.assertEqual(payload["domain_profile"]["id"], "hydraulics")
+    def test_unregistered_domain_fails_closed_and_foundation_domain_is_explicit(self) -> None:
+        with self.assertRaisesRegex(PlanError, "unregistered engineering domain"):
+            describe_plan(self.plan2d, "2d", "hydraulics")
+        payload = describe_plan(self.plan2d, "2d", "structural")
+        self.assertTrue(payload["domain_profile"]["built_in"])
+        self.assertEqual(payload["domain_profile"]["id"], "structural")
+        self.assertEqual(payload["domain_profile"]["maturity"], "foundation")
+        self.assertTrue(payload["domain_profile"]["specialist_generation_blocked"])
         self.assertTrue(validate_semantic_document(payload)["valid"])
         self.assertIn("mechanical", CORE_DOMAIN_PROFILES)
 

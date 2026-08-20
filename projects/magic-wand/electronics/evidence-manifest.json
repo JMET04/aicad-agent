@@ -1,0 +1,159 @@
+{
+  "artifact_status": "EVT_REVIEW_ONLY",
+  "checked_on": "2026-08-21",
+  "policy": "Primary manufacturer or standards-owner sources only. URLs and lifecycle status must be rechecked at each release gate.",
+  "evidence": [
+    {
+      "id": "UBX-NINA-B3-DS-R15",
+      "owner": "u-blox",
+      "title": "NINA-B3 series Data sheet, UBX-17052099 R15, 3-Jun-2025",
+      "url": "https://content.u-blox.com/sites/default/files/NINA-B3_DataSheet_UBX-17052099.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "NINA-B302-00B-00 is listed in mass production with an internal metal PIFA antenna.",
+        "VCC and VCC_IO are 1.7 to 3.6 V and VCC_IO must be connected to VCC.",
+        "Pins 54 and 55 are USB_DP and USB_DM, pin 31 is VBUS, pins 11 and 15 are SWDCLK and SWDIO, and exposed ground pads must be grounded.",
+        "NINA-B302 uses the internal antenna; the B301 antenna pin must not be repurposed on the B302 assembly variant."
+      ]
+    },
+    {
+      "id": "UBX-NINA-B3-SIM-R15",
+      "owner": "u-blox",
+      "title": "NINA-B3 System Integration Manual, UBX-17056748 R15",
+      "url": "https://content.u-blox.com/sites/default/files/NINA-B3_SIM_UBX-17056748.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "SWD access, short/wide supply routing, local decoupling, solid module ground and antenna-area integration review are required.",
+        "Integrated-antenna variants must not be enclosed by metal and finished-product radio/compliance obligations remain with the integrator."
+      ]
+    },
+    {
+      "id": "ST-LSM6DSV16X-DS13510-R4",
+      "owner": "STMicroelectronics",
+      "title": "LSM6DSV16X Datasheet DS13510 Rev 4",
+      "url": "https://www.st.com/resource/en/datasheet/lsm6dsv16x.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "VDD is 1.71 to 3.6 V and VDD_IO is 1.08 to 3.6 V.",
+        "I2C mode requires CS high; SDO/SA0 selects the address; VDD and VDD_IO each require local 100 nF decoupling.",
+        "Unused auxiliary/Qvar pins require the data-sheet-supported termination selected in the connectivity table."
+      ]
+    },
+    {
+      "id": "TI-BQ25185-SLUSF65A",
+      "owner": "Texas Instruments",
+      "title": "BQ25185 Datasheet SLUSF65A, revised Jan-2026",
+      "url": "https://www.ti.com/lit/ds/symlink/bq25185.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "IN needs at least 1 uF, SYS 10 uF nominal with at least 1 uF effective after bias, and BAT at least 1 uF.",
+        "The 5 V, 4.2 V, 300 mA charge and 500 mA input-limit example uses 1.00 kOhm ISET and 18.0 kOhm ILIM/VSET.",
+        "TS/MR directly supports a 10 kOhm at 25 C NTC with beta(25/85) 3435 K; different thermistors can require compensation.",
+        "STAT outputs are open drain and accept 1 kOhm to 20 kOhm pull-ups."
+      ]
+    },
+    {
+      "id": "TI-TPS63900-SLVSFJ2D",
+      "owner": "Texas Instruments",
+      "title": "TPS63900 Datasheet Rev D",
+      "url": "https://www.ti.com/lit/ds/symlink/tps63900.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "The 3.3 V application uses a 2.2 uH inductor, 10 uF input and 22 uF output capacitors.",
+        "16.2 kOhm on CFG3 programs 3.3 V VOUT1; 36.5 kOhm on CFG1 programs 3.3 V VOUT2; CFG2 at 0 Ohm selects no programmed input limit.",
+        "EN, SEL and CFG pins must not float."
+      ]
+    },
+    {
+      "id": "TI-DRV2605L-SLOS854D",
+      "owner": "Texas Instruments",
+      "title": "DRV2605L Datasheet Rev D",
+      "url": "https://www.ti.com/lit/ds/symlink/drv2605l.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "VDD operating range is 2 to 5.2 V.",
+        "REG requires 1 uF; VDD uses local 1 uF and 100 nF; IN/TRIG is grounded when unused.",
+        "OUT+ and OUT- are a differential actuator drive and are not grounded."
+      ]
+    },
+    {
+      "id": "TI-TPS62162-SLVSAJ1E",
+      "owner": "Texas Instruments",
+      "title": "TPS6216x Datasheet Rev E / TPS62162 product record",
+      "url": "https://www.ti.com/product/TPS62162",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "TPS62162 is active, fixed 3.3 V, accepts 3 to 17 V and is rated to 1 A.",
+        "The exposed pad is grounded and the fixed-output feedback/voltage-sense connections must follow the data sheet."
+      ]
+    },
+    {
+      "id": "TI-SN74LVC2T45-SCES516N",
+      "owner": "Texas Instruments",
+      "title": "SN74LVC2T45 Datasheet Rev N",
+      "url": "https://www.ti.com/lit/ds/symlink/sn74lvc2t45.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "Both rails accept 1.65 to 5.5 V and the device is direction controlled.",
+        "DIR reference and power sequencing must follow the data sheet; the 8-pin device has no dedicated OE pin and unused inputs cannot float."
+      ]
+    },
+    {
+      "id": "TOSHIBA-TLP291-SE-DS",
+      "owner": "Toshiba Electronic Devices & Storage",
+      "title": "TLP291(SE Photocoupler product record and English datasheet",
+      "url": "https://toshiba.semicon-storage.com/eu/semiconductor/product/optoelectronics/detail.TLP291%28SE.html",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "Phototransistor output provides a floating collector/emitter signal interface.",
+        "The base TLP291 product is not recommended for new design; exact TLP291(SE order code and agency option require procurement recheck.",
+        "Isolation component recognition does not certify the receiver or permit mains conductors on this PCB."
+      ]
+    },
+    {
+      "id": "TI-CSD17313Q2-SLPS260E",
+      "owner": "Texas Instruments",
+      "title": "CSD17313Q2 30 V N-channel NexFET Datasheet Rev E",
+      "url": "https://www.ti.com/lit/ds/symlink/csd17313q2.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "Device is active, 30 V and logic-level; package current does not define the board output rating.",
+        "3 V gate-drive resistance and safe temperature must be checked for the exact operating point."
+      ]
+    },
+    {
+      "id": "ST-USBLC6-2-DS4260-R7",
+      "owner": "STMicroelectronics",
+      "title": "USBLC6-2 Datasheet DS4260 Rev 7",
+      "url": "https://www.st.com/resource/en/datasheet/usblc6-2.pdf",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "Two low-capacitance USB data channels are supported and VBUS/GND bias pins must be connected as specified.",
+        "Placement is adjacent to the connector with a short ground return and no protected/unprotected trace overlap."
+      ]
+    },
+    {
+      "id": "NORDIC-NRF52840-PS",
+      "owner": "Nordic Semiconductor",
+      "title": "nRF52840 Product Specification and S113 feature record",
+      "url": "https://docs.nordicsemi.com/r/bundle/ps_nrf52840/page/keyfeatures_html5.html",
+      "secondary_url": "https://www.nordicsemi.com/Products/Development-software/S113",
+      "status": "datasheet-checked",
+      "claims_checked": [
+        "nRF52840 supports BLE 1 Mbps and hardware AES-CCM capabilities.",
+        "Nordic BLE stacks support LE Secure Connections; the selected SDK/stack and configuration still require build-time evidence."
+      ]
+    },
+    {
+      "id": "USBIF-TYPEC-R2-5",
+      "owner": "USB Implementers Forum",
+      "title": "USB Type-C Cable and Connector Specification Release 2.5, April 2026",
+      "url": "https://usb.org/usb-type-cr-cable-and-connector-specification",
+      "status": "standards-owner-checked",
+      "claims_checked": [
+        "A sink-only receptacle uses independent Rd terminations on CC1 and CC2.",
+        "Following the electrical intent does not constitute USB-IF certification or logo authorization."
+      ]
+    }
+  ]
+}

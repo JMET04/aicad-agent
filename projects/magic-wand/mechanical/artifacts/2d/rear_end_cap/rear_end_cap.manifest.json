@@ -1,0 +1,40 @@
+{
+  "schema_version": "2.0",
+  "name": "MW-M-003 rear end cap review drawing",
+  "domain": "mechanical",
+  "source_sha256": "4986924b8e76f4add6d9ed15b9eeb81b64254e2e0d193b128e44c04314ea30e2",
+  "units": "mm",
+  "origin": [
+    0.0,
+    0.0
+  ],
+  "tolerance": 0.001,
+  "entity_count": 17,
+  "entity_types": {
+    "line": 13,
+    "circle": 0,
+    "arc": 0,
+    "text": 1,
+    "dimension": 3
+  },
+  "layers": {
+    "CENTER": 1,
+    "DIMENSION": 3,
+    "NOTES": 1,
+    "NOTE_FRAME": 4,
+    "OUTLINE": 8
+  },
+  "roles": {
+    "datum": 1,
+    "interface": 8,
+    "outline": 8
+  },
+  "editable_entities": 17,
+  "dependency_edges": 16,
+  "artifacts": [
+    "rear_end_cap.aicad",
+    "rear_end_cap.scr",
+    "rear_end_cap.dxf",
+    "rear_end_cap.audit.md"
+  ]
+}

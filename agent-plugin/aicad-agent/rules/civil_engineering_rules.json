@@ -1,0 +1,135 @@
+{
+  "schema": "aicad_civil_engineering_rules_v1",
+  "version": "1.0.0",
+  "status": "controlled_review_candidate",
+  "scope": "civil_2d_3d_design_and_drawing_review",
+  "policy": "jurisdiction_and_survey_authority_first_non_compensatory",
+  "rules": [
+    {
+      "id": "CIV-G001",
+      "name": "jurisdiction_code_edition_and_responsibility",
+      "requirement": "The approving authority, project jurisdiction, applicable code and standard editions, design stage, licensed responsibility and submission requirements shall be explicit before civil geometry is generated.",
+      "prevention": "Block production-stage generation when jurisdiction, edition, scope or responsible-discipline authority is unresolved; generic defaults and image references are not authority."
+    },
+    {
+      "id": "CIV-G002",
+      "name": "survey_control_coordinate_reference_and_units",
+      "requirement": "Horizontal datum, vertical datum, coordinate reference system, geoid/model, survey control points, units, scale factor and transformation method shall be source-bound and internally consistent.",
+      "prevention": "Require hash-bound survey control and an independently checked transformation report; never infer coordinates or elevation from pixels."
+    },
+    {
+      "id": "CIV-G003",
+      "name": "existing_conditions_and_topographic_freshness",
+      "requirement": "Existing terrain, structures, utilities, water features, boundaries and access constraints shall identify acquisition method, accuracy class, date and known gaps.",
+      "prevention": "Expire stale existing-condition evidence and expose uncertainty zones rather than silently interpolating unsupported conditions."
+    },
+    {
+      "id": "CIV-G004",
+      "name": "property_right_of_way_and_easement_authority",
+      "requirement": "Property lines, rights-of-way, easements, setbacks and legal access shall be bound to controlled survey or legal records and shall not be reconstructed from aerial imagery alone.",
+      "prevention": "Keep legal geometry in a protected authority layer and block conflicts or unproved offsets before design layout."
+    },
+    {
+      "id": "CIV-G005",
+      "name": "geotechnical_and_groundwater_design_basis",
+      "requirement": "Soil profile, groundwater, bearing, settlement, slope stability, pavement subgrade and earthwork assumptions shall come from current geotechnical evidence or remain explicit blockers.",
+      "prevention": "Do not substitute visual terrain appearance or generic soil properties for project geotechnical inputs."
+    },
+    {
+      "id": "CIV-G006",
+      "name": "design_criteria_and_operating_envelope",
+      "requirement": "Traffic, loading, design life, climate, rainfall, flood, seismic, maintenance, emergency and construction-stage criteria shall be frozen with units and sources.",
+      "prevention": "Maintain one design-basis ledger and invalidate dependent checks whenever a criterion or source revision changes."
+    },
+    {
+      "id": "CIV-G007",
+      "name": "horizontal_vertical_alignment_and_continuity",
+      "requirement": "Alignments, profiles, grades, curves, transitions, stations and tie-ins shall be mathematically continuous, uniquely constrained and checked against the controlled coordinate system.",
+      "prevention": "Use typed alignment primitives and continuity checks; reject disconnected, reversed-station or self-intersecting geometry."
+    },
+    {
+      "id": "CIV-G008",
+      "name": "grading_drainage_and_no_trapped_surface",
+      "requirement": "Finished surfaces, spot levels, breaklines, slopes, flow paths, inlets, outlets and overflow routes shall form a coherent drainage model with no unexplained trapped low points.",
+      "prevention": "Run surface topology, minimum/maximum grade, ponding, inlet capture and safe-overflow checks after every grading change."
+    },
+    {
+      "id": "CIV-G009",
+      "name": "hydrology_hydraulics_and_outfall_authority",
+      "requirement": "Catchments, rainfall source, return periods, runoff parameters, tailwater, storage, conveyance, freeboard and outfall permissions shall be traceable to the selected authority and calculation model.",
+      "prevention": "Bind every plotted hydraulic result to model inputs and scenario IDs; a pipe label or visual slope is not hydraulic proof."
+    },
+    {
+      "id": "CIV-G010",
+      "name": "utility_identity_separation_and_crossing_coordination",
+      "requirement": "Each existing and proposed utility shall have typed service identity, material, size, level, ownership, protection, separation, crossing and maintenance-access requirements.",
+      "prevention": "Run three-dimensional conflict and access-envelope checks across all utilities; unresolved records remain uncertainty blockers."
+    },
+    {
+      "id": "CIV-G011",
+      "name": "road_accessibility_and_safety_geometry",
+      "requirement": "Road, path, curb, ramp, crossing, sight-distance, vehicle-envelope, pedestrian, cycle and accessibility geometry shall be checked against the selected project criteria and user classes.",
+      "prevention": "Use swept paths, slope/crossfall matrices and accessible-route continuity rather than isolated nominal dimensions."
+    },
+    {
+      "id": "CIV-G012",
+      "name": "earthwork_material_balance_and_unsuitable_material",
+      "requirement": "Existing/proposed surface versions, stripping, bulking/shrinkage, unsuitable material, borrow/disposal and quantity boundaries shall be explicit and reproducible.",
+      "prevention": "Bind quantity reports to exact surface hashes and calculation regions; reject unclosed regions and mixed revisions."
+    },
+    {
+      "id": "CIV-G013",
+      "name": "erosion_sediment_environmental_and_water_controls",
+      "requirement": "Construction and permanent erosion, sediment, pollution, habitat, water-quality and permit controls shall be coordinated with grading and phasing.",
+      "prevention": "Require stage-specific control drawings and inspection/maintenance access before exposing construction candidates."
+    },
+    {
+      "id": "CIV-G014",
+      "name": "cross_discipline_interface_and_clash_closure",
+      "requirement": "Civil interfaces with structure, architecture, electrical, plumbing, HVAC, landscape, fire, rail and process disciplines shall use shared coordinates, controlled clearances and an exact issue ledger.",
+      "prevention": "A resolved issue is removed only after all affected models and drawings are rechecked against the same source revisions."
+    },
+    {
+      "id": "CIV-G015",
+      "name": "constructability_temporary_works_access_and_phasing",
+      "requirement": "Construction access, plant envelopes, temporary support, excavation, dewatering, traffic staging, tie-ins, shutdowns and safe sequencing shall be represented or explicitly assigned to responsible design evidence.",
+      "prevention": "Do not treat the final geometry as proof that intermediate construction states are feasible or safe."
+    },
+    {
+      "id": "CIV-G016",
+      "name": "materials_specifications_and_inspection_characteristics",
+      "requirement": "Material classes, workmanship, compaction, testing, tolerances, acceptance methods and inspection lots shall be linked to drawing objects and current specifications.",
+      "prevention": "Require object-to-specification and object-to-inspection mappings; notes without measurable acceptance criteria do not close the gate."
+    },
+    {
+      "id": "CIV-G017",
+      "name": "plans_profiles_sections_details_and_annotation_closure",
+      "requirement": "Plans, profiles, cross-sections, details, schedules, coordinates, levels, slopes, stations, legends, notes, scales, sheet IDs and revision references shall form a complete stage-appropriate drawing set.",
+      "prevention": "Validate a declared sheet matrix and cross-reference graph; model geometry alone is not a civil deliverable."
+    },
+    {
+      "id": "CIV-G018",
+      "name": "digital_exchange_landxml_gis_and_native_host_persistence",
+      "requirement": "Required DWG/DXF/LandXML/IFC/GIS/native files shall preserve units, coordinates, surfaces, alignments, attributes, layer semantics and source hashes through save/reopen or independent re-import.",
+      "prevention": "Run format-specific round trips and compare typed object inventories, coordinates and hashes before native/exchange claims."
+    },
+    {
+      "id": "CIV-G019",
+      "name": "independent_calculation_model_and_drawing_parity_review",
+      "requirement": "Critical calculations, models, quantities and drawings shall be independently checked for exact input, scenario, object and revision parity; one passing discipline check cannot offset another missing check.",
+      "prevention": "Use an exact coverage ledger with named evidence for every required gate and invalidate affected rows after any source change."
+    },
+    {
+      "id": "CIV-G020",
+      "name": "field_setting_out_asbuilt_and_release_authority",
+      "requirement": "Setting-out data, construction issue status, hold points, as-built capture, deviations, approvals and final release shall remain separated and controlled by the responsible authority.",
+      "prevention": "Generated coordinates and drawings remain review candidates until field control, independent review and authorized issue evidence are complete."
+    }
+  ],
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

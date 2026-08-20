@@ -164,18 +164,37 @@ def _view(
 
 def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
     plan = compile_plan(data)
+    drawing = data.get("drawing", {}) if isinstance(data.get("drawing"), dict) else {}
+    domain = str(drawing.get("domain", "")).strip().lower()
+    dimension_text_height = 280.0 if domain == "architecture" else 4.0
+    source_by_id = {
+        str(item.get("id")): item
+        for item in data.get("steps", [])
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    }
     entities: list[dict[str, Any]] = []
     for item in plan.entities:
         if isinstance(item, ResolvedLine):
-            entities.append(_line(
+            source = source_by_id.get(item.id, {})
+            construction = source.get("construction", {}) if isinstance(source, dict) else {}
+            edit_paths = ["start"]
+            if isinstance(construction, dict) and construction.get("kind") in {"polar", "parallel", "perpendicular"}:
+                edit_paths.append("construction.length")
+            entity = _line(
                 f"PLAN_{item.id}", "PLAN", item.id, item.start, item.end, "geometry", False,
-                ["start", "construction"], "entity",
-            ))
+                edit_paths, "entity",
+            )
+            entity["placement_path"] = "start"
+            entity["placement_point"] = list(item.start)
+            entities.append(entity)
         elif isinstance(item, ResolvedCircle):
-            entities.append(_circle(
+            entity = _circle(
                 f"PLAN_{item.id}", "PLAN", item.id, item.center, item.radius, "geometry", False,
                 ["center", "radius"], "entity",
-            ))
+            )
+            entity["placement_path"] = "center"
+            entity["placement_point"] = list(item.center)
+            entities.append(entity)
         elif isinstance(item, ResolvedArc):
             segments = 32
             start = math.radians(item.start_angle_deg)
@@ -184,13 +203,17 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
                 (item.center[0] + item.radius * math.cos(start + sweep * index / segments), item.center[1] + item.radius * math.sin(start + sweep * index / segments))
                 for index in range(segments + 1)
             ]
-            entities.extend(
+            arc_entities = [
                 _line(
                     f"PLAN_{item.id}_A{index + 1:02d}", "PLAN", item.id, points[index], points[index + 1],
                     "geometry", True, ["center", "radius", "start_angle_deg", "end_angle_deg"], f"arc.segment.{index + 1}",
                 )
                 for index in range(segments)
-            )
+            ]
+            for entity in arc_entities:
+                entity["placement_path"] = "center"
+                entity["placement_point"] = list(item.center)
+            entities.extend(arc_entities)
         elif isinstance(item, ResolvedText):
             entities.append({
                 "id": f"PLAN_{item.id}", "view_id": "PLAN", "source_object_id": item.id,
@@ -203,6 +226,7 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
                 },
                 "role": "annotation", "derived": False, "selectable": True,
                 "edit_paths": ["insert", "value", "height", "rotation_deg"],
+                "placement_path": "insert", "placement_point": list(item.insert),
             })
         else:
             dx, dy = item.second[0] - item.first[0], item.second[1] - item.first[1]
@@ -213,20 +237,20 @@ def _views_2d(data: dict[str, Any]) -> list[dict[str, Any]]:
             second_base = (item.second[0] + nx * offset, item.second[1] + ny * offset)
             dimension_line = _line(
                 f"PLAN_{item.id}_D", "PLAN", item.id, first_base, second_base,
-                "annotation", False, ["base", "dimension_purpose"], "dimension.line",
+                "annotation", False, ["dimension_purpose"], "dimension.line",
             )
             dimension_line["geometry"]["display"] = {
                 "kind": "dimension", "measurement": item.measurement,
                 "orientation_deg": item.orientation_deg, "unit": "mm",
                 "style_name": item.style_name,
                 "dimension_purpose": item.dimension_purpose,
-                "text_height": 280.0,
+                "text_height": dimension_text_height,
                 "owner_id": item.id,
             }
             entities.extend([
                 dimension_line,
-                _line(f"PLAN_{item.id}_E1", "PLAN", item.id, item.first, first_base, "annotation", True, ["first", "base"], "dimension.extension.1"),
-                _line(f"PLAN_{item.id}_E2", "PLAN", item.id, item.second, second_base, "annotation", True, ["second", "base"], "dimension.extension.2"),
+                _line(f"PLAN_{item.id}_E1", "PLAN", item.id, item.first, first_base, "annotation", True, [], "dimension.extension.1"),
+                _line(f"PLAN_{item.id}_E2", "PLAN", item.id, item.second, second_base, "annotation", True, [], "dimension.extension.2"),
             ])
     return [_view("PLAN", "二维设计视图", "native_2d", ["x", "y"], None, "authoritative_2d_geometry", entities)]
 
@@ -428,6 +452,9 @@ def generate_view_package(data: dict[str, Any], space: str, domain: str = "gener
                 "edit_paths": entity["edit_paths"], "back_projection": view["back_projection"],
                 "measurement": view_measurement(view, entity, space, selector_objects_by_id),
             }
+            if entity.get("placement_path") and entity.get("placement_point") is not None:
+                selection["placement_path"] = entity["placement_path"]
+                selection["placement_point"] = list(entity["placement_point"])
             if space == "2d":
                 geometry_type = entity["geometry"]["type"]
                 layer = layer_by_id.get(entity["source_object_id"], "0")
@@ -560,7 +587,7 @@ def _selector_script() -> str:
     return r"""
 function initAicad3dSelector(){
   const canvas=document.getElementById('aicad3d-selector');
-  if(!canvas||!pkg.selector_3d)return;
+  if(!canvas||!pkg.selector_3d)return;canvas.style.touchAction='none';
   const ctx=canvas.getContext('2d');
   let yaw=-0.65,pitch=0.52,zoom=1,dragging=false,moved=false,lastX=0,lastY=0,hitFaces=[],hitEdges=[],hoveredKey=null;
   const faces=[],edges=[],refs=pkg.selection_map;
@@ -600,7 +627,7 @@ function initAicad3dSelector(){
   function segmentDistance(x,y,a,b){const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy;if(!l)return Math.hypot(x-a[0],y-a[1]);const t=Math.max(0,Math.min(1,((x-a[0])*dx+(y-a[1])*dy)/l));return Math.hypot(x-(a[0]+t*dx),y-(a[1]+t*dy));}
   function drawCoordinateTriad(context,w,h,dpr){const origin={x:48*dpr,y:h-42*dpr},size=27*dpr,axes=[['X',[1,0,0],'#c9362b'],['Y',[0,1,0],'#2f6f54'],['Z',[0,0,1],'#2563eb']];for(const [label,v,color] of axes){const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),x1=cy*v[0]-sy*v[1],y1=sy*v[0]+cy*v[1],rx=x1,ry=cp*v[2]-sp*y1,n=Math.hypot(rx,ry)||1,ex=origin.x+rx/n*size,ey=origin.y-ry/n*size;context.beginPath();context.moveTo(origin.x,origin.y);context.lineTo(ex,ey);context.strokeStyle=color;context.lineWidth=1.7*dpr;context.stroke();context.beginPath();context.arc(ex,ey,2.1*dpr,0,Math.PI*2);context.fillStyle=color;context.fill();context.font=`bold ${10*dpr}px Consolas`;context.fillText(label,ex+(rx/n)*7*dpr,ey-(ry/n)*7*dpr);}context.beginPath();context.arc(origin.x,origin.y,2.4*dpr,0,Math.PI*2);context.fillStyle='#132433';context.fill();context.font=`${9*dpr}px Consolas`;context.fillStyle='#475569';context.fillText('MODEL XYZ',12*dpr,h-10*dpr);}
   function draw(){
-    const box=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1,w=Math.max(1,Math.round(box.width*dpr)),h=Math.max(1,Math.round(box.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+    const box=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2),w=Math.max(1,Math.round(box.width*dpr)),h=Math.max(1,Math.round(box.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
     ctx.clearRect(0,0,w,h);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);const scale=Math.min(w,h)*.68/span*zoom;
     const project=v=>{const r=rotate(v);return{x:w/2+r[0]*scale,y:h/2-r[1]*scale,z:r[2]};};
     hitFaces=faces.map(f=>{const p=f.vertices.map(project);return{...f,p,depth:p.reduce((s,v)=>s+v.z,0)/p.length};}).sort((a,b)=>a.depth-b.depth);
@@ -609,10 +636,10 @@ function initAicad3dSelector(){
     for(const e of hitEdges){if(!e.ref)continue;const exact=selectedReferenceKeys().has(e.ref.reference_key),context=selected.includes(e.ref.source_object_id),isKey=e.key||e.ref.key_geometry;if(isKey&&!exact&&!context&&hoveredKey!==e.ref.reference_key)continue;ctx.beginPath();ctx.moveTo(e.a.x,e.a.y);ctx.lineTo(e.b.x,e.b.y);ctx.strokeStyle=exact?'#f59e0b':context?'#2563eb':'#334155';ctx.lineWidth=(exact?1.8:context?1:.65)*dpr;ctx.stroke();}
     if(window.__aicadCoordinateVisible!==false)drawCoordinateTriad(ctx,w,h,dpr);ctx.fillStyle='#475569';ctx.font=`${12*dpr}px Microsoft YaHei,sans-serif`;ctx.fillText('\u62d6\u52a8\u65cb\u8f6c \u00b7 \u6eda\u8f6e\u7f29\u653e \u00b7 \u5355\u51fb\u9009\u62e9\u8fb9\u6216\u9762',12*dpr,20*dpr);
   }
-  canvas.addEventListener('mousedown',e=>{dragging=true;moved=false;lastX=e.clientX;lastY=e.clientY;});
-  canvas.addEventListener('mousemove',e=>{if(!dragging){const b=canvas.getBoundingClientRect(),d=window.devicePixelRatio||1,x=(e.clientX-b.left)*d,y=(e.clientY-b.top)*d,c=[...hitEdges].filter(v=>v.ref&&(v.key||v.ref.key_geometry)).map(edge=>({edge,distance:segmentDistance(x,y,[edge.a.x,edge.a.y],[edge.b.x,edge.b.y])})).filter(v=>v.distance<=9*d).sort((a,b)=>a.distance-b.distance),next=c.length?c[0].edge.ref.reference_key:null;if(next!==hoveredKey){hoveredKey=next;canvas.style.cursor=next?'pointer':'grab';draw();}return;}const dx=e.clientX-lastX,dy=e.clientY-lastY;if(Math.abs(dx)+Math.abs(dy)>1)moved=true;yaw+=dx*.009;pitch=Math.max(-1.45,Math.min(1.45,pitch+dy*.009));lastX=e.clientX;lastY=e.clientY;draw();});
-  canvas.addEventListener('mouseup',e=>{dragging=false;if(moved)return;const b=canvas.getBoundingClientRect(),d=window.devicePixelRatio||1,x=(e.clientX-b.left)*d,y=(e.clientY-b.top)*d,threshold=7*d;const nearest=[...hitEdges].reverse().map(edge=>({edge,distance:segmentDistance(x,y,[edge.a.x,edge.a.y],[edge.b.x,edge.b.y])})).filter(x=>x.distance<=threshold).sort((a,b)=>a.distance-b.distance)[0];if(nearest){toggleSelectionRef(nearest.edge.ref);return;}const face=[...hitFaces].reverse().find(f=>f.ref&&inside(x,y,f.p.map(p=>[p.x,p.y])));if(face)toggleSelectionRef(face.ref);});
-  canvas.addEventListener('mouseleave',()=>{dragging=false;hoveredKey=null;canvas.style.cursor='grab';draw();});canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.35,Math.min(4,zoom*Math.exp(-e.deltaY*.001)));draw();},{passive:false});window.addEventListener('resize',draw);window.drawAicad3d=draw;window.__aicad3dSelector={draw,get coordinateSystemVisible(){return window.__aicadCoordinateVisible!==false}};draw();
+  canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;dragging=true;moved=false;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture?.(e.pointerId);});
+  canvas.addEventListener('pointermove',e=>{if(!dragging){const b=canvas.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2),x=(e.clientX-b.left)*d,y=(e.clientY-b.top)*d,c=[...hitEdges].filter(v=>v.ref&&(v.key||v.ref.key_geometry)).map(edge=>({edge,distance:segmentDistance(x,y,[edge.a.x,edge.a.y],[edge.b.x,edge.b.y])})).filter(v=>v.distance<=9*d).sort((a,b)=>a.distance-b.distance),next=c.length?c[0].edge.ref.reference_key:null;if(next!==hoveredKey){hoveredKey=next;canvas.style.cursor=next?'pointer':'grab';draw();}return;}const dx=e.clientX-lastX,dy=e.clientY-lastY;if(Math.abs(dx)+Math.abs(dy)>1)moved=true;yaw+=dx*.009;pitch=Math.max(-1.45,Math.min(1.45,pitch+dy*.009));lastX=e.clientX;lastY=e.clientY;draw();});
+  canvas.addEventListener('pointerup',e=>{dragging=false;canvas.releasePointerCapture?.(e.pointerId);if(moved)return;const b=canvas.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2),x=(e.clientX-b.left)*d,y=(e.clientY-b.top)*d,threshold=7*d;const nearest=[...hitEdges].reverse().map(edge=>({edge,distance:segmentDistance(x,y,[edge.a.x,edge.a.y],[edge.b.x,edge.b.y])})).filter(x=>x.distance<=threshold).sort((a,b)=>a.distance-b.distance)[0];if(nearest){toggleSelectionRef(nearest.edge.ref);return;}const face=[...hitFaces].reverse().find(f=>f.ref&&inside(x,y,f.p.map(p=>[p.x,p.y])));if(face)toggleSelectionRef(face.ref);});
+  canvas.addEventListener('pointercancel',()=>{dragging=false;hoveredKey=null;canvas.style.cursor='grab';draw();});canvas.addEventListener('pointerleave',()=>{if(!dragging){hoveredKey=null;canvas.style.cursor='grab';draw();}});canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.35,Math.min(4,zoom*Math.exp(-e.deltaY*.001)));draw();},{passive:false});window.addEventListener('resize',draw);document.addEventListener('visibilitychange',()=>{if(!document.hidden)draw();});window.drawAicad3d=draw;window.__aicad3dSelector={draw,get coordinateSystemVisible(){return window.__aicadCoordinateVisible!==false}};draw();
 }
 """
 

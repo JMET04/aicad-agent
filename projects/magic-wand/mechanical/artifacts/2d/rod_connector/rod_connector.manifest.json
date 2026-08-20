@@ -1,0 +1,41 @@
+{
+  "schema_version": "2.0",
+  "name": "MW-M-004 rod connector review drawing",
+  "domain": "mechanical",
+  "source_sha256": "30933b67298b7170af8a89202067a574f29bedc836af01fd868aaf2aeb4389b6",
+  "units": "mm",
+  "origin": [
+    0.0,
+    0.0
+  ],
+  "tolerance": 0.001,
+  "entity_count": 19,
+  "entity_types": {
+    "line": 15,
+    "circle": 0,
+    "arc": 0,
+    "text": 1,
+    "dimension": 3
+  },
+  "layers": {
+    "CENTER": 1,
+    "DIMENSION": 3,
+    "HIDDEN": 2,
+    "NOTES": 1,
+    "NOTE_FRAME": 4,
+    "OUTLINE": 8
+  },
+  "roles": {
+    "datum": 1,
+    "interface": 10,
+    "outline": 8
+  },
+  "editable_entities": 19,
+  "dependency_edges": 16,
+  "artifacts": [
+    "rod_connector.aicad",
+    "rod_connector.scr",
+    "rod_connector.dxf",
+    "rod_connector.audit.md"
+  ]
+}

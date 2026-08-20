@@ -1,0 +1,12 @@
+requirement_id,electronics_evidence,firmware_evidence,verification_gate,status
+SYS-002,interface-control.md press-to-arm and TP10,firmware/state-machine.md plus state_machine.c,HIL arm-release timing <=100 ms normal link; packet-loss fallback <=250 ms,pending_physical_test
+SYS-003,receiver connectivity has gate pulldown and inactive reset intent,firmware/state-machine.md and state_machine.c,Oscilloscope boot/reset/brownout/watchdog/link-loss test,pending_physical_test
+SYS-004,system-architecture.md explicitly limits IMU claim,firmware/gesture-dictionary.yaml and gesture.c,Labelled user dataset confusion matrix and reject-rate test,pending_dataset
+SYS-005,evidence-manifest.json Nordic/u-blox capability evidence,firmware/protocol.md and protocol.c,Negative vectors for duplicate stale cross-device unauthenticated and nonce reuse,pending_security_review
+SYS-006,wand connectivity BQ25185 TPS63900 LiPo NTC USB-C sink and calculations,firmware state observes charger only,Ordered cell review plus charge/thermal/USB sink bench tests,pending_ordered_part_and_bench
+SYS-007,pcb-constraints.json RF-001/RF-002,firmware radio configuration must use reviewed stack,Native PCB/enclosure overlay and RF comparison test,pending_native_layout
+SYS-008,interface-control.md receiver J2/J3/J4 and receiver connectivity,firmware output allow-list and bounded pulses,Native EDA review plus VREF isolation and 5-12 V load/fault tests,pending_native_layout_and_bench
+SYS-009,interface-control.md states no mains conductor enters the PCB or enclosure,firmware exposes only SELV signal command,Qualified electrical professional installation boundary review,external_specialist_required
+SYS-010,interface-control.md permits signals only and requires external SBUS inverter,firmware protocol excludes flight arming/propulsion commands,Flight integrator configuration plus restrained ground test; no primary control,external_specialist_required
+SYS-011,wand DRV2605L haptic path and charger/IMU inputs,firmware/state-machine.md feedback map and gesture rejection,Blinded supervised usability plus fault-state HIL,pending_implementation_and_user_test
+SYS-012,README.md review-only banner review-report.md blockers and pcb-constraints release locks,firmware/README.md review-only build blocker,Delivery/release-lock audit; no native or manufacturing claim while blocker open,enforced_review_only

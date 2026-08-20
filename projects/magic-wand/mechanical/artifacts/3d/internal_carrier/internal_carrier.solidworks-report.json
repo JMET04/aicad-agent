@@ -1,0 +1,784 @@
+{
+  "errors": [ ],
+  "features": [
+    {
+      "actual_volume_delta_mm3": 20961.280000000002,
+      "after": {
+        "bbox_mm": [
+          -8.9,
+          -6.4,
+          0,
+          8.9,
+          6.4,
+          92
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 6086.079999999999,
+        "volume_mm3": 20961.280000000002
+      },
+      "before": {
+        "bbox_mm": null,
+        "body_fault_count": 0,
+        "solid_body_count": 0,
+        "surface_area_mm2": 0,
+        "volume_mm3": 0
+      },
+      "checks": [
+        "PASS:volume_before",
+        "PASS:feature_error_code",
+        "PASS:sketch_fully_constrained",
+        "PASS:body_valid",
+        "PASS:support_plane_not_applicable",
+        "PASS:solid_body_count",
+        "PASS:volume_after",
+        "PASS:volume_delta",
+        "PASS:bbox",
+        "PASS:persistent_reference",
+        "PASS:native_topology_required_refs"
+      ],
+      "expected_volume_after_mm3": 20961.280000000006,
+      "explicit_center_dimension_count": 0,
+      "explicit_center_relation_count": 0,
+      "explicit_radius_dimension_count": 0,
+      "explicit_rectangle_position_dimension_count": 2,
+      "explicit_rectangle_position_relation_count": 0,
+      "explicit_rectangle_size_dimension_count": 2,
+      "feature_error_code": 0,
+      "feature_warning": false,
+      "id": "F001",
+      "native_topology": [
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": "AICAD_REF_0001",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEADABzZ0xpbmVIYW5kbGUAAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.edge.1",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -8.9,
+            -6.4,
+            8.9,
+            -6.4,
+            0
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": "AICAD_REF_0002",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEADABzZ0xpbmVIYW5kbGUBAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.edge.2",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            8.9,
+            -6.4,
+            8.9,
+            6.4,
+            0
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": "AICAD_REF_0003",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEADABzZ0xpbmVIYW5kbGUCAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.edge.3",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            8.9,
+            6.4,
+            -8.9,
+            6.4,
+            0
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": "AICAD_REF_0004",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEADABzZ0xpbmVIYW5kbGUDAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.edge.4",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -8.9,
+            6.4,
+            -8.9,
+            -6.4,
+            0
+          ]
+        },
+        {
+          "classification": "opposite_planar_face",
+          "custom_property_name": "AICAD_REF_0005",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAA3C6HagQAAAAMgAAABYAIAFMAAADcLodqAQAAAAyAAAAFgAgAUwAAANwuh2oCAAAADIAAAAWACABTAAAA3C6HagMAAAAAAAAAAAAAAAAAOEoAAAAAAAAAAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.opposite",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -8.9,
+            -6.4,
+            92,
+            8.9,
+            6.4,
+            92
+          ]
+        },
+        {
+          "classification": "rectangle_side_top",
+          "custom_property_name": "AICAD_REF_0006",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagMAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAADcLodqAAAAAAAAAAADgAAABYAIAFMAAADcLodqBAAAAAyAAAAFgAgAUwAAANwuh2oBAAAAAAAAAAOAAAAFgAgAUwAAANwuh2oCAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.side.3",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -8.9,
+            6.4,
+            0,
+            8.9,
+            6.4,
+            92
+          ]
+        },
+        {
+          "classification": "rectangle_side_right",
+          "custom_property_name": "AICAD_REF_0007",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagIAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAADcLodqAAAAAAAAAAADgAAABYAIAFMAAADcLodqAwAAAAyAAAAFgAgAUwAAANwuh2oBAAAAAAAAAAOAAAAFgAgAUwAAANwuh2oBAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.side.2",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            8.9,
+            -6.4,
+            0,
+            8.9,
+            6.4,
+            92
+          ]
+        },
+        {
+          "classification": "rectangle_side_bottom",
+          "custom_property_name": "AICAD_REF_0008",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagEAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAADcLodqAAAAAAAAAAADgAAABYAIAFMAAADcLodqAgAAAAyAAAAFgAgAUwAAANwuh2oBAAAAAAAAAAOAAAAFgAgAUwAAANwuh2oEAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.side.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -8.9,
+            -6.4,
+            0,
+            8.9,
+            -6.4,
+            92
+          ]
+        },
+        {
+          "classification": "rectangle_side_left",
+          "custom_property_name": "AICAD_REF_0009",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagQAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAADcLodqAAAAAAAAAAADgAAABYAIAFMAAADcLodqAQAAAAyAAAAFgAgAUwAAANwuh2oBAAAAAAAAAAOAAAAFgAgAUwAAANwuh2oDAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.side.4",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -8.9,
+            -6.4,
+            0,
+            -8.9,
+            6.4,
+            92
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0010",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAA3C6HagQAAAAMgAAABYAIAFMAAADcLodqAwAAAAyAAAAFgAgAUwAAANwuh2oBAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.opposite.4",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -8.9,
+            6.4,
+            92,
+            -8.9,
+            -6.4,
+            92
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0011",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAA3C6HagEAAAAMgAAABYAIAFMAAADcLodqBAAAAAyAAAAFgAgAUwAAANwuh2oCAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -8.9,
+            -6.4,
+            92,
+            8.9,
+            -6.4,
+            92
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0012",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAA3C6HagIAAAAMgAAABYAIAFMAAADcLodqAQAAAAyAAAAFgAgAUwAAANwuh2oDAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.opposite.2",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            8.9,
+            -6.4,
+            92,
+            8.9,
+            6.4,
+            92
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0013",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAA3C6HagMAAAAMgAAABYAIAFMAAADcLodqAgAAAAyAAAAFgAgAUwAAANwuh2oEAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.opposite.3",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            8.9,
+            6.4,
+            92,
+            -8.9,
+            6.4,
+            92
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0014",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagQAAAADgAAABYAIAFMAAADcLodqAwAAAP\/\/AQAUAG1vRW5kRmFjZVN1cmZJZFJlcF9jAAAFgAgAUwAAANwuh2oBAAAAAAAAAA6AAAAFgAgAUwAAANwuh2oAAAAAAAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.vertical.4",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -8.9,
+            6.4,
+            92,
+            -8.9,
+            6.4,
+            0
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0015",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagMAAAADgAAABYAIAFMAAADcLodqAgAAAP\/\/AQAUAG1vRW5kRmFjZVN1cmZJZFJlcF9jAAAFgAgAUwAAANwuh2oBAAAAAAAAAA6AAAAFgAgAUwAAANwuh2oAAAAAAAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.vertical.3",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            8.9,
+            6.4,
+            92,
+            8.9,
+            6.4,
+            0
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0016",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagIAAAADgAAABYAIAFMAAADcLodqAQAAAP\/\/AQAUAG1vRW5kRmFjZVN1cmZJZFJlcF9jAAAFgAgAUwAAANwuh2oBAAAAAAAAAA6AAAAFgAgAUwAAANwuh2oAAAAAAAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.vertical.2",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            8.9,
+            -6.4,
+            92,
+            8.9,
+            -6.4,
+            0
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0017",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagEAAAADgAAABYAIAFMAAADcLodqBAAAAP\/\/AQAUAG1vRW5kRmFjZVN1cmZJZFJlcF9jAAAFgAgAUwAAANwuh2oBAAAAAAAAAA6AAAAFgAgAUwAAANwuh2oAAAAAAAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.vertical.1",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -8.9,
+            -6.4,
+            92,
+            -8.9,
+            -6.4,
+            0
+          ]
+        }
+      ],
+      "passed": true,
+      "persistent_reference_base64": null,
+      "persistent_reference_resolved": false,
+      "persistent_reference_status": 0,
+      "profile_segment_count": 4,
+      "purpose": "Create the carrier outer sliding envelope.",
+      "selected_support_plane_z_mm": null,
+      "sketch_autodim_status": 0,
+      "sketch_constraint_status": 3,
+      "sketch_name": "AICAD_SKETCH_F001",
+      "support_face_selection_method": null,
+      "support_feature": null,
+      "type": "base_extrude",
+      "used_fixed_fallback": false
+    },
+    {
+      "actual_volume_delta_mm3": -14734.72,
+      "after": {
+        "bbox_mm": [
+          -8.9,
+          -6.4,
+          0,
+          8.9,
+          6.4,
+          92
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 10512.96,
+        "volume_mm3": 6226.5600000000031
+      },
+      "before": {
+        "bbox_mm": [
+          -8.9,
+          -6.4,
+          0,
+          8.9,
+          6.4,
+          92
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 6086.079999999999,
+        "volume_mm3": 20961.280000000002
+      },
+      "checks": [
+        "PASS:volume_before",
+        "PASS:feature_error_code",
+        "PASS:sketch_fully_constrained",
+        "PASS:body_valid",
+        "PASS:support_plane_feature_and_z",
+        "PASS:solid_body_count",
+        "PASS:volume_after",
+        "PASS:volume_delta",
+        "PASS:bbox",
+        "PASS:persistent_reference",
+        "PASS:native_topology_required_refs"
+      ],
+      "expected_volume_after_mm3": 6226.5600000000022,
+      "explicit_center_dimension_count": 0,
+      "explicit_center_relation_count": 0,
+      "explicit_radius_dimension_count": 0,
+      "explicit_rectangle_position_dimension_count": 2,
+      "explicit_rectangle_position_relation_count": 0,
+      "explicit_rectangle_size_dimension_count": 2,
+      "feature_error_code": 0,
+      "feature_warning": false,
+      "id": "F002",
+      "native_topology": [
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": "AICAD_REF_0018",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFQAAAD\/\/wEADABzZ0xpbmVIYW5kbGUAAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|profile.edge.1",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -7.7,
+            -5.2,
+            7.7,
+            -5.2,
+            92
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": "AICAD_REF_0019",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFQAAAD\/\/wEADABzZ0xpbmVIYW5kbGUBAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|profile.edge.2",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            7.7,
+            -5.2,
+            7.7,
+            5.2,
+            92
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": "AICAD_REF_0020",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFQAAAD\/\/wEADABzZ0xpbmVIYW5kbGUCAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|profile.edge.3",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            7.7,
+            5.2,
+            -7.7,
+            5.2,
+            92
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": "AICAD_REF_0021",
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFQAAAD\/\/wEADABzZ0xpbmVIYW5kbGUDAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|profile.edge.4",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -7.7,
+            5.2,
+            -7.7,
+            -5.2,
+            92
+          ]
+        },
+        {
+          "classification": "rectangle_side_bottom",
+          "custom_property_name": "AICAD_REF_0022",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMgACAADaLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAXgAAAN0uh2oBAAAA\/\/\/\/\/wAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAADcLodqAQAAAAAAAAADgAAABYAIAF4AAADdLodqAgAAAP\/\/\/\/8AAAAADIAAAAWACABTAAAA3C6HagAAAAAAAAAAA4AAAAWACABeAAAA3S6HagQAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAAAA4SgAAAAAAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.face.side.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -7.7,
+            -5.2,
+            0,
+            7.7,
+            -5.2,
+            92
+          ]
+        },
+        {
+          "classification": "rectangle_side_right",
+          "custom_property_name": "AICAD_REF_0023",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMgACAADaLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAXgAAAN0uh2oCAAAA\/\/\/\/\/wAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAADcLodqAQAAAAAAAAADgAAABYAIAF4AAADdLodqAwAAAP\/\/\/\/8AAAAADIAAAAWACABTAAAA3C6HagAAAAAAAAAAA4AAAAWACABeAAAA3S6HagEAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAAAA4SgAAAAAAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.face.side.2",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            7.7,
+            -5.2,
+            0,
+            7.7,
+            5.2,
+            92
+          ]
+        },
+        {
+          "classification": "rectangle_side_top",
+          "custom_property_name": "AICAD_REF_0024",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMgACAADaLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAXgAAAN0uh2oDAAAA\/\/\/\/\/wAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAADcLodqAQAAAAAAAAADgAAABYAIAF4AAADdLodqBAAAAP\/\/\/\/8AAAAADIAAAAWACABTAAAA3C6HagAAAAAAAAAAA4AAAAWACABeAAAA3S6HagIAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAAAA4SgAAAAAAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.face.side.3",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -7.7,
+            5.2,
+            0,
+            7.7,
+            5.2,
+            92
+          ]
+        },
+        {
+          "classification": "rectangle_side_left",
+          "custom_property_name": "AICAD_REF_0025",
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMgACAADaLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAXgAAAN0uh2oEAAAA\/\/\/\/\/wAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAADcLodqAQAAAAAAAAADgAAABYAIAF4AAADdLodqAQAAAP\/\/\/\/8AAAAADIAAAAWACABTAAAA3C6HagAAAAAAAAAAA4AAAAWACABeAAAA3S6HagMAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAAAA4SgAAAAAAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.face.side.4",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -7.7,
+            -5.2,
+            0,
+            -7.7,
+            5.2,
+            92
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0026",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMgACAADaLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAXgAAAN0uh2oCAAAA\/\/\/\/\/wAAAAADgAAABYAIAF4AAADdLodqAQAAAP\/\/\/\/8AAAAA\/\/8BABQAbW9FbmRGYWNlU3VyZklkUmVwX2MAAAWACABTAAAA3C6HagAAAAAAAAAADoAAAAWACABTAAAA3C6HagEAAAAAAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.edge.vertical.2",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            7.7,
+            -5.2,
+            0,
+            7.7,
+            -5.2,
+            92
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0027",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagAAAAAAAAAA\/\/8BABsAbW9Gcm9tU2t0RW50M0ludFN1cmZJZFJlcF9jAAAFgAgAXgAAAN0uh2oBAAAA\/\/\/\/\/wAAAAAMgAAABYAIAF4AAADdLodqBAAAAP\/\/\/\/8AAAAADIAAAAWACABeAAAA3S6HagIAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.edge.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -7.7,
+            -5.2,
+            0,
+            7.7,
+            -5.2,
+            0
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0028",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMgACAADaLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAXgAAAN0uh2oBAAAA\/\/\/\/\/wAAAAADgAAABYAIAF4AAADdLodqBAAAAP\/\/\/\/8AAAAA\/\/8BABQAbW9FbmRGYWNlU3VyZklkUmVwX2MAAAWACABTAAAA3C6HagAAAAAAAAAADoAAAAWACABTAAAA3C6HagEAAAAAAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.edge.vertical.1",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -7.7,
+            -5.2,
+            0,
+            -7.7,
+            -5.2,
+            92
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0029",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMgACAADaLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAXgAAAN0uh2oDAAAA\/\/\/\/\/wAAAAADgAAABYAIAF4AAADdLodqAgAAAP\/\/\/\/8AAAAA\/\/8BABQAbW9FbmRGYWNlU3VyZklkUmVwX2MAAAWACABTAAAA3C6HagAAAAAAAAAADoAAAAWACABTAAAA3C6HagEAAAAAAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.edge.vertical.3",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            7.7,
+            5.2,
+            0,
+            7.7,
+            5.2,
+            92
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0030",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagAAAAAAAAAA\/\/8BABsAbW9Gcm9tU2t0RW50M0ludFN1cmZJZFJlcF9jAAAFgAgAXgAAAN0uh2oCAAAA\/\/\/\/\/wAAAAAMgAAABYAIAF4AAADdLodqAQAAAP\/\/\/\/8AAAAADIAAAAWACABeAAAA3S6HagMAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.edge.opposite.2",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            7.7,
+            -5.2,
+            0,
+            7.7,
+            5.2,
+            0
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0031",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMgACAADaLodq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAXgAAAN0uh2oEAAAA\/\/\/\/\/wAAAAADgAAABYAIAF4AAADdLodqAwAAAP\/\/\/\/8AAAAA\/\/8BABQAbW9FbmRGYWNlU3VyZklkUmVwX2MAAAWACABTAAAA3C6HagAAAAAAAAAADoAAAAWACABTAAAA3C6HagEAAAAAAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.edge.vertical.4",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -7.7,
+            5.2,
+            0,
+            -7.7,
+            5.2,
+            92
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0032",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagAAAAAAAAAA\/\/8BABsAbW9Gcm9tU2t0RW50M0ludFN1cmZJZFJlcF9jAAAFgAgAXgAAAN0uh2oDAAAA\/\/\/\/\/wAAAAAMgAAABYAIAF4AAADdLodqAgAAAP\/\/\/\/8AAAAADIAAAAWACABeAAAA3S6HagQAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.edge.opposite.3",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            7.7,
+            5.2,
+            0,
+            -7.7,
+            5.2,
+            0
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": "AICAD_REF_0033",
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagAAAAAAAAAA\/\/8BABsAbW9Gcm9tU2t0RW50M0ludFN1cmZJZFJlcF9jAAAFgAgAXgAAAN0uh2oEAAAA\/\/\/\/\/wAAAAAMgAAABYAIAF4AAADdLodqAwAAAP\/\/\/\/8AAAAADIAAAAWACABeAAAA3S6HagEAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.edge.opposite.4",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -7.7,
+            5.2,
+            0,
+            -7.7,
+            -5.2,
+            0
+          ]
+        }
+      ],
+      "passed": true,
+      "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4yAAIAANouh2r\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAA3C6HagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAA3C6HagQAAAAMgAAABYAIAFMAAADcLodqAQAAAAyAAAAFgAgAUwAAANwuh2oCAAAADIAAAAWACABTAAAA3C6HagMAAAAAAAAAAAAAAAAAOEoAAAAAAAAAAAAA",
+      "persistent_reference_resolved": true,
+      "persistent_reference_status": 0,
+      "profile_segment_count": 4,
+      "purpose": "Create the axial module tunnel and four connected carrier walls.",
+      "selected_support_plane_z_mm": 92,
+      "sketch_autodim_status": 0,
+      "sketch_constraint_status": 3,
+      "sketch_name": "AICAD_SKETCH_F002",
+      "support_face_selection_method": "named_feature_exact_z",
+      "support_feature": "F001",
+      "type": "cut_extrude",
+      "used_fixed_fallback": false
+    }
+  ],
+  "final_state": {
+    "bbox_mm": [
+      -8.9,
+      -6.4,
+      0,
+      8.9,
+      6.4,
+      92
+    ],
+    "body_fault_count": 0,
+    "solid_body_count": 1,
+    "surface_area_mm2": 10512.96,
+    "volume_mm3": 6226.5600000000031
+  },
+  "native_topology_reference_count": 33,
+  "output_sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\internal_carrier\\internal_carrier.SLDPRT",
+  "output_step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\internal_carrier\\internal_carrier.step",
+  "protocol": "AICAD_SOLIDWORKS_REPORT_2",
+  "required_native_topology_reference_count": 8,
+  "sldprt_save_errors": 0,
+  "sldprt_save_warnings": 0,
+  "solidworks_revision": "34.0.0",
+  "source_sha256": "2c3753181eae2461e22438865ec4f3ca92a6261b9fbd106bacb9d8274f6ea8de",
+  "status": "passed",
+  "step_save_errors": 0,
+  "step_save_warnings": 0,
+  "unresolved_required_native_topology_reference_count": 0
+}

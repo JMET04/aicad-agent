@@ -11,7 +11,10 @@ Use the bundled tools as the execution boundary. Do not emit raw AutoCAD command
 
 Use this order. Do not skip or rearrange it:
 
-0. Load `rules/normative_governance_rules.json`. Declare `domain`, `deliveryStage`, `selectedRulePacks`, `applicableStandards` and highest-to-lowest source authority before interpreting preferences or creating geometry. The normative gate is first and non-compensatory in every domain; a missing domain pack, standard edition/scope, or standard-bound governed requirement blocks all later stages.
+0. Call `aicad_get_engineering_domain_registry`; resolve one registered `domain`, space and delivery stage before interpretation. Never route an unknown or declared specialist domain through `general`. A `foundation` domain may return intent, obligations and a blocker report but must not expose specialist CAD until its registry evidence is promoted.
+0a. Build an `aicad_experience_context_v1`, call `aicad_recall_experience`, and inspect every canonical coverage key before geometry. Candidate lessons are advisory only. For a governed job, fill the returned ledger with real `{path,size,sha256,kind}` evidence below one controlled root and call `aicad_validate_review_coverage`; missing, duplicate, extra, stale or fabricated evidence blocks the next stage.
+0b. Load `rules/normative_governance_rules.json`. Declare `deliveryStage`, `selectedRulePacks`, source-bound `applicableStandards` and highest-to-lowest source authority. The normative gate is non-compensatory in every domain; a missing domain pack, standard edition/scope, or standard-bound governed requirement blocks all later stages.
+0c. For `civil`, create the exact `aicad_civil_review_candidate_v1` contract, bind jurisdiction, CRS/datum/epoch/geoid, zero-origin mm↔ground-m mapping, at least two field-observed verified control points, alignment/profile/drainage and utility/geotechnical evidence below one controlled root, then call `aicad_validate_civil_review_candidate`. Embed the passing contract as `civil_review_candidate`. It authorizes only a constrained review candidate; terrain, LandXML, hydraulic analysis, construction issue and professional release remain external.
 1. Understand the whole request before drawing. Separate explicit user facts, approved numeric inputs, selected standards, CAD references, image-only references, preferences, forbidden features and assumptions.
 2. Freeze a `aicad_drawing_requirement_contract_v1` document using `rules/drawing_requirement_contract.schema.json`. Give every hard requirement an ASCII ID, source, typed expected relation and confirmation policy. Declare the product type, use case, units, structure family, top and bottom functions, dimensions, required/allowed/forbidden major features, outputs and safety locks.
 3. Resolve conflicts by the declared source authority. Never derive engineering dimensions from image pixels. A high-impact assumption that changes product type, structure, closure, fit or a critical dimension must be confirmed rather than merely disclosed.
@@ -21,6 +24,7 @@ Use this order. Do not skip or rearrange it:
 6. Select the exact versioned structure-family normality template. Author the origin-anchored schema 2.0 plan and logical geometry catalog. Every entity still needs purpose, reasoning, dependencies and sufficient mathematical constraints. Axis identifiers and geometry-bound tags must be real constrained TEXT steps; post-processed labels cannot satisfy the contract. Semantic architectural layers must preserve the normative linetype and lineweight through AICAD protocol 3, SCR, DXF and host readback.
 7. Run `scripts/aicad_normality_prover.py`. Require plan/geometry bijection, one named owner per endpoint, full independent constraint rank, one simple closed contour when applicable, complete feature/face contracts, functional formulas, bounding box and coupled parameter-domain regression.
 8. Use `scripts/aicad_guarded_delivery.py` as the candidate-output boundary. It reruns stage 1 and stage 2 in order, compiles only after both pass, verifies every required artifact, enforces ASCII execution channels and audits hashes before exposing the output directory. For architecture with strictProductionOnly=true, also require `aicad_architectural_detail_contract_v2`, typed object profiles from `architectural_symbol_profiles.json`, the full production drawing-set matrix and evidence-bound production readiness v2. Concept/review CAD is not exposed.
+8a. For `packaging`, call `aicad_guarded_packaging_delivery` instead of the generic compiler. Requirement conformance and the normality proof are ordered, non-compensatory gates; their source/hash bindings and the final artifact closure must all pass before a candidate directory can appear. Material tests, press/tooling trials and manufacturing release remain external.
 9. Inspect the returned manifest and audit. When presentation matters, require an opaque original-resolution visual check. When native CAD or persistence matters, perform a real host save/reopen and XData/layer/coordinate audit. Keep human engineering review for risks that are not mathematically modeled.
 
 For a trivial rectangle, circle, arc, or rectangular plate with one centered hole, `aicad_generate` remains available as a low-risk shortcut. A caller-supplied low-risk schema 2.0 plan can still use `aicad_compile_plan`. Do not use either shortcut for packaging, closure systems, multi-face products, fit-critical parts or any request with reference material and conflicting sources.
@@ -106,12 +110,18 @@ Never claim that a drawing was created when the tool returned `ok: false`, when 
 
 Never present a candidate as ready merely because the guarded build passed. State which post-build gates were actually run: visual inspection, native CAD save/reopen, persistence audit and human engineering review. Keep `reviewOnly=true`, `accepted=false`, `ruleEnabled=false`, and `packagingGated=true` unless a separately authorized governance process changes them.
 
+For natural-language generation, return the `*.provider-run.json` ledger with the drawing. Report API-response token usage and the date-stamped price estimate; missing usage or an unknown model price must remain `unknown`, never zero. Offline deterministic generation has USD 0 API cost and `null` token fields because tokens are not applicable.
+
 ## CLI fallback
 
 When MCP tools are unavailable, invoke the bundled script from the plugin root:
 
 ```powershell
 python scripts/aicad_agent.py capabilities
+python scripts/aicad_agent.py experience-context-schema
+python scripts/aicad_agent.py domain-registry
+python scripts/aicad_agent.py experience-recall --context context.json
+python scripts/aicad_agent.py coverage-validate --recall recall.json --ledger coverage.json --evidence-root evidence
 python scripts/aicad_agent.py open-review --review-html build/job/drawing.modifier.html
 python scripts/aicad_agent.py generate --request "120x80 plate with centered diameter 20 hole" --out build/job
 python scripts/aicad_agent.py generate --request-file request-utf8.txt --out build/job

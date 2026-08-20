@@ -1,0 +1,58 @@
+{
+  "schema": "aicad_engineering_normative_preflight_report_v1",
+  "status": "pass",
+  "domain": "mechanical",
+  "conclusion": "normative_preflight_ready_for_controlled_generation_only",
+  "canonicalRules": {
+    "schema": "aicad_production_readiness_rules_v3",
+    "version": "3.0.0",
+    "path": "rules/production_readiness_rules.json"
+  },
+  "checks": {
+    "schemaValid": true,
+    "canonicalRulesIdentityMatches": true,
+    "authorityOrderIsCanonical": true,
+    "sourcesAreUniquePortableAndAuthoritative": true,
+    "sourceFilesExistAndMatchDeclaredHashes": true,
+    "canonicalStandardsAreEditionScopeBound": true,
+    "canonicalGenerationGateInventoryIsExact": true,
+    "everyGateIsSourceBoundAndGenerationConstrained": true,
+    "canonicalGateContentAndFingerprintMatch": true,
+    "allConflictsAreResolved": true,
+    "safetyLocksRemainClosed": true
+  },
+  "counts": {
+    "canonicalSections": 3,
+    "canonicalGates": 54,
+    "contractGates": 54,
+    "requiredStandards": 14,
+    "contractStandards": 14,
+    "sources": 2,
+    "unresolvedGates": 0,
+    "notApplicableGates": 0
+  },
+  "failures": [],
+  "generationGate": {
+    "stage": 0,
+    "nextStageAllowed": true,
+    "nonCompensatory": true,
+    "artifactExposureAllowed": false
+  },
+  "readinessBoundary": {
+    "evidenceContractReady": false,
+    "technicalPackageReady": false,
+    "productionReleaseEligible": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false
+  },
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true,
+    "technicalPackageReady": false,
+    "productionReleaseEligible": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false
+  }
+}

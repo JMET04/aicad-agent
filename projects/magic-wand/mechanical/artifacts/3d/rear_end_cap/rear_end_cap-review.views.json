@@ -1,0 +1,6553 @@
+{
+  "schema_version": "1.1",
+  "space": "3d",
+  "domain": "mechanical",
+  "source_sha256": "41a17046bb7cf6b3c34a528382386abd39773c14573b12e429e8d6f72702f691",
+  "review_policy": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "domainGated": true
+  },
+  "semantic_document": {
+    "schema_version": "1.0",
+    "document": {
+      "id": "MW-M-003",
+      "name": "magic_wand_rear_nonconductive_end_cap_prototype",
+      "space": "3d",
+      "domain": "mechanical",
+      "units": "mm",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tolerance": 0.001,
+      "source_sha256": "41a17046bb7cf6b3c34a528382386abd39773c14573b12e429e8d6f72702f691",
+      "locks": [
+        "review_only_prototype",
+        "native_topology_requires_host_reopen",
+        "manufacturing_release_forbidden"
+      ],
+      "review_policy": {
+        "reviewOnly": true,
+        "accepted": false,
+        "ruleEnabled": false,
+        "domainGated": true
+      }
+    },
+    "domain_profile": {
+      "id": "mechanical",
+      "label": "机械零件与装配",
+      "dimensions": [
+        "2d",
+        "3d"
+      ],
+      "object_roles": [
+        "datum",
+        "outline",
+        "hole",
+        "shaft",
+        "boss",
+        "pocket",
+        "interface",
+        "fastener"
+      ],
+      "review_groups": [
+        "datums",
+        "degrees_of_freedom",
+        "fit",
+        "wall_thickness",
+        "interference",
+        "tolerance"
+      ],
+      "built_in": true,
+      "maturity": "constrained",
+      "specialist_generation_blocked": false,
+      "production_release_blocked": true
+    },
+    "objects": [
+      {
+        "id": "F001",
+        "kind": "base_extrude",
+        "space": "3d",
+        "purpose": "Create the rear exposed nonconductive flange.",
+        "reasoning": "The flange closes the rear grip end and preserves the full handle diameter at the antenna end.",
+        "depends_on": [],
+        "anchor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "parameters": {
+          "profile": {
+            "kind": "circle",
+            "center": [
+              0.0,
+              0.0
+            ],
+            "area": 572.5552611167398,
+            "bounds": [
+              -13.5,
+              -13.5,
+              13.5,
+              13.5
+            ],
+            "radius": 13.5,
+            "primitives": [
+              {
+                "center": [
+                  0.0,
+                  0.0
+                ],
+                "radius": 13.5
+              }
+            ]
+          },
+          "depth": 5.0,
+          "end_condition": "blind",
+          "support_feature": null,
+          "support_top_z": 0.0,
+          "resulting_top_z": 5.0,
+          "expected_volume_before": 0.0,
+          "expected_volume_after": 2862.776305583704,
+          "expected_volume_delta": 2862.776305583704,
+          "expected_bbox": [
+            -13.5,
+            -13.5,
+            0.0,
+            13.5,
+            13.5,
+            5.0
+          ],
+          "expected_body_count": 1
+        },
+        "source": {
+          "plan_space": "3d",
+          "object_id": "F001",
+          "sequence": 1,
+          "domain": "mechanical"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "F002",
+        "kind": "boss_extrude",
+        "space": "3d",
+        "purpose": "Create the concentric sliding plug.",
+        "reasoning": "The smaller boss fits inside the shell bore with the declared diametral prototype clearance.",
+        "depends_on": [
+          "F001"
+        ],
+        "anchor": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "parameters": {
+          "profile": {
+            "kind": "circle",
+            "center": [
+              0.0,
+              0.0
+            ],
+            "area": 401.14996593688073,
+            "bounds": [
+              -11.3,
+              -11.3,
+              11.3,
+              11.3
+            ],
+            "radius": 11.3,
+            "primitives": [
+              {
+                "center": [
+                  0.0,
+                  0.0
+                ],
+                "radius": 11.3
+              }
+            ]
+          },
+          "depth": 4.0,
+          "end_condition": "blind",
+          "support_feature": "F001",
+          "support_top_z": 5.0,
+          "resulting_top_z": 9.0,
+          "expected_volume_before": 2862.776305583704,
+          "expected_volume_after": 4467.37616933123,
+          "expected_volume_delta": 1604.599863747526,
+          "expected_bbox": [
+            -13.5,
+            -13.5,
+            0.0,
+            13.5,
+            13.5,
+            9.0
+          ],
+          "expected_body_count": 1
+        },
+        "source": {
+          "plan_space": "3d",
+          "object_id": "F002",
+          "sequence": 2,
+          "domain": "mechanical"
+        },
+        "roles": [
+          "boss"
+        ],
+        "editable": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "R_F001_001",
+        "kind": "center_offset",
+        "members": [
+          "F001"
+        ],
+        "purpose": "Validate center_offset for F001",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "F001",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_F001_002",
+        "kind": "radius",
+        "members": [
+          "F001"
+        ],
+        "purpose": "Validate radius for F001",
+        "hard": true,
+        "value": 13.5,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "F001",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_F001_003",
+        "kind": "depth",
+        "members": [
+          "F001"
+        ],
+        "purpose": "Validate depth for F001",
+        "hard": true,
+        "value": 5.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "F001",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_F002_001",
+        "kind": "support_coincident",
+        "members": [
+          "F002",
+          "F001"
+        ],
+        "purpose": "Validate support_coincident for F002",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "F002",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_F002_002",
+        "kind": "center_offset",
+        "members": [
+          "F002"
+        ],
+        "purpose": "Validate center_offset for F002",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "F002",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_F002_003",
+        "kind": "radius",
+        "members": [
+          "F002"
+        ],
+        "purpose": "Validate radius for F002",
+        "hard": true,
+        "value": 11.3,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "F002",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_F002_004",
+        "kind": "depth",
+        "members": [
+          "F002"
+        ],
+        "purpose": "Validate depth for F002",
+        "hard": true,
+        "value": 4.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "F002",
+          "constraint_index": 3
+        }
+      }
+    ],
+    "invariants": {
+      "origin_anchored": true,
+      "ordered_dependencies": true,
+      "all_objects_explained": true,
+      "review_only": true,
+      "accepted": false,
+      "rule_enabled": false,
+      "domain_gated": true
+    },
+    "validation": {
+      "ok": true,
+      "valid": true,
+      "space": "3d",
+      "domain": "mechanical",
+      "object_count": 2,
+      "relation_count": 7,
+      "source_sha256": "41a17046bb7cf6b3c34a528382386abd39773c14573b12e429e8d6f72702f691",
+      "semantic_sha256": "836194cf5f15126b868e210664b17eb64c745248fcab3600993e7c65fe2407d0"
+    }
+  },
+  "coordinate_system": {
+    "id": "MODEL_XYZ",
+    "type": "cartesian",
+    "handedness": "right",
+    "origin": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "axes": {
+      "x": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "y": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "z": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "unit": "mm"
+  },
+  "views": [
+    {
+      "id": "TOP",
+      "label": "俯视图",
+      "kind": "orthographic",
+      "axes": [
+        "x",
+        "y"
+      ],
+      "lost_axis": "z",
+      "plane": null,
+      "geometry_scope": "feature_profiles_before_final_visibility",
+      "entities": [
+        {
+          "id": "TOP_F001_C001",
+          "view_id": "TOP",
+          "source_object_id": "F001",
+          "source_subobject": "profile.circle.1",
+          "geometry": {
+            "type": "circle",
+            "center": [
+              0.0,
+              0.0
+            ],
+            "radius": 13.5
+          },
+          "role": "additive",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "TOP_F001_CENTER",
+          "view_id": "TOP",
+          "source_object_id": "F001",
+          "source_subobject": "profile.center",
+          "geometry": {
+            "type": "point",
+            "point": [
+              0.0,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center"
+          ],
+          "key_geometry": true,
+          "key_kind": "geometric_center"
+        },
+        {
+          "id": "TOP_F002_C001",
+          "view_id": "TOP",
+          "source_object_id": "F002",
+          "source_subobject": "profile.circle.1",
+          "geometry": {
+            "type": "circle",
+            "center": [
+              0.0,
+              0.0
+            ],
+            "radius": 11.3
+          },
+          "role": "additive",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "TOP_F002_CENTER",
+          "view_id": "TOP",
+          "source_object_id": "F002",
+          "source_subobject": "profile.center",
+          "geometry": {
+            "type": "point",
+            "point": [
+              0.0,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center"
+          ],
+          "key_geometry": true,
+          "key_kind": "geometric_center"
+        }
+      ],
+      "manufacturing_authority": false,
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_z",
+          "second_view",
+          "semantic_parameter"
+        ]
+      }
+    },
+    {
+      "id": "FRONT",
+      "label": "主视图",
+      "kind": "orthographic",
+      "axes": [
+        "x",
+        "z"
+      ],
+      "lost_axis": "y",
+      "plane": null,
+      "geometry_scope": "feature_operation_extents",
+      "entities": [
+        {
+          "id": "FRONT_F001_B_1",
+          "view_id": "FRONT",
+          "source_object_id": "F001",
+          "source_subobject": "projected_xz_extent.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -13.5,
+              0.0
+            ],
+            "end": [
+              13.5,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "FRONT_F001_B_2",
+          "view_id": "FRONT",
+          "source_object_id": "F001",
+          "source_subobject": "projected_xz_extent.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              13.5,
+              0.0
+            ],
+            "end": [
+              13.5,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "FRONT_F001_B_3",
+          "view_id": "FRONT",
+          "source_object_id": "F001",
+          "source_subobject": "projected_xz_extent.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              13.5,
+              5.0
+            ],
+            "end": [
+              -13.5,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "FRONT_F001_B_4",
+          "view_id": "FRONT",
+          "source_object_id": "F001",
+          "source_subobject": "projected_xz_extent.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -13.5,
+              5.0
+            ],
+            "end": [
+              -13.5,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "FRONT_F001_CENTER_AXIS",
+          "view_id": "FRONT",
+          "source_object_id": "F001",
+          "source_subobject": "feature.axis.center.xz",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              0.0
+            ],
+            "end": [
+              0.0,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "depth"
+          ],
+          "key_geometry": true,
+          "key_kind": "center_axis"
+        },
+        {
+          "id": "FRONT_F002_B_1",
+          "view_id": "FRONT",
+          "source_object_id": "F002",
+          "source_subobject": "projected_xz_extent.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -11.3,
+              5.0
+            ],
+            "end": [
+              11.3,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "FRONT_F002_B_2",
+          "view_id": "FRONT",
+          "source_object_id": "F002",
+          "source_subobject": "projected_xz_extent.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              11.3,
+              5.0
+            ],
+            "end": [
+              11.3,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "FRONT_F002_B_3",
+          "view_id": "FRONT",
+          "source_object_id": "F002",
+          "source_subobject": "projected_xz_extent.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              11.3,
+              9.0
+            ],
+            "end": [
+              -11.3,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "FRONT_F002_B_4",
+          "view_id": "FRONT",
+          "source_object_id": "F002",
+          "source_subobject": "projected_xz_extent.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -11.3,
+              9.0
+            ],
+            "end": [
+              -11.3,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "FRONT_F002_CENTER_AXIS",
+          "view_id": "FRONT",
+          "source_object_id": "F002",
+          "source_subobject": "feature.axis.center.xz",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              5.0
+            ],
+            "end": [
+              0.0,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "depth"
+          ],
+          "key_geometry": true,
+          "key_kind": "center_axis"
+        }
+      ],
+      "manufacturing_authority": false,
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      }
+    },
+    {
+      "id": "RIGHT",
+      "label": "右视图",
+      "kind": "orthographic",
+      "axes": [
+        "y",
+        "z"
+      ],
+      "lost_axis": "x",
+      "plane": null,
+      "geometry_scope": "feature_operation_extents",
+      "entities": [
+        {
+          "id": "RIGHT_F001_B_1",
+          "view_id": "RIGHT",
+          "source_object_id": "F001",
+          "source_subobject": "projected_yz_extent.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -13.5,
+              0.0
+            ],
+            "end": [
+              13.5,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "RIGHT_F001_B_2",
+          "view_id": "RIGHT",
+          "source_object_id": "F001",
+          "source_subobject": "projected_yz_extent.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              13.5,
+              0.0
+            ],
+            "end": [
+              13.5,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "RIGHT_F001_B_3",
+          "view_id": "RIGHT",
+          "source_object_id": "F001",
+          "source_subobject": "projected_yz_extent.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              13.5,
+              5.0
+            ],
+            "end": [
+              -13.5,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "RIGHT_F001_B_4",
+          "view_id": "RIGHT",
+          "source_object_id": "F001",
+          "source_subobject": "projected_yz_extent.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -13.5,
+              5.0
+            ],
+            "end": [
+              -13.5,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "RIGHT_F001_CENTER_AXIS",
+          "view_id": "RIGHT",
+          "source_object_id": "F001",
+          "source_subobject": "feature.axis.center.yz",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              0.0
+            ],
+            "end": [
+              0.0,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "depth"
+          ],
+          "key_geometry": true,
+          "key_kind": "center_axis"
+        },
+        {
+          "id": "RIGHT_F002_B_1",
+          "view_id": "RIGHT",
+          "source_object_id": "F002",
+          "source_subobject": "projected_yz_extent.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -11.3,
+              5.0
+            ],
+            "end": [
+              11.3,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "RIGHT_F002_B_2",
+          "view_id": "RIGHT",
+          "source_object_id": "F002",
+          "source_subobject": "projected_yz_extent.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              11.3,
+              5.0
+            ],
+            "end": [
+              11.3,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "RIGHT_F002_B_3",
+          "view_id": "RIGHT",
+          "source_object_id": "F002",
+          "source_subobject": "projected_yz_extent.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              11.3,
+              9.0
+            ],
+            "end": [
+              -11.3,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "RIGHT_F002_B_4",
+          "view_id": "RIGHT",
+          "source_object_id": "F002",
+          "source_subobject": "projected_yz_extent.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -11.3,
+              9.0
+            ],
+            "end": [
+              -11.3,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "depth",
+            "profile.center",
+            "profile.radius"
+          ]
+        },
+        {
+          "id": "RIGHT_F002_CENTER_AXIS",
+          "view_id": "RIGHT",
+          "source_object_id": "F002",
+          "source_subobject": "feature.axis.center.yz",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              5.0
+            ],
+            "end": [
+              0.0,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "depth"
+          ],
+          "key_geometry": true,
+          "key_kind": "center_axis"
+        }
+      ],
+      "manufacturing_authority": false,
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      }
+    },
+    {
+      "id": "ISOMETRIC",
+      "label": "等轴语义选择图",
+      "kind": "isometric",
+      "axes": [
+        "u",
+        "v"
+      ],
+      "lost_axis": "depth",
+      "plane": null,
+      "geometry_scope": "selectable_feature_extent_proxy",
+      "entities": [
+        {
+          "id": "ISOMETRIC_F001_E01",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              -13.499999999999998
+            ],
+            "end": [
+              23.382685902179844,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E02",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              23.382685902179844,
+              0.0
+            ],
+            "end": [
+              0.0,
+              13.499999999999998
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E03",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              13.499999999999998
+            ],
+            "end": [
+              -23.382685902179844,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E04",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -23.382685902179844,
+              0.0
+            ],
+            "end": [
+              0.0,
+              -13.499999999999998
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E05",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.5",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              -8.499999999999998
+            ],
+            "end": [
+              23.382685902179844,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E06",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.6",
+          "geometry": {
+            "type": "line",
+            "start": [
+              23.382685902179844,
+              5.0
+            ],
+            "end": [
+              0.0,
+              18.5
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E07",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.7",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              18.5
+            ],
+            "end": [
+              -23.382685902179844,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E08",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.8",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -23.382685902179844,
+              5.0
+            ],
+            "end": [
+              0.0,
+              -8.499999999999998
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E09",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.9",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              -13.499999999999998
+            ],
+            "end": [
+              0.0,
+              -8.499999999999998
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E10",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.10",
+          "geometry": {
+            "type": "line",
+            "start": [
+              23.382685902179844,
+              0.0
+            ],
+            "end": [
+              23.382685902179844,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E11",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.11",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              13.499999999999998
+            ],
+            "end": [
+              0.0,
+              18.5
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F001_E12",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F001",
+          "source_subobject": "feature_bbox.edge.12",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -23.382685902179844,
+              0.0
+            ],
+            "end": [
+              -23.382685902179844,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E01",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              -6.299999999999999
+            ],
+            "end": [
+              19.572174125528317,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E02",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              19.572174125528317,
+              5.0
+            ],
+            "end": [
+              0.0,
+              16.299999999999997
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E03",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              16.299999999999997
+            ],
+            "end": [
+              -19.572174125528317,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E04",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -19.572174125528317,
+              5.0
+            ],
+            "end": [
+              0.0,
+              -6.299999999999999
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E05",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.5",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              -2.299999999999999
+            ],
+            "end": [
+              19.572174125528317,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E06",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.6",
+          "geometry": {
+            "type": "line",
+            "start": [
+              19.572174125528317,
+              9.0
+            ],
+            "end": [
+              0.0,
+              20.299999999999997
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E07",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.7",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              20.299999999999997
+            ],
+            "end": [
+              -19.572174125528317,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E08",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.8",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -19.572174125528317,
+              9.0
+            ],
+            "end": [
+              0.0,
+              -2.299999999999999
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E09",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.9",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              -6.299999999999999
+            ],
+            "end": [
+              0.0,
+              -2.299999999999999
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E10",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.10",
+          "geometry": {
+            "type": "line",
+            "start": [
+              19.572174125528317,
+              5.0
+            ],
+            "end": [
+              19.572174125528317,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E11",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.11",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              16.299999999999997
+            ],
+            "end": [
+              0.0,
+              20.299999999999997
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "ISOMETRIC_F002_E12",
+          "view_id": "ISOMETRIC",
+          "source_object_id": "F002",
+          "source_subobject": "feature_bbox.edge.12",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -19.572174125528317,
+              5.0
+            ],
+            "end": [
+              -19.572174125528317,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        }
+      ],
+      "manufacturing_authority": false,
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      }
+    },
+    {
+      "id": "SECTION_X0",
+      "label": "X=0 基准截面",
+      "kind": "section",
+      "axes": [
+        "y",
+        "z"
+      ],
+      "lost_axis": null,
+      "plane": {
+        "axis": "x",
+        "value": 0.0
+      },
+      "geometry_scope": "feature_operation_section",
+      "entities": [
+        {
+          "id": "SECTION_X0_F001_S01_1",
+          "view_id": "SECTION_X0",
+          "source_object_id": "F001",
+          "source_subobject": "section_x_0.interval.1.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -13.5,
+              0.0
+            ],
+            "end": [
+              13.5,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_X0_F001_S01_2",
+          "view_id": "SECTION_X0",
+          "source_object_id": "F001",
+          "source_subobject": "section_x_0.interval.1.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              13.5,
+              0.0
+            ],
+            "end": [
+              13.5,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_X0_F001_S01_3",
+          "view_id": "SECTION_X0",
+          "source_object_id": "F001",
+          "source_subobject": "section_x_0.interval.1.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              13.5,
+              5.0
+            ],
+            "end": [
+              -13.5,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_X0_F001_S01_4",
+          "view_id": "SECTION_X0",
+          "source_object_id": "F001",
+          "source_subobject": "section_x_0.interval.1.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -13.5,
+              5.0
+            ],
+            "end": [
+              -13.5,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_X0_F002_S01_1",
+          "view_id": "SECTION_X0",
+          "source_object_id": "F002",
+          "source_subobject": "section_x_0.interval.1.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -11.3,
+              5.0
+            ],
+            "end": [
+              11.3,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_X0_F002_S01_2",
+          "view_id": "SECTION_X0",
+          "source_object_id": "F002",
+          "source_subobject": "section_x_0.interval.1.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              11.3,
+              5.0
+            ],
+            "end": [
+              11.3,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_X0_F002_S01_3",
+          "view_id": "SECTION_X0",
+          "source_object_id": "F002",
+          "source_subobject": "section_x_0.interval.1.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              11.3,
+              9.0
+            ],
+            "end": [
+              -11.3,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_X0_F002_S01_4",
+          "view_id": "SECTION_X0",
+          "source_object_id": "F002",
+          "source_subobject": "section_x_0.interval.1.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -11.3,
+              9.0
+            ],
+            "end": [
+              -11.3,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        }
+      ],
+      "manufacturing_authority": false,
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      }
+    },
+    {
+      "id": "SECTION_Y0",
+      "label": "Y=0 基准截面",
+      "kind": "section",
+      "axes": [
+        "x",
+        "z"
+      ],
+      "lost_axis": null,
+      "plane": {
+        "axis": "y",
+        "value": 0.0
+      },
+      "geometry_scope": "feature_operation_section",
+      "entities": [
+        {
+          "id": "SECTION_Y0_F001_S01_1",
+          "view_id": "SECTION_Y0",
+          "source_object_id": "F001",
+          "source_subobject": "section_y_0.interval.1.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -13.5,
+              0.0
+            ],
+            "end": [
+              13.5,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_Y0_F001_S01_2",
+          "view_id": "SECTION_Y0",
+          "source_object_id": "F001",
+          "source_subobject": "section_y_0.interval.1.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              13.5,
+              0.0
+            ],
+            "end": [
+              13.5,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_Y0_F001_S01_3",
+          "view_id": "SECTION_Y0",
+          "source_object_id": "F001",
+          "source_subobject": "section_y_0.interval.1.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              13.5,
+              5.0
+            ],
+            "end": [
+              -13.5,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_Y0_F001_S01_4",
+          "view_id": "SECTION_Y0",
+          "source_object_id": "F001",
+          "source_subobject": "section_y_0.interval.1.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -13.5,
+              5.0
+            ],
+            "end": [
+              -13.5,
+              0.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_Y0_F002_S01_1",
+          "view_id": "SECTION_Y0",
+          "source_object_id": "F002",
+          "source_subobject": "section_y_0.interval.1.edge.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -11.3,
+              5.0
+            ],
+            "end": [
+              11.3,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_Y0_F002_S01_2",
+          "view_id": "SECTION_Y0",
+          "source_object_id": "F002",
+          "source_subobject": "section_y_0.interval.1.edge.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              11.3,
+              5.0
+            ],
+            "end": [
+              11.3,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_Y0_F002_S01_3",
+          "view_id": "SECTION_Y0",
+          "source_object_id": "F002",
+          "source_subobject": "section_y_0.interval.1.edge.3",
+          "geometry": {
+            "type": "line",
+            "start": [
+              11.3,
+              9.0
+            ],
+            "end": [
+              -11.3,
+              9.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        },
+        {
+          "id": "SECTION_Y0_F002_S01_4",
+          "view_id": "SECTION_Y0",
+          "source_object_id": "F002",
+          "source_subobject": "section_y_0.interval.1.edge.4",
+          "geometry": {
+            "type": "line",
+            "start": [
+              -11.3,
+              9.0
+            ],
+            "end": [
+              -11.3,
+              5.0
+            ]
+          },
+          "role": "additive",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": [
+            "profile.center",
+            "profile.width",
+            "profile.height",
+            "profile.radius",
+            "depth"
+          ]
+        }
+      ],
+      "manufacturing_authority": false,
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      }
+    }
+  ],
+  "selection_map": {
+    "TOP_F001_C001": {
+      "view_id": "TOP",
+      "view_entity_id": "TOP_F001_C001",
+      "source_object_id": "F001",
+      "source_subobject": "profile.circle.1",
+      "reference_key": "F001|profile.circle.1",
+      "geometry_type": "circle",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_z",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "circle",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "radius_mm": 13.5,
+        "diameter_mm": 27.0,
+        "controller_path": "profile.radius",
+        "controller_value": 13.5
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "key_geometry": false,
+      "relation_capabilities": [
+        "concentric",
+        "equal_radius"
+      ]
+    },
+    "TOP_F001_CENTER": {
+      "view_id": "TOP",
+      "view_entity_id": "TOP_F001_CENTER",
+      "source_object_id": "F001",
+      "source_subobject": "profile.center",
+      "reference_key": "F001|profile.center",
+      "geometry_type": "point",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_z",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "point",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "coordinates": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "controller_path": "profile.center",
+        "controller_value": [
+          0.0,
+          0.0
+        ]
+      },
+      "key_geometry": true,
+      "key_kind": "geometric_center",
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.profile.radius",
+        "F001.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "coincident"
+      ]
+    },
+    "TOP_F002_C001": {
+      "view_id": "TOP",
+      "view_entity_id": "TOP_F002_C001",
+      "source_object_id": "F002",
+      "source_subobject": "profile.circle.1",
+      "reference_key": "F002|profile.circle.1",
+      "geometry_type": "circle",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_z",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "circle",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "radius_mm": 11.3,
+        "diameter_mm": 22.6,
+        "controller_path": "profile.radius",
+        "controller_value": 11.3
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "key_geometry": false,
+      "relation_capabilities": [
+        "concentric",
+        "equal_radius"
+      ]
+    },
+    "TOP_F002_CENTER": {
+      "view_id": "TOP",
+      "view_entity_id": "TOP_F002_CENTER",
+      "source_object_id": "F002",
+      "source_subobject": "profile.center",
+      "reference_key": "F002|profile.center",
+      "geometry_type": "point",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_z",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "point",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "coordinates": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "controller_path": "profile.center",
+        "controller_value": [
+          0.0,
+          0.0
+        ]
+      },
+      "key_geometry": true,
+      "key_kind": "geometric_center",
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.profile.radius",
+        "F002.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "coincident"
+      ]
+    },
+    "FRONT_F001_B_1": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F001_B_1",
+      "source_object_id": "F001",
+      "source_subobject": "projected_xz_extent.edge.1",
+      "reference_key": "F001|projected_xz_extent.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          null,
+          0.0
+        ],
+        "end": [
+          13.5,
+          null,
+          0.0
+        ],
+        "length_mm": 27.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "FRONT_F001_B_2": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F001_B_2",
+      "source_object_id": "F001",
+      "source_subobject": "projected_xz_extent.edge.2",
+      "reference_key": "F001|projected_xz_extent.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          null,
+          0.0
+        ],
+        "end": [
+          13.5,
+          null,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "FRONT_F001_B_3": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F001_B_3",
+      "source_object_id": "F001",
+      "source_subobject": "projected_xz_extent.edge.3",
+      "reference_key": "F001|projected_xz_extent.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          null,
+          5.0
+        ],
+        "end": [
+          -13.5,
+          null,
+          5.0
+        ],
+        "length_mm": 27.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "FRONT_F001_B_4": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F001_B_4",
+      "source_object_id": "F001",
+      "source_subobject": "projected_xz_extent.edge.4",
+      "reference_key": "F001|projected_xz_extent.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          null,
+          5.0
+        ],
+        "end": [
+          -13.5,
+          null,
+          0.0
+        ],
+        "length_mm": 5.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "FRONT_F001_CENTER_AXIS": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F001_CENTER_AXIS",
+      "source_object_id": "F001",
+      "source_subobject": "feature.axis.center.xz",
+      "reference_key": "F001|feature.axis.center.xz",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "controller_path": "depth",
+        "controller_value": 5.0,
+        "note": "特征中心轴"
+      },
+      "key_geometry": true,
+      "key_kind": "center_axis",
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "FRONT_F002_B_1": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F002_B_1",
+      "source_object_id": "F002",
+      "source_subobject": "projected_xz_extent.edge.1",
+      "reference_key": "F002|projected_xz_extent.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          null,
+          5.0
+        ],
+        "end": [
+          11.3,
+          null,
+          5.0
+        ],
+        "length_mm": 22.6,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "FRONT_F002_B_2": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F002_B_2",
+      "source_object_id": "F002",
+      "source_subobject": "projected_xz_extent.edge.2",
+      "reference_key": "F002|projected_xz_extent.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          null,
+          5.0
+        ],
+        "end": [
+          11.3,
+          null,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "FRONT_F002_B_3": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F002_B_3",
+      "source_object_id": "F002",
+      "source_subobject": "projected_xz_extent.edge.3",
+      "reference_key": "F002|projected_xz_extent.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          null,
+          9.0
+        ],
+        "end": [
+          -11.3,
+          null,
+          9.0
+        ],
+        "length_mm": 22.6,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "FRONT_F002_B_4": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F002_B_4",
+      "source_object_id": "F002",
+      "source_subobject": "projected_xz_extent.edge.4",
+      "reference_key": "F002|projected_xz_extent.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          null,
+          9.0
+        ],
+        "end": [
+          -11.3,
+          null,
+          5.0
+        ],
+        "length_mm": 4.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "FRONT_F002_CENTER_AXIS": {
+      "view_id": "FRONT",
+      "view_entity_id": "FRONT_F002_CENTER_AXIS",
+      "source_object_id": "F002",
+      "source_subobject": "feature.axis.center.xz",
+      "reference_key": "F002|feature.axis.center.xz",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_y",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "controller_path": "depth",
+        "controller_value": 4.0,
+        "note": "特征中心轴"
+      },
+      "key_geometry": true,
+      "key_kind": "center_axis",
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "RIGHT_F001_B_1": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F001_B_1",
+      "source_object_id": "F001",
+      "source_subobject": "projected_yz_extent.edge.1",
+      "reference_key": "F001|projected_yz_extent.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          null,
+          -13.5,
+          0.0
+        ],
+        "end": [
+          null,
+          13.5,
+          0.0
+        ],
+        "length_mm": 27.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "RIGHT_F001_B_2": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F001_B_2",
+      "source_object_id": "F001",
+      "source_subobject": "projected_yz_extent.edge.2",
+      "reference_key": "F001|projected_yz_extent.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          null,
+          13.5,
+          0.0
+        ],
+        "end": [
+          null,
+          13.5,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "RIGHT_F001_B_3": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F001_B_3",
+      "source_object_id": "F001",
+      "source_subobject": "projected_yz_extent.edge.3",
+      "reference_key": "F001|projected_yz_extent.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          null,
+          13.5,
+          5.0
+        ],
+        "end": [
+          null,
+          -13.5,
+          5.0
+        ],
+        "length_mm": 27.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "RIGHT_F001_B_4": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F001_B_4",
+      "source_object_id": "F001",
+      "source_subobject": "projected_yz_extent.edge.4",
+      "reference_key": "F001|projected_yz_extent.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          null,
+          -13.5,
+          5.0
+        ],
+        "end": [
+          null,
+          -13.5,
+          0.0
+        ],
+        "length_mm": 5.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "RIGHT_F001_CENTER_AXIS": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F001_CENTER_AXIS",
+      "source_object_id": "F001",
+      "source_subobject": "feature.axis.center.yz",
+      "reference_key": "F001|feature.axis.center.yz",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "controller_path": "depth",
+        "controller_value": 5.0,
+        "note": "特征中心轴"
+      },
+      "key_geometry": true,
+      "key_kind": "center_axis",
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "RIGHT_F002_B_1": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F002_B_1",
+      "source_object_id": "F002",
+      "source_subobject": "projected_yz_extent.edge.1",
+      "reference_key": "F002|projected_yz_extent.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          null,
+          -11.3,
+          5.0
+        ],
+        "end": [
+          null,
+          11.3,
+          5.0
+        ],
+        "length_mm": 22.6,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "RIGHT_F002_B_2": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F002_B_2",
+      "source_object_id": "F002",
+      "source_subobject": "projected_yz_extent.edge.2",
+      "reference_key": "F002|projected_yz_extent.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          null,
+          11.3,
+          5.0
+        ],
+        "end": [
+          null,
+          11.3,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "RIGHT_F002_B_3": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F002_B_3",
+      "source_object_id": "F002",
+      "source_subobject": "projected_yz_extent.edge.3",
+      "reference_key": "F002|projected_yz_extent.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          null,
+          11.3,
+          9.0
+        ],
+        "end": [
+          null,
+          -11.3,
+          9.0
+        ],
+        "length_mm": 22.6,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "RIGHT_F002_B_4": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F002_B_4",
+      "source_object_id": "F002",
+      "source_subobject": "projected_yz_extent.edge.4",
+      "reference_key": "F002|projected_yz_extent.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          null,
+          -11.3,
+          9.0
+        ],
+        "end": [
+          null,
+          -11.3,
+          5.0
+        ],
+        "length_mm": 4.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "RIGHT_F002_CENTER_AXIS": {
+      "view_id": "RIGHT",
+      "view_entity_id": "RIGHT_F002_CENTER_AXIS",
+      "source_object_id": "F002",
+      "source_subobject": "feature.axis.center.yz",
+      "reference_key": "F002|feature.axis.center.yz",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_x",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "controller_path": "depth",
+        "controller_value": 4.0,
+        "note": "特征中心轴"
+      },
+      "key_geometry": true,
+      "key_kind": "center_axis",
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "ISOMETRIC_F001_E01": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E01",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.1",
+      "reference_key": "F001|feature_bbox.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          -13.5,
+          0.0
+        ],
+        "end": [
+          13.5,
+          -13.5,
+          0.0
+        ],
+        "length_mm": 27.0,
+        "controller_path": "profile.width",
+        "controller_value": 27.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E02": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E02",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.2",
+      "reference_key": "F001|feature_bbox.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          -13.5,
+          0.0
+        ],
+        "end": [
+          13.5,
+          13.5,
+          0.0
+        ],
+        "length_mm": 27.0,
+        "controller_path": "profile.height",
+        "controller_value": 27.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E03": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E03",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.3",
+      "reference_key": "F001|feature_bbox.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          13.5,
+          0.0
+        ],
+        "end": [
+          -13.5,
+          13.5,
+          0.0
+        ],
+        "length_mm": 27.0,
+        "controller_path": "profile.width",
+        "controller_value": 27.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E04": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E04",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.4",
+      "reference_key": "F001|feature_bbox.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          13.5,
+          0.0
+        ],
+        "end": [
+          -13.5,
+          -13.5,
+          0.0
+        ],
+        "length_mm": 27.0,
+        "controller_path": "profile.height",
+        "controller_value": 27.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E05": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E05",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.5",
+      "reference_key": "F001|feature_bbox.edge.5",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          -13.5,
+          5.0
+        ],
+        "end": [
+          13.5,
+          -13.5,
+          5.0
+        ],
+        "length_mm": 27.0,
+        "controller_path": "profile.width",
+        "controller_value": 27.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E06": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E06",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.6",
+      "reference_key": "F001|feature_bbox.edge.6",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          -13.5,
+          5.0
+        ],
+        "end": [
+          13.5,
+          13.5,
+          5.0
+        ],
+        "length_mm": 27.0,
+        "controller_path": "profile.height",
+        "controller_value": 27.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E07": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E07",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.7",
+      "reference_key": "F001|feature_bbox.edge.7",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          13.5,
+          5.0
+        ],
+        "end": [
+          -13.5,
+          13.5,
+          5.0
+        ],
+        "length_mm": 27.0,
+        "controller_path": "profile.width",
+        "controller_value": 27.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E08": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E08",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.8",
+      "reference_key": "F001|feature_bbox.edge.8",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          13.5,
+          5.0
+        ],
+        "end": [
+          -13.5,
+          -13.5,
+          5.0
+        ],
+        "length_mm": 27.0,
+        "controller_path": "profile.height",
+        "controller_value": 27.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E09": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E09",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.9",
+      "reference_key": "F001|feature_bbox.edge.9",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          -13.5,
+          0.0
+        ],
+        "end": [
+          -13.5,
+          -13.5,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "controller_path": "depth",
+        "controller_value": 5.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E10": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E10",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.10",
+      "reference_key": "F001|feature_bbox.edge.10",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          -13.5,
+          0.0
+        ],
+        "end": [
+          13.5,
+          -13.5,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "controller_path": "depth",
+        "controller_value": 5.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E11": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E11",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.11",
+      "reference_key": "F001|feature_bbox.edge.11",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          13.5,
+          0.0
+        ],
+        "end": [
+          13.5,
+          13.5,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "controller_path": "depth",
+        "controller_value": 5.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F001_E12": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F001_E12",
+      "source_object_id": "F001",
+      "source_subobject": "feature_bbox.edge.12",
+      "reference_key": "F001|feature_bbox.edge.12",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          13.5,
+          0.0
+        ],
+        "end": [
+          -13.5,
+          13.5,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "controller_path": "depth",
+        "controller_value": 5.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E01": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E01",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.1",
+      "reference_key": "F002|feature_bbox.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          -11.3,
+          5.0
+        ],
+        "end": [
+          11.3,
+          -11.3,
+          5.0
+        ],
+        "length_mm": 22.6,
+        "controller_path": "profile.width",
+        "controller_value": 22.6,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E02": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E02",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.2",
+      "reference_key": "F002|feature_bbox.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          -11.3,
+          5.0
+        ],
+        "end": [
+          11.3,
+          11.3,
+          5.0
+        ],
+        "length_mm": 22.6,
+        "controller_path": "profile.height",
+        "controller_value": 22.6,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E03": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E03",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.3",
+      "reference_key": "F002|feature_bbox.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          11.3,
+          5.0
+        ],
+        "end": [
+          -11.3,
+          11.3,
+          5.0
+        ],
+        "length_mm": 22.6,
+        "controller_path": "profile.width",
+        "controller_value": 22.6,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E04": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E04",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.4",
+      "reference_key": "F002|feature_bbox.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          11.3,
+          5.0
+        ],
+        "end": [
+          -11.3,
+          -11.3,
+          5.0
+        ],
+        "length_mm": 22.6,
+        "controller_path": "profile.height",
+        "controller_value": 22.6,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E05": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E05",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.5",
+      "reference_key": "F002|feature_bbox.edge.5",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          -11.3,
+          9.0
+        ],
+        "end": [
+          11.3,
+          -11.3,
+          9.0
+        ],
+        "length_mm": 22.6,
+        "controller_path": "profile.width",
+        "controller_value": 22.6,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E06": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E06",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.6",
+      "reference_key": "F002|feature_bbox.edge.6",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          -11.3,
+          9.0
+        ],
+        "end": [
+          11.3,
+          11.3,
+          9.0
+        ],
+        "length_mm": 22.6,
+        "controller_path": "profile.height",
+        "controller_value": 22.6,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E07": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E07",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.7",
+      "reference_key": "F002|feature_bbox.edge.7",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          11.3,
+          9.0
+        ],
+        "end": [
+          -11.3,
+          11.3,
+          9.0
+        ],
+        "length_mm": 22.6,
+        "controller_path": "profile.width",
+        "controller_value": 22.6,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E08": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E08",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.8",
+      "reference_key": "F002|feature_bbox.edge.8",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          11.3,
+          9.0
+        ],
+        "end": [
+          -11.3,
+          -11.3,
+          9.0
+        ],
+        "length_mm": 22.6,
+        "controller_path": "profile.height",
+        "controller_value": 22.6,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E09": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E09",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.9",
+      "reference_key": "F002|feature_bbox.edge.9",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          -11.3,
+          5.0
+        ],
+        "end": [
+          -11.3,
+          -11.3,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "controller_path": "depth",
+        "controller_value": 4.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E10": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E10",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.10",
+      "reference_key": "F002|feature_bbox.edge.10",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          -11.3,
+          5.0
+        ],
+        "end": [
+          11.3,
+          -11.3,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "controller_path": "depth",
+        "controller_value": 4.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E11": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E11",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.11",
+      "reference_key": "F002|feature_bbox.edge.11",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          11.3,
+          5.0
+        ],
+        "end": [
+          11.3,
+          11.3,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "controller_path": "depth",
+        "controller_value": 4.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "ISOMETRIC_F002_E12": {
+      "view_id": "ISOMETRIC",
+      "view_entity_id": "ISOMETRIC_F002_E12",
+      "source_object_id": "F002",
+      "source_subobject": "feature_bbox.edge.12",
+      "reference_key": "F002|feature_bbox.edge.12",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "lock_depth",
+          "second_view",
+          "semantic_parameter"
+        ]
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          11.3,
+          5.0
+        ],
+        "end": [
+          -11.3,
+          11.3,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "controller_path": "depth",
+        "controller_value": 4.0,
+        "note": "特征外包框语义边"
+      }
+    },
+    "SECTION_X0_F001_S01_1": {
+      "view_id": "SECTION_X0",
+      "view_entity_id": "SECTION_X0_F001_S01_1",
+      "source_object_id": "F001",
+      "source_subobject": "section_x_0.interval.1.edge.1",
+      "reference_key": "F001|section_x_0.interval.1.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          -13.5,
+          0.0
+        ],
+        "end": [
+          0.0,
+          13.5,
+          0.0
+        ],
+        "length_mm": 27.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_X0_F001_S01_2": {
+      "view_id": "SECTION_X0",
+      "view_entity_id": "SECTION_X0_F001_S01_2",
+      "source_object_id": "F001",
+      "source_subobject": "section_x_0.interval.1.edge.2",
+      "reference_key": "F001|section_x_0.interval.1.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          13.5,
+          0.0
+        ],
+        "end": [
+          0.0,
+          13.5,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_X0_F001_S01_3": {
+      "view_id": "SECTION_X0",
+      "view_entity_id": "SECTION_X0_F001_S01_3",
+      "source_object_id": "F001",
+      "source_subobject": "section_x_0.interval.1.edge.3",
+      "reference_key": "F001|section_x_0.interval.1.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          13.5,
+          5.0
+        ],
+        "end": [
+          0.0,
+          -13.5,
+          5.0
+        ],
+        "length_mm": 27.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_X0_F001_S01_4": {
+      "view_id": "SECTION_X0",
+      "view_entity_id": "SECTION_X0_F001_S01_4",
+      "source_object_id": "F001",
+      "source_subobject": "section_x_0.interval.1.edge.4",
+      "reference_key": "F001|section_x_0.interval.1.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          -13.5,
+          5.0
+        ],
+        "end": [
+          0.0,
+          -13.5,
+          0.0
+        ],
+        "length_mm": 5.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_X0_F002_S01_1": {
+      "view_id": "SECTION_X0",
+      "view_entity_id": "SECTION_X0_F002_S01_1",
+      "source_object_id": "F002",
+      "source_subobject": "section_x_0.interval.1.edge.1",
+      "reference_key": "F002|section_x_0.interval.1.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          -11.3,
+          5.0
+        ],
+        "end": [
+          0.0,
+          11.3,
+          5.0
+        ],
+        "length_mm": 22.6,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_X0_F002_S01_2": {
+      "view_id": "SECTION_X0",
+      "view_entity_id": "SECTION_X0_F002_S01_2",
+      "source_object_id": "F002",
+      "source_subobject": "section_x_0.interval.1.edge.2",
+      "reference_key": "F002|section_x_0.interval.1.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          11.3,
+          5.0
+        ],
+        "end": [
+          0.0,
+          11.3,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_X0_F002_S01_3": {
+      "view_id": "SECTION_X0",
+      "view_entity_id": "SECTION_X0_F002_S01_3",
+      "source_object_id": "F002",
+      "source_subobject": "section_x_0.interval.1.edge.3",
+      "reference_key": "F002|section_x_0.interval.1.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          11.3,
+          9.0
+        ],
+        "end": [
+          0.0,
+          -11.3,
+          9.0
+        ],
+        "length_mm": 22.6,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_X0_F002_S01_4": {
+      "view_id": "SECTION_X0",
+      "view_entity_id": "SECTION_X0_F002_S01_4",
+      "source_object_id": "F002",
+      "source_subobject": "section_x_0.interval.1.edge.4",
+      "reference_key": "F002|section_x_0.interval.1.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          -11.3,
+          9.0
+        ],
+        "end": [
+          0.0,
+          -11.3,
+          5.0
+        ],
+        "length_mm": 4.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_Y0_F001_S01_1": {
+      "view_id": "SECTION_Y0",
+      "view_entity_id": "SECTION_Y0_F001_S01_1",
+      "source_object_id": "F001",
+      "source_subobject": "section_y_0.interval.1.edge.1",
+      "reference_key": "F001|section_y_0.interval.1.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          0.0,
+          0.0
+        ],
+        "end": [
+          13.5,
+          0.0,
+          0.0
+        ],
+        "length_mm": 27.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_Y0_F001_S01_2": {
+      "view_id": "SECTION_Y0",
+      "view_entity_id": "SECTION_Y0_F001_S01_2",
+      "source_object_id": "F001",
+      "source_subobject": "section_y_0.interval.1.edge.2",
+      "reference_key": "F001|section_y_0.interval.1.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          0.0,
+          0.0
+        ],
+        "end": [
+          13.5,
+          0.0,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_Y0_F001_S01_3": {
+      "view_id": "SECTION_Y0",
+      "view_entity_id": "SECTION_Y0_F001_S01_3",
+      "source_object_id": "F001",
+      "source_subobject": "section_y_0.interval.1.edge.3",
+      "reference_key": "F001|section_y_0.interval.1.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          13.5,
+          0.0,
+          5.0
+        ],
+        "end": [
+          -13.5,
+          0.0,
+          5.0
+        ],
+        "length_mm": 27.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_Y0_F001_S01_4": {
+      "view_id": "SECTION_Y0",
+      "view_entity_id": "SECTION_Y0_F001_S01_4",
+      "source_object_id": "F001",
+      "source_subobject": "section_y_0.interval.1.edge.4",
+      "reference_key": "F001|section_y_0.interval.1.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -13.5,
+          0.0,
+          5.0
+        ],
+        "end": [
+          -13.5,
+          0.0,
+          0.0
+        ],
+        "length_mm": 5.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_Y0_F002_S01_1": {
+      "view_id": "SECTION_Y0",
+      "view_entity_id": "SECTION_Y0_F002_S01_1",
+      "source_object_id": "F002",
+      "source_subobject": "section_y_0.interval.1.edge.1",
+      "reference_key": "F002|section_y_0.interval.1.edge.1",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          0.0,
+          5.0
+        ],
+        "end": [
+          11.3,
+          0.0,
+          5.0
+        ],
+        "length_mm": 22.6,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_Y0_F002_S01_2": {
+      "view_id": "SECTION_Y0",
+      "view_entity_id": "SECTION_Y0_F002_S01_2",
+      "source_object_id": "F002",
+      "source_subobject": "section_y_0.interval.1.edge.2",
+      "reference_key": "F002|section_y_0.interval.1.edge.2",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          0.0,
+          5.0
+        ],
+        "end": [
+          11.3,
+          0.0,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_Y0_F002_S01_3": {
+      "view_id": "SECTION_Y0",
+      "view_entity_id": "SECTION_Y0_F002_S01_3",
+      "source_object_id": "F002",
+      "source_subobject": "section_y_0.interval.1.edge.3",
+      "reference_key": "F002|section_y_0.interval.1.edge.3",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          11.3,
+          0.0,
+          9.0
+        ],
+        "end": [
+          -11.3,
+          0.0,
+          9.0
+        ],
+        "length_mm": 22.6,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SECTION_Y0_F002_S01_4": {
+      "view_id": "SECTION_Y0",
+      "view_entity_id": "SECTION_Y0_F002_S01_4",
+      "source_object_id": "F002",
+      "source_subobject": "section_y_0.interval.1.edge.4",
+      "reference_key": "F002|section_y_0.interval.1.edge.4",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.width",
+        "profile.height",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          -11.3,
+          0.0,
+          9.0
+        ],
+        "end": [
+          -11.3,
+          0.0,
+          5.0
+        ],
+        "length_mm": 4.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      }
+    },
+    "SEL3D_F001_CENTER_POINT": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F001_CENTER_POINT",
+      "source_object_id": "F001",
+      "source_subobject": "profile.center",
+      "reference_key": "F001|profile.center",
+      "geometry_type": "point",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "key_geometry": true,
+      "relation_capabilities": [
+        "coincident"
+      ],
+      "measurement": {
+        "kind": "point",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "coordinates": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "controller_path": "profile.center",
+        "controller_value": [
+          0.0,
+          0.0
+        ]
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.profile.radius",
+        "F001.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F001_CENTER_AXIS_XZ": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F001_CENTER_AXIS_XZ",
+      "source_object_id": "F001",
+      "source_subobject": "feature.axis.center.xz",
+      "reference_key": "F001|feature.axis.center.xz",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": true,
+      "relation_capabilities": [],
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "controller_path": "depth",
+        "controller_value": 5.0,
+        "note": "特征中心轴"
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F001_CENTER_AXIS_YZ": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F001_CENTER_AXIS_YZ",
+      "source_object_id": "F001",
+      "source_subobject": "feature.axis.center.yz",
+      "reference_key": "F001|feature.axis.center.yz",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": true,
+      "relation_capabilities": [],
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "length_mm": 5.0,
+        "controller_path": "depth",
+        "controller_value": 5.0,
+        "note": "特征中心轴"
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F001_PROFILE_CIRCLE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F001_PROFILE_CIRCLE_1",
+      "source_object_id": "F001",
+      "source_subobject": "profile.circle.1",
+      "reference_key": "F001|profile.circle.1",
+      "geometry_type": "circle",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "key_geometry": false,
+      "relation_capabilities": [
+        "concentric",
+        "equal_radius"
+      ],
+      "measurement": {
+        "kind": "circle",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "radius_mm": 13.5,
+        "diameter_mm": 27.0,
+        "controller_path": "profile.radius",
+        "controller_value": 13.5
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F001_OPPOSITE_CIRCLE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F001_OPPOSITE_CIRCLE_1",
+      "source_object_id": "F001",
+      "source_subobject": "feature.circle.opposite.1",
+      "reference_key": "F001|feature.circle.opposite.1",
+      "geometry_type": "circle",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": true,
+      "relation_capabilities": [
+        "concentric",
+        "equal_radius"
+      ],
+      "measurement": {
+        "kind": "circle",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "radius_mm": 13.5,
+        "diameter_mm": 27.0,
+        "controller_path": "profile.radius",
+        "controller_value": 13.5
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.depth",
+        "F001.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F001_CYLINDER_FACE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F001_CYLINDER_FACE_1",
+      "source_object_id": "F001",
+      "source_subobject": "feature.face.cylindrical.1",
+      "reference_key": "F001|feature.face.cylindrical.1",
+      "geometry_type": "face",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "coincident",
+        "offset"
+      ],
+      "measurement": {
+        "kind": "face",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          2.5
+        ],
+        "area_mm2": 424.11500823462205,
+        "note": "圆柱侧面展开面积"
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.profile.radius",
+        "F001.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F001_SKETCH_FACE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F001_SKETCH_FACE_1",
+      "source_object_id": "F001",
+      "source_subobject": "profile.face.1",
+      "reference_key": "F001|profile.face.1",
+      "geometry_type": "face",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "key_geometry": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "coincident",
+        "offset"
+      ],
+      "measurement": {
+        "kind": "face",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "area_mm2": 572.5552611167398,
+        "note": "圆形端面"
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F001.profile.center",
+        "F001.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F001_OPPOSITE_FACE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F001_OPPOSITE_FACE_1",
+      "source_object_id": "F001",
+      "source_subobject": "feature.face.opposite.1",
+      "reference_key": "F001|feature.face.opposite.1",
+      "geometry_type": "face",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "coincident",
+        "offset"
+      ],
+      "measurement": {
+        "kind": "face",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "area_mm2": 572.5552611167398,
+        "note": "圆形端面"
+      },
+      "edit_scope": "derived_parameter_proxy",
+      "shared_parameter_groups": [
+        "F001.depth",
+        "F001.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F002_CENTER_POINT": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F002_CENTER_POINT",
+      "source_object_id": "F002",
+      "source_subobject": "profile.center",
+      "reference_key": "F002|profile.center",
+      "geometry_type": "point",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "key_geometry": true,
+      "relation_capabilities": [
+        "coincident"
+      ],
+      "measurement": {
+        "kind": "point",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "coordinates": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "controller_path": "profile.center",
+        "controller_value": [
+          0.0,
+          0.0
+        ]
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.profile.radius",
+        "F002.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F002_CENTER_AXIS_XZ": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F002_CENTER_AXIS_XZ",
+      "source_object_id": "F002",
+      "source_subobject": "feature.axis.center.xz",
+      "reference_key": "F002|feature.axis.center.xz",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": true,
+      "relation_capabilities": [],
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "controller_path": "depth",
+        "controller_value": 4.0,
+        "note": "特征中心轴"
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F002_CENTER_AXIS_YZ": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F002_CENTER_AXIS_YZ",
+      "source_object_id": "F002",
+      "source_subobject": "feature.axis.center.yz",
+      "reference_key": "F002|feature.axis.center.yz",
+      "geometry_type": "line",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": true,
+      "relation_capabilities": [],
+      "measurement": {
+        "kind": "line",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          9.0
+        ],
+        "length_mm": 4.0,
+        "controller_path": "depth",
+        "controller_value": 4.0,
+        "note": "特征中心轴"
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F002_PROFILE_CIRCLE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F002_PROFILE_CIRCLE_1",
+      "source_object_id": "F002",
+      "source_subobject": "profile.circle.1",
+      "reference_key": "F002|profile.circle.1",
+      "geometry_type": "circle",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "key_geometry": false,
+      "relation_capabilities": [
+        "concentric",
+        "equal_radius"
+      ],
+      "measurement": {
+        "kind": "circle",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "radius_mm": 11.3,
+        "diameter_mm": 22.6,
+        "controller_path": "profile.radius",
+        "controller_value": 11.3
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F002_OPPOSITE_CIRCLE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F002_OPPOSITE_CIRCLE_1",
+      "source_object_id": "F002",
+      "source_subobject": "feature.circle.opposite.1",
+      "reference_key": "F002|feature.circle.opposite.1",
+      "geometry_type": "circle",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": true,
+      "relation_capabilities": [
+        "concentric",
+        "equal_radius"
+      ],
+      "measurement": {
+        "kind": "circle",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          9.0
+        ],
+        "radius_mm": 11.3,
+        "diameter_mm": 22.6,
+        "controller_path": "profile.radius",
+        "controller_value": 11.3
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.depth",
+        "F002.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F002_CYLINDER_FACE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F002_CYLINDER_FACE_1",
+      "source_object_id": "F002",
+      "source_subobject": "feature.face.cylindrical.1",
+      "reference_key": "F002|feature.face.cylindrical.1",
+      "geometry_type": "face",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius",
+        "depth"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "coincident",
+        "offset"
+      ],
+      "measurement": {
+        "kind": "face",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "area_mm2": 283.9999758845173,
+        "note": "圆柱侧面展开面积"
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.profile.radius",
+        "F002.depth"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F002_SKETCH_FACE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F002_SKETCH_FACE_1",
+      "source_object_id": "F002",
+      "source_subobject": "profile.face.1",
+      "reference_key": "F002|profile.face.1",
+      "geometry_type": "face",
+      "role": "additive",
+      "derived": false,
+      "edit_paths": [
+        "profile.center",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "key_geometry": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "coincident",
+        "offset"
+      ],
+      "measurement": {
+        "kind": "face",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "area_mm2": 401.14996593688073,
+        "note": "圆形端面"
+      },
+      "edit_scope": "feature_parameter",
+      "shared_parameter_groups": [
+        "F002.profile.center",
+        "F002.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    },
+    "SEL3D_F002_OPPOSITE_FACE_1": {
+      "view_id": "SELECTOR_3D",
+      "view_entity_id": "SEL3D_F002_OPPOSITE_FACE_1",
+      "source_object_id": "F002",
+      "source_subobject": "feature.face.opposite.1",
+      "reference_key": "F002|feature.face.opposite.1",
+      "geometry_type": "face",
+      "role": "additive",
+      "derived": true,
+      "edit_paths": [
+        "depth",
+        "profile.radius"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": false,
+        "requires": [
+          "semantic_parameter",
+          "native_topology_readback"
+        ]
+      },
+      "key_geometry": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "coincident",
+        "offset"
+      ],
+      "measurement": {
+        "kind": "face",
+        "authority": "model_semantic",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "center": [
+          0.0,
+          0.0,
+          9.0
+        ],
+        "area_mm2": 401.14996593688073,
+        "note": "圆形端面"
+      },
+      "edit_scope": "derived_parameter_proxy",
+      "shared_parameter_groups": [
+        "F002.depth",
+        "F002.profile.radius"
+      ],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false
+    }
+  },
+  "selector_3d": {
+    "mode": "semantic_subobject",
+    "topology_authority": false,
+    "topology_stability": "plan_derived_not_native_persistent_name",
+    "objects": [
+      {
+        "source_object_id": "F001",
+        "feature_type": "base_extrude",
+        "role": "additive",
+        "z_min": 0.0,
+        "z_max": 5.0,
+        "sketch_z": 0.0,
+        "profile": {
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "bounds": [
+            -13.5,
+            -13.5,
+            13.5,
+            13.5
+          ],
+          "radius": 13.5,
+          "primitives": [
+            {
+              "center": [
+                0.0,
+                0.0
+              ],
+              "radius": 13.5
+            }
+          ]
+        },
+        "core_parameters": [
+          {
+            "id": "center",
+            "path": "profile.center",
+            "label": "中心 X, Y",
+            "value": [
+              0.0,
+              0.0
+            ],
+            "unit": "mm",
+            "selection_id": "SEL3D_F001_CENTER_POINT"
+          },
+          {
+            "id": "radius",
+            "path": "profile.radius",
+            "label": "半径",
+            "value": 13.5,
+            "unit": "mm",
+            "selection_id": "SEL3D_F001_CENTER_POINT"
+          },
+          {
+            "id": "depth",
+            "path": "depth",
+            "label": "深度",
+            "value": 5.0,
+            "unit": "mm",
+            "selection_id": "SEL3D_F001_CENTER_POINT"
+          }
+        ],
+        "subobjects": [
+          {
+            "id": "SEL3D_F001_CENTER_POINT",
+            "source_object_id": "F001",
+            "source_subobject": "profile.center",
+            "geometry_type": "point",
+            "role": "additive",
+            "derived": false,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "profile.radius",
+              "depth"
+            ],
+            "reference_key": "F001|profile.center",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F001.profile.center",
+              "F001.profile.radius",
+              "F001.depth"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": true,
+            "relation_capabilities": [
+              "coincident"
+            ],
+            "measurement": {
+              "kind": "point",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "coordinates": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "controller_path": "profile.center",
+              "controller_value": [
+                0.0,
+                0.0
+              ]
+            }
+          },
+          {
+            "id": "SEL3D_F001_CENTER_AXIS_XZ",
+            "source_object_id": "F001",
+            "source_subobject": "feature.axis.center.xz",
+            "geometry_type": "line",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "depth"
+            ],
+            "reference_key": "F001|feature.axis.center.xz",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F001.profile.center",
+              "F001.depth"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": true,
+            "relation_capabilities": [],
+            "measurement": {
+              "kind": "line",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "start": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "end": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "length_mm": 5.0,
+              "controller_path": "depth",
+              "controller_value": 5.0,
+              "note": "特征中心轴"
+            }
+          },
+          {
+            "id": "SEL3D_F001_CENTER_AXIS_YZ",
+            "source_object_id": "F001",
+            "source_subobject": "feature.axis.center.yz",
+            "geometry_type": "line",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "depth"
+            ],
+            "reference_key": "F001|feature.axis.center.yz",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F001.profile.center",
+              "F001.depth"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": true,
+            "relation_capabilities": [],
+            "measurement": {
+              "kind": "line",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "start": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "end": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "length_mm": 5.0,
+              "controller_path": "depth",
+              "controller_value": 5.0,
+              "note": "特征中心轴"
+            }
+          },
+          {
+            "id": "SEL3D_F001_PROFILE_CIRCLE_1",
+            "source_object_id": "F001",
+            "source_subobject": "profile.circle.1",
+            "geometry_type": "circle",
+            "role": "additive",
+            "derived": false,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "profile.radius"
+            ],
+            "reference_key": "F001|profile.circle.1",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F001.profile.center",
+              "F001.profile.radius"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": false,
+            "relation_capabilities": [
+              "concentric",
+              "equal_radius"
+            ],
+            "measurement": {
+              "kind": "circle",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "radius_mm": 13.5,
+              "diameter_mm": 27.0,
+              "controller_path": "profile.radius",
+              "controller_value": 13.5
+            }
+          },
+          {
+            "id": "SEL3D_F001_OPPOSITE_CIRCLE_1",
+            "source_object_id": "F001",
+            "source_subobject": "feature.circle.opposite.1",
+            "geometry_type": "circle",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "depth",
+              "profile.radius"
+            ],
+            "reference_key": "F001|feature.circle.opposite.1",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F001.depth",
+              "F001.profile.radius"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": true,
+            "relation_capabilities": [
+              "concentric",
+              "equal_radius"
+            ],
+            "measurement": {
+              "kind": "circle",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "radius_mm": 13.5,
+              "diameter_mm": 27.0,
+              "controller_path": "profile.radius",
+              "controller_value": 13.5
+            }
+          },
+          {
+            "id": "SEL3D_F001_CYLINDER_FACE_1",
+            "source_object_id": "F001",
+            "source_subobject": "feature.face.cylindrical.1",
+            "geometry_type": "face",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "profile.radius",
+              "depth"
+            ],
+            "reference_key": "F001|feature.face.cylindrical.1",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F001.profile.center",
+              "F001.profile.radius",
+              "F001.depth"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": false,
+            "relation_capabilities": [
+              "parallel",
+              "perpendicular",
+              "coincident",
+              "offset"
+            ],
+            "measurement": {
+              "kind": "face",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                2.5
+              ],
+              "area_mm2": 424.11500823462205,
+              "note": "圆柱侧面展开面积"
+            }
+          },
+          {
+            "id": "SEL3D_F001_SKETCH_FACE_1",
+            "source_object_id": "F001",
+            "source_subobject": "profile.face.1",
+            "geometry_type": "face",
+            "role": "additive",
+            "derived": false,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "profile.radius"
+            ],
+            "reference_key": "F001|profile.face.1",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F001.profile.center",
+              "F001.profile.radius"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": false,
+            "relation_capabilities": [
+              "parallel",
+              "perpendicular",
+              "coincident",
+              "offset"
+            ],
+            "measurement": {
+              "kind": "face",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "area_mm2": 572.5552611167398,
+              "note": "圆形端面"
+            }
+          },
+          {
+            "id": "SEL3D_F001_OPPOSITE_FACE_1",
+            "source_object_id": "F001",
+            "source_subobject": "feature.face.opposite.1",
+            "geometry_type": "face",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "depth",
+              "profile.radius"
+            ],
+            "reference_key": "F001|feature.face.opposite.1",
+            "edit_scope": "derived_parameter_proxy",
+            "shared_parameter_groups": [
+              "F001.depth",
+              "F001.profile.radius"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": false,
+            "relation_capabilities": [
+              "parallel",
+              "perpendicular",
+              "coincident",
+              "offset"
+            ],
+            "measurement": {
+              "kind": "face",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "area_mm2": 572.5552611167398,
+              "note": "圆形端面"
+            }
+          }
+        ]
+      },
+      {
+        "source_object_id": "F002",
+        "feature_type": "boss_extrude",
+        "role": "additive",
+        "z_min": 5.0,
+        "z_max": 9.0,
+        "sketch_z": 5.0,
+        "profile": {
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "bounds": [
+            -11.3,
+            -11.3,
+            11.3,
+            11.3
+          ],
+          "radius": 11.3,
+          "primitives": [
+            {
+              "center": [
+                0.0,
+                0.0
+              ],
+              "radius": 11.3
+            }
+          ]
+        },
+        "core_parameters": [
+          {
+            "id": "center",
+            "path": "profile.center",
+            "label": "中心 X, Y",
+            "value": [
+              0.0,
+              0.0
+            ],
+            "unit": "mm",
+            "selection_id": "SEL3D_F002_CENTER_POINT"
+          },
+          {
+            "id": "radius",
+            "path": "profile.radius",
+            "label": "半径",
+            "value": 11.3,
+            "unit": "mm",
+            "selection_id": "SEL3D_F002_CENTER_POINT"
+          },
+          {
+            "id": "depth",
+            "path": "depth",
+            "label": "深度",
+            "value": 4.0,
+            "unit": "mm",
+            "selection_id": "SEL3D_F002_CENTER_POINT"
+          }
+        ],
+        "subobjects": [
+          {
+            "id": "SEL3D_F002_CENTER_POINT",
+            "source_object_id": "F002",
+            "source_subobject": "profile.center",
+            "geometry_type": "point",
+            "role": "additive",
+            "derived": false,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "profile.radius",
+              "depth"
+            ],
+            "reference_key": "F002|profile.center",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F002.profile.center",
+              "F002.profile.radius",
+              "F002.depth"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": true,
+            "relation_capabilities": [
+              "coincident"
+            ],
+            "measurement": {
+              "kind": "point",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "coordinates": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "controller_path": "profile.center",
+              "controller_value": [
+                0.0,
+                0.0
+              ]
+            }
+          },
+          {
+            "id": "SEL3D_F002_CENTER_AXIS_XZ",
+            "source_object_id": "F002",
+            "source_subobject": "feature.axis.center.xz",
+            "geometry_type": "line",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "depth"
+            ],
+            "reference_key": "F002|feature.axis.center.xz",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F002.profile.center",
+              "F002.depth"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": true,
+            "relation_capabilities": [],
+            "measurement": {
+              "kind": "line",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "start": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "end": [
+                0.0,
+                0.0,
+                9.0
+              ],
+              "length_mm": 4.0,
+              "controller_path": "depth",
+              "controller_value": 4.0,
+              "note": "特征中心轴"
+            }
+          },
+          {
+            "id": "SEL3D_F002_CENTER_AXIS_YZ",
+            "source_object_id": "F002",
+            "source_subobject": "feature.axis.center.yz",
+            "geometry_type": "line",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "depth"
+            ],
+            "reference_key": "F002|feature.axis.center.yz",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F002.profile.center",
+              "F002.depth"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": true,
+            "relation_capabilities": [],
+            "measurement": {
+              "kind": "line",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "start": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "end": [
+                0.0,
+                0.0,
+                9.0
+              ],
+              "length_mm": 4.0,
+              "controller_path": "depth",
+              "controller_value": 4.0,
+              "note": "特征中心轴"
+            }
+          },
+          {
+            "id": "SEL3D_F002_PROFILE_CIRCLE_1",
+            "source_object_id": "F002",
+            "source_subobject": "profile.circle.1",
+            "geometry_type": "circle",
+            "role": "additive",
+            "derived": false,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "profile.radius"
+            ],
+            "reference_key": "F002|profile.circle.1",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F002.profile.center",
+              "F002.profile.radius"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": false,
+            "relation_capabilities": [
+              "concentric",
+              "equal_radius"
+            ],
+            "measurement": {
+              "kind": "circle",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "radius_mm": 11.3,
+              "diameter_mm": 22.6,
+              "controller_path": "profile.radius",
+              "controller_value": 11.3
+            }
+          },
+          {
+            "id": "SEL3D_F002_OPPOSITE_CIRCLE_1",
+            "source_object_id": "F002",
+            "source_subobject": "feature.circle.opposite.1",
+            "geometry_type": "circle",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "depth",
+              "profile.radius"
+            ],
+            "reference_key": "F002|feature.circle.opposite.1",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F002.depth",
+              "F002.profile.radius"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": true,
+            "relation_capabilities": [
+              "concentric",
+              "equal_radius"
+            ],
+            "measurement": {
+              "kind": "circle",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                9.0
+              ],
+              "radius_mm": 11.3,
+              "diameter_mm": 22.6,
+              "controller_path": "profile.radius",
+              "controller_value": 11.3
+            }
+          },
+          {
+            "id": "SEL3D_F002_CYLINDER_FACE_1",
+            "source_object_id": "F002",
+            "source_subobject": "feature.face.cylindrical.1",
+            "geometry_type": "face",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "profile.radius",
+              "depth"
+            ],
+            "reference_key": "F002|feature.face.cylindrical.1",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F002.profile.center",
+              "F002.profile.radius",
+              "F002.depth"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": false,
+            "relation_capabilities": [
+              "parallel",
+              "perpendicular",
+              "coincident",
+              "offset"
+            ],
+            "measurement": {
+              "kind": "face",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                7.0
+              ],
+              "area_mm2": 283.9999758845173,
+              "note": "圆柱侧面展开面积"
+            }
+          },
+          {
+            "id": "SEL3D_F002_SKETCH_FACE_1",
+            "source_object_id": "F002",
+            "source_subobject": "profile.face.1",
+            "geometry_type": "face",
+            "role": "additive",
+            "derived": false,
+            "selectable": true,
+            "edit_paths": [
+              "profile.center",
+              "profile.radius"
+            ],
+            "reference_key": "F002|profile.face.1",
+            "edit_scope": "feature_parameter",
+            "shared_parameter_groups": [
+              "F002.profile.center",
+              "F002.profile.radius"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": false,
+            "relation_capabilities": [
+              "parallel",
+              "perpendicular",
+              "coincident",
+              "offset"
+            ],
+            "measurement": {
+              "kind": "face",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "area_mm2": 401.14996593688073,
+              "note": "圆形端面"
+            }
+          },
+          {
+            "id": "SEL3D_F002_OPPOSITE_FACE_1",
+            "source_object_id": "F002",
+            "source_subobject": "feature.face.opposite.1",
+            "geometry_type": "face",
+            "role": "additive",
+            "derived": true,
+            "selectable": true,
+            "edit_paths": [
+              "depth",
+              "profile.radius"
+            ],
+            "reference_key": "F002|feature.face.opposite.1",
+            "edit_scope": "derived_parameter_proxy",
+            "shared_parameter_groups": [
+              "F002.depth",
+              "F002.profile.radius"
+            ],
+            "affected_instance_count": 1,
+            "requires_preserve_policy": false,
+            "detach_supported": false,
+            "key_geometry": false,
+            "relation_capabilities": [
+              "parallel",
+              "perpendicular",
+              "coincident",
+              "offset"
+            ],
+            "measurement": {
+              "kind": "face",
+              "authority": "model_semantic",
+              "coordinate_system_id": "MODEL_XYZ",
+              "unit": "mm",
+              "center": [
+                0.0,
+                0.0,
+                9.0
+              ],
+              "area_mm2": 401.14996593688073,
+              "note": "圆形端面"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "limits": {
+    "projection_is_not_dimension_authority": true,
+    "derived_entities_require_semantic_parameter_or_second_view": true,
+    "native_host_hidden_line_and_section_evidence_required_for_manufacturing": true
+  }
+}

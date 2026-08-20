@@ -1,0 +1,79 @@
+{
+  "schema": "aicad_magic_wand_mechanical_bom_v1",
+  "project_id": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "status": "prototype_quote_only_not_release",
+  "source": "design-parameters.json",
+  "rows": [
+    {
+      "item": 1,
+      "part_number": "MW-M-001",
+      "description": "Grip shell, axial tube prototype",
+      "quantity": 1,
+      "make_buy": "make",
+      "material": "PC-ABS prototype grade, final resin and rating not selected",
+      "process": "FDM or MJF review prototype"
+    },
+    {
+      "item": 2,
+      "part_number": "MW-M-002",
+      "description": "Internal electronics carrier cage",
+      "quantity": 1,
+      "make_buy": "make",
+      "material": "PA12 unfilled prototype grade",
+      "process": "MJF or SLS review prototype"
+    },
+    {
+      "item": 3,
+      "part_number": "MW-M-003",
+      "description": "Rear nonconductive antenna-end cap",
+      "quantity": 1,
+      "make_buy": "make",
+      "material": "unfilled PC-ABS, nonconductive",
+      "process": "FDM or MJF review prototype"
+    },
+    {
+      "item": 4,
+      "part_number": "MW-M-004",
+      "description": "Handle-to-spine connector",
+      "quantity": 1,
+      "make_buy": "make",
+      "material": "PA12 unfilled prototype grade",
+      "process": "MJF or SLS review prototype"
+    },
+    {
+      "item": 5,
+      "part_number": "MW-P-001",
+      "description": "Pultruded GFRP spine blank",
+      "quantity": 1,
+      "make_buy": "buy",
+      "material": "pultruded GFRP rod, supplier grade and certificates not selected",
+      "process": "supplier cut and deburr after incoming inspection"
+    },
+    {
+      "item": 6,
+      "part_number": "MW-C-001",
+      "description": "Two-part structural adhesive trial kit",
+      "quantity": 1,
+      "make_buy": "buy",
+      "material": "selection gated by coupon results",
+      "process": "controlled mix, surface preparation and cure trial"
+    }
+  ],
+  "excluded_from_this_bom": [
+    "PCB assembly",
+    "battery",
+    "button",
+    "haptic motor",
+    "wiring"
+  ],
+  "release_locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "human_engineering_review_required": true
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "aicad_design_context_v1",
+  "contextId": "MW.MECH.PROTOTYPE.A",
+  "domain": "mechanical",
+  "spaces": ["2d", "3d"],
+  "deliveryStage": "prototype",
+  "productFamilies": ["handheld_device", "wand", "electronics_enclosure"],
+  "riskTags": ["assembly", "battery", "imu", "interface", "motion_control", "press_to_arm", "radio", "rf_keepout"],
+  "changeTags": ["assembly", "geometry", "interface", "material", "process", "requirements"],
+  "requestedOutputs": ["bom", "dxf", "engineering_drawing", "native_host_report", "review_svg", "sldprt", "step"],
+  "applicableStandards": [
+    {"standard": "ISO 8015", "edition": "2011", "scope": "GPS fundamentals for the review drawing package", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 14405-1", "edition": "2025", "scope": "size specification vocabulary for declared dimensions", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 5459", "edition": "2024", "scope": "prototype datum scheme vocabulary", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 1101", "edition": "2017", "scope": "geometrical specification vocabulary when later invoked", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 22081", "edition": "2021", "scope": "general specification planning", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 13715", "edition": "2017", "scope": "prototype edge condition planning", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 21920-1", "edition": "2021", "scope": "surface texture indication planning", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 1", "edition": "2022", "scope": "20 degree C reference temperature", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 2768-1", "edition": "1989", "scope": "general tolerance vocabulary only when explicitly invoked", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 286-1", "edition": "2010", "scope": "fit-system basis only when later invoked", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 286-2", "edition": "2010", "scope": "fit deviations only when later invoked", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 965-1", "edition": "2026", "scope": "threads only if a later revision introduces them", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 898-1", "edition": "2013", "scope": "steel fasteners only if a later revision introduces them", "authority": "MW-MECH-STD-001-A"},
+    {"standard": "ISO 16047", "edition": "2005+Amd 1:2012", "scope": "torque-clamp testing only if a later revision introduces fasteners", "authority": "MW-MECH-STD-001-A"}
+  ],
+  "assumptions": [
+    {
+      "id": "MW.ASSUME.MATERIAL",
+      "statement": "Polymer grades, GFRP supplier properties and adhesive remain prototype selections.",
+      "impact": "Strength, environmental durability and production process capability cannot be accepted from this package.",
+      "confirmationPolicy": "confirm_before_release"
+    },
+    {
+      "id": "MW.ASSUME.RF",
+      "statement": "The declared mechanical antenna zone is a conservative provisional envelope, not the module maker's final host-board layout rule.",
+      "impact": "Exact enclosure, ground, cable and hand-effect performance requires current integration documentation and representative RF testing.",
+      "confirmationPolicy": "confirm_before_release"
+    },
+    {
+      "id": "MW.ASSUME.SIDE_FEATURE",
+      "statement": "The press-to-arm side aperture is controlled by datum and 2D requirement because the present 3D kernel cannot cut from a radial side plane.",
+      "impact": "A later native CAD transaction must add and inspect the side feature before prototype fabrication.",
+      "confirmationPolicy": "disclosed_default"
+    }
+  ],
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

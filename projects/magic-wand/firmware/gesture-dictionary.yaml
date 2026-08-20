@@ -1,0 +1,79 @@
+schema: magic_wand_gesture_dictionary_v1
+status: EVT_REVIEW_ONLY
+sensor: LSM6DSV16X
+scope: short_window_relative_motion_classification_only
+prohibited_claims:
+  - absolute_position
+  - exact_free_space_3d_path
+  - drift_free_orientation_without_external_reference
+coordinate_frame:
+  plus_x: wand_tip_forward
+  plus_y: user_left_when_arm_button_up
+  plus_z: arm_button_up
+sampling:
+  target_hz: 200
+  window_ms: 160
+  overlap_percent: 50
+  initial_i2c_hz: 100000
+  calibration_required:
+    - stationary_accelerometer_bias_scale
+    - stationary_gyro_bias
+    - mounted_axis_alignment
+    - per_user_range_normalization
+rejection:
+  low_confidence_behavior: GESTURE_NONE
+  initial_confidence_percent_min: 70
+  out_of_distribution_behavior: GESTURE_NONE
+  arm_required_for_command: true
+  note: Thresholds are seed values only and may not be used as release limits without a held-out representative-user dataset.
+gestures:
+  - id: TAP
+    relative_feature: brief acceleration-norm impulse returning to stationary
+    seed_threshold: norm_squared_delta_peak_gt_1.25_and_40_to_250_ms
+    implementation: prototype_heuristic
+    output_mapping: feedback_only_until_dataset_gate
+  - id: TWIST_CW
+    relative_feature: positive integrated angular motion about wand +X with limited cross-axis motion
+    seed_threshold: integrated_x_gt_55_deg_and_abs_integrated_z_lt_30_deg
+    implementation: prototype_heuristic
+    output_mapping: configurable_non_flight_critical_aux_only
+  - id: TWIST_CCW
+    relative_feature: negative integrated angular motion about wand +X with limited cross-axis motion
+    seed_threshold: integrated_x_lt_minus_55_deg_and_abs_integrated_z_lt_30_deg
+    implementation: prototype_heuristic
+    output_mapping: configurable_non_flight_critical_aux_only
+  - id: SWISH_LEFT
+    relative_feature: positive integrated angular motion about wand +Z with limited twist
+    seed_threshold: integrated_z_gt_40_deg_and_abs_integrated_x_lt_35_deg
+    implementation: prototype_heuristic
+    output_mapping: configurable_low_voltage_channel_only
+  - id: SWISH_RIGHT
+    relative_feature: negative integrated angular motion about wand +Z with limited twist
+    seed_threshold: integrated_z_lt_minus_40_deg_and_abs_integrated_x_lt_35_deg
+    implementation: prototype_heuristic
+    output_mapping: configurable_low_voltage_channel_only
+  - id: THRUST
+    relative_feature: positive short-window mean acceleration along wand +X
+    seed_threshold: mean_accel_x_gt_0.60_g
+    implementation: prototype_heuristic
+    output_mapping: feedback_only_until_false_activation_gate
+  - id: CIRCLE_CW
+    relative_feature: temporal quadrature loop in two relative angular axes
+    seed_threshold: disabled_pending_validated_temporal_model
+    implementation: disabled
+    output_mapping: none
+  - id: CIRCLE_CCW
+    relative_feature: opposite temporal quadrature loop in two relative angular axes
+    seed_threshold: disabled_pending_validated_temporal_model
+    implementation: disabled
+    output_mapping: none
+dataset_gate:
+  split_rule: held_out_users_not_random_windows
+  required_reports:
+    - per_class_precision_recall
+    - confusion_matrix
+    - rejection_rate
+    - false_activations_per_hour
+    - latency_distribution
+    - performance_with_haptic_active
+  release_action: keep_all_motion_outputs_disabled_until_approved

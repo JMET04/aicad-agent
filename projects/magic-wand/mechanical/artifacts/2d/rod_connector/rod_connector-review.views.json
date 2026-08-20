@@ -1,0 +1,3593 @@
+{
+  "schema_version": "1.1",
+  "space": "2d",
+  "domain": "mechanical",
+  "source_sha256": "30933b67298b7170af8a89202067a574f29bedc836af01fd868aaf2aeb4389b6",
+  "review_policy": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "domainGated": true
+  },
+  "semantic_document": {
+    "schema_version": "1.0",
+    "document": {
+      "id": "MW_DWG_M004_A",
+      "name": "MW-M-004 rod connector review drawing",
+      "space": "2d",
+      "domain": "mechanical",
+      "units": "mm",
+      "origin": [
+        0.0,
+        0.0
+      ],
+      "tolerance": 0.001,
+      "source_sha256": "30933b67298b7170af8a89202067a574f29bedc836af01fd868aaf2aeb4389b6",
+      "locks": [
+        "review_only_prototype",
+        "critical_dimensions_require_inspection"
+      ],
+      "review_policy": {
+        "reviewOnly": true,
+        "accepted": false,
+        "ruleEnabled": false,
+        "domainGated": true
+      }
+    },
+    "domain_profile": {
+      "id": "mechanical",
+      "label": "机械零件与装配",
+      "dimensions": [
+        "2d",
+        "3d"
+      ],
+      "object_roles": [
+        "datum",
+        "outline",
+        "hole",
+        "shaft",
+        "boss",
+        "pocket",
+        "interface",
+        "fastener"
+      ],
+      "review_groups": [
+        "datums",
+        "degrees_of_freedom",
+        "fit",
+        "wall_thickness",
+        "interference",
+        "tolerance"
+      ],
+      "built_in": true,
+      "maturity": "constrained",
+      "specialist_generation_blocked": false,
+      "production_release_blocked": true
+    },
+    "objects": [
+      {
+        "id": "P1",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Define the stepped axial visible profile.",
+        "reasoning": "Each segment continues the exact local part section without a gap.",
+        "depends_on": [],
+        "anchor": [
+          0.0,
+          0.0
+        ],
+        "parameters": {
+          "start": [
+            0.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            0.0
+          ],
+          "length": 10.0,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "P1",
+          "sequence": 1,
+          "cad_layer": "OUTLINE"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "P2",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Define the stepped axial visible profile.",
+        "reasoning": "Each segment continues the exact local part section without a gap.",
+        "depends_on": [
+          "P1"
+        ],
+        "anchor": [
+          10.0,
+          0.0
+        ],
+        "parameters": {
+          "start": [
+            10.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            2.1999999999999993
+          ],
+          "length": 2.1999999999999993,
+          "direction": [
+            0.0,
+            1.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "P2",
+          "sequence": 2,
+          "cad_layer": "OUTLINE"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "P3",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Define the stepped axial visible profile.",
+        "reasoning": "Each segment continues the exact local part section without a gap.",
+        "depends_on": [
+          "P2"
+        ],
+        "anchor": [
+          10.0,
+          2.1999999999999993
+        ],
+        "parameters": {
+          "start": [
+            10.0,
+            2.1999999999999993
+          ],
+          "end": [
+            25.0,
+            2.1999999999999993
+          ],
+          "length": 15.0,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "P3",
+          "sequence": 3,
+          "cad_layer": "OUTLINE"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "P4",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Define the stepped axial visible profile.",
+        "reasoning": "Each segment continues the exact local part section without a gap.",
+        "depends_on": [
+          "P3"
+        ],
+        "anchor": [
+          25.0,
+          2.1999999999999993
+        ],
+        "parameters": {
+          "start": [
+            25.0,
+            2.1999999999999993
+          ],
+          "end": [
+            25.0,
+            24.8
+          ],
+          "length": 22.6,
+          "direction": [
+            0.0,
+            1.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "P4",
+          "sequence": 4,
+          "cad_layer": "OUTLINE"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "P5",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Define the stepped axial visible profile.",
+        "reasoning": "Each segment continues the exact local part section without a gap.",
+        "depends_on": [
+          "P4"
+        ],
+        "anchor": [
+          25.0,
+          24.8
+        ],
+        "parameters": {
+          "start": [
+            25.0,
+            24.8
+          ],
+          "end": [
+            10.0,
+            24.8
+          ],
+          "length": 15.0,
+          "direction": [
+            -1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "P5",
+          "sequence": 5,
+          "cad_layer": "OUTLINE"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "P6",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Define the stepped axial visible profile.",
+        "reasoning": "Each segment continues the exact local part section without a gap.",
+        "depends_on": [
+          "P5"
+        ],
+        "anchor": [
+          10.0,
+          24.8
+        ],
+        "parameters": {
+          "start": [
+            10.0,
+            24.8
+          ],
+          "end": [
+            10.0,
+            27.0
+          ],
+          "length": 2.1999999999999993,
+          "direction": [
+            0.0,
+            1.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "P6",
+          "sequence": 6,
+          "cad_layer": "OUTLINE"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "P7",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Define the stepped axial visible profile.",
+        "reasoning": "Each segment continues the exact local part section without a gap.",
+        "depends_on": [
+          "P6"
+        ],
+        "anchor": [
+          10.0,
+          27.0
+        ],
+        "parameters": {
+          "start": [
+            10.0,
+            27.0
+          ],
+          "end": [
+            0.0,
+            27.0
+          ],
+          "length": 10.0,
+          "direction": [
+            -1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "P7",
+          "sequence": 7,
+          "cad_layer": "OUTLINE"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "P8",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Define the stepped axial visible profile.",
+        "reasoning": "Each segment continues the exact local part section without a gap.",
+        "depends_on": [
+          "P7"
+        ],
+        "anchor": [
+          0.0,
+          27.0
+        ],
+        "parameters": {
+          "start": [
+            0.0,
+            27.0
+          ],
+          "end": [
+            0.0,
+            0.0
+          ],
+          "length": 27.0,
+          "direction": [
+            0.0,
+            -1.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "P8",
+          "sequence": 8,
+          "cad_layer": "OUTLINE"
+        },
+        "roles": [
+          "outline"
+        ],
+        "editable": true
+      },
+      {
+        "id": "C1",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Show the common part axis.",
+        "reasoning": "The explicit origin-relative start and exact endpoint make this centerline deterministic.",
+        "depends_on": [],
+        "anchor": [
+          0.0,
+          13.5
+        ],
+        "parameters": {
+          "start": [
+            0.0,
+            13.5
+          ],
+          "end": [
+            25.0,
+            13.5
+          ],
+          "length": 25.0,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "C1",
+          "sequence": 9,
+          "cad_layer": "CENTER"
+        },
+        "roles": [
+          "datum"
+        ],
+        "editable": true
+      },
+      {
+        "id": "H1",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Show the lower spine-bore boundary.",
+        "reasoning": "The explicit origin-relative start and exact endpoint make this hidden bore line deterministic.",
+        "depends_on": [],
+        "anchor": [
+          0.0,
+          9.8
+        ],
+        "parameters": {
+          "start": [
+            0.0,
+            9.8
+          ],
+          "end": [
+            25.0,
+            9.8
+          ],
+          "length": 25.0,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "H1",
+          "sequence": 10,
+          "cad_layer": "HIDDEN"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "H2",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "Show the upper spine-bore boundary.",
+        "reasoning": "The explicit origin-relative start and exact endpoint make this hidden bore line deterministic.",
+        "depends_on": [],
+        "anchor": [
+          0.0,
+          17.200000000000003
+        ],
+        "parameters": {
+          "start": [
+            0.0,
+            17.200000000000003
+          ],
+          "end": [
+            25.0,
+            17.200000000000003
+          ],
+          "length": 25.0,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "H2",
+          "sequence": 11,
+          "cad_layer": "HIDDEN"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "D1",
+        "kind": "dimension",
+        "space": "2d",
+        "purpose": "Control the total part length.",
+        "reasoning": "The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset.",
+        "depends_on": [
+          "P1",
+          "P4"
+        ],
+        "anchor": [
+          0.0,
+          -8.0
+        ],
+        "parameters": {
+          "first": [
+            0.0,
+            0.0
+          ],
+          "second": [
+            25.0,
+            24.8
+          ],
+          "base": [
+            0.0,
+            -8.0
+          ],
+          "measurement": 25.0,
+          "dimension_kind": "horizontal",
+          "style_name": "AICAD_MECH",
+          "dimension_purpose": "overall"
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "D1",
+          "sequence": 12,
+          "cad_layer": "DIMENSION"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "D2",
+        "kind": "dimension",
+        "space": "2d",
+        "purpose": "Control the first axial segment.",
+        "reasoning": "The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset.",
+        "depends_on": [
+          "P1"
+        ],
+        "anchor": [
+          0.0,
+          -14.0
+        ],
+        "parameters": {
+          "first": [
+            0.0,
+            0.0
+          ],
+          "second": [
+            10.0,
+            0.0
+          ],
+          "base": [
+            0.0,
+            -14.0
+          ],
+          "measurement": 10.0,
+          "dimension_kind": "horizontal",
+          "style_name": "AICAD_MECH",
+          "dimension_purpose": "general"
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "D2",
+          "sequence": 13,
+          "cad_layer": "DIMENSION"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "D3",
+        "kind": "dimension",
+        "space": "2d",
+        "purpose": "Control the maximum diameter.",
+        "reasoning": "The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset.",
+        "depends_on": [
+          "P1",
+          "P8"
+        ],
+        "anchor": [
+          33.0,
+          0.0
+        ],
+        "parameters": {
+          "first": [
+            0.0,
+            0.0
+          ],
+          "second": [
+            0.0,
+            27.0
+          ],
+          "base": [
+            33.0,
+            0.0
+          ],
+          "measurement": 27.0,
+          "dimension_kind": "vertical",
+          "style_name": "AICAD_MECH",
+          "dimension_purpose": "general"
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "D3",
+          "sequence": 14,
+          "cad_layer": "DIMENSION"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "N1",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "bounded note frame lower edge",
+        "reasoning": "Starts the closed typed outline from a controlled datum.",
+        "depends_on": [],
+        "anchor": [
+          0.0,
+          41.0
+        ],
+        "parameters": {
+          "start": [
+            0.0,
+            41.0
+          ],
+          "end": [
+            120.0,
+            41.0
+          ],
+          "length": 120.0,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "N1",
+          "sequence": 15,
+          "cad_layer": "NOTE_FRAME"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "N2",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "bounded note frame far edge",
+        "reasoning": "Continues from the preceding endpoint and fixes the transverse extent.",
+        "depends_on": [
+          "N1"
+        ],
+        "anchor": [
+          120.0,
+          41.0
+        ],
+        "parameters": {
+          "start": [
+            120.0,
+            41.0
+          ],
+          "end": [
+            120.0,
+            53.0
+          ],
+          "length": 12.0,
+          "direction": [
+            0.0,
+            1.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "N2",
+          "sequence": 16,
+          "cad_layer": "NOTE_FRAME"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "N3",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "bounded note frame upper edge",
+        "reasoning": "Returns parallel to the first edge with the same exact length.",
+        "depends_on": [
+          "N2"
+        ],
+        "anchor": [
+          120.0,
+          53.0
+        ],
+        "parameters": {
+          "start": [
+            120.0,
+            53.0
+          ],
+          "end": [
+            0.0,
+            53.0
+          ],
+          "length": 120.0,
+          "direction": [
+            -1.0,
+            0.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "N3",
+          "sequence": 17,
+          "cad_layer": "NOTE_FRAME"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "N4",
+        "kind": "line",
+        "space": "2d",
+        "purpose": "bounded note frame closing edge",
+        "reasoning": "Closes the outline at the controlled start point.",
+        "depends_on": [
+          "N3",
+          "N1"
+        ],
+        "anchor": [
+          0.0,
+          53.0
+        ],
+        "parameters": {
+          "start": [
+            0.0,
+            53.0
+          ],
+          "end": [
+            0.0,
+            41.0
+          ],
+          "length": 12.0,
+          "direction": [
+            0.0,
+            -1.0
+          ]
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "N4",
+          "sequence": 18,
+          "cad_layer": "NOTE_FRAME"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      },
+      {
+        "id": "NT",
+        "kind": "text",
+        "space": "2d",
+        "purpose": "Place the review limitation inside its note frame.",
+        "reasoning": "Middle-center alignment and the frame dimensions keep the complete text inside the declared card.",
+        "depends_on": [],
+        "anchor": [
+          60.0,
+          47.0
+        ],
+        "parameters": {
+          "insert": [
+            60.0,
+            47.0
+          ],
+          "value": "ADHESIVE BORE IS PROTOTYPE ONLY; COUPON VALIDATION REQUIRED",
+          "height": 2.5,
+          "rotation_deg": 0.0
+        },
+        "source": {
+          "plan_space": "2d",
+          "object_id": "NT",
+          "sequence": 19,
+          "cad_layer": "NOTES"
+        },
+        "roles": [
+          "interface"
+        ],
+        "editable": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "R_P1_001",
+        "kind": "length",
+        "members": [
+          "P1"
+        ],
+        "purpose": "Validate length for P1",
+        "hard": true,
+        "value": 10.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P1",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_P1_002",
+        "kind": "horizontal",
+        "members": [
+          "P1"
+        ],
+        "purpose": "Validate horizontal for P1",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P1",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_P2_001",
+        "kind": "length",
+        "members": [
+          "P2"
+        ],
+        "purpose": "Validate length for P2",
+        "hard": true,
+        "value": 2.1999999999999993,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P2",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_P2_002",
+        "kind": "start_coincident",
+        "members": [
+          "P2",
+          "P1"
+        ],
+        "purpose": "Validate start_coincident for P2",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P2",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_P2_003",
+        "kind": "vertical",
+        "members": [
+          "P2"
+        ],
+        "purpose": "Validate vertical for P2",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P2",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_P3_001",
+        "kind": "length",
+        "members": [
+          "P3"
+        ],
+        "purpose": "Validate length for P3",
+        "hard": true,
+        "value": 15.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P3",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_P3_002",
+        "kind": "start_coincident",
+        "members": [
+          "P3",
+          "P2"
+        ],
+        "purpose": "Validate start_coincident for P3",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P3",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_P3_003",
+        "kind": "horizontal",
+        "members": [
+          "P3"
+        ],
+        "purpose": "Validate horizontal for P3",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P3",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_P4_001",
+        "kind": "length",
+        "members": [
+          "P4"
+        ],
+        "purpose": "Validate length for P4",
+        "hard": true,
+        "value": 22.6,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P4",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_P4_002",
+        "kind": "start_coincident",
+        "members": [
+          "P4",
+          "P3"
+        ],
+        "purpose": "Validate start_coincident for P4",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P4",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_P4_003",
+        "kind": "vertical",
+        "members": [
+          "P4"
+        ],
+        "purpose": "Validate vertical for P4",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P4",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_P5_001",
+        "kind": "length",
+        "members": [
+          "P5"
+        ],
+        "purpose": "Validate length for P5",
+        "hard": true,
+        "value": 15.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P5",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_P5_002",
+        "kind": "start_coincident",
+        "members": [
+          "P5",
+          "P4"
+        ],
+        "purpose": "Validate start_coincident for P5",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P5",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_P5_003",
+        "kind": "horizontal",
+        "members": [
+          "P5"
+        ],
+        "purpose": "Validate horizontal for P5",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P5",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_P6_001",
+        "kind": "length",
+        "members": [
+          "P6"
+        ],
+        "purpose": "Validate length for P6",
+        "hard": true,
+        "value": 2.1999999999999993,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P6",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_P6_002",
+        "kind": "start_coincident",
+        "members": [
+          "P6",
+          "P5"
+        ],
+        "purpose": "Validate start_coincident for P6",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P6",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_P6_003",
+        "kind": "vertical",
+        "members": [
+          "P6"
+        ],
+        "purpose": "Validate vertical for P6",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P6",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_P7_001",
+        "kind": "length",
+        "members": [
+          "P7"
+        ],
+        "purpose": "Validate length for P7",
+        "hard": true,
+        "value": 10.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P7",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_P7_002",
+        "kind": "start_coincident",
+        "members": [
+          "P7",
+          "P6"
+        ],
+        "purpose": "Validate start_coincident for P7",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P7",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_P7_003",
+        "kind": "horizontal",
+        "members": [
+          "P7"
+        ],
+        "purpose": "Validate horizontal for P7",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P7",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_P8_001",
+        "kind": "length",
+        "members": [
+          "P8"
+        ],
+        "purpose": "Validate length for P8",
+        "hard": true,
+        "value": 27.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P8",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_P8_002",
+        "kind": "start_coincident",
+        "members": [
+          "P8",
+          "P7"
+        ],
+        "purpose": "Validate start_coincident for P8",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P8",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_P8_003",
+        "kind": "vertical",
+        "members": [
+          "P8"
+        ],
+        "purpose": "Validate vertical for P8",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P8",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_P8_004",
+        "kind": "end_coincident",
+        "members": [
+          "P8"
+        ],
+        "purpose": "Validate end_coincident for P8",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "P8",
+          "constraint_index": 3
+        }
+      },
+      {
+        "id": "R_C1_001",
+        "kind": "start_offset",
+        "members": [
+          "C1"
+        ],
+        "purpose": "Validate start_offset for C1",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "C1",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_C1_002",
+        "kind": "length",
+        "members": [
+          "C1"
+        ],
+        "purpose": "Validate length for C1",
+        "hard": true,
+        "value": 25.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "C1",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_C1_003",
+        "kind": "horizontal",
+        "members": [
+          "C1"
+        ],
+        "purpose": "Validate horizontal for C1",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "C1",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_H1_001",
+        "kind": "start_offset",
+        "members": [
+          "H1"
+        ],
+        "purpose": "Validate start_offset for H1",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "H1",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_H1_002",
+        "kind": "length",
+        "members": [
+          "H1"
+        ],
+        "purpose": "Validate length for H1",
+        "hard": true,
+        "value": 25.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "H1",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_H1_003",
+        "kind": "horizontal",
+        "members": [
+          "H1"
+        ],
+        "purpose": "Validate horizontal for H1",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "H1",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_H2_001",
+        "kind": "start_offset",
+        "members": [
+          "H2"
+        ],
+        "purpose": "Validate start_offset for H2",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "H2",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_H2_002",
+        "kind": "length",
+        "members": [
+          "H2"
+        ],
+        "purpose": "Validate length for H2",
+        "hard": true,
+        "value": 25.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "H2",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_H2_003",
+        "kind": "horizontal",
+        "members": [
+          "H2"
+        ],
+        "purpose": "Validate horizontal for H2",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "H2",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_D1_001",
+        "kind": "dimension_measurement",
+        "members": [
+          "D1"
+        ],
+        "purpose": "Validate dimension_measurement for D1",
+        "hard": true,
+        "value": 25.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D1",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_D1_002",
+        "kind": "dimension_orientation",
+        "members": [
+          "D1"
+        ],
+        "purpose": "Validate dimension_orientation for D1",
+        "hard": true,
+        "value": 0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D1",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_D1_003",
+        "kind": "base_offset",
+        "members": [
+          "D1",
+          "P1"
+        ],
+        "purpose": "Validate base_offset for D1",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D1",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_D2_001",
+        "kind": "dimension_measurement",
+        "members": [
+          "D2"
+        ],
+        "purpose": "Validate dimension_measurement for D2",
+        "hard": true,
+        "value": 10.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D2",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_D2_002",
+        "kind": "dimension_orientation",
+        "members": [
+          "D2"
+        ],
+        "purpose": "Validate dimension_orientation for D2",
+        "hard": true,
+        "value": 0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D2",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_D2_003",
+        "kind": "base_offset",
+        "members": [
+          "D2",
+          "P1"
+        ],
+        "purpose": "Validate base_offset for D2",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D2",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_D3_001",
+        "kind": "dimension_measurement",
+        "members": [
+          "D3"
+        ],
+        "purpose": "Validate dimension_measurement for D3",
+        "hard": true,
+        "value": 27.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D3",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_D3_002",
+        "kind": "dimension_orientation",
+        "members": [
+          "D3"
+        ],
+        "purpose": "Validate dimension_orientation for D3",
+        "hard": true,
+        "value": 90,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D3",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_D3_003",
+        "kind": "base_offset",
+        "members": [
+          "D3",
+          "P1"
+        ],
+        "purpose": "Validate base_offset for D3",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "D3",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_N1_001",
+        "kind": "horizontal",
+        "members": [
+          "N1"
+        ],
+        "purpose": "Validate horizontal for N1",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N1",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_N1_002",
+        "kind": "length",
+        "members": [
+          "N1"
+        ],
+        "purpose": "Validate length for N1",
+        "hard": true,
+        "value": 120,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N1",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_N1_003",
+        "kind": "start_offset",
+        "members": [
+          "N1"
+        ],
+        "purpose": "Validate start_offset for N1",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N1",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_N2_001",
+        "kind": "start_coincident",
+        "members": [
+          "N2",
+          "N1"
+        ],
+        "purpose": "Validate start_coincident for N2",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N2",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_N2_002",
+        "kind": "vertical",
+        "members": [
+          "N2"
+        ],
+        "purpose": "Validate vertical for N2",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N2",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_N2_003",
+        "kind": "length",
+        "members": [
+          "N2"
+        ],
+        "purpose": "Validate length for N2",
+        "hard": true,
+        "value": 12.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N2",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_N3_001",
+        "kind": "start_coincident",
+        "members": [
+          "N3",
+          "N2"
+        ],
+        "purpose": "Validate start_coincident for N3",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N3",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_N3_002",
+        "kind": "horizontal",
+        "members": [
+          "N3"
+        ],
+        "purpose": "Validate horizontal for N3",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N3",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_N3_003",
+        "kind": "length",
+        "members": [
+          "N3"
+        ],
+        "purpose": "Validate length for N3",
+        "hard": true,
+        "value": 120,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N3",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_N4_001",
+        "kind": "start_coincident",
+        "members": [
+          "N4",
+          "N3"
+        ],
+        "purpose": "Validate start_coincident for N4",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N4",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_N4_002",
+        "kind": "vertical",
+        "members": [
+          "N4"
+        ],
+        "purpose": "Validate vertical for N4",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N4",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_N4_003",
+        "kind": "length",
+        "members": [
+          "N4"
+        ],
+        "purpose": "Validate length for N4",
+        "hard": true,
+        "value": 12.0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N4",
+          "constraint_index": 2
+        }
+      },
+      {
+        "id": "R_N4_004",
+        "kind": "end_coincident",
+        "members": [
+          "N4",
+          "N1"
+        ],
+        "purpose": "Validate end_coincident for N4",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "N4",
+          "constraint_index": 3
+        }
+      },
+      {
+        "id": "R_NT_001",
+        "kind": "position_offset",
+        "members": [
+          "NT"
+        ],
+        "purpose": "Validate position_offset for NT",
+        "hard": true,
+        "value": null,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "NT",
+          "constraint_index": 0
+        }
+      },
+      {
+        "id": "R_NT_002",
+        "kind": "text_height",
+        "members": [
+          "NT"
+        ],
+        "purpose": "Validate text_height for NT",
+        "hard": true,
+        "value": 2.5,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "NT",
+          "constraint_index": 1
+        }
+      },
+      {
+        "id": "R_NT_003",
+        "kind": "rotation",
+        "members": [
+          "NT"
+        ],
+        "purpose": "Validate rotation for NT",
+        "hard": true,
+        "value": 0,
+        "tolerance": 0.001,
+        "source": {
+          "object_id": "NT",
+          "constraint_index": 2
+        }
+      }
+    ],
+    "invariants": {
+      "origin_anchored": true,
+      "ordered_dependencies": true,
+      "all_objects_explained": true,
+      "review_only": true,
+      "accepted": false,
+      "rule_enabled": false,
+      "domain_gated": true
+    },
+    "validation": {
+      "ok": true,
+      "valid": true,
+      "space": "2d",
+      "domain": "mechanical",
+      "object_count": 19,
+      "relation_count": 58,
+      "source_sha256": "30933b67298b7170af8a89202067a574f29bedc836af01fd868aaf2aeb4389b6",
+      "semantic_sha256": "a55514871c1ea2a74171e1d08cfe213e1edfcd4d2692e2a96bacddd73fede179"
+    }
+  },
+  "coordinate_system": {
+    "id": "MODEL_XYZ",
+    "type": "cartesian",
+    "handedness": "right",
+    "origin": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "axes": {
+      "x": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "y": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "z": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "unit": "mm"
+  },
+  "views": [
+    {
+      "id": "PLAN",
+      "label": "二维设计视图",
+      "kind": "native_2d",
+      "axes": [
+        "x",
+        "y"
+      ],
+      "lost_axis": null,
+      "plane": null,
+      "geometry_scope": "authoritative_2d_geometry",
+      "entities": [
+        {
+          "id": "PLAN_P1",
+          "view_id": "PLAN",
+          "source_object_id": "P1",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              0.0
+            ],
+            "end": [
+              10.0,
+              0.0
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "id": "PLAN_P2",
+          "view_id": "PLAN",
+          "source_object_id": "P2",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              10.0,
+              0.0
+            ],
+            "end": [
+              10.0,
+              2.1999999999999993
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            10.0,
+            0.0
+          ]
+        },
+        {
+          "id": "PLAN_P3",
+          "view_id": "PLAN",
+          "source_object_id": "P3",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              10.0,
+              2.1999999999999993
+            ],
+            "end": [
+              25.0,
+              2.1999999999999993
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            10.0,
+            2.1999999999999993
+          ]
+        },
+        {
+          "id": "PLAN_P4",
+          "view_id": "PLAN",
+          "source_object_id": "P4",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              25.0,
+              2.1999999999999993
+            ],
+            "end": [
+              25.0,
+              24.8
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            25.0,
+            2.1999999999999993
+          ]
+        },
+        {
+          "id": "PLAN_P5",
+          "view_id": "PLAN",
+          "source_object_id": "P5",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              25.0,
+              24.8
+            ],
+            "end": [
+              10.0,
+              24.8
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            25.0,
+            24.8
+          ]
+        },
+        {
+          "id": "PLAN_P6",
+          "view_id": "PLAN",
+          "source_object_id": "P6",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              10.0,
+              24.8
+            ],
+            "end": [
+              10.0,
+              27.0
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            10.0,
+            24.8
+          ]
+        },
+        {
+          "id": "PLAN_P7",
+          "view_id": "PLAN",
+          "source_object_id": "P7",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              10.0,
+              27.0
+            ],
+            "end": [
+              0.0,
+              27.0
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            10.0,
+            27.0
+          ]
+        },
+        {
+          "id": "PLAN_P8",
+          "view_id": "PLAN",
+          "source_object_id": "P8",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              27.0
+            ],
+            "end": [
+              0.0,
+              0.0
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            0.0,
+            27.0
+          ]
+        },
+        {
+          "id": "PLAN_C1",
+          "view_id": "PLAN",
+          "source_object_id": "C1",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              13.5
+            ],
+            "end": [
+              25.0,
+              13.5
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            0.0,
+            13.5
+          ]
+        },
+        {
+          "id": "PLAN_H1",
+          "view_id": "PLAN",
+          "source_object_id": "H1",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              9.8
+            ],
+            "end": [
+              25.0,
+              9.8
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            0.0,
+            9.8
+          ]
+        },
+        {
+          "id": "PLAN_H2",
+          "view_id": "PLAN",
+          "source_object_id": "H2",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              17.200000000000003
+            ],
+            "end": [
+              25.0,
+              17.200000000000003
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            0.0,
+            17.200000000000003
+          ]
+        },
+        {
+          "id": "PLAN_D1_D",
+          "view_id": "PLAN",
+          "source_object_id": "D1",
+          "source_subobject": "dimension.line",
+          "geometry": {
+            "type": "line",
+            "start": [
+              3.999870971904132,
+              -4.032127995871101
+            ],
+            "end": [
+              28.99987097190413,
+              20.7678720041289
+            ],
+            "display": {
+              "kind": "dimension",
+              "measurement": 25.0,
+              "orientation_deg": 0.0,
+              "unit": "mm",
+              "style_name": "AICAD_MECH",
+              "dimension_purpose": "overall",
+              "text_height": 4.0,
+              "owner_id": "D1"
+            }
+          },
+          "role": "annotation",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "dimension_purpose"
+          ]
+        },
+        {
+          "id": "PLAN_D1_E1",
+          "view_id": "PLAN",
+          "source_object_id": "D1",
+          "source_subobject": "dimension.extension.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              0.0
+            ],
+            "end": [
+              3.999870971904132,
+              -4.032127995871101
+            ]
+          },
+          "role": "annotation",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": []
+        },
+        {
+          "id": "PLAN_D1_E2",
+          "view_id": "PLAN",
+          "source_object_id": "D1",
+          "source_subobject": "dimension.extension.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              25.0,
+              24.8
+            ],
+            "end": [
+              28.99987097190413,
+              20.7678720041289
+            ]
+          },
+          "role": "annotation",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": []
+        },
+        {
+          "id": "PLAN_D2_D",
+          "view_id": "PLAN",
+          "source_object_id": "D2",
+          "source_subobject": "dimension.line",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              -14.0
+            ],
+            "end": [
+              10.0,
+              -14.0
+            ],
+            "display": {
+              "kind": "dimension",
+              "measurement": 10.0,
+              "orientation_deg": 0.0,
+              "unit": "mm",
+              "style_name": "AICAD_MECH",
+              "dimension_purpose": "general",
+              "text_height": 4.0,
+              "owner_id": "D2"
+            }
+          },
+          "role": "annotation",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "dimension_purpose"
+          ]
+        },
+        {
+          "id": "PLAN_D2_E1",
+          "view_id": "PLAN",
+          "source_object_id": "D2",
+          "source_subobject": "dimension.extension.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              0.0
+            ],
+            "end": [
+              0.0,
+              -14.0
+            ]
+          },
+          "role": "annotation",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": []
+        },
+        {
+          "id": "PLAN_D2_E2",
+          "view_id": "PLAN",
+          "source_object_id": "D2",
+          "source_subobject": "dimension.extension.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              10.0,
+              0.0
+            ],
+            "end": [
+              10.0,
+              -14.0
+            ]
+          },
+          "role": "annotation",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": []
+        },
+        {
+          "id": "PLAN_D3_D",
+          "view_id": "PLAN",
+          "source_object_id": "D3",
+          "source_subobject": "dimension.line",
+          "geometry": {
+            "type": "line",
+            "start": [
+              33.0,
+              0.0
+            ],
+            "end": [
+              33.0,
+              27.0
+            ],
+            "display": {
+              "kind": "dimension",
+              "measurement": 27.0,
+              "orientation_deg": 90.0,
+              "unit": "mm",
+              "style_name": "AICAD_MECH",
+              "dimension_purpose": "general",
+              "text_height": 4.0,
+              "owner_id": "D3"
+            }
+          },
+          "role": "annotation",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "dimension_purpose"
+          ]
+        },
+        {
+          "id": "PLAN_D3_E1",
+          "view_id": "PLAN",
+          "source_object_id": "D3",
+          "source_subobject": "dimension.extension.1",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              0.0
+            ],
+            "end": [
+              33.0,
+              0.0
+            ]
+          },
+          "role": "annotation",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": []
+        },
+        {
+          "id": "PLAN_D3_E2",
+          "view_id": "PLAN",
+          "source_object_id": "D3",
+          "source_subobject": "dimension.extension.2",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              27.0
+            ],
+            "end": [
+              33.0,
+              27.0
+            ]
+          },
+          "role": "annotation",
+          "derived": true,
+          "selectable": true,
+          "edit_paths": []
+        },
+        {
+          "id": "PLAN_N1",
+          "view_id": "PLAN",
+          "source_object_id": "N1",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              41.0
+            ],
+            "end": [
+              120.0,
+              41.0
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            0.0,
+            41.0
+          ]
+        },
+        {
+          "id": "PLAN_N2",
+          "view_id": "PLAN",
+          "source_object_id": "N2",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              120.0,
+              41.0
+            ],
+            "end": [
+              120.0,
+              53.0
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            120.0,
+            41.0
+          ]
+        },
+        {
+          "id": "PLAN_N3",
+          "view_id": "PLAN",
+          "source_object_id": "N3",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              120.0,
+              53.0
+            ],
+            "end": [
+              0.0,
+              53.0
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            120.0,
+            53.0
+          ]
+        },
+        {
+          "id": "PLAN_N4",
+          "view_id": "PLAN",
+          "source_object_id": "N4",
+          "source_subobject": "entity",
+          "geometry": {
+            "type": "line",
+            "start": [
+              0.0,
+              53.0
+            ],
+            "end": [
+              0.0,
+              41.0
+            ]
+          },
+          "role": "geometry",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "start"
+          ],
+          "placement_path": "start",
+          "placement_point": [
+            0.0,
+            53.0
+          ]
+        },
+        {
+          "id": "PLAN_NT",
+          "view_id": "PLAN",
+          "source_object_id": "NT",
+          "source_subobject": "entity.insert",
+          "geometry": {
+            "type": "point",
+            "point": [
+              60.0,
+              47.0
+            ],
+            "display": {
+              "kind": "text",
+              "value": "ADHESIVE BORE IS PROTOTYPE ONLY; COUPON VALIDATION REQUIRED",
+              "height": 2.5,
+              "rotation_deg": 0.0
+            }
+          },
+          "role": "annotation",
+          "derived": false,
+          "selectable": true,
+          "edit_paths": [
+            "insert",
+            "value",
+            "height",
+            "rotation_deg"
+          ],
+          "placement_path": "insert",
+          "placement_point": [
+            60.0,
+            47.0
+          ]
+        }
+      ],
+      "manufacturing_authority": false,
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      }
+    }
+  ],
+  "selection_map": {
+    "PLAN_P1": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_P1",
+      "source_object_id": "P1",
+      "source_subobject": "entity",
+      "reference_key": "P1|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          10.0,
+          0.0,
+          0.0
+        ],
+        "length_mm": 10.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        0.0,
+        0.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_P2": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_P2",
+      "source_object_id": "P2",
+      "source_subobject": "entity",
+      "reference_key": "P2|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          10.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          10.0,
+          2.1999999999999993,
+          0.0
+        ],
+        "length_mm": 2.1999999999999993
+      },
+      "placement_path": "start",
+      "placement_point": [
+        10.0,
+        0.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_P3": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_P3",
+      "source_object_id": "P3",
+      "source_subobject": "entity",
+      "reference_key": "P3|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          10.0,
+          2.1999999999999993,
+          0.0
+        ],
+        "end": [
+          25.0,
+          2.1999999999999993,
+          0.0
+        ],
+        "length_mm": 15.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        10.0,
+        2.1999999999999993
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_P4": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_P4",
+      "source_object_id": "P4",
+      "source_subobject": "entity",
+      "reference_key": "P4|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          25.0,
+          2.1999999999999993,
+          0.0
+        ],
+        "end": [
+          25.0,
+          24.8,
+          0.0
+        ],
+        "length_mm": 22.6
+      },
+      "placement_path": "start",
+      "placement_point": [
+        25.0,
+        2.1999999999999993
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_P5": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_P5",
+      "source_object_id": "P5",
+      "source_subobject": "entity",
+      "reference_key": "P5|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          25.0,
+          24.8,
+          0.0
+        ],
+        "end": [
+          10.0,
+          24.8,
+          0.0
+        ],
+        "length_mm": 15.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        25.0,
+        24.8
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_P6": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_P6",
+      "source_object_id": "P6",
+      "source_subobject": "entity",
+      "reference_key": "P6|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          10.0,
+          24.8,
+          0.0
+        ],
+        "end": [
+          10.0,
+          27.0,
+          0.0
+        ],
+        "length_mm": 2.1999999999999993
+      },
+      "placement_path": "start",
+      "placement_point": [
+        10.0,
+        24.8
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_P7": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_P7",
+      "source_object_id": "P7",
+      "source_subobject": "entity",
+      "reference_key": "P7|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          10.0,
+          27.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          27.0,
+          0.0
+        ],
+        "length_mm": 10.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        10.0,
+        27.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_P8": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_P8",
+      "source_object_id": "P8",
+      "source_subobject": "entity",
+      "reference_key": "P8|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          27.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "length_mm": 27.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        0.0,
+        27.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_C1": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_C1",
+      "source_object_id": "C1",
+      "source_subobject": "entity",
+      "reference_key": "C1|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          13.5,
+          0.0
+        ],
+        "end": [
+          25.0,
+          13.5,
+          0.0
+        ],
+        "length_mm": 25.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        0.0,
+        13.5
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_H1": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_H1",
+      "source_object_id": "H1",
+      "source_subobject": "entity",
+      "reference_key": "H1|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          9.8,
+          0.0
+        ],
+        "end": [
+          25.0,
+          9.8,
+          0.0
+        ],
+        "length_mm": 25.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        0.0,
+        9.8
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_H2": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_H2",
+      "source_object_id": "H2",
+      "source_subobject": "entity",
+      "reference_key": "H2|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          17.200000000000003,
+          0.0
+        ],
+        "end": [
+          25.0,
+          17.200000000000003,
+          0.0
+        ],
+        "length_mm": 25.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        0.0,
+        17.200000000000003
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_D1_D": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D1_D",
+      "source_object_id": "D1",
+      "source_subobject": "dimension.line",
+      "reference_key": "D1|dimension.line",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": false,
+      "edit_paths": [
+        "dimension_purpose"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          3.999870971904132,
+          -4.032127995871101,
+          0.0
+        ],
+        "end": [
+          28.99987097190413,
+          20.7678720041289,
+          0.0
+        ],
+        "length_mm": 35.214201680572
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_D1_E1": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D1_E1",
+      "source_object_id": "D1",
+      "source_subobject": "dimension.extension.1",
+      "reference_key": "D1|dimension.extension.1",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": true,
+      "edit_paths": [],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          3.999870971904132,
+          -4.032127995871101,
+          0.0
+        ],
+        "length_mm": 5.679526737939422,
+        "note": "由编译特征生成的正投影/截面代理"
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_D1_E2": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D1_E2",
+      "source_object_id": "D1",
+      "source_subobject": "dimension.extension.2",
+      "reference_key": "D1|dimension.extension.2",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": true,
+      "edit_paths": [],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          25.0,
+          24.8,
+          0.0
+        ],
+        "end": [
+          28.99987097190413,
+          20.7678720041289,
+          0.0
+        ],
+        "length_mm": 5.67952673793942,
+        "note": "由编译特征生成的正投影/截面代理"
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_D2_D": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D2_D",
+      "source_object_id": "D2",
+      "source_subobject": "dimension.line",
+      "reference_key": "D2|dimension.line",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": false,
+      "edit_paths": [
+        "dimension_purpose"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          -14.0,
+          0.0
+        ],
+        "end": [
+          10.0,
+          -14.0,
+          0.0
+        ],
+        "length_mm": 10.0
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_D2_E1": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D2_E1",
+      "source_object_id": "D2",
+      "source_subobject": "dimension.extension.1",
+      "reference_key": "D2|dimension.extension.1",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": true,
+      "edit_paths": [],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          -14.0,
+          0.0
+        ],
+        "length_mm": 14.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_D2_E2": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D2_E2",
+      "source_object_id": "D2",
+      "source_subobject": "dimension.extension.2",
+      "reference_key": "D2|dimension.extension.2",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": true,
+      "edit_paths": [],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          10.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          10.0,
+          -14.0,
+          0.0
+        ],
+        "length_mm": 14.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_D3_D": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D3_D",
+      "source_object_id": "D3",
+      "source_subobject": "dimension.line",
+      "reference_key": "D3|dimension.line",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": false,
+      "edit_paths": [
+        "dimension_purpose"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          33.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          33.0,
+          27.0,
+          0.0
+        ],
+        "length_mm": 27.0
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_D3_E1": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D3_E1",
+      "source_object_id": "D3",
+      "source_subobject": "dimension.extension.1",
+      "reference_key": "D3|dimension.extension.1",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": true,
+      "edit_paths": [],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "end": [
+          33.0,
+          0.0,
+          0.0
+        ],
+        "length_mm": 33.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_D3_E2": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_D3_E2",
+      "source_object_id": "D3",
+      "source_subobject": "dimension.extension.2",
+      "reference_key": "D3|dimension.extension.2",
+      "geometry_type": "line",
+      "role": "annotation",
+      "derived": true,
+      "edit_paths": [],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "orthographic_projection",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          27.0,
+          0.0
+        ],
+        "end": [
+          33.0,
+          27.0,
+          0.0
+        ],
+        "length_mm": 33.0,
+        "note": "由编译特征生成的正投影/截面代理"
+      },
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": []
+    },
+    "PLAN_N1": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_N1",
+      "source_object_id": "N1",
+      "source_subobject": "entity",
+      "reference_key": "N1|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          41.0,
+          0.0
+        ],
+        "end": [
+          120.0,
+          41.0,
+          0.0
+        ],
+        "length_mm": 120.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        0.0,
+        41.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_N2": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_N2",
+      "source_object_id": "N2",
+      "source_subobject": "entity",
+      "reference_key": "N2|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          120.0,
+          41.0,
+          0.0
+        ],
+        "end": [
+          120.0,
+          53.0,
+          0.0
+        ],
+        "length_mm": 12.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        120.0,
+        41.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_N3": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_N3",
+      "source_object_id": "N3",
+      "source_subobject": "entity",
+      "reference_key": "N3|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          120.0,
+          53.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          53.0,
+          0.0
+        ],
+        "length_mm": 120.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        120.0,
+        53.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_N4": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_N4",
+      "source_object_id": "N4",
+      "source_subobject": "entity",
+      "reference_key": "N4|entity",
+      "geometry_type": "line",
+      "role": "geometry",
+      "derived": false,
+      "edit_paths": [
+        "start"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "line",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "start": [
+          0.0,
+          53.0,
+          0.0
+        ],
+        "end": [
+          0.0,
+          41.0,
+          0.0
+        ],
+        "length_mm": 12.0
+      },
+      "placement_path": "start",
+      "placement_point": [
+        0.0,
+        53.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": true,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "parallel",
+        "perpendicular",
+        "collinear",
+        "equal_length"
+      ]
+    },
+    "PLAN_NT": {
+      "view_id": "PLAN",
+      "view_entity_id": "PLAN_NT",
+      "source_object_id": "NT",
+      "source_subobject": "entity.insert",
+      "reference_key": "NT|entity.insert",
+      "geometry_type": "point",
+      "role": "annotation",
+      "derived": false,
+      "edit_paths": [
+        "insert",
+        "value",
+        "height",
+        "rotation_deg"
+      ],
+      "back_projection": {
+        "unique_without_additional_constraints": true,
+        "requires": []
+      },
+      "measurement": {
+        "kind": "point",
+        "authority": "authoritative_2d",
+        "coordinate_system_id": "MODEL_XYZ",
+        "unit": "mm",
+        "coordinates": [
+          60.0,
+          47.0,
+          0.0
+        ]
+      },
+      "placement_path": "insert",
+      "placement_point": [
+        60.0,
+        47.0
+      ],
+      "edit_scope": "subobject_parameterized",
+      "shared_parameter_groups": [],
+      "affected_instance_count": 1,
+      "requires_preserve_policy": false,
+      "detach_supported": false,
+      "relation_capabilities": [
+        "coincident"
+      ]
+    }
+  },
+  "selector_3d": null,
+  "limits": {
+    "projection_is_not_dimension_authority": true,
+    "derived_entities_require_semantic_parameter_or_second_view": true,
+    "native_host_hidden_line_and_section_evidence_required_for_manufacturing": false
+  }
+}

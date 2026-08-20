@@ -1,0 +1,303 @@
+{
+  "schema": "aicad_magic_wand_system_traceability_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "sourcePath": "projects/magic-wand/system-requirements.json",
+  "requirements": [
+    {
+      "id": "SYS-001",
+      "category": "mechanical",
+      "requirement": "The assembled review prototype shall be 315 mm long with a 27 mm nominal grip and a 190 mm exposed nonconductive spine.",
+      "acceptance": "Overall length 315 +/- 2 mm; grip OD 27 +/- 0.2 mm; exposed spine 190 +/- 1 mm.",
+      "verification": "drawing inspection plus physical first-article measurement",
+      "sourceStatus": "design_defined_physical_test_pending",
+      "evidencePaths": [
+        "projects/magic-wand/mechanical/assembly-layout.json",
+        "projects/magic-wand/mechanical/design-parameters.json"
+      ],
+      "openBlockerIds": [
+        "MW-BLK-002",
+        "MW-BLK-003",
+        "MW-BLK-005",
+        "INT-BLK-001"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-002",
+      "category": "functional_safety",
+      "requirement": "Commands shall be enabled only while the recessed press-to-arm control is continuously held.",
+      "acceptance": "Release requests local disarm and receiver safe state within 100 ms target; measured worst case shall be recorded before use.",
+      "verification": "hardware-in-loop timing test over normal, reset and packet-loss cases",
+      "sourceStatus": "implementation_and_test_pending",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md",
+        "projects/magic-wand/firmware/CMakeLists.txt",
+        "projects/magic-wand/firmware/README.md",
+        "projects/magic-wand/firmware/gesture-dictionary.yaml",
+        "projects/magic-wand/firmware/host-review-evidence.json",
+        "projects/magic-wand/firmware/include/mw_gesture.h",
+        "projects/magic-wand/firmware/include/mw_protocol.h",
+        "projects/magic-wand/firmware/include/mw_state_machine.h",
+        "projects/magic-wand/firmware/protocol.md",
+        "projects/magic-wand/firmware/src/main.c",
+        "projects/magic-wand/firmware/src/mw_gesture.c",
+        "projects/magic-wand/firmware/src/mw_protocol.c",
+        "projects/magic-wand/firmware/src/mw_state_machine.c",
+        "projects/magic-wand/firmware/state-machine.md",
+        "projects/magic-wand/mechanical/REQUIREMENTS_INTERFACES_TOLERANCES.md"
+      ],
+      "openBlockerIds": [
+        "BLK-FW-001",
+        "INT-BLK-002"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-003",
+      "category": "functional_safety",
+      "requirement": "Boot, reset, brownout, watchdog expiry and radio-link loss shall force every receiver output inactive.",
+      "acceptance": "No output pulse on boot/reset; link-loss safe state within 250 ms target; recovery requires a fresh armed session.",
+      "verification": "oscilloscope capture and fault-injection test",
+      "sourceStatus": "implementation_and_test_pending",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/system-architecture.md",
+        "projects/magic-wand/firmware/CMakeLists.txt",
+        "projects/magic-wand/firmware/README.md",
+        "projects/magic-wand/firmware/gesture-dictionary.yaml",
+        "projects/magic-wand/firmware/host-review-evidence.json",
+        "projects/magic-wand/firmware/include/mw_gesture.h",
+        "projects/magic-wand/firmware/include/mw_protocol.h",
+        "projects/magic-wand/firmware/include/mw_state_machine.h",
+        "projects/magic-wand/firmware/protocol.md",
+        "projects/magic-wand/firmware/src/main.c",
+        "projects/magic-wand/firmware/src/mw_gesture.c",
+        "projects/magic-wand/firmware/src/mw_protocol.c",
+        "projects/magic-wand/firmware/src/mw_state_machine.c",
+        "projects/magic-wand/firmware/state-machine.md"
+      ],
+      "openBlockerIds": [
+        "BLK-FW-001",
+        "INT-BLK-002"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-004",
+      "category": "gesture",
+      "requirement": "The six-axis IMU shall classify calibrated short-window relative orientation and motion gestures; it shall not claim absolute position or an exact free-space 3D path.",
+      "acceptance": "Per-class confusion matrix, rejection threshold and false-activation rate are recorded on representative users; low-confidence windows cause no action.",
+      "verification": "labelled gesture dataset and supervised usability test",
+      "sourceStatus": "algorithm_and_dataset_pending",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/system-architecture.md",
+        "projects/magic-wand/firmware/CMakeLists.txt",
+        "projects/magic-wand/firmware/README.md",
+        "projects/magic-wand/firmware/gesture-dictionary.yaml",
+        "projects/magic-wand/firmware/host-review-evidence.json",
+        "projects/magic-wand/firmware/include/mw_gesture.h",
+        "projects/magic-wand/firmware/include/mw_protocol.h",
+        "projects/magic-wand/firmware/include/mw_state_machine.h",
+        "projects/magic-wand/firmware/protocol.md",
+        "projects/magic-wand/firmware/src/main.c",
+        "projects/magic-wand/firmware/src/mw_gesture.c",
+        "projects/magic-wand/firmware/src/mw_protocol.c",
+        "projects/magic-wand/firmware/src/mw_state_machine.c",
+        "projects/magic-wand/firmware/state-machine.md"
+      ],
+      "openBlockerIds": [
+        "BLK-FW-001",
+        "INT-BLK-003"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-005",
+      "category": "communications_security",
+      "requirement": "The BLE link shall use LE Secure Connections with physical pairing authorization and unique device credentials; commands shall also carry authenticated encryption, direction/session binding and a monotonic anti-replay sequence.",
+      "acceptance": "Duplicate, stale, cross-device, unauthenticated and nonce-reuse test vectors are rejected without output activation.",
+      "verification": "protocol unit tests, packet capture and negative security tests",
+      "sourceStatus": "implementation_and_security_review_pending",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/system-architecture.md",
+        "projects/magic-wand/firmware/CMakeLists.txt",
+        "projects/magic-wand/firmware/README.md",
+        "projects/magic-wand/firmware/gesture-dictionary.yaml",
+        "projects/magic-wand/firmware/host-review-evidence.json",
+        "projects/magic-wand/firmware/include/mw_gesture.h",
+        "projects/magic-wand/firmware/include/mw_protocol.h",
+        "projects/magic-wand/firmware/include/mw_state_machine.h",
+        "projects/magic-wand/firmware/protocol.md",
+        "projects/magic-wand/firmware/src/main.c",
+        "projects/magic-wand/firmware/src/mw_gesture.c",
+        "projects/magic-wand/firmware/src/mw_protocol.c",
+        "projects/magic-wand/firmware/src/mw_state_machine.c",
+        "projects/magic-wand/firmware/state-machine.md"
+      ],
+      "openBlockerIds": [
+        "BLK-FW-001",
+        "INT-BLK-003"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-006",
+      "category": "power",
+      "requirement": "The wand shall use one protected 1S LiPo cell with NTC supervision, a 5 V USB-C sink-only charge input and a regulated logic rail.",
+      "acceptance": "Cell protection is present in the selected ordered part or an external protector; charge/current/temperature limits match the cell; no USB source role is exposed.",
+      "verification": "ordered-part review, bench charge/thermal test and USB-C sink compliance check",
+      "sourceStatus": "ordered_parts_and_bench_test_pending",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/bom.csv",
+        "projects/magic-wand/electronics/design-calculations.md",
+        "projects/magic-wand/electronics/interface-control.md"
+      ],
+      "openBlockerIds": [
+        "BLK-EDA-001",
+        "BLK-SIM-001",
+        "BLK-MECH-001"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-007",
+      "category": "radio_mechanical",
+      "requirement": "The NINA-B302 antenna end shall face a nonconductive enclosure region and obey the current u-blox host-ground, metal, battery and enclosure restrictions.",
+      "acceptance": "Layout keepout is checked against the controlled module integration manual and representative enclosure RF performance is measured.",
+      "verification": "PCB/enclosure overlay review plus conducted or radiated RF comparison test",
+      "sourceStatus": "pcb_layout_and_rf_test_pending",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/system-architecture.md",
+        "projects/magic-wand/mechanical/REQUIREMENTS_INTERFACES_TOLERANCES.md",
+        "projects/magic-wand/mechanical/assembly-layout.json"
+      ],
+      "openBlockerIds": [
+        "MW-BLK-004",
+        "INT-BLK-004"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-008",
+      "category": "receiver_interfaces",
+      "requirement": "The receiver may expose only documented SELV interfaces: 3.3/5 V UART or PWM, an isolated open-collector interface, and a common-ground 5-12 V low-side MOSFET channel within declared ratings.",
+      "acceptance": "Every connector pin, voltage domain, current limit, default state and external flyback requirement is labelled and tested.",
+      "verification": "schematic/layout review, load test and connector fault injection",
+      "sourceStatus": "eda_and_bench_test_pending",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md",
+        "projects/magic-wand/electronics/receiver/connectivity.csv"
+      ],
+      "openBlockerIds": [
+        "BLK-EDA-001",
+        "INT-BLK-002"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-009",
+      "category": "mains_boundary",
+      "requirement": "Mains loads shall be controlled only through a separately certified enclosed relay or contactor module using a receiver SELV control output.",
+      "acceptance": "No mains conductor enters either AICAD PCB or enclosure; relay certification, ratings, creepage, wiring and installation remain external evidence.",
+      "verification": "installation boundary review by a qualified electrical professional",
+      "sourceStatus": "external_specialist_required",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md"
+      ],
+      "openBlockerIds": [
+        "BLK-SAFE-001",
+        "INT-BLK-005"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-010",
+      "category": "drone_boundary",
+      "requirement": "Drone integration is limited to an autopilot-configured, non-flight-critical AUX or telemetry channel; the receiver shall not drive motors, ESC power stages, arming or primary flight controls.",
+      "acceptance": "Autopilot configuration rejects the channel for arming/propulsion and fails safe on receiver loss; ground and restrained-prop tests precede any flight.",
+      "verification": "qualified flight-system integrator review and staged ground test",
+      "sourceStatus": "external_specialist_required",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md"
+      ],
+      "openBlockerIds": [
+        "BLK-SAFE-001",
+        "INT-BLK-005"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-011",
+      "category": "human_factors",
+      "requirement": "Command feedback shall distinguish paired, armed, accepted, rejected and fault states without relying on motion alone.",
+      "acceptance": "Haptic/indicator patterns are unambiguous in a blinded user test and fault feedback never activates an output.",
+      "verification": "firmware state-machine test and supervised usability study",
+      "sourceStatus": "implementation_and_test_pending",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/system-architecture.md",
+        "projects/magic-wand/firmware/CMakeLists.txt",
+        "projects/magic-wand/firmware/README.md",
+        "projects/magic-wand/firmware/gesture-dictionary.yaml",
+        "projects/magic-wand/firmware/host-review-evidence.json",
+        "projects/magic-wand/firmware/include/mw_gesture.h",
+        "projects/magic-wand/firmware/include/mw_protocol.h",
+        "projects/magic-wand/firmware/include/mw_state_machine.h",
+        "projects/magic-wand/firmware/protocol.md",
+        "projects/magic-wand/firmware/src/main.c",
+        "projects/magic-wand/firmware/src/mw_gesture.c",
+        "projects/magic-wand/firmware/src/mw_protocol.c",
+        "projects/magic-wand/firmware/src/mw_state_machine.c",
+        "projects/magic-wand/firmware/state-machine.md"
+      ],
+      "openBlockerIds": [
+        "BLK-FW-001",
+        "INT-BLK-002"
+      ],
+      "verificationState": "evidence_pending",
+      "verificationClosed": false
+    },
+    {
+      "id": "SYS-012",
+      "category": "release",
+      "requirement": "No drawing, model, schematic, PCB, firmware or BOM shall be marked factory/production released until its native-host, ordered-part, physical test and independent engineering gates close.",
+      "acceptance": "All release locks remain false while any blocker is open; prototype quotation files are visibly marked review-only.",
+      "verification": "delivery-manifest and release-gate audit",
+      "sourceStatus": "enforced",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/review-report.md",
+        "projects/magic-wand/integration/system-blockers.json",
+        "projects/magic-wand/mechanical/CAPABILITY_BLOCKERS.json",
+        "projects/magic-wand/system-requirements.json"
+      ],
+      "openBlockerIds": [
+        "INT-BLK-006"
+      ],
+      "verificationState": "release_lock_control_enforced",
+      "verificationClosed": false
+    }
+  ],
+  "coverage": {
+    "required": 12,
+    "traced": 12,
+    "missing": []
+  },
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}

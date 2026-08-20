@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/aicad/aicad-civil-review-candidate.schema.json",
+  "title": "AICAD civil engineering constrained review candidate",
+  "description": "A source-bound civil coordination candidate. Validation never grants production, construction, professional release, or signing/sealing authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "candidateId",
+    "project",
+    "coordinateReference",
+    "sources",
+    "surveyControls",
+    "alignment",
+    "profile",
+    "drainage",
+    "disciplineSources",
+    "locks"
+  ],
+  "properties": {
+    "schema": {"const": "aicad_civil_review_candidate_v1"},
+    "candidateId": {"type": "string", "pattern": "^[A-Z][A-Z0-9_.-]{2,63}$"},
+    "project": {"$ref": "#/$defs/project"},
+    "coordinateReference": {"$ref": "#/$defs/coordinateReference"},
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "surveyControls": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"$ref": "#/$defs/surveyControl"}
+    },
+    "alignment": {"$ref": "#/$defs/alignment"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "drainage": {"$ref": "#/$defs/drainage"},
+    "disciplineSources": {"$ref": "#/$defs/disciplineSources"},
+    "locks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "productionRelease", "professionalRelease", "constructionUse"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "productionRelease": {"const": false},
+        "professionalRelease": {"const": false},
+        "constructionUse": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyText": {"type": "string", "minLength": 1},
+    "stableId": {"type": "string", "pattern": "^[A-Z][A-Z0-9_.-]{2,63}$"},
+    "finiteNumber": {"type": "number"},
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "jurisdiction", "stage"],
+      "properties": {
+        "name": {"$ref": "#/$defs/nonEmptyText"},
+        "jurisdiction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["countryCode", "administrativeArea", "authority", "codeBasis"],
+          "properties": {
+            "countryCode": {"type": "string", "pattern": "^[A-Z]{2}$"},
+            "administrativeArea": {"$ref": "#/$defs/nonEmptyText"},
+            "authority": {"$ref": "#/$defs/nonEmptyText"},
+            "codeBasis": {"$ref": "#/$defs/nonEmptyText"}
+          }
+        },
+        "stage": {
+          "enum": [
+            "concept_review",
+            "survey_review",
+            "preliminary_design_review",
+            "detailed_design_review"
+          ]
+        }
+      }
+    },
+    "statusReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value", "sourceId", "rationale"],
+      "properties": {
+        "status": {"enum": ["declared", "not_applicable", "unresolved"]},
+        "value": {"type": ["number", "null"]},
+        "sourceId": {"type": ["string", "null"]},
+        "rationale": {"type": "string"}
+      }
+    },
+    "geoidReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "model", "sourceId", "rationale"],
+      "properties": {
+        "status": {"enum": ["declared", "not_applicable", "unresolved"]},
+        "model": {"type": ["string", "null"]},
+        "sourceId": {"type": ["string", "null"]},
+        "rationale": {"type": "string"}
+      }
+    },
+    "horizontalReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "epsg", "localGrid", "datum", "epoch"],
+      "properties": {
+        "type": {"enum": ["epsg", "local_grid"]},
+        "epsg": {"type": ["integer", "null"], "minimum": 1000, "maximum": 999999},
+        "localGrid": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "definition", "authoritySourceId"],
+              "properties": {
+                "name": {"$ref": "#/$defs/nonEmptyText"},
+                "definition": {"$ref": "#/$defs/nonEmptyText"},
+                "authoritySourceId": {"$ref": "#/$defs/stableId"}
+              }
+            }
+          ]
+        },
+        "datum": {"$ref": "#/$defs/nonEmptyText"},
+        "epoch": {"$ref": "#/$defs/statusReference"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"type": {"const": "epsg"}}, "required": ["type"]},
+          "then": {
+            "properties": {
+              "epsg": {"type": "integer", "minimum": 1000, "maximum": 999999},
+              "localGrid": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"type": {"const": "local_grid"}}, "required": ["type"]},
+          "then": {
+            "properties": {
+              "epsg": {"type": "null"},
+              "localGrid": {"type": "object"}
+            }
+          }
+        }
+      ]
+    },
+    "verticalReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["datum", "geoid"],
+      "properties": {
+        "datum": {"$ref": "#/$defs/nonEmptyText"},
+        "geoid": {"$ref": "#/$defs/geoidReference"}
+      }
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "drawingXmm",
+        "drawingYmm",
+        "groundEastingM",
+        "groundNorthingM",
+        "groundElevationM",
+        "surveyControlId"
+      ],
+      "properties": {
+        "drawingXmm": {"$ref": "#/$defs/finiteNumber"},
+        "drawingYmm": {"$ref": "#/$defs/finiteNumber"},
+        "groundEastingM": {"$ref": "#/$defs/finiteNumber"},
+        "groundNorthingM": {"$ref": "#/$defs/finiteNumber"},
+        "groundElevationM": {"$ref": "#/$defs/finiteNumber"},
+        "surveyControlId": {"$ref": "#/$defs/stableId"}
+      }
+    },
+    "localMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "drawingUnit",
+        "groundUnit",
+        "millimetresPerGroundMetre",
+        "groundScaleFactor",
+        "rotationDegrees",
+        "mappingRule",
+        "origin"
+      ],
+      "properties": {
+        "drawingUnit": {"const": "mm"},
+        "groundUnit": {"const": "m"},
+        "millimetresPerGroundMetre": {"const": 1000},
+        "groundScaleFactor": {"type": "number", "exclusiveMinimum": 0},
+        "rotationDegrees": {"type": "number", "minimum": -360, "maximum": 360},
+        "mappingRule": {
+          "const": "ground_xy_m=origin_m+R(rotation_deg)*(drawing_xy_mm-origin_xy_mm)/1000*groundScaleFactor"
+        },
+        "origin": {"$ref": "#/$defs/origin"}
+      }
+    },
+    "siteBounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minEastingM",
+        "maxEastingM",
+        "minNorthingM",
+        "maxNorthingM",
+        "minElevationM",
+        "maxElevationM"
+      ],
+      "properties": {
+        "minEastingM": {"$ref": "#/$defs/finiteNumber"},
+        "maxEastingM": {"$ref": "#/$defs/finiteNumber"},
+        "minNorthingM": {"$ref": "#/$defs/finiteNumber"},
+        "maxNorthingM": {"$ref": "#/$defs/finiteNumber"},
+        "minElevationM": {"$ref": "#/$defs/finiteNumber"},
+        "maxElevationM": {"$ref": "#/$defs/finiteNumber"}
+      }
+    },
+    "coordinateReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["horizontal", "vertical", "localMapping", "siteBounds"],
+      "properties": {
+        "horizontal": {"$ref": "#/$defs/horizontalReference"},
+        "vertical": {"$ref": "#/$defs/verticalReference"},
+        "localMapping": {"$ref": "#/$defs/localMapping"},
+        "siteBounds": {"$ref": "#/$defs/siteBounds"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "description", "path", "size", "sha256"],
+      "properties": {
+        "id": {"$ref": "#/$defs/stableId"},
+        "kind": {
+          "enum": [
+            "survey_control",
+            "coordinate_authority",
+            "utility_record",
+            "geotechnical_report",
+            "alignment_basis",
+            "profile_basis",
+            "drainage_basis"
+          ]
+        },
+        "description": {"$ref": "#/$defs/nonEmptyText"},
+        "path": {"type": "string", "minLength": 1},
+        "size": {"type": "integer", "minimum": 0},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "surveyControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "eastingM",
+        "northingM",
+        "elevationM",
+        "horizontalDatum",
+        "verticalDatum",
+        "observationType",
+        "status",
+        "sourceId"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/stableId"},
+        "eastingM": {"$ref": "#/$defs/finiteNumber"},
+        "northingM": {"$ref": "#/$defs/finiteNumber"},
+        "elevationM": {"$ref": "#/$defs/finiteNumber"},
+        "horizontalDatum": {"$ref": "#/$defs/nonEmptyText"},
+        "verticalDatum": {"$ref": "#/$defs/nonEmptyText"},
+        "observationType": {"const": "field_observed"},
+        "status": {"const": "verified"},
+        "sourceId": {"$ref": "#/$defs/stableId"}
+      }
+    },
+    "horizontalPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eastingM", "northingM"],
+      "properties": {
+        "eastingM": {"$ref": "#/$defs/finiteNumber"},
+        "northingM": {"$ref": "#/$defs/finiteNumber"}
+      }
+    },
+    "alignmentSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "startStationM", "endStationM", "start", "end"],
+      "properties": {
+        "id": {"$ref": "#/$defs/stableId"},
+        "startStationM": {"$ref": "#/$defs/finiteNumber"},
+        "endStationM": {"$ref": "#/$defs/finiteNumber"},
+        "start": {"$ref": "#/$defs/horizontalPoint"},
+        "end": {"$ref": "#/$defs/horizontalPoint"}
+      }
+    },
+    "alignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourceId", "stationToleranceM", "joinToleranceM", "segments"],
+      "properties": {
+        "id": {"$ref": "#/$defs/stableId"},
+        "sourceId": {"$ref": "#/$defs/stableId"},
+        "stationToleranceM": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "joinToleranceM": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "segments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/alignmentSegment"}
+        }
+      }
+    },
+    "profilePoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stationM", "elevationM"],
+      "properties": {
+        "stationM": {"$ref": "#/$defs/finiteNumber"},
+        "elevationM": {"$ref": "#/$defs/finiteNumber"}
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourceId", "stationToleranceM", "points"],
+      "properties": {
+        "id": {"$ref": "#/$defs/stableId"},
+        "sourceId": {"$ref": "#/$defs/stableId"},
+        "stationToleranceM": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "points": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"$ref": "#/$defs/profilePoint"}
+        }
+      }
+    },
+    "drainagePoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stationM", "invertElevationM"],
+      "properties": {
+        "stationM": {"$ref": "#/$defs/finiteNumber"},
+        "invertElevationM": {"$ref": "#/$defs/finiteNumber"}
+      }
+    },
+    "drainage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourceId", "flowDirection", "minimumSlope", "maximumSlope", "points"],
+      "properties": {
+        "id": {"$ref": "#/$defs/stableId"},
+        "sourceId": {"$ref": "#/$defs/stableId"},
+        "flowDirection": {"enum": ["increasing_station", "decreasing_station"]},
+        "minimumSlope": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximumSlope": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "points": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"$ref": "#/$defs/drainagePoint"}
+        }
+      }
+    },
+    "disciplineSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["utilitySourceIds", "geotechnicalSourceIds", "limitations"],
+      "properties": {
+        "utilitySourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/stableId"}
+        },
+        "geotechnicalSourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/stableId"}
+        },
+        "limitations": {"$ref": "#/$defs/nonEmptyText"}
+      }
+    }
+  }
+}

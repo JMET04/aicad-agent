@@ -1,0 +1,162 @@
+{
+  "schema": "aicad_magic_wand_rough_cost_estimate_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "snapshotDate": "2026-08-21",
+  "currency": "CNY",
+  "usdToCnyPlanningRate": 7.2,
+  "estimateType": "API-equivalent planning estimate, not actual platform usage or invoice",
+  "providers": {
+    "openai": {
+      "model": "gpt-5.6-terra",
+      "inputUsdPerMillion": 2.0,
+      "cachedInputUsdPerMillion": 0.2,
+      "outputUsdPerMillion": 12.0,
+      "pricingUrl": "https://developers.openai.com/api/docs/models/gpt-5.6-terra"
+    },
+    "deepseek": {
+      "model": "deepseek-v4-pro",
+      "inputUsdPerMillion": 0.435,
+      "cachedInputUsdPerMillion": 0.003625,
+      "outputUsdPerMillion": 0.87,
+      "pricingUrl": "https://api-docs.deepseek.com/quick_start/pricing/"
+    }
+  },
+  "phases": [
+    {
+      "phase": "mechanical_drawings",
+      "estimatedInputTokens": 160000,
+      "estimatedOutputTokens": 65000,
+      "humanOnlyHours": {
+        "low": 40,
+        "high": 70
+      },
+      "humanHourlyRateCny": 220,
+      "humanOnlyCostCny": {
+        "low": 8800,
+        "high": 15400
+      },
+      "requiredHumanReviewAfterAiHours": {
+        "low": 18,
+        "high": 32
+      },
+      "requiredHumanReviewAfterAiCostCny": {
+        "low": 3960,
+        "high": 7040
+      },
+      "apiTokenOnlyCost": {
+        "openai": {
+          "usd": 1.1,
+          "cny": 7.92
+        },
+        "deepseek": {
+          "usd": 0.12615,
+          "cny": 0.91
+        }
+      }
+    },
+    {
+      "phase": "electronics_and_firmware",
+      "estimatedInputTokens": 210000,
+      "estimatedOutputTokens": 90000,
+      "humanOnlyHours": {
+        "low": 55,
+        "high": 95
+      },
+      "humanHourlyRateCny": 260,
+      "humanOnlyCostCny": {
+        "low": 14300,
+        "high": 24700
+      },
+      "requiredHumanReviewAfterAiHours": {
+        "low": 30,
+        "high": 52
+      },
+      "requiredHumanReviewAfterAiCostCny": {
+        "low": 7800,
+        "high": 13520
+      },
+      "apiTokenOnlyCost": {
+        "openai": {
+          "usd": 1.5,
+          "cny": 10.8
+        },
+        "deepseek": {
+          "usd": 0.16965,
+          "cny": 1.22
+        }
+      }
+    },
+    {
+      "phase": "system_integration",
+      "estimatedInputTokens": 95000,
+      "estimatedOutputTokens": 42000,
+      "humanOnlyHours": {
+        "low": 24,
+        "high": 40
+      },
+      "humanHourlyRateCny": 240,
+      "humanOnlyCostCny": {
+        "low": 5760,
+        "high": 9600
+      },
+      "requiredHumanReviewAfterAiHours": {
+        "low": 12,
+        "high": 22
+      },
+      "requiredHumanReviewAfterAiCostCny": {
+        "low": 2880,
+        "high": 5280
+      },
+      "apiTokenOnlyCost": {
+        "openai": {
+          "usd": 0.694,
+          "cny": 5.0
+        },
+        "deepseek": {
+          "usd": 0.077865,
+          "cny": 0.56
+        }
+      }
+    }
+  ],
+  "totals": {
+    "estimatedInputTokens": 465000,
+    "estimatedOutputTokens": 197000,
+    "humanOnlyCostCny": {
+      "low": 28860,
+      "high": 49700
+    },
+    "requiredHumanReviewAfterAiCostCny": {
+      "low": 14640,
+      "high": 25840
+    },
+    "apiTokenOnlyCostCny": {
+      "openai": 23.72,
+      "deepseek": 2.69
+    }
+  },
+  "assumptions": [
+    "All API input is priced as cache-miss standard processing; no batch, cache, long-context, regional or priority adjustment is assumed.",
+    "Token volumes are engineering planning estimates for equivalent prompt/tool/report work; tokenizer and retry differences can materially change usage.",
+    "Model output quality and tool reliability are not assumed equivalent. Both workflows still require qualified human review and physical/native-tool evidence.",
+    "The exchange rate is a round budgeting assumption, not a live foreign-exchange quote."
+  ],
+  "excluded": [
+    "CAD/EDA licenses and workstation",
+    "web search, image or other tool fees",
+    "prototype parts, PCB/PCBA, freight, fixtures and rework",
+    "RF/EMC/battery/regulatory laboratories",
+    "qualified sign-off, installer and flight-integrator fees",
+    "taxes and supplier margins"
+  ],
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}

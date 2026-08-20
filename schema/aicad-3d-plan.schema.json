@@ -29,6 +29,7 @@
       }
     },
     "engineering_normative_preflight": {"type": "object"},
+    "civil_review_candidate": {"type": "object"},
     "features": {
       "type": "array",
       "minItems": 1,

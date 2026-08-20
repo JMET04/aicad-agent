@@ -1,0 +1,151 @@
+{
+  "schema": "aicad_magic_wand_evt_dvt_pvt_plan_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "currentGate": "pre_EVT_definition_blocked_from_pcb_fabrication_and_production",
+  "stages": [
+    {
+      "stage": "EVT",
+      "items": [
+        {
+          "id": "EVT-001",
+          "requiredEvidence": "Freeze exact battery, haptic, switch, connectors, PCB outlines and controlled datasheet revisions",
+          "status": "open",
+          "closed": false
+        },
+        {
+          "id": "EVT-002",
+          "requiredEvidence": "Add missing native press-to-arm side cut and prove native assembly fit/interference/reopen",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "EVT-003",
+          "requiredEvidence": "Capture wand and receiver in KiCad; peer-check symbols/footprints/pins; run zero-unresolved ERC/DRC",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "EVT-004",
+          "requiredEvidence": "Export revision-bound schematic PDF, PCB, BOM, CPL, assembly/fab drawings, Gerbers and PTH/NPTH drills",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "EVT-005",
+          "requiredEvidence": "Target-build/flash pinned firmware and run host unit tests plus target HIL fault/security tests",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "EVT-006",
+          "requiredEvidence": "Build supervised mechanical samples and PCBA engineering samples with incoming inspection",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "EVT-007",
+          "requiredEvidence": "Measure charge/thermal, rail transient, RF, I/O loads, arm/link-loss timing and gesture confusion matrix",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "EVT-008",
+          "requiredEvidence": "Independent EVT hazard review; document every failure and controlled ECO",
+          "status": "blocked",
+          "closed": false
+        }
+      ]
+    },
+    {
+      "stage": "DVT",
+      "items": [
+        {
+          "id": "DVT-001",
+          "requiredEvidence": "Freeze design inputs, material/process specifications, tolerances, firmware protocol and threat model",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "DVT-002",
+          "requiredEvidence": "Complete structural/drop/fatigue/adhesive, environmental and battery/charging validation",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "DVT-003",
+          "requiredEvidence": "Complete RF/EMC pre-scan and applicable radio, USB, battery and regional compliance plan/tests",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "DVT-004",
+          "requiredEvidence": "Validate misuse, fault injection, security, usability and all receiver interface limits on representative units",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "DVT-005",
+          "requiredEvidence": "Release native manufacturing drawings, DFM feedback, test fixtures and service/recovery instructions for review",
+          "status": "blocked",
+          "closed": false
+        }
+      ]
+    },
+    {
+      "stage": "PVT",
+      "items": [
+        {
+          "id": "PVT-001",
+          "requiredEvidence": "Approve supplier AVL, incoming controls, golden samples and revision-locked factory package",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "PVT-002",
+          "requiredEvidence": "Run pilot build with calibrated fixtures, programming/key injection, serialization and end-of-line tests",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "PVT-003",
+          "requiredEvidence": "Demonstrate yield, process capability, traceability, rework controls and failure containment",
+          "status": "blocked",
+          "closed": false
+        },
+        {
+          "id": "PVT-004",
+          "requiredEvidence": "Close independent engineering, regulatory, quality and release approvals before any production authorization",
+          "status": "blocked",
+          "closed": false
+        }
+      ]
+    }
+  ],
+  "factoryQuotation": {
+    "mechanicalQuoteOnly": true,
+    "mechanicalReferencePaths": [
+      "projects/magic-wand/mechanical/artifacts/3d/handle_shell/handle_shell.step",
+      "projects/magic-wand/mechanical/artifacts/3d/internal_carrier/internal_carrier.step",
+      "projects/magic-wand/mechanical/artifacts/3d/rear_end_cap/rear_end_cap.step",
+      "projects/magic-wand/mechanical/artifacts/3d/rod_connector/rod_connector.step",
+      "projects/magic-wand/mechanical/artifacts/2d/wand_general_arrangement/wand_general_arrangement.dxf"
+    ],
+    "conditions": [
+      "REVIEW ONLY / NOT FOR PRODUCTION must remain visible",
+      "Quote and DFM feedback only; no fabrication authorization",
+      "Supplier must state assumed process/material/tolerance and return deviations"
+    ],
+    "electronicsFabricationAllowed": false,
+    "reason": "No native KiCad, ERC/DRC, CAM or target-firmware evidence exists."
+  },
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}

@@ -20,4 +20,3 @@ Release date: 2026-08-20
 - Every generated or corrected reviewer remains `reviewOnly=true`, `accepted=false`, and `ruleEnabled=false`.
 - The release adds three MCP tools, three CLI commands, a strict handoff schema, packaged-runtime checks, atomic-promotion tests, source-hash regressions, and complete source/package test coverage.
 - This package is an engineering review candidate. It does not grant technical acceptance, production release, manufacturing, or fabrication authorization.
-

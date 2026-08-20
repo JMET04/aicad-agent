@@ -1,0 +1,41 @@
+{
+  "schema_version": "2.0",
+  "name": "MW-M-002 carrier review drawing",
+  "domain": "mechanical",
+  "source_sha256": "59781fc5b7ccfd209a158364b21e36b6a009340e3d1dad80f6ccc79883be3e05",
+  "units": "mm",
+  "origin": [
+    0.0,
+    0.0
+  ],
+  "tolerance": 0.001,
+  "entity_count": 24,
+  "entity_types": {
+    "line": 19,
+    "circle": 0,
+    "arc": 0,
+    "text": 1,
+    "dimension": 4
+  },
+  "layers": {
+    "CENTER": 1,
+    "DIMENSION": 4,
+    "HIDDEN": 6,
+    "NOTES": 1,
+    "NOTE_FRAME": 4,
+    "OUTLINE": 8
+  },
+  "roles": {
+    "datum": 1,
+    "interface": 15,
+    "outline": 8
+  },
+  "editable_entities": 24,
+  "dependency_edges": 20,
+  "artifacts": [
+    "internal_carrier.aicad",
+    "internal_carrier.scr",
+    "internal_carrier.dxf",
+    "internal_carrier.audit.md"
+  ]
+}

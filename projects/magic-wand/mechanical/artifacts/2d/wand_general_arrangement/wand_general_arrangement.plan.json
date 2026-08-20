@@ -1,0 +1,1817 @@
+{
+  "schema_version": "2.0",
+  "drawing": {
+    "name": "Magic wand mechanical general arrangement review drawing",
+    "id": "MW_DWG_GA001_A",
+    "units": "mm",
+    "origin": [
+      0,
+      0
+    ],
+    "tolerance": 0.001,
+    "domain": "mechanical",
+    "locks": [
+      "review_only_prototype",
+      "critical_dimensions_require_inspection"
+    ],
+    "review_policy": {
+      "reviewOnly": true,
+      "accepted": false,
+      "ruleEnabled": false,
+      "domainGated": true
+    }
+  },
+  "engineering_normative_preflight": {
+    "schema": "aicad_engineering_normative_preflight_v1",
+    "contractId": "MW_MECHANICAL_CONTROLLED_GENERATION_PREFLIGHT_A",
+    "revision": 1,
+    "domain": "mechanical",
+    "deliveryStage": "review",
+    "canonicalRulesSchema": "aicad_production_readiness_rules_v3",
+    "canonicalRulesVersion": "3.0.0",
+    "authorityOrder": [
+      "selected_standard",
+      "approved_engineering_input",
+      "user_explicit_numeric",
+      "user_explicit_semantic",
+      "reference_cad",
+      "reference_image",
+      "inferred_assumption"
+    ],
+    "sources": [
+      {
+        "id": "STD_AUTHORITY",
+        "kind": "selected_standard",
+        "description": "Controlled review-scope selection of the canonical mechanical standards ledger; compliance is not asserted.",
+        "path": "authority/selected-standards-scope.json",
+        "size": 2090,
+        "sha256": "95b44981555d43251649ce670660e93c023c583a5ad7c7ecabca179ee94ac05e",
+        "mediaType": "application/json",
+        "authorityRevision": "MW-MECH-STD-001-A"
+      },
+      {
+        "id": "ENG_INPUT",
+        "kind": "approved_engineering_input",
+        "description": "Task-authorized controlled prototype design basis; external professional release approval is outside this authority.",
+        "path": "authority/engineering-design-basis.json",
+        "size": 4441,
+        "sha256": "35cc4fe53b8f6905a719b90f815339235b24f1404ff4f6e4c57a4d6aa4baab79",
+        "mediaType": "application/json",
+        "authorityRevision": "MW-MECH-DB-001-A"
+      }
+    ],
+    "applicableStandards": [
+      {
+        "standard": "ISO 8015:2011",
+        "status": "published",
+        "applicability": "GPS fundamentals",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 14405-1:2025",
+        "status": "published",
+        "applicability": "dimensional tolerancing",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 5459:2024",
+        "status": "published",
+        "applicability": "datums and datum systems",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 1101:2017",
+        "status": "published",
+        "applicability": "geometrical tolerancing",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 22081:2021",
+        "status": "published",
+        "applicability": "general geometrical and size specifications",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 13715:2017",
+        "status": "published",
+        "applicability": "edges of undefined shape",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 21920-1:2021",
+        "status": "published",
+        "applicability": "surface texture indication",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 1:2022",
+        "status": "published",
+        "applicability": "reference temperature for specification and verification",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 2768-1:1989",
+        "status": "published",
+        "applicability": "general linear and angular tolerances when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 286-1:2010",
+        "status": "published",
+        "applicability": "limits and fits basis when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 286-2:2010",
+        "status": "published",
+        "applicability": "limit deviations for holes and shafts when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 965-1:2026",
+        "status": "published",
+        "applicability": "metric thread tolerances when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 898-1:2013",
+        "status": "published",
+        "applicability": "steel fastener properties when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      },
+      {
+        "standard": "ISO 16047:2005+Amd 1:2012",
+        "status": "published",
+        "applicability": "fastener torque-clamp testing when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Selected for review-stage GPS and drawing control only; obtain a controlled copy and confirm edition, scope and jurisdiction before release."
+      }
+    ],
+    "ruleApplications": [
+      {
+        "gatePath": "mechanical.intent.wholeIntent",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.wholeIntent before controlled generation. The generated design and its later evidence plan must bind /intent/wholeIntent to the rule-owned expected value true.",
+        "canonicalGateSha256": "a86804e245f560d2a7539890fd601a66304811feb9b277089b816a5ac8935582",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.intent.dimensionalAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.dimensionalAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/dimensionalAuthority to the rule-owned expected value true.",
+        "canonicalGateSha256": "879fae881a20f92c7953f4345c19a072045002de8ce2b7ad224ee65257ffaac6",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Drive every critical dimension from design-parameters.json, use datum A rear plane, datum B common axis and datum C actuator radial plane, and retain explicit inspection limits without inferring production capability."
+      },
+      {
+        "gatePath": "mechanical.intent.materialAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.materialAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/materialAuthority to the rule-owned expected value true.",
+        "canonicalGateSha256": "ae4a7838939af15079be8a77a4a7dae5bbf146128993313a9ad508df506b9f60",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.intent.processAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.processAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/processAuthority to the rule-owned expected value true.",
+        "canonicalGateSha256": "df3f8281be6b8de5b26a0595e65834328472490d85a7cee45cb5e9fb7814b338",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.intent.standardsApplicabilityAndEditionResolved",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.standardsApplicabilityAndEditionResolved before controlled generation. The generated design and its later evidence plan must bind /standards/applicabilityAndEditionResolved to the rule-owned expected value true.",
+        "canonicalGateSha256": "03f71aca4abf320b0161078f7c6b60f62d64bc0f4c11aeb0376413ca988e6ef5",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.intent.materialAndFastenerPropertySourcesBound",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.materialAndFastenerPropertySourcesBound before controlled generation. The generated design and its later evidence plan must bind /standards/materialAndFastenerPropertySourcesBound to the rule-owned expected value true.",
+        "canonicalGateSha256": "ab5c381a96c20c4e69b9e442f247ae16dc9969f4423b8373ad686d0d8929b681",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Generate an explicit zero-item baseline for fasteners, bearings and threads; if any such item is introduced, invalidate this preflight and require a revised interface, sizing and verification record."
+      },
+      {
+        "gatePath": "mechanical.intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/operatingEnvelopeDutyCycleAndDesignLifeAuthority to the rule-owned expected value true.",
+        "canonicalGateSha256": "258b4c93121eab1675333ff2f84397ddf594805b211f3637b2bfee4d2ea4198c",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.intent.assemblyConfigurationAndInterfaceAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.assemblyConfigurationAndInterfaceAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/assemblyConfigurationAndInterfaceAuthority to the rule-owned expected value true.",
+        "canonicalGateSha256": "d651e74593bd89e7f9da2d4c8796f8fe5c6184c0351d655344ca491cfa1270af",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Preserve sliding assembly access, positive declared clearances and the inspection sequence in ASSEMBLY_DFM_TEST.md; block hammer assembly, hidden interference and unmeasured critical interfaces."
+      },
+      {
+        "gatePath": "mechanical.intent.safetyRegulatoryAndRiskApplicabilityResolved",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.safetyRegulatoryAndRiskApplicabilityResolved before controlled generation. The generated design and its later evidence plan must bind /intent/safetyRegulatoryAndRiskApplicabilityResolved to the rule-owned expected value true.",
+        "canonicalGateSha256": "18f6c87f6bab223f7724a17e032bf1eb82d3c65b6a175f6227f948499d40babc",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep press-to-arm, supervised indoor use and all six release locks active; forbid impact use, mains switching, direct propulsion control and any acceptance statement without physical risk review."
+      },
+      {
+        "gatePath": "mechanical.intent.currentStandardsLedger",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.currentStandardsLedger before controlled generation. The generated design and its later evidence plan must bind /standards/requiredCurrentBaselines to the rule-owned expected value [{\"applicability\": \"GPS fundamentals\", \"standard\": \"ISO 8015:2011\", \"status\": \"published\"}, {\"applicability\": \"dimensional tolerancing\", \"standard\": \"ISO 14405-1:2025\", \"status\": \"published\"}, {\"applicability\": \"datums and datum systems\", \"standard\": \"ISO 5459:2024\", \"status\": \"published\"}, {\"applicability\": \"geometrical tolerancing\", \"standard\": \"ISO 1101:2017\", \"status\": \"published\"}, {\"applicability\": \"general geometrical and size specifications\", \"standard\": \"ISO 22081:2021\", \"status\": \"published\"}, {\"applicability\": \"edges of undefined shape\", \"standard\": \"ISO 13715:2017\", \"status\": \"published\"}, {\"applicability\": \"surface texture indication\", \"standard\": \"ISO 21920-1:2021\", \"status\": \"published\"}, {\"applicability\": \"reference temperature for specification and verification\", \"standard\": \"ISO 1:2022\", \"status\": \"published\"}, {\"applicability\": \"general linear and angular tolerances when invoked\", \"standard\": \"ISO 2768-1:1989\", \"status\": \"published\"}, {\"applicability\": \"limits and fits basis when invoked\", \"standard\": \"ISO 286-1:2010\", \"status\": \"published\"}, {\"applicability\": \"limit deviations for holes and shafts when invoked\", \"standard\": \"ISO 286-2:2010\", \"status\": \"published\"}, {\"applicability\": \"metric thread tolerances when invoked\", \"standard\": \"ISO 965-1:2026\", \"status\": \"published\"}, {\"applicability\": \"steel fastener properties when invoked\", \"standard\": \"ISO 898-1:2013\", \"status\": \"published\"}, {\"applicability\": \"fastener torque-clamp testing when invoked\", \"standard\": \"ISO 16047:2005+Amd 1:2012\", \"status\": \"published\"}].",
+        "canonicalGateSha256": "ccd71238d675257c23c5b97bacbcc7c22833da49ce37d5a5dd8623f827fa070c",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Drive every critical dimension from design-parameters.json, use datum A rear plane, datum B common axis and datum C actuator radial plane, and retain explicit inspection limits without inferring production capability."
+      },
+      {
+        "gatePath": "mechanical.intent.noRetiredSoleAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.noRetiredSoleAuthority before controlled generation. The generated design and its later evidence plan must bind /standards/retiredOrWithdrawnSoleAuthorityCount to the rule-owned expected value 0.",
+        "canonicalGateSha256": "297907deb373d66cde261493d59a8c618cd0a016b04467b8885a25d7d11ab357",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.design.constraintCompile",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.constraintCompile before controlled generation. The generated design and its later evidence plan must bind /design/constraintCompile to the rule-owned expected value true.",
+        "canonicalGateSha256": "03339022df8be6d043cb33df2e63be19d1f484d71add994e95199c5386d9014a",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.design.detailProof",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.detailProof before controlled generation. The generated design and its later evidence plan must bind /design/detailProof to the rule-owned expected value true.",
+        "canonicalGateSha256": "24d9573f108bc2c72528a0c270d0c18176bb42d6e8de2a7192c95f295327e20b",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Generate revision-A part plans, drawing plans, BOM quantities and hash manifest from the one parameter source; require exact part-number and revision parity before exposing a later manufacturing candidate."
+      },
+      {
+        "gatePath": "mechanical.design.loadCasesAndServiceConditions",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.loadCasesAndServiceConditions before controlled generation. The generated design and its later evidence plan must bind /engineering/loadCasesAndServiceConditionsDefined to the rule-owned expected value true.",
+        "canonicalGateSha256": "e9bfe192d23d9065a3d817379d36669d10765c087467ad6cb5ab371c026b5ec6",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep structural acceptance locked; bind LC01 through LC04 from MW-MECH-DB-001 and require material-property, coupon and calculation evidence before any strength, stiffness, fatigue or safety-factor claim."
+      },
+      {
+        "gatePath": "mechanical.design.analysisInputUnitsAndProvenance",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.analysisInputUnitsAndProvenance before controlled generation. The generated design and its later evidence plan must bind /engineering/inputUnitsAndProvenanceComplete to the rule-owned expected value true.",
+        "canonicalGateSha256": "aa66fc15a4a13eca3d65f562368f5141dc97314135c66b74b472289d758117c5",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.design.analysisRecomputedFromDeclaredInputs",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.analysisRecomputedFromDeclaredInputs before controlled generation. The generated design and its later evidence plan must bind /engineering/resultsIndependentlyRecomputedFromDeclaredInputs to the rule-owned expected value true.",
+        "canonicalGateSha256": "27d13571eff349d197437e721a47ea712d62f40c800b7ca5523618643db6599f",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.design.criticalLoadPathCoverage",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.criticalLoadPathCoverage before controlled generation. The generated design and its later evidence plan must bind /engineering/criticalLoadPathsComplete to the rule-owned expected value true.",
+        "canonicalGateSha256": "246d67c60f86de9aa75fbf8acbafe747594930e424974aeb005f989eba6588ad",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep structural acceptance locked; bind LC01 through LC04 from MW-MECH-DB-001 and require material-property, coupon and calculation evidence before any strength, stiffness, fatigue or safety-factor claim."
+      },
+      {
+        "gatePath": "mechanical.design.loadCombinationAndAbnormalCaseCoverage",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.loadCombinationAndAbnormalCaseCoverage before controlled generation. The generated design and its later evidence plan must bind /engineering/loadCombinationAndAbnormalCaseCoverageComplete to the rule-owned expected value true.",
+        "canonicalGateSha256": "36ca2b51193fb012b61927369656724d1ed6257f7655639c1cbb1b1ebec8f2f3",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep structural acceptance locked; bind LC01 through LC04 from MW-MECH-DB-001 and require material-property, coupon and calculation evidence before any strength, stiffness, fatigue or safety-factor claim."
+      },
+      {
+        "gatePath": "mechanical.design.analysisEquationInputOutputMarginTrace",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.analysisEquationInputOutputMarginTrace before controlled generation. The generated design and its later evidence plan must bind /engineering/equationInputOutputMarginTraceComplete to the rule-owned expected value true.",
+        "canonicalGateSha256": "7b15c0ffd17d3efa8d13d431d1f45461c7ae84931a555dd00aa456e64f0fdb01",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.design.strength",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.strength before controlled generation. The generated design and its later evidence plan must bind /engineering/strengthPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "40df9ff9707577c859685f0ca153ccdafd4e827c7b50ef6370e250047e018eaf",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep structural acceptance locked; bind LC01 through LC04 from MW-MECH-DB-001 and require material-property, coupon and calculation evidence before any strength, stiffness, fatigue or safety-factor claim."
+      },
+      {
+        "gatePath": "mechanical.design.stiffness",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.stiffness before controlled generation. The generated design and its later evidence plan must bind /engineering/stiffnessPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "21349ba378886447d515147d1ac6fd55d1dbc5db03f09d252fec77bdf2674928",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep structural acceptance locked; bind LC01 through LC04 from MW-MECH-DB-001 and require material-property, coupon and calculation evidence before any strength, stiffness, fatigue or safety-factor claim."
+      },
+      {
+        "gatePath": "mechanical.design.fatigueApplicabilityAndResult",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.fatigueApplicabilityAndResult before controlled generation. The generated design and its later evidence plan must bind /engineering/fatigueApplicabilityAndResultValid to the rule-owned expected value true.",
+        "canonicalGateSha256": "6c54a972e90f20633a100d0fac794574d3f5d97f0de88d9c31c1f75c4754aa66",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep structural acceptance locked; bind LC01 through LC04 from MW-MECH-DB-001 and require material-property, coupon and calculation evidence before any strength, stiffness, fatigue or safety-factor claim."
+      },
+      {
+        "gatePath": "mechanical.design.factorOfSafety",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.factorOfSafety before controlled generation. The generated design and its later evidence plan must bind /engineering/factorOfSafetyMeetsAuthority to the rule-owned expected value true.",
+        "canonicalGateSha256": "4d7559c8d63bae3e303f4d02a5f24996c8e8378169d96b7a0210a15ba7c1ca00",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep structural acceptance locked; bind LC01 through LC04 from MW-MECH-DB-001 and require material-property, coupon and calculation evidence before any strength, stiffness, fatigue or safety-factor claim."
+      },
+      {
+        "gatePath": "mechanical.design.jointBearingAndEdgeChecks",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.jointBearingAndEdgeChecks before controlled generation. The generated design and its later evidence plan must bind /engineering/jointBearingAndEdgeChecksComplete to the rule-owned expected value true.",
+        "canonicalGateSha256": "66db9e56d2fea33a9680d24660916b2314c66a8bc328e9ab2e0f2a86f437470a",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Generate an explicit zero-item baseline for fasteners, bearings and threads; if any such item is introduced, invalidate this preflight and require a revised interface, sizing and verification record."
+      },
+      {
+        "gatePath": "mechanical.design.fastenerPreloadSlipAndCapacity",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.fastenerPreloadSlipAndCapacity before controlled generation. The generated design and its later evidence plan must bind /engineering/fastenerPreloadSlipAndCapacityPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "c4ddb47a44af39295c7d10895eb207c9bf31ecb4e8cc1a0911d9658aa32ee21c",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep structural acceptance locked; bind LC01 through LC04 from MW-MECH-DB-001 and require material-property, coupon and calculation evidence before any strength, stiffness, fatigue or safety-factor claim."
+      },
+      {
+        "gatePath": "mechanical.design.bearingLife",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.bearingLife before controlled generation. The generated design and its later evidence plan must bind /engineering/bearingLifePass to the rule-owned expected value true.",
+        "canonicalGateSha256": "9697ba6d8385284e3a4b661bbf8f95109455f18289692f5b5137b334743c93ea",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Generate an explicit zero-item baseline for fasteners, bearings and threads; if any such item is introduced, invalidate this preflight and require a revised interface, sizing and verification record."
+      },
+      {
+        "gatePath": "mechanical.design.thermalEnvelope",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.thermalEnvelope before controlled generation. The generated design and its later evidence plan must bind /engineering/thermalEnvelopePass to the rule-owned expected value true.",
+        "canonicalGateSha256": "024a292bda1489571b9f674bdae6cae2eb54e398c33416f7912266fe89078869",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Constrain this review prototype to the 5 to 40 degree C dry indoor envelope and keep thermal, battery and polymer-temperature acceptance locked until representative enclosure testing is attached."
+      },
+      {
+        "gatePath": "mechanical.design.fitAndMatingInterfaces",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.fitAndMatingInterfaces before controlled generation. The generated design and its later evidence plan must bind /engineering/fitAndMatingInterfacesPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "6f91c5e487fe97495a056ed0f9d3cb0217ba38ee5c30dfa08a1fbcc25abd3729",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Drive every critical dimension from design-parameters.json, use datum A rear plane, datum B common axis and datum C actuator radial plane, and retain explicit inspection limits without inferring production capability."
+      },
+      {
+        "gatePath": "mechanical.design.toleranceStack",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.toleranceStack before controlled generation. The generated design and its later evidence plan must bind /design/toleranceStackPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "0a3ae6722f90519f4da321ecd3dd3f1ecdab97f2821fff79ce85cfb0ee069e5a",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Drive every critical dimension from design-parameters.json, use datum A rear plane, datum B common axis and datum C actuator radial plane, and retain explicit inspection limits without inferring production capability."
+      },
+      {
+        "gatePath": "mechanical.design.failureModesAndResidualRiskControls",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.failureModesAndResidualRiskControls before controlled generation. The generated design and its later evidence plan must bind /engineering/failureModesAndResidualRiskControlsPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "600c6d35947f5fa31265cb527b50d0bb64e7662d3a490e3a127a778dcdf015ac",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Keep press-to-arm, supervised indoor use and all six release locks active; forbid impact use, mains switching, direct propulsion control and any acceptance statement without physical risk review."
+      },
+      {
+        "gatePath": "mechanical.design.assemblyServiceAndToolClearance",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.assemblyServiceAndToolClearance before controlled generation. The generated design and its later evidence plan must bind /engineering/assemblyServiceAndToolClearancePass to the rule-owned expected value true.",
+        "canonicalGateSha256": "c67a60c56b9bbaf9b0cced8fbaaf61965ef120643b8048c03637a50ea06ff08d",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Preserve sliding assembly access, positive declared clearances and the inspection sequence in ASSEMBLY_DFM_TEST.md; block hammer assembly, hidden interference and unmeasured critical interfaces."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.materialDesignation",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialDesignation before controlled generation. The generated design and its later evidence plan must bind /definition/materialDesignationPresent to the rule-owned expected value true.",
+        "canonicalGateSha256": "b567096ae04ea4f5d296ab51039cef0dc058873c965f7c3f2743e2e19351d2de",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.materialConditionAndHeatTreatment",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialConditionAndHeatTreatment before controlled generation. The generated design and its later evidence plan must bind /definition/materialConditionAndHeatTreatmentDefined to the rule-owned expected value true.",
+        "canonicalGateSha256": "d7678ce8c9662d8539bcf91d21fc8c128f09d105ea21952549eef6bcc79dc192",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.materialCertificateRequirementAndIncomingInspection",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialCertificateRequirementAndIncomingInspection before controlled generation. The generated design and its later evidence plan must bind /definition/materialCertificateRequirementAndIncomingInspectionDefined to the rule-owned expected value true.",
+        "canonicalGateSha256": "78d5da48e2304d869679a68a8e6fe6c349f0cefa5cb088c53009acb4b05b20bc",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.generalAndFeatureTolerances",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.generalAndFeatureTolerances before controlled generation. The generated design and its later evidence plan must bind /definition/toleranceCoveragePercent to the rule-owned expected value 100.",
+        "canonicalGateSha256": "b2526a1fa8e631a50a1a94e14e69dd3119ca75d1c93d1c6e0eb3485e4c5d5d1a",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Drive every critical dimension from design-parameters.json, use datum A rear plane, datum B common axis and datum C actuator radial plane, and retain explicit inspection limits without inferring production capability."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.gdandtDatumScheme",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.gdandtDatumScheme before controlled generation. The generated design and its later evidence plan must bind /definition/gdandtDatumSchemeValid to the rule-owned expected value true.",
+        "canonicalGateSha256": "7d8b4722534e81bb97abbc5d8ae7cdf57acfc89d5cb3563726f9a077a0f4c013",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Drive every critical dimension from design-parameters.json, use datum A rear plane, datum B common axis and datum C actuator radial plane, and retain explicit inspection limits without inferring production capability."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.surfaceRoughness",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.surfaceRoughness before controlled generation. The generated design and its later evidence plan must bind /definition/roughnessCoveragePercent to the rule-owned expected value 100.",
+        "canonicalGateSha256": "43b03bd51a2794fa2e8e45883c0fb84eab029db3faf9ca6bde09cd7d77f9a84d",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.stockAndPrimaryProcess",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.stockAndPrimaryProcess before controlled generation. The generated design and its later evidence plan must bind /definition/stockAndPrimaryProcessDefined to the rule-owned expected value true.",
+        "canonicalGateSha256": "a5ca8dccbd9b00f203e1454c9df0e421fe5fedda7017e1ad48f77159d8824961",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.fixturingFeasibility",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.fixturingFeasibility before controlled generation. The generated design and its later evidence plan must bind /manufacturability/fixturingPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "66777845670e77819461fe07f9ad53cfa0976ea3ee2dda0c9e9a208f5f8d78d3",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.toolAccessibility",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.toolAccessibility before controlled generation. The generated design and its later evidence plan must bind /manufacturability/toolAccessibilityPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "64cb26fb565dfc9574b935c458a012f4e3b53ac868e5625392b96f0721161969",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Preserve sliding assembly access, positive declared clearances and the inspection sequence in ASSEMBLY_DFM_TEST.md; block hammer assembly, hidden interference and unmeasured critical interfaces."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.coatingDimensionalCompensation",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.coatingDimensionalCompensation before controlled generation. The generated design and its later evidence plan must bind /manufacturability/coatingDimensionalCompensationPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "2cc667d665d4ece8cf24fc477a88d90e5375d2bae03f09e41eda8a3cc1c1e666",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.processAndFinish",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.processAndFinish before controlled generation. The generated design and its later evidence plan must bind /definition/processAndFinishDefined to the rule-owned expected value true.",
+        "canonicalGateSha256": "0b51224081ab0d3cc29c5c38fa36fec2c3edac6a8009ac15149bd5929603c137",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.threadsStandardPartsAndFastenerDefinition",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.threadsStandardPartsAndFastenerDefinition before controlled generation. The generated design and its later evidence plan must bind /definition/threadsStandardPartsAndFastenersComplete to the rule-owned expected value true.",
+        "canonicalGateSha256": "b0ec06a43d1e11a49cb801284cecda8cd6b6a11ebc5eca2464911b0a88c3c4c9",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Generate an explicit zero-item baseline for fasteners, bearings and threads; if any such item is introduced, invalidate this preflight and require a revised interface, sizing and verification record."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl before controlled generation. The generated design and its later evidence plan must bind /definition/undefinedEdgesDeburrAndSharpEdgeControlComplete to the rule-owned expected value true.",
+        "canonicalGateSha256": "7d6a7c72c85a3c28071881e6bc7ceebb684fe77e8a5635b18321f0ece52e701a",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Drive every critical dimension from design-parameters.json, use datum A rear plane, datum B common axis and datum C actuator radial plane, and retain explicit inspection limits without inferring production capability."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure before controlled generation. The generated design and its later evidence plan must bind /definition/assemblyBomItemRevisionAndQuantityClosurePass to the rule-owned expected value true.",
+        "canonicalGateSha256": "c02ac0222d01e10d357a86c7d31d7b8e0ab2a9ef0831829bf50be06b6b561b49",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Preserve sliding assembly access, positive declared clearances and the inspection sequence in ASSEMBLY_DFM_TEST.md; block hammer assembly, hidden interference and unmeasured critical interfaces."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod before controlled generation. The generated design and its later evidence plan must bind /manufacturability/criticalCharacteristicProcessCapabilityAndMeasurementMethodPass to the rule-owned expected value true.",
+        "canonicalGateSha256": "618db84beb45e79cf5e4d46abc3a851e841c5901044f8021bce66e1bdad5d129",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Use only the review-grade material and process labels in design-parameters.json; preserve lot, orientation, conditioning, coating and final-process qualification as release-blocking evidence items."
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.inspectionPlan",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.inspectionPlan before controlled generation. The generated design and its later evidence plan must bind /definition/inspectionCharacteristicCoveragePercent to the rule-owned expected value 100.",
+        "canonicalGateSha256": "9bddf283128fb2b2f6877582112de528aa5a233c0f5a1f416e4f6fb172fc2572",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests, then inspect the listed critical characteristic with the method in ASSEMBLY_DFM_TEST.md.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Preserve sliding assembly access, positive declared clearances and the inspection sequence in ASSEMBLY_DFM_TEST.md; block hammer assembly, hidden interference and unmeasured critical interfaces."
+      },
+      {
+        "gatePath": "shared.rules.PROD-G001",
+        "disposition": "constrained",
+        "requirement": "The requested product, use, dimensions, materials, applicable jurisdiction and drawing stage shall be explicit and traceable to authoritative inputs.",
+        "canonicalGateSha256": "c659c3a7eeca8af3e359f889f65af4fc078f7275362a323d4bdd7fbd666f188f",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "shared.rules.PROD-G002",
+        "disposition": "constrained",
+        "requirement": "Origin protocol, constraint compilation, whole-intent checks, detail proof and domain QA shall all pass independently.",
+        "canonicalGateSha256": "437c01a0615ab266bcf7f716e1c1fd8c513f12a8476716262a1627cd6a014a28",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "shared.rules.PROD-G003",
+        "disposition": "constrained",
+        "requirement": "Drawing layers, linetypes, lineweights, dimensions, annotation matrix, axes and axis identifiers shall satisfy the selected discipline and stage.",
+        "canonicalGateSha256": "e0eb33f1a464511eabd47301e96147989ce074b7b107243b0f15f20fed0ff60f",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "shared.rules.PROD-G004",
+        "disposition": "constrained",
+        "requirement": "Required product details and furnishings shall be represented by typed, selectable geometry with a component matrix; labels and occupancy rectangles are not substitutes.",
+        "canonicalGateSha256": "ec9ce64e7628bf8c353fc30a7a8d5cf0a4adfa025b49f5c2eeb782af58beb5b9",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "shared.rules.PROD-G005",
+        "disposition": "constrained",
+        "requirement": "Production candidates shall include populated paper-space sheets, title blocks, sheet numbers, plot scales, revisions, statuses, schedules and section/elevation/detail references where required.",
+        "canonicalGateSha256": "112db58871196cc969f26178fcb9040da94d52858ac225dd8a870ebe5d32bfdf",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "shared.rules.PROD-G006",
+        "disposition": "constrained",
+        "requirement": "Site survey, geotechnical, structural, MEP, fire, accessibility, manufacturing or equivalent discipline evidence required by the project shall be present and current.",
+        "canonicalGateSha256": "eed64ce911aa38bfe6084ee8b7c56fdc40744f5c534fd578ee81d25ee0d2650c",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      },
+      {
+        "gatePath": "shared.rules.PROD-G013",
+        "disposition": "constrained",
+        "requirement": "Required manufacturing and fabrication gates are a conjunction: no score, waiver, visual approval, portable export or unrelated passing analysis may offset one failed or unavailable gate.",
+        "canonicalGateSha256": "c5e0595e0766726f9d44b6cc579d7be3a30bc6f5efb3f001bcc0404567ea1d43",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "ENG_INPUT"
+        ],
+        "standardIds": [
+          "ISO 8015:2011"
+        ],
+        "verificationMethod": "Run the deterministic package tests and AICAD validator, compare source hashes, and retain human engineering review as a separate gate.",
+        "verifierId": "canonical_rule_check",
+        "generationConstraint": "Bind this canonical gate to MW-MECH-DB-001 and MW-MECH-STD-001, preserve review-only locks, and verify the parameter-derived plan and evidence manifest before allowing the next controlled generation stage."
+      }
+    ],
+    "conflicts": [],
+    "locks": {
+      "reviewOnly": true,
+      "accepted": false,
+      "ruleEnabled": false,
+      "packagingGated": true,
+      "technicalPackageReady": false,
+      "productionReleaseEligible": false,
+      "manufacturingAuthorized": false,
+      "fabricationAuthorized": false
+    }
+  },
+  "steps": [
+    {
+      "id": "G1",
+      "type": "line",
+      "purpose": "grip envelope lower edge",
+      "reasoning": "Starts the closed typed outline from a controlled datum.",
+      "start": {
+        "ref": "origin"
+      },
+      "construction": {
+        "kind": "vector",
+        "dx": 115.0,
+        "dy": 0
+      },
+      "constraints": [
+        {
+          "kind": "horizontal"
+        },
+        {
+          "kind": "length",
+          "value": 115.0
+        }
+      ],
+      "layer": "OUTLINE",
+      "role": "outline",
+      "editable": true
+    },
+    {
+      "id": "G2",
+      "type": "line",
+      "purpose": "grip envelope far edge",
+      "reasoning": "Continues from the preceding endpoint and fixes the transverse extent.",
+      "start": {
+        "ref": "G1.end"
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            115.0,
+            27.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_coincident",
+          "target": "G1.end"
+        },
+        {
+          "kind": "vertical"
+        },
+        {
+          "kind": "length",
+          "value": 27.0
+        }
+      ],
+      "layer": "OUTLINE",
+      "role": "outline",
+      "editable": true
+    },
+    {
+      "id": "G3",
+      "type": "line",
+      "purpose": "grip envelope upper edge",
+      "reasoning": "Returns parallel to the first edge with the same exact length.",
+      "start": {
+        "ref": "G2.end"
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            0,
+            27.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_coincident",
+          "target": "G2.end"
+        },
+        {
+          "kind": "horizontal"
+        },
+        {
+          "kind": "length",
+          "value": 115.0
+        }
+      ],
+      "layer": "OUTLINE",
+      "role": "outline",
+      "editable": true
+    },
+    {
+      "id": "G4",
+      "type": "line",
+      "purpose": "grip envelope closing edge",
+      "reasoning": "Closes the outline at the controlled start point.",
+      "start": {
+        "ref": "G3.end"
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            0,
+            0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_coincident",
+          "target": "G3.end"
+        },
+        {
+          "kind": "vertical"
+        },
+        {
+          "kind": "length",
+          "value": 27.0
+        },
+        {
+          "kind": "end_coincident",
+          "target": "origin"
+        }
+      ],
+      "layer": "OUTLINE",
+      "role": "outline",
+      "editable": true
+    },
+    {
+      "id": "T1",
+      "type": "line",
+      "purpose": "Show the transition lower edge.",
+      "reasoning": "The explicit origin-relative start and exact endpoint make this connector edge deterministic.",
+      "start": {
+        "point": [
+          115.0,
+          0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            125.0,
+            0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 115.0,
+          "dy": 0
+        },
+        {
+          "kind": "length",
+          "value": 10.0
+        },
+        {
+          "kind": "horizontal"
+        }
+      ],
+      "layer": "SHAFT",
+      "role": "shaft",
+      "editable": true
+    },
+    {
+      "id": "T2",
+      "type": "line",
+      "purpose": "Show the transition far edge.",
+      "reasoning": "The explicit origin-relative start and exact endpoint make this connector edge deterministic.",
+      "start": {
+        "point": [
+          125.0,
+          0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            125.0,
+            27.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 125.0,
+          "dy": 0
+        },
+        {
+          "kind": "length",
+          "value": 27.0
+        },
+        {
+          "kind": "vertical"
+        }
+      ],
+      "layer": "SHAFT",
+      "role": "shaft",
+      "editable": true
+    },
+    {
+      "id": "T3",
+      "type": "line",
+      "purpose": "Show the transition upper edge.",
+      "reasoning": "The explicit origin-relative start and exact endpoint make this connector edge deterministic.",
+      "start": {
+        "point": [
+          125.0,
+          27.0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            115.0,
+            27.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 125.0,
+          "dy": 27.0
+        },
+        {
+          "kind": "length",
+          "value": 10.0
+        },
+        {
+          "kind": "horizontal"
+        }
+      ],
+      "layer": "SHAFT",
+      "role": "shaft",
+      "editable": true
+    },
+    {
+      "id": "R1",
+      "type": "line",
+      "purpose": "Show the lower exposed GFRP rod edge.",
+      "reasoning": "The explicit origin-relative start and exact endpoint make this rod edge deterministic.",
+      "start": {
+        "point": [
+          125.0,
+          10.0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            315.0,
+            10.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 125.0,
+          "dy": 10.0
+        },
+        {
+          "kind": "length",
+          "value": 190.0
+        },
+        {
+          "kind": "horizontal"
+        }
+      ],
+      "layer": "SHAFT",
+      "role": "shaft",
+      "editable": true
+    },
+    {
+      "id": "R2",
+      "type": "line",
+      "purpose": "Close the rod tip envelope.",
+      "reasoning": "The explicit origin-relative start and exact endpoint make this rod tip deterministic.",
+      "start": {
+        "point": [
+          315.0,
+          10.0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            315.0,
+            17.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 315.0,
+          "dy": 10.0
+        },
+        {
+          "kind": "length",
+          "value": 7.0
+        },
+        {
+          "kind": "vertical"
+        }
+      ],
+      "layer": "SHAFT",
+      "role": "shaft",
+      "editable": true
+    },
+    {
+      "id": "R3",
+      "type": "line",
+      "purpose": "Show the upper exposed GFRP rod edge.",
+      "reasoning": "The explicit origin-relative start and exact endpoint make this rod edge deterministic.",
+      "start": {
+        "point": [
+          315.0,
+          17.0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            125.0,
+            17.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 315.0,
+          "dy": 17.0
+        },
+        {
+          "kind": "length",
+          "value": 190.0
+        },
+        {
+          "kind": "horizontal"
+        }
+      ],
+      "layer": "SHAFT",
+      "role": "shaft",
+      "editable": true
+    },
+    {
+      "id": "C1",
+      "type": "line",
+      "purpose": "Show the full wand reference axis.",
+      "reasoning": "The explicit origin-relative start and exact endpoint make this assembly centerline deterministic.",
+      "start": {
+        "point": [
+          0,
+          13.5
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            315.0,
+            13.5
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 13.5
+        },
+        {
+          "kind": "length",
+          "value": 315.0
+        },
+        {
+          "kind": "horizontal"
+        }
+      ],
+      "layer": "CENTER",
+      "role": "datum",
+      "editable": true
+    },
+    {
+      "id": "K1",
+      "type": "line",
+      "purpose": "Mark the axial RF keepout start and end.",
+      "reasoning": "The explicit origin-relative start and exact endpoint make this keepout boundary deterministic.",
+      "start": {
+        "point": [
+          5.0,
+          2
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            30.0,
+            2
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 5.0,
+          "dy": 2
+        },
+        {
+          "kind": "length",
+          "value": 25.0
+        },
+        {
+          "kind": "horizontal"
+        }
+      ],
+      "layer": "KEEP_OUT",
+      "role": "interface",
+      "editable": true
+    },
+    {
+      "id": "D1",
+      "type": "dimension",
+      "purpose": "Control the total assembled length.",
+      "reasoning": "The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset.",
+      "first": {
+        "ref": "G1.start"
+      },
+      "second": {
+        "ref": "R2.end"
+      },
+      "base": {
+        "point": [
+          0,
+          -12
+        ]
+      },
+      "dimension_kind": "horizontal",
+      "dimension_purpose": "overall",
+      "style_name": "AICAD_MECH",
+      "constraints": [
+        {
+          "kind": "dimension_measurement",
+          "value": 315.0
+        },
+        {
+          "kind": "dimension_orientation",
+          "value": 0
+        },
+        {
+          "kind": "base_offset",
+          "target": "G1.start",
+          "dx": 0.0,
+          "dy": -12.0
+        }
+      ],
+      "layer": "DIMENSION",
+      "role": "interface"
+    },
+    {
+      "id": "D2",
+      "type": "dimension",
+      "purpose": "Control the grip segment length.",
+      "reasoning": "The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset.",
+      "first": {
+        "ref": "G1.start"
+      },
+      "second": {
+        "ref": "G1.end"
+      },
+      "base": {
+        "point": [
+          0,
+          -19
+        ]
+      },
+      "dimension_kind": "horizontal",
+      "dimension_purpose": "general",
+      "style_name": "AICAD_MECH",
+      "constraints": [
+        {
+          "kind": "dimension_measurement",
+          "value": 115.0
+        },
+        {
+          "kind": "dimension_orientation",
+          "value": 0
+        },
+        {
+          "kind": "base_offset",
+          "target": "G1.start",
+          "dx": 0.0,
+          "dy": -19.0
+        }
+      ],
+      "layer": "DIMENSION",
+      "role": "interface"
+    },
+    {
+      "id": "D3",
+      "type": "dimension",
+      "purpose": "Control the exposed transition length.",
+      "reasoning": "The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset.",
+      "first": {
+        "ref": "T1.start"
+      },
+      "second": {
+        "ref": "T1.end"
+      },
+      "base": {
+        "point": [
+          115.0,
+          -26
+        ]
+      },
+      "dimension_kind": "horizontal",
+      "dimension_purpose": "general",
+      "style_name": "AICAD_MECH",
+      "constraints": [
+        {
+          "kind": "dimension_measurement",
+          "value": 10.0
+        },
+        {
+          "kind": "dimension_orientation",
+          "value": 0
+        },
+        {
+          "kind": "base_offset",
+          "target": "T1.start",
+          "dx": 0.0,
+          "dy": -26
+        }
+      ],
+      "layer": "DIMENSION",
+      "role": "interface"
+    },
+    {
+      "id": "D4",
+      "type": "dimension",
+      "purpose": "Control the exposed rod length.",
+      "reasoning": "The dimension is bound to earlier physical geometry and carries an explicit measurement, orientation and base offset.",
+      "first": {
+        "ref": "R1.start"
+      },
+      "second": {
+        "ref": "R1.end"
+      },
+      "base": {
+        "point": [
+          125.0,
+          -33
+        ]
+      },
+      "dimension_kind": "horizontal",
+      "dimension_purpose": "general",
+      "style_name": "AICAD_MECH",
+      "constraints": [
+        {
+          "kind": "dimension_measurement",
+          "value": 190.0
+        },
+        {
+          "kind": "dimension_orientation",
+          "value": 0
+        },
+        {
+          "kind": "base_offset",
+          "target": "R1.start",
+          "dx": 0.0,
+          "dy": -43.0
+        }
+      ],
+      "layer": "DIMENSION",
+      "role": "interface"
+    },
+    {
+      "id": "N1",
+      "type": "line",
+      "purpose": "bounded note frame lower edge",
+      "reasoning": "Starts the closed typed outline from a controlled datum.",
+      "start": {
+        "point": [
+          0,
+          43.0
+        ]
+      },
+      "construction": {
+        "kind": "vector",
+        "dx": 315.0,
+        "dy": 0
+      },
+      "constraints": [
+        {
+          "kind": "horizontal"
+        },
+        {
+          "kind": "length",
+          "value": 315.0
+        },
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 43.0
+        }
+      ],
+      "layer": "NOTE_FRAME",
+      "role": "interface",
+      "editable": true
+    },
+    {
+      "id": "N2",
+      "type": "line",
+      "purpose": "bounded note frame far edge",
+      "reasoning": "Continues from the preceding endpoint and fixes the transverse extent.",
+      "start": {
+        "ref": "N1.end"
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            315.0,
+            55.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_coincident",
+          "target": "N1.end"
+        },
+        {
+          "kind": "vertical"
+        },
+        {
+          "kind": "length",
+          "value": 12.0
+        }
+      ],
+      "layer": "NOTE_FRAME",
+      "role": "interface",
+      "editable": true
+    },
+    {
+      "id": "N3",
+      "type": "line",
+      "purpose": "bounded note frame upper edge",
+      "reasoning": "Returns parallel to the first edge with the same exact length.",
+      "start": {
+        "ref": "N2.end"
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            0,
+            55.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_coincident",
+          "target": "N2.end"
+        },
+        {
+          "kind": "horizontal"
+        },
+        {
+          "kind": "length",
+          "value": 315.0
+        }
+      ],
+      "layer": "NOTE_FRAME",
+      "role": "interface",
+      "editable": true
+    },
+    {
+      "id": "N4",
+      "type": "line",
+      "purpose": "bounded note frame closing edge",
+      "reasoning": "Closes the outline at the controlled start point.",
+      "start": {
+        "ref": "N3.end"
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            0,
+            43.0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_coincident",
+          "target": "N3.end"
+        },
+        {
+          "kind": "vertical"
+        },
+        {
+          "kind": "length",
+          "value": 12.0
+        },
+        {
+          "kind": "end_coincident",
+          "target": "N1.start"
+        }
+      ],
+      "layer": "NOTE_FRAME",
+      "role": "interface",
+      "editable": true
+    },
+    {
+      "id": "NT",
+      "type": "text",
+      "purpose": "Place the review limitation inside its note frame.",
+      "reasoning": "Middle-center alignment and the frame dimensions keep the complete text inside the declared card.",
+      "insert": {
+        "point": [
+          157.5,
+          49.0
+        ]
+      },
+      "value": "REVIEW PROTOTYPE - PRESS TO ARM AT Z72 - RF KEEP OUT Z5 TO Z30",
+      "height": 2.5,
+      "rotation_deg": 0,
+      "constraints": [
+        {
+          "kind": "position_offset",
+          "target": "origin",
+          "dx": 157.5,
+          "dy": 49.0
+        },
+        {
+          "kind": "text_height",
+          "value": 2.5
+        },
+        {
+          "kind": "rotation",
+          "value": 0
+        }
+      ],
+      "layer": "NOTES",
+      "role": "interface"
+    }
+  ]
+}

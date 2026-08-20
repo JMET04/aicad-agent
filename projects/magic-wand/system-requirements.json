@@ -1,0 +1,121 @@
+{
+  "schema": "aicad_magic_wand_system_requirements_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "status": "review_only_prototype",
+  "intendedUse": "Supervised indoor gesture controller for low-energy receiver interfaces.",
+  "prohibitedUses": [
+    "impact or striking use",
+    "life-safety or emergency-stop function",
+    "direct switching of mains voltage",
+    "flight-critical, propulsion, arming or primary flight-control command",
+    "weapon, restraint or unattended actuation"
+  ],
+  "requirements": [
+    {
+      "id": "SYS-001",
+      "category": "mechanical",
+      "requirement": "The assembled review prototype shall be 315 mm long with a 27 mm nominal grip and a 190 mm exposed nonconductive spine.",
+      "acceptance": "Overall length 315 +/- 2 mm; grip OD 27 +/- 0.2 mm; exposed spine 190 +/- 1 mm.",
+      "verification": "drawing inspection plus physical first-article measurement",
+      "status": "design_defined_physical_test_pending"
+    },
+    {
+      "id": "SYS-002",
+      "category": "functional_safety",
+      "requirement": "Commands shall be enabled only while the recessed press-to-arm control is continuously held.",
+      "acceptance": "Release requests local disarm and receiver safe state within 100 ms target; measured worst case shall be recorded before use.",
+      "verification": "hardware-in-loop timing test over normal, reset and packet-loss cases",
+      "status": "implementation_and_test_pending"
+    },
+    {
+      "id": "SYS-003",
+      "category": "functional_safety",
+      "requirement": "Boot, reset, brownout, watchdog expiry and radio-link loss shall force every receiver output inactive.",
+      "acceptance": "No output pulse on boot/reset; link-loss safe state within 250 ms target; recovery requires a fresh armed session.",
+      "verification": "oscilloscope capture and fault-injection test",
+      "status": "implementation_and_test_pending"
+    },
+    {
+      "id": "SYS-004",
+      "category": "gesture",
+      "requirement": "The six-axis IMU shall classify calibrated short-window relative orientation and motion gestures; it shall not claim absolute position or an exact free-space 3D path.",
+      "acceptance": "Per-class confusion matrix, rejection threshold and false-activation rate are recorded on representative users; low-confidence windows cause no action.",
+      "verification": "labelled gesture dataset and supervised usability test",
+      "status": "algorithm_and_dataset_pending"
+    },
+    {
+      "id": "SYS-005",
+      "category": "communications_security",
+      "requirement": "The BLE link shall use LE Secure Connections with physical pairing authorization and unique device credentials; commands shall also carry authenticated encryption, direction/session binding and a monotonic anti-replay sequence.",
+      "acceptance": "Duplicate, stale, cross-device, unauthenticated and nonce-reuse test vectors are rejected without output activation.",
+      "verification": "protocol unit tests, packet capture and negative security tests",
+      "status": "implementation_and_security_review_pending"
+    },
+    {
+      "id": "SYS-006",
+      "category": "power",
+      "requirement": "The wand shall use one protected 1S LiPo cell with NTC supervision, a 5 V USB-C sink-only charge input and a regulated logic rail.",
+      "acceptance": "Cell protection is present in the selected ordered part or an external protector; charge/current/temperature limits match the cell; no USB source role is exposed.",
+      "verification": "ordered-part review, bench charge/thermal test and USB-C sink compliance check",
+      "status": "ordered_parts_and_bench_test_pending"
+    },
+    {
+      "id": "SYS-007",
+      "category": "radio_mechanical",
+      "requirement": "The NINA-B302 antenna end shall face a nonconductive enclosure region and obey the current u-blox host-ground, metal, battery and enclosure restrictions.",
+      "acceptance": "Layout keepout is checked against the controlled module integration manual and representative enclosure RF performance is measured.",
+      "verification": "PCB/enclosure overlay review plus conducted or radiated RF comparison test",
+      "status": "pcb_layout_and_rf_test_pending"
+    },
+    {
+      "id": "SYS-008",
+      "category": "receiver_interfaces",
+      "requirement": "The receiver may expose only documented SELV interfaces: 3.3/5 V UART or PWM, an isolated open-collector interface, and a common-ground 5-12 V low-side MOSFET channel within declared ratings.",
+      "acceptance": "Every connector pin, voltage domain, current limit, default state and external flyback requirement is labelled and tested.",
+      "verification": "schematic/layout review, load test and connector fault injection",
+      "status": "eda_and_bench_test_pending"
+    },
+    {
+      "id": "SYS-009",
+      "category": "mains_boundary",
+      "requirement": "Mains loads shall be controlled only through a separately certified enclosed relay or contactor module using a receiver SELV control output.",
+      "acceptance": "No mains conductor enters either AICAD PCB or enclosure; relay certification, ratings, creepage, wiring and installation remain external evidence.",
+      "verification": "installation boundary review by a qualified electrical professional",
+      "status": "external_specialist_required"
+    },
+    {
+      "id": "SYS-010",
+      "category": "drone_boundary",
+      "requirement": "Drone integration is limited to an autopilot-configured, non-flight-critical AUX or telemetry channel; the receiver shall not drive motors, ESC power stages, arming or primary flight controls.",
+      "acceptance": "Autopilot configuration rejects the channel for arming/propulsion and fails safe on receiver loss; ground and restrained-prop tests precede any flight.",
+      "verification": "qualified flight-system integrator review and staged ground test",
+      "status": "external_specialist_required"
+    },
+    {
+      "id": "SYS-011",
+      "category": "human_factors",
+      "requirement": "Command feedback shall distinguish paired, armed, accepted, rejected and fault states without relying on motion alone.",
+      "acceptance": "Haptic/indicator patterns are unambiguous in a blinded user test and fault feedback never activates an output.",
+      "verification": "firmware state-machine test and supervised usability study",
+      "status": "implementation_and_test_pending"
+    },
+    {
+      "id": "SYS-012",
+      "category": "release",
+      "requirement": "No drawing, model, schematic, PCB, firmware or BOM shall be marked factory/production released until its native-host, ordered-part, physical test and independent engineering gates close.",
+      "acceptance": "All release locks remain false while any blocker is open; prototype quotation files are visibly marked review-only.",
+      "verification": "delivery-manifest and release-gate audit",
+      "status": "enforced"
+    }
+  ],
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}

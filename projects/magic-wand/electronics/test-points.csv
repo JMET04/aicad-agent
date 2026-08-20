@@ -1,0 +1,33 @@
+board,id,net,kind,minimum_access,bringup_use,normal_limit,notes
+wand,TP1,GND,power,probe_and_pogo,Scope reference,0 V,Provide multiple ground points including USB and regulator areas
+wand,TP2,USB_VBUS_5V,power,pogo,Current-limited USB input check,4.75-5.25 V,Do not back-power
+wand,TP3,BAT_POS,power,pogo,Battery simulator and charge measurement,3.0-4.2 V,Polarity-protected fixture required
+wand,TP4,SYS_RAIL,power,pogo,Charger power-path observation,Data-sheet operating range,Record USB/battery transition
+wand,TP5,3V3,power,probe_and_pogo,Regulator ripple/load transient,3.3 V design target,Measure at load and regulator capacitor
+wand,TP6,BAT_NTC,analog,probe,Temperature-fault resistor substitution,BQ25185 threshold window,Fixture must never short into pack
+wand,TP7,I2C_SCL,digital,probe,I2C rise time and traffic,0-3.3 V,High-impedance probe
+wand,TP8,I2C_SDA,digital,probe,I2C rise time and traffic,0-3.3 V,High-impedance probe
+wand,TP9,IMU_INT1,digital,probe,Interrupt timing,0-3.3 V,
+wand,TP10,ARM_N,digital,probe,Press/release latency,0-3.3 V,Stuck-low fault injection point
+wand,TP11,HAPTIC_EN,digital,probe,Reset default and pulse timing,0-3.3 V,
+wand,TP12,CHG_STAT1_N,digital,pogo,Charger-state functional test,0-3.3 V,Open-drain
+wand,TP13,CHG_STAT2_N,digital,pogo,Charger-state functional test,0-3.3 V,Open-drain
+wand,TP14,SWDIO,debug,pogo,Programming/debug,0-3.3 V,Keep away from antenna
+wand,TP15,SWDCLK,debug,pogo,Programming/debug,0-3.3 V,Keep away from antenna
+wand,TP16,RESET_N,debug,pogo,Reset/fault injection,0-3.3 V,
+receiver,TP1,GND,power,probe_and_pogo,Scope reference,0 V,Keep load-loop and logic references distinct in fixture
+receiver,TP2,USB_VBUS_5V,power,pogo,Input current and brownout,4.75-5.25 V,
+receiver,TP3,3V3,power,probe_and_pogo,Buck ripple and reset test,3.3 V design target,
+receiver,TP4,PWR_GOOD_N,digital,probe,Buck startup/fault timing,0-3.3 V,Open-drain
+receiver,TP5,VREF_IO,power,probe,3.3/5 V translator test,3.135-5.25 V,External reference input only
+receiver,TP6,UART_TX_3V3,digital,probe,MCU-side UART timing,0-3.3 V,
+receiver,TP7,UART_RX_3V3,digital,probe,MCU-side UART timing,0-3.3 V,
+receiver,TP8,PWM_3V3,digital,probe,PWM default/timing,0-3.3 V,
+receiver,TP9,OPTO_DRV,digital,probe,Isolation channel latency,0-3.3 V,
+receiver,TP10,LOAD_GATE,digital,probe,Reset default and gate edge,0-3.3 V,100 kOhm pull-down present
+receiver,TP11,LOAD_DRAIN,power,probe,Load waveform/flyback test,0-12 V nominal,Use appropriately rated differential/isolated probe
+receiver,TP12,ISO_OC_COL,isolated,probe,External pull-up sink test,3.3-24 V target,Do not reference receiver ground during isolation test
+receiver,TP13,ISO_OC_EMIT,isolated,probe,External return,field floating,Do not bridge moat
+receiver,TP14,SWDIO,debug,pogo,Programming/debug,0-3.3 V,Keep away from antenna
+receiver,TP15,SWDCLK,debug,pogo,Programming/debug,0-3.3 V,Keep away from antenna
+receiver,TP16,RESET_N,debug,pogo,Reset/fault injection,0-3.3 V,

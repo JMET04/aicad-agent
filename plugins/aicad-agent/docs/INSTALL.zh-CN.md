@@ -75,7 +75,7 @@ git clone https://github.com/JMET04/aicad-agent.git
 cd aicad-agent
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-./scripts/build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.15.2
+./scripts/build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.17.0
 python -B scripts/verify_release_package.py release/ci/aicad-agent --source-root .
 ```
 

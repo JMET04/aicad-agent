@@ -1,0 +1,22 @@
+{
+  "schema": "aicad_magic_wand_mechanical_drawing_style_profile_v1",
+  "revision": "A",
+  "units": "hundredths_of_mm_for_lineweight",
+  "purpose": "Package-local mechanical layer styling because the shared exporter is outside this task's allowed edit scope.",
+  "layers": {
+    "OUTLINE": {"color": 7, "lineweight": 50, "linetype": "CONTINUOUS"},
+    "SHAFT": {"color": 7, "lineweight": 35, "linetype": "CONTINUOUS"},
+    "HOLE": {"color": 2, "lineweight": 35, "linetype": "CONTINUOUS"},
+    "CENTER": {"color": 4, "lineweight": 13, "linetype": "CENTER2"},
+    "HIDDEN": {"color": 8, "lineweight": 18, "linetype": "DASHED2"},
+    "KEEP_OUT": {"color": 1, "lineweight": 18, "linetype": "DASHED"},
+    "DIMENSION": {"color": 3, "lineweight": 18, "linetype": "CONTINUOUS"},
+    "NOTE_FRAME": {"color": 6, "lineweight": 25, "linetype": "CONTINUOUS"},
+    "NOTES": {"color": 7, "lineweight": 18, "linetype": "CONTINUOUS"}
+  },
+  "locks": {
+    "reviewOnly": true,
+    "manufacturingAuthorized": false,
+    "sharedExporterModified": false
+  }
+}

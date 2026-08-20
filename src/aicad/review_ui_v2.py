@@ -117,11 +117,19 @@ def _coordinate_triad_svg(view: dict[str, Any], left: float, bottom: float, widt
     rows = [f'<circle cx="{ox:.9g}" cy="{oy:.9g}" r="{scale * .055:.9g}" class="triad-origin"/>']
     for label, dx, dy, color in vectors:
         ex, ey = ox + dx * scale, oy + dy * scale
+        label_x = ex + dx * scale * 0.17
+        label_y = ey + dy * scale * 0.17
+        label_width = scale * 0.25
+        label_height = scale * 0.20
         rows.append(
             f'<line x1="{ox:.9g}" y1="{oy:.9g}" x2="{ex:.9g}" y2="{ey:.9g}" '
             f'style="stroke:{color}"/><circle cx="{ex:.9g}" cy="{ey:.9g}" r="{scale * .045:.9g}" '
-            f'style="fill:{color}"/><text x="{ex + dx * scale * .13:.9g}" y="{ey + dy * scale * .13:.9g}" '
-            f'style="fill:{color}">{html.escape(label)}</text>'
+            f'style="fill:{color}"/><g class="coordinate-label-box">'
+            f'<rect class="coordinate-label-frame" x="{label_x - label_width * .5:.9g}" '
+            f'y="{label_y - label_height * .5:.9g}" width="{label_width:.9g}" height="{label_height:.9g}" '
+            f'rx="{scale * .018:.9g}" style="stroke:{color}"/>'
+            f'<text x="{label_x:.9g}" y="{label_y:.9g}" '
+            f'style="fill:{color};font-size:{scale * .12:.9g}px">{html.escape(label)}</text></g>'
         )
     return (
         f'<g class="view-coordinate-triad" data-coordinate-system="MODEL_XYZ" '
@@ -146,7 +154,9 @@ def _svg(view: dict[str, Any], source_layers: dict[str, str]) -> str:
         source_layer = str(source_layers.get(source_id, "0")).upper()
         layer_token = re.sub(r"[^A-Z0-9_-]+", "-", source_layer).strip("-").lower().replace("_", "-") or "0"
         pick_priority = _pick_priority(source_layer, str(display.get("kind", "")))
+        selection_label = f'选择 {source_id} · {source_layer} · {entity["source_subobject"]}'
         attrs = (
+            f'tabindex="0" role="button" aria-label="{html.escape(selection_label)}" '
             f'data-view-entity-id="{html.escape(entity["id"])}" '
             f'data-source-id="{html.escape(entity["source_object_id"])}" '
             f'data-source-subobject="{html.escape(entity["source_subobject"])}" '
@@ -154,6 +164,13 @@ def _svg(view: dict[str, Any], source_layers: dict[str, str]) -> str:
         )
         role = html.escape(entity["role"])
         visible_class = f'view-entity role-{role} layer-{layer_token}' + (" derived" if entity["derived"] else "")
+        semantic_subobject = str(entity.get("source_subobject", "")).lower()
+        if "axis" in semantic_subobject or "centerline" in semantic_subobject:
+            visible_class += " semantic-centerline"
+        elif "circle" in semantic_subobject or "hole" in semantic_subobject:
+            visible_class += " semantic-hole"
+        elif "edge" in semantic_subobject or "profile" in semantic_subobject:
+            visible_class += " semantic-outline"
         kind = geometry["type"]
         if kind == "point" and display.get("kind") == "text":
             cx, cy = map(float, geometry["point"])
@@ -169,10 +186,15 @@ def _svg(view: dict[str, Any], source_layers: dict[str, str]) -> str:
                 f'y="{screen_y - text_height * 0.5:.9g}" width="{text_width:.9g}" height="{text_height:.9g}" '
                 f'transform="{transform}" {attrs}/>'
             )
+            frame_pad = font_size * 0.34
             visible = (
+                f'<g class="annotation-box" transform="{transform}">'
+                f'<rect class="annotation-frame" x="{cx - text_width * 0.5 - frame_pad:.9g}" '
+                f'y="{screen_y - text_height * 0.5 - frame_pad * 0.5:.9g}" '
+                f'width="{text_width + frame_pad * 2:.9g}" height="{text_height + frame_pad:.9g}" rx="{frame_pad * .18:.9g}"/>'
                 f'<text class="native-text role-{role} layer-{layer_token}" x="{cx:.9g}" y="{screen_y:.9g}" '
-                f'font-size="{font_size:.9g}" transform="{transform}" text-anchor="middle" '
-                f'dominant-baseline="central">{html.escape(value)}</text>'
+                f'font-size="{font_size:.9g}" text-anchor="middle" '
+                f'dominant-baseline="central">{html.escape(value)}</text></g>'
             )
             overlay_rows.append(f'<g class="{" ".join(classes)}">{hit}{visible}</g>')
             continue
@@ -206,11 +228,18 @@ def _svg(view: dict[str, Any], source_layers: dict[str, str]) -> str:
                     angle += 180.0
                 elif angle > 90.0:
                     angle -= 180.0
+                dimension_width = _text_width(label, label_size)
+                dimension_pad = label_size * 0.32
+                transform = f'rotate({angle:.9g} {mid_x:.9g} {screen_y:.9g})'
                 overlay_rows.append(
+                    f'<g class="annotation-box dimension-box" transform="{transform}">'
+                    f'<rect class="annotation-frame dimension-frame" x="{mid_x - dimension_width * .5 - dimension_pad:.9g}" '
+                    f'y="{screen_y - label_size * .7:.9g}" width="{dimension_width + dimension_pad * 2:.9g}" '
+                    f'height="{label_size * 1.4:.9g}" rx="{dimension_pad * .18:.9g}"/>'
                     f'<text class="dimension-value layer-{layer_token}" x="{mid_x:.9g}" y="{screen_y:.9g}" '
-                    f'font-size="{label_size:.9g}" transform="rotate({angle:.9g} {mid_x:.9g} {screen_y:.9g})" '
+                    f'font-size="{label_size:.9g}" '
                     f'text-anchor="middle" dominant-baseline="central" aria-label="尺寸 {html.escape(label)} {html.escape(unit)}">'
-                    f'{html.escape(label)}</text>'
+                    f'{html.escape(label)}</text></g>'
                 )
         elif kind == "circle":
             cx, cy = geometry["center"]
@@ -362,12 +391,29 @@ function renderChanges(){
   host.querySelectorAll('button').forEach(b=>b.onclick=()=>{(b.dataset.kind==='operation'?operations:instructions).splice(Number(b.dataset.index),1);renderChanges();});
   document.getElementById('advancedJson').textContent=JSON.stringify(handoff(),null,2);
   document.getElementById('changeCount').textContent=String(rows.length);
+  document.getElementById('submitRequest').disabled=!rows.length;
+  document.getElementById('exportRequest').disabled=!rows.length;
+  updateOperationalStatus();
+}
+function updateOperationalStatus(){
+  const changeTotal=operations.length+instructions.length,hasSelection=selectedRefs.length>0;
+  const states={
+    source:['complete','已绑定'],
+    select:hasSelection?['complete','已选择']:['active','当前'],
+    edit:changeTotal?['complete','已起草']:hasSelection?['active','当前']:['waiting','待选择'],
+    verify:changeTotal?['active','待校验']:['blocked','无变更'],
+    handoff:changeTotal?['ready','可回传']:['blocked','已锁定']
+  };
+  document.querySelectorAll('.stage-step').forEach(step=>{const [state,label]=states[step.dataset.stage]||['waiting','等待'];step.dataset.state=state;step.classList.toggle('is-current',state==='active');step.setAttribute('aria-current',state==='active'?'step':'false');const output=step.querySelector('.stage-state');if(output)output.textContent=label;});
+  const stage=changeTotal?'VERIFY':hasSelection?'EDIT':'SELECT';document.documentElement.dataset.reviewStage=stage.toLowerCase();
+  const command=document.getElementById('commandState');if(command)command.textContent=changeTotal?`已起草 ${changeTotal} 项 · 等待 AI 规范校验`:'无变更 · 回传锁定';
+  const live=document.getElementById('liveStatus');if(live)live.textContent=`当前阶段 ${stage}，${hasSelection?`已选 ${selectedRefs.length} 个对象`:'未选对象'}，${changeTotal?`已起草 ${changeTotal} 项变更`:'无变更'}`;
 }
 function exportHandoff(){const blob=new Blob([JSON.stringify(handoff(),null,2)],{type:'application/json;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='aicad-agent-change-request.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);showToast('修改请求已导出；内部精确事务保留在高级信息中');}
 async function submitHandoff(){const payload=handoff(),json=JSON.stringify(payload,null,2),message={type:'aicad:review-handoff',payload};let copied=false;try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(json);copied=true;}}catch(_error){}if(!copied){const area=document.createElement('textarea');area.value=json;area.setAttribute('readonly','');area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();try{copied=document.execCommand('copy');}catch(_error){}area.remove();}try{window.dispatchEvent(new CustomEvent('aicad:review-handoff',{detail:payload}));}catch(_error){}try{if(window.parent&&window.parent!==window)window.parent.postMessage(message,'*');}catch(_error){}try{window.chrome?.webview?.postMessage(message);}catch(_error){}window.__aicadLastHandoff=payload;showToast(copied?'已复制并回传给 AI；等待约束校验':'已发送回传事件；剪贴板受限，可下载 JSON');return payload;}
 function renderUi(redraw=true){
-  const keys=selectedReferenceKeys();document.querySelectorAll('.view-hit').forEach(x=>{const pair=x.closest('.entity-pair'),ref=pkg.selection_map[x.dataset.viewEntityId],key=ref?referenceKey(ref):`${x.dataset.sourceId}|${x.dataset.sourceSubobject}`;pair?.classList.toggle('selected',keys.has(key));pair?.classList.toggle('context-selected',!keys.has(key)&&selected.includes(x.dataset.sourceId));});
-  renderSelection();renderMeasurements();renderParameters();renderRelations();populatePath();if(redraw&&window.drawAicad3d)window.drawAicad3d();
+  const keys=selectedReferenceKeys();document.querySelectorAll('.view-hit').forEach(x=>{const pair=x.closest('.entity-pair'),ref=pkg.selection_map[x.dataset.viewEntityId],key=ref?referenceKey(ref):`${x.dataset.sourceId}|${x.dataset.sourceSubobject}`,isSelected=keys.has(key);pair?.classList.toggle('selected',isSelected);pair?.classList.toggle('context-selected',!isSelected&&selected.includes(x.dataset.sourceId));x.setAttribute('aria-pressed',String(isSelected));});
+  renderSelection();renderMeasurements();renderParameters();renderRelations();populatePath();updateOperationalStatus();if(redraw&&window.drawAicad3d)window.drawAicad3d();
 }
 function showToast(text){const n=document.getElementById('toast');n.textContent=text;n.classList.add('show');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>n.classList.remove('show'),2200);}
 let lastPick={x:NaN,y:NaN,time:0,keys:[],index:-1};
@@ -390,6 +436,7 @@ function screenDistance(hit,x,y){
 function pickCandidates(event,svg){const seen=new Set(),rows=[];document.elementsFromPoint(event.clientX,event.clientY).forEach(node=>{const hit=node.closest?.('.view-hit');if(!hit||hit.ownerSVGElement!==svg||seen.has(hit.dataset.viewEntityId))return;const ref=pkg.selection_map[hit.dataset.viewEntityId];if(!ref)return;if(activeStorey&&(ref.storey_id!==activeStorey||!referenceKey(ref).startsWith(`${activeStorey}|`)))return;const distance=screenDistance(hit,event.clientX,event.clientY);if(distance>8)return;seen.add(hit.dataset.viewEntityId);rows.push({hit,ref,distance,priority:Number(hit.dataset.pickPriority||0)});});rows.sort((a,b)=>(Math.floor(a.distance/1.5)-Math.floor(b.distance/1.5))||(b.priority-a.priority)||(a.distance-b.distance)||a.hit.dataset.viewEntityId.localeCompare(b.hit.dataset.viewEntityId));return rows;}
 function pickAt(event,svg){const rows=pickCandidates(event,svg);if(!rows.length)return;const keys=rows.map(row=>referenceKey(row.ref)),repeat=performance.now()-lastPick.time<600&&Math.hypot(event.clientX-lastPick.x,event.clientY-lastPick.y)<=3&&keys.join('\u0000')===lastPick.keys.join('\u0000');const index=event.altKey&&rows.length>1?1:(repeat?(lastPick.index+1)%rows.length:0);lastPick={x:event.clientX,y:event.clientY,time:performance.now(),keys,index};toggleSelectionRef(rows[index].ref);if(rows.length>1)showToast(`\u91cd\u53e0 ${rows.length} \u4e2a\u5bf9\u8c61\uff1b\u518d\u6b21\u70b9\u51fb\u53ef\u5207\u6362`);}
 document.querySelectorAll('.cad-view').forEach(svg=>svg.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();pickAt(event,svg);},true));
+document.querySelectorAll('.view-hit').forEach(hit=>{const pair=hit.closest('.entity-pair');hit.addEventListener('focus',()=>pair?.classList.add('keyboard-focus'));hit.addEventListener('blur',()=>pair?.classList.remove('keyboard-focus'));hit.addEventListener('keydown',event=>{if(!['Enter',' '].includes(event.key))return;event.preventDefault();const ref=pkg.selection_map[hit.dataset.viewEntityId];if(ref)toggleSelectionRef(ref);});});
 
 
 
@@ -417,7 +464,7 @@ function initFreeSection(){
   function updateFields(){['sectionNx','sectionNy','sectionNz'].forEach((id,i)=>document.getElementById(id).value=Number(plane.n[i].toFixed(6)));['sectionPx','sectionPy','sectionPz'].forEach((id,i)=>document.getElementById(id).value=Number(plane.p[i].toFixed(6)));}
   function createSection(next){if(!next)return showToast('无法识别截面。可输入 X=10，或“法向 1,1,0 过原点”');plane=next;updateFields();draw();}
   function draw(){
-    const box=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1,w=Math.max(1,Math.round(box.width*dpr)),h=Math.max(1,Math.round(box.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}ctx.fillStyle='#fbfaf6';ctx.fillRect(0,0,w,h);
+    const box=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2),w=Math.max(1,Math.round(box.width*dpr)),h=Math.max(1,Math.round(box.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}ctx.fillStyle='#fbfaf6';ctx.fillRect(0,0,w,h);
     const helper=Math.abs(plane.n[2])<.9?[0,0,1]:[0,1,0],u=unit(cross(helper,plane.n)),v=unit(cross(plane.n,u)),raw=[];
     for(const o of pkg.selector_3d.objects){const triangles=o.profile.kind==='center_rectangle'?prismTriangles(o):(o.profile.primitives||[]).flatMap(c=>cylinderTriangles(o,c));for(const tri of triangles){const seg=triangleSection(tri,plane.n,plane.p);if(seg)raw.push({o,ref:controllerRef(o),a:[dot(vsub(seg[0],plane.p),u),dot(vsub(seg[0],plane.p),v)],b:[dot(vsub(seg[1],plane.p),u),dot(vsub(seg[1],plane.p),v)]});}}
     const points=raw.flatMap(x=>[x.a,x.b]);if(!points.length){ctx.fillStyle='#6b7280';ctx.font=`${14*dpr}px Microsoft YaHei`;ctx.fillText('该平面没有穿过当前特征',18*dpr,32*dpr);hits=[];return;}
@@ -425,10 +472,10 @@ function initFreeSection(){
     hits=raw.map((x,i)=>({...x,index:i,pa:project(x.a),pb:project(x.b)}));for(const x of hits){const chosen=x.ref&&selectedReferenceKeys().has(x.ref.reference_key),hot=x.index===hover;ctx.beginPath();ctx.moveTo(...x.pa);ctx.lineTo(...x.pb);ctx.strokeStyle=hot||chosen?'#e97428':x.o.role==='subtractive'?'#c9362b':'#173f5f';ctx.lineWidth=(hot||chosen?2.4:1)*dpr;ctx.globalAlpha=x.o.role==='subtractive'?.82:.7;ctx.stroke();}ctx.globalAlpha=1;ctx.fillStyle='#384454';ctx.font=`${12*dpr}px Microsoft YaHei`;ctx.fillText(`截面法向 ${plane.n.map(x=>x.toFixed(3)).join(', ')} · 过点 ${plane.p.join(', ')}`,12*dpr,20*dpr);
   }
   const dist=(x,y,a,b)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy;if(!l)return Math.hypot(x-a[0],y-a[1]);const t=Math.max(0,Math.min(1,((x-a[0])*dx+(y-a[1])*dy)/l));return Math.hypot(x-a[0]-t*dx,y-a[1]-t*dy);};
-  canvas.onmousemove=e=>{const b=canvas.getBoundingClientRect(),d=window.devicePixelRatio||1,x=(e.clientX-b.left)*d,y=(e.clientY-b.top)*d,candidates=hits.map(h=>({h,d:dist(x,y,h.pa,h.pb)})).filter(x=>x.d<9*d).sort((a,b)=>a.d-b.d),next=candidates.length?candidates[0].h.index:-1;if(next!==hover){hover=next;canvas.style.cursor=hover>=0?'pointer':'crosshair';draw();}};
-  canvas.onclick=()=>{if(hover>=0&&hits[hover].ref)toggleSelectionRef(hits[hover].ref);};
+  canvas.onpointermove=e=>{const b=canvas.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2),x=(e.clientX-b.left)*d,y=(e.clientY-b.top)*d,candidates=hits.map(h=>({h,d:dist(x,y,h.pa,h.pb)})).filter(x=>x.d<9*d).sort((a,b)=>a.d-b.d),next=candidates.length?candidates[0].h.index:-1;if(next!==hover){hover=next;canvas.style.cursor=hover>=0?'pointer':'crosshair';draw();}};
+  canvas.onpointerup=()=>{if(hover>=0&&hits[hover].ref)toggleSelectionRef(hits[hover].ref);};
   document.getElementById('makeSection').onclick=()=>{const text=document.getElementById('sectionRequest').value.trim();createSection(text?parseRequest(text):valuesPlane());};document.getElementById('applyPlaneFields').onclick=()=>createSection(valuesPlane());
-  window.addEventListener('resize',draw);window.__aicadSection={parseRequest,createSection,get plane(){return plane},get hitCount(){return hits.length},firstHitPoint(){if(!hits.length)return null;const d=window.devicePixelRatio||1,h=hits[0];return{x:(h.pa[0]+h.pb[0])/(2*d),y:(h.pa[1]+h.pb[1])/(2*d)};}};updateFields();draw();
+  window.addEventListener('resize',draw);document.addEventListener('visibilitychange',()=>{if(!document.hidden)draw();});window.__aicadSection={parseRequest,createSection,get plane(){return plane},get hitCount(){return hits.length},firstHitPoint(){if(!hits.length)return null;const d=Math.min(window.devicePixelRatio||1,2),h=hits[0];return{x:(h.pa[0]+h.pb[0])/(2*d),y:(h.pa[1]+h.pb[1])/(2*d)};}};updateFields();draw();
 }
 """
 
@@ -514,6 +561,63 @@ def _document_set_controls(package: dict[str, Any]) -> tuple[str, str, str | Non
         active,
     )
 
+def _operational_console_css() -> str:
+    """Industrial review-console overrides kept separate from drawing semantics."""
+    return r"""
+:root {
+  --canvas:#e7ecef;--surface:#fbfcf8;--surface-2:#eef2f3;--surface-3:#dfe6e9;
+  --ink:#111b22;--muted:#4e5d68;--border:#7c8790;--border-soft:#c5cdd1;
+  --navy:#0c2536;--navy-2:#123d55;--accent:#9a3b08;--accent-bg:#fff0dc;
+  --danger:#981b1b;--danger-bg:#fff0ed;--warning:#7c4800;--warning-bg:#fff3d6;
+  --success:#1b6541;--success-bg:#e7f4eb;--focus:#006fbb;--white:#fff;
+  --shadow:3px 3px 0 rgba(12,37,54,.12);--topbar-h:76px;
+}
+html,body{max-width:100%;overflow-x:hidden}html{scroll-behavior:smooth;background:var(--canvas)}
+body{min-width:0;color:var(--ink);background:linear-gradient(90deg,transparent 31px,rgba(12,37,54,.035) 32px),linear-gradient(transparent 31px,rgba(12,37,54,.035) 32px),var(--canvas);background-size:32px 32px;font-family:"Microsoft YaHei UI","Noto Sans CJK SC",system-ui,sans-serif;line-height:1.45}
+.skip-link{position:fixed;left:10px;top:8px;z-index:100;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;background:var(--white);color:var(--navy);border:0;font-weight:700}
+.skip-link:focus-visible{width:auto;height:auto;padding:8px 12px;clip-path:none;border:2px solid var(--focus)}
+button,input,select,textarea,summary,[tabindex]{outline:none}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,.storey-tab:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+button,.storey-tab{min-height:36px}.view-hit:focus{outline:none;fill:rgba(0,111,187,.08);stroke:var(--focus)!important;stroke-width:3!important}body .entity-pair:focus-within .view-entity,body .view-hit:focus~.view-entity,body .entity-pair.keyboard-focus .view-entity{opacity:1;stroke:var(--focus)!important;stroke-width:2.4!important}.entity-pair:focus-within .annotation-frame,.entity-pair.keyboard-focus .annotation-frame{stroke:var(--focus);stroke-width:1.4}
+button:disabled{cursor:not-allowed;color:#68737c;background:#dfe4e6;border-color:#9ba5ab;opacity:1}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.topbar{position:sticky;top:0;z-index:30;height:auto;min-height:var(--topbar-h);padding:10px 16px;background:var(--navy);border-bottom:4px solid var(--accent);display:grid;grid-template-columns:minmax(260px,1fr) auto;gap:14px;align-items:center}
+.title-lockup{min-width:0}.mark{flex:0 0 38px;width:38px;height:38px;border:1px solid rgba(255,255,255,.55);background:#071722;box-shadow:inset 0 0 0 3px rgba(255,255,255,.05);font:800 12px "Cascadia Mono",Consolas,monospace;letter-spacing:.08em}
+.topbar h1{font-size:16px;line-height:1.2}.topbar p{max-width:62ch;color:#c5d0d7;font-size:10px;overflow-wrap:anywhere}
+.top-actions{min-width:0;gap:12px}.status-strip{display:grid;grid-template-columns:repeat(3,minmax(112px,1fr));border:1px solid #587080;background:#071923}
+.status-cell{min-width:0;display:grid;grid-template-columns:21px 1fr;grid-template-rows:auto auto;padding:6px 8px;border-right:1px solid #38505f;color:#fff}
+.status-cell:last-child{border-right:0}.status-symbol{grid-row:1/3;align-self:center;font:800 14px "Cascadia Mono",Consolas;color:#cfd9df}.status-cell small{font:700 8px "Cascadia Mono",Consolas;letter-spacing:.09em;color:#aebfc9}.status-cell b{font:800 10px "Cascadia Mono",Consolas;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status-cell[data-state="bound"]{box-shadow:inset 3px 0 var(--success)}.status-cell[data-state="warning"]{box-shadow:inset 3px 0 #d28b16}.status-cell[data-state="blocked"]{box-shadow:inset 3px 0 #e4554f}.status-cell[data-state="blocked"] b{color:#ffd8d4}
+.coordinate-toggle{min-height:30px;padding:2px 4px;color:#fff}.coordinate-toggle input:focus-visible+.switch-track{outline:3px solid #6dc4ff;outline-offset:2px}.switch-track{flex:0 0 auto}
+.console-layout{display:grid;grid-template-columns:minmax(138px,160px) minmax(0,1fr) minmax(340px,370px);gap:12px;padding:12px;align-items:start;max-width:1920px;margin:0 auto}
+.stage-rail{position:sticky;top:calc(var(--topbar-h) + 12px);max-height:calc(100vh - var(--topbar-h) - 24px);overflow:auto;min-width:0;background:var(--navy);color:#eef5f7;border-top:4px solid var(--accent);box-shadow:var(--shadow)}
+.stage-rail header{padding:12px 11px 9px;border-bottom:1px solid #3c5260}.stage-rail header small{display:block;font:800 8px "Cascadia Mono",Consolas;letter-spacing:.13em;color:#d39a6d}.stage-rail header b{display:block;margin-top:3px;font-size:12px}.stage-rail ol{list-style:none;padding:0;margin:0}.stage-step{position:relative;min-width:0;display:grid;grid-template-columns:30px minmax(0,1fr);gap:6px;padding:10px 9px;border-bottom:1px solid #344a58}.stage-index{grid-row:1/3;font:800 17px "Cascadia Mono",Consolas;color:#718896}.stage-copy{min-width:0}.stage-copy b{display:block;font-size:11px}.stage-copy small{display:block;margin-top:2px;font-size:8px;color:#9fb0ba;overflow-wrap:anywhere}.stage-state{justify-self:start;margin-top:4px;padding:2px 5px;border:1px solid #617581;background:#112e40;color:#e8eff2;font:800 8px "Cascadia Mono",Consolas}.stage-step[data-state="complete"]{box-shadow:inset 4px 0 var(--success)}.stage-step[data-state="complete"] .stage-index{color:#8fd2ad}.stage-step[data-state="active"]{background:#173d50;box-shadow:inset 4px 0 #d5792a}.stage-step[data-state="active"] .stage-index{color:#ffc68c}.stage-step[data-state="ready"]{box-shadow:inset 4px 0 #4d9bc1}.stage-step[data-state="blocked"]{box-shadow:inset 4px 0 #b9403b}.stage-step[data-state="blocked"] .stage-state{border-color:#b65450;color:#ffd8d4}
+.rail-hash{display:block;padding:10px;overflow:hidden;text-overflow:ellipsis;color:#9fb0ba;font:8px "Cascadia Mono",Consolas;white-space:nowrap}
+.workspace-shell,.workspace,.view-card,.inspector,.inspector-scroll{min-width:0}.workspace-shell{grid-column:2}.workspace{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.source-banner{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;margin:0 0 10px;padding:9px 11px;background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--warning)}
+.source-banner strong{font-size:12px}.source-banner p{margin:2px 0 0;color:var(--muted);font-size:9px}.source-code{max-width:30ch;overflow:hidden;text-overflow:ellipsis;padding:5px 7px;border:1px solid var(--border-soft);background:var(--surface-2);font:800 9px "Cascadia Mono",Consolas;white-space:nowrap}
+.drawing-legend{margin:0 0 10px;background:var(--surface);border:1px solid var(--border)}.legend-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 9px;background:var(--surface-2);border-bottom:1px solid var(--border-soft)}.legend-head b{font-size:11px}.legend-head small{color:var(--muted);font:8px "Cascadia Mono",Consolas}.legend-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}.legend-item{min-width:0;display:grid;grid-template-columns:44px minmax(0,1fr);gap:7px;align-items:center;padding:7px 9px;border-right:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);font-size:9px}.legend-item:nth-child(3n){border-right:0}.line-sample{display:block;width:40px;height:0;border-top-color:#1b2c37;border-top-style:solid}.line-sample.outline{border-top-width:4px}.line-sample.visible{border-top-width:2px}.line-sample.hidden{border-top-width:1px;border-top-style:dashed}.line-sample.center{height:2px;border:0;background:repeating-linear-gradient(90deg,#9a3b08 0 12px,transparent 12px 15px,#9a3b08 15px 18px,transparent 18px 22px)}.line-sample.dimension{border-top-width:1px;border-top-color:#1e5676}.annotation-sample{display:grid;place-items:center;width:40px;height:22px;border:1px solid #667680;background:#fff;font:800 9px "Cascadia Mono",Consolas}
+.view-card,.inspector{background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}.view-card{padding:10px}.view-heading{align-items:center;border-bottom:1px solid var(--border-soft)}.view-heading h2{font-size:14px}.eyebrow{color:var(--accent);font-family:"Cascadia Mono",Consolas,monospace}.hint{max-width:45ch;color:var(--muted);overflow-wrap:anywhere}.cad-view,#aicad3d-selector,#freeSectionCanvas{max-width:100%;border-color:#9aa5ab;background-color:#fcfdf9;background-image:radial-gradient(#a9b3b8 0.65px,transparent 0.65px);background-size:12px 12px}
+.annotation-frame,.coordinate-label-frame{fill:#fffdf7;fill-opacity:.96;stroke:#687983;stroke-width:.7;vector-effect:non-scaling-stroke}.dimension-frame{stroke:#1e5676}.coordinate-label-box text{text-anchor:middle;dominant-baseline:central;paint-order:normal;stroke:none}.native-text,.dimension-value{fill:#111b22}.dimension-value{paint-order:normal;stroke:none}.view-entity{stroke:#34495a;stroke-width:.8}.view-entity.derived{stroke-dasharray:none;opacity:.82}.view-entity.semantic-outline{stroke:#243944;stroke-width:1.35}.view-entity.semantic-hole{stroke:#125274;stroke-width:1.05}.view-entity.semantic-centerline{stroke:#9a3b08;stroke-width:.68;stroke-dasharray:12 3 2 3}.view-entity.layer-wall{stroke:#111b22;stroke-width:2.4}.view-entity.layer-column{stroke:#7e1d1d;stroke-width:2.8}.view-entity.layer-opening{stroke:#075d70;stroke-width:1.45}.view-entity.layer-room,.view-entity.layer-stair{stroke-width:1.05}.view-entity.layer-furniture{stroke:#59666f;stroke-width:.72}.view-entity.layer-route,.view-entity.layer-overhead{stroke:#6d367f;stroke-width:.9;stroke-dasharray:8 4}.view-entity.layer-grid{stroke:#65747e;stroke-width:.7;stroke-dasharray:14 4 2 4}.view-entity.layer-outline{stroke:#101e28;stroke-width:2.2}.view-entity.layer-hole{stroke:#104f75;stroke-width:1.35}.view-entity.layer-hidden{stroke:#556773;stroke-width:.8;stroke-dasharray:7 3}.view-entity.layer-center{stroke:#9a3b08;stroke-width:.7;stroke-dasharray:12 3 2 3}.view-entity.layer-dimension{stroke:#1e5676;stroke-width:.72}.view-hit{stroke-width:12}.entity-pair:hover .annotation-frame,.entity-pair.selected .annotation-frame{stroke:var(--accent);stroke-width:1.2}
+.storey-switcher{min-width:0;flex-wrap:wrap;border-color:var(--border)}.storey-tab.active,.storey-tab[aria-pressed="true"]{background:var(--navy-2)}
+.inspector{grid-column:3;position:sticky;top:calc(var(--topbar-h) + 12px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;max-height:calc(100vh - var(--topbar-h) - 24px);overflow:hidden}.inspector-head{padding:12px 13px 9px;background:var(--navy-2);color:#fff;border-bottom:3px solid var(--accent)}.inspector-head p{color:#d0dce2}.inspector-scroll{overflow:auto;overscroll-behavior:contain}.panel-section{padding:10px 12px}.panel-section h3{font-size:11px}.selection-chip{grid-template-columns:minmax(48px,auto) minmax(0,1fr);background:var(--accent-bg);overflow-wrap:anywhere}.measurement-card,.parameter-group{box-shadow:none;border-color:var(--border-soft)}.metric-primary>strong{color:#143e58}.coordinate-grid span{min-width:0}.coordinate-grid strong{min-width:0;overflow:hidden;text-overflow:ellipsis}.form-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}input,select,textarea{max-width:100%;border-color:#7d898f;background:#fff;color:var(--ink)}button{border-color:#6f7b82;background:#f9faf7;color:var(--ink)}button:hover{border-color:var(--accent);color:#7f2e06}button.accent,.primary{background:var(--accent);border-color:var(--accent);color:#fff}.change-row{align-items:start;background:var(--success-bg);overflow-wrap:anywhere}
+.command-zone{position:relative;z-index:8;padding:10px 12px;background:#dfe7ea;border-top:1px solid var(--border);box-shadow:0 -4px 0 rgba(12,37,54,.08)}.command-state{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px;color:var(--muted);font-size:9px}.command-state b{color:var(--navy);font:800 10px "Cascadia Mono",Consolas}.handoff-actions{margin:0}.handoff-actions .primary{min-height:42px}.advanced-wrap{padding:0 12px 10px;background:var(--surface)}
+#toast{max-width:min(90vw,560px);background:var(--navy);border-left-color:var(--accent);overflow-wrap:anywhere}
+@media(max-width:1240px){
+  :root{--topbar-h:86px}.topbar{grid-template-columns:minmax(230px,1fr) auto}.status-strip{grid-template-columns:repeat(3,minmax(94px,1fr))}.console-layout{grid-template-columns:minmax(0,1fr) 350px}.stage-rail{position:static;grid-column:1/-1;max-height:none;overflow:visible}.stage-rail header{display:none}.stage-rail ol{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}.stage-step{grid-template-columns:27px minmax(0,1fr);border-right:1px solid #344a58;border-bottom:0}.rail-hash{display:none}.workspace-shell{grid-column:1}.inspector{grid-column:2}
+}
+@media(max-width:880px){
+  :root{--topbar-h:0px}.topbar{position:relative;grid-template-columns:1fr;padding:9px 11px}.top-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;width:100%}.console-layout{grid-template-columns:minmax(0,1fr);padding:9px}.stage-rail,.workspace-shell,.inspector{grid-column:1}.inspector{position:relative;top:auto;max-height:none}.inspector-scroll{overflow:visible}.command-zone{position:sticky;bottom:0}.workspace{grid-template-columns:repeat(2,minmax(0,1fr))}.drawing-sheet-card,.storey-view{min-height:0}.drawing-sheet-card .cad-view,.storey-view .cad-view{height:clamp(430px,68vh,720px)}.legend-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.legend-item:nth-child(3n){border-right:1px solid var(--border-soft)}.legend-item:nth-child(2n){border-right:0}
+}
+@media(max-width:560px){
+  .title-lockup{align-items:flex-start}.mark{width:34px;height:34px;flex-basis:34px}.topbar h1{font-size:14px}.topbar p{font-size:9px}.top-actions{grid-template-columns:1fr}.status-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.status-cell{grid-template-columns:15px minmax(0,1fr);padding:5px 4px}.status-symbol{font-size:11px}.status-cell small{font-size:6.5px}.status-cell b{font-size:7.5px}.coordinate-toggle{justify-self:start}.console-layout{padding:7px;gap:8px}.stage-step{display:block;padding:7px 4px;text-align:center}.stage-index{display:block;font-size:12px}.stage-copy b{font-size:9px;line-height:1.2}.stage-copy small{display:none}.stage-state{display:inline-block;margin-top:3px;font-size:6.5px}.source-banner{grid-template-columns:1fr}.source-code{max-width:100%}.legend-grid{grid-template-columns:1fr 1fr}.legend-item{grid-template-columns:38px minmax(0,1fr);padding:6px 5px;font-size:8px}.line-sample,.annotation-sample{width:34px}.workspace{grid-template-columns:minmax(0,1fr)}.selector-card,.section-card{grid-column:1}.view-heading{align-items:flex-start;flex-direction:column}.hint{text-align:left}.plane-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.section-command,.ai-row,.form-grid{grid-template-columns:minmax(0,1fr)}.form-grid .wide{grid-column:1}.relation-grid{grid-template-columns:1fr 1fr}.drawing-sheet-card .cad-view,.storey-view .cad-view{height:58vh;min-height:360px}.handoff-actions{grid-template-columns:minmax(0,1fr) auto}.command-zone{padding:8px}.command-state{align-items:flex-start;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media(pointer:coarse),(any-pointer:coarse){button,.storey-tab,input,select,textarea{min-height:44px}.view-hit{stroke-width:18}.cad-view,#aicad3d-selector,#freeSectionCanvas{touch-action:none}}
+@media(prefers-contrast:more){:root{--border:#27343c;--border-soft:#6f7a80}.view-entity{opacity:1}.muted,.hint{color:#27343c}}
+"""
+
+
 
 def render_review_html_v2(package: dict[str, Any], selector_script: str = "") -> str:
     payload = json.dumps(package, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -529,8 +633,8 @@ def render_review_html_v2(package: dict[str, Any], selector_script: str = "") ->
         document_meta = f'<meta name="aicad-document-set-sha256" content="{html.escape(digest)}">'
     section_card = ""
     if package["space"] == "3d":
-        selector_card = '''<section class="view-card selector-card"><div class="view-heading"><div><span class="eyebrow">3D SELECT</span><h2>可旋转三维选择器</h2></div><span class="hint">拖动旋转 · 滚轮缩放 · 悬停发现隐藏几何</span></div><canvas id="aicad3d-selector" aria-label="可旋转三维特征选择器"></canvas></section>'''
-        section_card = '''<section class="view-card section-card"><div class="view-heading"><div><span class="eyebrow">FREE SECTION</span><h2>自由截面</h2></div><span class="hint">告诉 AI 截面位置，截面线可直接点选</span></div><div class="section-command"><input id="sectionRequest" placeholder="例如：看 X=10 截面；或 法向 1,1,0 过原点"><button id="makeSection" class="accent">生成截面</button></div><details class="plane-fields"><summary>精确平面</summary><div class="plane-grid"><label>法向 X<input id="sectionNx" type="number" step="0.1"></label><label>法向 Y<input id="sectionNy" type="number" step="0.1"></label><label>法向 Z<input id="sectionNz" type="number" step="0.1"></label><label>过点 X<input id="sectionPx" type="number" step="0.1"></label><label>过点 Y<input id="sectionPy" type="number" step="0.1"></label><label>过点 Z<input id="sectionPz" type="number" step="0.1"></label></div><button id="applyPlaneFields">按数值更新</button></details><canvas id="freeSectionCanvas" aria-label="自由截面选择视图"></canvas><p class="authority-note">截面来自受约束特征运算，可用于定位和修改参数；制造结论仍需宿主 CAD 的最终 BREP 复核。</p></section>'''
+        selector_card = '''<section class="view-card selector-card"><div class="view-heading"><div><span class="eyebrow">3D SELECT</span><h2>可旋转三维选择器</h2></div><span class="hint">拖动旋转 · 滚轮缩放 · 悬停发现隐藏几何</span></div><canvas id="aicad3d-selector" role="img" aria-label="可旋转三维特征选择器" aria-describedby="selectorKeyboardHelp"></canvas><p id="selectorKeyboardHelp" class="authority-note">键盘用户可在下方正投影图和右侧核心参数中完成等价选择。</p></section>'''
+        section_card = '''<section class="view-card section-card"><div class="view-heading"><div><span class="eyebrow">FREE SECTION</span><h2>自由截面</h2></div><span class="hint">告诉 AI 截面位置，截面线可直接点选</span></div><div class="section-command"><input id="sectionRequest" aria-label="截面请求" placeholder="例如：看 X=10 截面；或 法向 1,1,0 过原点"><button id="makeSection" class="accent">生成截面</button></div><details class="plane-fields"><summary>精确平面</summary><div class="plane-grid"><label>法向 X<input id="sectionNx" type="number" step="0.1"></label><label>法向 Y<input id="sectionNy" type="number" step="0.1"></label><label>法向 Z<input id="sectionNz" type="number" step="0.1"></label><label>过点 X<input id="sectionPx" type="number" step="0.1"></label><label>过点 Y<input id="sectionPy" type="number" step="0.1"></label><label>过点 Z<input id="sectionPz" type="number" step="0.1"></label></div><button id="applyPlaneFields">按数值更新</button></details><canvas id="freeSectionCanvas" role="img" aria-label="自由截面选择视图" aria-describedby="sectionAuthorityNote"></canvas><p id="sectionAuthorityNote" class="authority-note">截面来自受约束特征运算，可用于定位和修改参数；键盘用户可用精确平面数值获得等价结果。制造结论仍需宿主 CAD 的最终 BREP 复核。</p></section>'''
     view_cards: list[str] = []
     for view in package["views"]:
         storey_id = str(view.get("storey_id", ""))
@@ -554,6 +658,10 @@ def render_review_html_v2(package: dict[str, Any], selector_script: str = "") ->
     interaction = _interaction_script()
     section = _section_script() if package["space"] == "3d" else ""
     init = "if(typeof initAicad3dSelector==='function')initAicad3dSelector();initFreeSection();" if package["space"] == "3d" else ""
+    source_digest = str(package.get("source_sha256", ""))
+    source_short = source_digest[:12] if re.fullmatch(r"[0-9a-f]{64}", source_digest) else "UNVERIFIED"
+    space_label = html.escape(str(package.get("space", "?D")).upper())
+    domain_label = html.escape(str(package.get("domain", "general")).upper())
     return f'''<!doctype html>
 <html lang="zh-CN"{document_attrs}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{document_meta}
 <title>AICAD 几何审查与修改器</title><style>
@@ -571,15 +679,17 @@ main{{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:14px;padding:14
 .parameter-group{{border:1px solid #d5d0c5;margin:6px 0;background:#fbfaf6}}.parameter-group.active{{border-color:var(--orange)}}.parameter-group header{{display:flex;justify-content:space-between;padding:6px 8px;background:#ece8df;font-size:10px}}.parameter-row{{display:flex;width:100%;justify-content:space-between;border:0;border-top:1px solid #e6e1d7;padding:6px 8px;background:transparent;font-size:11px;text-align:left}}.parameter-row strong{{font:700 11px "Cascadia Mono",Consolas}}.parameter-row i{{font:normal 9px "Microsoft YaHei";color:var(--muted)}}.form-grid{{display:grid;grid-template-columns:1fr 1fr;gap:7px}}.form-grid .wide{{grid-column:1/-1}}.label{{display:grid;gap:3px;font-size:10px;color:var(--muted)}}.attention{{animation:attention .65s}}@keyframes attention{{50%{{background:#fff0dd}}}}
 .relation-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}}textarea{{width:100%;min-height:78px;resize:vertical}}.ai-row{{display:grid;grid-template-columns:1fr auto;gap:6px}}.change-row{{display:flex;justify-content:space-between;gap:8px;border-left:2px solid var(--green);background:#edf4ef;padding:7px 8px;margin:5px 0;font-size:11px}}.change-row button{{border:0;background:transparent;padding:0 4px;font-size:16px}}.handoff-actions{{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:9px}}.handoff-actions .primary{{width:auto;margin:0}}details.advanced{{margin-top:8px;font-size:10px;color:var(--muted)}}pre{{white-space:pre-wrap;overflow-wrap:anywhere;font:9px Consolas;max-height:230px;overflow:auto;background:#14232e;color:#dce7ee;padding:8px}}#toast{{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:#132433;color:white;padding:9px 14px;opacity:0;pointer-events:none;transition:.18s;border-left:4px solid var(--orange);z-index:20;font-size:12px}}#toast.show{{opacity:1;transform:translate(-50%,0)}}
 @media(max-width:1500px){{main{{grid-template-columns:1fr}}.inspector{{position:static;max-height:none}}}}@media(max-width:720px){{.workspace{{grid-template-columns:1fr}}.selector-card,.section-card{{grid-column:span 1}}.plane-grid{{grid-template-columns:repeat(3,1fr)}}.safety{{display:none}}}}
-</style></head><body><header class="topbar"><div class="title-lockup"><div class="mark">CAD</div><div><h1>几何审查与修改器</h1><p>选择 → 修改 → 约束复核；系统在后台生成精确事务</p></div></div><div class="top-actions"><label class="coordinate-toggle" title="显示或隐藏所有坐标基准"><input id="coordinateToggle" type="checkbox" checked role="switch" aria-checked="true"><span class="switch-track"></span><b>坐标系</b></label><div class="safety">REVIEW ONLY · NOT ACCEPTED · RULES OFF</div></div></header>
-<main><div class="workspace-shell">{storey_switcher}<div class="workspace">{cards}</div></div><aside class="inspector"><div class="inspector-head"><h2>修改面板</h2><p>选择对象后先读取模型真值，再决定是否修改。</p></div>
-<section class="panel-section"><h3>当前对象</h3><div id="selection"></div></section>
+{_operational_console_css()}</style></head><body><a class="skip-link" href="#review-workspace">跳到图纸工作区</a><header class="topbar"><div class="title-lockup"><div class="mark" aria-hidden="true">AIC</div><div><h1>AICAD 工程图纸审查台</h1><p>来源绑定 → 精确选择 → 变更起草 → 规范复核 → 回传；本页始终为未批准候选</p></div></div><div class="top-actions"><div class="status-strip" role="list" aria-label="审查安全状态"><div class="status-cell" data-state="bound" role="listitem"><span class="status-symbol" aria-hidden="true">✓</span><small>FRESHNESS / 新鲜度</small><b>SNAPSHOT BOUND</b></div><div class="status-cell" data-state="warning" role="listitem"><span class="status-symbol" aria-hidden="true">!</span><small>SEVERITY / 风险级</small><b>WARNING</b></div><div class="status-cell" data-state="blocked" role="listitem"><span class="status-symbol" aria-hidden="true">×</span><small>RELEASE / 发布门禁</small><b>BLOCKED</b></div></div><label class="coordinate-toggle" title="显示或隐藏所有坐标基准"><input id="coordinateToggle" type="checkbox" checked role="switch" aria-checked="true"><span class="switch-track" aria-hidden="true"></span><b>坐标系</b></label></div></header><div id="liveStatus" class="sr-only" role="status" aria-live="polite"></div>
+<main class="console-layout"><nav class="stage-rail" aria-label="审查阶段"><header><small>REVIEW FLOW</small><b>安全审查阶段</b></header><ol><li class="stage-step" data-stage="source" data-state="complete"><span class="stage-index">01</span><span class="stage-copy"><b>来源绑定</b><small>哈希锁定当前快照</small></span><output class="stage-state">已绑定</output></li><li class="stage-step is-current" data-stage="select" data-state="active" aria-current="step"><span class="stage-index">02</span><span class="stage-copy"><b>精确选择</b><small>线 / 面 / 中心 / 参数</small></span><output class="stage-state">当前</output></li><li class="stage-step" data-stage="edit" data-state="waiting"><span class="stage-index">03</span><span class="stage-copy"><b>变更起草</b><small>保留策略与精确引用</small></span><output class="stage-state">待选择</output></li><li class="stage-step" data-stage="verify" data-state="blocked"><span class="stage-index">04</span><span class="stage-copy"><b>规范复核</b><small>由 AI 执行约束校验</small></span><output class="stage-state">无变更</output></li><li class="stage-step" data-stage="handoff" data-state="blocked"><span class="stage-index">05</span><span class="stage-copy"><b>安全回传</b><small>不等于工程批准</small></span><output class="stage-state">已锁定</output></li></ol><code class="rail-hash" title="{html.escape(source_digest)}">SHA {source_short}</code></nav>
+<section class="workspace-shell" id="review-workspace" tabindex="-1"><section class="source-banner" aria-label="来源快照状态"><div><strong>{space_label} · {domain_label} 审查快照</strong><p>来源哈希已绑定；未与外部最新文件自动比对，不声称实时新鲜。发布仍被阻断。</p></div><code class="source-code" title="{html.escape(source_digest)}">SHA-256 {source_short}…</code></section><section class="drawing-legend" aria-label="图纸线型与标注图例"><div class="legend-head"><b>图纸语法图例</b><small>LINE WEIGHT / TYPE / ANNOTATION</small></div><div class="legend-grid"><div class="legend-item"><span class="line-sample outline" aria-hidden="true"></span><span>轮廓线 · 粗实线</span></div><div class="legend-item"><span class="line-sample visible" aria-hidden="true"></span><span>可见线 · 中实线</span></div><div class="legend-item"><span class="line-sample hidden" aria-hidden="true"></span><span>隐藏线 · 短虚线</span></div><div class="legend-item"><span class="line-sample center" aria-hidden="true"></span><span>中心线 · 点划线</span></div><div class="legend-item"><span class="line-sample dimension" aria-hidden="true"></span><span>尺寸线 · 细实线</span></div><div class="legend-item"><span class="annotation-sample" aria-hidden="true">A1</span><span>标注框 · 文字在框内</span></div></div></section>{storey_switcher}<div class="workspace">{cards}</div></section>
+<aside class="inspector" aria-label="持久修改命令区"><div class="inspector-head"><h2>修改与约束面板</h2><p>先读取模型真值，再起草可回溯变更；底部命令区持续可见。</p></div><div class="inspector-scroll">
+<section class="panel-section"><h3>当前对象</h3><div id="selection" aria-live="polite"></div></section>
 <section class="panel-section measurement-section"><h3>几何数值</h3><div id="measurement"></div></section>
 <section class="panel-section"><h3>核心参数</h3><div id="coreParameters"></div></section>
-<section class="panel-section" id="quickEditor"><h3>快速修改</h3><div class="form-grid"><label class="label">参数<select id="parameterPath"></select></label><label class="label">新值<input id="parameterValue" placeholder="输入数值；中心用 X, Y"></label><label class="label">尺寸变化时<select id="preserve"><option value="keep_center">保持中心</option><option value="keep_opposite">保持对边</option><option value="keep_size">保持尺寸</option><option value="keep_support">保持支撑面</option></select></label><button id="setParameter">加入修改</button></div><details><summary class="muted">沿坐标轴移动边或面</summary><div class="form-grid"><select id="moveAxis"><option value="x">X 轴</option><option value="y">Y 轴</option><option value="z">Z 轴</option></select><select id="valueMode"><option value="absolute">绝对坐标</option><option value="delta">增量</option></select><input id="moveValue" type="number" value="0" step="0.1"><button id="addMove">加入移动</button></div></details></section>
-<section class="panel-section"><h3>对象关系</h3><div id="relations" class="relation-grid"></div><label class="label">偏移量<input id="offsetValue" type="number" value="0" step="0.1"></label></section>
-<section class="panel-section"><h3>直接告诉 AI</h3><div class="ai-row"><textarea id="aiInstruction" placeholder="例如：让中心孔与凸台同心，孔径改为 12 mm，其他尺寸保持不变。"></textarea><button id="addInstruction">加入</button></div></section>
-<section class="panel-section"><h3>修改清单 <span id="changeCount">0</span></h3><div id="changeList"></div><div class="handoff-actions"><button id="submitRequest" class="primary">复制并回传给 AI</button><button id="exportRequest">下载 JSON</button></div><details class="advanced"><summary>高级信息：精确引用与安全锁</summary><pre id="advancedJson"></pre></details></section></aside></main><div id="toast"></div>
+<section class="panel-section" id="quickEditor"><h3>快速修改</h3><div class="form-grid"><label class="label" for="parameterPath">参数<select id="parameterPath"></select></label><label class="label" for="parameterValue">新值<input id="parameterValue" placeholder="输入数值；中心用 X, Y"></label><label class="label" for="preserve">尺寸变化时<select id="preserve"><option value="keep_center">保持中心</option><option value="keep_opposite">保持对边</option><option value="keep_size">保持尺寸</option><option value="keep_support">保持支撑面</option></select></label><button id="setParameter">加入修改</button></div><details><summary class="muted">沿坐标轴移动边或面</summary><div class="form-grid"><select id="moveAxis" aria-label="移动坐标轴"><option value="x">X 轴</option><option value="y">Y 轴</option><option value="z">Z 轴</option></select><select id="valueMode" aria-label="移动值模式"><option value="absolute">绝对坐标</option><option value="delta">增量</option></select><input id="moveValue" aria-label="移动值" type="number" value="0" step="0.1"><button id="addMove">加入移动</button></div></details></section>
+<section class="panel-section"><h3>对象关系</h3><div id="relations" class="relation-grid"></div><label class="label" for="offsetValue">偏移量<input id="offsetValue" type="number" value="0" step="0.1"></label></section>
+<section class="panel-section"><h3>直接告诉 AI</h3><label class="label" for="aiInstruction">修改意图</label><div class="ai-row"><textarea id="aiInstruction" placeholder="例如：让中心孔与凸台同心，孔径改为 12 mm，其他尺寸保持不变。"></textarea><button id="addInstruction">加入</button></div></section>
+<section class="panel-section"><h3>修改清单 <output id="changeCount">0</output></h3><div id="changeList" aria-live="polite"></div></section><div class="advanced-wrap"><details class="advanced"><summary>高级信息：精确引用与安全锁</summary><pre id="advancedJson"></pre></details></div></div><section class="command-zone" aria-label="持久回传命令区"><div class="command-state"><b>COMMAND ZONE</b><span id="commandState">无变更 · 回传锁定</span></div><div class="handoff-actions"><button id="submitRequest" class="primary" disabled aria-describedby="commandState">复制并回传给 AI</button><button id="exportRequest" disabled aria-describedby="commandState">下载 JSON</button></div></section></aside></main><div id="toast" role="status" aria-live="polite"></div>
 <script>const pkg={payload};
 {selector_script}
 {interaction}

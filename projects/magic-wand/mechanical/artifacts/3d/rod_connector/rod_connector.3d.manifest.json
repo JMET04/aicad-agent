@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "name": "magic_wand_rod_connector_axial_prototype",
+  "domain": "mechanical",
+  "source_sha256": "f1eaa4487e1d26a47276faae45addca9b400da3bf05a8881ece6411c71f97ec7",
+  "feature_count": 3,
+  "feature_types": {
+    "base_extrude": 1,
+    "boss_extrude": 1,
+    "cut_extrude": 1
+  },
+  "roles": {
+    "boss": 1,
+    "hole": 1,
+    "outline": 1
+  },
+  "editable_features": 3,
+  "expected_final_volume_mm3": 10667.592014529513,
+  "expected_final_bbox_mm": [
+    -13.5,
+    -13.5,
+    0.0,
+    13.5,
+    13.5,
+    25.0
+  ],
+  "artifacts": {
+    "source": "projects/magic-wand/mechanical/artifacts/3d/rod_connector/rod_connector.aicad3d.plan.json",
+    "execution": "projects/magic-wand/mechanical/artifacts/3d/rod_connector/rod_connector.swplan.json",
+    "audit": "projects/magic-wand/mechanical/artifacts/3d/rod_connector/rod_connector.3d.audit.md",
+    "sldprt": "projects/magic-wand/mechanical/artifacts/3d/rod_connector/rod_connector.SLDPRT",
+    "step": "projects/magic-wand/mechanical/artifacts/3d/rod_connector/rod_connector.step",
+    "host_report": "projects/magic-wand/mechanical/artifacts/3d/rod_connector/rod_connector.solidworks-report.json",
+    "reopen_report": "projects/magic-wand/mechanical/artifacts/3d/rod_connector/rod_connector.reopen-report.json"
+  },
+  "native_host_validation": {
+    "status": "passed",
+    "solidworks_revision": "34.0.0",
+    "host_protocol": "AICAD_SOLIDWORKS_REPORT_2",
+    "reopen_protocol": "AICAD_SOLIDWORKS_REOPEN_REPORT_2",
+    "native_topology_authority": true,
+    "native_topology_stability": "solidworks_persist_reference_save_reopen_verified",
+    "saved_reference_count": 11,
+    "reopened_reference_count": 11,
+    "required_reference_count": 3,
+    "unresolved_required_reference_count": 0,
+    "reference_keys": [
+      "F001|feature.circle.opposite.1",
+      "F001|feature.face.cylindrical.1",
+      "F001|feature.face.opposite.1",
+      "F001|profile.circle.1",
+      "F002|feature.circle.opposite.1",
+      "F002|feature.face.cylindrical.1",
+      "F002|feature.face.opposite.1",
+      "F002|profile.circle.1",
+      "F003|feature.circle.opposite.1",
+      "F003|feature.face.cylindrical.1",
+      "F003|profile.circle.1"
+    ],
+    "file_sha256": {
+      "sldprt": "1fc73bd1fbc74d72665923adb886df5f08dc6f7d49d26443e09c151c4fb117ab",
+      "step": "2c96902dde309c63935bf42a891071a57cc1e57667da05cdfa8510a51af5f623",
+      "solidworks_report": "8ff70d600967bd26e515590c4f844bb29993c9987e2e8ad86c9d827caac7794a",
+      "reopen_report": "b5c242d393faef51ebd1a4e2ec1bced9ad86d74ef5bb0b008c01e1d86d69522c"
+    },
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

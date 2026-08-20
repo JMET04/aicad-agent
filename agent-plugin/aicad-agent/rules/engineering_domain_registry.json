@@ -1,0 +1,128 @@
+{
+  "schema": "aicad_engineering_domain_registry_v1",
+  "version": "1.0.0",
+  "policy": "declare_domain_maturity_and_fail_closed_on_missing_specialist_evidence",
+  "maturityLevels": {
+    "advanced": "Dedicated executable contracts, negative regressions and specialist validators exist for substantial review-candidate coverage.",
+    "constrained": "Typed domain semantics exist, but native authoring or specialist evidence remains incomplete.",
+    "foundation": "Normative domain-pack recall and exact coverage exist; specialist generation/analysis must remain blocked or externally supplied."
+  },
+  "domains": {
+    "general": {
+      "label": "通用工程图",
+      "maturity": "constrained",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/normative_governance_rules.json", "rules/cad_normative_quality_rules.json"],
+      "validators": ["runtime constraint compiler", "domain semantic validator"],
+      "nativeGenerationBoundary": "portable constrained geometry only"
+    },
+    "architecture": {
+      "label": "建筑工程",
+      "maturity": "constrained",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/architectural_drafting_rules.json", "rules/architectural_detail_contract_v2.schema.json", "rules/production_readiness_rules.json"],
+      "validators": ["aicad_architecture_detail_qa.py", "aicad_architecture_qa.py", "aicad_production_readiness_qa_v2.py"],
+      "nativeGenerationBoundary": "2D constrained review candidates; professional release external"
+    },
+    "packaging": {
+      "label": "包装工程",
+      "maturity": "constrained",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/packaging_dieline_rules.json", "rules/normality_contract.schema.json", "rules/production_readiness_rules.json"],
+      "validators": ["aicad_packaging_qa.py", "aicad_normality_prover.py", "aicad_guarded_delivery.py"],
+      "nativeGenerationBoundary": "constrained dieline review candidates; material/process trials external"
+    },
+    "mechanical": {
+      "label": "机械工程",
+      "maturity": "constrained",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/production_readiness_rules.json", "rules/native_solidworks_topology_rules.json"],
+      "validators": ["54-gate engineering preflight", "SolidWorks transactional host", "production-readiness v3 evidence verifier"],
+      "nativeGenerationBoundary": "extrude/cut parts only; assemblies, loft/sweep/revolve and engineering release remain external"
+    },
+    "electronics": {
+      "label": "电子与PCB工程",
+      "maturity": "constrained",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/production_readiness_rules.json"],
+      "validators": ["63-gate engineering preflight", "production-readiness v3 evidence verifier", "external KiCad/EDA analyzer workflow"],
+      "nativeGenerationBoundary": "board-envelope CAD plus externally generated native EDA sources; fabrication authorization external"
+    },
+    "sheet_metal": {
+      "label": "钣金工程",
+      "maturity": "constrained",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/normative_governance_rules.json"],
+      "validators": ["domain semantic validator"],
+      "nativeGenerationBoundary": "semantic review only; native bends, flat pattern and tooling evidence unavailable"
+    },
+    "civil": {
+      "label": "土木工程",
+      "maturity": "constrained",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/civil_engineering_rules.json", "schema/aicad-civil-review-candidate.schema.json", "rules/normative_governance_rules.json", "rules/cad_normative_quality_rules.json"],
+      "validators": ["aicad_validate_civil_review_candidate", "domain semantic validator with specialist-validation binding"],
+      "nativeGenerationBoundary": "source-bound CRS/survey/alignment/profile/drainage coordination review candidates only; terrain, LandXML, hydraulic, construction and professional release hosts remain external"
+    },
+    "structural": {
+      "label": "结构工程",
+      "maturity": "foundation",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/normative_governance_rules.json"],
+      "validators": ["domain registry fail-closed boundary"],
+      "nativeGenerationBoundary": "load-path intent review only; analysis and connection design external"
+    },
+    "electrical": {
+      "label": "电气工程",
+      "maturity": "foundation",
+      "spaces": ["2d"],
+      "dedicatedRuleCatalogs": ["rules/normative_governance_rules.json"],
+      "validators": ["domain registry fail-closed boundary"],
+      "nativeGenerationBoundary": "diagram semantics only; protection and cable calculations external"
+    },
+    "plumbing": {
+      "label": "给排水工程",
+      "maturity": "foundation",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/normative_governance_rules.json"],
+      "validators": ["domain registry fail-closed boundary"],
+      "nativeGenerationBoundary": "routing intent only; demand, sizing and code authority external"
+    },
+    "hvac": {
+      "label": "暖通工程",
+      "maturity": "foundation",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/normative_governance_rules.json"],
+      "validators": ["domain registry fail-closed boundary"],
+      "nativeGenerationBoundary": "routing intent only; loads, airflow, pressure and controls analysis external"
+    },
+    "process_piping": {
+      "label": "工艺管道工程",
+      "maturity": "foundation",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/normative_governance_rules.json"],
+      "validators": ["domain registry fail-closed boundary"],
+      "nativeGenerationBoundary": "line-class and routing intent only; stress, supports and isometrics host external"
+    },
+    "product_design": {
+      "label": "工业产品设计",
+      "maturity": "foundation",
+      "spaces": ["2d", "3d"],
+      "dedicatedRuleCatalogs": ["rules/normative_governance_rules.json", "rules/production_readiness_rules.json"],
+      "validators": ["domain registry fail-closed boundary; mechanical/electronics handoff remains external"],
+      "nativeGenerationBoundary": "multi-domain intent coordination; specialist mechanical/electronics packages remain separate"
+    }
+  },
+  "releasePolicy": {
+    "productionArtifactExposureGranted": false,
+    "professionalReleaseGranted": false,
+    "externalSpecialistEvidenceRequired": true,
+    "maturityMayNotBeInferredFromGenericGeometry": true
+  },
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

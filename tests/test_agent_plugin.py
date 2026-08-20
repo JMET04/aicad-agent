@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import subprocess
@@ -24,6 +25,65 @@ def load_agent_module():
     return module
 
 
+def materialize_preflight(agent, domain: str, evidence_root: Path) -> dict:
+    contract = agent.get_engineering_preflight_template_value(domain)["template"]
+    payloads = {
+        "STD_AUTHORITY": (
+            "evidence/selected-standard.txt",
+            f"Controlled {domain} standard edition and applicability ledger, revision STD-R1.\n".encode("utf-8"),
+            "text/plain",
+            "STD-R1",
+            "Controlled standard edition, scope, jurisdiction, and applicability evidence.",
+        ),
+        "ENG_INPUT": (
+            "evidence/approved-engineering-input.json",
+            json.dumps(
+                {
+                    "domain": domain,
+                    "revision": "ENG-R1",
+                    "status": "approved",
+                    "basis": "Controlled design basis, calculations, interfaces, and process capability.",
+                },
+                sort_keys=True,
+            ).encode("utf-8"),
+            "application/json",
+            "ENG-R1",
+            "Approved design basis, calculations, interfaces, and process-capability evidence.",
+        ),
+    }
+    for source in contract["sources"]:
+        relative_path, payload, media_type, revision, description = payloads[source["id"]]
+        target = evidence_root.joinpath(*relative_path.split("/"))
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(payload)
+        source.update({
+            "path": relative_path,
+            "size": len(payload),
+            "sha256": hashlib.sha256(payload).hexdigest(),
+            "mediaType": media_type,
+            "authorityRevision": revision,
+            "description": description,
+        })
+    first_standard = contract["applicableStandards"][0]["standard"]
+    for row in contract["ruleApplications"]:
+        row.update({
+            "disposition": "constrained",
+            "generationConstraint": f"Bind {row['gatePath']} to both controlled authority files before geometry generation.",
+            "verificationMethod": f"Run canonical rule equality and evidence checks for {row['gatePath']} before release.",
+            "verifierId": "canonical_rule_check",
+            "standardIds": [first_standard],
+        })
+    return contract
+
+
+def plan_with_preflight(agent, example: Path, domain: str, evidence_root: Path, *, space: str) -> dict:
+    plan = json.loads(example.read_text(encoding="utf-8"))
+    container = "drawing" if space == "2d" else "part"
+    plan[container]["domain"] = domain
+    plan["engineering_normative_preflight"] = materialize_preflight(agent, domain, evidence_root)
+    return plan
+
+
 class AgentPluginTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -32,7 +92,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_manifest_skill_and_mcp_are_complete(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "aicad-agent")
-        self.assertEqual(manifest["version"], "1.16.0")
+        self.assertEqual(manifest["version"], "1.17.0")
         self.assertEqual(manifest["mcpServers"], "./.mcp.json")
         self.assertIn("MCP tools", manifest["interface"]["capabilities"])
         self.assertIn("Mechanical/electronics normative generation preflight", manifest["interface"]["capabilities"])
@@ -53,7 +113,7 @@ class AgentPluginTests(unittest.TestCase):
     def test_capabilities_are_machine_readable(self) -> None:
         payload = self.agent.capabilities()
         self.assertTrue(payload["ok"])
-        self.assertEqual(payload["api_version"], "1.16.0")
+        self.assertEqual(payload["api_version"], "1.17.0")
         self.assertEqual(payload["entities"], ["line", "circle", "arc", "text", "dimension"])
         self.assertTrue({"position_coincident", "position_offset", "text_height", "rotation", "dimension_measurement", "dimension_orientation", "base_offset"}.issubset(payload["constraints"]))
         self.assertIn("schema 2.0 compiles to AICAD protocol 3, or protocol 4 when native dimensions are present", payload["invariants"])
@@ -240,6 +300,9 @@ class AgentPluginTests(unittest.TestCase):
             "aicad_capabilities", "aicad_get_plan_schema",
             "aicad_get_engineering_preflight_schema", "aicad_get_engineering_preflight_template",
             "aicad_validate_engineering_preflight",
+            "aicad_get_experience_context_schema", "aicad_get_review_coverage_schema",
+            "aicad_get_engineering_domain_registry", "aicad_recall_experience",
+            "aicad_validate_review_coverage",
             "aicad_get_architecture_detail_contract_schema", "aicad_validate_architecture_detail_contract",
             "aicad_generate",
             "aicad_validate_plan", "aicad_compile_plan", "aicad_solidworks_doctor",
@@ -252,6 +315,12 @@ class AgentPluginTests(unittest.TestCase):
             "aicad_get_domain_validation_schema", "aicad_validate_domain_plan",
             "aicad_get_reference_rebuild_schema", "aicad_validate_reference_rebuild",
             "aicad_build_reference_reconstruction",
+            "aicad_get_experience_context_schema", "aicad_get_review_coverage_schema",
+            "aicad_get_engineering_domain_registry", "aicad_recall_experience",
+            "aicad_validate_review_coverage",
+            "aicad_guarded_packaging_delivery",
+            "aicad_get_civil_review_candidate_schema",
+            "aicad_validate_civil_review_candidate",
         })
         call = self.agent._handle_mcp({
             "jsonrpc": "2.0", "id": 3, "method": "tools/call",
@@ -290,16 +359,21 @@ class AgentPluginTests(unittest.TestCase):
                 self.agent.compile_plan_value(plan, str(output), "blocked-mechanical")
             self.assertFalse(output.exists())
 
-        contract = template_call["template"]
-        first_standard = contract["applicableStandards"][0]["standard"]
-        for row in contract["ruleApplications"]:
-            row["disposition"] = "constrained"
-            row["generationConstraint"] = f"Generate only after resolving {row['gatePath']}."
-            row["verificationMethod"] = f"Independently verify {row['gatePath']}."
-            row["standardIds"] = [first_standard]
-        plan["engineering_normative_preflight"] = contract
         with tempfile.TemporaryDirectory() as directory:
-            payload = self.agent.compile_plan_value(plan, directory, "preflight-pass")
+            evidence_root = Path(directory)
+            plan["engineering_normative_preflight"] = materialize_preflight(
+                self.agent, "mechanical", evidence_root
+            )
+            output = evidence_root / "in-memory-must-not-exist"
+            with patch.object(self.agent, "export_all") as exporter:
+                with self.assertRaisesRegex(self.agent.PlanError, "source_inventory_invalid"):
+                    self.agent.compile_plan_value(plan, str(output), "missing-evidence-root")
+                exporter.assert_not_called()
+            self.assertFalse(output.exists())
+
+            payload = self.agent.compile_plan_value(
+                plan, directory, "preflight-pass", evidence_root=str(evidence_root)
+            )
             self.assertTrue(payload["ok"])
             self.assertEqual(payload["engineering_normative_preflight"]["status"], "pass")
             self.assertFalse(payload["engineering_normative_preflight"]["generationGate"]["artifactExposureAllowed"])
@@ -310,20 +384,100 @@ class AgentPluginTests(unittest.TestCase):
         with self.assertRaisesRegex(self.agent.PlanError, "engineering_normative_preflight"):
             self.agent.validate_3d_plan_value(plan)
 
-        contract = self.agent.get_engineering_preflight_template_value("mechanical")["template"]
-        first_standard = contract["applicableStandards"][0]["standard"]
-        for row in contract["ruleApplications"]:
-            row["disposition"] = "constrained"
-            row["generationConstraint"] = f"Generate only after resolving {row['gatePath']}."
-            row["verificationMethod"] = f"Independently verify {row['gatePath']}."
-            row["standardIds"] = [first_standard]
-        plan["engineering_normative_preflight"] = contract
-        validated = self.agent.validate_3d_plan_value(plan)
-        self.assertTrue(validated["valid"])
-        self.assertEqual(validated["engineering_normative_preflight"]["status"], "pass")
-        self.assertFalse(
-            validated["engineering_normative_preflight"]["readinessBoundary"]["manufacturingAuthorized"]
-        )
+        with tempfile.TemporaryDirectory() as directory:
+            evidence_root = Path(directory)
+            plan["engineering_normative_preflight"] = materialize_preflight(
+                self.agent, "mechanical", evidence_root
+            )
+            with self.assertRaisesRegex(self.agent.PlanError, "source_inventory_invalid"):
+                self.agent.validate_3d_plan_value(plan)
+            blocked_output = evidence_root / "in-memory-build-must-not-exist"
+            with patch.object(self.agent, "compile_3d_plan") as builder:
+                with self.assertRaisesRegex(self.agent.PlanError, "source_inventory_invalid"):
+                    self.agent.build_solidworks_part(
+                        plan, str(blocked_output), "missing-evidence-root", False
+                    )
+                builder.assert_not_called()
+            self.assertFalse(blocked_output.exists())
+
+            validated = self.agent.validate_3d_plan_value(plan, str(evidence_root))
+            self.assertTrue(validated["valid"])
+            self.assertEqual(validated["engineering_normative_preflight"]["status"], "pass")
+            self.assertFalse(
+                validated["engineering_normative_preflight"]["readinessBoundary"]["manufacturingAuthorized"]
+            )
+
+    def test_file_inputs_default_preflight_evidence_to_their_parent_for_compile_3d_and_build(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            evidence_root = Path(directory)
+            contract = materialize_preflight(self.agent, "mechanical", evidence_root)
+            contract_path = evidence_root / "mechanical-preflight.json"
+            contract_path.write_text(json.dumps(contract, ensure_ascii=False), encoding="utf-8")
+            validated_contract = self.agent.validate_engineering_preflight_value(str(contract_path))
+            self.assertTrue(validated_contract["ok"], validated_contract)
+
+            plan_2d = plan_with_preflight(
+                self.agent, ROOT / "examples" / "arc.plan.json", "mechanical", evidence_root, space="2d"
+            )
+            plan_2d_path = evidence_root / "mechanical-2d.plan.json"
+            plan_2d_path.write_text(json.dumps(plan_2d, ensure_ascii=False), encoding="utf-8")
+            compiled = self.agent.compile_plan_value(
+                str(plan_2d_path), str(evidence_root / "compiled-2d"), "mechanical-file-input"
+            )
+            self.assertEqual(compiled["engineering_normative_preflight"]["status"], "pass")
+
+            plan_3d = plan_with_preflight(
+                self.agent,
+                ROOT / "examples" / "mounting_plate_3d.plan.json",
+                "mechanical",
+                evidence_root,
+                space="3d",
+            )
+            plan_3d_path = evidence_root / "mechanical-3d.plan.json"
+            plan_3d_path.write_text(json.dumps(plan_3d, ensure_ascii=False), encoding="utf-8")
+            validated_3d = self.agent.validate_3d_plan_value(str(plan_3d_path))
+            self.assertEqual(validated_3d["engineering_normative_preflight"]["status"], "pass")
+            built = self.agent.build_solidworks_part(
+                str(plan_3d_path), str(evidence_root / "built-3d"), "mechanical-file-input", False
+            )
+            self.assertEqual(built["engineering_normative_preflight"]["status"], "pass")
+            self.assertTrue(Path(built["solidworks_plan"]).is_file())
+
+    def test_tampered_evidence_blocks_2d_and_3d_artifact_generation_before_builders_run(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            evidence_root = Path(directory)
+            plan_2d = plan_with_preflight(
+                self.agent, ROOT / "examples" / "arc.plan.json", "mechanical", evidence_root, space="2d"
+            )
+            evidence = evidence_root / plan_2d["engineering_normative_preflight"]["sources"][0]["path"]
+            evidence.write_bytes(evidence.read_bytes() + b" post-contract mutation")
+            output_2d = evidence_root / "blocked-2d"
+            with patch.object(self.agent, "export_all") as exporter:
+                with self.assertRaisesRegex(self.agent.PlanError, "source_inventory_invalid"):
+                    self.agent.compile_plan_value(
+                        plan_2d, str(output_2d), "blocked-2d", evidence_root=str(evidence_root)
+                    )
+                exporter.assert_not_called()
+            self.assertFalse(output_2d.exists())
+
+            plan_3d = plan_with_preflight(
+                self.agent,
+                ROOT / "examples" / "mounting_plate_3d.plan.json",
+                "mechanical",
+                evidence_root,
+                space="3d",
+            )
+            evidence = evidence_root / plan_3d["engineering_normative_preflight"]["sources"][1]["path"]
+            evidence.write_bytes(evidence.read_bytes() + b" post-contract mutation")
+            output_3d = evidence_root / "blocked-3d"
+            with patch.object(self.agent, "compile_3d_plan") as builder:
+                with self.assertRaisesRegex(self.agent.PlanError, "source_inventory_invalid"):
+                    self.agent.build_solidworks_part(
+                        plan_3d, str(output_3d), "blocked-3d", False,
+                        evidence_root=str(evidence_root),
+                    )
+                builder.assert_not_called()
+            self.assertFalse(output_3d.exists())
 
     def test_universal_semantic_correction_and_multiview_tools(self) -> None:
         plan = json.loads((ROOT / "examples" / "mounting_plate_3d.plan.json").read_text(encoding="utf-8"))
@@ -444,9 +598,9 @@ class AgentPluginTests(unittest.TestCase):
         self.assertIn("Unsafe integration-manifest path", installer)
         self.assertIn("integration-manifest.json", installer)
         self.assertNotIn("Get-ChildItem -LiteralPath $source -Force", installer)
-        self.assertIn("[string]$ExpectedVersion = '1.16.0'", installer)
+        self.assertIn("[string]$ExpectedVersion = '1.17.0'", installer)
         self.assertLess(
-            installer.index("release\\v1.16.0\\aicad-agent"),
+            installer.index("release\\v1.17.0\\aicad-agent"),
             installer.index("plugins\\aicad-agent"),
         )
         self.assertNotIn("agent-plugin\\aicad-agent", installer)
@@ -462,7 +616,7 @@ class AgentPluginTests(unittest.TestCase):
         self.assertIn("$installedManifest.version -ne $ExpectedVersion", installer)
         verifier = (ROOT / "scripts" / "verify_release_package.py").read_text(encoding="utf-8")
         builder = (ROOT / "scripts" / "build-agent-plugin.ps1").read_text(encoding="utf-8-sig")
-        self.assertIn('EXPECTED_VERSION = "1.16.0"', verifier)
+        self.assertIn('EXPECTED_VERSION = "1.17.0"', verifier)
         self.assertIn('"expected-version-mismatch"', verifier)
         self.assertIn('"component-version-mismatch"', verifier)
         self.assertIn("--expected-version $Version", builder)
@@ -490,7 +644,7 @@ class AgentPluginTests(unittest.TestCase):
                 [
                     "powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
                     "-File", str(ROOT / "scripts" / "install-agent-plugin.ps1"),
-                    "-SourceDirectory", str(source), "-ExpectedVersion", "1.16.0",
+                    "-SourceDirectory", str(source), "-ExpectedVersion", "1.17.0",
                 ],
                 cwd=ROOT,
                 text=True,

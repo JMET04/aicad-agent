@@ -1,0 +1,96 @@
+{
+  "schema": "aicad_magic_wand_mechanical_design_basis_v1",
+  "document_id": "MW-MECH-DB-001",
+  "revision": "A",
+  "status": "controlled_review_input_only",
+  "authorization_basis": "User-authorized creation of a reviewable physical prototype package in the current AICAD task.",
+  "authority_boundary": "This input authorizes controlled geometry generation only. It is not professional engineering approval, a supplier specification, a safety certification, or manufacturing release.",
+  "parameter_source": "design-parameters.json",
+  "product_intent": {
+    "product": "hand-held gesture wand research prototype",
+    "use": "indoor, dry, supervised low-energy interaction testing",
+    "forbidden_uses": [
+      "striking or impact tool",
+      "load-bearing aid",
+      "children's toy release",
+      "unsupervised public use",
+      "direct mains switching",
+      "direct drone propulsion or flight-control power switching"
+    ]
+  },
+  "operating_envelope": {
+    "ambient_temperature_c": [5, 40],
+    "relative_humidity_percent_noncondensing": [20, 80],
+    "session_duration_minutes_max": 15,
+    "sessions_per_day_max": 20,
+    "prototype_design_life_cycles": 10000,
+    "intentional_tip_contact_allowed": false,
+    "outdoor_weather_exposure_allowed": false
+  },
+  "controlled_load_cases": [
+    {
+      "id": "LC01_HANDLING",
+      "case": "self weight plus 3 g equivalent gesture acceleration",
+      "generation_constraint": "Preserve continuous GFRP spine support and minimum declared polymer wall; do not infer strength approval without material coupons and calculation evidence."
+    },
+    {
+      "id": "LC02_BUTTON",
+      "case": "5 N maximum press-to-arm actuation force",
+      "generation_constraint": "Keep the actuator center at the declared datum and provide a guarded recessed opening."
+    },
+    {
+      "id": "LC03_ASSEMBLY",
+      "case": "manual sliding assembly without hammering",
+      "generation_constraint": "Use positive diametral clearances; adhesive retention remains a coupon-test item."
+    },
+    {
+      "id": "LC04_ABNORMAL",
+      "case": "drop, impact, misuse, thermal runaway, or tip contact",
+      "generation_constraint": "No design acceptance is claimed; these cases remain release blockers pending risk review and physical verification."
+    }
+  ],
+  "materials_and_processes": {
+    "polymer_parts": "prototype polymers only; lot, conditioning, orientation, flammability and final process are not qualified",
+    "spine": "supplier grade, fibre fraction, modulus, surface preparation and certificates must be selected before structural review",
+    "adhesive": "no production adhesive selected; lap-shear and ageing coupons required",
+    "fasteners": "none in the baseline package",
+    "bearings": "none in the baseline package",
+    "threads": "none in the baseline package"
+  },
+  "tolerance_policy": {
+    "reference_temperature_c": 20,
+    "general_prototype_linear_tolerance_mm": 0.3,
+    "critical_interfaces": "Use explicit bilateral limits from design-parameters.json; do not apply a general tolerance over those limits.",
+    "datum_scheme": "A = rear outer plane, B = common wand axis, C = press-to-arm radial center plane",
+    "surface_texture": "No production roughness value assigned; remove sharp edges and burrs on prototypes."
+  },
+  "rf_mechanical_policy": {
+    "antenna_end": "rear cap end",
+    "mechanical_keepout": "Use the explicit axial/radial envelope and forbidden-item classes in design-parameters.json.",
+    "external_authority_required": "Current u-blox NINA-B302 antenna integration documentation and a representative enclosure RF test."
+  },
+  "verification_policy": {
+    "digital": [
+      "AICAD schema and geometric invariant checks",
+      "parameter-to-plan consistency tests",
+      "artifact hash manifest"
+    ],
+    "physical": [
+      "dimensional inspection of all critical interfaces",
+      "assembly fit check",
+      "press-to-arm travel and force check",
+      "antenna-zone visual exclusion inspection",
+      "adhesive coupon test",
+      "supervised handling test"
+    ],
+    "native_host": "SolidWorks native save/reopen and topology readback are required before native authority can be claimed."
+  },
+  "release_locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false
+  }
+}

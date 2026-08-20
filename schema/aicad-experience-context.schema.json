@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/aicad/aicad-experience-context.schema.json",
+  "title": "AICAD authority-first experience recall context",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "contextId", "domain", "spaces", "deliveryStage", "productFamilies", "riskTags", "changeTags", "requestedOutputs", "applicableStandards", "assumptions", "locks"],
+  "properties": {
+    "schema": {"const": "aicad_design_context_v1"},
+    "contextId": {"type": "string", "pattern": "^[A-Z][A-Z0-9_.-]{2,63}$"},
+    "domain": {"enum": ["general", "architecture", "packaging", "mechanical", "electronics", "sheet_metal", "civil", "structural", "electrical", "plumbing", "hvac", "process_piping", "product_design"]},
+    "spaces": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["2d", "3d"]}},
+    "deliveryStage": {"enum": ["concept", "prototype", "engineering_review", "production"]},
+    "productFamilies": {"$ref": "#/$defs/tags"},
+    "riskTags": {"$ref": "#/$defs/tags"},
+    "changeTags": {"$ref": "#/$defs/tags"},
+    "requestedOutputs": {"$ref": "#/$defs/tags"},
+    "applicableStandards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["standard", "edition", "scope", "authority"],
+        "properties": {
+          "standard": {"type": "string", "minLength": 1},
+          "edition": {"type": "string", "minLength": 1},
+          "scope": {"type": "string", "minLength": 1},
+          "authority": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "impact", "confirmationPolicy"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Z][A-Z0-9_.-]{2,63}$"},
+          "statement": {"type": "string", "minLength": 1},
+          "impact": {"type": "string", "minLength": 1},
+          "confirmationPolicy": {"enum": ["confirm_before_geometry", "confirm_before_release", "disclosed_default"]}
+        }
+      }
+    },
+    "locks": {"$ref": "#/$defs/locks"}
+  },
+  "$defs": {
+    "tags": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[_:-][a-z0-9]+)*$"}},
+    "locks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true}
+      }
+    }
+  }
+}

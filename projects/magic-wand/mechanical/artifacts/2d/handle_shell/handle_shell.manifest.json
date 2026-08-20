@@ -1,0 +1,44 @@
+{
+  "schema_version": "2.0",
+  "name": "MW-M-001 handle shell review drawing",
+  "domain": "mechanical",
+  "source_sha256": "ef6eb794ff922560e1584707ce49276e6c37f19b189bd534050fbf9b50ce3631",
+  "units": "mm",
+  "origin": [
+    0.0,
+    0.0
+  ],
+  "tolerance": 0.001,
+  "entity_count": 16,
+  "entity_types": {
+    "line": 11,
+    "circle": 2,
+    "arc": 0,
+    "text": 1,
+    "dimension": 2
+  },
+  "layers": {
+    "CENTER": 1,
+    "DIMENSION": 2,
+    "HIDDEN": 2,
+    "HOLE": 1,
+    "NOTES": 1,
+    "NOTE_FRAME": 4,
+    "OUTLINE": 5
+  },
+  "roles": {
+    "datum": 1,
+    "hole": 1,
+    "interface": 9,
+    "outline": 4,
+    "shaft": 1
+  },
+  "editable_entities": 16,
+  "dependency_edges": 10,
+  "artifacts": [
+    "handle_shell.aicad",
+    "handle_shell.scr",
+    "handle_shell.dxf",
+    "handle_shell.audit.md"
+  ]
+}

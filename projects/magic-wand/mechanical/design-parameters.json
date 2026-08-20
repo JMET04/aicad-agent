@@ -1,0 +1,126 @@
+{
+  "schema": "aicad_magic_wand_mechanical_parameters_v1",
+  "project_id": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "units": "mm",
+  "status": "review_only_prototype",
+  "coordinate_system": {
+    "axis": "+Z from rear cap outer datum toward rod tip",
+    "rear_cap_outer_datum_z": 0.0,
+    "model_hand": "right_handed_MODEL_XYZ"
+  },
+  "envelope": {
+    "overall_length": 315.0,
+    "overall_length_tolerance": 2.0,
+    "grip_segment_length": 115.0,
+    "grip_segment_tolerance": 0.8,
+    "transition_exposed_length": 10.0,
+    "rod_exposed_length": 190.0,
+    "rod_exposed_length_tolerance": 1.0,
+    "overall_stack_equation": "rear_cap_exposed_length + handle_shell_length + connector_exposed_length + rod_exposed_length"
+  },
+  "handle_shell": {
+    "part_number": "MW-M-001",
+    "outer_diameter": 27.0,
+    "inner_diameter": 23.0,
+    "wall_thickness": 2.0,
+    "length": 110.0,
+    "diameter_tolerance": 0.2,
+    "length_tolerance": 0.5,
+    "prototype_material": "PC-ABS prototype grade, final resin and rating not selected",
+    "prototype_process": "FDM or MJF review prototype",
+    "side_feature_model_status": "press_to_arm_side_aperture_not_representable_in_current_axial_extrude_kernel"
+  },
+  "internal_carrier": {
+    "part_number": "MW-M-002",
+    "outer_width": 17.8,
+    "outer_height": 12.8,
+    "inner_width": 15.4,
+    "inner_height": 10.4,
+    "wall_thickness": 1.2,
+    "length": 92.0,
+    "minimum_corner_clearance_to_shell_id": 0.5,
+    "prototype_material": "PA12 unfilled prototype grade",
+    "prototype_process": "MJF or SLS review prototype",
+    "module_envelope": {
+      "nina_b302_body_max_width_provisional": 15.0,
+      "nina_b302_body_max_height_provisional": 10.0,
+      "datasheet_dimensional_recheck_required": true
+    }
+  },
+  "rear_end_cap": {
+    "part_number": "MW-M-003",
+    "plug_diameter": 22.6,
+    "plug_insertion_length": 4.0,
+    "flange_diameter": 27.0,
+    "exposed_length": 5.0,
+    "diametral_clearance_to_shell": 0.4,
+    "prototype_material": "unfilled PC-ABS, nonconductive",
+    "prototype_process": "FDM or MJF review prototype"
+  },
+  "rod_connector": {
+    "part_number": "MW-M-004",
+    "plug_diameter": 22.6,
+    "plug_insertion_length": 15.0,
+    "collar_diameter": 27.0,
+    "exposed_length": 10.0,
+    "total_length": 25.0,
+    "spine_bore_diameter": 7.4,
+    "spine_bore_nominal_clearance": 0.4,
+    "diametral_clearance_to_shell": 0.4,
+    "prototype_material": "PA12 unfilled prototype grade",
+    "prototype_process": "MJF or SLS review prototype",
+    "retention": "two-part structural adhesive after coupon validation; no production bond specification assigned"
+  },
+  "gfrp_spine": {
+    "part_number": "MW-P-001",
+    "nominal_diameter": 7.0,
+    "diameter_tolerance": 0.1,
+    "purchase_length": 220.0,
+    "insertion_length": 30.0,
+    "exposed_length": 190.0,
+    "material": "pultruded GFRP rod, supplier grade and certificates not selected",
+    "supplier_recheck_required": true
+  },
+  "press_to_arm": {
+    "interface_id": "MW-I-PTA-001",
+    "center_z_from_rear_outer_datum": 72.0,
+    "center_z_tolerance": 0.5,
+    "actuator_aperture_diameter": 8.0,
+    "aperture_diameter_tolerance": 0.2,
+    "minimum_recess_below_guard_surface": 0.6,
+    "target_travel": 1.2,
+    "target_actuation_force_n": [2.0, 5.0],
+    "logic_boundary": "momentary hold-to-arm; release requests immediate disarm; firmware and electrical proof are outside this package",
+    "3d_representation": "datum_only_blocked_side_plane_feature"
+  },
+  "antenna_keepout": {
+    "interface_id": "MW-I-RF-001",
+    "reference": "rear-facing antenna end of NINA-B302 at nonconductive rear cap",
+    "axial_start_z": 5.0,
+    "axial_end_z": 30.0,
+    "radial_radius": 11.5,
+    "minimum_clearance_to_conductive_parts": 10.0,
+    "minimum_clearance_to_battery": 10.0,
+    "minimum_clearance_to_gfrp_spine": 40.0,
+    "forbidden_item_classes": [
+      "metal_fastener",
+      "conductive_coating",
+      "battery_cell",
+      "gfrp_spine",
+      "shield_can",
+      "cable_bundle"
+    ],
+    "enclosure_requirement": "rear cap and adjacent shell must remain nonconductive and unfilled in this zone",
+    "authority_boundary": "provisional mechanical envelope only; exact u-blox antenna integration and host-ground keepout require current NINA-B302 integration manual review"
+  },
+  "safety_locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "human_engineering_review_required": true
+  }
+}

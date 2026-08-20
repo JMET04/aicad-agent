@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/aicad/aicad-review-coverage-ledger.schema.json",
+  "title": "AICAD exact review coverage ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "contextFingerprint", "catalogFingerprint", "entries", "locks"],
+  "properties": {
+    "schema": {"const": "aicad_review_coverage_ledger_v1"},
+    "contextFingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "catalogFingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["coverageKey", "status", "evidenceRefs", "rationale", "validatedChangeTags"],
+        "properties": {
+          "coverageKey": {"type": "string", "minLength": 1},
+          "status": {"enum": ["pending", "pass", "failed", "not_applicable"]},
+          "evidenceRefs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "size", "sha256", "kind"],
+              "properties": {
+                "path": {"type": "string", "minLength": 1},
+                "size": {"type": "integer", "minimum": 0},
+                "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                "kind": {"enum": ["calculation", "inspection", "native_host", "test", "authority", "review"]}
+              }
+            }
+          },
+          "rationale": {"type": "string"},
+          "validatedChangeTags": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[_:-][a-z0-9]+)*$"}}
+        }
+      }
+    },
+    "locks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewOnly", "accepted", "ruleEnabled", "packagingGated"],
+      "properties": {
+        "reviewOnly": {"const": true},
+        "accepted": {"const": false},
+        "ruleEnabled": {"const": false},
+        "packagingGated": {"const": true}
+      }
+    }
+  }
+}

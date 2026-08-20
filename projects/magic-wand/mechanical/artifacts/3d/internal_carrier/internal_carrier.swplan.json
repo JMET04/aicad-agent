@@ -1,0 +1,98 @@
+{
+  "protocol": "AICAD_SOLIDWORKS_1",
+  "source_sha256": "2c3753181eae2461e22438865ec4f3ca92a6261b9fbd106bacb9d8274f6ea8de",
+  "part_name": "magic_wand_internal_carrier_axial_cage_prototype",
+  "units": "mm",
+  "tolerance_mm": 0.001,
+  "template_path": "C:\\ProgramData\\SOLIDWORKS\\SOLIDWORKS 2026\\templates\\gb_part.prtdot",
+  "output_sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\internal_carrier\\internal_carrier.SLDPRT",
+  "output_step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\internal_carrier\\internal_carrier.step",
+  "features": [
+    {
+      "id": "F001",
+      "type": "base_extrude",
+      "purpose": "Create the carrier outer sliding envelope.",
+      "reasoning": "The centered rectangle stays inside the circular shell bore with a computed positive corner clearance.",
+      "roles": [
+        "outline"
+      ],
+      "editable": true,
+      "depends_on": [],
+      "support_feature": null,
+      "support_top_z_mm": 0.0,
+      "resulting_top_z_mm": 92.0,
+      "depth_mm": 92.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": 17.8,
+        "height_mm": 12.8,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 0.0,
+        "volume_after_mm3": 20961.280000000006,
+        "volume_delta_mm3": 20961.280000000006,
+        "bbox_mm": [
+          -8.9,
+          -6.4,
+          0.0,
+          8.9,
+          6.4,
+          92.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F002",
+      "type": "cut_extrude",
+      "purpose": "Create the axial module tunnel and four connected carrier walls.",
+      "reasoning": "The centered through cut leaves the declared uniform rectangular wall while preserving one connected body.",
+      "roles": [
+        "pocket"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 92.0,
+      "resulting_top_z_mm": 92.0,
+      "depth_mm": 92.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": 15.4,
+        "height_mm": 10.4,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 20961.280000000006,
+        "volume_after_mm3": 6226.560000000002,
+        "volume_delta_mm3": -14734.720000000005,
+        "bbox_mm": [
+          -8.9,
+          -6.4,
+          0.0,
+          8.9,
+          6.4,
+          92.0
+        ],
+        "solid_body_count": 1
+      }
+    }
+  ]
+}

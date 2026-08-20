@@ -1,4 +1,4 @@
-# aicad-agent 1.16.0
+# aicad-agent 1.17.0
 
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
@@ -315,12 +315,12 @@ python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.16.0
+.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.17.0
 python -B scripts/verify_release_package.py release/ci/aicad-agent --source-root .
 .\scripts\build-github-source.ps1 `
   -OutputDirectory release/ci/github-repository `
-  -Version 1.16.0 `
-  -PluginArchive release/ci/aicad-agent-1.16.0.zip `
+  -Version 1.17.0 `
+  -PluginArchive release/ci/aicad-agent-1.17.0.zip `
   -PluginDirectory release/ci/aicad-agent
 python -B scripts/verify_github_source.py release/ci/github-repository --source-root .
 ```
@@ -343,7 +343,7 @@ python -B scripts/verify_github_source.py release/ci/github-repository --source-
 
 ## v1.14.0 技术说明
 
-以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.16.0.md)。
+以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.17.0.md)。
 
 ## Mechanical/electronics normative generation preflight
 

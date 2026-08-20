@@ -1,0 +1,161 @@
+{
+  "protocol": "AICAD_SOLIDWORKS_1",
+  "source_sha256": "f1eaa4487e1d26a47276faae45addca9b400da3bf05a8881ece6411c71f97ec7",
+  "part_name": "magic_wand_rod_connector_axial_prototype",
+  "units": "mm",
+  "tolerance_mm": 0.001,
+  "template_path": "C:\\ProgramData\\SOLIDWORKS\\SOLIDWORKS 2026\\templates\\gb_part.prtdot",
+  "output_sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\rod_connector\\rod_connector.SLDPRT",
+  "output_step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\mechanical\\artifacts\\3d\\rod_connector\\rod_connector.step",
+  "features": [
+    {
+      "id": "F001",
+      "type": "base_extrude",
+      "purpose": "Create the external transition collar.",
+      "reasoning": "The collar continues the handle outer diameter over the exact exposed transition length.",
+      "roles": [
+        "outline"
+      ],
+      "editable": true,
+      "depends_on": [],
+      "support_feature": null,
+      "support_top_z_mm": 0.0,
+      "resulting_top_z_mm": 10.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 13.5,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 13.5
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 0.0,
+        "volume_after_mm3": 5725.552611167408,
+        "volume_delta_mm3": 5725.552611167408,
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0.0,
+          13.5,
+          13.5,
+          10.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F002",
+      "type": "boss_extrude",
+      "purpose": "Create the shell insertion plug.",
+      "reasoning": "The smaller concentric boss enters the shell bore with positive diametral clearance and keeps one body.",
+      "roles": [
+        "boss"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 10.0,
+      "resulting_top_z_mm": 25.0,
+      "depth_mm": 15.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 11.3,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 11.3
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 5725.552611167408,
+        "volume_after_mm3": 11742.80210022063,
+        "volume_delta_mm3": 6017.249489053222,
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0.0,
+          13.5,
+          13.5,
+          25.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F003",
+      "type": "cut_extrude",
+      "purpose": "Create the continuous GFRP spine adhesive bore.",
+      "reasoning": "The concentric through bore preserves a positive annular wall and lets the spine extend behind the collar.",
+      "roles": [
+        "hole"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001",
+        "F002"
+      ],
+      "support_feature": "F002",
+      "support_top_z_mm": 25.0,
+      "resulting_top_z_mm": 25.0,
+      "depth_mm": 25.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 3.7,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 3.7
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 11742.80210022063,
+        "volume_after_mm3": 10667.592014529513,
+        "volume_delta_mm3": -1075.2100856911165,
+        "bbox_mm": [
+          -13.5,
+          -13.5,
+          0.0,
+          13.5,
+          13.5,
+          25.0
+        ],
+        "solid_body_count": 1
+      }
+    }
+  ]
+}

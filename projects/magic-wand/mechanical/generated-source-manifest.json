@@ -1,0 +1,85 @@
+{
+  "schema": "aicad_magic_wand_generated_source_manifest_v1",
+  "revision": "A",
+  "parameterSource": {
+    "path": "design-parameters.json",
+    "size": 4596,
+    "sha256": "f9dc87bf9731251ab98bde5992b0439f480d6c5deb8e6630523f425dc0be4582"
+  },
+  "files": [
+    {
+      "path": "assembly-layout.json",
+      "size": 1985,
+      "sha256": "dae9e31607d1541668abfb0a5922452979d8655d925738722d8d26442c3dbb18"
+    },
+    {
+      "path": "bom.json",
+      "size": 2374,
+      "sha256": "e14ee2738158d142fd91267c67bb6f4883160b9eeb3a60ad400ff7be920a8c07"
+    },
+    {
+      "path": "drawings2d/handle_shell.drawing.plan.json",
+      "size": 81284,
+      "sha256": "651bf2b27c6353654c3115171d3c80a8dfd0f7c04ff82eba107b71a8b313fa6a"
+    },
+    {
+      "path": "drawings2d/internal_carrier.drawing.plan.json",
+      "size": 88363,
+      "sha256": "5bf0abc5b147c15ad77afb7d79d9ed644ac6a049ea5c7ed398a3c97324cedcea"
+    },
+    {
+      "path": "drawings2d/rear_end_cap.drawing.plan.json",
+      "size": 82440,
+      "sha256": "379ec33057f69763353b3fc50f30dd3c7844a1cb3ff1f975b567442f2e308d1c"
+    },
+    {
+      "path": "drawings2d/rod_connector.drawing.plan.json",
+      "size": 84217,
+      "sha256": "1af72c6facca8f98d93ca15f8ba07c992c536ba370dfb217b1895af3f4a28950"
+    },
+    {
+      "path": "drawings2d/wand_general_arrangement.drawing.plan.json",
+      "size": 86235,
+      "sha256": "f44057a1404be927bd0b57111555c6a6d6d35834dc1fbbc3353599093cb54c59"
+    },
+    {
+      "path": "plans3d/handle_shell.plan.json",
+      "size": 70462,
+      "sha256": "541193064d6809e8b71de2f39ffc164aeb63bad0cda2239a93837e5716cda13e"
+    },
+    {
+      "path": "plans3d/internal_carrier.plan.json",
+      "size": 70697,
+      "sha256": "643ec8a9bb8c30291285e4aa8920bdfbedb2f0be2ab6fd3aac93138419c2cf93"
+    },
+    {
+      "path": "plans3d/rear_end_cap.plan.json",
+      "size": 70417,
+      "sha256": "8e4d35ac48d2f7a00cbbc99b790da0637ad1bf4d05c1bc80ed423b44602a078d"
+    },
+    {
+      "path": "plans3d/rod_connector.plan.json",
+      "size": 71403,
+      "sha256": "ce5af8ab1c1bee85ca05bb4fcb5cb5c81ab9d09c65fb0159995cc36d6694c445"
+    },
+    {
+      "path": "preflight/engineering-preflight.json",
+      "size": 66017,
+      "sha256": "0a11ef69e0097378616c2766ce6855d5f6cd005cac806181aea1cdd3672e881f"
+    },
+    {
+      "path": "review/wand-mechanical-isometric.svg",
+      "size": 4391,
+      "sha256": "509b2c9e9574b60aa0e040c09c53b7b86c5fda8d888a59c0d94b91d6befb4d11"
+    }
+  ],
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "human_engineering_review_required": true
+  }
+}

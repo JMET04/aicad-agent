@@ -8,6 +8,7 @@ from typing import Any, Iterable
 
 from .engine import PlanError, ResolvedArc, ResolvedCircle, ResolvedDimension, ResolvedLine, ResolvedText, compile_plan
 from .engine3d import compile_plan3d
+from .domain_maturity import DOMAIN_MATURITY_CEILINGS, assess_domain_maturity
 
 
 ID_PATTERN = re.compile(r"^[A-Za-z0-9_]+$")
@@ -51,7 +52,53 @@ CORE_DOMAIN_PROFILES: dict[str, dict[str, Any]] = {
         "object_roles": ["cut", "crease", "slot", "panel", "flap", "tab", "lock", "glue"],
         "review_groups": ["structure_identity", "closure", "fold_order", "clearance", "collision", "manufacturing"],
     },
+    "civil": {
+        "label": "土木工程意图",
+        "dimensions": ["2d", "3d"],
+        "object_roles": ["control_point", "terrain", "alignment", "profile", "grading", "drainage", "utility", "right_of_way", "parcel", "road", "structure", "annotation"],
+        "review_groups": ["survey", "coordinate_system", "grading", "drainage", "utilities", "drawing_standard"],
+    },
+    "structural": {
+        "label": "结构工程意图",
+        "dimensions": ["2d", "3d"],
+        "object_roles": ["grid", "node", "member", "slab", "wall", "support", "load", "connection", "reinforcement", "annotation"],
+        "review_groups": ["load_path", "member_system", "connections", "stability", "detailing", "drawing_standard"],
+    },
+    "electrical": {
+        "label": "电气工程意图",
+        "dimensions": ["2d"],
+        "object_roles": ["bus", "circuit", "device", "cable", "panel", "transformer", "protection", "earthing", "conduit", "annotation"],
+        "review_groups": ["single_line", "protection", "cable_sizing", "clearance", "earthing", "schematic_standard"],
+    },
+    "plumbing": {
+        "label": "给排水工程意图",
+        "dimensions": ["2d", "3d"],
+        "object_roles": ["fixture", "pipe", "fitting", "valve", "vent", "drain", "equipment", "access", "annotation"],
+        "review_groups": ["fixture_demand", "pipe_sizing", "slope", "venting", "access", "drawing_standard"],
+    },
+    "hvac": {
+        "label": "暖通工程意图",
+        "dimensions": ["2d", "3d"],
+        "object_roles": ["zone", "equipment", "duct", "pipe", "terminal", "damper", "control", "clearance", "annotation"],
+        "review_groups": ["load_basis", "airflow", "duct_pipe_sizing", "clearance", "controls", "drawing_standard"],
+    },
+    "process_piping": {
+        "label": "工艺管道工程意图",
+        "dimensions": ["2d", "3d"],
+        "object_roles": ["equipment", "nozzle", "line", "pipe", "fitting", "valve", "instrument", "support", "isometric", "annotation"],
+        "review_groups": ["line_class", "pressure_temperature", "routing", "supports", "isometrics", "drawing_standard"],
+    },
+    "product_design": {
+        "label": "工业产品多专业意图",
+        "dimensions": ["2d", "3d"],
+        "object_roles": ["requirement", "datum", "body", "interface", "component", "fastener", "clearance", "service_envelope", "annotation"],
+        "review_groups": ["design_intent", "interfaces", "material_process", "tolerances", "assembly", "drawing_standard"],
+    },
 }
+
+
+DOMAIN_MATURITY: dict[str, str] = dict(DOMAIN_MATURITY_CEILINGS)
+REGISTERED_ENGINEERING_DOMAINS = frozenset(CORE_DOMAIN_PROFILES)
 
 
 @dataclass(frozen=True)
@@ -156,6 +203,8 @@ def _review_policy(raw: Any) -> dict[str, bool]:
 def _validate_domain(domain: str) -> None:
     if not DOMAIN_PATTERN.fullmatch(domain):
         raise PlanError("domain must be a lower-case ASCII identifier")
+    if domain not in REGISTERED_ENGINEERING_DOMAINS:
+        raise PlanError(f"unregistered engineering domain: {domain!r}")
 
 
 def _semantic_from_2d(data: dict[str, Any], domain: str) -> SemanticDocument:
@@ -274,6 +323,10 @@ def semantic_from_plan(data: dict[str, Any], space: str, domain: str = "general"
     declared_domain = metadata.get("domain") if isinstance(metadata, dict) else None
     effective_domain = declared_domain if domain == "general" and isinstance(declared_domain, str) else domain
     _validate_domain(effective_domain)
+    if space not in CORE_DOMAIN_PROFILES[effective_domain]["dimensions"]:
+        raise PlanError(
+            f"engineering domain {effective_domain!r} does not support {space}"
+        )
     if isinstance(declared_domain, str) and declared_domain != effective_domain:
         raise PlanError(f"declared plan domain {declared_domain!r} conflicts with requested domain {effective_domain!r}")
     return _semantic_from_2d(data, effective_domain) if space == "2d" else _semantic_from_3d(data, effective_domain)
@@ -295,7 +348,8 @@ def _relation_payload(item: SemanticRelation) -> dict[str, Any]:
 
 
 def semantic_document_payload(document: SemanticDocument) -> dict[str, Any]:
-    profile = CORE_DOMAIN_PROFILES.get(document.domain, CORE_DOMAIN_PROFILES["general"])
+    profile = CORE_DOMAIN_PROFILES[document.domain]
+    maturity = assess_domain_maturity(document.domain)
     return {
         "schema_version": "1.0",
         "document": {
@@ -304,7 +358,18 @@ def semantic_document_payload(document: SemanticDocument) -> dict[str, Any]:
             "source_sha256": document.source_hash, "locks": list(document.locks),
             "review_policy": document.review_policy,
         },
-        "domain_profile": {"id": document.domain, **profile, "built_in": document.domain in CORE_DOMAIN_PROFILES},
+        "domain_profile": {
+            "id": document.domain,
+            **profile,
+            "built_in": True,
+            "maturity": maturity["effectiveMaturity"],
+            "maturity_ceiling": maturity["codeCeiling"],
+            "maturity_earned": maturity["earnedMaturity"],
+            "maturity_evidence_sha256": maturity["evidenceClosure"]["fingerprint"],
+            "maturity_issues": list(maturity["issues"]),
+            "specialist_generation_blocked": maturity["specialistGenerationBlocked"],
+            "production_release_blocked": True,
+        },
         "objects": [_object_payload(item) for item in document.objects],
         "relations": [_relation_payload(item) for item in document.relations],
         "invariants": {
@@ -336,6 +401,21 @@ def validate_semantic_document(data: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(domain, str):
         raise PlanError("semantic document domain must be a string")
     _validate_domain(domain)
+    if space not in CORE_DOMAIN_PROFILES[domain]["dimensions"]:
+        raise PlanError(f"engineering domain {domain!r} does not support {space}")
+    profile = data.get("domain_profile")
+    if not isinstance(profile, dict):
+        raise PlanError("semantic document domain_profile is required")
+    maturity = assess_domain_maturity(domain)
+    if profile.get("maturity") != maturity["effectiveMaturity"]:
+        raise PlanError("semantic domain maturity must match the code-owned effective decision")
+    if (
+        profile.get("specialist_generation_blocked")
+        is not maturity["specialistGenerationBlocked"]
+    ):
+        raise PlanError(
+            "semantic specialist generation boundary must match effective maturity"
+        )
     objects = data.get("objects")
     if not isinstance(objects, list) or not objects:
         raise PlanError("semantic document objects must be non-empty")
@@ -389,9 +469,31 @@ def describe_plan(data: dict[str, Any], space: str, domain: str = "general") -> 
 
 
 def domain_capabilities() -> dict[str, Any]:
+    decisions = {
+        domain: assess_domain_maturity(domain)
+        for domain in sorted(REGISTERED_ENGINEERING_DOMAINS)
+    }
     return {
         "core_is_domain_agnostic": True,
         "built_in_profiles": CORE_DOMAIN_PROFILES,
-        "custom_profile_ids_allowed": True,
+        "registered_domains": sorted(REGISTERED_ENGINEERING_DOMAINS),
+        "domain_maturity": {
+            domain: decision["effectiveMaturity"]
+            for domain, decision in decisions.items()
+        },
+        "domain_maturity_ceiling": dict(DOMAIN_MATURITY_CEILINGS),
+        "domain_maturity_decisions": {
+            domain: {
+                "earned_maturity": decision["earnedMaturity"],
+                "effective_maturity": decision["effectiveMaturity"],
+                "evidence_closure_sha256": decision["evidenceClosure"]["fingerprint"],
+                "specialist_generation_blocked": decision["specialistGenerationBlocked"],
+                "issues": list(decision["issues"]),
+            }
+            for domain, decision in decisions.items()
+        },
+        "custom_profile_ids_allowed": False,
+        "unknown_domain_policy": "fail_closed",
+        "production_release_granted": False,
         "rule_boundary": "domain profiles add requirements and QA; they do not replace origin, dependency, audit, or transaction gates",
     }

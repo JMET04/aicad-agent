@@ -1,0 +1,120 @@
+{
+  "artifact_status": "EVT_REVIEW_ONLY",
+  "native_layout_status": "BLOCKED_NO_KICAD_CLI_OR_NATIVE_BOARD",
+  "source_of_truth": {
+    "wand": "wand/connectivity.csv",
+    "receiver": "receiver/connectivity.csv"
+  },
+  "stackup": {
+    "status": "design-choice pending fabricator field solver",
+    "layers": 4,
+    "order": [
+      "L1 components and short signals",
+      "L2 uninterrupted GND reference",
+      "L3 power and low-rate signals with no split beneath critical L1/L4 traces",
+      "L4 signals and ground fill"
+    ],
+    "nominal_finished_thickness_mm": 1.0,
+    "outer_copper_oz": 1,
+    "inner_copper_oz": 1,
+    "finish": "ENIG candidate; confirm radio/module assembly process and cost",
+    "acceptance": "Fabricator-approved stackup and impedance coupon before routing lock"
+  },
+  "global_rules": {
+    "minimum_trace_mm": 0.15,
+    "minimum_space_mm": 0.15,
+    "minimum_via_drill_mm": 0.20,
+    "minimum_via_diameter_mm": 0.45,
+    "copper_to_board_edge_mm": 0.30,
+    "silkscreen_to_exposed_pad_mm": 0.15,
+    "note": "Provisional capability values only; exact fabricator and reliability class must approve them."
+  },
+  "net_classes": {
+    "USB2": {
+      "target_differential_impedance_ohm": 90,
+      "tolerance_percent": 10,
+      "intra_pair_length_mismatch_mm_max": 0.25,
+      "vias_per_leg_max": 0,
+      "reference": "continuous L2 GND",
+      "placement": "USBLC6-2SC6 adjacent to receptacle; no raw/protected overlap or stubs",
+      "acceptance": "fabricator field-solved width/gap and post-layout pair report"
+    },
+    "I2C": {
+      "speed_hz_initial": 100000,
+      "trace_length_mm_max": 100,
+      "spacing_mm_min": 0.20,
+      "acceptance": "measured rise time and no ringing/false clock across voltage and temperature"
+    },
+    "WAND_POWER": {
+      "trace_width_mm_min": 0.50,
+      "vias_in_parallel_min": 2,
+      "notes": "Keep charger IN/SYS/BAT capacitor loops and TPS63900 VIN/LX/VOUT loops at the pins; no sensitive IMU return through switching loops."
+    },
+    "RECEIVER_LOAD_1A": {
+      "trace_width_mm_min_provisional": 1.00,
+      "copper_oz_assumption": 1,
+      "clearance_mm_min": 0.25,
+      "notes": "5-12 V SELV only; calculate with actual stackup and temperature-rise target; load return does not cross RF/USB/MCU return path."
+    },
+    "ISOLATED_SIGNAL": {
+      "copper_keepout_between_sides_mm_min": 3.0,
+      "silkscreen_barrier_required": true,
+      "notes": "Low-voltage signal isolation intent only. Maintain manufacturer package creepage/clearance; no plane, test pad, mounting metal or shield bridges the moat. Not a mains insulation rating."
+    }
+  },
+  "placement_rules": [
+    {
+      "id": "RF-001",
+      "rule": "Place NINA-B302 at the board edge with its integrated PIFA facing a nonconductive enclosure region. Reproduce the current u-blox module courtyard/host-ground restriction exactly; no copper, vias, battery, cable, metal fastener, shield can or tall component in the controlled antenna zone.",
+      "provisional_extra_mechanical_clearance_mm": 10,
+      "status": "exact keepout must be imported from UBX-NINA-B3-SIM-R15 during native layout"
+    },
+    {
+      "id": "RF-002",
+      "rule": "Do not route SWD, USB, switching nodes or load current beneath/across the antenna zone. Preserve a continuous ground reference at the module ground region outside that keepout."
+    },
+    {
+      "id": "PWR-001",
+      "rule": "Place each data-sheet capacitor at its named power pin before routing; exposed thermal pads use the exact manufacturer land pattern and thermal-via review."
+    },
+    {
+      "id": "IMU-001",
+      "rule": "Place LSM6DSV16X on mechanically stiff PCB away from haptic actuator, board edge, USB connector and inductor. Mark package axes on silkscreen and assembly drawing."
+    },
+    {
+      "id": "HAPTIC-001",
+      "rule": "Keep DRV2605L differential actuator loop compact and separated from IMU and antenna. Route OUT+ and OUT- as a pair and never reference either output to ground."
+    },
+    {
+      "id": "LOAD-001",
+      "rule": "Place receiver MOSFET, flyback option and load terminal together. Keep the high-di/dt load loop out of logic ground paths and provide copper temperature measurement access."
+    },
+    {
+      "id": "ISO-001",
+      "rule": "Place optocoupler across the isolation moat; floating collector/emitter terminal stays entirely on the field side."
+    }
+  ],
+  "board_targets": {
+    "wand": {
+      "outline_envelope_mm": [22, 95],
+      "status": "mechanical design choice pending enclosure/antenna/battery overlay",
+      "critical_zones": ["NINA antenna end", "battery and NTC connector", "charger thermal copper", "IMU quiet island", "haptic connector"]
+    },
+    "receiver": {
+      "outline_envelope_mm": [50, 42],
+      "status": "mechanical design choice pending terminal/harness enclosure",
+      "critical_zones": ["NINA antenna edge", "USB power entry", "isolated-signal moat", "5-12 V load loop", "logic translator connector"]
+    }
+  },
+  "native_drc_requirements": [
+    "Use net classes matching this file and fabricator stackup.",
+    "Run DRC with all-track-errors, schematic parity, all severities and zone refill.",
+    "Zero non-excluded errors and warnings; every exclusion requires a reviewed waiver ledger.",
+    "Independent antenna, return-path, thermal, connector, polarity, assembly and CAM review remains required."
+  ],
+  "release_locks": {
+    "fabrication_authorized": false,
+    "manufacturing_authorized": false,
+    "production_release_eligible": false
+  }
+}

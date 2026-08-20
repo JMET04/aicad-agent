@@ -10,6 +10,10 @@ from typing import Any
 
 APP_NAME = "AiCadConstraint"
 CREDENTIAL_TARGET = "AiCadConstraint/OpenAI"
+CREDENTIAL_TARGETS = {
+    "openai": CREDENTIAL_TARGET,
+    "deepseek": "AiCadConstraint/DeepSeek",
+}
 DEFAULT_CONFIG = {
     # Agent-first is the product default. A caller must explicitly opt into
     # `auto` or `openai` before this local compiler looks for an API key.
@@ -41,6 +45,8 @@ def load_config() -> dict[str, Any]:
             pass
     if os.environ.get("OPENAI_BASE_URL"):
         config["base_url"] = os.environ["OPENAI_BASE_URL"].rstrip("/")
+    if config.get("provider") == "deepseek" and os.environ.get("DEEPSEEK_BASE_URL"):
+        config["base_url"] = os.environ["DEEPSEEK_BASE_URL"].rstrip("/")
     return config
 
 
@@ -63,15 +69,19 @@ class CREDENTIALW(ctypes.Structure):
     ]
 
 
-def get_api_key() -> str | None:
-    env_key = os.environ.get("OPENAI_API_KEY")
+def get_api_key(provider: str = "openai") -> str | None:
+    if provider not in CREDENTIAL_TARGETS:
+        raise ValueError("provider must be openai or deepseek")
+    env_name = "OPENAI_API_KEY" if provider == "openai" else "DEEPSEEK_API_KEY"
+    env_key = os.environ.get(env_name)
     if env_key:
         return env_key.strip()
     if os.name != "nt":
         return None
     pointer = ctypes.POINTER(CREDENTIALW)()
     advapi = ctypes.WinDLL("Advapi32.dll")
-    if not advapi.CredReadW(CREDENTIAL_TARGET, 1, 0, ctypes.byref(pointer)):
+    credential_target = CREDENTIAL_TARGETS[provider]
+    if not advapi.CredReadW(credential_target, 1, 0, ctypes.byref(pointer)):
         return None
     try:
         credential = pointer.contents
@@ -81,7 +91,9 @@ def get_api_key() -> str | None:
         advapi.CredFree(pointer)
 
 
-def set_api_key(api_key: str) -> None:
+def set_api_key(api_key: str, provider: str = "openai") -> None:
+    if provider not in CREDENTIAL_TARGETS:
+        raise ValueError("provider must be openai or deepseek")
     if os.name != "nt":
         raise RuntimeError("Windows Credential Manager is required")
     value = api_key.strip()
@@ -90,16 +102,18 @@ def set_api_key(api_key: str) -> None:
     raw = value.encode("utf-16-le")
     blob = (ctypes.c_ubyte * len(raw)).from_buffer_copy(raw)
     credential = CREDENTIALW()
-    credential.Type, credential.TargetName, credential.CredentialBlobSize = 1, CREDENTIAL_TARGET, len(raw)
-    credential.CredentialBlob, credential.Persist, credential.UserName = blob, 2, "OpenAI API"
+    credential.Type, credential.TargetName, credential.CredentialBlobSize = 1, CREDENTIAL_TARGETS[provider], len(raw)
+    credential.CredentialBlob, credential.Persist, credential.UserName = blob, 2, f"{provider.title()} API"
     if not ctypes.WinDLL("Advapi32.dll").CredWriteW(ctypes.byref(credential), 0):
         raise ctypes.WinError()
 
 
-def delete_api_key() -> bool:
+def delete_api_key(provider: str = "openai") -> bool:
+    if provider not in CREDENTIAL_TARGETS:
+        raise ValueError("provider must be openai or deepseek")
     if os.name != "nt":
         return False
-    result = ctypes.WinDLL("Advapi32.dll").CredDeleteW(CREDENTIAL_TARGET, 1, 0)
+    result = ctypes.WinDLL("Advapi32.dll").CredDeleteW(CREDENTIAL_TARGETS[provider], 1, 0)
     if result:
         return True
     error = ctypes.get_last_error()

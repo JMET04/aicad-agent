@@ -1,0 +1,26 @@
+{
+  "schema": "aicad_magic_wand_selected_standards_scope_v1",
+  "document_id": "MW-MECH-STD-001",
+  "revision": "A",
+  "status": "review_scope_selection",
+  "authority_boundary": "This document records the canonical AICAD mechanical standards ledger and project scope decisions. It does not reproduce the standards, certify compliance, or prove that an edition remains current at release time.",
+  "source_inventory": "agent-plugin/aicad-agent/rules/production_readiness_rules.json generation preflight mechanical ledger",
+  "scope_policy": "Use these rows only to control prototype drawing vocabulary and evidence planning. Obtain controlled copies, confirm licensing, edition, jurisdiction and applicability with the responsible engineer before manufacturing release.",
+  "standards": [
+    {"standard": "ISO 8015:2011", "scope": "GPS fundamentals"},
+    {"standard": "ISO 14405-1:2025", "scope": "dimensional tolerancing"},
+    {"standard": "ISO 5459:2024", "scope": "datums and datum systems"},
+    {"standard": "ISO 1101:2017", "scope": "geometrical tolerancing"},
+    {"standard": "ISO 22081:2021", "scope": "general geometrical and size specifications"},
+    {"standard": "ISO 13715:2017", "scope": "edges of undefined shape"},
+    {"standard": "ISO 21920-1:2021", "scope": "surface texture indication"},
+    {"standard": "ISO 1:2022", "scope": "reference temperature for specification and verification"},
+    {"standard": "ISO 2768-1:1989", "scope": "general linear and angular tolerances when invoked"},
+    {"standard": "ISO 286-1:2010", "scope": "limits and fits basis when invoked"},
+    {"standard": "ISO 286-2:2010", "scope": "limit deviations for holes and shafts when invoked"},
+    {"standard": "ISO 965-1:2026", "scope": "metric thread tolerances when invoked; baseline has no threads"},
+    {"standard": "ISO 898-1:2013", "scope": "steel fastener properties when invoked; baseline has no fasteners"},
+    {"standard": "ISO 16047:2005+Amd 1:2012", "scope": "fastener torque-clamp testing when invoked; baseline has no fasteners"}
+  ],
+  "release_recheck_required": true
+}

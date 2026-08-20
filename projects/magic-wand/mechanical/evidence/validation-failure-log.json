@@ -1,0 +1,44 @@
+{
+  "schema": "aicad_magic_wand_mechanical_validation_failure_log_v1",
+  "revision": "A",
+  "status": "closed_for_review_scope",
+  "incidents": [
+    {
+      "id": "MW-VAL-001",
+      "caught_by": "AICAD 2D constraint compiler",
+      "symptom": "Dimension base offsets were supplied as global coordinates.",
+      "disabled_candidate": "Use absolute drawing coordinates as start_offset dx/dy values.",
+      "correction": "Dimension helper now subtracts the first witness point and emits a relative offset.",
+      "closure": "All five drawing plans compile successfully."
+    },
+    {
+      "id": "MW-VAL-002",
+      "caught_by": "AICAD duplicate geometry rejection",
+      "symptom": "General arrangement transition initially duplicated the grip boundary.",
+      "disabled_candidate": "Draw two coincident lines to represent the shared part boundary.",
+      "correction": "The transition reuses the existing grip boundary and only adds three distinct edges.",
+      "closure": "General arrangement compiles without duplicate geometry."
+    },
+    {
+      "id": "MW-VAL-003",
+      "caught_by": "AICAD mechanical semantic domain gate",
+      "symptom": "Early draft mixed a hole role with a line and used a noncanonical visible layer.",
+      "disabled_candidate": "Infer mechanical semantics from visual intent alone.",
+      "correction": "Geometry now uses canonical OUTLINE, HOLE, CENTER, HIDDEN, KEEP_OUT and related compatible roles.",
+      "closure": "All five 2D plans pass the mechanical domain gate."
+    },
+    {
+      "id": "MW-VAL-004",
+      "caught_by": "Package closeout inspection",
+      "symptom": "The shared exporter assigns the same fallback lineweight and continuous linetype to unregistered mechanical layers.",
+      "disabled_candidate": "Treat canonical layer names alone as proof of visual differentiation.",
+      "correction": "A package-local controlled DXF style profile is applied and audited without changing shared core files.",
+      "closure": "Five DXFs have differentiated outline, center, hidden and keepout styles; the dedicated test verifies them."
+    }
+  ],
+  "safety_locks": {
+    "reviewOnly": true,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false
+  }
+}

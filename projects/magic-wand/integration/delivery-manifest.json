@@ -1,0 +1,330 @@
+{
+  "schema": "aicad_magic_wand_integration_delivery_manifest_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "status": "review_only_hash_closure_not_release",
+  "root": ".",
+  "sourceInputs": [
+    {
+      "path": "projects/magic-wand/electronics/bom.csv",
+      "size": 8447,
+      "sha256": "75673dcf6745f0923f871aae2362f9158336c0206bacb985686d5fb0a1c031cc",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/bring-up-and-production-test.md",
+      "size": 7641,
+      "sha256": "fabd748d9e2af3330e43b9c6c7a7061bcae40c63266580e0132d6e3fabe51a63",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/design-calculations.md",
+      "size": 5068,
+      "sha256": "1467a52e6f23a59c5819e93c7ede46e53f28ed17fdaf561b61173dde1a82e53c",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/evidence-manifest.json",
+      "size": 7762,
+      "sha256": "d4dc410b28d7454c900fd9b50261d1ad5399bf80ca472fcbc0fb807534db820f",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/fmea.csv",
+      "size": 6580,
+      "sha256": "7f751f690549bbe5263206de6fd2b5cf48eb22c59fcdd82534c72b7246ee8eb4",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/interface-control.md",
+      "size": 4812,
+      "sha256": "cc47ee4b930ac9f50b0dd6d670795c4dd7af13550a609d73d27a3bf1527d1a7a",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/native-validation.md",
+      "size": 6453,
+      "sha256": "2392150f0e9396191e91b0558ba02f1d22e132042274b432f002013493434851",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/pcb-constraints.json",
+      "size": 5552,
+      "sha256": "51d24ca5344a12ea9efd82c19cd74e3d4fe91ea74bd2027fd1bd69c10e6b9369",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/README.md",
+      "size": 2561,
+      "sha256": "31023db2d7f555d1b6c6c75fbd2af7c887344cfd1dd5903361e1cb77df32f7be",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/receiver/connectivity.csv",
+      "size": 8474,
+      "sha256": "69f387e92d351a74ef2b4d718b5b269fc28418d41c88857dfc6c4e351c26bab8",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/requirements-traceability.csv",
+      "size": 2380,
+      "sha256": "14fe423fbde69330d4953df744e71c9d836afdbe650b06339ee19b4af51fdff5",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/review-report.md",
+      "size": 7473,
+      "sha256": "bdde3d47cd4f6912b4365d86177b0039c2725181b1aea5a2e47b1cdd578df2f5",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/system-architecture.md",
+      "size": 3086,
+      "sha256": "2ff26afab3ae4687ca960f0ad5da77fbdb16f053053ed0f9c03e679d5d7317f3",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/test-points.csv",
+      "size": 2959,
+      "sha256": "044e964fbb7a0ecbc170effb7141cbb43f5e43c89cf34a1281b4f4a7441a8f2d",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/verification-manifest.json",
+      "size": 2272,
+      "sha256": "99d924f476a799494dc49daa1163f2f44aef8995f277192519812de641048c66",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/electronics/wand/connectivity.csv",
+      "size": 8693,
+      "sha256": "74095cdd841659f7c5326ad7d74a0eab4036f09180287c6c906b36a8e34f4baa",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/CMakeLists.txt",
+      "size": 986,
+      "sha256": "1c6cc03f862086db820954ced2dec893e11316fbb2bf176fa63f0ff7607a0339",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/gesture-dictionary.yaml",
+      "size": 3328,
+      "sha256": "d41e0ba54e539bbb8e9e4521e25cd94eee8a23b2edb3c58462f27b3ea356e6fd",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/host-review-evidence.json",
+      "size": 2845,
+      "sha256": "7b9804304fe5dbdb1e6da0b65936cf8dc2f25b406e51f662a9b1f55e1f9e8801",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/include/mw_gesture.h",
+      "size": 975,
+      "sha256": "276599231d2c0c6197ea73bf8b83113a6db058a9a48c0da574409963621067df",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/include/mw_protocol.h",
+      "size": 2725,
+      "sha256": "6359981d417152c8453e1dbbeedfce7ca33d8a8451eae09825ced0c89e2c98bf",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/include/mw_state_machine.h",
+      "size": 1969,
+      "sha256": "f9f30855ba9848a305784b01e71c7d57798d69e57d82cda8be31d55210814b0e",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/protocol.md",
+      "size": 5028,
+      "sha256": "021aac017f2290fa9fe892e23da70570125f6452cd8dc8d5872ea1c6b6d412ad",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/README.md",
+      "size": 4103,
+      "sha256": "00ee08ef8e1324c55e6d44c2338c41bcf991094405b4763c5774c9f168b6cf55",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/src/main.c",
+      "size": 6394,
+      "sha256": "ce072b48be6d5ae795d6a39b5a343c32f8ee7ea646dee838a49be05387cd2097",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/src/mw_gesture.c",
+      "size": 3183,
+      "sha256": "5c96567abd8b083efc456f9226274e8e19ca8f61b3181e19c82d0baff1e749c0",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/src/mw_protocol.c",
+      "size": 5031,
+      "sha256": "a6de16f1f45e553f5ef92b7fc6bb910251cd6fbe81a7b9018ce0edc2f7c1c170",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/src/mw_state_machine.c",
+      "size": 6755,
+      "sha256": "2a528b69a16b1ab26d73282513fa6f4b7d582e378c6085e4e6019c5a8557785b",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/firmware/state-machine.md",
+      "size": 3620,
+      "sha256": "4a67e8505b188435b8491c5b6acc8be0dadb5b69a6c7dc359c5d3fd93bbf6c56",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/assembly-layout.json",
+      "size": 1985,
+      "sha256": "dae9e31607d1541668abfb0a5922452979d8655d925738722d8d26442c3dbb18",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/bom.json",
+      "size": 2374,
+      "sha256": "e14ee2738158d142fd91267c67bb6f4883160b9eeb3a60ad400ff7be920a8c07",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/CAPABILITY_BLOCKERS.json",
+      "size": 3158,
+      "sha256": "7d53e25548d81120ec0d82245f4ebf0d68405a6be624fa6c13eabb89e470f199",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/design-parameters.json",
+      "size": 4596,
+      "sha256": "f9dc87bf9731251ab98bde5992b0439f480d6c5deb8e6630523f425dc0be4582",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/generated-source-manifest.json",
+      "size": 2810,
+      "sha256": "2d1a3f0619907d0f8ac5560df53a2c00dd37af9849bf9a6ec9962af5ef959dd0",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/REQUIREMENTS_INTERFACES_TOLERANCES.md",
+      "size": 3807,
+      "sha256": "e8ed239915dbc125dc10c15ecdbea947688064f4b423cadae10bd4f93e42e953",
+      "kind": "source_evidence"
+    },
+    {
+      "path": "projects/magic-wand/system-requirements.json",
+      "size": 7214,
+      "sha256": "c1b00b8abf06c74f46c58be5d1add2d1ac9659b2c25721617431007de909af93",
+      "kind": "source_evidence"
+    }
+  ],
+  "deliverables": [
+    {
+      "path": "projects/magic-wand/integration/build_package.py",
+      "size": 57343,
+      "sha256": "568da8e4f91e10d1527970dffc38eed851625daf4d6c0fa151464313596e4204",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/README.md",
+      "size": 3467,
+      "sha256": "dcde49baf675c00b004ad86d4bea8c363879d8c8d5446856f933c4ddd28938c2",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/combined-bom.csv",
+      "size": 11154,
+      "sha256": "4e5c078cc292c032b904da23825265561a8e88deb800da7aecdb802c87f6710a",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/combined-bom.json",
+      "size": 29606,
+      "sha256": "5353d7e7afba4b7bc94434e0ccc44420006098d6b3a3cf1817d618e22851d5e9",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/evt-dvt-pvt-plan.json",
+      "size": 5582,
+      "sha256": "18da1cbe039ffabdc65c2728f0a5d8f00efe9c3fa1fdd7d63a0fffc4de2d6dc1",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/evt-dvt-pvt-plan.md",
+      "size": 3045,
+      "sha256": "0f032fb82c3dd3ba842e50055f91dcf7912d162d4a65616ccb2234e555a6f435",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/integration-status.json",
+      "size": 2871,
+      "sha256": "f010391aa06b82ebde4ab93070bc11ec682e1e6c2079be2c1fa4bd2d89045e53",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/rough-cost-estimate.json",
+      "size": 4383,
+      "sha256": "02be96bca8755218d11b729ef5174bb0d3d9119c9e9aa4d87c247dc0c48b35f5",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/rough-cost-estimate.md",
+      "size": 1109,
+      "sha256": "3b0717ea19fe38cfac091069c59b453cfa3a5f047d79b8e4fdea75f2c4d64309",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-blockers.json",
+      "size": 9850,
+      "sha256": "44d4185bb7fc6d7f8ee217851ad31e4aefa97c48d08df7375c00e04f0e896957",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-fmea.json",
+      "size": 11127,
+      "sha256": "dfecb9744b92f4bd5251150d19f6a9188f8aa1401228f689424510ba3c3a19ce",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-interface-control.json",
+      "size": 7813,
+      "sha256": "dc5d012492fd32445769ceec4ae3b9b90a456cca98d2939ba86b47e6c49cb8e7",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-interface-control.md",
+      "size": 2681,
+      "sha256": "4a889b7c87832a5a28057e21b3d59226ab9f070ff84c8f76f8774254c1776d5a",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-review-overview.svg",
+      "size": 8663,
+      "sha256": "1e9f4b54daefa6982393021c5e40bcba2cea642140b59a42cdc008206b627350",
+      "kind": "integration_deliverable"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-traceability.json",
+      "size": 14670,
+      "sha256": "33e6b59f774e8c7b2a16f8a305baf6d06a855a9314876be1e46796550a197d47",
+      "kind": "integration_deliverable"
+    }
+  ],
+  "selfHashPolicy": {
+    "deliveryManifestExcluded": true,
+    "reason": "A file cannot contain a stable SHA-256 of itself; every other integration deliverable is bound."
+  },
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}

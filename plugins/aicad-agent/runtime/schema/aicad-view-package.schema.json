@@ -205,6 +205,15 @@
         "key_kind": {
           "type": "string"
         },
+        "placement_path": {
+          "enum": ["start", "center", "insert"]
+        },
+        "placement_point": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "number" }
+        },
         "measurement": {
           "$ref": "#/$defs/measurement"
         }
@@ -516,6 +525,15 @@
         },
         "key_kind": {
           "type": "string"
+        },
+        "placement_path": {
+          "enum": ["start", "center", "insert"]
+        },
+        "placement_point": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "number" }
         }
       }
     },

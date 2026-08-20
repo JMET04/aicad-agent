@@ -5,9 +5,10 @@ import math
 from pathlib import Path
 from typing import Any, Iterable
 
+from . import domain_maturity as maturity_policy
 from .engine import PlanError, ResolvedLine, compile_plan
 from .engine3d import compile_plan3d
-from .semantic import CORE_DOMAIN_PROFILES, describe_plan
+from .semantic import CORE_DOMAIN_PROFILES, DOMAIN_MATURITY, describe_plan
 
 
 DOMAIN_RULE_PACKS: dict[str, dict[str, Any]] = {
@@ -87,7 +88,43 @@ DOMAIN_RULE_PACKS: dict[str, dict[str, Any]] = {
         "closed_roles": [],
         "manual_reviews": ["structure_identity", "closure", "fold_order", "clearance", "collision", "manufacturing"],
     },
+    "civil": {
+        "role_kinds_2d": {
+            "control_point": ["circle"], "alignment": ["line", "arc"],
+            "profile": ["line", "arc"], "grading": ["line", "arc"],
+            "drainage": ["line", "arc"], "utility": ["line", "arc", "circle"],
+            "right_of_way": ["line", "arc"], "parcel": ["line", "arc"],
+            "road": ["line", "arc"], "structure": ["line", "arc", "circle"],
+            "annotation": ["text", "dimension", "line"],
+        },
+        "role_types_3d": {
+            "terrain": ["base_extrude", "boss_extrude"], "road": ["base_extrude", "boss_extrude"],
+            "structure": ["base_extrude", "boss_extrude"], "utility": ["cut_extrude"],
+        },
+        "canonical_layers": {
+            "control_point": ["SURVEY_CONTROL"], "alignment": ["ALIGNMENT"],
+            "profile": ["PROFILE"], "grading": ["GRADING"], "drainage": ["DRAINAGE"],
+            "utility": ["UTILITY"], "right_of_way": ["RIGHT_OF_WAY"], "parcel": ["PARCEL"],
+        },
+        "closed_roles": ["parcel"],
+        "manual_reviews": ["survey", "coordinate_system", "grading", "drainage", "utilities", "drawing_standard"],
+    },
 }
+
+
+_FOUNDATION_REVIEW_GROUPS: dict[str, list[str]] = {
+    domain: list(profile["review_groups"])
+    for domain, profile in CORE_DOMAIN_PROFILES.items()
+    if DOMAIN_MATURITY[domain] == "foundation"
+}
+for _domain, _manual_reviews in _FOUNDATION_REVIEW_GROUPS.items():
+    DOMAIN_RULE_PACKS[_domain] = {
+        "role_kinds_2d": {},
+        "role_types_3d": {},
+        "canonical_layers": {},
+        "closed_roles": [],
+        "manual_reviews": _manual_reviews,
+    }
 
 
 HOST_CAPABILITIES: dict[str, dict[str, Any]] = {
@@ -157,12 +194,102 @@ def _closed_line_check(plan: Any, object_ids: set[str], tolerance: float) -> tup
     return not invalid, {"applicable": True, "line_count": len(lines), "vertex_count": len(degrees), "invalid_vertex_degrees": invalid}
 
 
-def evaluate_domain_plan(data: dict[str, Any], space: str, domain: str = "general") -> dict[str, Any]:
+def evaluate_domain_plan(
+    data: dict[str, Any],
+    space: str,
+    domain: str = "general",
+    specialist_validation: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     semantic = describe_plan(data, space, domain)
     active_domain = semantic["document"]["domain"]
-    pack = DOMAIN_RULE_PACKS.get(active_domain, DOMAIN_RULE_PACKS["general"])
-    known_roles = set(CORE_DOMAIN_PROFILES.get(active_domain, {}).get("object_roles", []))
+    if active_domain not in DOMAIN_RULE_PACKS:
+        raise PlanError(f"registered domain lacks an executable boundary: {active_domain}")
+    pack = DOMAIN_RULE_PACKS[active_domain]
+    known_roles = set(CORE_DOMAIN_PROFILES[active_domain]["object_roles"])
+    maturity = maturity_policy.assess_domain_maturity(active_domain)
+    effective_maturity = maturity["effectiveMaturity"]
     checks: list[dict[str, Any]] = []
+
+    if active_domain == "civil" and effective_maturity != "foundation":
+        civil_ready = (
+            isinstance(specialist_validation, dict)
+            and specialist_validation.get("status") == "review_candidate"
+            and specialist_validation.get("authorizedOutput") == "review_candidate"
+            and specialist_validation.get("releaseBoundary", {}).get(
+                "productionArtifactExposureGranted"
+            ) is False
+            and specialist_validation.get("releaseBoundary", {}).get(
+                "professionalReleaseGranted"
+            ) is False
+        )
+        checks.append(_check(
+            "DOMAIN.G000",
+            "pass" if civil_ready else "fail",
+            "hard",
+            (
+                "Civil CRS, survey-control, alignment, profile, drainage and discipline "
+                "evidence passed the constrained review-candidate validator."
+                if civil_ready
+                else "Civil geometry is blocked until the source-bound review-candidate validator passes."
+            ),
+            evidence={
+                "maturity": effective_maturity,
+                "maturity_code_ceiling": maturity["codeCeiling"],
+                "maturity_earned": maturity["earnedMaturity"],
+                "specialist_generation_blocked": not civil_ready,
+                "production_release_blocked": True,
+                "maturity_evidence_sha256": maturity["evidenceClosure"]["fingerprint"],
+                "authorized_output": (
+                    specialist_validation.get("authorizedOutput")
+                    if isinstance(specialist_validation, dict)
+                    else None
+                ),
+            },
+            root_cause=(
+                "Generic linework cannot prove CRS, datum, field control, station continuity, "
+                "drainage direction or utility/geotechnical evidence."
+            ),
+            prevention=(
+                "Validate an embedded aicad_civil_review_candidate_v1 against real files under "
+                "a controlled evidence root before exposing review geometry."
+            ),
+        ))
+
+    if effective_maturity == "foundation":
+        code_locked = maturity["codeCeiling"] == "foundation"
+        checks.append(_check(
+            "DOMAIN.G000",
+            "fail",
+            "hard",
+            (
+                (
+                    f"{active_domain} is code-locked to foundation maturity for intent "
+                    "and obligation review only."
+                )
+                if code_locked
+                else (
+                    f"{active_domain} was downgraded to foundation because its executable "
+                    "capability or SHA-256 evidence closure is incomplete."
+                )
+            ),
+            evidence={
+                "maturity": effective_maturity,
+                "maturity_code_ceiling": maturity["codeCeiling"],
+                "maturity_earned": maturity["earnedMaturity"],
+                "maturity_issues": list(maturity["issues"]),
+                "maturity_evidence_sha256": maturity["evidenceClosure"]["fingerprint"],
+                "specialist_generation_blocked": True,
+                "production_release_blocked": True,
+            },
+            root_cause=(
+                "Registry text cannot grant maturity. The code ceiling, executable probes "
+                "and exact regular-file evidence closure did not earn a higher boundary."
+            ),
+            prevention=(
+                "Change the reviewed code-owned ceiling and provide every required executable "
+                "validator and SHA-256 evidence file before exposing technical artifacts."
+            ),
+        ))
 
     checks.append(_check(
         "DOMAIN.G001", "pass", "hard", "The plan compiled and its ordered semantic dependency graph is valid.",
@@ -225,6 +352,17 @@ def evaluate_domain_plan(data: dict[str, Any], space: str, domain: str = "genera
             {"final_volume_mm3": final.expected_volume_after, "final_bbox_mm": list(final.expected_bbox), "body_count": final.expected_body_count},
         ))
         host = {"portable": HOST_CAPABILITIES["portable_3d"], "native": HOST_CAPABILITIES["solidworks"]}
+    host["domain_registry"] = {
+        "maturity": effective_maturity,
+        "code_maturity_ceiling": maturity["codeCeiling"],
+        "earned_maturity": maturity["earnedMaturity"],
+        "maturity_evidence_sha256": maturity["evidenceClosure"]["fingerprint"],
+        "maturity_issues": list(maturity["issues"]),
+        "specialist_generation_blocked": maturity["specialistGenerationBlocked"],
+        "production_release_blocked": True,
+        "unknown_domain_policy": "fail_closed",
+        "maturity_authority": maturity["decisionSource"],
+    }
 
     failures = sum(item["status"] == "fail" for item in checks)
     warnings = sum(item["status"] == "warning" for item in checks)
@@ -233,6 +371,14 @@ def evaluate_domain_plan(data: dict[str, Any], space: str, domain: str = "genera
         "schema_version": "1.0", "status": status, "space": space, "domain": active_domain,
         "source_sha256": semantic["document"]["source_sha256"],
         "summary": {"checks": len(checks), "failures": failures, "warnings": warnings, "manual_review_required": True},
+        "maturity_decision": {
+            "code_ceiling": maturity["codeCeiling"],
+            "earned_maturity": maturity["earnedMaturity"],
+            "effective_maturity": effective_maturity,
+            "evidence_closure_sha256": maturity["evidenceClosure"]["fingerprint"],
+            "issues": list(maturity["issues"]),
+            "specialist_generation_blocked": maturity["specialistGenerationBlocked"],
+        },
         "checks": checks,
         "manual_review_queue": list(pack["manual_reviews"]),
         "capability_boundary": host,

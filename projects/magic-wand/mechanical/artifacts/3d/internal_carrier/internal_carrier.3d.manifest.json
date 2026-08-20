@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "name": "magic_wand_internal_carrier_axial_cage_prototype",
+  "domain": "mechanical",
+  "source_sha256": "2c3753181eae2461e22438865ec4f3ca92a6261b9fbd106bacb9d8274f6ea8de",
+  "feature_count": 2,
+  "feature_types": {
+    "base_extrude": 1,
+    "boss_extrude": 0,
+    "cut_extrude": 1
+  },
+  "roles": {
+    "outline": 1,
+    "pocket": 1
+  },
+  "editable_features": 2,
+  "expected_final_volume_mm3": 6226.560000000002,
+  "expected_final_bbox_mm": [
+    -8.9,
+    -6.4,
+    0.0,
+    8.9,
+    6.4,
+    92.0
+  ],
+  "artifacts": {
+    "source": "projects/magic-wand/mechanical/artifacts/3d/internal_carrier/internal_carrier.aicad3d.plan.json",
+    "execution": "projects/magic-wand/mechanical/artifacts/3d/internal_carrier/internal_carrier.swplan.json",
+    "audit": "projects/magic-wand/mechanical/artifacts/3d/internal_carrier/internal_carrier.3d.audit.md",
+    "sldprt": "projects/magic-wand/mechanical/artifacts/3d/internal_carrier/internal_carrier.SLDPRT",
+    "step": "projects/magic-wand/mechanical/artifacts/3d/internal_carrier/internal_carrier.step",
+    "host_report": "projects/magic-wand/mechanical/artifacts/3d/internal_carrier/internal_carrier.solidworks-report.json",
+    "reopen_report": "projects/magic-wand/mechanical/artifacts/3d/internal_carrier/internal_carrier.reopen-report.json"
+  },
+  "native_host_validation": {
+    "status": "passed",
+    "solidworks_revision": "34.0.0",
+    "host_protocol": "AICAD_SOLIDWORKS_REPORT_2",
+    "reopen_protocol": "AICAD_SOLIDWORKS_REOPEN_REPORT_2",
+    "native_topology_authority": true,
+    "native_topology_stability": "solidworks_persist_reference_save_reopen_verified",
+    "saved_reference_count": 33,
+    "reopened_reference_count": 33,
+    "required_reference_count": 8,
+    "unresolved_required_reference_count": 0,
+    "reference_keys": [
+      "F001|feature.edge.opposite.1",
+      "F001|feature.edge.opposite.2",
+      "F001|feature.edge.opposite.3",
+      "F001|feature.edge.opposite.4",
+      "F001|feature.edge.vertical.1",
+      "F001|feature.edge.vertical.2",
+      "F001|feature.edge.vertical.3",
+      "F001|feature.edge.vertical.4",
+      "F001|feature.face.opposite",
+      "F001|feature.face.side.1",
+      "F001|feature.face.side.2",
+      "F001|feature.face.side.3",
+      "F001|feature.face.side.4",
+      "F001|profile.edge.1",
+      "F001|profile.edge.2",
+      "F001|profile.edge.3",
+      "F001|profile.edge.4",
+      "F002|feature.edge.opposite.1",
+      "F002|feature.edge.opposite.2",
+      "F002|feature.edge.opposite.3",
+      "F002|feature.edge.opposite.4",
+      "F002|feature.edge.vertical.1",
+      "F002|feature.edge.vertical.2",
+      "F002|feature.edge.vertical.3",
+      "F002|feature.edge.vertical.4",
+      "F002|feature.face.side.1",
+      "F002|feature.face.side.2",
+      "F002|feature.face.side.3",
+      "F002|feature.face.side.4",
+      "F002|profile.edge.1",
+      "F002|profile.edge.2",
+      "F002|profile.edge.3",
+      "F002|profile.edge.4"
+    ],
+    "file_sha256": {
+      "sldprt": "6f684e1cc39de8ce908d21801d2df03eef8db9de19948fa0fc96e0f48174c2e4",
+      "step": "e1e437503260b4d4a9c501eebb63c3fc0a6c7e2e5006965c49f606725bd24bf7",
+      "solidworks_report": "67ebb54599e9b52c27110c1ab33e4890a12003ea8fb4978e53185931cece3243",
+      "reopen_report": "5581c3769035ef7e3355cb9f4d2c1129182fdd7f7fae64f2baf5d74694a72e4f"
+    },
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

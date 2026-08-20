@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "name": "magic_wand_handle_shell_axial_prototype",
+  "domain": "mechanical",
+  "source_sha256": "2fe4fc4542cb540ab73bc338e05c8c1e7971837e2a26f49991a8e61e079e1e0a",
+  "feature_count": 2,
+  "feature_types": {
+    "base_extrude": 1,
+    "boss_extrude": 0,
+    "cut_extrude": 1
+  },
+  "roles": {
+    "hole": 1,
+    "outline": 1
+  },
+  "editable_features": 2,
+  "expected_final_volume_mm3": 17278.7595947438,
+  "expected_final_bbox_mm": [
+    -13.5,
+    -13.5,
+    0.0,
+    13.5,
+    13.5,
+    110.0
+  ],
+  "artifacts": {
+    "source": "projects/magic-wand/mechanical/artifacts/3d/handle_shell/handle_shell.aicad3d.plan.json",
+    "execution": "projects/magic-wand/mechanical/artifacts/3d/handle_shell/handle_shell.swplan.json",
+    "audit": "projects/magic-wand/mechanical/artifacts/3d/handle_shell/handle_shell.3d.audit.md",
+    "sldprt": "projects/magic-wand/mechanical/artifacts/3d/handle_shell/handle_shell.SLDPRT",
+    "step": "projects/magic-wand/mechanical/artifacts/3d/handle_shell/handle_shell.step",
+    "host_report": "projects/magic-wand/mechanical/artifacts/3d/handle_shell/handle_shell.solidworks-report.json",
+    "reopen_report": "projects/magic-wand/mechanical/artifacts/3d/handle_shell/handle_shell.reopen-report.json"
+  },
+  "native_host_validation": {
+    "status": "passed",
+    "solidworks_revision": "34.0.0",
+    "host_protocol": "AICAD_SOLIDWORKS_REPORT_2",
+    "reopen_protocol": "AICAD_SOLIDWORKS_REOPEN_REPORT_2",
+    "native_topology_authority": true,
+    "native_topology_stability": "solidworks_persist_reference_save_reopen_verified",
+    "saved_reference_count": 7,
+    "reopened_reference_count": 7,
+    "required_reference_count": 2,
+    "unresolved_required_reference_count": 0,
+    "reference_keys": [
+      "F001|feature.circle.opposite.1",
+      "F001|feature.face.cylindrical.1",
+      "F001|feature.face.opposite.1",
+      "F001|profile.circle.1",
+      "F002|feature.circle.opposite.1",
+      "F002|feature.face.cylindrical.1",
+      "F002|profile.circle.1"
+    ],
+    "file_sha256": {
+      "sldprt": "2009e47c40fe201bdde4149fc782bc283243a485445fa35de694e9b73431e9cf",
+      "step": "b33a3440da22fdcccaa1c745ad1866a21660e41d6bad0e0450d90457c253c003",
+      "solidworks_report": "14f0df6ceea7da011309ef4a34f5ecfe76bba743ba250eef17c593cfe2beaf63",
+      "reopen_report": "1e0d59f7f375f2f52198c6c3af0793a1491f6fe46792a63ad2f91786bdd39ec6"
+    },
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

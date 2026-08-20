@@ -4,7 +4,7 @@
   "title": "AICAD cross-domain validation report",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "status", "space", "domain", "source_sha256", "summary", "checks", "manual_review_queue", "capability_boundary", "review_policy"],
+  "required": ["schema_version", "status", "space", "domain", "source_sha256", "summary", "checks", "manual_review_queue", "maturity_decision", "capability_boundary", "review_policy"],
   "properties": {
     "schema_version": {"const": "1.0"},
     "status": {"enum": ["passed", "passed_with_warnings", "failed"]},
@@ -37,6 +37,19 @@
       }
     },
     "manual_review_queue": {"type": "array", "items": {"type": "string"}},
+    "maturity_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code_ceiling", "earned_maturity", "effective_maturity", "evidence_closure_sha256", "issues", "specialist_generation_blocked"],
+      "properties": {
+        "code_ceiling": {"enum": ["foundation", "constrained", "advanced"]},
+        "earned_maturity": {"enum": ["foundation", "constrained", "advanced"]},
+        "effective_maturity": {"enum": ["foundation", "constrained", "advanced"]},
+        "evidence_closure_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "issues": {"type": "array", "items": {"type": "string"}},
+        "specialist_generation_blocked": {"type": "boolean"}
+      }
+    },
     "capability_boundary": {"type": "object"},
     "review_policy": {
       "type": "object", "additionalProperties": false, "required": ["reviewOnly", "accepted", "ruleEnabled", "domainGated"],

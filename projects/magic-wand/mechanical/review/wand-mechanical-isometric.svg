@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Magic wand mechanical prototype isometric review</title>
+  <desc id="desc">Review-only axial assembly visualization generated from design-parameters.json; it is not native BREP assembly evidence.</desc>
+  <rect width="1200" height="520" fill="#f5f7fa"/>
+  <style>
+    .outline{stroke:#10243e;stroke-width:3;fill:none} .detail{stroke:#245d8a;stroke-width:1.5;fill:none}
+    .hidden{stroke:#66788a;stroke-width:1.2;stroke-dasharray:8 6;fill:none} .center{stroke:#b34d2e;stroke-width:1;stroke-dasharray:16 4 3 4}
+    .dim{stroke:#505b66;stroke-width:1;fill:none} .card{fill:#fff;stroke:#24374a;stroke-width:1.5}
+    .label{font:14px 'Segoe UI',sans-serif;fill:#172b3d} .small{font:12px 'Segoe UI',sans-serif;fill:#344a5e}
+    .head{font:bold 22px 'Segoe UI',sans-serif;fill:#10243e} .warn{font:bold 13px 'Segoe UI',sans-serif;fill:#8a351f}
+  </style>
+  <text class="head" x="42" y="42">MW-PROTOTYPE-001 / Mechanical review view / Rev A</text>
+  <rect class="card" x="42" y="58" width="1116" height="48" rx="4"/>
+  <text class="warn" x="58" y="79">REVIEW ONLY - no native assembly mates, material readback, structural approval or manufacturing authorization</text>
+  <text class="small" x="58" y="97">Axial parts are dimension-driven; press-to-arm side aperture remains a declared side-plane modeling blocker.</text>
+  <line class="center" x1="60.0" y1="210.0" x2="1045.0" y2="210.0"/>
+  <path d="M 80.0 169.5 L 425.0 157.5 L 425.0 238.5 L 80.0 250.5 Z" fill="#dce8f2" stroke="#10243e" stroke-width="3"/>
+  <ellipse cx="80.0" cy="210.0" rx="10" ry="40.5" fill="#f0f5f9" stroke="#10243e" stroke-width="3"/>
+  <path d="M 425.0 157.5 L 455.0 154.5 L 455.0 235.5 L 425.0 238.5 Z" fill="#c4d7e8" stroke="#10243e" stroke-width="3"/>
+  <path d="M 455.0 184.5 L 1025.0 166.5 L 1025.0 187.5 L 455.0 205.5 Z" fill="#dfebe0" stroke="#10243e" stroke-width="2.2"/>
+  <rect x="95.0" y="165.5" width="75.0" height="81.0" fill="#f2c36b" fill-opacity="0.4" stroke="#a86500" stroke-width="1.5" stroke-dasharray="7 5"/>
+  <rect x="104.0" y="193.0" width="276.0" height="34" fill="none" stroke="#245d8a" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <circle cx="296.0" cy="161.5" r="8" fill="#d9513c" stroke="#7d2317" stroke-width="2"/>
+  <line class="detail" x1="296.0" y1="153.5" x2="296.0" y2="132"/>
+  <rect class="card" x="238" y="112" width="220" height="44" rx="4"/><text class="label" x="250" y="131">Press-to-arm datum Z=72</text><text class="small" x="250" y="148">side aperture not in axial BREP</text>
+  <rect class="card" x="42" y="302" width="248" height="64" rx="4"/><text class="label" x="54" y="323">RF keepout Z=5..30</text><text class="small" x="54" y="342">nonconductive rear end</text><text class="small" x="54" y="359">battery starts at Z=40</text>
+  <rect class="card" x="330" y="302" width="248" height="64" rx="4"/><text class="label" x="342" y="323">Grip segment 115 mm</text><text class="small" x="342" y="342">5 cap + 110 shell</text><text class="small" x="342" y="359">target OD 27 mm</text>
+  <rect class="card" x="618" y="302" width="248" height="64" rx="4"/><text class="label" x="630" y="323">Transition 10 mm</text><text class="small" x="630" y="342">25 mm connector total</text><text class="small" x="630" y="359">15 mm shell insertion</text>
+  <rect class="card" x="906" y="302" width="248" height="64" rx="4"/><text class="label" x="918" y="323">Exposed GFRP 190 mm</text><text class="small" x="918" y="342">diameter 7 mm</text><text class="small" x="918" y="359">30 mm insertion</text>
+  <line class="dim" x1="80.0" y1="404" x2="1025.0" y2="404"/><line class="dim" x1="80.0" y1="396" x2="80.0" y2="412"/><line class="dim" x1="1025.0" y1="396" x2="1025.0" y2="412"/>
+  <rect class="card" x="455" y="386" width="270" height="36" rx="4"/><text class="label" x="504" y="409">OVERALL = 315 +/- 2 mm</text>
+  <rect class="card" x="42" y="446" width="1116" height="44" rx="4"/>
+  <text class="small" x="58" y="466">Solid = visible outline | thin blue = internal carrier | dashed amber = antenna exclusion | chain centerline = MODEL +Z axis</text>
+  <text class="small" x="58" y="483">Source: design-parameters.json SHA-256 f9dc87bf9731251a... | visualization has no topology authority</text>
+</svg>

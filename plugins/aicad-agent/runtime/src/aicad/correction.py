@@ -126,6 +126,29 @@ def _sync_2d(item: dict[str, Any], path: str) -> None:
         target = _constraint(item, kind)
         if target is not None:
             target["value"] = item[path]
+    elif path in {"start", "center", "insert"}:
+        anchor = item.get(path)
+        prefix = {"start": "start", "center": "center", "insert": "position"}[path]
+        coincident_kind, offset_kind = f"{prefix}_coincident", f"{prefix}_offset"
+        if not isinstance(anchor, dict):
+            raise PlanError(f"{item.get('id')}.{path} must remain a typed anchor")
+        if isinstance(anchor.get("ref"), str):
+            _replace_constraint(item, {coincident_kind, offset_kind}, {"kind": coincident_kind, "target": anchor["ref"]})
+        else:
+            point = anchor.get("point")
+            if not isinstance(point, list) or len(point) != 2 or any(isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)) for value in point):
+                raise PlanError(f"{item.get('id')}.{path}.point must contain two finite numbers")
+            _replace_constraint(item, {coincident_kind, offset_kind}, {
+                "kind": offset_kind, "target": "origin", "dx": float(point[0]), "dy": float(point[1]),
+            })
+    elif path == "height":
+        target = _constraint(item, "text_height")
+        if target is not None:
+            target["value"] = item["height"]
+    elif path == "rotation_deg":
+        target = _constraint(item, "rotation")
+        if target is not None:
+            target["value"] = item["rotation_deg"]
 
 
 def _sync_3d(item: dict[str, Any], path: str) -> None:

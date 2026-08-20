@@ -1,0 +1,356 @@
+{
+  "schema": "aicad_experience_recall_catalog_v1",
+  "version": "1.0.0",
+  "policy": "authority_first_compact_retrieval_with_exact_change_coverage",
+  "domainRegistry": "engineering_domain_registry.json",
+  "ruleSources": [
+    {"id": "normative", "path": "normative_governance_rules.json"},
+    {"id": "production", "path": "production_readiness_rules.json"},
+    {"id": "cad_quality", "path": "cad_normative_quality_rules.json"},
+    {"id": "review", "path": "automatic_review_rules.json"},
+    {"id": "solidworks", "path": "native_solidworks_topology_rules.json"},
+    {"id": "subobject", "path": "subobject_correction_rules.json"},
+    {"id": "packaging", "path": "packaging_dieline_rules.json"},
+    {"id": "civil", "path": "civil_engineering_rules.json"}
+  ],
+  "workflow": [
+    {"id": "WF-00", "order": 0, "label": "领域与任务冻结", "objective": "识别专业、用途、阶段、输出和安全边界", "exitGate": "上下文指纹和高影响假设完整"},
+    {"id": "WF-01", "order": 1, "label": "规范与经验召回", "objective": "加载完整权威规则库存并分离候选经验", "exitGate": "适用规则、版本、范围和来源无遗漏"},
+    {"id": "WF-02", "order": 2, "label": "专业预检", "objective": "把每条规则转换为生成约束和验证方法", "exitGate": "所有必需门禁有真实来源证据且无模板占位"},
+    {"id": "WF-03", "order": 3, "label": "受约束生成", "objective": "用可追踪对象、关系、依赖和参数生成候选", "exitGate": "意图、细节、几何和工件闭包独立通过"},
+    {"id": "WF-04", "order": 4, "label": "跨专业协调", "objective": "复核接口、净空、荷载、坐标、能源和维护空间", "exitGate": "受影响覆盖项已按当前变更标签重检"},
+    {"id": "WF-05", "order": 5, "label": "原生宿主与制造验证", "objective": "保存重开、分析、图纸、BOM和制造输出同版闭合", "exitGate": "原生证据和哈希闭包完整"},
+    {"id": "WF-06", "order": 6, "label": "独立审查与放行", "objective": "区分候选、技术审查、制造授权和发布", "exitGate": "负责工程师/主管机构/工厂按项目职责签发"}
+  ],
+  "cards": [
+    {
+      "id": "EXP-GLOBAL-001",
+      "title": "先锁定规范与权威，再生成几何",
+      "severity": "blocker",
+      "required": true,
+      "workflowStage": "WF-00",
+      "whyRecalled": "所有工程专业都必须先冻结领域、阶段、标准和来源优先级。",
+      "domains": ["*"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": [], "none": []},
+      "ruleRefs": [
+        {"sourceId": "normative", "ruleId": "NORM-G001"},
+        {"sourceId": "normative", "ruleId": "NORM-G002"},
+        {"sourceId": "normative", "ruleId": "NORM-G003"},
+        {"sourceId": "normative", "ruleId": "NORM-G004"},
+        {"sourceId": "production", "ruleId": "PROD-G001"}
+      ],
+      "checklist": [
+        "领域、用途、交付阶段、司法辖区和输出类型均已声明。",
+        "每条适用标准都绑定版次、范围和权威来源。",
+        "高影响假设在几何前确认；图片和偏好不覆盖标准或工程输入。"
+      ],
+      "invalidatedBy": ["requirements", "standards", "jurisdiction", "delivery_stage"],
+      "reusableArtifacts": ["design-context.json", "authority-ledger.json", "standards-ledger.json"],
+      "estimatedReviewMinutesAvoided": 30
+    },
+    {
+      "id": "EXP-GLOBAL-002",
+      "title": "完整覆盖账本，禁止修一漏一",
+      "severity": "blocker",
+      "required": true,
+      "workflowStage": "WF-04",
+      "whyRecalled": "任何单点修复都可能让相邻约束、接口或制造证据过期。",
+      "domains": ["*"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": [], "none": []},
+      "ruleRefs": [
+        {"sourceId": "production", "ruleId": "PROD-G002"},
+        {"sourceId": "production", "ruleId": "PROD-G013"},
+        {"sourceId": "cad_quality", "ruleId": "CAD-Q006"}
+      ],
+      "checklist": [
+        "预期检查键与实际账本严格双向相等，无缺项、重复项和额外项。",
+        "每个通过项绑定当前输入证据；受变更标签影响的旧通过项必须失效并重检。",
+        "失败、待定或未授权不适用项不能被总分、视觉效果或无关通过项抵消。"
+      ],
+      "invalidatedBy": ["requirements", "standards", "geometry", "material", "process", "load", "interface", "evidence", "software"],
+      "reusableArtifacts": ["coverage-ledger.json", "change-impact.json", "regression-matrix.json"],
+      "estimatedReviewMinutesAvoided": 45
+    },
+    {
+      "id": "EXP-MECH-001",
+      "title": "抽象三维结构必须转成特征图、自由度和接口不变量",
+      "severity": "blocker",
+      "required": true,
+      "workflowStage": "WF-03",
+      "whyRecalled": "三维外形直观但约束关系不可见，最容易出现局部正确、整体错误。",
+      "domains": ["mechanical", "product_design"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": ["3d", "enclosure", "assembly", "handheld_device"], "none": []},
+      "ruleRefs": [
+        {"sourceId": "production", "ruleId": "PROD-G011"},
+        {"sourceId": "solidworks", "ruleId": "SW-N001"},
+        {"sourceId": "solidworks", "ruleId": "SW-N002"},
+        {"sourceId": "solidworks", "ruleId": "SW-N010"},
+        {"sourceId": "subobject", "ruleId": "SUB-G003"}
+      ],
+      "checklist": [
+        "把产品拆成制造件、装配、基准、接口、包络和有向特征依赖图。",
+        "每个特征声明支撑、尺寸、位置、端条件、预期体积变化和边界框。",
+        "关键配合、壁厚、残余材料、干涉、工具空间和维护空间均作为产品级不变量重放。",
+        "保存重开后持久引用集合、材料、质量属性和制造图绑定与生成前一致。"
+      ],
+      "invalidatedBy": ["requirements", "geometry", "material", "load", "interface", "process", "assembly"],
+      "reusableArtifacts": ["feature-graph.json", "interface-control-drawing.json", "invariant-matrix.json", "native-reopen-report.json"],
+      "estimatedReviewMinutesAvoided": 90
+    },
+    {
+      "id": "EXP-MECH-002",
+      "title": "手持电子外壳的承力、IMU、天线与电池必须解耦",
+      "severity": "high",
+      "required": false,
+      "workflowStage": "WF-04",
+      "whyRecalled": "手持动作设备同时受刚度、跌落、射频、热、维修和人体工学约束。",
+      "domains": ["mechanical", "product_design"],
+      "deliveryStages": ["prototype", "engineering_review", "production"],
+      "match": {"all": ["handheld_device"], "any": ["battery", "radio", "motion_control", "enclosure"], "none": []},
+      "ruleRefs": [
+        {"sourceId": "production", "ruleId": "PROD-G006"},
+        {"sourceId": "production", "ruleId": "PROD-G011"}
+      ],
+      "checklist": [
+        "承力脊柱、电子载架和装饰外壳分工明确，装饰壳不是唯一载荷路径。",
+        "IMU刚性防呆定位；振动器、松动线束和柔性棒身不会污染识别频带。",
+        "电池有防刺穿、膨胀和跌落保持空间；USB焊盘不承担插拔结构力。",
+        "天线净空服从模块集成手册并覆盖真实握持姿态测试。"
+      ],
+      "invalidatedBy": ["geometry", "material", "battery", "radio", "imu", "assembly"],
+      "reusableArtifacts": ["handheld-architecture.json", "imu-frame-contract.json", "antenna-keepout.step", "drop-test-plan.md"],
+      "estimatedReviewMinutesAvoided": 75
+    },
+    {
+      "id": "EXP-ELEC-001",
+      "title": "电源、器件引脚与故障恢复必须由数据表闭环",
+      "severity": "blocker",
+      "required": true,
+      "workflowStage": "WF-02",
+      "whyRecalled": "原理图、PCB和库可以一致地犯同一个引脚或额定值错误。",
+      "domains": ["electronics"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": [], "none": []},
+      "ruleRefs": [
+        {"sourceId": "production", "ruleId": "PROD-G012"},
+        {"sourceId": "production", "ruleId": "PROD-G013"}
+      ],
+      "checklist": [
+        "精确订货号、封装、符号引脚、焊盘号、网络和BOM/CPL逐项双向一致。",
+        "所有电源域、启动、关断、欠压、过流、反接、浪涌、热和故障恢复均有计算或仿真。",
+        "最终 ERC/DRC 无未管理告警、排除项和未连接网络，且在最后铺铜后重跑。",
+        "原理图、PCB、BOM、CPL、3D、Gerber、钻孔和作业文件绑定同一修订与哈希。"
+      ],
+      "invalidatedBy": ["requirements", "standards", "component", "power", "interface", "pcb", "firmware", "evidence"],
+      "reusableArtifacts": ["datasheet-pin-map.json", "power-budget.json", "fault-matrix.json", "eda-parity-report.json"],
+      "estimatedReviewMinutesAvoided": 120
+    },
+    {
+      "id": "EXP-ELEC-002",
+      "title": "无线动作控制必须防重放、防误触发并保持安全输出边界",
+      "severity": "high",
+      "required": false,
+      "workflowStage": "WF-04",
+      "whyRecalled": "无线手势设备把传感、分类、链路和外部执行器四类风险串在一起。",
+      "domains": ["electronics"],
+      "deliveryStages": ["prototype", "engineering_review", "production"],
+      "match": {"all": [], "any": ["radio", "motion_control", "external_control", "battery"], "none": []},
+      "ruleRefs": [
+        {"sourceId": "production", "ruleId": "PROD-G006"},
+        {"sourceId": "production", "ruleId": "PROD-G012"}
+      ],
+      "checklist": [
+        "动作识别只声明可观测的相对姿态/加速度特征，不把6轴IMU冒充绝对三维轨迹。",
+        "高风险动作需按住触发或进入武装状态；无线帧有设备身份、序号、认证和防重放。",
+        "接收器提供受限逻辑、隔离开集电极或低压负载接口；市电使用外置认证继电器。",
+        "无人机接口仅连接飞控通信/AUX，不直接进入动力级或自动映射电机解锁。"
+      ],
+      "invalidatedBy": ["radio", "firmware", "gesture_model", "power", "interface", "safety"],
+      "reusableArtifacts": ["gesture-dictionary.json", "radio-protocol.md", "interface-control-spec.json", "misfire-test-vectors.json"],
+      "estimatedReviewMinutesAvoided": 90
+    },
+    {
+      "id": "EXP-PKG-001",
+      "title": "包装结构身份、材料工艺、折叠碰撞和刀版制图必须一起闭合",
+      "severity": "blocker",
+      "required": true,
+      "workflowStage": "WF-02",
+      "whyRecalled": "刀线几何正确不代表盒型、压痕补偿、折叠顺序或模切工艺可用。",
+      "domains": ["packaging"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": [], "none": []},
+      "ruleRefs": [
+        {"sourceId": "packaging", "ruleId": "PKG-G001"},
+        {"sourceId": "packaging", "ruleId": "PKG-G006"},
+        {"sourceId": "packaging", "ruleId": "PKG-G015"},
+        {"sourceId": "packaging", "ruleId": "PKG-G024"},
+        {"sourceId": "packaging", "ruleId": "PKG-G025"}
+      ],
+      "checklist": [
+        "产品/盒型家族、内尺寸、材料、楞向/纹向、厚度、压痕和模切能力由权威输入冻结。",
+        "面板、襟片、插舌、锁口、胶位、上下功能和折叠顺序具有唯一语义身份。",
+        "平面刀版与折叠状态分别检查闭合、重复线、间隙、干涉、锁合和装填路径。",
+        "切线、压痕、半切、开槽、出血和标注在 DXF/SCR/预览/宿主中保持线型线宽语义。",
+        "实材打样、模切/压痕试验和工厂能力仍作为制造放行外部门禁。"
+      ],
+      "invalidatedBy": ["requirements", "structure_family", "dimensions", "material", "process", "closure", "artwork"],
+      "reusableArtifacts": ["normality-template.json", "fold-sequence.json", "material-process-ledger.json", "dieline-qa.json"],
+      "estimatedReviewMinutesAvoided": 110
+    },
+    {
+      "id": "EXP-CIV-001",
+      "title": "土木设计必须围绕坐标、测量、地形、水、地勘和跨专业接口闭合",
+      "severity": "blocker",
+      "required": true,
+      "workflowStage": "WF-02",
+      "whyRecalled": "土木图最危险的错误常不是画错线，而是坐标、基准、现状或模型场景不一致。",
+      "domains": ["civil"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": [], "none": []},
+      "ruleRefs": [
+        {"sourceId": "civil", "ruleId": "CIV-G001"},
+        {"sourceId": "civil", "ruleId": "CIV-G002"},
+        {"sourceId": "civil", "ruleId": "CIV-G005"},
+        {"sourceId": "civil", "ruleId": "CIV-G008"},
+        {"sourceId": "civil", "ruleId": "CIV-G014"},
+        {"sourceId": "civil", "ruleId": "CIV-G019"},
+        {"sourceId": "civil", "ruleId": "CIV-G020"}
+      ],
+      "checklist": [
+        "水平/竖向基准、坐标系、控制点、单位、转换和地形版本有独立校核。",
+        "现状、产权、管线、地勘、地下水和批准条件保留日期、精度与不确定区。",
+        "平纵横、场地竖向、排水路径、积水点、土方和道路/无障碍连续性按场景重算。",
+        "土建与结构、建筑、机电、景观及施工阶段接口使用同一坐标和问题账本。",
+        "图纸、LandXML/GIS/DWG、放样、工程量、计算和修订形成同源闭包；专业签发外部完成。"
+      ],
+      "invalidatedBy": ["jurisdiction", "survey", "coordinate_system", "terrain", "geotechnical", "hydrology", "alignment", "grading", "utility", "interface", "phasing"],
+      "reusableArtifacts": ["survey-control-contract.json", "surface-version-ledger.json", "civil-scenario-matrix.json", "coordination-issue-ledger.json"],
+      "estimatedReviewMinutesAvoided": 150
+    },
+    {
+      "id": "EXP-ARCH-001",
+      "title": "建筑图必须从轴网、空间、门洞、路线和图纸集整体复核",
+      "severity": "high",
+      "required": false,
+      "workflowStage": "WF-04",
+      "whyRecalled": "建筑对象之间的净空、疏散和标注会在后续对象加入后失效。",
+      "domains": ["architecture"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": [], "none": []},
+      "ruleRefs": [
+        {"sourceId": "cad_quality", "ruleId": "CAD-Q001"},
+        {"sourceId": "cad_quality", "ruleId": "CAD-Q002"},
+        {"sourceId": "cad_quality", "ruleId": "CAD-Q003"}
+      ],
+      "checklist": [
+        "轴线、轴圈、轴号、墙柱、门洞、房间和楼层转换均有成组身份。",
+        "家具设备、通行/疏散路线、门扇和净空包络参与同一碰撞计算。",
+        "图纸集、视口、比例、尺寸链、索引、标题栏和修订形成完整发布矩阵。"
+      ],
+      "invalidatedBy": ["grid", "room", "opening", "furniture", "route", "annotation", "sheet_set"],
+      "reusableArtifacts": ["axis-catalog.json", "room-programme.json", "annotation-reservations.json", "document-set.json"],
+      "estimatedReviewMinutesAvoided": 90
+    },
+    {
+      "id": "EXP-CROSS-001",
+      "title": "跨专业接口先建接口控制文件，再分别生成专业图",
+      "severity": "high",
+      "required": false,
+      "workflowStage": "WF-04",
+      "whyRecalled": "一个专业的局部更改会使其他专业的净空、荷载、能源、坐标或维护结论失效。",
+      "domains": ["*"],
+      "deliveryStages": ["prototype", "engineering_review", "production"],
+      "match": {"all": [], "any": ["multi_domain", "interface", "coordination"], "none": []},
+      "ruleRefs": [
+        {"sourceId": "production", "ruleId": "PROD-G006"},
+        {"sourceId": "production", "ruleId": "PROD-G013"}
+      ],
+      "checklist": [
+        "每个接口声明所有者、坐标/基准、单位、载荷/能源/信号、包络、容差和修订。",
+        "上游变化按标签找到全部下游消费者并失效其旧证据。",
+        "跨专业问题只有在所有受影响专业重检后才能关闭。"
+      ],
+      "invalidatedBy": ["*"],
+      "reusableArtifacts": ["interface-control-document.json", "dependency-map.json", "cross-discipline-issue-ledger.json"],
+      "estimatedReviewMinutesAvoided": 80
+    },
+    {
+      "id": "EXP-UI-001",
+      "title": "用户只走一条可见流程，安全操作始终在视口内",
+      "severity": "medium",
+      "required": false,
+      "workflowStage": "WF-03",
+      "whyRecalled": "重复术语、隐藏状态和跳跃式按钮会让用户绕开正确审查顺序。",
+      "domains": ["*"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": ["interactive_review", "review_html", "workflow_ui"], "none": []},
+      "ruleRefs": [
+        {"sourceId": "review", "ruleId": "REVIEW-G004"},
+        {"sourceId": "review", "ruleId": "REVIEW-G008"},
+        {"sourceId": "review", "ruleId": "REVIEW-G009"}
+      ],
+      "checklist": [
+        "选择、读取真值、提出修改、复核清单、回传五步使用同一状态源。",
+        "阻断/警告不仅靠颜色；键盘、触摸、窄屏、低动态和空/错状态均可用。",
+        "主要安全操作和当前阶段在滚动过程中保持可见。"
+      ],
+      "invalidatedBy": ["software", "workflow", "ui", "review_contract"],
+      "reusableArtifacts": ["ui-workflow-contract.json", "desktop-mobile-visual-qa.json"],
+      "estimatedReviewMinutesAvoided": 25
+    },
+    {
+      "id": "EXP-COST-001",
+      "title": "用结构化召回和证据复用降低重复 token 与人工审查",
+      "severity": "advisory",
+      "required": false,
+      "workflowStage": "WF-01",
+      "whyRecalled": "每次把全量规则和历史报告塞回提示词会重复消耗成本且增加冲突。",
+      "domains": ["*"],
+      "deliveryStages": ["*"],
+      "match": {"all": [], "any": [], "none": []},
+      "ruleRefs": [
+        {"sourceId": "cad_quality", "ruleId": "CAD-Q006"}
+      ],
+      "checklist": [
+        "以领域/阶段/风险/变更标签检索，只返回命中卡片和完整必需门禁。",
+        "同一覆盖键去重，证据以哈希和引用复用，不复制大段报告。",
+        "记录召回数、压缩 token 估计、复用工件和实际返工时间，用真实项目校准成本模型。"
+      ],
+      "invalidatedBy": ["software", "catalog", "cost_model"],
+      "reusableArtifacts": ["recall-result.json", "cost-metrics.json", "evidence-cache-manifest.json"],
+      "estimatedReviewMinutesAvoided": 35
+    },
+    {
+      "id": "EXP-RELEASE-001",
+      "title": "发布入口、构建产物和安装缓存必须同版同哈希",
+      "severity": "blocker",
+      "required": true,
+      "workflowStage": "WF-06",
+      "whyRecalled": "仓库模板、公开插件入口和压缩包版本漂移会让用户继续加载旧能力。",
+      "domains": ["*"],
+      "deliveryStages": ["engineering_review", "production"],
+      "match": {"all": [], "any": ["plugin_release", "github_release", "software"], "none": []},
+      "ruleRefs": [
+        {"sourceId": "cad_quality", "ruleId": "CAD-Q006"},
+        {"sourceId": "production", "ruleId": "PROD-G008"}
+      ],
+      "checklist": [
+        "HEAD公开插件、构建模板、运行时、技能、清单、ZIP和安装器版本完全一致。",
+        "独立验证器从原始来源重算所有输入与产物哈希并双向闭合。",
+        "发布后不再修改包内容；安装前后各验证一次并报告实际加载版本。"
+      ],
+      "invalidatedBy": ["software", "version", "catalog", "rule", "schema", "runtime"],
+      "reusableArtifacts": ["source-manifest.json", "integration-manifest.json", "SHA256SUMS", "install-verification.json"],
+      "estimatedReviewMinutesAvoided": 45
+    }
+  ],
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

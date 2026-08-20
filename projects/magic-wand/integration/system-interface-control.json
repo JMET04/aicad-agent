@@ -1,0 +1,161 @@
+{
+  "schema": "aicad_magic_wand_interface_control_v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "revision": "A",
+  "coordinateAuthority": "Mechanical datum A at rear cap outer plane Z=0, datum B common axis, millimetres.",
+  "interfaces": [
+    {
+      "id": "IF-MECH-PCB-001",
+      "producer": "mechanical",
+      "consumer": "wand PCB/carrier",
+      "contract": "Carrier outer 17.8 x 12.8 mm, inner channel 15.4 x 10.4 mm, inside nominal shell ID 23.0 mm; exact PCB outline and keepouts remain unfrozen.",
+      "safeState": "No forced assembly; quote-only until native fit/interference proof.",
+      "evidencePaths": [
+        "projects/magic-wand/mechanical/REQUIREMENTS_INTERFACES_TOLERANCES.md",
+        "projects/magic-wand/mechanical/assembly-layout.json"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "IF-ARM-001",
+      "producer": "press-to-arm switch",
+      "consumer": "wand MCU ARM_N",
+      "contract": "Momentary normally-open switch at global Z=72 +/-0.5 mm; recessed at least 0.6 mm; grounds dedicated ARM_N through 1 kOhm with 100 kOhm pull-up.",
+      "safeState": "Stuck-low is a fault; release requests disarm; no command enable without continuous hold.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md",
+        "projects/magic-wand/firmware/CMakeLists.txt",
+        "projects/magic-wand/firmware/README.md",
+        "projects/magic-wand/firmware/gesture-dictionary.yaml",
+        "projects/magic-wand/firmware/host-review-evidence.json",
+        "projects/magic-wand/firmware/include/mw_gesture.h",
+        "projects/magic-wand/firmware/include/mw_protocol.h",
+        "projects/magic-wand/firmware/include/mw_state_machine.h",
+        "projects/magic-wand/firmware/protocol.md",
+        "projects/magic-wand/firmware/src/main.c",
+        "projects/magic-wand/firmware/src/mw_gesture.c",
+        "projects/magic-wand/firmware/src/mw_protocol.c",
+        "projects/magic-wand/firmware/src/mw_state_machine.c",
+        "projects/magic-wand/firmware/state-machine.md",
+        "projects/magic-wand/mechanical/REQUIREMENTS_INTERFACES_TOLERANCES.md"
+      ],
+      "status": "blocked_hil_pending"
+    },
+    {
+      "id": "IF-RF-001",
+      "producer": "NINA-B302 internal PIFA",
+      "consumer": "enclosure/host PCB",
+      "contract": "Antenna end faces nonconductive rear region; mechanical keepout global Z=5..30 mm, radius 11.5 mm; no metal, battery, GFRP, shielding or harness in the conservative envelope.",
+      "safeState": "No RF pass claim; final vendor-rule overlay and representative hand/enclosure test required.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/system-architecture.md",
+        "projects/magic-wand/mechanical/assembly-layout.json"
+      ],
+      "status": "blocked_rf_test_pending"
+    },
+    {
+      "id": "IF-PWR-WAND-001",
+      "producer": "USB-C / protected 1S LiPo",
+      "consumer": "wand power tree",
+      "contract": "5 V sink-only USB-C feeds BQ25185; protected 1S LiPo with 10 kOhm NTC; TPS63900 creates 3.3 V logic rail.",
+      "safeState": "Charge prohibited until exact cell/protection/NTC limits and thermal behavior are verified.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/design-calculations.md",
+        "projects/magic-wand/electronics/interface-control.md"
+      ],
+      "status": "blocked_eda_bench_pending"
+    },
+    {
+      "id": "IF-BLE-001",
+      "producer": "wand NINA-B302",
+      "consumer": "receiver NINA-B302",
+      "contract": "BLE 1M, LE Secure Connections plus application AES-CCM, direction/device/session binding and monotonic anti-replay sequence.",
+      "safeState": "Invalid, stale, duplicate or unauthenticated packets cause no output and do not renew arm lease.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/system-architecture.md",
+        "projects/magic-wand/firmware/CMakeLists.txt",
+        "projects/magic-wand/firmware/README.md",
+        "projects/magic-wand/firmware/gesture-dictionary.yaml",
+        "projects/magic-wand/firmware/host-review-evidence.json",
+        "projects/magic-wand/firmware/include/mw_gesture.h",
+        "projects/magic-wand/firmware/include/mw_protocol.h",
+        "projects/magic-wand/firmware/include/mw_state_machine.h",
+        "projects/magic-wand/firmware/protocol.md",
+        "projects/magic-wand/firmware/src/main.c",
+        "projects/magic-wand/firmware/src/mw_gesture.c",
+        "projects/magic-wand/firmware/src/mw_protocol.c",
+        "projects/magic-wand/firmware/src/mw_state_machine.c",
+        "projects/magic-wand/firmware/state-machine.md"
+      ],
+      "status": "blocked_target_security_test_pending"
+    },
+    {
+      "id": "IF-RX-LOGIC-001",
+      "producer": "receiver",
+      "consumer": "external controller",
+      "contract": "J2 exposes GND, external VREF_IO 3.3/5 V, UART TX/RX and PWM/AUX. It is signal-only; SBUS requires an externally reviewed inverter.",
+      "safeState": "Outputs default inactive; no propulsion energy or arming/primary flight control.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md",
+        "projects/magic-wand/electronics/receiver/connectivity.csv"
+      ],
+      "status": "blocked_eda_bench_pending"
+    },
+    {
+      "id": "IF-RX-ISO-001",
+      "producer": "receiver optocoupler",
+      "consumer": "external low-voltage input",
+      "contract": "J3 is floating collector/emitter, external pull-up, target 3.3..24 V and <=10 mA subject to exact CTR validation.",
+      "safeState": "Signal isolation only; no mains conductor on PCB or inside enclosure.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md"
+      ],
+      "status": "blocked_eda_bench_pending"
+    },
+    {
+      "id": "IF-RX-LOAD-001",
+      "producer": "receiver MOSFET",
+      "consumer": "external SELV load",
+      "contract": "J4 common-ground 5..12 V low-side channel, provisional 1 A continuous / 2 A 100 ms; external supply protection and inductive flyback required.",
+      "safeState": "No mains and no flight propulsion; hardware pulldown holds gate inactive on reset.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md",
+        "projects/magic-wand/electronics/receiver/connectivity.csv"
+      ],
+      "status": "blocked_drc_thermal_load_test_pending"
+    },
+    {
+      "id": "IF-MAINS-001",
+      "producer": "receiver SELV output",
+      "consumer": "external certified relay/contactor",
+      "contract": "Only the certified product's low-voltage control input may connect; all mains wiring, enclosure, creepage and installation are external.",
+      "safeState": "Qualified electrical professional review mandatory; no mains enters AICAD PCB/enclosure.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md",
+        "projects/magic-wand/system-requirements.json"
+      ],
+      "status": "external_specialist_required"
+    },
+    {
+      "id": "IF-DRONE-001",
+      "producer": "receiver signal",
+      "consumer": "autopilot AUX/telemetry",
+      "contract": "Only non-flight-critical AUX or telemetry signal; no motor, ESC power, arming or primary flight controls.",
+      "safeState": "Integrator-configured failsafe; ground and restrained-prop test before any flight.",
+      "evidencePaths": [
+        "projects/magic-wand/electronics/interface-control.md",
+        "projects/magic-wand/system-requirements.json"
+      ],
+      "status": "external_specialist_required"
+    }
+  ],
+  "releaseLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "productionReleaseEligible": false,
+    "humanEngineeringReviewRequired": true
+  }
+}
