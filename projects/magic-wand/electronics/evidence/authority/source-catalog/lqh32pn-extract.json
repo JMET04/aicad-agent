@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Murata",
+  "coveredMpns": ["LQH32PN2R2NN0L"],
+  "documentNumber": "JELF243A_0061T-01",
+  "revision": "01",
+  "originalOfficialUrl": "https://www.murata.com/en-us/products/productdetail?partno=LQH32PN2R2NN0L",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_lqh32pn.pdf", "size": 546503, "sha256": "0294e7f0a3d2772c0e6798e85c1ced0e8773d8e9fbed773b1956429513b70134"},
+  "page": 7,
+  "section": "12.1 Land dimensions",
+  "coordinateFrame": {"origin": "component center", "xPositive": "right across terminals", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"terminalCount": 2, "landMm": [1.25, 2.0], "centerOffsetMm": 1.275}, "bodyDatum": {"bodyEnvelopeMm": [3.2, 2.5], "nominalHeightMm": 1.55, "maximumHeightMm": 1.7}, "heightBasis": "series dimensions and maximum-height tolerance"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified Murata specification page and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

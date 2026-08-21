@@ -1,0 +1,112 @@
+{
+  "schema": "aicad_solidworks_native_execution_raw_v1",
+  "subjectId": "MW-M-001A",
+  "revision": "B-RFQ",
+  "operation": "STEP import -> native SLDPRT save -> native reopen -> STEP export",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true,
+    "api": "SOLIDWORKS COM API / OpenDoc7 / SaveAs3",
+    "automation": "owned DispatchEx COM instance",
+    "neutralImportMode": "embedded imported solid; 3D Interconnect external links disabled"
+  },
+  "paths": {
+    "nativeCad": "outputs/3d/MW-M-001A_upper_grip_shell.SLDPRT",
+    "step": "outputs/3d/MW-M-001A_upper_grip_shell.step"
+  },
+  "checks": [
+    {
+      "id": "source-brep",
+      "status": "pass",
+      "detail": "valid single-solid source BREP"
+    },
+    {
+      "id": "solidworks-import",
+      "status": "pass",
+      "detail": "LoadFile4 imported the source STEP without error"
+    },
+    {
+      "id": "native-save",
+      "status": "pass",
+      "detail": "SaveAs3 created an authentic SLDPRT"
+    },
+    {
+      "id": "native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 returned one solid body; bbox mm=[-13.493892, -0.55, 0.0, 13.493892, 15.3, 110.0]"
+    },
+    {
+      "id": "step-roundtrip",
+      "status": "pass",
+      "detail": "reopened native document exported valid single-solid STEP; volume delta 0.013741000 mm3"
+    },
+    {
+      "id": "post-assembly-native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 warningCode=0, one solid body, and STEP export did not mutate final SLDPRT bytes after SaveReferenced"
+    }
+  ],
+  "source": {
+    "kind": "authoritative generated BREP",
+    "path": "reports/geometry/MW-M-001A_upper_grip_shell.brep",
+    "sizeBytes": 387060,
+    "sha256": "1e3714dc16cf44e8d4f12cfbf5b9da6f26d030781ee311bd675d754a54d42a91",
+    "solidWorksImportStepSizeBytes": 904652,
+    "solidWorksImportStepSha256": "3eadf98e573eb4bec2b128f5b8b7e63b4ef8f63634fe5bdcb5c90cf977491cf1",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 8426.366903,
+      "bboxMm": [
+        -13.493892,
+        -0.55,
+        -0.0,
+        13.493892,
+        15.3,
+        110.0
+      ]
+    }
+  },
+  "nativeReopen": {
+    "errorCode": 0,
+    "warningCode": 0,
+    "warningNames": [],
+    "documentType": "part",
+    "bodyCount": 1,
+    "bboxMm": [
+      -13.493892,
+      -0.55,
+      0.0,
+      13.493892,
+      15.3,
+      110.0
+    ],
+    "phase": "post-assembly SaveReferenced final closure"
+  },
+  "nativeCad": {
+    "path": "outputs/3d/MW-M-001A_upper_grip_shell.SLDPRT",
+    "sizeBytes": 211701,
+    "sha256": "09fc88a1f0cf63130e2698c6b5787da176b75233ac9625f49502542a00c28452"
+  },
+  "finalStep": {
+    "path": "outputs/3d/MW-M-001A_upper_grip_shell.step",
+    "sizeBytes": 389719,
+    "sha256": "845f32f0f4065eac595ac64bc9f38e25bb296ffc15387fbf6fe691fa8d254bba",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 8426.353162,
+      "bboxMm": [
+        -13.493892,
+        -0.55,
+        -0.0,
+        13.493892,
+        15.3,
+        110.0
+      ]
+    },
+    "volumeDeltaMm3": 0.013741
+  }
+}

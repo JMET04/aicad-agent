@@ -1,0 +1,314 @@
+{
+  "schema": "aicad_magic_wand_factory_design_input_v1",
+  "project_id": "MW-PROTOTYPE-001",
+  "package_id": "MW-FACTORY-RFQ-001",
+  "revision": "B-RFQ",
+  "units": "mm",
+  "delivery_stage": "tooling_dfm_rfq_input_not_tool_release",
+  "coordinate_system": {
+    "id": "MODEL_XYZ",
+    "handedness": "right",
+    "origin": "datum A, rear-cap exterior plane on the common wand axis",
+    "positive_z": "from rear cap toward rod tip",
+    "positive_y": "toward the press-to-arm button"
+  },
+  "product_envelope": {
+    "overall_length": 315.0,
+    "overall_length_tolerance": 2.0,
+    "grip_outer_diameter": 27.0,
+    "grip_outer_diameter_tolerance": 0.2,
+    "grip_segment_length": 115.0,
+    "grip_segment_length_tolerance": 0.8,
+    "shell_length": 110.0,
+    "shell_wall_nominal": 2.0,
+    "shell_wall_minimum_after_tooling_tune": 1.8,
+    "rod_exposed_length": 190.0,
+    "rod_exposed_length_tolerance": 1.0
+  },
+  "molding_defaults": {
+    "general_draft_deg": 1.5,
+    "texture_draft_addition_deg": 1.0,
+    "side_action_shutoff_draft_deg": 3.0,
+    "external_edge_radius_min": 0.8,
+    "internal_edge_radius_min": 0.5,
+    "reference_temperature_c": 20,
+    "general_linear_tolerance": "ISO 2768-m where explicitly invoked; otherwise drawing-specific limits control",
+    "undefined_edges": "ISO 13715; break 0.2-0.4, no sharp hand-contact edges",
+    "surface": "SPI B-2 visual starting point on exposed grip; hidden/internal as-machined unless DFM changes it",
+    "color": "vendor color-match after resin selection",
+    "shrinkage": "vendor must propose from selected resin, gate and fiber state; CAD is nominal finished-part geometry",
+    "steel_safe_policy": "button, USB-C, debug, shell fit and energy-director dimensions remain steel-safe until T0 measurements"
+  },
+  "parts": {
+    "MW-M-001A": {
+      "name": "upper_grip_shell",
+      "quantity": 1,
+      "make_buy": "make",
+      "process": "injection molding",
+      "material": "PC-ABS, unfilled, nonconductive; final grade/UL/color not yet selected",
+      "mold_pull": "+Y from XZ parting plane",
+      "parting_line": "two longitudinal edges on XZ plane",
+      "side_actions": ["press-to-arm aperture core", "four screw counterbore/clearance cores if not drilled after molding"],
+      "critical_features": ["press-to-arm aperture", "guard ring", "seam tongue", "M2 clearance holes", "antenna-zone nonconductive wall"]
+    },
+    "MW-M-001B": {
+      "name": "lower_grip_shell",
+      "quantity": 1,
+      "make_buy": "make",
+      "process": "injection molding",
+      "material": "PC-ABS, unfilled, nonconductive; final grade/UL/color not yet selected",
+      "mold_pull": "-Y from XZ parting plane",
+      "parting_line": "two longitudinal edges on XZ plane",
+      "side_actions": ["USB-C service window core", "debug window core", "four tapered M2 thread-forming pilot cores"],
+      "critical_features": ["USB-C window", "debug window", "seam groove", "carrier key rail", "M2 pilot holes"]
+    },
+    "MW-M-002": {
+      "name": "internal_electronics_carrier",
+      "quantity": 1,
+      "make_buy": "make",
+      "process": "injection molding",
+      "material": "PA12 or PBT, unfilled; final grade not yet selected",
+      "mold_pull": "+Y",
+      "parting_line": "carrier top rim",
+      "side_actions": [],
+      "critical_features": ["PCB support rails", "four heat-stake bosses", "poka-yoke key groove", "button switch support", "cable relief"]
+    },
+    "MW-M-003": {
+      "name": "rear_rf_end_cap",
+      "quantity": 1,
+      "make_buy": "make",
+      "process": "injection molding",
+      "material": "PC-ABS, unfilled and nonconductive; no metallic pigment or conductive coating",
+      "mold_pull": "+Z",
+      "parting_line": "rear flange maximum diameter",
+      "side_actions": [],
+      "critical_features": ["shell plug", "poka-yoke key relief", "ultrasonic energy director", "RF-zone material restriction"]
+    },
+    "MW-M-004": {
+      "name": "rod_connector",
+      "quantity": 1,
+      "make_buy": "make",
+      "process": "injection molding",
+      "material": "PA12 or PBT, unfilled; final grade not yet selected",
+      "mold_pull": "+Z",
+      "parting_line": "collar maximum diameter",
+      "side_actions": [],
+      "critical_features": ["shell plug", "poka-yoke key relief", "GFRP adhesive bore", "three adhesive relief grooves", "witness vent"]
+    },
+    "MW-M-005": {
+      "name": "press_to_arm_plunger",
+      "quantity": 1,
+      "make_buy": "make",
+      "process": "injection molding",
+      "material": "PC or POM; final grade and tactile finish not yet selected",
+      "mold_pull": "+Y along plunger axis",
+      "parting_line": "head maximum diameter",
+      "side_actions": [],
+      "critical_features": ["7.6 stem", "anti-rotation flat", "guard-recessed head", "switch contact land"]
+    },
+    "MW-P-001": {
+      "name": "gfrp_spine",
+      "quantity": 1,
+      "make_buy": "buy",
+      "process": "pultrusion, supplier cut/deburr/seal",
+      "material": "pultruded GFRP, supplier grade and certificate pending",
+      "critical_features": ["diameter 7.0 +/-0.1", "purchase length 220 +/-1", "sealed and deburred ends"]
+    },
+    "MW-M-101": {
+      "name": "receiver_enclosure_base",
+      "quantity": 1,
+      "make_buy": "make",
+      "process": "injection molding",
+      "material": "PC-ABS, unfilled, nonconductive; final grade/UL/color not yet selected",
+      "mold_pull": "+Z",
+      "parting_line": "top rim maximum footprint",
+      "side_actions": ["connector openings are conditional on the bound electronics interface table"],
+      "critical_features": ["PCB datums", "PCB supports", "lid screw pilots", "connector openings", "RF fastener exclusion"]
+    },
+    "MW-M-102": {
+      "name": "receiver_enclosure_lid",
+      "quantity": 1,
+      "make_buy": "make",
+      "process": "injection molding",
+      "material": "PC-ABS, unfilled, nonconductive; no metallic pigment/coating in the RF window",
+      "mold_pull": "-Z",
+      "parting_line": "lower rim maximum footprint",
+      "side_actions": ["none until the electronics interface table is frozen"],
+      "critical_features": ["overlap skirt", "lid screw clearances", "RF nonconductive window", "component-height clearance", "poka-yoke corner"]
+    }
+  },
+  "interfaces": {
+    "shell": {
+      "outer_diameter": 27.0,
+      "inner_diameter": 23.0,
+      "length": 110.0,
+      "split_plane_y": 0.0,
+      "seam_tongue_width": 1.2,
+      "seam_tongue_depth": 0.55,
+      "seam_clearance_per_side": 0.10,
+      "assembly_z_start": 5.0
+    },
+    "shell_screws": {
+      "standard": "M2 x 8 pan-head thread-forming screw for thermoplastic, final supplier series pending",
+      "quantity": 4,
+      "x_positions": [-12.15, 12.15],
+      "global_z_positions": [40.0, 90.0],
+      "upper_clearance_diameter": 2.3,
+      "upper_counterbore_diameter": 4.2,
+      "upper_counterbore_depth": 1.5,
+      "lower_pilot_entry_diameter": 1.8,
+      "lower_pilot_root_diameter": 1.6,
+      "minimum_distance_from_rf_keepout": 10.0
+    },
+    "press_to_arm": {
+      "global_center_z": 72.0,
+      "center_z_tolerance": 0.5,
+      "aperture_finished_diameter": 8.2,
+      "aperture_tolerance": 0.15,
+      "side_core_draft_deg": 1.5,
+      "guard_outer_diameter": 12.8,
+      "guard_height": 1.8,
+      "guard_edge_radius": 0.8,
+      "plunger_stem_diameter": 7.6,
+      "diametral_clearance": 0.6,
+      "head_diameter": 10.8,
+      "head_thickness": 1.2,
+      "head_recess_below_guard": 0.6,
+      "target_travel": 1.2,
+      "target_force_n": [2.0, 5.0]
+    },
+    "service_openings": {
+      "usb_c": {
+        "global_center_z": 47.0,
+        "width_x": 10.0,
+        "height_z": 4.8,
+        "corner_radius": 1.0,
+        "profile_tolerance": 0.15,
+        "shell_side": "-Y"
+      },
+      "debug": {
+        "global_center_z": 60.0,
+        "width_x": 8.0,
+        "height_z": 3.2,
+        "corner_radius": 0.8,
+        "profile_tolerance": 0.15,
+        "shell_side": "-Y"
+      }
+    },
+    "carrier": {
+      "assembly_z_start": 9.0,
+      "length": 90.0,
+      "outer_width": 17.6,
+      "outer_height": 12.6,
+      "base_wall": 1.6,
+      "side_wall": 1.5,
+      "key_groove_width": 3.4,
+      "key_groove_depth": 0.8,
+      "shell_key_rail_width": 3.0,
+      "shell_key_rail_tip_y": -6.7,
+      "key_clearance": 0.2,
+      "pcb_envelope_width": 15.0,
+      "pcb_envelope_length": 80.0,
+      "pcb_envelope_thickness": 1.6,
+      "battery_envelope": [15.0, 10.0, 40.0]
+    },
+    "rear_cap": {
+      "flange_diameter": 27.0,
+      "exposed_length": 5.0,
+      "plug_diameter": 22.6,
+      "plug_length": 4.0,
+      "nominal_diametral_clearance": 0.4,
+      "energy_director_height": 0.25,
+      "energy_director_base": 0.35,
+      "weld_parameter_status": "DOE required; no production weld recipe assigned"
+    },
+    "rod_connector": {
+      "assembly_z_start": 100.0,
+      "plug_diameter": 22.6,
+      "plug_length": 15.0,
+      "collar_diameter": 27.0,
+      "collar_length": 10.0,
+      "spine_bore_diameter": 7.4,
+      "spine_diameter": 7.0,
+      "nominal_diametral_adhesive_gap": 0.4,
+      "adhesive_groove_width": 0.6,
+      "adhesive_groove_depth": 0.3,
+      "adhesive_groove_count": 3
+    },
+    "gfrp": {
+      "assembly_z_start": 95.0,
+      "diameter": 7.0,
+      "diameter_tolerance": 0.1,
+      "purchase_length": 220.0,
+      "purchase_length_tolerance": 1.0,
+      "insertion_length": 30.0,
+      "exposed_length": 190.0
+    },
+    "rf_keepout": {
+      "global_z_min": 5.0,
+      "global_z_max": 30.0,
+      "radial_radius": 11.5,
+      "forbidden": ["metal fasteners", "conductive coating", "battery cell", "shield can", "cable bundle", "GFRP spine"],
+      "status": "mechanical DFM envelope; electrical/RF authority remains external"
+    },
+    "receiver_enclosure": {
+      "interface_source": "projects/magic-wand/electronics/receiver/receiver-mechanical-interface.json",
+      "interface_status": "pending_electronics_final_native_drc",
+      "coordinate_mapping": "electronics board x,y are shifted by (-25,-21) into centered mechanical X,Y; PCB bottom is Z=3.2",
+      "board": {
+        "outline_x": 50.0,
+        "outline_y": 42.0,
+        "thickness": 1.6,
+        "bottom_z": 3.2,
+        "maximum_top_component_height": 8.0,
+        "mount_holes": []
+      },
+      "case": {
+        "outer_x": 64.0,
+        "outer_y": 56.0,
+        "corner_radius": 5.0,
+        "wall_nominal": 2.0,
+        "base_floor": 2.0,
+        "base_height": 12.0,
+        "lid_height": 8.0,
+        "lid_assembly_z": 6.0,
+        "skirt_clearance_per_side": 0.15,
+        "general_draft_deg": 1.5,
+        "minimum_internal_edge_radius": 0.6
+      },
+      "case_screws": {
+        "standard": "M2.5 x 12 pan-head thread-forming screw for thermoplastic; exact supplier series pending",
+        "positions": [[-28.0, -24.0], [28.0, -24.0], [-28.0, 24.0]],
+        "pilot_entry_diameter": 2.15,
+        "pilot_root_diameter": 1.95,
+        "lid_clearance_diameter": 2.8,
+        "lid_counterbore_diameter": 5.0,
+        "minimum_antenna_keepout_distance": 10.0
+      },
+      "pcb_location": {
+        "x": -25.0,
+        "y": -21.0,
+        "z": 3.2,
+        "primary_datum": "base PCB support plane",
+        "secondary_datum": "left PCB locating rib",
+        "tertiary_datum": "rear PCB locating rib"
+      },
+      "connector_openings": [],
+      "rf_keepout": {
+        "source_status": "pending_electronics_final_native_drc",
+        "board_xy_polygon": [],
+        "mechanical_rules": ["nonconductive resin only", "no metal fastener or conductive coating", "no ventilation slots above antenna until RF review"]
+      }
+    }
+  },
+  "release_locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "technicalPackageReady": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false,
+    "toolSteelCutAuthorized": false,
+    "productionReleaseEligible": false,
+    "human_engineering_review_required": true
+  }
+}

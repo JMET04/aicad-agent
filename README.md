@@ -1,4 +1,4 @@
-# aicad-agent 1.17.0
+# aicad-agent 1.17.1
 
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
@@ -10,13 +10,15 @@
 
 产品覆盖通用 2D、建筑制图、包装刀版、参考图重建、受控 SolidWorks 3D，以及机械技术包和 PCB 证据合同检查。没有原生宿主或专业证据时会明确降级，绝不把候选一致性冒充制造、施工或投板授权。
 
+统一入口显式覆盖机械、电子/电气、包装、土木、建筑和钢结构，并按对象需要提供 2D、3D 与交互审查；但各领域成熟度并不相同。通用制图、包装和建筑可进入受约束生成与审查，机械与 PCB 可形成哈希闭合的制造候选，土木当前仅接受权威来源绑定的受约束审查候选，钢结构当前仅提供诊断与构件关系审查。“覆盖”不等于生产级自动设计，任何施工、结构计算、加工或投板结论仍需相应专业人员和真实工具放行。
+
 | 快速入口 | 内容 |
 |---|---|
 | [完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md) | 适用人群、工作方式、核心模块、支持范围、交付物和安全边界 |
 | [四领域工程展示](showcase/README.md) | 建筑、钢结构、机械和 PCB 的预览、交互审查与验证材料 |
 | [v1.15.0 标准化重生成证据](showcase/standardized-regeneration-v1.15.0/README.md) | 新机械包与受阻电子包、预览、精确哈希和工程边界 |
 | [安装和使用指南](docs/INSTALL.zh-CN.md) | Marketplace、Release ZIP、首次使用和更新流程 |
-| [v1.15.0 Release](https://github.com/JMET04/aicad-agent/releases/tag/v1.15.0) | 发布说明、插件 ZIP 与 SHA256SUMS |
+| [v1.17.1 Release](https://github.com/JMET04/aicad-agent/releases/tag/v1.17.1) | 发布说明、插件 ZIP 与 SHA256SUMS |
 
 ![aicad-agent 多视图修改器：点击线、点、圆查看模型数值](docs/images/modifier-measurements-v3.png)
 
@@ -80,7 +82,7 @@ flowchart LR
 准备：Codex CLI 或 Codex 桌面版、Git、Python 3.10+。
 
 ```powershell
-codex plugin marketplace add JMET04/aicad-agent --ref v1.15.0
+codex plugin marketplace add JMET04/aicad-agent --ref v1.17.1
 codex plugin add aicad-agent@aicad-agent
 codex plugin list
 ```
@@ -104,13 +106,13 @@ codex plugin remove aicad-agent
 
 从 [GitHub Releases](https://github.com/JMET04/aicad-agent/releases) 或仓库的 [`dist`](dist/) 目录下载：
 
-- `aicad-agent-1.15.0.zip`
+- `aicad-agent-1.17.1.zip`
 - `SHA256SUMS`
 
 先核对哈希：
 
 ```powershell
-Get-FileHash .\aicad-agent-1.15.0.zip -Algorithm SHA256
+Get-FileHash .\aicad-agent-1.17.1.zip -Algorithm SHA256
 Get-Content .\SHA256SUMS
 ```
 
@@ -315,12 +317,12 @@ python -m pip install -r agent-plugin/aicad-agent/requirements-packaging.txt
 ```powershell
 python -B -m unittest discover -s tests -p "test_*.py" -v
 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_*.py" -v
-.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.17.0
+.\scripts\build-agent-plugin.ps1 -OutputDirectory release/ci -Version 1.17.1
 python -B scripts/verify_release_package.py release/ci/aicad-agent --source-root .
 .\scripts\build-github-source.ps1 `
   -OutputDirectory release/ci/github-repository `
-  -Version 1.17.0 `
-  -PluginArchive release/ci/aicad-agent-1.17.0.zip `
+  -Version 1.17.1 `
+  -PluginArchive release/ci/aicad-agent-1.17.1.zip `
   -PluginDirectory release/ci/aicad-agent
 python -B scripts/verify_github_source.py release/ci/github-repository --source-root .
 ```
@@ -343,7 +345,7 @@ python -B scripts/verify_github_source.py release/ci/github-repository --source-
 
 ## v1.14.0 技术说明
 
-以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.17.0.md)。
+以下两节保留机械、PCB 与持续学习门禁的精确定义；面向用户的中文说明请优先阅读[完整产品介绍](docs/PRODUCT_OVERVIEW.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_v1.17.1.md)。
 
 ## Mechanical/electronics normative generation preflight
 

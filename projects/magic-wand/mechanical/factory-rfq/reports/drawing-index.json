@@ -1,0 +1,487 @@
+{
+  "schema": "aicad_factory_drawing_index_v2",
+  "drawings": [
+    {
+      "drawing_number": "MW-M-001A",
+      "title": "UPPER GRIP SHELL",
+      "kind": "manufacturing_part",
+      "file": "MW-M-001A_upper_grip_shell.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-M-001A",
+      "featureDimensionRowCount": 11,
+      "sectionIds": [
+        "MW-M-001A:section-A-A"
+      ]
+    },
+    {
+      "drawing_number": "MW-M-001B",
+      "title": "LOWER GRIP SHELL",
+      "kind": "manufacturing_part",
+      "file": "MW-M-001B_lower_grip_shell.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-M-001B",
+      "featureDimensionRowCount": 11,
+      "sectionIds": [
+        "MW-M-001B:section-A-A",
+        "MW-M-001B:section-B-B"
+      ]
+    },
+    {
+      "drawing_number": "MW-M-002",
+      "title": "INTERNAL ELECTRONICS CARRIER",
+      "kind": "manufacturing_part",
+      "file": "MW-M-002_internal_carrier.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-M-002",
+      "featureDimensionRowCount": 10,
+      "sectionIds": [
+        "MW-M-002:section-A-A"
+      ]
+    },
+    {
+      "drawing_number": "MW-M-003",
+      "title": "REAR RF END CAP",
+      "kind": "manufacturing_part",
+      "file": "MW-M-003_rear_end_cap.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-M-003",
+      "featureDimensionRowCount": 8,
+      "sectionIds": [
+        "MW-M-003:section-A-A"
+      ]
+    },
+    {
+      "drawing_number": "MW-M-004",
+      "title": "ROD CONNECTOR",
+      "kind": "manufacturing_part",
+      "file": "MW-M-004_rod_connector.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-M-004",
+      "featureDimensionRowCount": 9,
+      "sectionIds": [
+        "MW-M-004:section-A-A"
+      ]
+    },
+    {
+      "drawing_number": "MW-M-005",
+      "title": "PRESS TO ARM PLUNGER",
+      "kind": "manufacturing_part",
+      "file": "MW-M-005_press_to_arm_plunger.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-M-005",
+      "featureDimensionRowCount": 8,
+      "sectionIds": [
+        "MW-M-005:section-A-A"
+      ]
+    },
+    {
+      "drawing_number": "MW-P-001",
+      "title": "GFRP SPINE",
+      "kind": "manufacturing_part",
+      "file": "MW-P-001_gfrp_spine.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-P-001",
+      "featureDimensionRowCount": 8,
+      "sectionIds": [
+        "MW-P-001:section-A-A"
+      ]
+    },
+    {
+      "drawing_number": "MW-M-101",
+      "title": "RECEIVER ENCLOSURE BASE",
+      "kind": "manufacturing_part",
+      "file": "MW-M-101_receiver_enclosure_base.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-M-101",
+      "featureDimensionRowCount": 8,
+      "sectionIds": [
+        "MW-M-101:section-A-A"
+      ]
+    },
+    {
+      "drawing_number": "MW-M-102",
+      "title": "RECEIVER ENCLOSURE LID",
+      "kind": "manufacturing_part",
+      "file": "MW-M-102_receiver_enclosure_lid.dxf",
+      "views": [
+        "front",
+        "right",
+        "top",
+        "isometric",
+        "true_brep_section_A-A"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ],
+      "source_part": "MW-M-102",
+      "featureDimensionRowCount": 9,
+      "sectionIds": [
+        "MW-M-102:section-A-A"
+      ]
+    },
+    {
+      "drawing_number": "MW-A-001",
+      "title": "MAGIC WAND GENERAL ASSEMBLY",
+      "kind": "assembly",
+      "file": "MW-A-001_wand_general_assembly.dxf",
+      "views": [
+        "front",
+        "isometric",
+        "top_interface"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ]
+    },
+    {
+      "drawing_number": "MW-A-001-EX",
+      "title": "MAGIC WAND EXPLODED",
+      "kind": "exploded",
+      "file": "MW-A-001_wand_exploded.dxf",
+      "views": [
+        "front",
+        "isometric",
+        "top_interface"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ]
+    },
+    {
+      "drawing_number": "MW-A-001-SE",
+      "title": "MAGIC WAND SECTION A-A",
+      "kind": "section",
+      "file": "MW-A-001_wand_section_A-A.dxf",
+      "views": [
+        "front",
+        "isometric",
+        "true_brep_section_A-A",
+        "true_brep_section_B-B"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ]
+    },
+    {
+      "drawing_number": "MW-A-001-HI",
+      "title": "MAGIC WAND HARNESS INTERFACE",
+      "kind": "harness_interface",
+      "file": "MW-A-001_wand_harness_interface.dxf",
+      "views": [
+        "front",
+        "isometric",
+        "top_interface"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ]
+    },
+    {
+      "drawing_number": "MW-A-101",
+      "title": "RECEIVER ENCLOSURE ASSEMBLY",
+      "kind": "assembly",
+      "file": "MW-A-101_receiver_assembly.dxf",
+      "views": [
+        "front",
+        "isometric",
+        "top_interface"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ]
+    },
+    {
+      "drawing_number": "MW-A-101-EX",
+      "title": "RECEIVER ENCLOSURE EXPLODED",
+      "kind": "exploded",
+      "file": "MW-A-101_receiver_exploded.dxf",
+      "views": [
+        "front",
+        "isometric",
+        "top_interface"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ]
+    },
+    {
+      "drawing_number": "MW-A-101-SE",
+      "title": "RECEIVER ENCLOSURE SECTION / INTERFACE",
+      "kind": "section_interface",
+      "file": "MW-A-101_receiver_section_interface.dxf",
+      "views": [
+        "front",
+        "isometric",
+        "true_brep_section_A-A",
+        "true_brep_section_B-B"
+      ],
+      "layers": [
+        "BORDER",
+        "OUTLINE",
+        "VISIBLE",
+        "HIDDEN",
+        "CENTER",
+        "DIMENSION",
+        "SECTION",
+        "HATCH",
+        "NOTES",
+        "TITLE_BLOCK",
+        "KEEP_OUT",
+        "DATUM",
+        "HARNESS"
+      ]
+    }
+  ]
+}

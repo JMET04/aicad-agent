@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Hirose Electric",
+  "coveredMpns": ["DF13A-5P-1.25H(51)"],
+  "documentNumber": "EDCX-162444-51-08 / 0000995752",
+  "revision": "DIS-H-00027308, 2026-07-29",
+  "originalOfficialUrl": "https://www.hirose.com/en/product/p/CL0536-0304-6-51",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/Hirose_DF13A-5P-1.25H-51_2DDrawing_0000995752.pdf", "size": 160868, "sha256": "bf36337e1144b0cab28d43eac3198601041fc98be0236c5acb94e9fbff8ddc0c"},
+  "page": 1,
+  "section": "DF13A-*P-1.25H(51) dimensions and recommended pattern",
+  "coordinateFrame": {"origin": "10.9 x 5.0 mm body center", "xPositive": "right along pin row", "yPositive": "toward mating face", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"contactCount": 5, "contactPitchMm": 1.25, "contactLandMm": [0.7, 1.8], "reinforcementPadCount": 2, "reinforcementLandMm": [1.6, 2.2]}, "bodyDatum": {"bodyEnvelopeMm": [10.9, 5.0], "nominalHeightMm": 3.6}, "heightBasis": "drawing overall connector dimensions"},
+  "humanExtractionDeclaration": "Manually transcribed from Hirose drawing EDCX-162444-51-08 and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

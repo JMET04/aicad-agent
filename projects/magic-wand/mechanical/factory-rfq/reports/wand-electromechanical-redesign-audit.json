@@ -1,0 +1,652 @@
+{
+  "schema": "aicad_wand_electromechanical_redesign_audit_v1",
+  "status": "candidate_read_only_audit",
+  "revision": "A",
+  "auditDate": "2026-08-21",
+  "scope": {
+    "electronicsMutation": false,
+    "mechanicalReleaseMutation": false,
+    "purpose": "Fail-closed audit and candidate coordinate contract for the wand PCB, controls, enclosure and carrier before a new frozen electronics interface is consumed.",
+    "releaseUse": "NOT_FOR_FABRICATION",
+    "gate": "blocked_pending_frozen_wand_electromechanical_interface"
+  },
+  "auditedInputs": [
+    {
+      "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+      "size": 136781,
+      "sha256": "f845f4308920e7f7f16caefd59ac187465b8eed6bbd7a3311e7e0ccdd3290075"
+    },
+    {
+      "path": "projects/magic-wand/electronics/wand/wand-factory-design.json",
+      "size": 168418,
+      "sha256": "fbf50e36155101fee8c29f18365987547d26227fa0a8591af6edf27a65323fc3"
+    },
+    {
+      "path": "projects/magic-wand/electronics/wand/wand-bom.csv",
+      "size": 4190,
+      "sha256": "e49a31ccec8d7b86a1bb1d8c49fa5d6867881e18941c647f82638d40044aecab"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/factory-rfq/factory-design-input.json",
+      "size": 11962,
+      "sha256": "49336a02dc2b3d0f918a3d717800b34750eda9d6dffb093ca09475f60ec81e3a"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/factory-rfq/source/factory_geometry.py",
+      "size": 27868,
+      "sha256": "90bb9ad8182092dc24a7a8d5b522e4af0c9e3e80f9031c8ca0e9cfea51d9fbf1"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/factory-rfq/reports/wand-pcb-mechanical-interface-analyzer-summary.json",
+      "size": 2094,
+      "sha256": "e5930b5bcf6a746a4ad220418c4b1c3edca6f1d001a7343d20a4a61a7fe9cd16",
+      "analysisMode": "KiCad parser portable read-only analysis summary"
+    }
+  ],
+  "authorities": [
+    {
+      "subject": "SW1",
+      "manufacturer": "ALPS Alpine",
+      "mpn": "SKQGAFE010",
+      "kind": "manufacturer_product_page_and_current_specification",
+      "url": "https://tech.alpsalpine.com/e/products/detail/SKQGAFE010/",
+      "specificationUrl": "https://tech.alpsalpine.com/cms.media/SKQGAF_KQG_706_EN_18ba0d0cc8.pdf",
+      "controlledFacts": {
+        "bodyMm": [5.2, 5.2, 1.5],
+        "operatingDirection": "top_push",
+        "travelMm": 0.25,
+        "operatingForceN": 0.98,
+        "physicalTerminalCount": 4
+      },
+      "boundary": "The member-only production drawing and force-stroke curve must still be captured as controlled artifacts before hard-stop overtravel is frozen."
+    },
+    {
+      "subject": "J1",
+      "manufacturer": "JAE",
+      "mpn": "DX07S016JA1R1500",
+      "kind": "manufacturer_current_product_page",
+      "url": "https://products.jae.com/jp/ja/connectors/category/io/dx07-receptacle/dx07s016ja1r1500/",
+      "controlledFacts": {
+        "drawingNumber": "SJ121837",
+        "status": "current",
+        "contactPositionCount": 16,
+        "mount": "single_row_SMT_with_shell_DIP",
+        "dipLengthMm": 0.9
+      },
+      "boundary": "The current SJ121837 drawing and manufacturer 3D artifact must be hashed and extracted before the mating face, four shell stakes and locating holes drive enclosure geometry."
+    },
+    {
+      "subject": "J2_J3",
+      "manufacturer": "JST",
+      "mpns": [
+        "SM03B-SRSS-TB(LF)(SN)",
+        "SM02B-SRSS-TB(LF)(SN)"
+      ],
+      "kind": "manufacturer_series_catalog",
+      "url": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf",
+      "controlledFacts": {
+        "pitchMm": 1.0,
+        "entry": "side",
+        "reinforcementTabsPresent": true,
+        "nominalBodyWidthByMpnMm": {
+          "SM03B-SRSS-TB(LF)(SN)": 5.0,
+          "SM02B-SRSS-TB(LF)(SN)": 4.0
+        }
+      },
+      "boundary": "Exact per-part 2D/STEP authority files and recommended lands remain required."
+    },
+    {
+      "subject": "U1",
+      "manufacturer": "u-blox",
+      "mpn": "NINA-B302-00B-00",
+      "kind": "manufacturer_datasheet_and_system_integration_manual",
+      "datasheetUrl": "https://content.u-blox.com/sites/default/files/NINA-B3_DataSheet_UBX-17052099.pdf",
+      "integrationManualUrl": "https://content.u-blox.com/sites/default/files/NINA-B3_SIM_UBX-17056748.pdf",
+      "controlledFacts": {
+        "moduleBodyMm": [10.0, 15.0],
+        "overallHeightTypicalMm": 3.83,
+        "overallHeightToleranceMm": {
+          "plus": 0.4,
+          "minus": 0.2
+        },
+        "variant": "NINA-B3x2_internal_metal_PIFA",
+        "preferredPlacement": "host_PCB_corner_with_antenna_feed_pins_15_16_at_corner",
+        "hostGround": "full_GND_plane_under_entire_module_including_antenna_section",
+        "minimumHighLargeMetalPartClearanceMm": 10.0,
+        "minimumCasingClearanceMm": 5.0,
+        "orientation": "antenna_faces_outward"
+      }
+    },
+    {
+      "subject": "L1",
+      "manufacturer": "Coilcraft",
+      "mpn": "XFL4020-222MEC",
+      "kind": "manufacturer_datasheet",
+      "url": "https://www.coilcraft.com/getmedia/50632d43-da1b-4cdb-8ab4-3029cab51df3/xfl4020.pdf",
+      "controlledFacts": {
+        "bodyMm": [4.0, 4.0],
+        "bodyToleranceMm": 0.3,
+        "maximumHeightMm": 2.1
+      }
+    },
+    {
+      "subject": "F1",
+      "manufacturer": "Bourns",
+      "mpn": "MF-FSMF050X-2",
+      "kind": "manufacturer_datasheet",
+      "url": "https://www.bourns.com/docs/product-datasheets/mffsmf.pdf",
+      "controlledFacts": {
+        "package": "0603",
+        "bodyMaximumMm": [1.85, 1.05, 1.0]
+      }
+    }
+  ],
+  "currentCoordinateInference": {
+    "confidence": "high_but_not_frozen",
+    "basis": [
+      "The 15 mm board width fits between the carrier X rails and therefore maps to mechanical X.",
+      "The 80 mm board length maps to the carrier and product Z axis.",
+      "J1 source y=38 plus carrier assembly Z=9 equals the existing service opening Z=47.",
+      "SW1 source y=63 plus carrier assembly Z=9 equals the existing button axis Z=72.",
+      "The carrier PCB ledge top is mechanical Y=0 and the U-channel opens toward +Y."
+    ],
+    "source": {
+      "name": "wand_KiCad_board",
+      "origin": "top-left",
+      "xAxis": "right",
+      "yAxis": "down",
+      "units": "mm",
+      "boardWidthMm": 15.0,
+      "boardHeightMm": 80.0,
+      "boardThicknessMm": 1.6
+    },
+    "mechanical": {
+      "name": "MW-A-001_case",
+      "boardPlane": "XZ",
+      "boardWidthAxis": "+X",
+      "boardLengthAxis": "+Z",
+      "boardNormal": "+Y",
+      "bCuSupportPlaneYmm": 0.0,
+      "fCuMountingPlaneYmm": 1.6,
+      "carrierAssemblyZmm": 9.0
+    },
+    "forwardTransform": {
+      "x": "x_source - 7.5",
+      "y": "height_from_BCu_support_plane",
+      "z": "y_source + 9.0"
+    },
+    "inverseTransform": {
+      "x_source": "x_case + 7.5",
+      "y_source": "z_case - 9.0"
+    },
+    "roundTripTests": [
+      {
+        "sourceMm": [0.0, 0.0],
+        "caseMm": [-7.5, 0.0, 9.0],
+        "passed": true
+      },
+      {
+        "sourceMm": [15.0, 80.0],
+        "caseMm": [7.5, 0.0, 89.0],
+        "passed": true
+      },
+      {
+        "sourceMm": [7.5, 63.0],
+        "caseMm": [0.0, 1.6, 72.0],
+        "role": "candidate_SW1_mounting_datum",
+        "passed": true
+      }
+    ]
+  },
+  "p0Findings": [
+    {
+      "id": "WAND-EM-P0-001",
+      "subject": "SW1_footprint_and_body",
+      "status": "confirmed_mismatch",
+      "current": {
+        "sourceCenterMm": [12.5, 63.0],
+        "rotationDeg": 90.0,
+        "fabBodyMm": [4.0, 3.5],
+        "physicalPads": 2,
+        "padNumbers": ["1", "2"]
+      },
+      "authority": {
+        "bodyMm": [5.2, 5.2, 1.5],
+        "travelMm": 0.25,
+        "physicalTerminals": 4,
+        "operatingDirection": "top_push"
+      },
+      "effect": "The old footprint cannot be used as the mechanical or manufacturing authority and cannot establish a four-terminal land pattern."
+    },
+    {
+      "id": "WAND-EM-P0-002",
+      "subject": "SW1_button_axis",
+      "status": "confirmed_mismatch_under_current_transform",
+      "current": {
+        "sw1CaseAxisMm": [5.0, 72.0],
+        "plungerCaseAxisMm": [0.0, 72.0],
+        "transverseOffsetMm": 5.0
+      },
+      "effect": "The plunger is not coaxial with the switch."
+    },
+    {
+      "id": "WAND-EM-P0-003",
+      "subject": "button_actuation_stack",
+      "status": "confirmed_unclosed",
+      "current": {
+        "bCuSupportYmm": 0.0,
+        "pcbTopFcuYmm": 1.6,
+        "officialSwitchFreeTopYmm": 3.1,
+        "carrierShelfYBandMm": [3.6, 5.4],
+        "switchToShelfFreeGapMm": 0.5,
+        "plungerInnerTipYmm": 6.2,
+        "plungerToShelfFreeGapMm": 0.8,
+        "combinedDeadGapBeforeSwitchCompressionMm": 1.3,
+        "directPlungerToSwitchFreeGapMm": 3.1,
+        "mechanicalTargetTravelMm": 1.2,
+        "officialSwitchTravelMm": 0.25,
+        "uncontrolledOvertravelIfDirectlyCoupledMm": 0.95,
+        "hardStopDefined": false,
+        "releasedPreloadVerified": false
+      },
+      "effect": "The present geometry neither proves actuation within the declared 1.2 mm stroke nor protects the 0.25 mm switch from overtravel. The solid shelf also blocks a direct load path."
+    },
+    {
+      "id": "WAND-EM-P0-004",
+      "subject": "J1_USB_C_footprint",
+      "status": "confirmed_mismatch",
+      "current": {
+        "sourceCenterMm": [12.5, 38.0],
+        "rotationDeg": 90.0,
+        "contactPads": 14,
+        "missingContactPads": ["A8", "B8"],
+        "shellPads": 2,
+        "shellPadType": "SMD",
+        "throughHoleShellStakes": 0
+      },
+      "authority": {
+        "contactPositions": 16,
+        "drawingNumber": "SJ121837",
+        "dipLengthMm": 0.9,
+        "requiredShellStakeAndLocatingGeometry": "pending_controlled_drawing_extraction"
+      },
+      "effect": "The current board, enclosure opening and retention evidence cannot represent the selected JAE part."
+    },
+    {
+      "id": "WAND-EM-P0-005",
+      "subject": "J1_mating_axis_and_enclosure_opening",
+      "status": "confirmed_axis_contract_mismatch",
+      "current": {
+        "j1FootprintCaseCenterMm": [5.0, 1.6, 47.0],
+        "inferredMatingDirection": "+X",
+        "existingOpeningCaseCenterXZmm": [0.0, 47.0],
+        "existingOpeningWall": "-Y"
+      },
+      "effect": "The board-edge mating direction is parallel to the board and cannot pass through the current -Y wall opening."
+    },
+    {
+      "id": "WAND-EM-P0-006",
+      "subject": "J2_J3_reinforcement_lands",
+      "status": "confirmed_missing",
+      "current": {
+        "J2SignalPads": 3,
+        "J2MechanicalPads": 0,
+        "J3SignalPads": 2,
+        "J3MechanicalPads": 0,
+        "footprintNameClaimsOneMechanicalPad": true
+      },
+      "authority": {
+        "reinforcementTabsPresent": true
+      },
+      "effect": "The footprint name, physical entities and manufacturer construction disagree; cable insertion loads are not closed."
+    },
+    {
+      "id": "WAND-EM-P0-007",
+      "subject": "PCB_mount_holes_and_carrier_bosses",
+      "status": "confirmed_mismatch",
+      "current": {
+        "pcbHoles": [
+          {
+            "ref": "H1",
+            "sourceCenterMm": [7.5, 19.5],
+            "caseCenterMm": [0.0, 0.0, 28.5],
+            "finishedDiameterMm": 2.4,
+            "type": "NPTH"
+          },
+          {
+            "ref": "H2",
+            "sourceCenterMm": [7.5, 77.0],
+            "caseCenterMm": [0.0, 0.0, 86.0],
+            "finishedDiameterMm": 2.4,
+            "type": "NPTH"
+          }
+        ],
+        "carrierBossCaseAxesMm": [
+          [-5.5, 31.0],
+          [5.5, 31.0],
+          [-5.5, 77.0],
+          [5.5, 77.0]
+        ],
+        "carrierBossCount": 4,
+        "alignedBossCount": 0
+      },
+      "effect": "No PCB hole can assemble over a current carrier boss; the retention process is undefined."
+    },
+    {
+      "id": "WAND-EM-P0-008",
+      "subject": "PCB_carrier_envelope",
+      "status": "confirmed_zero_nominal_clearance",
+      "current": {
+        "boardWidthMm": 15.0,
+        "carrierPcbEnvelopeWidthMm": 15.0,
+        "nominalClearancePerSideMm": 0.0,
+        "boardLengthMm": 80.0,
+        "carrierPcbEnvelopeLengthMm": 80.0
+      },
+      "effect": "PCB fabrication tolerance, molded shrink/tolerance and insertion variation have no assembly allowance."
+    },
+    {
+      "id": "WAND-EM-P0-009",
+      "subject": "NINA_B302_RF_contract",
+      "status": "confirmed_design_contract_mismatch",
+      "current": {
+        "u1SourceCenterMm": [7.5, 10.5],
+        "u1BodyBboxMm": [2.5, 3.0, 12.5, 18.0],
+        "pin15SourceMm": [9.8, 14.925],
+        "pin16SourceMm": [11.925, 14.05],
+        "nearestFeedPointToHostCornerApproxMm": 14.38,
+        "declaredFactoryJsonKeepoutMm": [1.5, 0.0, 13.5, 8.8],
+        "declaredKeepoutLayers": ["F.Cu", "In1.Cu", "In2.Cu", "B.Cu"],
+        "actualKiCadKeepoutZoneCount": 0,
+        "actualPlaneZones": [
+          {
+            "layer": "In1.Cu",
+            "net": "GND",
+            "bboxMm": [0.3, 0.3, 14.7, 79.7]
+          },
+          {
+            "layer": "In2.Cu",
+            "net": "3V3",
+            "bboxMm": [0.3, 0.3, 14.7, 79.7]
+          }
+        ]
+      },
+      "authority": {
+        "feedCornerPins": [15, 16],
+        "preferredHostPlacement": "corner_or_edge_with_antenna_outward",
+        "hostGroundUnderModule": "full_GND",
+        "metalLargePartClearanceMm": 10.0,
+        "casingClearanceMm": 5.0
+      },
+      "effect": "The declared all-layer copper keepout is absent from the PCB and is conceptually incompatible with the B3x2 full-ground requirement. Electrical ground and mechanical/component keepout must be separate tested contracts."
+    }
+  ],
+  "additionalEnvelopeFindings": [
+    {
+      "id": "WAND-EM-ENV-001",
+      "subject": "U1",
+      "currentFactoryBodyMm": [10.0, 15.0],
+      "currentHeightAuthority": "missing_from_factory_design",
+      "authorityOverallHeightTypicalMm": 3.83,
+      "authorityOverallHeightMaxMm": 4.23,
+      "caseTopYTypicalMm": 5.43,
+      "caseTopYMaxMm": 5.83
+    },
+    {
+      "id": "WAND-EM-ENV-002",
+      "subject": "L1",
+      "currentFactoryBodyMm": [2.0, 1.0],
+      "authorityBodyNominalMm": [4.0, 4.0],
+      "authorityHeightMaxMm": 2.1,
+      "caseTopYMaxMm": 3.7,
+      "status": "confirmed_body_envelope_under_modeled"
+    },
+    {
+      "id": "WAND-EM-ENV-003",
+      "subject": "F1",
+      "currentFactoryBodyMm": [1.6, 0.8],
+      "currentFootprintLibraryName": "Inductor_SMD:L_4.0x4.0mm_H2.0mm",
+      "authorityBodyMaximumMm": [1.85, 1.05, 1.0],
+      "caseTopYMaxMm": 2.6,
+      "status": "confirmed_library_identity_and_body_envelope_mismatch"
+    }
+  ],
+  "candidateUnifiedParameters": {
+    "status": "candidate_not_frozen",
+    "coordinateContract": {
+      "forward": "X=x_source-7.5; Z=y_source+9.0; Y=heightFromBCu",
+      "boardNormal": "+Y",
+      "requiredRoundTripToleranceMm": 0.000001
+    },
+    "SW1": {
+      "sourceCenterMm": [7.5, 63.0],
+      "rotationDeg": 90.0,
+      "caseMountingDatumMm": [0.0, 1.6, 72.0],
+      "caseActuationAxisXZmm": [0.0, 72.0],
+      "actuationNormal": "+Y",
+      "bodyMm": [5.2, 5.2, 1.5],
+      "freeTopYmm": 3.1,
+      "travelMm": 0.25,
+      "physicalTerminalCount": 4,
+      "logicalTerminalPairs": 2,
+      "releasedPreload": "zero_nominal_and_no_false_actuation",
+      "releasedGapMm": "TBD_by_worst_case_tolerance_stack",
+      "hardStopTotalTravelMm": "TBD_by_controlled_force_stroke_authority",
+      "requiredMechanicalChange": "Remove or open the solid carrier shelf over SW1, center a reduced plunger contact land on the actuator, and add a positive hard stop independent of switch bottoming."
+    },
+    "J1": {
+      "sourceCenterMm": [12.5, 38.0],
+      "rotationDeg": 90.0,
+      "caseFootprintCenterMm": [5.0, 1.6, 47.0],
+      "matingDirection": "+X",
+      "targetEnclosureWall": "+X",
+      "contactPositionCount": 16,
+      "requiredContactPads": ["A1", "B12", "A4", "B9", "A5", "B5", "A6", "B6", "A7", "B7", "A8", "B8", "A9", "B4", "A12", "B1"],
+      "shellStakeCount": 4,
+      "shellStakeType": "DIP",
+      "shellStakeLengthMm": 0.9,
+      "openingCenterAndProfile": "TBD_from_controlled_SJ121837_mating_face_and_3D_envelope",
+      "requiredMechanicalChange": "Move the old -Y opening to a source-bound +X wall opening and verify insertion/unmate envelope."
+    },
+    "pcbRetention": {
+      "architecture": "two_hole_minimal_change_candidate",
+      "holes": [
+        {
+          "ref": "H1",
+          "sourceCenterMm": [7.5, 19.5],
+          "caseCenterXZmm": [0.0, 28.5],
+          "finishedDiameterMm": 2.4,
+          "type": "NPTH"
+        },
+        {
+          "ref": "H2",
+          "sourceCenterMm": [7.5, 77.0],
+          "caseCenterXZmm": [0.0, 86.0],
+          "finishedDiameterMm": 2.4,
+          "type": "NPTH"
+        }
+      ],
+      "H3": "ABSENT_BY_DESIGN",
+      "H4": "ABSENT_BY_DESIGN",
+      "requiredMechanicalChange": "Replace the four nonmatching carrier bosses with two coaxial retainers; freeze heat-stake versus screw process before boss/post/bore dimensions are assigned."
+    },
+    "boardEnvelope": {
+      "boardMm": [15.0, 80.0, 1.6],
+      "candidateCarrierChannelWidthMm": 15.4,
+      "candidateNominalWidthClearancePerSideMm": 0.2,
+      "candidateAxialEnvelopeMm": 80.5,
+      "finalValues": "TBD_after_PCB_outline_and_mold_tolerance_stack",
+      "datumScheme": "one_side_width_datum_plus_opposite_clearance_and_one_axial_stop"
+    },
+    "NINA_B302": {
+      "electronicsContract": {
+        "placement": "pins_15_16_feed_corner_at_host_edge_or_corner",
+        "orientation": "antenna_faces_product_outward",
+        "ground": "full_GND_plane_under_entire_module_including_antenna",
+        "proof": "native_KiCad_zone_and_connectivity_evidence"
+      },
+      "mechanicalContract": {
+        "minimumHighLargeMetalPartClearanceMm": 10.0,
+        "minimumCasingClearanceMm": 5.0,
+        "forbiddenClasses": [
+          "metal_fastener",
+          "conductive_coating",
+          "battery_cell",
+          "shield_can",
+          "cable_bundle",
+          "GFRP_spine"
+        ],
+        "proof": "source-bound_3D_keepout_solid_and_interference_report"
+      }
+    }
+  },
+  "requiredFrozenInterfaceFields": {
+    "artifact": {
+      "schema": "aicad_wand_electromechanical_interface_v1",
+      "status": "frozen",
+      "sourceBoard": ["path", "size", "sha256"],
+      "sourceRoutes": ["path", "size", "sha256", "sourceBoard"],
+      "nativeDrc": ["path", "size", "sha256", "violations", "unconnected", "footprintErrors", "ignoredRules"],
+      "coordinateContract": ["source", "mechanical", "forwardTransform", "inverseTransform", "roundTripTests"],
+      "boardDimensionsMm": ["width", "height", "thickness", "tolerances"],
+      "refs": ["SW1", "J1", "J2", "J3", "U1", "L1", "F1", "H1", "H2"]
+    },
+    "perRefCommon": [
+      "ref",
+      "manufacturer",
+      "mpn",
+      "authorityEvidence",
+      "sourceCenterMm",
+      "caseCenterMm",
+      "rotationDeg",
+      "bodyEnvelopeMm",
+      "maximumHeightMm",
+      "padOrHoleGeometry",
+      "roundTripCoordinateEvidence"
+    ],
+    "SW1Specific": [
+      "actuatorCenterMm",
+      "actuationNormal",
+      "freeHeightMm",
+      "travelMm",
+      "forceN",
+      "fourPhysicalPadGeometry",
+      "logicalTerminalPairMap",
+      "allowedPreloadMm",
+      "allowedOvertravelMm"
+    ],
+    "J1Specific": [
+      "matingFaceMm",
+      "matingDirection",
+      "bodyEnvelopeMm",
+      "matingEnvelopeMm",
+      "unmateClearanceMm",
+      "sixteenContactPads",
+      "fourShellDipStakes",
+      "locatingHoles",
+      "officialDrawingNumber",
+      "official3dEvidence"
+    ],
+    "NINASpecific": [
+      "antennaFeedCorner",
+      "antennaDirection",
+      "fullGroundEvidence",
+      "mechanicalKeepoutSolid",
+      "caseClearanceEvidence"
+    ]
+  },
+  "mechanicalImpactClosure": {
+    "directSourceAndParameterFiles": [
+      "projects/magic-wand/mechanical/factory-rfq/factory-design-input.json",
+      "projects/magic-wand/mechanical/factory-rfq/source/factory_geometry.py",
+      "projects/magic-wand/mechanical/factory-rfq/source/factory_release_geometry.py",
+      "projects/magic-wand/mechanical/factory-rfq/source/factory_drawings.py",
+      "projects/magic-wand/mechanical/factory-rfq/source/factory_release_drawings.py",
+      "projects/magic-wand/mechanical/factory-rfq/source/mw_m_002_internal_carrier.py",
+      "projects/magic-wand/mechanical/factory-rfq/source/mw_m_005_press_to_arm_plunger.py",
+      "projects/magic-wand/mechanical/factory-rfq/source/mw_a_001_wand_assembly.py",
+      "tests/test_magic_wand_factory_mechanical.py"
+    ],
+    "geometrySubjectsExpectedToChange": [
+      "MW-M-001A",
+      "MW-M-001B",
+      "MW-M-002",
+      "MW-M-005",
+      "MW-A-001"
+    ],
+    "geometrySubjectsConditionallyChanged": [
+      {
+        "subject": "MW-M-003",
+        "condition": "NINA antenna mechanical clearance requires rear-cap envelope or material-zone change"
+      }
+    ],
+    "geometrySubjectsExpectedUnchanged": [
+      "MW-M-004",
+      "MW-P-001",
+      "MW-M-101",
+      "MW-M-102",
+      "MW-A-101"
+    ],
+    "regeneratedRolesForChangedParts": [
+      "BREP",
+      "STEP",
+      "SLDPRT",
+      "nativeReopenLog",
+      "manufacturingDrawingDXF",
+      "drawingPreview",
+      "modelPreview2d",
+      "modelPreview3d",
+      "sectionEvidence"
+    ],
+    "regeneratedRolesForWandAssembly": [
+      "STEP",
+      "SLDASM",
+      "nativeReopenLog",
+      "generalAssemblyDrawing",
+      "explodedDrawing",
+      "sectionDrawing",
+      "harnessInterfaceDrawing",
+      "assemblyPreview2d",
+      "assemblyPreview3d",
+      "explodedPreview",
+      "sectionPreview",
+      "interferenceReport",
+      "assemblyPositions",
+      "BOM",
+      "AWI",
+      "inspectionPlan",
+      "moldingInput"
+    ],
+    "packageClosure": [
+      "brep-section-intersection-report.json",
+      "feature-dimension-catalog.json",
+      "drawing-text-frame-audit.json",
+      "visual-preview-manifest.json",
+      "artifact-manifest.json",
+      "mechanical-source-manifest.json",
+      "factory-delivery-manifest.json",
+      "reviewer"
+    ],
+    "shaInvariant": "Every subject and artifact not in the changed closure must retain its pre-redesign SHA-256; the finalizer must compare before/after manifests and fail on drift."
+  },
+  "acceptanceGates": [
+    "Frozen electronics interface artifact and board/routes/native DRC SHA closure validate.",
+    "All source-to-case coordinate round trips pass for SW1, J1, H1, H2 and NINA antenna datum.",
+    "SW1 body, four pads, actuator and travel match controlled authority.",
+    "Released-state preload, free travel, actuation travel and positive hard-stop clearance pass worst-case tolerance analysis.",
+    "J1 sixteen contacts, four shell stakes, locating holes, mating face, wall opening and unmate envelope match controlled SJ121837 and 3D authority.",
+    "J2 and J3 reinforcement pads and body envelopes match controlled JST drawings.",
+    "PCB holes and mechanical retainers are coaxial and their selected process is validated.",
+    "PCB channel has positive worst-case assembly clearance while preserving datums.",
+    "NINA full host ground and separate 3D mechanical keepout both pass source-bound evidence.",
+    "Changed wand parts and assembly pass one-solid native reopen, exact interference, meaningful true sections, DXF/readability and real 2D/3D preview checks.",
+    "Unchanged subject hashes remain bit-identical.",
+    "Both mechanical manifests bind the same frozen wand interface SHA and artifact hashes."
+  ],
+  "summary": {
+    "p0Count": 9,
+    "additionalEnvelopeMismatchCount": 3,
+    "releasePassed": false,
+    "nextAction": "Consume only a frozen wand electromechanical interface, then perform a bounded wand-domain redesign and regenerate the declared impact closure."
+  }
+}

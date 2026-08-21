@@ -1,0 +1,33 @@
+{
+  "schema": "aicad_native_tool_execution_log_v1",
+  "gate": "mechanical_part_native_reopen",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true
+  },
+  "subjectId": "MW-M-102",
+  "revision": "B-RFQ",
+  "inputSha256ByRole": {
+    "nativeCad": "8eee47b4203e6a13f8269135abb09caecd87965fcf195a9fedb591cedb9e9400"
+  },
+  "outputSha256ByRole": {
+    "step": "b33996fa7c416d7e38a240c890982189fde7772e1a384325495e141b90243dd7",
+    "manufacturingDrawing": "1fef19dca282954c27443b6a939a52fc09eff8e94c91bbf7a597523e5b63cc94",
+    "drawingPreview": "8086e3e4b52d43f48f85b60af0c92d8bfad39fd99d664e0106c154c6ae45d5c1",
+    "modelPreview": "1c27c544941c89be4f771d438fa5ab8b25b4b9843de76a01c74408f292c16294"
+  },
+  "checks": [
+    {
+      "id": "solidworks-native-reopen",
+      "status": "pass",
+      "detail": "SolidWorks OpenDoc7 warningCode=0 and bodyCount=1; raw execution evidence SHA256 031a05167d861076b22cb922ac98fdf4929f0a14486f91c4bdc13d5968c6a2f0"
+    },
+    {
+      "id": "artifact-hash-closure",
+      "status": "pass",
+      "detail": "Final STEP, manufacturing DXF, real DXF render and STEP geometry render hashes match this exact revision"
+    }
+  ]
+}

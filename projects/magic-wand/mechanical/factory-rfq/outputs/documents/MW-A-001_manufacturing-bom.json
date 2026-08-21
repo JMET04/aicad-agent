@@ -1,0 +1,44 @@
+{
+  "schema": "aicad_manufacturing_bom_v1",
+  "assemblyId": "MW-A-001",
+  "revision": "B-RFQ",
+  "units": "mm",
+  "coordinateSystemId": "MODEL_XYZ",
+  "rows": [
+    {
+      "partId": "MW-M-001A",
+      "revision": "B-RFQ",
+      "quantity": 1
+    },
+    {
+      "partId": "MW-M-001B",
+      "revision": "B-RFQ",
+      "quantity": 1
+    },
+    {
+      "partId": "MW-M-002",
+      "revision": "B-RFQ",
+      "quantity": 1
+    },
+    {
+      "partId": "MW-M-003",
+      "revision": "B-RFQ",
+      "quantity": 1
+    },
+    {
+      "partId": "MW-M-004",
+      "revision": "B-RFQ",
+      "quantity": 1
+    },
+    {
+      "partId": "MW-M-005",
+      "revision": "B-RFQ",
+      "quantity": 1
+    },
+    {
+      "partId": "MW-P-001",
+      "revision": "B-RFQ",
+      "quantity": 1
+    }
+  ]
+}

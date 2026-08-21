@@ -1,0 +1,9759 @@
+{
+  "schema": "aicad.factory-board.v1",
+  "status": "RELEASE_CANDIDATE_ONLY",
+  "board": "receiver",
+  "title": "Magic Wand Low-Voltage Receiver PCB",
+  "dimensions_mm": [
+    50.0,
+    42.0
+  ],
+  "layers": [
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "B.Cu"
+  ],
+  "finished_thickness_mm": 1.6,
+  "copper_oz": 1,
+  "surface_finish": "ENIG_CANDIDATE",
+  "keepouts": [
+    {
+      "name": "NINA_PIFA_KEEP_OUT",
+      "x1": 38.0,
+      "y1": 0.0,
+      "x2": 50.0,
+      "y2": 8.8,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "allow_refs": [
+        "U1"
+      ]
+    },
+    {
+      "name": "LOW_VOLTAGE_ISOLATION_MOAT",
+      "x1": 38.0,
+      "y1": 23.0,
+      "x2": 40.5,
+      "y2": 40.5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "allow_refs": []
+    }
+  ],
+  "differential_pairs": [
+    [
+      "USB_DP_RAW",
+      "USB_DM_RAW"
+    ],
+    [
+      "USB_DP_PROT",
+      "USB_DM_PROT"
+    ]
+  ],
+  "high_current_nets": [
+    "BUCK_SW",
+    "GND",
+    "LOAD_DRAIN",
+    "LOAD_SUPPLY_5_12V",
+    "USB_VBUS_5V",
+    "USB_VBUS_RAW"
+  ],
+  "isolated_nets": [
+    "ISO_OC_COL",
+    "ISO_OC_EMIT"
+  ],
+  "load_voltage_max_v": 12.0,
+  "components": [
+    {
+      "ref": "U1",
+      "value": "NINA-B302-00B-00",
+      "manufacturer": "u-blox",
+      "mpn": "NINA-B302-00B-00",
+      "footprint": "MW_FACTORY:NINA-B302_LGA55",
+      "x": 44.0,
+      "y": 10.5,
+      "width": 10.0,
+      "height": 15.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "GPIO_UNUSED_1",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "2",
+          "name": "GPIO_UNUSED_2",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "3",
+          "name": "GPIO_UNUSED_3",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "4",
+          "name": "GPIO_UNUSED_4",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "5",
+          "name": "GPIO_UNUSED_5",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "6",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "7",
+          "name": "GPIO_UNUSED_7",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "8",
+          "name": "SWO",
+          "net": "SWO",
+          "electrical_type": "output"
+        },
+        {
+          "number": "9",
+          "name": "VCC_IO",
+          "net": "3V3",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "10",
+          "name": "VCC",
+          "net": "3V3",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "11",
+          "name": "SWDCLK",
+          "net": "SWDCLK",
+          "electrical_type": "input"
+        },
+        {
+          "number": "12",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "13",
+          "name": "ANT",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "14",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "15",
+          "name": "SWDIO",
+          "net": "SWDIO",
+          "electrical_type": "bidirectional"
+        },
+        {
+          "number": "16",
+          "name": "GPIO_UNUSED_16",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "17",
+          "name": "GPIO_UNUSED_17",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "18",
+          "name": "GPIO_UNUSED_18",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "19",
+          "name": "RESET_N",
+          "net": "RESET_N",
+          "electrical_type": "input"
+        },
+        {
+          "number": "20",
+          "name": "GPIO_UNUSED_20",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "21",
+          "name": "GPIO_UNUSED_21",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "22",
+          "name": "GPIO_UNUSED_22",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "23",
+          "name": "GPIO_UNUSED_23",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "24",
+          "name": "GPIO_UNUSED_24",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "25",
+          "name": "GPIO_UNUSED_25",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "26",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "27",
+          "name": "GPIO_UNUSED_27",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "28",
+          "name": "GPIO_UNUSED_28",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "29",
+          "name": "GPIO_UNUSED_29",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "30",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "31",
+          "name": "VBUS",
+          "net": "USB_VBUS_5V",
+          "electrical_type": "input"
+        },
+        {
+          "number": "32",
+          "name": "P0.11",
+          "net": "UART_TX_3V3",
+          "electrical_type": "output"
+        },
+        {
+          "number": "33",
+          "name": "P1.09",
+          "net": "UART_RX_3V3",
+          "electrical_type": "input"
+        },
+        {
+          "number": "34",
+          "name": "GPIO_UNUSED_34",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "35",
+          "name": "GPIO_UNUSED_35",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "36",
+          "name": "GPIO_UNUSED_36",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "37",
+          "name": "GPIO_UNUSED_37",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "38",
+          "name": "GPIO_UNUSED_38",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "39",
+          "name": "GPIO_UNUSED_39",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "40",
+          "name": "GPIO_UNUSED_40",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "41",
+          "name": "GPIO_UNUSED_41",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "42",
+          "name": "P0.26",
+          "net": "PWM_3V3",
+          "electrical_type": "output"
+        },
+        {
+          "number": "43",
+          "name": "P0.06",
+          "net": "OPTO_DRV",
+          "electrical_type": "output"
+        },
+        {
+          "number": "44",
+          "name": "P0.27",
+          "net": "LOAD_GATE_CTL",
+          "electrical_type": "output"
+        },
+        {
+          "number": "45",
+          "name": "GPIO_UNUSED_45",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "46",
+          "name": "P0.12",
+          "net": "PWR_GOOD_N",
+          "electrical_type": "input"
+        },
+        {
+          "number": "47",
+          "name": "GPIO_UNUSED_47",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "48",
+          "name": "GPIO_UNUSED_48",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "49",
+          "name": "GPIO_UNUSED_49",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "50",
+          "name": "GPIO_UNUSED_50",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "51",
+          "name": "GPIO_UNUSED_51",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "52",
+          "name": "GPIO_UNUSED_52",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "53",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "54",
+          "name": "USB_DP",
+          "net": "USB_DP_PROT",
+          "electrical_type": "bidirectional"
+        },
+        {
+          "number": "55",
+          "name": "USB_DM",
+          "net": "USB_DM_PROT",
+          "electrical_type": "bidirectional"
+        },
+        {
+          "number": "EGP",
+          "name": "EXPOSED_GROUND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "LGA-55",
+      "dnp": false,
+      "notes": "Internal PIFA faces top/right nonconductive enclosure",
+      "datasheet": "https://content.u-blox.com/sites/default/files/NINA-B3_DataSheet_UBX-17052099.pdf",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -4.425,
+          -5.45
+        ],
+        "2": [
+          -4.425,
+          -4.45
+        ],
+        "3": [
+          -4.425,
+          -3.45
+        ],
+        "4": [
+          -4.425,
+          -2.45
+        ],
+        "5": [
+          -4.425,
+          -1.4500000000000002
+        ],
+        "6": [
+          -4.425,
+          -0.4500000000000002
+        ],
+        "7": [
+          -4.425,
+          0.5499999999999998
+        ],
+        "8": [
+          -4.425,
+          1.5499999999999998
+        ],
+        "9": [
+          -4.425,
+          2.55
+        ],
+        "10": [
+          -4.425,
+          3.55
+        ],
+        "11": [
+          -2.3,
+          4.425
+        ],
+        "12": [
+          -1.15,
+          4.425
+        ],
+        "13": [
+          0.0,
+          4.425
+        ],
+        "14": [
+          1.15,
+          4.425
+        ],
+        "15": [
+          2.3,
+          4.425
+        ],
+        "16": [
+          4.425,
+          3.55
+        ],
+        "17": [
+          4.425,
+          2.55
+        ],
+        "18": [
+          4.425,
+          1.5499999999999998
+        ],
+        "19": [
+          4.425,
+          0.5499999999999998
+        ],
+        "20": [
+          4.425,
+          -0.4500000000000002
+        ],
+        "21": [
+          4.425,
+          -1.4500000000000002
+        ],
+        "22": [
+          4.425,
+          -2.45
+        ],
+        "23": [
+          4.425,
+          -3.45
+        ],
+        "24": [
+          4.425,
+          -4.45
+        ],
+        "25": [
+          4.425,
+          -5.45
+        ],
+        "26": [
+          -3.0,
+          2.2
+        ],
+        "27": [
+          -3.0,
+          -3.5
+        ],
+        "28": [
+          -3.0,
+          -2.4
+        ],
+        "29": [
+          -3.0,
+          -1.3
+        ],
+        "30": [
+          -3.0,
+          -0.2
+        ],
+        "31": [
+          -3.0,
+          0.9
+        ],
+        "32": [
+          -1.9,
+          -3.5
+        ],
+        "33": [
+          -1.9,
+          -2.4
+        ],
+        "34": [
+          -1.9,
+          -1.3
+        ],
+        "35": [
+          -1.9,
+          -0.2
+        ],
+        "36": [
+          -1.9,
+          0.9
+        ],
+        "37": [
+          1.9,
+          0.9
+        ],
+        "38": [
+          1.9,
+          -0.2
+        ],
+        "39": [
+          1.9,
+          -1.3
+        ],
+        "40": [
+          1.9,
+          -2.4
+        ],
+        "41": [
+          1.9,
+          -3.5
+        ],
+        "42": [
+          3.0,
+          0.9
+        ],
+        "43": [
+          3.0,
+          -0.2
+        ],
+        "44": [
+          3.0,
+          -1.3
+        ],
+        "45": [
+          3.0,
+          -2.4
+        ],
+        "46": [
+          3.0,
+          -3.5
+        ],
+        "47": [
+          -1.15,
+          2.1
+        ],
+        "48": [
+          0.0,
+          2.1
+        ],
+        "49": [
+          1.15,
+          2.1
+        ],
+        "50": [
+          -1.15,
+          3.25
+        ],
+        "51": [
+          0.0,
+          3.25
+        ],
+        "52": [
+          1.15,
+          3.25
+        ],
+        "53": [
+          3.0,
+          2.2
+        ],
+        "54": [
+          -0.575,
+          -4.35
+        ],
+        "55": [
+          0.575,
+          -4.35
+        ],
+        "EGP": [
+          0.0,
+          0.35
+        ]
+      }
+    },
+    {
+      "ref": "J1",
+      "value": "USB-C-16P",
+      "manufacturer": "JAE",
+      "mpn": "DX07S016JA1R1500",
+      "footprint": "Connector_USB:USB_C_Receptacle_USB2.0_16P",
+      "x": 3.0,
+      "y": 19.0,
+      "width": 7.0,
+      "height": 9.0,
+      "pins": [
+        {
+          "number": "A1",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "A4",
+          "name": "VBUS",
+          "net": "USB_VBUS_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "A5",
+          "name": "CC1",
+          "net": "USB_CC1",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "A6",
+          "name": "D+",
+          "net": "USB_DP_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "A7",
+          "name": "D-",
+          "net": "USB_DM_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "A9",
+          "name": "VBUS",
+          "net": "USB_VBUS_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "A12",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "B1",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "B4",
+          "name": "VBUS",
+          "net": "USB_VBUS_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "B5",
+          "name": "CC2",
+          "net": "USB_CC2",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "B6",
+          "name": "D+",
+          "net": "USB_DP_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "B7",
+          "name": "D-",
+          "net": "USB_DM_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "B9",
+          "name": "VBUS",
+          "net": "USB_VBUS_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "B12",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "SH1",
+          "name": "SHIELD",
+          "net": "USB_SHIELD",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "SH2",
+          "name": "SHIELD",
+          "net": "USB_SHIELD",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 270.0,
+      "assembly": "SMT_TOP",
+      "package": "USB-C-16P",
+      "dnp": false,
+      "notes": "USB power/service only",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "A1": [
+          -3.25,
+          -3.2
+        ],
+        "B12": [
+          -2.75,
+          -3.2
+        ],
+        "A4": [
+          -2.25,
+          -3.2
+        ],
+        "B9": [
+          -1.75,
+          -3.2
+        ],
+        "A5": [
+          -1.25,
+          -3.2
+        ],
+        "B5": [
+          -0.75,
+          -3.2
+        ],
+        "A6": [
+          -0.25,
+          -3.2
+        ],
+        "B6": [
+          0.25,
+          -3.2
+        ],
+        "A7": [
+          0.75,
+          -3.2
+        ],
+        "B7": [
+          1.25,
+          -3.2
+        ],
+        "A9": [
+          1.75,
+          -3.2
+        ],
+        "B4": [
+          2.25,
+          -3.2
+        ],
+        "A12": [
+          2.75,
+          -3.2
+        ],
+        "B1": [
+          3.25,
+          -3.2
+        ],
+        "SH1": [
+          -4.0,
+          0.75
+        ],
+        "SH2": [
+          4.0,
+          0.75
+        ]
+      }
+    },
+    {
+      "ref": "U6",
+      "value": "USBLC6-2SC6",
+      "manufacturer": "STMicroelectronics",
+      "mpn": "USBLC6-2SC6",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "x": 9.0,
+      "y": 19.0,
+      "width": 3.0,
+      "height": 3.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "I/O1_RAW",
+          "net": "USB_DP_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "3",
+          "name": "I/O2_RAW",
+          "net": "USB_DM_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "4",
+          "name": "I/O2_PROT",
+          "net": "USB_DM_PROT",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "5",
+          "name": "VBUS",
+          "net": "USB_VBUS_5V",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "6",
+          "name": "I/O1_PROT",
+          "net": "USB_DP_PROT",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "SOT-23-6",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.25,
+          -0.95
+        ],
+        "2": [
+          -1.25,
+          0.0
+        ],
+        "3": [
+          -1.25,
+          0.95
+        ],
+        "4": [
+          1.25,
+          0.95
+        ],
+        "5": [
+          1.25,
+          0.0
+        ],
+        "6": [
+          1.25,
+          -0.95
+        ]
+      }
+    },
+    {
+      "ref": "F1",
+      "value": "500mA PTC",
+      "manufacturer": "Bourns",
+      "mpn": "MF-FSMF050X-2",
+      "footprint": "Inductor_SMD:L_4.0x4.0mm_H2.0mm",
+      "x": 8.0,
+      "y": 14.5,
+      "width": 1.6,
+      "height": 0.8,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "USB_VBUS_RAW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "USB_VBUS_5V",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0603",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.55,
+          0.0
+        ],
+        "2": [
+          0.55,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "U2",
+      "value": "TPS62162DSGR",
+      "manufacturer": "Texas Instruments",
+      "mpn": "TPS62162DSGR",
+      "footprint": "Package_SON:WSON-8-1EP_2x2mm_P0.5mm",
+      "x": 15.0,
+      "y": 14.0,
+      "width": 2.2,
+      "height": 2.2,
+      "pins": [
+        {
+          "number": "1",
+          "name": "PGND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "2",
+          "name": "VIN",
+          "net": "USB_VBUS_5V",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "3",
+          "name": "EN",
+          "net": "USB_VBUS_5V",
+          "electrical_type": "input"
+        },
+        {
+          "number": "4",
+          "name": "AGND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "5",
+          "name": "FB",
+          "net": "GND",
+          "electrical_type": "input"
+        },
+        {
+          "number": "6",
+          "name": "VOS",
+          "net": "3V3",
+          "electrical_type": "input"
+        },
+        {
+          "number": "7",
+          "name": "SW",
+          "net": "BUCK_SW",
+          "electrical_type": "power_out"
+        },
+        {
+          "number": "8",
+          "name": "PG",
+          "net": "PWR_GOOD_N",
+          "electrical_type": "open_collector"
+        },
+        {
+          "number": "EP",
+          "name": "THERMAL_PAD",
+          "net": "GND",
+          "electrical_type": "power_in"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "WSON-8-EP",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "https://www.ti.com/product/TPS62162",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.15,
+          -0.75
+        ],
+        "2": [
+          -1.15,
+          -0.25
+        ],
+        "3": [
+          -1.15,
+          0.25
+        ],
+        "4": [
+          -1.15,
+          0.75
+        ],
+        "8": [
+          1.15,
+          -0.75
+        ],
+        "7": [
+          1.15,
+          -0.25
+        ],
+        "6": [
+          1.15,
+          0.25
+        ],
+        "5": [
+          1.15,
+          0.75
+        ],
+        "EP": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "L1",
+      "value": "2.2uH",
+      "manufacturer": "Murata",
+      "mpn": "LQH32PN2R2NN0L",
+      "footprint": "Inductor_SMD:L_4.0x4.0mm_H2.0mm",
+      "x": 20.5,
+      "y": 14.0,
+      "width": 2.0,
+      "height": 1.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "BUCK_SW",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "3V3",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "L_4x4",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.45,
+          0.0
+        ],
+        "2": [
+          1.45,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "U3",
+      "value": "SN74LVC2T45DCUR",
+      "manufacturer": "Texas Instruments",
+      "mpn": "SN74LVC2T45DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "x": 25.0,
+      "y": 16.0,
+      "width": 2.3,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "VCCA",
+          "net": "3V3",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "2",
+          "name": "A1",
+          "net": "UART_TX_3V3",
+          "electrical_type": "input"
+        },
+        {
+          "number": "3",
+          "name": "A2",
+          "net": "PWM_3V3",
+          "electrical_type": "input"
+        },
+        {
+          "number": "4",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "5",
+          "name": "DIR",
+          "net": "3V3",
+          "electrical_type": "input"
+        },
+        {
+          "number": "6",
+          "name": "B2",
+          "net": "PWM_XLAT",
+          "electrical_type": "output"
+        },
+        {
+          "number": "7",
+          "name": "B1",
+          "net": "UART_TX_XLAT",
+          "electrical_type": "output"
+        },
+        {
+          "number": "8",
+          "name": "VCCB",
+          "net": "VREF_IO",
+          "electrical_type": "power_in"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "VSSOP-8",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.9,
+          -0.75
+        ],
+        "2": [
+          -1.9,
+          -0.25
+        ],
+        "3": [
+          -1.9,
+          0.25
+        ],
+        "4": [
+          -1.9,
+          0.75
+        ],
+        "8": [
+          1.9,
+          -0.75
+        ],
+        "7": [
+          1.9,
+          -0.25
+        ],
+        "6": [
+          1.9,
+          0.25
+        ],
+        "5": [
+          1.9,
+          0.75
+        ]
+      }
+    },
+    {
+      "ref": "U4",
+      "value": "SN74LVC2T45DCUR",
+      "manufacturer": "Texas Instruments",
+      "mpn": "SN74LVC2T45DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "x": 25.0,
+      "y": 24.0,
+      "width": 2.3,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "VCCA",
+          "net": "3V3",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "2",
+          "name": "A1",
+          "net": "UART_RX_3V3",
+          "electrical_type": "output"
+        },
+        {
+          "number": "3",
+          "name": "A2",
+          "net": "NC",
+          "electrical_type": "no_connect"
+        },
+        {
+          "number": "4",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "5",
+          "name": "DIR",
+          "net": "GND",
+          "electrical_type": "input"
+        },
+        {
+          "number": "6",
+          "name": "B2",
+          "net": "GND",
+          "electrical_type": "input"
+        },
+        {
+          "number": "7",
+          "name": "B1",
+          "net": "UART_RX_VREF",
+          "electrical_type": "input"
+        },
+        {
+          "number": "8",
+          "name": "VCCB",
+          "net": "VREF_IO",
+          "electrical_type": "power_in"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "VSSOP-8",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.9,
+          -0.75
+        ],
+        "2": [
+          -1.9,
+          -0.25
+        ],
+        "3": [
+          -1.9,
+          0.25
+        ],
+        "4": [
+          -1.9,
+          0.75
+        ],
+        "8": [
+          1.9,
+          -0.75
+        ],
+        "7": [
+          1.9,
+          -0.25
+        ],
+        "6": [
+          1.9,
+          0.25
+        ],
+        "5": [
+          1.9,
+          0.75
+        ]
+      }
+    },
+    {
+      "ref": "J2",
+      "value": "LOGIC_IF_5P",
+      "manufacturer": "TE Connectivity",
+      "mpn": "1-1734592-5",
+      "footprint": "Connector_TE:TE_1-1734592-5_1x05_P1.27mm_Horizontal",
+      "x": 25.0,
+      "y": 39.5,
+      "width": 8.0,
+      "height": 4.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "VREF_IO",
+          "net": "VREF_IO",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "3",
+          "name": "UART_TX",
+          "net": "UART_TX_VREF",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "4",
+          "name": "UART_RX",
+          "net": "UART_RX_VREF",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "5",
+          "name": "PWM_AUX",
+          "net": "PWM_VREF",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "1.27mm-SMT-5",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -2.54,
+          0.0
+        ],
+        "2": [
+          -1.27,
+          0.0
+        ],
+        "3": [
+          0.0,
+          0.0
+        ],
+        "4": [
+          1.27,
+          0.0
+        ],
+        "5": [
+          2.54,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "U5",
+      "value": "TLP291(SE",
+      "manufacturer": "Toshiba",
+      "mpn": "TLP291(GB-TP,SE",
+      "footprint": "Package_SO:SO-4_4.4x3.6mm_P2.54mm",
+      "x": 35.0,
+      "y": 31.0,
+      "width": 4.4,
+      "height": 3.6,
+      "pins": [
+        {
+          "number": "1",
+          "name": "ANODE",
+          "net": "OPTO_ANODE",
+          "electrical_type": "input"
+        },
+        {
+          "number": "2",
+          "name": "CATHODE",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "3",
+          "name": "EMITTER",
+          "net": "ISO_OC_EMIT",
+          "electrical_type": "open_emitter"
+        },
+        {
+          "number": "4",
+          "name": "COLLECTOR",
+          "net": "ISO_OC_COL",
+          "electrical_type": "open_collector"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "SO-4",
+      "dnp": false,
+      "notes": "Low-voltage signal isolation only",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -3.05,
+          -1.27
+        ],
+        "2": [
+          -3.05,
+          1.27
+        ],
+        "3": [
+          3.05,
+          1.27
+        ],
+        "4": [
+          3.05,
+          -1.27
+        ]
+      }
+    },
+    {
+      "ref": "J3",
+      "value": "ISO_OC_2P",
+      "manufacturer": "TE Connectivity",
+      "mpn": "282834-2",
+      "footprint": "TerminalBlock_TE:TE_282834-2_1x02_P2.54mm_Horizontal",
+      "x": 47.0,
+      "y": 32.0,
+      "width": 6.0,
+      "height": 6.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "ISO_OC_COL",
+          "net": "ISO_OC_COL",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "ISO_OC_EMIT",
+          "net": "ISO_OC_EMIT",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TB-2.54-2",
+      "dnp": false,
+      "notes": "3.3-24V target, 10mA max; no mains",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.27,
+          0.0
+        ],
+        "2": [
+          1.27,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "Q1",
+      "value": "CSD17313Q2",
+      "manufacturer": "Texas Instruments",
+      "mpn": "CSD17313Q2",
+      "footprint": "Package_SON:SON_2x2mm_P0.65mm",
+      "x": 15.0,
+      "y": 31.0,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "GATE",
+          "net": "LOAD_GATE",
+          "electrical_type": "input"
+        },
+        {
+          "number": "2",
+          "name": "SOURCE",
+          "net": "GND",
+          "electrical_type": "power_in"
+        },
+        {
+          "number": "3",
+          "name": "DRAIN",
+          "net": "LOAD_DRAIN",
+          "electrical_type": "power_out"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "SON-2x2",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "https://www.ti.com/lit/ds/symlink/csd17313q2.pdf",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.1,
+          -0.65
+        ],
+        "2": [
+          -1.1,
+          0.65
+        ],
+        "3": [
+          1.1,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "J4",
+      "value": "LOAD_OUT_3P",
+      "manufacturer": "TE Connectivity",
+      "mpn": "282834-3",
+      "footprint": "TerminalBlock_TE:TE_282834-3_1x03_P2.54mm_Horizontal",
+      "x": 5.0,
+      "y": 38.5,
+      "width": 8.0,
+      "height": 6.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "LOAD_SUPPLY",
+          "net": "LOAD_SUPPLY_5_12V",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "LOAD_DRAIN",
+          "net": "LOAD_DRAIN",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "3",
+          "name": "LOAD_GND",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TB-2.54-3",
+      "dnp": false,
+      "notes": "5-12V SELV only; 1A continuous EVT limit",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -2.54,
+          0.0
+        ],
+        "2": [
+          0.0,
+          0.0
+        ],
+        "3": [
+          2.54,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "D1",
+      "value": "SS24 flyback",
+      "manufacturer": "Diodes Inc.",
+      "mpn": "SS24-13-F",
+      "footprint": "Diode_SMD:D_SOD-123",
+      "x": 10.0,
+      "y": 32.0,
+      "width": 3.7,
+      "height": 1.8,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "LOAD_DRAIN",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "LOAD_SUPPLY_5_12V",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "SOD-123",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.3,
+          0.0
+        ],
+        "2": [
+          1.3,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "D2",
+      "value": "SMBJ15A TVS",
+      "manufacturer": "Littelfuse",
+      "mpn": "SMBJ15A",
+      "footprint": "Diode_SMD:D_SOD-123",
+      "x": 7.0,
+      "y": 29.0,
+      "width": 3.7,
+      "height": 1.8,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "GND",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "LOAD_SUPPLY_5_12V",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "SOD-123",
+      "dnp": true,
+      "notes": "DNP until actual load transient review",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -1.3,
+          0.0
+        ],
+        "2": [
+          1.3,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_CC1",
+      "value": "5.1k",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-075K1L",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 4.0,
+      "y": 13.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "USB_CC1",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_CC2",
+      "value": "5.1k",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-075K1L",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 4.0,
+      "y": 25.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "USB_CC2",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_PG",
+      "value": "10k",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-0710KL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 17.0,
+      "y": 18.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "3V3",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "PWR_GOOD_N",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_TX",
+      "value": "33R",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-0733RL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 29.0,
+      "y": 16.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "UART_TX_XLAT",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "UART_TX_VREF",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_PWM",
+      "value": "33R",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-0733RL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 29.0,
+      "y": 19.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "PWM_XLAT",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "PWM_VREF",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_TX_PD",
+      "value": "100k",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-07100KL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 21.0,
+      "y": 18.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "UART_TX_3V3",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_PWM_PD",
+      "value": "100k",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-07100KL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 21.0,
+      "y": 21.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "PWM_3V3",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_RX_PD",
+      "value": "100k",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-07100KL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 29.0,
+      "y": 24.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "UART_RX_VREF",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_OPTO",
+      "value": "430R",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-07430RL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 31.0,
+      "y": 31.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "OPTO_DRV",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "OPTO_ANODE",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_GATE",
+      "value": "33R",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-0733RL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 19.0,
+      "y": 31.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "LOAD_GATE_CTL",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "LOAD_GATE",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "R_GATE_PD",
+      "value": "100k",
+      "manufacturer": "Yageo",
+      "mpn": "RC0402FR-07100KL",
+      "footprint": "Resistor_SMD:R_0402_HandSolder",
+      "x": 17.0,
+      "y": 34.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "LOAD_GATE",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "C_USB",
+      "value": "10uF 10V X5R",
+      "manufacturer": "Murata",
+      "mpn": "GRM21BR61A106KE19L",
+      "footprint": "Capacitor_SMD:C_0805_HandSolder",
+      "x": 10.0,
+      "y": 12.0,
+      "width": 2.0,
+      "height": 1.25,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "USB_VBUS_5V",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0805",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.7,
+          0.0
+        ],
+        "2": [
+          0.7,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "C_BUCK_IN",
+      "value": "10uF 10V X5R",
+      "manufacturer": "Murata",
+      "mpn": "GRM21BR61A106KE19L",
+      "footprint": "Capacitor_SMD:C_0805_HandSolder",
+      "x": 13.0,
+      "y": 10.0,
+      "width": 2.0,
+      "height": 1.25,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "USB_VBUS_5V",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0805",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.7,
+          0.0
+        ],
+        "2": [
+          0.7,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "C_BUCK_OUT",
+      "value": "22uF 6.3V X5R",
+      "manufacturer": "Murata",
+      "mpn": "GRM21BR60J226ME39L",
+      "footprint": "Capacitor_SMD:C_0805_HandSolder",
+      "x": 21.0,
+      "y": 11.0,
+      "width": 2.0,
+      "height": 1.25,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "3V3",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0805",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.7,
+          0.0
+        ],
+        "2": [
+          0.7,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "C_U1",
+      "value": "10uF 6.3V X5R",
+      "manufacturer": "Murata",
+      "mpn": "GRM21BR60J106KE19L",
+      "footprint": "Capacitor_SMD:C_0805_HandSolder",
+      "x": 37.0,
+      "y": 17.0,
+      "width": 2.0,
+      "height": 1.25,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "3V3",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0805",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.7,
+          0.0
+        ],
+        "2": [
+          0.7,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "C_U3A",
+      "value": "100nF 16V X7R",
+      "manufacturer": "Murata",
+      "mpn": "GRM155R71C104KA88D",
+      "footprint": "Capacitor_SMD:C_0402_HandSolder",
+      "x": 24.0,
+      "y": 13.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "3V3",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "C_U3B",
+      "value": "100nF 16V X7R",
+      "manufacturer": "Murata",
+      "mpn": "GRM155R71C104KA88D",
+      "footprint": "Capacitor_SMD:C_0402_HandSolder",
+      "x": 27.0,
+      "y": 13.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "VREF_IO",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "C_U4A",
+      "value": "100nF 16V X7R",
+      "manufacturer": "Murata",
+      "mpn": "GRM155R71C104KA88D",
+      "footprint": "Capacitor_SMD:C_0402_HandSolder",
+      "x": 23.0,
+      "y": 27.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "3V3",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "C_U4B",
+      "value": "100nF 16V X7R",
+      "manufacturer": "Murata",
+      "mpn": "GRM155R71C104KA88D",
+      "footprint": "Capacitor_SMD:C_0402_HandSolder",
+      "x": 27.0,
+      "y": 27.0,
+      "width": 1.0,
+      "height": 0.55,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "VREF_IO",
+          "electrical_type": "passive"
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "SMT_TOP",
+      "package": "0402",
+      "dnp": false,
+      "notes": "",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          -0.35,
+          0.0
+        ],
+        "2": [
+          0.35,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "TP1",
+      "value": "3V3",
+      "manufacturer": "Keystone-compatible",
+      "mpn": "5015-equivalent",
+      "footprint": "TestPoint:TestPoint_Plated_Hole_D2.0mm",
+      "x": 13.0,
+      "y": 22.0,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "3V3",
+          "net": "3V3",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TESTPOINT",
+      "dnp": false,
+      "notes": "Production probe point; do not fit component",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "TP2",
+      "value": "GND",
+      "manufacturer": "Keystone-compatible",
+      "mpn": "5015-equivalent",
+      "footprint": "TestPoint:TestPoint_Plated_Hole_D2.0mm",
+      "x": 17.0,
+      "y": 22.0,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "GND",
+          "net": "GND",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TESTPOINT",
+      "dnp": false,
+      "notes": "Production probe point; do not fit component",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "TP3",
+      "value": "SWDIO",
+      "manufacturer": "Keystone-compatible",
+      "mpn": "5015-equivalent",
+      "footprint": "TestPoint:TestPoint_Plated_Hole_D2.0mm",
+      "x": 35.0,
+      "y": 18.0,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "SWDIO",
+          "net": "SWDIO",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TESTPOINT",
+      "dnp": false,
+      "notes": "Production probe point; do not fit component",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "TP4",
+      "value": "SWDCLK",
+      "manufacturer": "Keystone-compatible",
+      "mpn": "5015-equivalent",
+      "footprint": "TestPoint:TestPoint_Plated_Hole_D2.0mm",
+      "x": 39.0,
+      "y": 20.5,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "SWDCLK",
+          "net": "SWDCLK",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TESTPOINT",
+      "dnp": false,
+      "notes": "Production probe point; do not fit component",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "TP5",
+      "value": "RESET_N",
+      "manufacturer": "Keystone-compatible",
+      "mpn": "5015-equivalent",
+      "footprint": "TestPoint:TestPoint_Plated_Hole_D2.0mm",
+      "x": 42.0,
+      "y": 20.5,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "RESET_N",
+          "net": "RESET_N",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TESTPOINT",
+      "dnp": false,
+      "notes": "Production probe point; do not fit component",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "TP6",
+      "value": "SWO",
+      "manufacturer": "Keystone-compatible",
+      "mpn": "5015-equivalent",
+      "footprint": "TestPoint:TestPoint_Plated_Hole_D2.0mm",
+      "x": 45.0,
+      "y": 20.5,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "SWO",
+          "net": "SWO",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TESTPOINT",
+      "dnp": false,
+      "notes": "Production probe point; do not fit component",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "TP7",
+      "value": "VREF_IO",
+      "manufacturer": "Keystone-compatible",
+      "mpn": "5015-equivalent",
+      "footprint": "TestPoint:TestPoint_Plated_Hole_D2.0mm",
+      "x": 31.0,
+      "y": 26.0,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "VREF_IO",
+          "net": "VREF_IO",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TESTPOINT",
+      "dnp": false,
+      "notes": "Production probe point; do not fit component",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "TP8",
+      "value": "LOAD_DRAIN",
+      "manufacturer": "Keystone-compatible",
+      "mpn": "5015-equivalent",
+      "footprint": "TestPoint:TestPoint_Plated_Hole_D2.0mm",
+      "x": 11.0,
+      "y": 35.0,
+      "width": 2.0,
+      "height": 2.0,
+      "pins": [
+        {
+          "number": "1",
+          "name": "LOAD_DRAIN",
+          "net": "LOAD_DRAIN",
+          "electrical_type": "passive"
+        }
+      ],
+      "rotation": 0.0,
+      "assembly": "THT",
+      "package": "TESTPOINT",
+      "dnp": false,
+      "notes": "Production probe point; do not fit component",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "1": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "H1",
+      "value": "MountingHole_2.4mm",
+      "manufacturer": "MECHANICAL",
+      "mpn": "NPTH",
+      "footprint": "MountingHole:MountingHole_2.4mm",
+      "x": 3.0,
+      "y": 3.0,
+      "width": 3.4,
+      "height": 3.4,
+      "pins": [],
+      "rotation": 0.0,
+      "assembly": "NPTH",
+      "package": "NPTH",
+      "dnp": false,
+      "notes": "Non-plated mechanical hole",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "NPTH": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "H2",
+      "value": "MountingHole_2.4mm",
+      "manufacturer": "MECHANICAL",
+      "mpn": "NPTH",
+      "footprint": "MountingHole:MountingHole_2.4mm",
+      "x": 47.0,
+      "y": 3.0,
+      "width": 3.4,
+      "height": 3.4,
+      "pins": [],
+      "rotation": 0.0,
+      "assembly": "NPTH",
+      "package": "NPTH",
+      "dnp": false,
+      "notes": "Non-plated mechanical hole",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "NPTH": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "H3",
+      "value": "MountingHole_2.4mm",
+      "manufacturer": "MECHANICAL",
+      "mpn": "NPTH",
+      "footprint": "MountingHole:MountingHole_2.4mm",
+      "x": 15.0,
+      "y": 39.0,
+      "width": 3.4,
+      "height": 3.4,
+      "pins": [],
+      "rotation": 0.0,
+      "assembly": "NPTH",
+      "package": "NPTH",
+      "dnp": false,
+      "notes": "Non-plated mechanical hole",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "NPTH": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "ref": "H4",
+      "value": "MountingHole_2.4mm",
+      "manufacturer": "MECHANICAL",
+      "mpn": "NPTH",
+      "footprint": "MountingHole:MountingHole_2.4mm",
+      "x": 37.0,
+      "y": 39.0,
+      "width": 3.4,
+      "height": 3.4,
+      "pins": [],
+      "rotation": 0.0,
+      "assembly": "NPTH",
+      "package": "NPTH",
+      "dnp": false,
+      "notes": "Non-plated mechanical hole",
+      "datasheet": "",
+      "lcsc": "",
+      "exact_land_pattern": true,
+      "pad_positions": {
+        "NPTH": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ],
+  "pads": [
+    {
+      "ref": "U1",
+      "number": "1",
+      "net": "NC",
+      "x": 39.575,
+      "y": 5.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "2",
+      "net": "NC",
+      "x": 39.575,
+      "y": 6.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "3",
+      "net": "NC",
+      "x": 39.575,
+      "y": 7.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "4",
+      "net": "NC",
+      "x": 39.575,
+      "y": 8.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "5",
+      "net": "NC",
+      "x": 39.575,
+      "y": 9.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "6",
+      "net": "GND",
+      "x": 39.575,
+      "y": 10.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "7",
+      "net": "NC",
+      "x": 39.575,
+      "y": 11.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "8",
+      "net": "SWO",
+      "x": 39.575,
+      "y": 12.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "9",
+      "net": "3V3",
+      "x": 39.575,
+      "y": 13.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "10",
+      "net": "3V3",
+      "x": 39.575,
+      "y": 14.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "11",
+      "net": "SWDCLK",
+      "x": 41.7,
+      "y": 14.925,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.15,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "12",
+      "net": "GND",
+      "x": 42.85,
+      "y": 14.925,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.15,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "13",
+      "net": "NC",
+      "x": 44.0,
+      "y": 14.925,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.15,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "14",
+      "net": "GND",
+      "x": 45.15,
+      "y": 14.925,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.15,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "15",
+      "net": "SWDIO",
+      "x": 46.3,
+      "y": 14.925,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.15,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "16",
+      "net": "NC",
+      "x": 48.425,
+      "y": 14.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "17",
+      "net": "NC",
+      "x": 48.425,
+      "y": 13.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "18",
+      "net": "NC",
+      "x": 48.425,
+      "y": 12.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "19",
+      "net": "RESET_N",
+      "x": 48.425,
+      "y": 11.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "20",
+      "net": "NC",
+      "x": 48.425,
+      "y": 10.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "21",
+      "net": "NC",
+      "x": 48.425,
+      "y": 9.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "22",
+      "net": "NC",
+      "x": 48.425,
+      "y": 8.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "23",
+      "net": "NC",
+      "x": 48.425,
+      "y": 7.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "24",
+      "net": "NC",
+      "x": 48.425,
+      "y": 6.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "25",
+      "net": "NC",
+      "x": 48.425,
+      "y": 5.05,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "26",
+      "net": "GND",
+      "x": 41.0,
+      "y": 12.7,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "27",
+      "net": "NC",
+      "x": 41.0,
+      "y": 7.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "28",
+      "net": "NC",
+      "x": 41.0,
+      "y": 8.1,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "29",
+      "net": "NC",
+      "x": 41.0,
+      "y": 9.2,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "30",
+      "net": "GND",
+      "x": 41.0,
+      "y": 10.3,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "31",
+      "net": "USB_VBUS_5V",
+      "x": 41.0,
+      "y": 11.4,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "32",
+      "net": "UART_TX_3V3",
+      "x": 42.1,
+      "y": 7.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "33",
+      "net": "UART_RX_3V3",
+      "x": 42.1,
+      "y": 8.1,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "34",
+      "net": "NC",
+      "x": 42.1,
+      "y": 9.2,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "35",
+      "net": "NC",
+      "x": 42.1,
+      "y": 10.3,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "36",
+      "net": "NC",
+      "x": 42.1,
+      "y": 11.4,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "37",
+      "net": "NC",
+      "x": 45.9,
+      "y": 11.4,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "38",
+      "net": "NC",
+      "x": 45.9,
+      "y": 10.3,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "39",
+      "net": "NC",
+      "x": 45.9,
+      "y": 9.2,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "40",
+      "net": "NC",
+      "x": 45.9,
+      "y": 8.1,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "41",
+      "net": "NC",
+      "x": 45.9,
+      "y": 7.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "42",
+      "net": "PWM_3V3",
+      "x": 47.0,
+      "y": 11.4,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "43",
+      "net": "OPTO_DRV",
+      "x": 47.0,
+      "y": 10.3,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "44",
+      "net": "LOAD_GATE_CTL",
+      "x": 47.0,
+      "y": 9.2,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "45",
+      "net": "NC",
+      "x": 47.0,
+      "y": 8.1,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "46",
+      "net": "PWR_GOOD_N",
+      "x": 47.0,
+      "y": 7.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "47",
+      "net": "NC",
+      "x": 42.85,
+      "y": 12.6,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "48",
+      "net": "NC",
+      "x": 44.0,
+      "y": 12.6,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "49",
+      "net": "NC",
+      "x": 45.15,
+      "y": 12.6,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "50",
+      "net": "NC",
+      "x": 42.85,
+      "y": 13.75,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "51",
+      "net": "NC",
+      "x": 44.0,
+      "y": 13.75,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "52",
+      "net": "NC",
+      "x": 45.15,
+      "y": 13.75,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "53",
+      "net": "GND",
+      "x": 47.0,
+      "y": 12.7,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "54",
+      "net": "USB_DP_PROT",
+      "x": 43.425,
+      "y": 6.15,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "55",
+      "net": "USB_DM_PROT",
+      "x": 44.575,
+      "y": 6.15,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U1",
+      "number": "EGP",
+      "net": "GND",
+      "x": 44.0,
+      "y": 10.85,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "A1",
+      "net": "GND",
+      "x": 6.2,
+      "y": 15.75,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "B12",
+      "net": "GND",
+      "x": 6.2,
+      "y": 16.25,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "A4",
+      "net": "USB_VBUS_RAW",
+      "x": 6.2,
+      "y": 16.75,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "B9",
+      "net": "USB_VBUS_RAW",
+      "x": 6.2,
+      "y": 17.25,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "A5",
+      "net": "USB_CC1",
+      "x": 6.2,
+      "y": 17.75,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "B5",
+      "net": "USB_CC2",
+      "x": 6.2,
+      "y": 18.25,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "A6",
+      "net": "USB_DP_RAW",
+      "x": 6.2,
+      "y": 18.75,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "B6",
+      "net": "USB_DP_RAW",
+      "x": 6.2,
+      "y": 19.25,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "A7",
+      "net": "USB_DM_RAW",
+      "x": 6.2,
+      "y": 19.75,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "B7",
+      "net": "USB_DM_RAW",
+      "x": 6.2,
+      "y": 20.25,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "A9",
+      "net": "USB_VBUS_RAW",
+      "x": 6.2,
+      "y": 20.75,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "B4",
+      "net": "USB_VBUS_RAW",
+      "x": 6.2,
+      "y": 21.25,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "A12",
+      "net": "GND",
+      "x": 6.2,
+      "y": 21.75,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "B1",
+      "net": "GND",
+      "x": 6.2,
+      "y": 22.25,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 0.25,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "SH1",
+      "net": "USB_SHIELD",
+      "x": 2.25,
+      "y": 15.0,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 1.6,
+      "drill": 0.0
+    },
+    {
+      "ref": "J1",
+      "number": "SH2",
+      "net": "USB_SHIELD",
+      "x": 2.25,
+      "y": 23.0,
+      "kind": "smd",
+      "width": 1.0,
+      "height": 1.6,
+      "drill": 0.0
+    },
+    {
+      "ref": "U6",
+      "number": "1",
+      "net": "USB_DP_RAW",
+      "x": 7.75,
+      "y": 18.05,
+      "kind": "smd",
+      "width": 1.05,
+      "height": 0.6,
+      "drill": 0.0
+    },
+    {
+      "ref": "U6",
+      "number": "2",
+      "net": "GND",
+      "x": 7.75,
+      "y": 19.0,
+      "kind": "smd",
+      "width": 1.05,
+      "height": 0.6,
+      "drill": 0.0
+    },
+    {
+      "ref": "U6",
+      "number": "3",
+      "net": "USB_DM_RAW",
+      "x": 7.75,
+      "y": 19.95,
+      "kind": "smd",
+      "width": 1.05,
+      "height": 0.6,
+      "drill": 0.0
+    },
+    {
+      "ref": "U6",
+      "number": "4",
+      "net": "USB_DM_PROT",
+      "x": 10.25,
+      "y": 19.95,
+      "kind": "smd",
+      "width": 1.05,
+      "height": 0.6,
+      "drill": 0.0
+    },
+    {
+      "ref": "U6",
+      "number": "5",
+      "net": "USB_VBUS_5V",
+      "x": 10.25,
+      "y": 19.0,
+      "kind": "smd",
+      "width": 1.05,
+      "height": 0.6,
+      "drill": 0.0
+    },
+    {
+      "ref": "U6",
+      "number": "6",
+      "net": "USB_DP_PROT",
+      "x": 10.25,
+      "y": 18.05,
+      "kind": "smd",
+      "width": 1.05,
+      "height": 0.6,
+      "drill": 0.0
+    },
+    {
+      "ref": "F1",
+      "number": "1",
+      "net": "USB_VBUS_RAW",
+      "x": 7.45,
+      "y": 14.5,
+      "kind": "smd",
+      "width": 0.6,
+      "height": 0.75,
+      "drill": 0.0
+    },
+    {
+      "ref": "F1",
+      "number": "2",
+      "net": "USB_VBUS_5V",
+      "x": 8.55,
+      "y": 14.5,
+      "kind": "smd",
+      "width": 0.6,
+      "height": 0.75,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "1",
+      "net": "GND",
+      "x": 13.85,
+      "y": 13.25,
+      "kind": "smd",
+      "width": 0.8,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "2",
+      "net": "USB_VBUS_5V",
+      "x": 13.85,
+      "y": 13.75,
+      "kind": "smd",
+      "width": 0.8,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "3",
+      "net": "USB_VBUS_5V",
+      "x": 13.85,
+      "y": 14.25,
+      "kind": "smd",
+      "width": 0.8,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "4",
+      "net": "GND",
+      "x": 13.85,
+      "y": 14.75,
+      "kind": "smd",
+      "width": 0.8,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "8",
+      "net": "PWR_GOOD_N",
+      "x": 16.15,
+      "y": 13.25,
+      "kind": "smd",
+      "width": 0.8,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "7",
+      "net": "BUCK_SW",
+      "x": 16.15,
+      "y": 13.75,
+      "kind": "smd",
+      "width": 0.8,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "6",
+      "net": "3V3",
+      "x": 16.15,
+      "y": 14.25,
+      "kind": "smd",
+      "width": 0.8,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "5",
+      "net": "GND",
+      "x": 16.15,
+      "y": 14.75,
+      "kind": "smd",
+      "width": 0.8,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U2",
+      "number": "EP",
+      "net": "GND",
+      "x": 15.0,
+      "y": 14.0,
+      "kind": "smd",
+      "width": 0.9,
+      "height": 1.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "L1",
+      "number": "1",
+      "net": "BUCK_SW",
+      "x": 19.05,
+      "y": 14.0,
+      "kind": "smd",
+      "width": 1.4,
+      "height": 2.2,
+      "drill": 0.0
+    },
+    {
+      "ref": "L1",
+      "number": "2",
+      "net": "3V3",
+      "x": 21.95,
+      "y": 14.0,
+      "kind": "smd",
+      "width": 1.4,
+      "height": 2.2,
+      "drill": 0.0
+    },
+    {
+      "ref": "U3",
+      "number": "1",
+      "net": "3V3",
+      "x": 23.1,
+      "y": 15.25,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U3",
+      "number": "2",
+      "net": "UART_TX_3V3",
+      "x": 23.1,
+      "y": 15.75,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U3",
+      "number": "3",
+      "net": "PWM_3V3",
+      "x": 23.1,
+      "y": 16.25,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U3",
+      "number": "4",
+      "net": "GND",
+      "x": 23.1,
+      "y": 16.75,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U3",
+      "number": "8",
+      "net": "VREF_IO",
+      "x": 26.9,
+      "y": 15.25,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U3",
+      "number": "7",
+      "net": "UART_TX_XLAT",
+      "x": 26.9,
+      "y": 15.75,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U3",
+      "number": "6",
+      "net": "PWM_XLAT",
+      "x": 26.9,
+      "y": 16.25,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U3",
+      "number": "5",
+      "net": "3V3",
+      "x": 26.9,
+      "y": 16.75,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U4",
+      "number": "1",
+      "net": "3V3",
+      "x": 23.1,
+      "y": 23.25,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U4",
+      "number": "2",
+      "net": "UART_RX_3V3",
+      "x": 23.1,
+      "y": 23.75,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U4",
+      "number": "3",
+      "net": "NC",
+      "x": 23.1,
+      "y": 24.25,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U4",
+      "number": "4",
+      "net": "GND",
+      "x": 23.1,
+      "y": 24.75,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U4",
+      "number": "8",
+      "net": "VREF_IO",
+      "x": 26.9,
+      "y": 23.25,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U4",
+      "number": "7",
+      "net": "UART_RX_VREF",
+      "x": 26.9,
+      "y": 23.75,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U4",
+      "number": "6",
+      "net": "GND",
+      "x": 26.9,
+      "y": 24.25,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "U4",
+      "number": "5",
+      "net": "GND",
+      "x": 26.9,
+      "y": 24.75,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 0.3,
+      "drill": 0.0
+    },
+    {
+      "ref": "J2",
+      "number": "1",
+      "net": "GND",
+      "x": 22.46,
+      "y": 39.5,
+      "kind": "smd",
+      "width": 0.6,
+      "height": 1.35,
+      "drill": 0.0
+    },
+    {
+      "ref": "J2",
+      "number": "2",
+      "net": "VREF_IO",
+      "x": 23.73,
+      "y": 39.5,
+      "kind": "smd",
+      "width": 0.6,
+      "height": 1.35,
+      "drill": 0.0
+    },
+    {
+      "ref": "J2",
+      "number": "3",
+      "net": "UART_TX_VREF",
+      "x": 25.0,
+      "y": 39.5,
+      "kind": "smd",
+      "width": 0.6,
+      "height": 1.35,
+      "drill": 0.0
+    },
+    {
+      "ref": "J2",
+      "number": "4",
+      "net": "UART_RX_VREF",
+      "x": 26.27,
+      "y": 39.5,
+      "kind": "smd",
+      "width": 0.6,
+      "height": 1.35,
+      "drill": 0.0
+    },
+    {
+      "ref": "J2",
+      "number": "5",
+      "net": "PWM_VREF",
+      "x": 27.54,
+      "y": 39.5,
+      "kind": "smd",
+      "width": 0.6,
+      "height": 1.35,
+      "drill": 0.0
+    },
+    {
+      "ref": "U5",
+      "number": "1",
+      "net": "OPTO_ANODE",
+      "x": 31.95,
+      "y": 29.73,
+      "kind": "smd",
+      "width": 1.6,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U5",
+      "number": "2",
+      "net": "GND",
+      "x": 31.95,
+      "y": 32.27,
+      "kind": "smd",
+      "width": 1.6,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U5",
+      "number": "3",
+      "net": "ISO_OC_EMIT",
+      "x": 38.05,
+      "y": 32.27,
+      "kind": "smd",
+      "width": 1.6,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "U5",
+      "number": "4",
+      "net": "ISO_OC_COL",
+      "x": 38.05,
+      "y": 29.73,
+      "kind": "smd",
+      "width": 1.6,
+      "height": 0.7,
+      "drill": 0.0
+    },
+    {
+      "ref": "J3",
+      "number": "1",
+      "net": "ISO_OC_COL",
+      "x": 45.73,
+      "y": 32.0,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "J3",
+      "number": "2",
+      "net": "ISO_OC_EMIT",
+      "x": 48.27,
+      "y": 32.0,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "Q1",
+      "number": "1",
+      "net": "LOAD_GATE",
+      "x": 13.9,
+      "y": 30.35,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.55,
+      "drill": 0.0
+    },
+    {
+      "ref": "Q1",
+      "number": "2",
+      "net": "GND",
+      "x": 13.9,
+      "y": 31.65,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 0.55,
+      "drill": 0.0
+    },
+    {
+      "ref": "Q1",
+      "number": "3",
+      "net": "LOAD_DRAIN",
+      "x": 16.1,
+      "y": 31.0,
+      "kind": "smd",
+      "width": 1.15,
+      "height": 1.35,
+      "drill": 0.0
+    },
+    {
+      "ref": "J4",
+      "number": "1",
+      "net": "LOAD_SUPPLY_5_12V",
+      "x": 2.46,
+      "y": 38.5,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "J4",
+      "number": "2",
+      "net": "LOAD_DRAIN",
+      "x": 5.0,
+      "y": 38.5,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "J4",
+      "number": "3",
+      "net": "GND",
+      "x": 7.54,
+      "y": 38.5,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "D1",
+      "number": "1",
+      "net": "LOAD_DRAIN",
+      "x": 8.7,
+      "y": 32.0,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 1.4,
+      "drill": 0.0
+    },
+    {
+      "ref": "D1",
+      "number": "2",
+      "net": "LOAD_SUPPLY_5_12V",
+      "x": 11.3,
+      "y": 32.0,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 1.4,
+      "drill": 0.0
+    },
+    {
+      "ref": "D2",
+      "number": "1",
+      "net": "GND",
+      "x": 5.7,
+      "y": 29.0,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 1.4,
+      "drill": 0.0
+    },
+    {
+      "ref": "D2",
+      "number": "2",
+      "net": "LOAD_SUPPLY_5_12V",
+      "x": 8.3,
+      "y": 29.0,
+      "kind": "smd",
+      "width": 1.2,
+      "height": 1.4,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_CC1",
+      "number": "1",
+      "net": "USB_CC1",
+      "x": 3.65,
+      "y": 13.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_CC1",
+      "number": "2",
+      "net": "GND",
+      "x": 4.35,
+      "y": 13.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_CC2",
+      "number": "1",
+      "net": "USB_CC2",
+      "x": 3.65,
+      "y": 25.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_CC2",
+      "number": "2",
+      "net": "GND",
+      "x": 4.35,
+      "y": 25.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_PG",
+      "number": "1",
+      "net": "3V3",
+      "x": 16.65,
+      "y": 18.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_PG",
+      "number": "2",
+      "net": "PWR_GOOD_N",
+      "x": 17.35,
+      "y": 18.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_TX",
+      "number": "1",
+      "net": "UART_TX_XLAT",
+      "x": 28.65,
+      "y": 16.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_TX",
+      "number": "2",
+      "net": "UART_TX_VREF",
+      "x": 29.35,
+      "y": 16.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_PWM",
+      "number": "1",
+      "net": "PWM_XLAT",
+      "x": 28.65,
+      "y": 19.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_PWM",
+      "number": "2",
+      "net": "PWM_VREF",
+      "x": 29.35,
+      "y": 19.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_TX_PD",
+      "number": "1",
+      "net": "UART_TX_3V3",
+      "x": 20.65,
+      "y": 18.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_TX_PD",
+      "number": "2",
+      "net": "GND",
+      "x": 21.35,
+      "y": 18.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_PWM_PD",
+      "number": "1",
+      "net": "PWM_3V3",
+      "x": 20.65,
+      "y": 21.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_PWM_PD",
+      "number": "2",
+      "net": "GND",
+      "x": 21.35,
+      "y": 21.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_RX_PD",
+      "number": "1",
+      "net": "UART_RX_VREF",
+      "x": 28.65,
+      "y": 24.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_RX_PD",
+      "number": "2",
+      "net": "GND",
+      "x": 29.35,
+      "y": 24.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_OPTO",
+      "number": "1",
+      "net": "OPTO_DRV",
+      "x": 30.65,
+      "y": 31.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_OPTO",
+      "number": "2",
+      "net": "OPTO_ANODE",
+      "x": 31.35,
+      "y": 31.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_GATE",
+      "number": "1",
+      "net": "LOAD_GATE_CTL",
+      "x": 18.65,
+      "y": 31.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_GATE",
+      "number": "2",
+      "net": "LOAD_GATE",
+      "x": 19.35,
+      "y": 31.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_GATE_PD",
+      "number": "1",
+      "net": "LOAD_GATE",
+      "x": 16.65,
+      "y": 34.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "R_GATE_PD",
+      "number": "2",
+      "net": "GND",
+      "x": 17.35,
+      "y": 34.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_USB",
+      "number": "1",
+      "net": "USB_VBUS_5V",
+      "x": 9.3,
+      "y": 12.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.1,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_USB",
+      "number": "2",
+      "net": "GND",
+      "x": 10.7,
+      "y": 12.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.1,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_BUCK_IN",
+      "number": "1",
+      "net": "USB_VBUS_5V",
+      "x": 12.3,
+      "y": 10.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.1,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_BUCK_IN",
+      "number": "2",
+      "net": "GND",
+      "x": 13.7,
+      "y": 10.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.1,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_BUCK_OUT",
+      "number": "1",
+      "net": "3V3",
+      "x": 20.3,
+      "y": 11.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.1,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_BUCK_OUT",
+      "number": "2",
+      "net": "GND",
+      "x": 21.7,
+      "y": 11.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.1,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U1",
+      "number": "1",
+      "net": "3V3",
+      "x": 36.3,
+      "y": 17.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.1,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U1",
+      "number": "2",
+      "net": "GND",
+      "x": 37.7,
+      "y": 17.0,
+      "kind": "smd",
+      "width": 0.7,
+      "height": 1.1,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U3A",
+      "number": "1",
+      "net": "3V3",
+      "x": 23.65,
+      "y": 13.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U3A",
+      "number": "2",
+      "net": "GND",
+      "x": 24.35,
+      "y": 13.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U3B",
+      "number": "1",
+      "net": "VREF_IO",
+      "x": 26.65,
+      "y": 13.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U3B",
+      "number": "2",
+      "net": "GND",
+      "x": 27.35,
+      "y": 13.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U4A",
+      "number": "1",
+      "net": "3V3",
+      "x": 22.65,
+      "y": 27.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U4A",
+      "number": "2",
+      "net": "GND",
+      "x": 23.35,
+      "y": 27.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U4B",
+      "number": "1",
+      "net": "VREF_IO",
+      "x": 26.65,
+      "y": 27.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "C_U4B",
+      "number": "2",
+      "net": "GND",
+      "x": 27.35,
+      "y": 27.0,
+      "kind": "smd",
+      "width": 0.4,
+      "height": 0.5,
+      "drill": 0.0
+    },
+    {
+      "ref": "TP1",
+      "number": "1",
+      "net": "3V3",
+      "x": 13.0,
+      "y": 22.0,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "TP2",
+      "number": "1",
+      "net": "GND",
+      "x": 17.0,
+      "y": 22.0,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "TP3",
+      "number": "1",
+      "net": "SWDIO",
+      "x": 35.0,
+      "y": 18.0,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "TP4",
+      "number": "1",
+      "net": "SWDCLK",
+      "x": 39.0,
+      "y": 20.5,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "TP5",
+      "number": "1",
+      "net": "RESET_N",
+      "x": 42.0,
+      "y": 20.5,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "TP6",
+      "number": "1",
+      "net": "SWO",
+      "x": 45.0,
+      "y": 20.5,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "TP7",
+      "number": "1",
+      "net": "VREF_IO",
+      "x": 31.0,
+      "y": 26.0,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "TP8",
+      "number": "1",
+      "net": "LOAD_DRAIN",
+      "x": 11.0,
+      "y": 35.0,
+      "kind": "tht",
+      "width": 1.8,
+      "height": 1.8,
+      "drill": 1.0
+    },
+    {
+      "ref": "H1",
+      "number": "",
+      "net": "",
+      "x": 3.0,
+      "y": 3.0,
+      "kind": "npth",
+      "width": 2.4,
+      "height": 2.4,
+      "drill": 2.4
+    },
+    {
+      "ref": "H2",
+      "number": "",
+      "net": "",
+      "x": 47.0,
+      "y": 3.0,
+      "kind": "npth",
+      "width": 2.4,
+      "height": 2.4,
+      "drill": 2.4
+    },
+    {
+      "ref": "H3",
+      "number": "",
+      "net": "",
+      "x": 15.0,
+      "y": 39.0,
+      "kind": "npth",
+      "width": 2.4,
+      "height": 2.4,
+      "drill": 2.4
+    },
+    {
+      "ref": "H4",
+      "number": "",
+      "net": "",
+      "x": 37.0,
+      "y": 39.0,
+      "kind": "npth",
+      "width": 2.4,
+      "height": 2.4,
+      "drill": 2.4
+    }
+  ],
+  "routes": [
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        16.5898,
+        14.25
+      ],
+      "end": [
+        16.15,
+        14.25
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        16.65,
+        17.1076
+      ],
+      "end": [
+        18.0487,
+        15.7089
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        16.65,
+        18.0
+      ],
+      "end": [
+        16.65,
+        17.1076
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        18.0487,
+        15.7089
+      ],
+      "end": [
+        16.5898,
+        14.25
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        20.3,
+        11.0
+      ],
+      "end": [
+        21.1522,
+        11.8522
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        21.1522,
+        11.8522
+      ],
+      "end": [
+        22.5022,
+        11.8522
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        21.95,
+        14.0
+      ],
+      "end": [
+        23.1,
+        15.15
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        22.1538,
+        23.3496
+      ],
+      "end": [
+        23.0004,
+        23.3496
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        22.1538,
+        26.5038
+      ],
+      "end": [
+        22.1538,
+        23.3496
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        22.5022,
+        11.8522
+      ],
+      "end": [
+        23.65,
+        13.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        22.65,
+        14.0
+      ],
+      "end": [
+        21.95,
+        14.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        22.65,
+        27.0
+      ],
+      "end": [
+        22.1538,
+        26.5038
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        23.0004,
+        23.3496
+      ],
+      "end": [
+        23.1,
+        23.25
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        23.1,
+        15.15
+      ],
+      "end": [
+        23.1,
+        15.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        23.1,
+        15.25
+      ],
+      "end": [
+        23.7823,
+        15.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        23.1,
+        23.25
+      ],
+      "end": [
+        21.5,
+        23.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        23.65,
+        13.0
+      ],
+      "end": [
+        22.65,
+        14.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        23.7823,
+        15.25
+      ],
+      "end": [
+        25.051,
+        16.5187
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        25.051,
+        16.5187
+      ],
+      "end": [
+        25.051,
+        16.6504
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        25.051,
+        16.6504
+      ],
+      "end": [
+        26.8004,
+        16.6504
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "3V3",
+      "layer": "F.Cu",
+      "start": [
+        26.8004,
+        16.6504
+      ],
+      "end": [
+        26.9,
+        16.75
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "BUCK_SW",
+      "layer": "F.Cu",
+      "start": [
+        16.1746,
+        13.7746
+      ],
+      "end": [
+        16.15,
+        13.75
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "BUCK_SW",
+      "layer": "F.Cu",
+      "start": [
+        19.05,
+        13.7746
+      ],
+      "end": [
+        16.1746,
+        13.7746
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "BUCK_SW",
+      "layer": "F.Cu",
+      "start": [
+        19.05,
+        14.0
+      ],
+      "end": [
+        19.05,
+        13.7746
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        4.35,
+        25.0
+      ],
+      "end": [
+        4.4317,
+        25.0817
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        4.4317,
+        13.0817
+      ],
+      "end": [
+        4.35,
+        13.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        4.4317,
+        25.0817
+      ],
+      "end": [
+        4.4318,
+        25.0817
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        4.4318,
+        13.0817
+      ],
+      "end": [
+        4.4317,
+        13.0817
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        4.4318,
+        13.9818
+      ],
+      "end": [
+        4.4318,
+        13.0817
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        4.4318,
+        25.0817
+      ],
+      "end": [
+        4.4318,
+        27.7318
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        4.4318,
+        27.7318
+      ],
+      "end": [
+        5.7,
+        29.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        15.75
+      ],
+      "end": [
+        4.4318,
+        13.9818
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        16.25
+      ],
+      "end": [
+        6.2,
+        15.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        21.75
+      ],
+      "end": [
+        6.2,
+        22.25
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        22.25
+      ],
+      "end": [
+        6.2,
+        23.15
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        22.25
+      ],
+      "end": [
+        7.1105,
+        22.25
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        23.15
+      ],
+      "end": [
+        4.35,
+        25.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        7.1105,
+        22.25
+      ],
+      "end": [
+        8.6342,
+        20.7263
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        7.75,
+        19.0
+      ],
+      "end": [
+        8.65,
+        19.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        8.0743,
+        19.3243
+      ],
+      "end": [
+        7.75,
+        19.0
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        8.6342,
+        19.3243
+      ],
+      "end": [
+        8.0743,
+        19.3243
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        8.6342,
+        20.7263
+      ],
+      "end": [
+        8.6342,
+        19.3243
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        8.8207,
+        20.9128
+      ],
+      "end": [
+        8.6342,
+        20.7263
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        10.3161,
+        20.9128
+      ],
+      "end": [
+        8.8207,
+        20.9128
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        10.6532,
+        20.5757
+      ],
+      "end": [
+        10.3161,
+        20.9128
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        10.7,
+        12.0
+      ],
+      "end": [
+        12.6,
+        12.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        12.6,
+        12.0
+      ],
+      "end": [
+        13.85,
+        13.25
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        12.6917,
+        20.5757
+      ],
+      "end": [
+        10.6532,
+        20.5757
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        13.7,
+        10.0
+      ],
+      "end": [
+        13.7,
+        10.9
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        13.7,
+        10.9
+      ],
+      "end": [
+        12.6,
+        12.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        13.8746,
+        13.2746
+      ],
+      "end": [
+        13.85,
+        13.25
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        14.5994,
+        30.9506
+      ],
+      "end": [
+        13.9,
+        31.65
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        14.9648,
+        13.2746
+      ],
+      "end": [
+        13.8746,
+        13.2746
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.0,
+        13.3098
+      ],
+      "end": [
+        14.9648,
+        13.2746
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.0,
+        14.0
+      ],
+      "end": [
+        15.0,
+        13.3098
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.0,
+        14.0
+      ],
+      "end": [
+        15.0,
+        14.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.0,
+        14.75
+      ],
+      "end": [
+        13.85,
+        14.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.0465,
+        30.9506
+      ],
+      "end": [
+        14.5994,
+        30.9506
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.1489,
+        30.1222
+      ],
+      "end": [
+        15.1489,
+        30.8482
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.1489,
+        30.8482
+      ],
+      "end": [
+        15.0465,
+        30.9506
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.3607,
+        29.9104
+      ],
+      "end": [
+        15.1489,
+        30.1222
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.8041,
+        14.75
+      ],
+      "end": [
+        15.0,
+        14.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.8041,
+        14.75
+      ],
+      "end": [
+        15.8041,
+        20.5757
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.8041,
+        20.5757
+      ],
+      "end": [
+        12.6917,
+        20.5757
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        15.8041,
+        20.8041
+      ],
+      "end": [
+        15.8041,
+        20.5757
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        16.15,
+        14.75
+      ],
+      "end": [
+        15.8041,
+        14.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        16.701,
+        29.9104
+      ],
+      "end": [
+        15.3607,
+        29.9104
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        17.0,
+        22.0
+      ],
+      "end": [
+        15.8041,
+        20.8041
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        17.0,
+        22.0
+      ],
+      "end": [
+        20.5501,
+        22.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        17.35,
+        30.5594
+      ],
+      "end": [
+        16.701,
+        29.9104
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        17.35,
+        34.0
+      ],
+      "end": [
+        17.35,
+        30.5594
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        17.35,
+        34.0
+      ],
+      "end": [
+        22.46,
+        39.11
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        20.5501,
+        22.0
+      ],
+      "end": [
+        21.35,
+        21.2001
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        21.35,
+        18.0
+      ],
+      "end": [
+        21.85,
+        18.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        21.35,
+        21.0
+      ],
+      "end": [
+        21.4884,
+        20.8616
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        21.35,
+        21.2001
+      ],
+      "end": [
+        21.35,
+        21.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        21.4884,
+        18.1384
+      ],
+      "end": [
+        21.35,
+        18.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        21.4884,
+        20.8616
+      ],
+      "end": [
+        21.4884,
+        18.1384
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        21.7,
+        11.0
+      ],
+      "end": [
+        22.5981,
+        11.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        21.85,
+        18.0
+      ],
+      "end": [
+        23.1,
+        16.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        22.46,
+        39.11
+      ],
+      "end": [
+        22.46,
+        39.5
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        22.5981,
+        11.0
+      ],
+      "end": [
+        24.35,
+        12.7519
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        22.7498,
+        22.5999
+      ],
+      "end": [
+        21.35,
+        21.2001
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        23.1,
+        16.75
+      ],
+      "end": [
+        23.1,
+        17.55
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        23.35,
+        24.75
+      ],
+      "end": [
+        23.1,
+        24.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        23.35,
+        27.0
+      ],
+      "end": [
+        23.35,
+        24.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        23.8827,
+        22.5999
+      ],
+      "end": [
+        22.7498,
+        22.5999
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        24.35,
+        12.7519
+      ],
+      "end": [
+        24.35,
+        13.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        24.35,
+        12.7519
+      ],
+      "end": [
+        24.7087,
+        12.3932
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        24.35,
+        13.0
+      ],
+      "end": [
+        24.35,
+        12.1
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        24.7087,
+        12.3932
+      ],
+      "end": [
+        26.9581,
+        12.3932
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        25.5328,
+        24.25
+      ],
+      "end": [
+        23.8827,
+        22.5999
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        26.9,
+        24.25
+      ],
+      "end": [
+        25.5328,
+        24.25
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        26.9,
+        24.25
+      ],
+      "end": [
+        26.9,
+        24.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        26.9,
+        24.75
+      ],
+      "end": [
+        23.35,
+        24.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        26.9,
+        24.75
+      ],
+      "end": [
+        27.35,
+        24.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        26.9581,
+        12.3932
+      ],
+      "end": [
+        27.35,
+        12.7851
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        27.35,
+        12.7851
+      ],
+      "end": [
+        27.35,
+        13.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        27.35,
+        24.75
+      ],
+      "end": [
+        27.35,
+        27.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        27.35,
+        24.75
+      ],
+      "end": [
+        28.8231,
+        24.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        27.35,
+        27.0
+      ],
+      "end": [
+        27.845,
+        26.505
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        28.8231,
+        24.75
+      ],
+      "end": [
+        29.35,
+        24.2231
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        29.35,
+        24.2231
+      ],
+      "end": [
+        29.35,
+        24.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        37.7,
+        17.0
+      ],
+      "end": [
+        37.7,
+        15.2
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        40.75,
+        10.05
+      ],
+      "end": [
+        39.575,
+        10.05
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "GND",
+      "layer": "F.Cu",
+      "start": [
+        41.0,
+        10.3
+      ],
+      "end": [
+        40.75,
+        10.05
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "ISO_OC_COL",
+      "layer": "F.Cu",
+      "start": [
+        40.32,
+        32.0
+      ],
+      "end": [
+        38.05,
+        29.73
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "ISO_OC_COL",
+      "layer": "F.Cu",
+      "start": [
+        45.73,
+        32.0
+      ],
+      "end": [
+        40.32,
+        32.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "ISO_OC_EMIT",
+      "layer": "F.Cu",
+      "start": [
+        38.9446,
+        33.1646
+      ],
+      "end": [
+        38.05,
+        32.27
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "ISO_OC_EMIT",
+      "layer": "F.Cu",
+      "start": [
+        47.1054,
+        33.1646
+      ],
+      "end": [
+        38.9446,
+        33.1646
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "ISO_OC_EMIT",
+      "layer": "F.Cu",
+      "start": [
+        48.27,
+        32.0
+      ],
+      "end": [
+        47.1054,
+        33.1646
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_DRAIN",
+      "layer": "F.Cu",
+      "start": [
+        9.3237,
+        32.6237
+      ],
+      "end": [
+        8.7,
+        32.0
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_DRAIN",
+      "layer": "F.Cu",
+      "start": [
+        9.3237,
+        34.1763
+      ],
+      "end": [
+        5.0,
+        38.5
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_DRAIN",
+      "layer": "F.Cu",
+      "start": [
+        9.3237,
+        34.1763
+      ],
+      "end": [
+        9.3237,
+        32.6237
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_DRAIN",
+      "layer": "F.Cu",
+      "start": [
+        10.1763,
+        34.1763
+      ],
+      "end": [
+        9.3237,
+        34.1763
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_DRAIN",
+      "layer": "F.Cu",
+      "start": [
+        11.0,
+        35.0
+      ],
+      "end": [
+        10.1763,
+        34.1763
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_DRAIN",
+      "layer": "F.Cu",
+      "start": [
+        11.0,
+        35.0
+      ],
+      "end": [
+        12.237,
+        35.0
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_DRAIN",
+      "layer": "F.Cu",
+      "start": [
+        12.237,
+        35.0
+      ],
+      "end": [
+        16.1,
+        31.137
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_DRAIN",
+      "layer": "F.Cu",
+      "start": [
+        16.1,
+        31.137
+      ],
+      "end": [
+        16.1,
+        31.0
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "B.Cu",
+      "start": [
+        18.0304,
+        31.7682
+      ],
+      "end": [
+        18.0304,
+        31.9168
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "B.Cu",
+      "start": [
+        18.0304,
+        31.9168
+      ],
+      "end": [
+        15.9472,
+        34.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "F.Cu",
+      "start": [
+        13.9,
+        30.35
+      ],
+      "end": [
+        14.7862,
+        29.4638
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "F.Cu",
+      "start": [
+        14.7862,
+        29.4638
+      ],
+      "end": [
+        16.8897,
+        29.4638
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "F.Cu",
+      "start": [
+        16.65,
+        34.0
+      ],
+      "end": [
+        15.9472,
+        34.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "F.Cu",
+      "start": [
+        16.8897,
+        29.4638
+      ],
+      "end": [
+        18.0304,
+        30.6045
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "F.Cu",
+      "start": [
+        18.0304,
+        30.6045
+      ],
+      "end": [
+        18.0304,
+        31.7682
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "F.Cu",
+      "start": [
+        18.6765,
+        31.7682
+      ],
+      "end": [
+        18.0304,
+        31.7682
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "F.Cu",
+      "start": [
+        19.35,
+        31.0
+      ],
+      "end": [
+        19.35,
+        31.0947
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE",
+      "layer": "F.Cu",
+      "start": [
+        19.35,
+        31.0947
+      ],
+      "end": [
+        18.6765,
+        31.7682
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "layer": "B.Cu",
+      "start": [
+        23.4001,
+        30.2308
+      ],
+      "end": [
+        28.4514,
+        30.2308
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "layer": "B.Cu",
+      "start": [
+        28.4514,
+        30.2308
+      ],
+      "end": [
+        35.8877,
+        22.7945
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "layer": "B.Cu",
+      "start": [
+        35.8877,
+        20.3123
+      ],
+      "end": [
+        47.0,
+        9.2
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "layer": "B.Cu",
+      "start": [
+        35.8877,
+        22.7945
+      ],
+      "end": [
+        35.8877,
+        20.3123
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "layer": "F.Cu",
+      "start": [
+        18.65,
+        30.9037
+      ],
+      "end": [
+        19.3229,
+        30.2308
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "layer": "F.Cu",
+      "start": [
+        18.65,
+        31.0
+      ],
+      "end": [
+        18.65,
+        30.9037
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "layer": "F.Cu",
+      "start": [
+        19.3229,
+        30.2308
+      ],
+      "end": [
+        23.4001,
+        30.2308
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "LOAD_SUPPLY_5_12V",
+      "layer": "B.Cu",
+      "start": [
+        2.46,
+        37.1042
+      ],
+      "end": [
+        2.46,
+        38.5
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_SUPPLY_5_12V",
+      "layer": "B.Cu",
+      "start": [
+        9.0642,
+        30.5
+      ],
+      "end": [
+        2.46,
+        37.1042
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_SUPPLY_5_12V",
+      "layer": "F.Cu",
+      "start": [
+        9.0642,
+        29.7642
+      ],
+      "end": [
+        8.3,
+        29.0
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_SUPPLY_5_12V",
+      "layer": "F.Cu",
+      "start": [
+        9.0642,
+        30.5
+      ],
+      "end": [
+        9.0642,
+        29.7642
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_SUPPLY_5_12V",
+      "layer": "F.Cu",
+      "start": [
+        9.0642,
+        30.5
+      ],
+      "end": [
+        9.8,
+        30.5
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "LOAD_SUPPLY_5_12V",
+      "layer": "F.Cu",
+      "start": [
+        9.8,
+        30.5
+      ],
+      "end": [
+        11.3,
+        32.0
+      ],
+      "width": 1.0
+    },
+    {
+      "net": "OPTO_ANODE",
+      "layer": "F.Cu",
+      "start": [
+        31.35,
+        31.0
+      ],
+      "end": [
+        31.95,
+        30.4
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "OPTO_ANODE",
+      "layer": "F.Cu",
+      "start": [
+        31.95,
+        30.4
+      ],
+      "end": [
+        31.95,
+        29.73
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "OPTO_DRV",
+      "layer": "B.Cu",
+      "start": [
+        30.65,
+        29.2098
+      ],
+      "end": [
+        37.2744,
+        22.5854
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "OPTO_DRV",
+      "layer": "B.Cu",
+      "start": [
+        37.2744,
+        19.5244
+      ],
+      "end": [
+        46.4988,
+        10.3
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "OPTO_DRV",
+      "layer": "B.Cu",
+      "start": [
+        37.2744,
+        22.5854
+      ],
+      "end": [
+        37.2744,
+        19.5244
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "OPTO_DRV",
+      "layer": "B.Cu",
+      "start": [
+        46.4988,
+        10.3
+      ],
+      "end": [
+        47.0,
+        10.3
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "OPTO_DRV",
+      "layer": "F.Cu",
+      "start": [
+        30.65,
+        31.0
+      ],
+      "end": [
+        30.65,
+        29.2098
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "B.Cu",
+      "start": [
+        21.6354,
+        16.4514
+      ],
+      "end": [
+        21.6354,
+        19.378
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "B.Cu",
+      "start": [
+        21.6354,
+        16.4514
+      ],
+      "end": [
+        36.9785,
+        1.1083
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "B.Cu",
+      "start": [
+        21.6354,
+        19.378
+      ],
+      "end": [
+        20.8001,
+        20.2133
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "B.Cu",
+      "start": [
+        36.9785,
+        1.1083
+      ],
+      "end": [
+        42.9347,
+        1.1083
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "B.Cu",
+      "start": [
+        42.9347,
+        1.1083
+      ],
+      "end": [
+        44.9531,
+        3.1267
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "B.Cu",
+      "start": [
+        44.9531,
+        3.1267
+      ],
+      "end": [
+        44.9531,
+        10.3629
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "F.Cu",
+      "start": [
+        20.65,
+        20.3634
+      ],
+      "end": [
+        20.8001,
+        20.2133
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "F.Cu",
+      "start": [
+        20.65,
+        21.0
+      ],
+      "end": [
+        20.65,
+        20.3634
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "F.Cu",
+      "start": [
+        21.8368,
+        16.25
+      ],
+      "end": [
+        21.6354,
+        16.4514
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "F.Cu",
+      "start": [
+        23.1,
+        16.25
+      ],
+      "end": [
+        21.8368,
+        16.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "F.Cu",
+      "start": [
+        44.9531,
+        10.3629
+      ],
+      "end": [
+        44.9531,
+        11.4281
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "F.Cu",
+      "start": [
+        44.9531,
+        11.4281
+      ],
+      "end": [
+        45.5313,
+        12.0063
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "F.Cu",
+      "start": [
+        45.5313,
+        12.0063
+      ],
+      "end": [
+        46.3937,
+        12.0063
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_3V3",
+      "layer": "F.Cu",
+      "start": [
+        46.3937,
+        12.0063
+      ],
+      "end": [
+        47.0,
+        11.4
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_VREF",
+      "layer": "B.Cu",
+      "start": [
+        22.7679,
+        23.6202
+      ],
+      "end": [
+        24.2157,
+        22.1724
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_VREF",
+      "layer": "B.Cu",
+      "start": [
+        22.7679,
+        33.5398
+      ],
+      "end": [
+        22.7679,
+        23.6202
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_VREF",
+      "layer": "B.Cu",
+      "start": [
+        24.2157,
+        22.1724
+      ],
+      "end": [
+        24.2157,
+        20.9033
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_VREF",
+      "layer": "B.Cu",
+      "start": [
+        27.54,
+        38.3119
+      ],
+      "end": [
+        22.7679,
+        33.5398
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_VREF",
+      "layer": "F.Cu",
+      "start": [
+        27.54,
+        38.3119
+      ],
+      "end": [
+        27.54,
+        39.5
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_VREF",
+      "layer": "F.Cu",
+      "start": [
+        27.5718,
+        20.9033
+      ],
+      "end": [
+        24.2157,
+        20.9033
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_VREF",
+      "layer": "F.Cu",
+      "start": [
+        29.35,
+        19.0
+      ],
+      "end": [
+        29.35,
+        19.1251
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_VREF",
+      "layer": "F.Cu",
+      "start": [
+        29.35,
+        19.1251
+      ],
+      "end": [
+        27.5718,
+        20.9033
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_XLAT",
+      "layer": "F.Cu",
+      "start": [
+        26.9,
+        16.25
+      ],
+      "end": [
+        27.5358,
+        16.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_XLAT",
+      "layer": "F.Cu",
+      "start": [
+        27.5358,
+        16.25
+      ],
+      "end": [
+        28.65,
+        17.3642
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWM_XLAT",
+      "layer": "F.Cu",
+      "start": [
+        28.65,
+        17.3642
+      ],
+      "end": [
+        28.65,
+        19.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "B.Cu",
+      "start": [
+        16.4808,
+        18.7758
+      ],
+      "end": [
+        16.4808,
+        12.5786
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        13.4154,
+        3.1299
+      ],
+      "end": [
+        13.7552,
+        2.7901
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        13.4154,
+        4.173
+      ],
+      "end": [
+        13.4154,
+        3.1299
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        13.7552,
+        2.7901
+      ],
+      "end": [
+        42.7901,
+        2.7901
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        16.15,
+        12.9094
+      ],
+      "end": [
+        16.4808,
+        12.5786
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        16.15,
+        13.25
+      ],
+      "end": [
+        16.15,
+        12.9094
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        16.4808,
+        7.2384
+      ],
+      "end": [
+        13.4154,
+        4.173
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        16.4808,
+        12.5786
+      ],
+      "end": [
+        16.4808,
+        7.2384
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        16.65,
+        18.7758
+      ],
+      "end": [
+        16.4808,
+        18.7758
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        17.35,
+        18.0
+      ],
+      "end": [
+        17.35,
+        18.0758
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        17.35,
+        18.0758
+      ],
+      "end": [
+        16.65,
+        18.7758
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "layer": "F.Cu",
+      "start": [
+        42.7901,
+        2.7901
+      ],
+      "end": [
+        47.0,
+        7.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "RESET_N",
+      "layer": "B.Cu",
+      "start": [
+        48.425,
+        11.05
+      ],
+      "end": [
+        48.425,
+        14.075
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "RESET_N",
+      "layer": "B.Cu",
+      "start": [
+        48.425,
+        14.075
+      ],
+      "end": [
+        42.0,
+        20.5
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWDCLK",
+      "layer": "F.Cu",
+      "start": [
+        39.0,
+        20.5
+      ],
+      "end": [
+        41.7,
+        17.8
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWDCLK",
+      "layer": "F.Cu",
+      "start": [
+        41.7,
+        17.8
+      ],
+      "end": [
+        41.7,
+        14.925
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWDIO",
+      "layer": "F.Cu",
+      "start": [
+        35.0,
+        18.0
+      ],
+      "end": [
+        35.0,
+        18.6368
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWDIO",
+      "layer": "F.Cu",
+      "start": [
+        35.0,
+        18.6368
+      ],
+      "end": [
+        38.4011,
+        22.0379
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWDIO",
+      "layer": "F.Cu",
+      "start": [
+        38.4011,
+        22.0379
+      ],
+      "end": [
+        45.1197,
+        22.0379
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWDIO",
+      "layer": "F.Cu",
+      "start": [
+        45.1197,
+        22.0379
+      ],
+      "end": [
+        46.3,
+        20.8576
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWDIO",
+      "layer": "F.Cu",
+      "start": [
+        46.3,
+        20.8576
+      ],
+      "end": [
+        46.3,
+        14.925
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWO",
+      "layer": "B.Cu",
+      "start": [
+        38.4974,
+        12.4493
+      ],
+      "end": [
+        38.4974,
+        16.0211
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWO",
+      "layer": "F.Cu",
+      "start": [
+        37.7895,
+        18.3104
+      ],
+      "end": [
+        38.4974,
+        17.6025
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWO",
+      "layer": "F.Cu",
+      "start": [
+        37.7895,
+        20.929
+      ],
+      "end": [
+        37.7895,
+        18.3104
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWO",
+      "layer": "F.Cu",
+      "start": [
+        38.4974,
+        12.4493
+      ],
+      "end": [
+        39.1757,
+        12.4493
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "SWO",
+      "layer": "F.Cu",
+      "start": [
+        38.4974,
+        17.6025
+      ],
+      "end": [
+        38.4974,
+        16.0211
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWO",
+      "layer": "F.Cu",
+      "start": [
+        38.5287,
+        21.6682
+      ],
+      "end": [
+        37.7895,
+        20.929
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWO",
+      "layer": "F.Cu",
+      "start": [
+        39.1757,
+        12.4493
+      ],
+      "end": [
+        39.575,
+        12.05
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "SWO",
+      "layer": "F.Cu",
+      "start": [
+        43.8318,
+        21.6682
+      ],
+      "end": [
+        38.5287,
+        21.6682
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "SWO",
+      "layer": "F.Cu",
+      "start": [
+        45.0,
+        20.5
+      ],
+      "end": [
+        43.8318,
+        21.6682
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "B.Cu",
+      "start": [
+        25.2629,
+        22.5498
+      ],
+      "end": [
+        25.2629,
+        22.8259
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "B.Cu",
+      "start": [
+        25.2629,
+        22.8259
+      ],
+      "end": [
+        24.2073,
+        23.8815
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "B.Cu",
+      "start": [
+        32.9517,
+        22.4365
+      ],
+      "end": [
+        42.7021,
+        12.6861
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "B.Cu",
+      "start": [
+        42.7021,
+        12.6861
+      ],
+      "end": [
+        42.7021,
+        5.5244
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        23.1,
+        23.75
+      ],
+      "end": [
+        24.0758,
+        23.75
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        24.0758,
+        23.75
+      ],
+      "end": [
+        24.2073,
+        23.8815
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        25.2629,
+        22.5498
+      ],
+      "end": [
+        25.3762,
+        22.4365
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        25.3762,
+        22.4365
+      ],
+      "end": [
+        32.9517,
+        22.4365
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        42.1,
+        8.1
+      ],
+      "end": [
+        42.7022,
+        7.4978
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        42.7022,
+        5.5244
+      ],
+      "end": [
+        42.7021,
+        5.5244
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        42.7022,
+        7.4978
+      ],
+      "end": [
+        42.7022,
+        5.5244
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        26.0456,
+        23.0255
+      ],
+      "end": [
+        26.2725,
+        22.7986
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        26.0456,
+        23.5443
+      ],
+      "end": [
+        26.0456,
+        23.0255
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        26.2513,
+        23.75
+      ],
+      "end": [
+        26.0456,
+        23.5443
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        26.27,
+        32.4241
+      ],
+      "end": [
+        26.27,
+        39.5
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        26.2725,
+        22.7986
+      ],
+      "end": [
+        29.5294,
+        22.7986
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        26.9,
+        23.75
+      ],
+      "end": [
+        26.2513,
+        23.75
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        26.9496,
+        23.7996
+      ],
+      "end": [
+        26.9,
+        23.75
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        27.8283,
+        23.7996
+      ],
+      "end": [
+        26.9496,
+        23.7996
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        28.0287,
+        24.0
+      ],
+      "end": [
+        27.8283,
+        23.7996
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        28.65,
+        24.0
+      ],
+      "end": [
+        28.0287,
+        24.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        29.5294,
+        22.7986
+      ],
+      "end": [
+        32.1847,
+        25.4539
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        32.1847,
+        25.4539
+      ],
+      "end": [
+        32.1847,
+        26.5094
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_RX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        32.1847,
+        26.5094
+      ],
+      "end": [
+        26.27,
+        32.4241
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        19.6818,
+        10.3744
+      ],
+      "end": [
+        25.6654,
+        4.3908
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        19.6818,
+        11.5996
+      ],
+      "end": [
+        19.6818,
+        10.3744
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        20.65,
+        12.5678
+      ],
+      "end": [
+        19.6818,
+        11.5996
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        20.65,
+        15.75
+      ],
+      "end": [
+        20.65,
+        12.5678
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        20.65,
+        15.75
+      ],
+      "end": [
+        23.1,
+        15.75
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        20.65,
+        18.0
+      ],
+      "end": [
+        20.65,
+        15.75
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        25.6654,
+        4.3908
+      ],
+      "end": [
+        40.1443,
+        4.3908
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        40.1443,
+        4.3908
+      ],
+      "end": [
+        40.488,
+        4.7345
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        40.488,
+        4.7345
+      ],
+      "end": [
+        40.488,
+        5.388
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_3V3",
+      "layer": "F.Cu",
+      "start": [
+        40.488,
+        5.388
+      ],
+      "end": [
+        42.1,
+        7.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_VREF",
+      "layer": "B.Cu",
+      "start": [
+        22.3475,
+        23.1897
+      ],
+      "end": [
+        22.3475,
+        35.6581
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_VREF",
+      "layer": "B.Cu",
+      "start": [
+        22.3475,
+        35.6581
+      ],
+      "end": [
+        25.0,
+        38.3106
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_VREF",
+      "layer": "B.Cu",
+      "start": [
+        23.614,
+        21.9232
+      ],
+      "end": [
+        22.3475,
+        23.1897
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        25.0,
+        38.3106
+      ],
+      "end": [
+        25.0,
+        39.5
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        27.2161,
+        21.9232
+      ],
+      "end": [
+        23.614,
+        21.9232
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        29.35,
+        16.0
+      ],
+      "end": [
+        29.802,
+        16.452
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        29.802,
+        16.452
+      ],
+      "end": [
+        29.802,
+        19.3373
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_VREF",
+      "layer": "F.Cu",
+      "start": [
+        29.802,
+        19.3373
+      ],
+      "end": [
+        27.2161,
+        21.9232
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "UART_TX_XLAT",
+      "layer": "F.Cu",
+      "start": [
+        26.9996,
+        15.8496
+      ],
+      "end": [
+        26.9,
+        15.75
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "UART_TX_XLAT",
+      "layer": "F.Cu",
+      "start": [
+        28.65,
+        15.8496
+      ],
+      "end": [
+        26.9996,
+        15.8496
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "UART_TX_XLAT",
+      "layer": "F.Cu",
+      "start": [
+        28.65,
+        16.0
+      ],
+      "end": [
+        28.65,
+        15.8496
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_CC1",
+      "layer": "F.Cu",
+      "start": [
+        3.65,
+        13.0
+      ],
+      "end": [
+        3.65,
+        15.7363
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_CC1",
+      "layer": "F.Cu",
+      "start": [
+        3.65,
+        15.7363
+      ],
+      "end": [
+        5.6637,
+        17.75
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_CC1",
+      "layer": "F.Cu",
+      "start": [
+        5.6637,
+        17.75
+      ],
+      "end": [
+        6.2,
+        17.75
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_CC2",
+      "layer": "F.Cu",
+      "start": [
+        3.65,
+        20.2909
+      ],
+      "end": [
+        5.6909,
+        18.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_CC2",
+      "layer": "F.Cu",
+      "start": [
+        3.65,
+        25.0
+      ],
+      "end": [
+        3.65,
+        20.2909
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_CC2",
+      "layer": "F.Cu",
+      "start": [
+        5.6909,
+        18.25
+      ],
+      "end": [
+        6.2,
+        18.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "B.Cu",
+      "start": [
+        15.5385,
+        1.7104
+      ],
+      "end": [
+        15.5385,
+        17.1769
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "B.Cu",
+      "start": [
+        15.5385,
+        17.1769
+      ],
+      "end": [
+        12.8396,
+        19.8758
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "B.Cu",
+      "start": [
+        42.6748,
+        4.3134
+      ],
+      "end": [
+        42.6748,
+        1.7104
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "F.Cu",
+      "start": [
+        10.25,
+        19.95
+      ],
+      "end": [
+        12.7654,
+        19.95
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "F.Cu",
+      "start": [
+        12.7654,
+        19.95
+      ],
+      "end": [
+        12.8396,
+        19.8758
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "F.Cu",
+      "start": [
+        15.5385,
+        1.7104
+      ],
+      "end": [
+        42.6748,
+        1.7104
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "F.Cu",
+      "start": [
+        42.6748,
+        4.3134
+      ],
+      "end": [
+        42.8734,
+        4.3134
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "F.Cu",
+      "start": [
+        42.8734,
+        4.3134
+      ],
+      "end": [
+        44.575,
+        6.015
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_PROT",
+      "layer": "F.Cu",
+      "start": [
+        44.575,
+        6.015
+      ],
+      "end": [
+        44.575,
+        6.15
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        19.75
+      ],
+      "end": [
+        6.2,
+        19.95
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        19.95
+      ],
+      "end": [
+        6.2,
+        20.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DM_RAW",
+      "layer": "F.Cu",
+      "start": [
+        7.75,
+        19.95
+      ],
+      "end": [
+        6.2,
+        19.95
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_PROT",
+      "layer": "B.Cu",
+      "start": [
+        14.0184,
+        15.5652
+      ],
+      "end": [
+        14.0184,
+        3.4108
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_PROT",
+      "layer": "B.Cu",
+      "start": [
+        41.5174,
+        3.4108
+      ],
+      "end": [
+        41.5174,
+        4.9151
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_PROT",
+      "layer": "F.Cu",
+      "start": [
+        10.25,
+        18.05
+      ],
+      "end": [
+        12.7348,
+        15.5652
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_PROT",
+      "layer": "F.Cu",
+      "start": [
+        12.7348,
+        15.5652
+      ],
+      "end": [
+        14.0184,
+        15.5652
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_PROT",
+      "layer": "F.Cu",
+      "start": [
+        41.5174,
+        3.4108
+      ],
+      "end": [
+        14.0184,
+        3.4108
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_PROT",
+      "layer": "F.Cu",
+      "start": [
+        42.9721,
+        4.9151
+      ],
+      "end": [
+        41.5174,
+        4.9151
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_PROT",
+      "layer": "F.Cu",
+      "start": [
+        43.425,
+        5.368
+      ],
+      "end": [
+        42.9721,
+        4.9151
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_PROT",
+      "layer": "F.Cu",
+      "start": [
+        43.425,
+        6.15
+      ],
+      "end": [
+        43.425,
+        5.368
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        19.25
+      ],
+      "end": [
+        6.2,
+        18.75
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.3246,
+        18.6254
+      ],
+      "end": [
+        6.2,
+        18.75
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "USB_DP_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.9243,
+        18.6254
+      ],
+      "end": [
+        6.3246,
+        18.6254
+      ],
+      "width": 0.15
+    },
+    {
+      "net": "USB_DP_RAW",
+      "layer": "F.Cu",
+      "start": [
+        7.4997,
+        18.05
+      ],
+      "end": [
+        6.9243,
+        18.6254
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_DP_RAW",
+      "layer": "F.Cu",
+      "start": [
+        7.75,
+        18.05
+      ],
+      "end": [
+        7.4997,
+        18.05
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_SHIELD",
+      "layer": "F.Cu",
+      "start": [
+        2.25,
+        23.0
+      ],
+      "end": [
+        2.25,
+        15.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        12.0,
+        19.6
+      ],
+      "end": [
+        12.0,
+        20.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        12.0,
+        20.0
+      ],
+      "end": [
+        12.2,
+        20.2
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        12.2,
+        20.2
+      ],
+      "end": [
+        12.2,
+        20.4
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        12.2,
+        20.4
+      ],
+      "end": [
+        12.4,
+        20.6
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        12.3,
+        10.0
+      ],
+      "end": [
+        12.4,
+        10.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        12.4,
+        10.0
+      ],
+      "end": [
+        12.4,
+        19.2
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        12.4,
+        19.2
+      ],
+      "end": [
+        12.0,
+        19.6
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        12.4,
+        20.6
+      ],
+      "end": [
+        20.0,
+        20.6
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        20.0,
+        20.6
+      ],
+      "end": [
+        20.2,
+        20.8
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        20.2,
+        20.8
+      ],
+      "end": [
+        20.4,
+        20.8
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        20.4,
+        20.8
+      ],
+      "end": [
+        20.6,
+        21.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        20.6,
+        21.0
+      ],
+      "end": [
+        21.0,
+        21.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        21.0,
+        21.0
+      ],
+      "end": [
+        21.2,
+        20.8
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        21.2,
+        20.8
+      ],
+      "end": [
+        21.4,
+        20.8
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        21.4,
+        20.8
+      ],
+      "end": [
+        26.8,
+        15.4
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        26.8,
+        14.2
+      ],
+      "end": [
+        27.2,
+        13.8
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        26.8,
+        15.4
+      ],
+      "end": [
+        26.8,
+        14.2
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        27.2,
+        13.8
+      ],
+      "end": [
+        35.8,
+        13.8
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        35.8,
+        13.8
+      ],
+      "end": [
+        36.0,
+        13.6
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        36.0,
+        13.6
+      ],
+      "end": [
+        36.2,
+        13.6
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        36.2,
+        13.6
+      ],
+      "end": [
+        38.0,
+        11.8
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        38.0,
+        11.8
+      ],
+      "end": [
+        38.2,
+        11.8
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        38.2,
+        11.8
+      ],
+      "end": [
+        38.4,
+        11.6
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        38.4,
+        11.6
+      ],
+      "end": [
+        40.6,
+        11.6
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        40.6,
+        11.6
+      ],
+      "end": [
+        40.8,
+        11.4
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "B.Cu",
+      "start": [
+        40.8,
+        11.4
+      ],
+      "end": [
+        41.0,
+        11.4
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        8.55,
+        14.5
+      ],
+      "end": [
+        8.6007,
+        14.5
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        8.6007,
+        14.5
+      ],
+      "end": [
+        9.308,
+        13.7927
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        8.6007,
+        17.616
+      ],
+      "end": [
+        8.6007,
+        14.5
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        8.6007,
+        17.616
+      ],
+      "end": [
+        9.9847,
+        19.0
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        9.3,
+        12.0
+      ],
+      "end": [
+        9.3,
+        13.7847
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        9.3,
+        13.7847
+      ],
+      "end": [
+        9.308,
+        13.7927
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        9.308,
+        13.7927
+      ],
+      "end": [
+        9.7899,
+        14.2746
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        9.7899,
+        14.2746
+      ],
+      "end": [
+        13.8254,
+        14.2746
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        9.9847,
+        19.0
+      ],
+      "end": [
+        10.25,
+        19.0
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        11.3,
+        10.0
+      ],
+      "end": [
+        9.3,
+        12.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        12.3,
+        10.0
+      ],
+      "end": [
+        11.3,
+        10.0
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        13.8254,
+        14.2746
+      ],
+      "end": [
+        13.85,
+        14.25
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "layer": "F.Cu",
+      "start": [
+        13.85,
+        14.25
+      ],
+      "end": [
+        13.85,
+        13.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "B.Cu",
+      "start": [
+        7.4612,
+        15.5641
+      ],
+      "end": [
+        7.45,
+        15.5529
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "B.Cu",
+      "start": [
+        7.4612,
+        20.8716
+      ],
+      "end": [
+        7.4612,
+        15.5641
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        17.25
+      ],
+      "end": [
+        6.2,
+        16.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.2,
+        20.75
+      ],
+      "end": [
+        6.2,
+        21.25
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.2496,
+        16.7004
+      ],
+      "end": [
+        6.2,
+        16.75
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "F.Cu",
+      "start": [
+        6.3216,
+        20.8716
+      ],
+      "end": [
+        6.2,
+        20.75
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "F.Cu",
+      "start": [
+        7.45,
+        14.5
+      ],
+      "end": [
+        7.45,
+        15.5529
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "F.Cu",
+      "start": [
+        7.45,
+        15.5529
+      ],
+      "end": [
+        7.45,
+        16.7004
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "F.Cu",
+      "start": [
+        7.45,
+        16.7004
+      ],
+      "end": [
+        6.2496,
+        16.7004
+      ],
+      "width": 0.1874
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "layer": "F.Cu",
+      "start": [
+        7.4612,
+        20.8716
+      ],
+      "end": [
+        6.3216,
+        20.8716
+      ],
+      "width": 0.25
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "B.Cu",
+      "start": [
+        27.5673,
+        14.5827
+      ],
+      "end": [
+        27.5673,
+        22.5673
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "B.Cu",
+      "start": [
+        27.5673,
+        22.5673
+      ],
+      "end": [
+        31.0,
+        26.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        23.73,
+        39.5
+      ],
+      "end": [
+        24.0018,
+        39.2282
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        24.0018,
+        29.6482
+      ],
+      "end": [
+        26.65,
+        27.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        24.0018,
+        39.2282
+      ],
+      "end": [
+        24.0018,
+        29.6482
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        26.65,
+        13.0
+      ],
+      "end": [
+        26.65,
+        15.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        26.65,
+        15.0
+      ],
+      "end": [
+        26.9,
+        15.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        26.65,
+        27.2421
+      ],
+      "end": [
+        26.65,
+        27.0
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        26.9917,
+        27.5838
+      ],
+      "end": [
+        26.65,
+        27.2421
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        27.5673,
+        14.5827
+      ],
+      "end": [
+        26.9,
+        15.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        29.4162,
+        27.5838
+      ],
+      "end": [
+        26.9917,
+        27.5838
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        29.4795,
+        23.25
+      ],
+      "end": [
+        26.9,
+        23.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        31.0,
+        24.7705
+      ],
+      "end": [
+        29.4795,
+        23.25
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        31.0,
+        26.0
+      ],
+      "end": [
+        29.4162,
+        27.5838
+      ],
+      "width": 0.2
+    },
+    {
+      "net": "VREF_IO",
+      "layer": "F.Cu",
+      "start": [
+        31.0,
+        26.0
+      ],
+      "end": [
+        31.0,
+        24.7705
+      ],
+      "width": 0.2
+    }
+  ],
+  "vias": [
+    {
+      "net": "3V3",
+      "x": 18.0487,
+      "y": 15.7089,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "3V3",
+      "x": 20.3,
+      "y": 11.0,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "3V3",
+      "x": 21.5,
+      "y": 23.25,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "3V3",
+      "x": 21.95,
+      "y": 14.0,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "3V3",
+      "x": 36.3,
+      "y": 17.0,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "3V3",
+      "x": 39.575,
+      "y": 13.05,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "3V3",
+      "x": 39.575,
+      "y": 14.05,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 5.7,
+      "y": 29.0,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 6.2,
+      "y": 16.0,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 8.65,
+      "y": 19.0,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 13.9,
+      "y": 31.65,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 23.1,
+      "y": 17.55,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 24.35,
+      "y": 12.1,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 27.845,
+      "y": 26.505,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 31.95,
+      "y": 32.27,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 37.7,
+      "y": 15.2,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 41.0,
+      "y": 10.3,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 41.0,
+      "y": 12.7,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 42.85,
+      "y": 14.925,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 44.0,
+      "y": 10.85,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 45.15,
+      "y": 14.925,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "GND",
+      "x": 47.0,
+      "y": 12.7,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "LOAD_GATE",
+      "x": 15.9472,
+      "y": 34.0,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "LOAD_GATE",
+      "x": 18.0304,
+      "y": 31.7682,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "x": 23.4001,
+      "y": 30.2308,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "LOAD_GATE_CTL",
+      "x": 47.0,
+      "y": 9.2,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "LOAD_SUPPLY_5_12V",
+      "x": 9.0642,
+      "y": 30.5,
+      "size": 1.0,
+      "drill": 0.5
+    },
+    {
+      "net": "OPTO_DRV",
+      "x": 30.65,
+      "y": 29.2098,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "OPTO_DRV",
+      "x": 47.0,
+      "y": 10.3,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "PWM_3V3",
+      "x": 20.8001,
+      "y": 20.2133,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "PWM_3V3",
+      "x": 21.6354,
+      "y": 16.4514,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "PWM_3V3",
+      "x": 44.9531,
+      "y": 10.3629,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "PWM_VREF",
+      "x": 24.2157,
+      "y": 20.9033,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "PWM_VREF",
+      "x": 27.54,
+      "y": 38.3119,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "x": 16.4808,
+      "y": 12.5786,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "PWR_GOOD_N",
+      "x": 16.4808,
+      "y": 18.7758,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "RESET_N",
+      "x": 48.425,
+      "y": 11.05,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "SWO",
+      "x": 38.4974,
+      "y": 12.4493,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "SWO",
+      "x": 38.4974,
+      "y": 16.0211,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "UART_RX_3V3",
+      "x": 24.2073,
+      "y": 23.8815,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "UART_RX_3V3",
+      "x": 25.2629,
+      "y": 22.5498,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "UART_RX_3V3",
+      "x": 32.9517,
+      "y": 22.4365,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "UART_RX_3V3",
+      "x": 42.7021,
+      "y": 5.5244,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "UART_TX_VREF",
+      "x": 23.614,
+      "y": 21.9232,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "UART_TX_VREF",
+      "x": 25.0,
+      "y": 38.3106,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_DM_PROT",
+      "x": 12.8396,
+      "y": 19.8758,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_DM_PROT",
+      "x": 15.5385,
+      "y": 1.7104,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_DM_PROT",
+      "x": 42.6748,
+      "y": 1.7104,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_DM_PROT",
+      "x": 42.6748,
+      "y": 4.3134,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_DP_PROT",
+      "x": 14.0184,
+      "y": 3.4108,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_DP_PROT",
+      "x": 14.0184,
+      "y": 15.5652,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_DP_PROT",
+      "x": 41.5174,
+      "y": 3.4108,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_DP_PROT",
+      "x": 41.5174,
+      "y": 4.9151,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "x": 12.3,
+      "y": 10.0,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_VBUS_5V",
+      "x": 41.0,
+      "y": 11.4,
+      "size": 0.7,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "x": 7.45,
+      "y": 15.5529,
+      "size": 0.8,
+      "drill": 0.45
+    },
+    {
+      "net": "USB_VBUS_RAW",
+      "x": 7.4612,
+      "y": 20.8716,
+      "size": 0.8,
+      "drill": 0.45
+    },
+    {
+      "net": "VREF_IO",
+      "x": 27.5673,
+      "y": 14.5827,
+      "size": 0.7,
+      "drill": 0.45
+    }
+  ],
+  "router_failures": [],
+  "routing_source": {
+    "kind": "native_drc_frozen_fixture",
+    "path": "receiver/receiver-frozen-routes.json",
+    "fixtureSha256": "90968a63710fd7f9e699b6fff3de5a835b88799248b8af388b5315cce90ef74d",
+    "revision": "A0",
+    "sourceBoard": {
+      "path": "receiver/receiver.kicad_pcb",
+      "sha256": "eefea6b7770f4d3607811ede5fe63815c847edea1245914dc86c329531955104",
+      "nativeDrc": "0_violations_0_unconnected_0_footprint_errors"
+    }
+  },
+  "release_gates": {
+    "native_kicad_erc": "NOT_RUN",
+    "native_kicad_drc": "PASS",
+    "manufacturer_land_pattern_overlay": "OPEN",
+    "fabrication_authorized": false
+  }
+}

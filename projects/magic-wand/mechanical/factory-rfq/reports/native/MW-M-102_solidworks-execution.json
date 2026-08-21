@@ -1,0 +1,112 @@
+{
+  "schema": "aicad_solidworks_native_execution_raw_v1",
+  "subjectId": "MW-M-102",
+  "revision": "B-RFQ",
+  "operation": "STEP import -> native SLDPRT save -> native reopen -> STEP export",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true,
+    "api": "SOLIDWORKS COM API / OpenDoc7 / SaveAs3",
+    "automation": "owned DispatchEx COM instance",
+    "neutralImportMode": "embedded imported solid; 3D Interconnect external links disabled"
+  },
+  "paths": {
+    "nativeCad": "outputs/3d/MW-M-102_receiver_enclosure_lid.SLDPRT",
+    "step": "outputs/3d/MW-M-102_receiver_enclosure_lid.step"
+  },
+  "checks": [
+    {
+      "id": "source-brep",
+      "status": "pass",
+      "detail": "valid single-solid source BREP"
+    },
+    {
+      "id": "solidworks-import",
+      "status": "pass",
+      "detail": "LoadFile4 imported the source STEP without error"
+    },
+    {
+      "id": "native-save",
+      "status": "pass",
+      "detail": "SaveAs3 created an authentic SLDPRT"
+    },
+    {
+      "id": "native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 returned one solid body; bbox mm=[-32.2, -28.2, 0.0, 32.2, 28.2, 8.0]"
+    },
+    {
+      "id": "step-roundtrip",
+      "status": "pass",
+      "detail": "reopened native document exported valid single-solid STEP; volume delta 0.000000000 mm3"
+    },
+    {
+      "id": "post-assembly-native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 warningCode=0, one solid body, and STEP export did not mutate final SLDPRT bytes after SaveReferenced"
+    }
+  ],
+  "source": {
+    "kind": "authoritative generated BREP",
+    "path": "reports/geometry/MW-M-102_receiver_enclosure_lid.brep",
+    "sizeBytes": 43207,
+    "sha256": "020bebc93337a8a598f49f7192cf81613b6a0403afb931823a22532aae193a95",
+    "solidWorksImportStepSizeBytes": 143912,
+    "solidWorksImportStepSha256": "e3124ece7a0a535e4e2eb939d18fd9bd5e19726560954ca6fbfa5470e3ec086d",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 9385.265003,
+      "bboxMm": [
+        -32.2,
+        -28.2,
+        0.0,
+        32.2,
+        28.2,
+        8.0
+      ]
+    }
+  },
+  "nativeReopen": {
+    "errorCode": 0,
+    "warningCode": 0,
+    "warningNames": [],
+    "documentType": "part",
+    "bodyCount": 1,
+    "bboxMm": [
+      -32.2,
+      -28.2,
+      0.0,
+      32.2,
+      28.2,
+      8.0
+    ],
+    "phase": "post-assembly SaveReferenced final closure"
+  },
+  "nativeCad": {
+    "path": "outputs/3d/MW-M-102_receiver_enclosure_lid.SLDPRT",
+    "sizeBytes": 84902,
+    "sha256": "8eee47b4203e6a13f8269135abb09caecd87965fcf195a9fedb591cedb9e9400"
+  },
+  "finalStep": {
+    "path": "outputs/3d/MW-M-102_receiver_enclosure_lid.step",
+    "sizeBytes": 124485,
+    "sha256": "b33996fa7c416d7e38a240c890982189fde7772e1a384325495e141b90243dd7",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 9385.265003,
+      "bboxMm": [
+        -32.2,
+        -28.2,
+        0.0,
+        32.2,
+        28.2,
+        8.0
+      ]
+    },
+    "volumeDeltaMm3": 0.0
+  }
+}

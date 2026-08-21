@@ -1,0 +1,814 @@
+{
+  "schema": "aicad_feature_bound_factory_dimension_catalog_v1",
+  "units": "mm",
+  "coordinateSystem": {
+    "id": "MODEL_XYZ",
+    "handedness": "right",
+    "origin": "datum A, rear-cap exterior plane on the common wand axis",
+    "positive_z": "from rear cap toward rod tip",
+    "positive_y": "toward the press-to-arm button"
+  },
+  "subjects": [
+    {
+      "subjectId": "MW-M-001A",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 11,
+      "rows": [
+        {
+          "featureId": "MW-M-001A-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = inside rear axial stop; B = XZ split plane; C = side button axis",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-M-001A; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-001A-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "26.988 x 15.850 x 110.000 mm",
+          "locationXYZ": "min=(-13.494,-0.550,-0.000)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=8426.367 mm3"
+        },
+        {
+          "featureId": "MW-M-001A-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "+Y from XZ parting plane / two longitudinal edges on XZ plane",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-M-001A.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-001A-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-001A-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "press-to-arm aperture core; four screw counterbore/clearance cores if not drilled after molding",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-M-001A.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-001A-W01",
+          "characteristic": "WALL",
+          "nominal": "2.00 NOM / 1.80 MIN",
+          "locationXYZ": "radial",
+          "tolerance": "tooling tune",
+          "source": "interfaces.shell",
+          "geometryProbe": "outer/inner BREP cylinders"
+        },
+        {
+          "featureId": "MW-M-001A-O01",
+          "characteristic": "BUTTON THRU APERTURE",
+          "nominal": "DIA 8.20",
+          "locationXYZ": "XYZ=(0,+Y,72.00)",
+          "tolerance": "+/-0.15; draft 1.5 deg",
+          "source": "interfaces.press_to_arm",
+          "geometryProbe": "pre/post BREP void probe PASS"
+        },
+        {
+          "featureId": "MW-M-001A-O02",
+          "characteristic": "GUARD / HEAD POCKET",
+          "nominal": "OD 12.80; pocket DIA 11.20",
+          "locationXYZ": "XYZ=(0,+Y,72.00)",
+          "tolerance": "0.40 diametral head clearance",
+          "source": "interfaces.press_to_arm",
+          "geometryProbe": "guard-head intersection=0 required"
+        },
+        {
+          "featureId": "MW-M-001A-H01",
+          "characteristic": "4X M2 CLEARANCE",
+          "nominal": "DIA 2.30",
+          "locationXYZ": "X=[-12.15, 12.15]; Z=[40.0, 90.0]",
+          "tolerance": "H11 unless supplier changes",
+          "source": "interfaces.shell_screws",
+          "geometryProbe": "4 radial BREP cuts"
+        },
+        {
+          "featureId": "MW-M-001A-H02",
+          "characteristic": "4X COUNTERBORE",
+          "nominal": "DIA 4.20 x 1.50 deep",
+          "locationXYZ": "X=[-12.15, 12.15]; Z=[40.0, 90.0]",
+          "tolerance": "+0.10/-0",
+          "source": "interfaces.shell_screws",
+          "geometryProbe": "4 exterior BREP cuts"
+        },
+        {
+          "featureId": "MW-M-001A-F01",
+          "characteristic": "SEAM TONGUE / FIT",
+          "nominal": "W 1.20 x D 0.55",
+          "locationXYZ": "XZ parting edges",
+          "tolerance": "0.10/side nominal",
+          "source": "interfaces.shell",
+          "geometryProbe": "assembly intersection=0 required"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-001B",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 11,
+      "rows": [
+        {
+          "featureId": "MW-M-001B-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = inside rear axial stop; B = XZ split plane; C = carrier rail",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-M-001B; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-001B-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "26.988 x 13.500 x 110.000 mm",
+          "locationXYZ": "min=(-13.494,-13.500,-0.000)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=9618.950 mm3"
+        },
+        {
+          "featureId": "MW-M-001B-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "-Y from XZ parting plane / two longitudinal edges on XZ plane",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-M-001B.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-001B-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-001B-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "USB-C service window core; debug window core; four tapered M2 thread-forming pilot cores",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-M-001B.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-001B-W01",
+          "characteristic": "WALL",
+          "nominal": "2.00 NOM / 1.80 MIN",
+          "locationXYZ": "radial",
+          "tolerance": "tooling tune",
+          "source": "interfaces.shell",
+          "geometryProbe": "outer/inner BREP cylinders"
+        },
+        {
+          "featureId": "MW-M-001B-O01",
+          "characteristic": "USB-C OPENING",
+          "nominal": "10.00 x 4.80 R1.00",
+          "locationXYZ": "XYZ=(0,-Y,47.00)",
+          "tolerance": "profile +/-0.15",
+          "source": "interfaces.service_openings.usb_c",
+          "geometryProbe": "pre/post BREP void probe PASS"
+        },
+        {
+          "featureId": "MW-M-001B-O02",
+          "characteristic": "DEBUG OPENING",
+          "nominal": "8.00 x 3.20 R0.80",
+          "locationXYZ": "XYZ=(0,-Y,60.00)",
+          "tolerance": "profile +/-0.15",
+          "source": "interfaces.service_openings.debug",
+          "geometryProbe": "pre/post BREP void probe PASS"
+        },
+        {
+          "featureId": "MW-M-001B-H01",
+          "characteristic": "4X TAPERED PILOT",
+          "nominal": "DIA 1.80->1.60",
+          "locationXYZ": "X=[-12.15, 12.15]; Z=[40.0, 90.0]",
+          "tolerance": "supplier strip-torque validation",
+          "source": "interfaces.shell_screws",
+          "geometryProbe": "4 tapered radial BREP cuts"
+        },
+        {
+          "featureId": "MW-M-001B-F01",
+          "characteristic": "SEAM GROOVE / TONGUE",
+          "nominal": "tongue W 1.20",
+          "locationXYZ": "XZ parting edges",
+          "tolerance": "0.10/side nominal",
+          "source": "interfaces.shell",
+          "geometryProbe": "assembly intersection=0 required"
+        },
+        {
+          "featureId": "MW-M-001B-F02",
+          "characteristic": "CARRIER KEY RAIL",
+          "nominal": "tip Y -6.70; W 3.00",
+          "locationXYZ": "X=0, Z=13..107 global",
+          "tolerance": "0.20 nominal",
+          "source": "interfaces.carrier",
+          "geometryProbe": "rail-to-groove distance probe"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-002",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 10,
+      "rows": [
+        {
+          "featureId": "MW-M-002-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = PCB support ledges; B = rear stop; C = key groove center",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-M-002; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-002-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "17.600 x 12.600 x 90.000 mm",
+          "locationXYZ": "min=(-8.800,-6.300,0.000)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=5754.467 mm3"
+        },
+        {
+          "featureId": "MW-M-002-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "+Y / carrier top rim",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-M-002.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-002-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-002-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "NONE",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-M-002.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-002-W01",
+          "characteristic": "BASE / SIDE WALL",
+          "nominal": "1.60 / 1.50",
+          "locationXYZ": "carrier section",
+          "tolerance": "-0.10/+0.15",
+          "source": "interfaces.carrier",
+          "geometryProbe": "BREP section thickness"
+        },
+        {
+          "featureId": "MW-M-002-I01",
+          "characteristic": "PCB ENVELOPE",
+          "nominal": "15.00 x 80.00 x 1.60",
+          "locationXYZ": "global Z=9.00..89.00",
+          "tolerance": "+0.30 width; +0.50 length",
+          "source": "interfaces.carrier",
+          "geometryProbe": "support-ledges present"
+        },
+        {
+          "featureId": "MW-M-002-B01",
+          "characteristic": "4X HEAT-STAKE BOSS",
+          "nominal": "OD 4.2->3.8; pilot DIA 1.3->1.5",
+          "locationXYZ": "X=+/-5.5; local Z=22,68",
+          "tolerance": "supplier heat-stake DOE",
+          "source": "factory_geometry.make_internal_carrier",
+          "geometryProbe": "boss/pilot BREP feature"
+        },
+        {
+          "featureId": "MW-M-002-F01",
+          "characteristic": "KEY GROOVE / RAIL FIT",
+          "nominal": "W 3.40 x D 0.80",
+          "locationXYZ": "X=0; full local Z",
+          "tolerance": "0.20 nominal",
+          "source": "interfaces.carrier",
+          "geometryProbe": "lower-shell distance probe"
+        },
+        {
+          "featureId": "MW-M-002-O01",
+          "characteristic": "CABLE RELIEFS",
+          "nominal": "rear 6x4 R1; front 8x4 R1",
+          "locationXYZ": "local Z=1 / 89",
+          "tolerance": "+0.30",
+          "source": "factory_geometry.make_internal_carrier",
+          "geometryProbe": "two open BREP cuts"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-003",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 8,
+      "rows": [
+        {
+          "featureId": "MW-M-003-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = rear exterior plane; B = common axis; C = asymmetric key",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-M-003; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-003-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "27.000 x 27.000 x 9.000 mm",
+          "locationXYZ": "min=(-13.500,-13.500,0.000)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=4370.182 mm3"
+        },
+        {
+          "featureId": "MW-M-003-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "+Z / rear flange maximum diameter",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-M-003.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-003-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-003-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "NONE",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-M-003.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-003-F01",
+          "characteristic": "FLANGE / PLUG",
+          "nominal": "DIA 27.00 / 22.60",
+          "locationXYZ": "axis MODEL_Z; datum A at Z=0",
+          "tolerance": "plug -0.10/-0.20 after T0",
+          "source": "interfaces.rear_cap",
+          "geometryProbe": "coaxial BREP cylinders"
+        },
+        {
+          "featureId": "MW-M-003-F02",
+          "characteristic": "PLUG LENGTH / FIT",
+          "nominal": "4.00; diametral clr 0.40",
+          "locationXYZ": "Z=5..9",
+          "tolerance": "steel-safe",
+          "source": "interfaces.rear_cap",
+          "geometryProbe": "shell-cap intended process interference only"
+        },
+        {
+          "featureId": "MW-M-003-W01",
+          "characteristic": "ENERGY DIRECTOR",
+          "nominal": "H 0.25; base 0.35",
+          "locationXYZ": "circumferential at Z=5.35",
+          "tolerance": "weld DOE / vendor triangular conversion",
+          "source": "interfaces.rear_cap",
+          "geometryProbe": "BREP torus; intended overlap classified"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-004",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 9,
+      "rows": [
+        {
+          "featureId": "MW-M-004-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = shell collar plane; B = common axis; C = key slot",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-M-004; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-004-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "27.000 x 27.000 x 25.000 mm",
+          "locationXYZ": "min=(-13.500,-13.500,-0.000)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=10260.467 mm3"
+        },
+        {
+          "featureId": "MW-M-004-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "+Z / collar maximum diameter",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-M-004.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-004-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-004-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "NONE",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-M-004.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-004-F01",
+          "characteristic": "PLUG / COLLAR",
+          "nominal": "DIA 22.60 x 15.00; DIA 27.00 x 10.00",
+          "locationXYZ": "axis MODEL_Z",
+          "tolerance": "plug steel-safe",
+          "source": "interfaces.rod_connector",
+          "geometryProbe": "coaxial BREP solids"
+        },
+        {
+          "featureId": "MW-M-004-H01",
+          "characteristic": "GFRP ADHESIVE BORE",
+          "nominal": "DIA 7.40",
+          "locationXYZ": "XYZ=(0,0), through",
+          "tolerance": "gap DIA 0.40",
+          "source": "interfaces.rod_connector",
+          "geometryProbe": "GFRP minimum distance 0.20 radial"
+        },
+        {
+          "featureId": "MW-M-004-G01",
+          "characteristic": "3X ADHESIVE GROOVE",
+          "nominal": "W 0.60; D 0.30",
+          "locationXYZ": "local Z=4,10,18",
+          "tolerance": "+/-0.10",
+          "source": "interfaces.rod_connector",
+          "geometryProbe": "3 circumferential BREP cuts"
+        },
+        {
+          "featureId": "MW-M-004-H02",
+          "characteristic": "WITNESS VENT",
+          "nominal": "DIA 1.20 THRU",
+          "locationXYZ": "axis X; local Z=20",
+          "tolerance": "+0.10/-0",
+          "source": "factory_geometry.make_rod_connector",
+          "geometryProbe": "radial BREP cut"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-005",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 8,
+      "rows": [
+        {
+          "featureId": "MW-M-005-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = switch-contact land; B = stem axis; C = anti-rotation flat",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-M-005; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-005-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "10.800 x 8.500 x 10.800 mm",
+          "locationXYZ": "min=(-5.400,-0.000,-5.400)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=423.843 mm3"
+        },
+        {
+          "featureId": "MW-M-005-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "+Y along plunger axis / head maximum diameter",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-M-005.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-005-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-005-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "NONE",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-M-005.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-005-F01",
+          "characteristic": "STEM / HEAD",
+          "nominal": "DIA 7.60; DIA 10.80 x 1.20",
+          "locationXYZ": "axis +Y",
+          "tolerance": "stem -0.05/-0.15",
+          "source": "interfaces.press_to_arm",
+          "geometryProbe": "single-solid BREP"
+        },
+        {
+          "featureId": "MW-M-005-F02",
+          "characteristic": "APERTURE CLEARANCE",
+          "nominal": "diametral 0.60",
+          "locationXYZ": "global Z=72.00",
+          "tolerance": "functional",
+          "source": "interfaces.press_to_arm",
+          "geometryProbe": "upper-shell/plunger overlap=0 required"
+        },
+        {
+          "featureId": "MW-M-005-F03",
+          "characteristic": "TRAVEL / FORCE",
+          "nominal": "1.20 mm / 2.0-5.0 N",
+          "locationXYZ": "switch axis +Y",
+          "tolerance": "prototype verification",
+          "source": "interfaces.press_to_arm",
+          "geometryProbe": "inspection gauge required"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-P-001",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 8,
+      "rows": [
+        {
+          "featureId": "MW-P-001-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = rear cut face; B = pultrusion axis",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-P-001; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-P-001-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "7.000 x 7.000 x 220.000 mm",
+          "locationXYZ": "min=(-3.500,-3.500,0.000)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=8466.592 mm3"
+        },
+        {
+          "featureId": "MW-P-001-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "N/A / N/A",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-P-001.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-P-001-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-P-001-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "NONE",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-P-001.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-P-001-P01",
+          "characteristic": "PURCHASE DIAMETER",
+          "nominal": "DIA 7.00",
+          "locationXYZ": "axis MODEL_Z",
+          "tolerance": "+/-0.10",
+          "source": "interfaces.gfrp",
+          "geometryProbe": "BREP diameter 7.0"
+        },
+        {
+          "featureId": "MW-P-001-P02",
+          "characteristic": "PURCHASE LENGTH",
+          "nominal": "220.00",
+          "locationXYZ": "Z=0..220 local",
+          "tolerance": "+/-1.00",
+          "source": "interfaces.gfrp",
+          "geometryProbe": "BREP bbox Z=220"
+        },
+        {
+          "featureId": "MW-P-001-F01",
+          "characteristic": "ADHESIVE FIT",
+          "nominal": "insertion 30.00; exposed 190.00",
+          "locationXYZ": "connector bore",
+          "tolerance": "0.20 radial nominal",
+          "source": "interfaces.gfrp/rod_connector",
+          "geometryProbe": "pairwise BREP distance"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-101",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 8,
+      "rows": [
+        {
+          "featureId": "MW-M-101-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = PCB support plane; B = left PCB locator; C = rear locator",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-M-101; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-101-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "64.000 x 56.000 x 12.000 mm",
+          "locationXYZ": "min=(-32.000,-28.000,0.000)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=12258.846 mm3"
+        },
+        {
+          "featureId": "MW-M-101-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "+Z / top rim maximum footprint",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-M-101.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-101-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-101-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "connector openings are conditional on the bound electronics interface table",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-M-101.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-101-W01",
+          "characteristic": "WALL / FLOOR",
+          "nominal": "2.00 / 2.00",
+          "locationXYZ": "base section",
+          "tolerance": "1.80 MIN",
+          "source": "interfaces.receiver_enclosure.case",
+          "geometryProbe": "BREP section thickness"
+        },
+        {
+          "featureId": "MW-M-101-I01",
+          "characteristic": "PCB ENVELOPE / DATUM",
+          "nominal": "50.00 x 42.00 x 1.60",
+          "locationXYZ": "PCB bottom Z=3.20",
+          "tolerance": "+0.30 XY / +0.20 Z",
+          "source": "receiver-mechanical-interface.json",
+          "geometryProbe": "native-DRC-bound interface"
+        },
+        {
+          "featureId": "MW-M-101-H01",
+          "characteristic": "CASE PILOTS",
+          "nominal": "DIA 2.15->1.95",
+          "locationXYZ": "XYZ=[[-28.0, -24.0], [28.0, -24.0], [-28.0, 24.0]]",
+          "tolerance": "strip-torque DOE",
+          "source": "interfaces.receiver_enclosure.case_screws",
+          "geometryProbe": "3 tapered BREP cuts"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-102",
+      "sourceRevision": "B-RFQ",
+      "rowCount": 9,
+      "rows": [
+        {
+          "featureId": "MW-M-102-D01",
+          "characteristic": "DATUM SYSTEM",
+          "nominal": "A = top exterior plane; B = skirt center; C = poka-yoke corner",
+          "locationXYZ": "MODEL_XYZ; origin per design input",
+          "tolerance": "basic",
+          "source": "parts.MW-M-102; coordinate_system",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-102-E01",
+          "characteristic": "BREP ENVELOPE",
+          "nominal": "64.400 x 56.400 x 8.000 mm",
+          "locationXYZ": "min=(-32.200,-28.200,0.000)",
+          "tolerance": "reference",
+          "source": "generated BREP",
+          "geometryProbe": "bbox/valid/single-solid; volume=9385.265 mm3"
+        },
+        {
+          "featureId": "MW-M-102-M01",
+          "characteristic": "MOLD PULL / PARTING",
+          "nominal": "-Z / lower rim maximum footprint",
+          "locationXYZ": "part-local",
+          "tolerance": "vendor DFM",
+          "source": "parts.MW-M-102.mold_pull/parting_line",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-102-M02",
+          "characteristic": "GENERAL DRAFT / RADII",
+          "nominal": "1.5 deg; Rext>=0.8; Rint>=0.5",
+          "locationXYZ": "all unspecified molded faces/edges",
+          "tolerance": "tooling tune",
+          "source": "molding_defaults",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-102-M03",
+          "characteristic": "SIDE ACTIONS",
+          "nominal": "none until the electronics interface table is frozen",
+          "locationXYZ": "feature-specific",
+          "tolerance": "shutoff draft 3.0 deg target",
+          "source": "parts.MW-M-102.side_actions",
+          "geometryProbe": "parameter-bound"
+        },
+        {
+          "featureId": "MW-M-102-W01",
+          "characteristic": "LID WALL / HEIGHT",
+          "nominal": "2.00 / 8.00",
+          "locationXYZ": "lid section",
+          "tolerance": "1.80 MIN",
+          "source": "interfaces.receiver_enclosure.case",
+          "geometryProbe": "BREP section thickness"
+        },
+        {
+          "featureId": "MW-M-102-F01",
+          "characteristic": "SKIRT FIT",
+          "nominal": "clearance 0.15/side",
+          "locationXYZ": "perimeter",
+          "tolerance": "+0.10/-0.05",
+          "source": "interfaces.receiver_enclosure.case",
+          "geometryProbe": "base/lid positive overlap=0 required"
+        },
+        {
+          "featureId": "MW-M-102-H01",
+          "characteristic": "3X LID CLEARANCE / CBORE / TOWER POCKET",
+          "nominal": "DIA 2.80; CBORE DIA 5.00; POCKET DIA 6.80",
+          "locationXYZ": "XYZ=[[-28.0, -24.0], [28.0, -24.0], [-28.0, 24.0]]",
+          "tolerance": "+0.10/-0",
+          "source": "interfaces.receiver_enclosure.case_screws",
+          "geometryProbe": "9 axial BREP cuts; base/lid overlap=0"
+        },
+        {
+          "featureId": "MW-M-102-RF01",
+          "characteristic": "RF KEEP-OUT",
+          "nominal": "polygon=[]",
+          "locationXYZ": "above PCB antenna",
+          "tolerance": "no metal/coating/vent",
+          "source": "receiver-mechanical-interface.json",
+          "geometryProbe": "review overlay / material rule"
+        }
+      ]
+    }
+  ]
+}

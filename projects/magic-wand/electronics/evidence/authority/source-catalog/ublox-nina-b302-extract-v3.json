@@ -1,0 +1,32 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "u-blox",
+  "coveredMpns": ["NINA-B302-00B-00"],
+  "documentNumber": "UBX-17052099 / UBX-17065600",
+  "revision": "R15 / R03; extraction v3",
+  "originalOfficialUrl": "https://content.u-blox.com/sites/default/files/NINA-B3_DataSheet_UBX-17052099.pdf",
+  "originalSourceArtifacts": [
+    {"path": "electronics/evidence/datasheets/u-blox_NINA-B3_DataSheet_UBX-17052099_R15.pdf", "size": 2185082, "sha256": "e036969a27a1cedc5ec945a129fcbb271c256037e4b1e812ecc1127672d57c4c"},
+    {"path": "electronics/evidence/datasheets/u-blox_NINA-Family_NestedDesign_UBX-17065600_R03.pdf", "size": 488670, "sha256": "aa03de29340eb1240af181b530c523b50545c04e536cbf9b11d9536007a25d20"}
+  ],
+  "page": "R15 pages 23-25 and 41-42; R03 pages 7-8 and 14",
+  "section": "NINA-B3x2 pin assignment; Figure 14 M/N/P/Q detailed dimensions; Table 27 mechanical data; footprint and paste mask",
+  "coordinateFrame": {"origin": "module center", "xPositive": "right", "yPositive": "down", "units": "mm", "view": "top/PCB mounting surface normalized"},
+  "geometry": {
+    "physicalPads": {
+      "numberedPads": 55,
+      "unnumberedCentralEgpPads": 12,
+      "physicalEntityCount": 67,
+      "pad26Through30": {"xMm": [2.0, 1.0, 0.0, -1.0, -2.0], "yMm": -5.625, "sizeMm": [0.70, 1.15]},
+      "pad31Through46": {"topYmm": -4.25, "sideXmm": [-2.75, 2.75], "pitchQmm": 1.10, "sizeMm": [0.70, 0.70], "topEdgeXmm": [1.65, 0.55, -0.55, -1.65], "topology": "U-shaped"},
+      "egpTopology": {"pitchPmm": 1.15, "rowCounts": [2, 4, 2, 4], "physicalIds": "egp-01..egp-12", "logicalPadNumber": "EGP", "net": "GND", "layers": ["F.Cu", "F.Paste", "F.Mask"]},
+      "b306EagpExcluded": true,
+      "canonicalPhysicalPadFingerprint": "9b9200a5866335e8b7c21d237cc163df831070e790b699d6f3b3b172bbbfe1b4",
+      "fingerprintBasis": "SHA-256 of ordered canonical 67-entity physical-pad rows after manual R15 Figure 4/Figure 14 transcription"
+    },
+    "bodyDatum": {"bodyEnvelopeMm": [10.0, 15.0], "moduleThicknessTypicalMm": 2.23, "antennaAndPcbThicknessTypicalMm": 3.83, "assembledEnvelopeMaximumMm": 4.23},
+    "heightBasis": "R15 Table 27 NINA-B3x2 V=3.83 mm typical plus +0.40 mm tolerance"
+  },
+  "humanExtractionDeclaration": "Manually transcribed and independently audited against UBX-17052099 R15 Figure 4, Figure 14 and Table 27, cross-checked with UBX-17065600 R03. The fingerprint is calculated from that controlled transcription, not copied from a generated authority inventory. NINA-B302 has 55 numbered pads plus twelve distinct EGP lands (67 physical entities); B306-only EAGP lands are excluded."
+}

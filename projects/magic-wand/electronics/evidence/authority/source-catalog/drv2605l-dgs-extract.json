@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Texas Instruments",
+  "coveredMpns": ["DRV2605LDGSR"],
+  "documentNumber": "SLOS854D / DGS0010A",
+  "revision": "D; package drawing 4221984/A",
+  "originalOfficialUrl": "https://www.ti.com/lit/ds/symlink/drv2605l.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_drv2605l.pdf", "size": 2642481, "sha256": "0597de48de2dd1d08d3d2a801ced819c1c756f152916367608b9146c927bb290"},
+  "page": "70-71",
+  "section": "DGS0010A package outline and land pattern example",
+  "coordinateFrame": {"origin": "package center", "xPositive": "right", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"terminalCount": 10, "pitchMm": 0.5, "landMm": [1.45, 0.3], "rowSpanMm": 4.4}, "bodyDatum": {"bodyEnvelopeMm": [3.0, 3.0], "maximumHeightMm": 1.1}, "heightBasis": "DGS0010A package maximum height"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified TI PDF pages and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

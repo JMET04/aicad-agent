@@ -1,0 +1,19 @@
+{
+  "schema": "aicad_manufacturing_bom_v1",
+  "assemblyId": "MW-A-101",
+  "revision": "B-RFQ",
+  "units": "mm",
+  "coordinateSystemId": "MODEL_XYZ",
+  "rows": [
+    {
+      "partId": "MW-M-101",
+      "revision": "B-RFQ",
+      "quantity": 1
+    },
+    {
+      "partId": "MW-M-102",
+      "revision": "B-RFQ",
+      "quantity": 1
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "aicad_native_tool_execution_log_v1",
+  "gate": "mechanical_assembly_native_reopen",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true
+  },
+  "subjectId": "MW-A-001",
+  "revision": "B-RFQ",
+  "inputSha256ByRole": {
+    "nativeAssembly": "ca53ccb0bac21e87b49560bef4c6be3697cd34ff97e5ba8c0604c8c56031227e"
+  },
+  "outputSha256ByRole": {
+    "step": "e1f1c89b921944da9e7dcdbd05f6e75c171a72bcaf852bd11527bb0a64a54531",
+    "assemblyDrawing": "a3a61f4d30e328108ea5841b66bb3d9cc68de8d2839211cabc1ca1c9ea07ab98",
+    "explodedDrawing": "7364c3df1b3bd4aa67009023be5fd9271ccc4ea0cd7121fa3055fc22a3daafa7",
+    "sectionDrawing": "f054f8a3bdfbeae83b9909807770daf2a9c51cafabadd35a6a7b66e71462bcc2",
+    "assemblyPreview2d": "3a5bbb01600b81986ca471c029cc331d6ee2d33f7129f5426844409132f5f9df",
+    "assemblyPreview3d": "e0d1b537acdc95583487350f96b29140bb970eceb79b79c1aa5b419c40f5f3ac",
+    "assemblyWorkInstruction": "e78c04f0e2ee3a8d713fe1ef25de317a4ae71951e1863aafec54fedfb7b80aba",
+    "inspectionPlan": "ab73e0adad0c735a206f1f16ba913d5c76787fd756c49da57f3d5c7aece075fe",
+    "moldingInput": "1327f5fe066194455226c83adfa96cbcbf418bea001bb64e17ed5a5c25fe01c1",
+    "bom": "566bfdb8eea8f39945f65ef3284a6234ab9e357ef96aa3dc0d7dfa5d156526fd",
+    "positions": "4ea276dd0af6531be4f119528cfb420d4f87725ab7003899f7fe08f1c77da3cd"
+  },
+  "checks": [
+    {
+      "id": "solidworks-assembly-reopen",
+      "status": "pass",
+      "detail": "SolidWorks OpenDoc7 warningCode=0 with 7 resolved components; raw evidence SHA256 6560bb1cab6912f0a5b1ee75506765211072feae8b606c945592229d4e03f666"
+    },
+    {
+      "id": "component-transform-closure",
+      "status": "pass",
+      "detail": "All 7 native component Transform2 translations match released positions within 0.000001 mm"
+    },
+    {
+      "id": "assembly-artifact-closure",
+      "status": "pass",
+      "detail": "STEP, three controlled DXFs, two real previews, AWI, inspection, mold input, BOM and positions hashes match this revision"
+    }
+  ]
+}

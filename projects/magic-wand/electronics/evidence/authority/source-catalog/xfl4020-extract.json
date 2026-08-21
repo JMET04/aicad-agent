@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Coilcraft",
+  "coveredMpns": ["XFL4020-222MEC"],
+  "documentNumber": "745-3 / XFL4020",
+  "revision": "2026-03-10",
+  "originalOfficialUrl": "https://www.coilcraft.com/getmedia/50632d43-da1b-4cdb-8ab4-3029cab51df3/xfl4020.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_xfl4020.pdf", "size": 232753, "sha256": "6dca915ac1daa47210f7708a7540221ffef4f34a88a8621c94bd50cdf48647e6"},
+  "page": 3,
+  "section": "Dimensions and Recommended Land Pattern",
+  "coordinateFrame": {"origin": "component center", "xPositive": "right across terminals", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"terminalCount": 2, "landMm": [0.98, 3.4], "centerOffsetMm": 1.185}, "bodyDatum": {"bodyEnvelopeMm": [4.0, 4.0], "maximumHeightMm": 2.1}, "heightBasis": "Document 745-3 mounted-part maximum"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified Coilcraft PDF page and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

@@ -1,0 +1,274 @@
+{
+  "schema": "aicad_solidworks_native_execution_raw_v1",
+  "subjectId": "MW-A-101",
+  "revision": "B-RFQ",
+  "operation": "native component load -> SLDASM build/save -> native reopen -> STEP export",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true,
+    "api": "SOLIDWORKS COM API / OpenDoc7 / SaveAs3",
+    "automation": "owned DispatchEx COM instance",
+    "neutralImportMode": "embedded imported solid; 3D Interconnect external links disabled"
+  },
+  "paths": {
+    "nativeAssembly": "outputs/3d/MW-A-101_receiver_enclosure_assembly.SLDASM",
+    "step": "outputs/3d/MW-A-101_receiver_enclosure_assembly.step"
+  },
+  "components": [
+    {
+      "instanceId": "MW-M-101:1",
+      "partId": "MW-M-101",
+      "nativeCadPath": "outputs/3d/MW-M-101_receiver_enclosure_base.SLDPRT",
+      "nativeCadSizeBytes": 118123,
+      "nativeCadSha256": "42114ad3f175889f27ab1df1d844cb72c6049bc95237313cbbdf3bc538cb6e1f",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-102:1",
+      "partId": "MW-M-102",
+      "nativeCadPath": "outputs/3d/MW-M-102_receiver_enclosure_lid.SLDPRT",
+      "nativeCadSizeBytes": 84902,
+      "nativeCadSha256": "8eee47b4203e6a13f8269135abb09caecd87965fcf195a9fedb591cedb9e9400",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.006,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        6.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        6.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "component-native-load",
+      "status": "pass",
+      "detail": "OpenDoc7 loaded 2 final native component documents"
+    },
+    {
+      "id": "assembly-native-save",
+      "status": "pass",
+      "detail": "SaveAs3 created an authentic SLDASM with Silent|SaveReferenced options"
+    },
+    {
+      "id": "assembly-native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 returned warningCode=0 and 2 resolved components; bbox mm=[-32.2, -28.2, 0.0, 32.2, 28.2, 14.0]"
+    },
+    {
+      "id": "component-transform-closure",
+      "status": "pass",
+      "detail": "all 2 resolved native components match released translation transforms within 0.000001 mm"
+    },
+    {
+      "id": "assembly-step-roundtrip",
+      "status": "pass",
+      "detail": "reopened SLDASM exported a valid 2-solid STEP"
+    }
+  ],
+  "nativeReopen": {
+    "errorCode": 0,
+    "warningCode": 0,
+    "warningNames": [],
+    "documentType": "assembly",
+    "componentCount": 2,
+    "bboxMm": [
+      -32.2,
+      -28.2,
+      0.0,
+      32.2,
+      28.2,
+      14.0
+    ]
+  },
+  "componentClosure": [
+    {
+      "instanceId": "MW-M-101:1",
+      "partId": "MW-M-101",
+      "nativeCadPath": "outputs/3d/MW-M-101_receiver_enclosure_base.SLDPRT",
+      "nativeCadSizeBytes": 118123,
+      "nativeCadSha256": "42114ad3f175889f27ab1df1d844cb72c6049bc95237313cbbdf3bc538cb6e1f",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-102:1",
+      "partId": "MW-M-102",
+      "nativeCadPath": "outputs/3d/MW-M-102_receiver_enclosure_lid.SLDPRT",
+      "nativeCadSizeBytes": 84902,
+      "nativeCadSha256": "8eee47b4203e6a13f8269135abb09caecd87965fcf195a9fedb591cedb9e9400",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.006,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        6.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        6.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    }
+  ],
+  "nativeAssembly": {
+    "path": "outputs/3d/MW-A-101_receiver_enclosure_assembly.SLDASM",
+    "sizeBytes": 101022,
+    "sha256": "ae2f4441383c68087ff89c01b936ef6428bcaa3d93de7af4ea393304db44e02f"
+  },
+  "finalStep": {
+    "path": "outputs/3d/MW-A-101_receiver_enclosure_assembly.step",
+    "sizeBytes": 305336,
+    "sha256": "4579f6d3ea6708c473726d4cb9f480ae14c426192a4d102d75cf1bcdec20ce5a",
+    "metrics": {
+      "valid": true,
+      "solidCount": 2,
+      "volumeMm3": 21644.111302,
+      "bboxMm": [
+        -32.2,
+        -28.2,
+        0.0,
+        32.2,
+        28.2,
+        14.0
+      ]
+    }
+  },
+  "positionsEvidence": {
+    "path": "outputs/documents/MW-A-101_assembly-positions.json",
+    "sizeBytes": 903,
+    "sha256": "556626ec16ed9cb910767e01631dcf0642652910dd7515815d4ae7cd04162051"
+  },
+  "interferenceEvidence": {
+    "path": "reports/MW-A-101_brep-interference-report.json",
+    "sizeBytes": 615,
+    "sha256": "b5011e94b9da98cfc349c0e223be855fc9a60bd15a7d177fb92658f864273519"
+  }
+}

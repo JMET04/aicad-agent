@@ -1,0 +1,1413 @@
+{
+  "schema": "aicad_land_pattern_source_catalog_v1",
+  "status": "CONTROLLED",
+  "coverageStatus": "COMPLETE",
+  "policy": {
+    "generatedAuthorityJsonIsNeverSourceEvidence": true,
+    "temporaryRendersHtmlZipAndProbeFilesAreNeverAuthority": true,
+    "manufacturerPdfsRemainVerificationInputsNotRedistributedArtifacts": true,
+    "supplierConfirmationRequiredDoesNotBlockDigitalCandidateAuthority": true
+  },
+  "summary": {
+    "familyCount": 25,
+    "refCount": 92,
+    "refCoverage": 92,
+    "blockerCount": 0
+  },
+  "families": [
+    {
+      "familyId": "alps-skqg",
+      "manufacturer": "ALPS Alpine",
+      "coveredMpns": [
+        "SKQGAFE010"
+      ],
+      "documentNumber": "KiCad 10.0.5 Button_Switch_SMD SKQG WithoutStem",
+      "revision": "10.0.5",
+      "officialUrl": "https://tech.alpsalpine.com/e/products/detail/SKQGAFE010/",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-skqg-extract.json",
+          "size": 1112,
+          "sha256": "972e326192b595d43a4d64a17fae44bb3afd0c3374b8a46991496868e10b7a0e",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Button_Switch_SMD SKQG WithoutStem",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "972e326192b595d43a4d64a17fae44bb3afd0c3374b8a46991496868e10b7a0e",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "SW1",
+          "physicalPadFingerprint": "c13cf0c4aaf30f8428af10f25bc7536a9bf7db9ad2c748d80257f9287d667e96",
+          "bodyDatumFingerprint": "d636c843650b8eb02a14f56d1929f392cd2dc0cc4cf53acd910d577f3d7971bb"
+        }
+      ]
+    },
+    {
+      "familyId": "bourns-mf-fsmf",
+      "manufacturer": "Bourns",
+      "coveredMpns": [
+        "MF-FSMF050X-2"
+      ],
+      "documentNumber": "MF-FSMF Series",
+      "revision": "PDF modified 2026-05-16",
+      "officialUrl": "https://www.bourns.com/docs/product-datasheets/mf-fsmf.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/mf-fsmf-extract.json",
+          "size": 1194,
+          "sha256": "48e336aee4b7e99c1ea4788a3342df1dd5c0bba7ab2ed80fc135e37b119a38f3",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "MF-FSMF Series",
+        "page": "1-2",
+        "section": "Physical dimensions and recommended pad layout; MF-FSMF050X electrical row",
+        "sourceArtifactSha256": "48e336aee4b7e99c1ea4788a3342df1dd5c0bba7ab2ed80fc135e37b119a38f3",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "F1",
+          "physicalPadFingerprint": "301fa62eca6928ebdbe698b4abcb49ac435e07834a462abe07ceeaa7ba7b767c",
+          "bodyDatumFingerprint": "60d3b2adfc3fdbd17caec35b45d0aba96a0eba43158b751c7b2c9a510a890cda"
+        },
+        {
+          "board": "receiver",
+          "ref": "F1",
+          "physicalPadFingerprint": "301fa62eca6928ebdbe698b4abcb49ac435e07834a462abe07ceeaa7ba7b767c",
+          "bodyDatumFingerprint": "60d3b2adfc3fdbd17caec35b45d0aba96a0eba43158b751c7b2c9a510a890cda"
+        }
+      ]
+    },
+    {
+      "familyId": "coilcraft-xfl4020",
+      "manufacturer": "Coilcraft",
+      "coveredMpns": [
+        "XFL4020-222MEC"
+      ],
+      "documentNumber": "745-3 / XFL4020",
+      "revision": "2026-03-10",
+      "officialUrl": "https://www.coilcraft.com/getmedia/50632d43-da1b-4cdb-8ab4-3029cab51df3/xfl4020.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/xfl4020-extract.json",
+          "size": 1176,
+          "sha256": "4a1afa4aa9c04878d5a1f3de57910fe1a652216bc1a0828a21de119de60364fa",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "745-3 / XFL4020",
+        "page": 3,
+        "section": "Dimensions and Recommended Land Pattern",
+        "sourceArtifactSha256": "4a1afa4aa9c04878d5a1f3de57910fe1a652216bc1a0828a21de119de60364fa",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "L1",
+          "physicalPadFingerprint": "a3d3bd1b7dcc5f7582d6785f0460aa8a1fc6c6b49701ffd8b26ed68609393642",
+          "bodyDatumFingerprint": "691e98cc65784ca70fb056fa1faa45afeb42ed104efb7135c4610bf603e1e559"
+        }
+      ]
+    },
+    {
+      "familyId": "diodes-ss24-smb",
+      "manufacturer": "Diodes Inc.",
+      "coveredMpns": [
+        "SS24-13-F"
+      ],
+      "documentNumber": "KiCad 10.0.5 Diode_SMD D_SMB",
+      "revision": "10.0.5; footprint version 20260206",
+      "officialUrl": "https://gitlab.com/kicad/libraries/kicad-footprints",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-smb-extract.json",
+          "size": 1243,
+          "sha256": "159bba09b6e51150caf146fb9846fc38d386a6f3c3693f59b64a8e91ba411eb1",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Diode_SMD D_SMB",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "159bba09b6e51150caf146fb9846fc38d386a6f3c3693f59b64a8e91ba411eb1",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "D1",
+          "physicalPadFingerprint": "2f606d05d8a0c168983d4a7aef89c859b31fff2c81ad95c3dc60973d1fda2a90",
+          "bodyDatumFingerprint": "b567423ecd37b91e4e8f148d50bae40b77e1d70dbba2fbb87ffcfea934839226"
+        }
+      ]
+    },
+    {
+      "familyId": "hirose-df13a-5p",
+      "manufacturer": "Hirose Electric",
+      "coveredMpns": [
+        "DF13A-5P-1.25H(51)"
+      ],
+      "documentNumber": "EDCX-162444-51-08 / 0000995752",
+      "revision": "DIS-H-00027308, 2026-07-29",
+      "officialUrl": "https://www.hirose.com/en/product/p/CL0536-0304-6-51",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/hirose-df13a-5p-extract.json",
+          "size": 1315,
+          "sha256": "722abcf75d41bd1fb82ca5db7882a3ba96f62579f5f2f0beb422a4d567262091",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "EDCX-162444-51-08 / 0000995752",
+        "page": 1,
+        "section": "DF13A-*P-1.25H(51) dimensions and recommended pattern",
+        "sourceArtifactSha256": "722abcf75d41bd1fb82ca5db7882a3ba96f62579f5f2f0beb422a4d567262091",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "J2",
+          "physicalPadFingerprint": "41310ba34c3736f8373301aa6a95050f5a90145c9014da6fc5783a7dd9e933f8",
+          "bodyDatumFingerprint": "997ebe42f4f9e44a3948568dc35730177e2d88548ce2d11f7e21af21d782368a"
+        }
+      ]
+    },
+    {
+      "familyId": "jae-dx07s016ja1r1500",
+      "manufacturer": "JAE",
+      "coveredMpns": [
+        "DX07S016JA1R1500"
+      ],
+      "documentNumber": "KiCad 10.0.5 Connector_USB / JAE DX07S016JA1R1500",
+      "revision": "10.0.5; exact MPN footprint",
+      "officialUrl": "https://www.jae.com/en/connectors/series/detail/product/id=68295",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-jae-dx07-extract.json",
+          "size": 1295,
+          "sha256": "a7b9c5718d1a9735731426657f2b410d1caa4af1d1dc5783827cec830a24504e",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Connector_USB / JAE DX07S016JA1R1500",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "a7b9c5718d1a9735731426657f2b410d1caa4af1d1dc5783827cec830a24504e",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "J1",
+          "physicalPadFingerprint": "f6c4212f72ebd58b06723bb33283afb04e5870ac6d5795de2a26f16e70e08ea3",
+          "bodyDatumFingerprint": "0317acc4c09053fcd3d7c8c8658c53a22e459a31abee647f8c4d424a9fdaffa9"
+        },
+        {
+          "board": "receiver",
+          "ref": "J1",
+          "physicalPadFingerprint": "f6c4212f72ebd58b06723bb33283afb04e5870ac6d5795de2a26f16e70e08ea3",
+          "bodyDatumFingerprint": "d9383006cd4908c88efae1e72dc9e08a664f89848e0a10cf1134c86cd03e4bea"
+        }
+      ]
+    },
+    {
+      "familyId": "jst-sh-side-entry",
+      "manufacturer": "JST",
+      "coveredMpns": [
+        "SM02B-SRSS-TB(LF)(SN)",
+        "SM03B-SRSS-TB(LF)(SN)"
+      ],
+      "documentNumber": "JST SH CONNECTOR catalog",
+      "revision": "PDF creation 2024-10-04",
+      "officialUrl": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/jst-sh-side-entry-extract.json",
+          "size": 1372,
+          "sha256": "70f61c2c29d41d62a06eb76a4b3e4287985aeeb7762dd558d859a229cfc05bab",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "JST SH CONNECTOR catalog",
+        "page": "1 and 3",
+        "section": "Side entry type PC board layout; header model table",
+        "sourceArtifactSha256": "70f61c2c29d41d62a06eb76a4b3e4287985aeeb7762dd558d859a229cfc05bab",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "J2",
+          "physicalPadFingerprint": "a799b2964ea620dc4ee9bfcc56bb8de56430be389476e63bd38752d89f15318b",
+          "bodyDatumFingerprint": "3668e19d0d69b7af55e52fa337c6c954b769822c63e9dee4d511d05f69d0d391"
+        },
+        {
+          "board": "wand",
+          "ref": "J3",
+          "physicalPadFingerprint": "10cbc2d77991c8cb4c57febd569e8c4dc759aeee599b012a303158f6d2a870dd",
+          "bodyDatumFingerprint": "0a6a85040e2f001f6a9ce9d0f9787fea20fc51709e245d3e776fcab1cee21333"
+        }
+      ]
+    },
+    {
+      "familyId": "littelfuse-smbj-smb",
+      "manufacturer": "Littelfuse",
+      "coveredMpns": [
+        "SMBJ15A"
+      ],
+      "documentNumber": "KiCad 10.0.5 Diode_SMD D_SMB",
+      "revision": "10.0.5; footprint version 20260206",
+      "officialUrl": "https://gitlab.com/kicad/libraries/kicad-footprints",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-smb-extract.json",
+          "size": 1243,
+          "sha256": "159bba09b6e51150caf146fb9846fc38d386a6f3c3693f59b64a8e91ba411eb1",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Diode_SMD D_SMB",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "159bba09b6e51150caf146fb9846fc38d386a6f3c3693f59b64a8e91ba411eb1",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "D2",
+          "physicalPadFingerprint": "2f606d05d8a0c168983d4a7aef89c859b31fff2c81ad95c3dc60973d1fda2a90",
+          "bodyDatumFingerprint": "b567423ecd37b91e4e8f148d50bae40b77e1d70dbba2fbb87ffcfea934839226"
+        }
+      ]
+    },
+    {
+      "familyId": "mechanical-npth",
+      "manufacturer": "MECHANICAL",
+      "coveredMpns": [
+        "NPTH"
+      ],
+      "documentNumber": "MW-MECH-NPTH-D2.4",
+      "revision": "1",
+      "designAuthorityUri": "aicad://magic-wand/mechanical-interface/npth-d2.4",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/design-npth-d2p4-extract.json",
+          "size": 868,
+          "sha256": "d13b83a098e7df8a794be24a137d0ecbcd65f6d9d804cb2ad6b9dccde8e770a5",
+          "kind": "designAuthority"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "MW-MECH-NPTH-D2.4",
+        "page": "interface rule",
+        "section": "non-plated locating/mounting hole",
+        "sourceArtifactSha256": "d13b83a098e7df8a794be24a137d0ecbcd65f6d9d804cb2ad6b9dccde8e770a5",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "H1",
+          "physicalPadFingerprint": "e9cec73ad29aeb80fbb9d7f09cb4e7294d5af60a983f87cc8650519b78177632",
+          "bodyDatumFingerprint": "dd3129039158f694c6ca9fca724f580b3fb05a4345add509484dbd0d1567f3cc"
+        },
+        {
+          "board": "wand",
+          "ref": "H2",
+          "physicalPadFingerprint": "e9cec73ad29aeb80fbb9d7f09cb4e7294d5af60a983f87cc8650519b78177632",
+          "bodyDatumFingerprint": "dd3129039158f694c6ca9fca724f580b3fb05a4345add509484dbd0d1567f3cc"
+        },
+        {
+          "board": "receiver",
+          "ref": "H1",
+          "physicalPadFingerprint": "e9cec73ad29aeb80fbb9d7f09cb4e7294d5af60a983f87cc8650519b78177632",
+          "bodyDatumFingerprint": "9bd9377e84abc2b425c91efce9f2e7d9c3c6d3d2614e19ce37fa5d659a3d7ee1"
+        },
+        {
+          "board": "receiver",
+          "ref": "H2",
+          "physicalPadFingerprint": "e9cec73ad29aeb80fbb9d7f09cb4e7294d5af60a983f87cc8650519b78177632",
+          "bodyDatumFingerprint": "9bd9377e84abc2b425c91efce9f2e7d9c3c6d3d2614e19ce37fa5d659a3d7ee1"
+        },
+        {
+          "board": "receiver",
+          "ref": "H3",
+          "physicalPadFingerprint": "e9cec73ad29aeb80fbb9d7f09cb4e7294d5af60a983f87cc8650519b78177632",
+          "bodyDatumFingerprint": "9bd9377e84abc2b425c91efce9f2e7d9c3c6d3d2614e19ce37fa5d659a3d7ee1"
+        },
+        {
+          "board": "receiver",
+          "ref": "H4",
+          "physicalPadFingerprint": "e9cec73ad29aeb80fbb9d7f09cb4e7294d5af60a983f87cc8650519b78177632",
+          "bodyDatumFingerprint": "9bd9377e84abc2b425c91efce9f2e7d9c3c6d3d2614e19ce37fa5d659a3d7ee1"
+        }
+      ],
+      "officialUrl": "https://github.com/JMET04/aicad-agent/blob/main/projects/magic-wand/electronics/evidence/authority/source-catalog/design-npth-d2p4-extract.json"
+    },
+    {
+      "familyId": "murata-grm0402",
+      "manufacturer": "Murata",
+      "coveredMpns": [
+        "GRM155R71C104KA88D",
+        "GRM155R71A105KE15D"
+      ],
+      "documentNumber": "KiCad 10.0.5 Capacitor_SMD C_0402_1005Metric",
+      "revision": "10.0.5; footprint version 20260206",
+      "officialUrl": "https://gitlab.com/kicad/libraries/kicad-footprints",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-c0402-extract.json",
+          "size": 1187,
+          "sha256": "410a947e73cb14408901872cd5897df6a498c65b629dd08cf54b6c282feace9b",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Capacitor_SMD C_0402_1005Metric",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "410a947e73cb14408901872cd5897df6a498c65b629dd08cf54b6c282feace9b",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "C_IMU_VDD",
+          "physicalPadFingerprint": "2669d7056bc0741f85fb8c88170dc04c3b0b27d95b9fe9db1684e9aba20d512f",
+          "bodyDatumFingerprint": "9fdc0922c3c52671391c0ba33bc713d13abdc4a5fff702c00cdb93571d90e66a"
+        },
+        {
+          "board": "wand",
+          "ref": "C_IMU_IO",
+          "physicalPadFingerprint": "2669d7056bc0741f85fb8c88170dc04c3b0b27d95b9fe9db1684e9aba20d512f",
+          "bodyDatumFingerprint": "9fdc0922c3c52671391c0ba33bc713d13abdc4a5fff702c00cdb93571d90e66a"
+        },
+        {
+          "board": "wand",
+          "ref": "C_HAPTIC_REG",
+          "physicalPadFingerprint": "2669d7056bc0741f85fb8c88170dc04c3b0b27d95b9fe9db1684e9aba20d512f",
+          "bodyDatumFingerprint": "9fdc0922c3c52671391c0ba33bc713d13abdc4a5fff702c00cdb93571d90e66a"
+        },
+        {
+          "board": "wand",
+          "ref": "C_HAPTIC_VDD",
+          "physicalPadFingerprint": "2669d7056bc0741f85fb8c88170dc04c3b0b27d95b9fe9db1684e9aba20d512f",
+          "bodyDatumFingerprint": "9fdc0922c3c52671391c0ba33bc713d13abdc4a5fff702c00cdb93571d90e66a"
+        },
+        {
+          "board": "receiver",
+          "ref": "C_U3A",
+          "physicalPadFingerprint": "2669d7056bc0741f85fb8c88170dc04c3b0b27d95b9fe9db1684e9aba20d512f",
+          "bodyDatumFingerprint": "9fdc0922c3c52671391c0ba33bc713d13abdc4a5fff702c00cdb93571d90e66a"
+        },
+        {
+          "board": "receiver",
+          "ref": "C_U3B",
+          "physicalPadFingerprint": "2669d7056bc0741f85fb8c88170dc04c3b0b27d95b9fe9db1684e9aba20d512f",
+          "bodyDatumFingerprint": "9fdc0922c3c52671391c0ba33bc713d13abdc4a5fff702c00cdb93571d90e66a"
+        },
+        {
+          "board": "receiver",
+          "ref": "C_U4A",
+          "physicalPadFingerprint": "2669d7056bc0741f85fb8c88170dc04c3b0b27d95b9fe9db1684e9aba20d512f",
+          "bodyDatumFingerprint": "9fdc0922c3c52671391c0ba33bc713d13abdc4a5fff702c00cdb93571d90e66a"
+        },
+        {
+          "board": "receiver",
+          "ref": "C_U4B",
+          "physicalPadFingerprint": "2669d7056bc0741f85fb8c88170dc04c3b0b27d95b9fe9db1684e9aba20d512f",
+          "bodyDatumFingerprint": "9fdc0922c3c52671391c0ba33bc713d13abdc4a5fff702c00cdb93571d90e66a"
+        }
+      ]
+    },
+    {
+      "familyId": "murata-grm0805",
+      "manufacturer": "Murata",
+      "coveredMpns": [
+        "GRM21BR61A106KE19L",
+        "GRM21BR60J226ME39L",
+        "GRM21BR60J106KE19L"
+      ],
+      "documentNumber": "KiCad 10.0.5 Capacitor_SMD C_0805_2012Metric",
+      "revision": "10.0.5; footprint version 20260206",
+      "officialUrl": "https://gitlab.com/kicad/libraries/kicad-footprints",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-c0805-extract.json",
+          "size": 1208,
+          "sha256": "aa52b62f860943e89cfed7ab079c89a1a8f8bf263d50f97aa86c36a2216b9e6e",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Capacitor_SMD C_0805_2012Metric",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "aa52b62f860943e89cfed7ab079c89a1a8f8bf263d50f97aa86c36a2216b9e6e",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "C_USB",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "wand",
+          "ref": "C_CHG_IN",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "wand",
+          "ref": "C_SYS",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "wand",
+          "ref": "C_BAT",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "wand",
+          "ref": "C_BUCK_IN",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "wand",
+          "ref": "C_BUCK_OUT",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "receiver",
+          "ref": "C_USB",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "receiver",
+          "ref": "C_BUCK_IN",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "receiver",
+          "ref": "C_BUCK_OUT",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        },
+        {
+          "board": "receiver",
+          "ref": "C_U1",
+          "physicalPadFingerprint": "a876a0ba685b008182afa400ab22322b97464dd6cb0fc181d5becd7dde990f24",
+          "bodyDatumFingerprint": "46e9da534effe4de4fe8a39f7458e476fe3e7061d25e720cc139693c8832cd9f"
+        }
+      ]
+    },
+    {
+      "familyId": "murata-lqh32pn",
+      "manufacturer": "Murata",
+      "coveredMpns": [
+        "LQH32PN2R2NN0L"
+      ],
+      "documentNumber": "JELF243A_0061T-01",
+      "revision": "01",
+      "officialUrl": "https://www.murata.com/en-us/products/productdetail?partno=LQH32PN2R2NN0L",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/lqh32pn-extract.json",
+          "size": 1181,
+          "sha256": "d04ce7e4b188abd276e3f4617061168f33b12ff4cb0f8dbd4ea9576a9005b529",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "JELF243A_0061T-01",
+        "page": 7,
+        "section": "12.1 Land dimensions",
+        "sourceArtifactSha256": "d04ce7e4b188abd276e3f4617061168f33b12ff4cb0f8dbd4ea9576a9005b529",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "L1",
+          "physicalPadFingerprint": "1736ff0c79e84d8509c7ac17e5de951d4dfc93c1b74e1f275e98dd7e57ecb403",
+          "bodyDatumFingerprint": "f986b3e48f19afbd525edaceca2288eb129c6c47673880f7f6f95b78ae1b48ee"
+        }
+      ]
+    },
+    {
+      "familyId": "pcb-bare-pad-d1p5",
+      "manufacturer": "PCB FABRICATION",
+      "coveredMpns": [
+        "BARE_PAD_D1.5"
+      ],
+      "documentNumber": "KiCad 10.0.5 TestPoint Pad D1.5 + MW paste override",
+      "revision": "10.0.5 / design override 1",
+      "officialUrl": "https://gitlab.com/kicad/libraries/kicad-footprints",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-testpoint-bare-pad-extract.json",
+          "size": 1351,
+          "sha256": "746aa56f60892f892204fa0829e1c9794708d052b961606b89ae2a1a4ae49984",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 TestPoint Pad D1.5 + MW paste override",
+        "page": "KiCad S-expression",
+        "section": "pad entity plus engineering-owned no-paste override",
+        "sourceArtifactSha256": "746aa56f60892f892204fa0829e1c9794708d052b961606b89ae2a1a4ae49984",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "TP3",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "wand",
+          "ref": "TP4",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "wand",
+          "ref": "TP5",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "wand",
+          "ref": "TP6",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "wand",
+          "ref": "TP1",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "wand",
+          "ref": "TP2",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "wand",
+          "ref": "TP7",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "wand",
+          "ref": "TP8",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "receiver",
+          "ref": "TP1",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "receiver",
+          "ref": "TP2",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "receiver",
+          "ref": "TP3",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "receiver",
+          "ref": "TP4",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "receiver",
+          "ref": "TP5",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "receiver",
+          "ref": "TP6",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "receiver",
+          "ref": "TP7",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        },
+        {
+          "board": "receiver",
+          "ref": "TP8",
+          "physicalPadFingerprint": "5c7c9987055dfc8e3d58117b57e7aef06553f6a2a89ba64cb3d0a18308faacd5",
+          "bodyDatumFingerprint": "e56a8dcc8469e4d86078edda32c030ddf50b48b657725152aa233ce9dc23878c"
+        }
+      ]
+    },
+    {
+      "familyId": "st-lsm6dsv16x-lga14",
+      "manufacturer": "STMicroelectronics",
+      "coveredMpns": [
+        "LSM6DSV16XTR"
+      ],
+      "documentNumber": "KiCad 10.0.5 Package_LGA LGA-14 3x2.5 P0.5",
+      "revision": "10.0.5",
+      "officialUrl": "https://www.st.com/resource/en/datasheet/lsm6dsv16x.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-lga14-extract.json",
+          "size": 1140,
+          "sha256": "84a999ca47ae1166a08ae81360709a726f388d8b6f66ef3cffdc9fa73077dd01",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Package_LGA LGA-14 3x2.5 P0.5",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "84a999ca47ae1166a08ae81360709a726f388d8b6f66ef3cffdc9fa73077dd01",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "U2",
+          "physicalPadFingerprint": "384d3a1e2095f7c654d48a2e5c9e47f390531bf67414a35dfdc99c4eb29bbdf1",
+          "bodyDatumFingerprint": "5a3f80cb1847670cdcfc75399f929c4283309df71184bed4fc8ed1e08c9962a3"
+        }
+      ]
+    },
+    {
+      "familyId": "st-usblc6-sot23-6",
+      "manufacturer": "STMicroelectronics",
+      "coveredMpns": [
+        "USBLC6-2SC6"
+      ],
+      "documentNumber": "KiCad 10.0.5 Package_TO_SOT_SMD SOT-23-6",
+      "revision": "10.0.5",
+      "officialUrl": "https://www.st.com/resource/en/datasheet/usblc6-2.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-sot23-6-extract.json",
+          "size": 1090,
+          "sha256": "26bcd9cd970bd416d241c989c29779d3e5a443ab78b965624a5089af0ff85fe8",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Package_TO_SOT_SMD SOT-23-6",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "26bcd9cd970bd416d241c989c29779d3e5a443ab78b965624a5089af0ff85fe8",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "U6",
+          "physicalPadFingerprint": "bf6eb6f32e219008228ff668ce0c2518c7b5f7c14aebdfc99a540e032db3134e",
+          "bodyDatumFingerprint": "dcacfb9724891dd241957de1e4e9fc105b64448ee94f201bb089413084b7b24f"
+        },
+        {
+          "board": "receiver",
+          "ref": "U6",
+          "physicalPadFingerprint": "bf6eb6f32e219008228ff668ce0c2518c7b5f7c14aebdfc99a540e032db3134e",
+          "bodyDatumFingerprint": "dcacfb9724891dd241957de1e4e9fc105b64448ee94f201bb089413084b7b24f"
+        }
+      ]
+    },
+    {
+      "familyId": "te-282834",
+      "manufacturer": "TE Connectivity",
+      "coveredMpns": [
+        "282834-2",
+        "282834-3"
+      ],
+      "documentNumber": "282834",
+      "revision": "D (PCN-21-107524, 2022-05-12)",
+      "officialUrl": "https://www.te.com/en/product-282834-2.html",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/te-282834-extract.json",
+          "size": 1304,
+          "sha256": "00e739a6a36b66eb3392b59a6bb437110ebb52e24fc9edb7922a368e03b3e7c1",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "282834",
+        "page": 1,
+        "section": "Customer drawing 282834 Rev D; recommended PC board layout",
+        "sourceArtifactSha256": "00e739a6a36b66eb3392b59a6bb437110ebb52e24fc9edb7922a368e03b3e7c1",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "J3",
+          "physicalPadFingerprint": "ce4c12afd2064694e7b483854511ca843a2ec6b21004b127a5bc247c17551f40",
+          "bodyDatumFingerprint": "74e8c19298109667f9e9b713decdf9dd3bdfc9d5cf4ed830438fd513bde39a18"
+        },
+        {
+          "board": "receiver",
+          "ref": "J4",
+          "physicalPadFingerprint": "c50f9458881d91f14a422a5dd6880c0d6b4973ed17059fa0af999eecf74a92df",
+          "bodyDatumFingerprint": "e6d8f47356df3c6020e50e603a23c457307fbeb25d0a1e2cd7bedb5246c4e6e6"
+        }
+      ]
+    },
+    {
+      "familyId": "ti-bq25185-dlh0010a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": [
+        "BQ25185DLHR"
+      ],
+      "documentNumber": "SLUSF65A / DLH0010A",
+      "revision": "A; package drawing 4226298/A",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/bq25185.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/bq25185-dlh-extract.json",
+          "size": 1177,
+          "sha256": "1ead8d8895b12a8d60104d044860af2996206ae24f070b0b75d47ba436859f8a",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "SLUSF65A / DLH0010A",
+        "page": "29-30",
+        "section": "DLH0010A package outline and land pattern example",
+        "sourceArtifactSha256": "1ead8d8895b12a8d60104d044860af2996206ae24f070b0b75d47ba436859f8a",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "U3",
+          "physicalPadFingerprint": "2a027705c3ff13c055376d1ef1de219774edab2eac13b4e27cf08771c573b0f0",
+          "bodyDatumFingerprint": "9e42b8fc9397e0ff1b93b3e3951011195c7cfcf9a9f18e2fca2da3bc00446400"
+        }
+      ]
+    },
+    {
+      "familyId": "ti-csd17313q2-dqk0008a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": [
+        "CSD17313Q2"
+      ],
+      "documentNumber": "SLPS260E / DQK0008A",
+      "revision": "E",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/csd17313q2.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/csd17313q2-dqk-extract.json",
+          "size": 1156,
+          "sha256": "7144bd5289255ccdd15da71d077b2e11939e2a177db0b71f737f9b045307157d",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "SLPS260E / DQK0008A",
+        "page": 9,
+        "section": "7.2 Recommended PCB Pattern; DQK package drawing",
+        "sourceArtifactSha256": "7144bd5289255ccdd15da71d077b2e11939e2a177db0b71f737f9b045307157d",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "Q1",
+          "physicalPadFingerprint": "ab24020dd26ba7e80783eab57e40db0d2aa4d8201f447bb53c34d7a0fa1695a1",
+          "bodyDatumFingerprint": "f176b6581489a68013b177e2ba9094e27fb97e640bc2abc7ce9b1be27af9c90b"
+        }
+      ]
+    },
+    {
+      "familyId": "ti-drv2605l-dgs0010a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": [
+        "DRV2605LDGSR"
+      ],
+      "documentNumber": "SLOS854D / DGS0010A",
+      "revision": "D; package drawing 4221984/A",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/drv2605l.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/drv2605l-dgs-extract.json",
+          "size": 1166,
+          "sha256": "d0ca65a89d2eda682f030ffd16a0e06fa95964181fa495d3620baee3218ca614",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "SLOS854D / DGS0010A",
+        "page": "70-71",
+        "section": "DGS0010A package outline and land pattern example",
+        "sourceArtifactSha256": "d0ca65a89d2eda682f030ffd16a0e06fa95964181fa495d3620baee3218ca614",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "U5",
+          "physicalPadFingerprint": "dea4bbae82e8d7d0fad0164d1a175e48c336a224ba31e62caaa2e565c12c9810",
+          "bodyDatumFingerprint": "8262e0ec44d68ad3e84e5adb39f5a380f54ae8dbd39d19f55d655f27d75bc9d6"
+        }
+      ]
+    },
+    {
+      "familyId": "ti-sn74lvc2t45-dcu0008a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": [
+        "SN74LVC2T45DCUR"
+      ],
+      "documentNumber": "SCES516N / DCU0008A",
+      "revision": "N",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc2t45.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/sn74lvc2t45-dcu-extract.json",
+          "size": 1156,
+          "sha256": "e5db11dc48511eaf5f4e2923e2524ff41ea138ff24f26e12b4a0cdbe54109647",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "SCES516N / DCU0008A",
+        "page": "28-29",
+        "section": "DCU0008A package outline and land pattern example",
+        "sourceArtifactSha256": "e5db11dc48511eaf5f4e2923e2524ff41ea138ff24f26e12b4a0cdbe54109647",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "U3",
+          "physicalPadFingerprint": "1d0dcfc7d8de43b1016b2e5a20eddc27d0bf459dcad0b2b1e2c832fedf84a2b6",
+          "bodyDatumFingerprint": "16264bde576c41bd121264b8af0a544d9d7ab54de03e1595f38406ffa71e43d4"
+        },
+        {
+          "board": "receiver",
+          "ref": "U4",
+          "physicalPadFingerprint": "1d0dcfc7d8de43b1016b2e5a20eddc27d0bf459dcad0b2b1e2c832fedf84a2b6",
+          "bodyDatumFingerprint": "16264bde576c41bd121264b8af0a544d9d7ab54de03e1595f38406ffa71e43d4"
+        }
+      ]
+    },
+    {
+      "familyId": "ti-tps62162-dsg0008a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": [
+        "TPS62162DSGR"
+      ],
+      "documentNumber": "SLVSAM2E / DSG0008A",
+      "revision": "E",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/tps62160.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/tps62162-dsg-extract.json",
+          "size": 1158,
+          "sha256": "d4ab09b0306629296287bf563aec1ce39ddbc98250dd0ca9961ff071dd2d741c",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "SLVSAM2E / DSG0008A",
+        "page": "39-40",
+        "section": "DSG0008A WSON package outline and land pattern example",
+        "sourceArtifactSha256": "d4ab09b0306629296287bf563aec1ce39ddbc98250dd0ca9961ff071dd2d741c",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "U2",
+          "physicalPadFingerprint": "2193b64134d4693630acbc01c476564efd55750d680e97fbbd9516b6f5589703",
+          "bodyDatumFingerprint": "e25a75707f51d8040c8230b777b6ae7656e56d3d38a0e0c611ad82d0db0a1d5a"
+        }
+      ]
+    },
+    {
+      "familyId": "ti-tps63900-dsk0010a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": [
+        "TPS63900DSKR"
+      ],
+      "documentNumber": "SLVSET3D / DSK0010A",
+      "revision": "D; package drawing 4218903/C",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/tps63900.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/tps63900-dsk-extract.json",
+          "size": 1181,
+          "sha256": "6fc7b39a41727bf66095a6ed4ae0da15efffc1d28c35f19f5914b3827ba514d5",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "SLVSET3D / DSK0010A",
+        "page": "37-38",
+        "section": "DSK0010A package outline and land pattern example",
+        "sourceArtifactSha256": "6fc7b39a41727bf66095a6ed4ae0da15efffc1d28c35f19f5914b3827ba514d5",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "U4",
+          "physicalPadFingerprint": "6c68de09607e20a048319ff236c2804ec264fad3832a77959fa822e566863aee",
+          "bodyDatumFingerprint": "1b9ea3d4bc723e2bb0c54505e26b991ccde754409e38842f792ed2245987ce88"
+        }
+      ]
+    },
+    {
+      "familyId": "toshiba-tlp291-so4",
+      "manufacturer": "Toshiba",
+      "coveredMpns": [
+        "TLP291(GB-TP,SE)"
+      ],
+      "documentNumber": "KiCad 10.0.5 Package_SO SO-4 4.4x3.6 P2.54",
+      "revision": "10.0.5",
+      "officialUrl": "https://toshiba.semicon-storage.com/info/TLP291_datasheet_en_20201001.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-so4-extract.json",
+          "size": 1104,
+          "sha256": "358d9684d3a4474f0779470a75a4f93b40dc931adbc1500a4f031a86c803f52a",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Package_SO SO-4 4.4x3.6 P2.54",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "358d9684d3a4474f0779470a75a4f93b40dc931adbc1500a4f031a86c803f52a",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "receiver",
+          "ref": "U5",
+          "physicalPadFingerprint": "ffcf2cf9c2454e3017f60e47f5aad81026e27a40f68a37641bab87fd6ddf9666",
+          "bodyDatumFingerprint": "22ea075fd32e4654461c2c8382339fe9b62b50f635af5d3d1aa1e5518e16158a"
+        }
+      ]
+    },
+    {
+      "familyId": "ublox-nina-b302",
+      "manufacturer": "u-blox",
+      "coveredMpns": [
+        "NINA-B302-00B-00"
+      ],
+      "documentNumber": "UBX-17052099 / UBX-17065600",
+      "revision": "R15 / R03; extraction v3",
+      "officialUrl": "https://content.u-blox.com/sites/default/files/NINA-B3_DataSheet_UBX-17052099.pdf",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/ublox-nina-b302-extract-v3.json",
+          "size": 2667,
+          "sha256": "3d9e8a3eaa8e8e655b44db16ead252a8c4acda4ed4f1223d7544461a6a6bc2e7",
+          "kind": "manufacturerDrawingExtract"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "UBX-17052099 / UBX-17065600",
+        "page": "R15 pages 23-25 and 41-42; R03 pages 7-8 and 14",
+        "section": "NINA-B3x2 pin assignment; Figure 14 M/N/P/Q detailed dimensions; Table 27 mechanical data; footprint and paste mask; 55 numbered pads plus 12 distinct EGP lands",
+        "sourceArtifactSha256": "3d9e8a3eaa8e8e655b44db16ead252a8c4acda4ed4f1223d7544461a6a6bc2e7",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": false,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "U1",
+          "physicalPadFingerprint": "9b9200a5866335e8b7c21d237cc163df831070e790b699d6f3b3b172bbbfe1b4",
+          "bodyDatumFingerprint": "8bf5cff01c92e7c81879f0f088ce1e3eef8d500ce600632d17cecd6927452f14"
+        },
+        {
+          "board": "receiver",
+          "ref": "U1",
+          "physicalPadFingerprint": "9b9200a5866335e8b7c21d237cc163df831070e790b699d6f3b3b172bbbfe1b4",
+          "bodyDatumFingerprint": "983f959a754ebbc39e610e570ed2d49b9458db33d004e1e7e498db62be7c8de8"
+        }
+      ]
+    },
+    {
+      "familyId": "yageo-rc0402",
+      "manufacturer": "Yageo",
+      "coveredMpns": [
+        "RC0402FR-075K1L",
+        "RC0402FR-074K7L",
+        "RC0402FR-07100KL",
+        "RC0402FR-071KL",
+        "RC0402FR-0710KL",
+        "RC0402FR-0718KL",
+        "RC0402FR-0736K5L",
+        "RC0402JR-070RL",
+        "RC0402FR-0716K2L",
+        "RC0402FR-0733RL",
+        "RC0402FR-07430RL"
+      ],
+      "documentNumber": "KiCad 10.0.5 Resistor_SMD R_0402_1005Metric",
+      "revision": "10.0.5; footprint version 20260206",
+      "officialUrl": "https://gitlab.com/kicad/libraries/kicad-footprints",
+      "sourceArtifacts": [
+        {
+          "path": "electronics/evidence/authority/source-catalog/kicad10-r0402-extract.json",
+          "size": 1342,
+          "sha256": "eea6a6bef5a0ed7256cc023d2368d1d48d3ffb284b0e714e5f2819555fc7fa51",
+          "kind": "controlledKiCadLibrary"
+        }
+      ],
+      "extractionTemplate": {
+        "documentNumber": "KiCad 10.0.5 Resistor_SMD R_0402_1005Metric",
+        "page": "KiCad S-expression",
+        "section": "all pad, F.Fab and F.CrtYd entities",
+        "sourceArtifactSha256": "eea6a6bef5a0ed7256cc023d2368d1d48d3ffb284b0e714e5f2819555fc7fa51",
+        "extractedFields": [
+          "physicalPads",
+          "bodyDatum",
+          "heightBasis",
+          "sourceCoordinateFrame"
+        ]
+      },
+      "supplierConfirmationRequired": true,
+      "expectedRefs": [
+        {
+          "board": "wand",
+          "ref": "R_CC1",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_CC2",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_I2C_SCL",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_I2C_SDA",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_ARM",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_ARM_SER",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_HAPTIC_EN",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_STAT1",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_STAT2",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_ISET",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_ILIM",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_CFG1",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_CFG2",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "wand",
+          "ref": "R_CFG3",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_CC1",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_CC2",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_PG",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_TX",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_PWM",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_TX_PD",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_PWM_PD",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_RX_PD",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_OPTO",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_GATE",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        },
+        {
+          "board": "receiver",
+          "ref": "R_GATE_PD",
+          "physicalPadFingerprint": "62e6956eb9356125afa5a6c649467f091582ca399116a3013833a8416c83ac0e",
+          "bodyDatumFingerprint": "4f2ae06dacf1d42727556ce5852a2f435a5c6fbcd60c000b266259bc37978dda"
+        }
+      ]
+    }
+  ],
+  "blockers": []
+}

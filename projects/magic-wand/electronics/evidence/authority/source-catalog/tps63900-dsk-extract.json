@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Texas Instruments",
+  "coveredMpns": ["TPS63900DSKR"],
+  "documentNumber": "SLVSET3D / DSK0010A",
+  "revision": "D; package drawing 4218903/C",
+  "originalOfficialUrl": "https://www.ti.com/lit/ds/symlink/tps63900.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_tps63900.pdf", "size": 3653339, "sha256": "e67d17d6cd57bb48351c457fac80ee44185ffceaa61902fb7a32e0c63022d230"},
+  "page": "37-38",
+  "section": "DSK0010A package outline and land pattern example",
+  "coordinateFrame": {"origin": "package center", "xPositive": "right", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"signalCount": 10, "pitchMm": 0.5, "signalLandMm": [0.6, 0.25], "exposedLandMm": [1.2, 2.0]}, "bodyDatum": {"bodyEnvelopeMm": [2.5, 2.5], "maximumHeightMm": 0.8}, "heightBasis": "DSK0010A package maximum height"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified TI PDF pages and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Bourns",
+  "coveredMpns": ["MF-FSMF050X-2"],
+  "documentNumber": "MF-FSMF Series",
+  "revision": "PDF modified 2026-05-16",
+  "originalOfficialUrl": "https://www.bourns.com/docs/product-datasheets/mf-fsmf.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_mf-fsmf.pdf", "size": 329700, "sha256": "143ed3f1d039e1cd7d7f29ff73f53a368b426ce1b841333f9347c27690fd1564"},
+  "page": "1-2",
+  "section": "Physical dimensions and recommended pad layout; MF-FSMF050X electrical row",
+  "coordinateFrame": {"origin": "component center", "xPositive": "right across terminals", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"terminalCount": 2, "landMm": [0.875, 0.95], "centerOffsetMm": 0.7875}, "bodyDatum": {"bodyEnvelopeMm": [1.85, 1.05], "maximumHeightMm": 1.0}, "heightBasis": "MF-FSMF physical description"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified Bourns PDF pages and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

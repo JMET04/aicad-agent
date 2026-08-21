@@ -1,0 +1,112 @@
+{
+  "schema": "aicad_solidworks_native_execution_raw_v1",
+  "subjectId": "MW-M-005",
+  "revision": "B-RFQ",
+  "operation": "STEP import -> native SLDPRT save -> native reopen -> STEP export",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true,
+    "api": "SOLIDWORKS COM API / OpenDoc7 / SaveAs3",
+    "automation": "owned DispatchEx COM instance",
+    "neutralImportMode": "embedded imported solid; 3D Interconnect external links disabled"
+  },
+  "paths": {
+    "nativeCad": "outputs/3d/MW-M-005_press_to_arm_plunger.SLDPRT",
+    "step": "outputs/3d/MW-M-005_press_to_arm_plunger.step"
+  },
+  "checks": [
+    {
+      "id": "source-brep",
+      "status": "pass",
+      "detail": "valid single-solid source BREP"
+    },
+    {
+      "id": "solidworks-import",
+      "status": "pass",
+      "detail": "LoadFile4 imported the source STEP without error"
+    },
+    {
+      "id": "native-save",
+      "status": "pass",
+      "detail": "SaveAs3 created an authentic SLDPRT"
+    },
+    {
+      "id": "native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 returned one solid body; bbox mm=[-5.4, -0.0, -5.4, 5.4, 8.5, 5.4]"
+    },
+    {
+      "id": "step-roundtrip",
+      "status": "pass",
+      "detail": "reopened native document exported valid single-solid STEP; volume delta 0.000001000 mm3"
+    },
+    {
+      "id": "post-assembly-native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 warningCode=0, one solid body, and STEP export did not mutate final SLDPRT bytes after SaveReferenced"
+    }
+  ],
+  "source": {
+    "kind": "authoritative generated BREP",
+    "path": "reports/geometry/MW-M-005_press_to_arm_plunger.brep",
+    "sizeBytes": 26072,
+    "sha256": "f0854eb3b91f87048e77e4728de331080fb1c4d58702463e2055c6a5dad39f21",
+    "solidWorksImportStepSizeBytes": 51983,
+    "solidWorksImportStepSha256": "c6e9db2bc07172bb8352788d89c5e467ce4d8d435f8bf0498d9f5ce8c6715f40",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 423.84283,
+      "bboxMm": [
+        -5.4,
+        -0.0,
+        -5.4,
+        5.4,
+        8.5,
+        5.4
+      ]
+    }
+  },
+  "nativeReopen": {
+    "errorCode": 0,
+    "warningCode": 0,
+    "warningNames": [],
+    "documentType": "part",
+    "bodyCount": 1,
+    "bboxMm": [
+      -5.4,
+      -0.0,
+      -5.4,
+      5.4,
+      8.5,
+      5.4
+    ],
+    "phase": "post-assembly SaveReferenced final closure"
+  },
+  "nativeCad": {
+    "path": "outputs/3d/MW-M-005_press_to_arm_plunger.SLDPRT",
+    "sizeBytes": 96430,
+    "sha256": "59acf9dda4c17d462aca854cfae9ce8df5daf605cde9510580484973a2bd8ae8"
+  },
+  "finalStep": {
+    "path": "outputs/3d/MW-M-005_press_to_arm_plunger.step",
+    "sizeBytes": 37200,
+    "sha256": "8abd05957a002f3ac05e07d792bd0fd97a885a171e11edd5c22487d5b44d7a07",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 423.842829,
+      "bboxMm": [
+        -5.4,
+        -0.0,
+        -5.4,
+        5.4,
+        8.5,
+        5.4
+      ]
+    },
+    "volumeDeltaMm3": 1e-06
+  }
+}

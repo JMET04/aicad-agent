@@ -1,0 +1,158 @@
+{
+  "schema": "aicad_land_pattern_source_catalog_v1",
+  "status": "CONTROLLED",
+  "coverageStatus": "BLOCKED_PARTIAL",
+  "policy": {
+    "originalManufacturerPdfsAreVerificationInputsOnly": true,
+    "generatedAuthorityJsonIsNeverSourceEvidence": true,
+    "temporaryRendersHtmlZipAndProbeFilesAreNeverAuthority": true,
+    "productionReleaseRequiresNoBlockers": true
+  },
+  "families": [
+    {
+      "familyId": "ti-bq25185-dlh0010a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": ["BQ25185DLHR"],
+      "documentNumber": "SLUSF65A / DLH0010A",
+      "revision": "A; package drawing 4226298/A",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/bq25185.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/bq25185-dlh-extract.json", "size": 1177, "sha256": "1ead8d8895b12a8d60104d044860af2996206ae24f070b0b75d47ba436859f8a", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "SLUSF65A / DLH0010A", "page": "29-30", "section": "DLH0010A package outline and land pattern example", "sourceArtifactSha256": "1ead8d8895b12a8d60104d044860af2996206ae24f070b0b75d47ba436859f8a", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "ti-csd17313q2-dqk0008a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": ["CSD17313Q2"],
+      "documentNumber": "SLPS260E / DQK0008A",
+      "revision": "E",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/csd17313q2.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/csd17313q2-dqk-extract.json", "size": 1156, "sha256": "7144bd5289255ccdd15da71d077b2e11939e2a177db0b71f737f9b045307157d", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "SLPS260E / DQK0008A", "page": 9, "section": "7.2 Recommended PCB Pattern; DQK package drawing", "sourceArtifactSha256": "7144bd5289255ccdd15da71d077b2e11939e2a177db0b71f737f9b045307157d", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "ti-drv2605l-dgs0010a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": ["DRV2605LDGSR"],
+      "documentNumber": "SLOS854D / DGS0010A",
+      "revision": "D; package drawing 4221984/A",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/drv2605l.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/drv2605l-dgs-extract.json", "size": 1166, "sha256": "d0ca65a89d2eda682f030ffd16a0e06fa95964181fa495d3620baee3218ca614", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "SLOS854D / DGS0010A", "page": "70-71", "section": "DGS0010A package outline and land pattern example", "sourceArtifactSha256": "d0ca65a89d2eda682f030ffd16a0e06fa95964181fa495d3620baee3218ca614", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "jst-sh-side-entry",
+      "manufacturer": "JST",
+      "coveredMpns": ["SM02B-SRSS-TB(LF)(SN)", "SM03B-SRSS-TB(LF)(SN)"],
+      "documentNumber": "JST SH CONNECTOR catalog",
+      "revision": "PDF creation 2024-10-04",
+      "officialUrl": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/jst-sh-side-entry-extract.json", "size": 1372, "sha256": "70f61c2c29d41d62a06eb76a4b3e4287985aeeb7762dd558d859a229cfc05bab", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "JST SH CONNECTOR catalog", "page": "1 and 3", "section": "Side entry type PC board layout; header model table", "sourceArtifactSha256": "70f61c2c29d41d62a06eb76a4b3e4287985aeeb7762dd558d859a229cfc05bab", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": true
+    },
+    {
+      "familyId": "murata-lqh32pn",
+      "manufacturer": "Murata",
+      "coveredMpns": ["LQH32PN2R2NN0L"],
+      "documentNumber": "JELF243A_0061T-01",
+      "revision": "01",
+      "officialUrl": "https://www.murata.com/en-us/products/productdetail?partno=LQH32PN2R2NN0L",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/lqh32pn-extract.json", "size": 1181, "sha256": "d04ce7e4b188abd276e3f4617061168f33b12ff4cb0f8dbd4ea9576a9005b529", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "JELF243A_0061T-01", "page": 7, "section": "12.1 Land dimensions", "sourceArtifactSha256": "d04ce7e4b188abd276e3f4617061168f33b12ff4cb0f8dbd4ea9576a9005b529", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "bourns-mf-fsmf",
+      "manufacturer": "Bourns",
+      "coveredMpns": ["MF-FSMF050X-2"],
+      "documentNumber": "MF-FSMF Series",
+      "revision": "PDF modified 2026-05-16",
+      "officialUrl": "https://www.bourns.com/docs/product-datasheets/mf-fsmf.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/mf-fsmf-extract.json", "size": 1194, "sha256": "48e336aee4b7e99c1ea4788a3342df1dd5c0bba7ab2ed80fc135e37b119a38f3", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "MF-FSMF Series", "page": "1-2", "section": "Physical dimensions and recommended pad layout; MF-FSMF050X electrical row", "sourceArtifactSha256": "48e336aee4b7e99c1ea4788a3342df1dd5c0bba7ab2ed80fc135e37b119a38f3", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "ti-sn74lvc2t45-dcu0008a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": ["SN74LVC2T45DCUR"],
+      "documentNumber": "SCES516N / DCU0008A",
+      "revision": "N",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc2t45.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/sn74lvc2t45-dcu-extract.json", "size": 1156, "sha256": "e5db11dc48511eaf5f4e2923e2524ff41ea138ff24f26e12b4a0cdbe54109647", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "SCES516N / DCU0008A", "page": "28-29", "section": "DCU0008A package outline and land pattern example", "sourceArtifactSha256": "e5db11dc48511eaf5f4e2923e2524ff41ea138ff24f26e12b4a0cdbe54109647", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "ti-tps62162-dsg0008a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": ["TPS62162DSGR"],
+      "documentNumber": "SLVSAM2E / DSG0008A",
+      "revision": "E",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/tps62160.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/tps62162-dsg-extract.json", "size": 1158, "sha256": "d4ab09b0306629296287bf563aec1ce39ddbc98250dd0ca9961ff071dd2d741c", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "SLVSAM2E / DSG0008A", "page": "39-40", "section": "DSG0008A WSON package outline and land pattern example", "sourceArtifactSha256": "d4ab09b0306629296287bf563aec1ce39ddbc98250dd0ca9961ff071dd2d741c", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "ti-tps63900-dsk0010a",
+      "manufacturer": "Texas Instruments",
+      "coveredMpns": ["TPS63900DSKR"],
+      "documentNumber": "SLVSET3D / DSK0010A",
+      "revision": "D; package drawing 4218903/C",
+      "officialUrl": "https://www.ti.com/lit/ds/symlink/tps63900.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/tps63900-dsk-extract.json", "size": 1181, "sha256": "6fc7b39a41727bf66095a6ed4ae0da15efffc1d28c35f19f5914b3827ba514d5", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "SLVSET3D / DSK0010A", "page": "37-38", "section": "DSK0010A package outline and land pattern example", "sourceArtifactSha256": "6fc7b39a41727bf66095a6ed4ae0da15efffc1d28c35f19f5914b3827ba514d5", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "coilcraft-xfl4020",
+      "manufacturer": "Coilcraft",
+      "coveredMpns": ["XFL4020-222MEC"],
+      "documentNumber": "745-3 / XFL4020",
+      "revision": "2026-03-10",
+      "officialUrl": "https://www.coilcraft.com/getmedia/50632d43-da1b-4cdb-8ab4-3029cab51df3/xfl4020.pdf",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/xfl4020-extract.json", "size": 1176, "sha256": "4a1afa4aa9c04878d5a1f3de57910fe1a652216bc1a0828a21de119de60364fa", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "745-3 / XFL4020", "page": 3, "section": "Dimensions and Recommended Land Pattern", "sourceArtifactSha256": "4a1afa4aa9c04878d5a1f3de57910fe1a652216bc1a0828a21de119de60364fa", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "te-282834",
+      "manufacturer": "TE Connectivity",
+      "coveredMpns": ["282834-2", "282834-3"],
+      "documentNumber": "282834",
+      "revision": "D (PCN-21-107524, 2022-05-12)",
+      "officialUrl": "https://www.te.com/en/product-282834-2.html",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/te-282834-extract.json", "size": 1304, "sha256": "00e739a6a36b66eb3392b59a6bb437110ebb52e24fc9edb7922a368e03b3e7c1", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "282834", "page": 1, "section": "Customer drawing 282834 Rev D; recommended PC board layout", "sourceArtifactSha256": "00e739a6a36b66eb3392b59a6bb437110ebb52e24fc9edb7922a368e03b3e7c1", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    },
+    {
+      "familyId": "hirose-df13a-5p",
+      "manufacturer": "Hirose Electric",
+      "coveredMpns": ["DF13A-5P-1.25H(51)"],
+      "documentNumber": "EDCX-162444-51-08 / 0000995752",
+      "revision": "DIS-H-00027308, 2026-07-29",
+      "officialUrl": "https://www.hirose.com/en/product/p/CL0536-0304-6-51",
+      "sourceArtifacts": [{"path": "electronics/evidence/authority/source-catalog/hirose-df13a-5p-extract.json", "size": 1315, "sha256": "722abcf75d41bd1fb82ca5db7882a3ba96f62579f5f2f0beb422a4d567262091", "kind": "manufacturerDrawingExtract"}],
+      "extractionTemplate": {"documentNumber": "EDCX-162444-51-08 / 0000995752", "page": 1, "section": "DF13A-*P-1.25H(51) dimensions and recommended pattern", "sourceArtifactSha256": "722abcf75d41bd1fb82ca5db7882a3ba96f62579f5f2f0beb422a4d567262091", "extractedFields": ["physicalPads", "bodyDatum", "heightBasis", "sourceCoordinateFrame"]},
+      "supplierConfirmationRequired": false
+    }
+  ],
+  "blockers": [
+    {"familyId": "ublox-nina-b302", "manufacturer": "u-blox", "coveredMpns": ["NINA-B302-00B-00"], "reason": "The available UBX-17052099 R15 states 55 pads while the current design materializes numbered pads 1-55 plus EGP; the source/design land-count mismatch must be resolved."},
+    {"familyId": "jae-dx07s016ja1r1500", "manufacturer": "JAE", "coveredMpns": ["DX07S016JA1R1500"], "reason": "The available SJ121837 PDF is a carrier-tape drawing and explicitly refers connector dimensions to missing drawing SJ121836; it cannot authorize physicalPads/bodyDatum."},
+    {"familyId": "diodes-ss24-13-f", "manufacturer": "Diodes Inc.", "coveredMpns": ["SS24-13-F"], "reason": "The available file named _authority_ss24.pdf is actually DS13003 Rev 8 for SK12-SK16 and does not cover SS24-13-F."},
+    {"familyId": "st-device-packages", "manufacturer": "STMicroelectronics", "coveredMpns": ["LSM6DSV16XTR", "USBLC6-2SC6"], "reason": "No matching official manufacturer drawing bytes or installed KiCad 10 source footprints were found in the controlled workspace."},
+    {"familyId": "alps-skqg", "manufacturer": "ALPS Alpine", "coveredMpns": ["SKQGAFE010"], "reason": "No matching official manufacturer drawing bytes or installed KiCad 10 source footprint was found in the controlled workspace."},
+    {"familyId": "littelfuse-smbj", "manufacturer": "Littelfuse", "coveredMpns": ["SMBJ15A"], "reason": "No matching official manufacturer drawing bytes or installed KiCad 10 source footprint was found in the controlled workspace."},
+    {"familyId": "toshiba-tlp291", "manufacturer": "Toshiba", "coveredMpns": ["TLP291(GB-TP,SE)"], "reason": "No matching official manufacturer drawing bytes or installed KiCad 10 source footprint was found in the controlled workspace."},
+    {"familyId": "yageo-rc0402", "manufacturer": "Yageo", "coveredMpns": ["RC0402FR-075K1L", "RC0402FR-074K7L", "RC0402FR-07100KL", "RC0402FR-071KL", "RC0402FR-0710KL", "RC0402FR-0718KL", "RC0402FR-0736K5L", "RC0402JR-070RL", "RC0402FR-0716K2L", "RC0402FR-0733RL", "RC0402FR-07430RL"], "reason": "No Yageo RC0402 official package drawing bytes or installed KiCad 10 R_0402 source footprint was found in the controlled workspace."},
+    {"familyId": "murata-grm-passives", "manufacturer": "Murata", "coveredMpns": ["GRM21BR61A106KE19L", "GRM21BR60J226ME39L", "GRM155R71C104KA88D", "GRM155R71A105KE15D", "GRM21BR60J106KE19L"], "reason": "No matching Murata GRM package drawing bytes or installed KiCad 10 C_0402/C_0805 source footprints were found in the controlled workspace."},
+    {"familyId": "pcb-bare-pad-d1p5", "manufacturer": "PCB FABRICATION", "coveredMpns": ["BARE_PAD_D1.5"], "reason": "An engineering-owned designAuthority extract is required; current validator accepts designAuthority-only closure for NPTH but not for BARE_PAD."},
+    {"familyId": "mechanical-npth", "manufacturer": "MECHANICAL", "coveredMpns": ["NPTH"], "reason": "An independent engineering-owned designAuthority extraction snapshot with finished-hole tolerance and interface datum has not yet been approved."}
+  ]
+}

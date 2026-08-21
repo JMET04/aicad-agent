@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Texas Instruments",
+  "coveredMpns": ["TPS62162DSGR"],
+  "documentNumber": "SLVSAM2E / DSG0008A",
+  "revision": "E",
+  "originalOfficialUrl": "https://www.ti.com/lit/ds/symlink/tps62160.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_tps62162.pdf", "size": 2784755, "sha256": "6c26eb5b607f7af543c24ed99b8ed942e4819326352ae9fb87e8396686d06659"},
+  "page": "39-40",
+  "section": "DSG0008A WSON package outline and land pattern example",
+  "coordinateFrame": {"origin": "package center", "xPositive": "right", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"signalCount": 8, "pitchMm": 0.5, "signalLandMm": [0.6, 0.25], "exposedLandMm": [0.9, 1.6]}, "bodyDatum": {"bodyEnvelopeMm": [2.0, 2.0], "maximumHeightMm": 0.8}, "heightBasis": "DSG0008A package maximum height"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified TI PDF pages and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

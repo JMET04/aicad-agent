@@ -1,0 +1,112 @@
+{
+  "schema": "aicad_solidworks_native_execution_raw_v1",
+  "subjectId": "MW-P-001",
+  "revision": "B-RFQ",
+  "operation": "STEP import -> native SLDPRT save -> native reopen -> STEP export",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true,
+    "api": "SOLIDWORKS COM API / OpenDoc7 / SaveAs3",
+    "automation": "owned DispatchEx COM instance",
+    "neutralImportMode": "embedded imported solid; 3D Interconnect external links disabled"
+  },
+  "paths": {
+    "nativeCad": "outputs/3d/MW-P-001_gfrp_spine.SLDPRT",
+    "step": "outputs/3d/MW-P-001_gfrp_spine.step"
+  },
+  "checks": [
+    {
+      "id": "source-brep",
+      "status": "pass",
+      "detail": "valid single-solid source BREP"
+    },
+    {
+      "id": "solidworks-import",
+      "status": "pass",
+      "detail": "LoadFile4 imported the source STEP without error"
+    },
+    {
+      "id": "native-save",
+      "status": "pass",
+      "detail": "SaveAs3 created an authentic SLDPRT"
+    },
+    {
+      "id": "native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 returned one solid body; bbox mm=[-3.5, -3.5, 0.0, 3.5, 3.5, 220.0]"
+    },
+    {
+      "id": "step-roundtrip",
+      "status": "pass",
+      "detail": "reopened native document exported valid single-solid STEP; volume delta 0.000000000 mm3"
+    },
+    {
+      "id": "post-assembly-native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 warningCode=0, one solid body, and STEP export did not mutate final SLDPRT bytes after SaveReferenced"
+    }
+  ],
+  "source": {
+    "kind": "authoritative generated BREP",
+    "path": "reports/geometry/MW-P-001_gfrp_spine.brep",
+    "sizeBytes": 1548,
+    "sha256": "407f64fb974531e94837186708467a888266eb7b5ed1df840de92fb77547ad15",
+    "solidWorksImportStepSizeBytes": 6047,
+    "solidWorksImportStepSha256": "f58f32ac5d71f7c5b2303c6e78856c052e5535f23237e3d30f9007b11c85874d",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 8466.592201,
+      "bboxMm": [
+        -3.5,
+        -3.5,
+        0.0,
+        3.5,
+        3.5,
+        220.0
+      ]
+    }
+  },
+  "nativeReopen": {
+    "errorCode": 0,
+    "warningCode": 0,
+    "warningNames": [],
+    "documentType": "part",
+    "bodyCount": 1,
+    "bboxMm": [
+      -3.5,
+      -3.5,
+      0.0,
+      3.5,
+      3.5,
+      220.0
+    ],
+    "phase": "post-assembly SaveReferenced final closure"
+  },
+  "nativeCad": {
+    "path": "outputs/3d/MW-P-001_gfrp_spine.SLDPRT",
+    "sizeBytes": 50075,
+    "sha256": "d967f4045c3e03cca5790545f87b17391432607c2a969fb19e7671227f0dc30b"
+  },
+  "finalStep": {
+    "path": "outputs/3d/MW-P-001_gfrp_spine.step",
+    "sizeBytes": 11792,
+    "sha256": "ed6ecdb2b3e42094a91532610e4900606eb9f65da200c316511abb0c033919aa",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 8466.592201,
+      "bboxMm": [
+        -3.5,
+        -3.5,
+        0.0,
+        3.5,
+        3.5,
+        220.0
+      ]
+    },
+    "volumeDeltaMm3": 0.0
+  }
+}

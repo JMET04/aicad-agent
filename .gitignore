@@ -14,3 +14,12 @@ release/
 *.log
 acad.err
 
+# The factory-RFQ package intentionally versions its hash-bound native CAD
+# and neutral exchange files. Keep the exception narrow so ad-hoc CAD exports
+# elsewhere in the repository remain ignored.
+!projects/magic-wand/mechanical/factory-rfq/outputs/3d/*.SLDPRT
+!projects/magic-wand/mechanical/factory-rfq/outputs/3d/*.SLDASM
+!projects/magic-wand/mechanical/factory-rfq/outputs/3d/*.step
+!projects/magic-wand/mechanical/factory-rfq/outputs/3d/*.STEP
+!projects/magic-wand/mechanical/factory-rfq/outputs/3d/*.stp
+!projects/magic-wand/mechanical/factory-rfq/outputs/3d/*.STP

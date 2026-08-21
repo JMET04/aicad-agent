@@ -13,10 +13,10 @@ from collections import Counter
 from pathlib import Path, PurePosixPath
 
 
-EXPECTED_VERSION = "1.17.0"
+EXPECTED_VERSION = "1.17.1"
 SOURCE_INPUT_POLICY = "github_source_builder_v1"
 REQUIRED_README_SECTIONS = (
-    "# aicad-agent 1.17.0",
+    "# aicad-agent 1.17.1",
     "## 安装步骤",
     "## 第一次使用：完全不需要写代码",
     "## 常用任务提示词",
@@ -670,7 +670,7 @@ def _validate_learning_runtime_behavior(plugin_root: Path, errors: list[str]) ->
             wrong_schema = dict(payload)
             wrong_schema["schema"] = "aicad_untrusted_v0"
             invoke = (
-                (lambda value: function(plugin_root, value, current_version="1.17.0"))
+                (lambda value: function(plugin_root, value, current_version="1.17.1"))
                 if surface == "ledger" else (lambda value: function(plugin_root, value))
             )
             _runtime_rejects(module, lambda value=extra, call=invoke: call(value), f"{surface}-extra-key", errors)
@@ -726,7 +726,7 @@ def verify(root: Path, source_root: Path | None = None) -> dict:
         "SECURITY.md",
         "THIRD_PARTY_NOTICES.md",
         "source-manifest.json",
-        "dist/aicad-agent-1.17.0.zip",
+        "dist/aicad-agent-1.17.1.zip",
         "dist/SHA256SUMS",
         "docs/images/modifier-measurements-v3.png",
         "plugins/aicad-agent/.codex-plugin/plugin.json",
@@ -789,8 +789,8 @@ def verify(root: Path, source_root: Path | None = None) -> dict:
     workflow = root / ".github" / "workflows" / "ci.yml"
     if workflow.is_file():
         workflow_text = workflow.read_text(encoding="utf-8")
-        if "Version 1.17.0" not in workflow_text:
-            errors.append("ci-not-pinned-to-1.17.0")
+        if "Version 1.17.1" not in workflow_text:
+            errors.append("ci-not-pinned-to-1.17.1")
         if "verify_github_source.py" not in workflow_text:
             errors.append("ci-missing-github-source-verifier")
         if "1.3.4" in workflow_text or "1.4.0" in workflow_text:
@@ -853,7 +853,7 @@ def verify(root: Path, source_root: Path | None = None) -> dict:
         )
     showcase_count = verify_showcase(root, errors)
 
-    archive = root / "dist" / "aicad-agent-1.17.0.zip"
+    archive = root / "dist" / "aicad-agent-1.17.1.zip"
     sums = root / "dist" / "SHA256SUMS"
     if archive.is_file() and sums.is_file():
         parts = sums.read_text(encoding="ascii").strip().split()

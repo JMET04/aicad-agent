@@ -1,0 +1,16 @@
+{
+  "schema": "aicad_factory_package_readiness_v2",
+  "packageId": "MW-FACTORY-RFQ-001",
+  "revision": "B-RFQ",
+  "partCount": 9,
+  "assemblyCount": 2,
+  "nativePartReopenPassed": true,
+  "nativeAssemblyReopenPassed": true,
+  "unexpectedInterferenceCount": 0,
+  "drawingTextOverflowCount": 0,
+  "previewCount": 29,
+  "receiverInterfaceStatus": "pending_electronics_final_native_drc",
+  "receiverInterfaceFrozen": false,
+  "technicalPackageReady": false,
+  "releaseBasis": "DFM/RFQ input; engineering authorization remains controlled by release locks"
+}

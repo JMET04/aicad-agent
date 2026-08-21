@@ -15,11 +15,17 @@ from .domain_rules import evaluate_domain_plan
 from .engine import PlanError, compile_plan
 from .experience import EXPECTED_LOCKS, recall_experience, validate_coverage_ledger
 from .exporters import export_all
+from .manufacturing_validation import validate_manufacturing_release_package
+from .manufacturing_workflow import (
+    build_manufacturing_release_package,
+    write_manufacturing_release_review,
+)
 from .provider import generate_plan_with_usage
+from .review_launch import REVIEW_LAUNCH_MODES, launch_review
 from .settings import config_path, get_api_key, load_config, save_config, set_api_key
 
 
-VERSION = "1.17.0"
+VERSION = "1.17.1"
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -59,6 +65,32 @@ def _parser() -> argparse.ArgumentParser:
     civil_review = subparsers.add_parser("civil-review-validate", help="validate a civil review candidate against real evidence")
     civil_review.add_argument("candidate", type=Path)
     civil_review.add_argument("--evidence-root", type=Path)
+    subparsers.add_parser(
+        "manufacturing-release-schema",
+        help="print the fail-closed factory handoff package schema",
+    )
+    manufacturing_validate = subparsers.add_parser(
+        "manufacturing-release-validate",
+        help="validate exact mechanical/PCB factory evidence without writing artifacts",
+    )
+    manufacturing_validate.add_argument("package", type=Path)
+    manufacturing_validate.add_argument("--evidence-root", type=Path)
+    manufacturing_build = subparsers.add_parser(
+        "manufacturing-release-build",
+        help="build portable validation/reviewer, scoped digital candidate, and supplier-gated handoff records",
+    )
+    manufacturing_build.add_argument("package", type=Path)
+    manufacturing_build.add_argument("--evidence-root", type=Path)
+    manufacturing_build.add_argument("--out", type=Path, required=True)
+    manufacturing_build.add_argument("--name", default="manufacturing-release")
+    manufacturing_review = subparsers.add_parser(
+        "manufacturing-release-review",
+        help="write and open the review-only 2D/3D factory candidate console",
+    )
+    manufacturing_review.add_argument("package", type=Path)
+    manufacturing_review.add_argument("--evidence-root", type=Path)
+    manufacturing_review.add_argument("--output", type=Path, required=True)
+    manufacturing_review.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="always")
     recall = subparsers.add_parser("experience-recall", help="recall authority-first rules before geometry")
     recall.add_argument("context", type=Path)
     recall.add_argument("--rules-root", type=Path)
@@ -319,6 +351,51 @@ def main(argv: list[str] | None = None) -> int:
             path = _schema_path("aicad-civil-review-candidate.schema.json")
             print(json.dumps({"ok": True, "schema": _load_json_object(path, "civil review candidate schema"), "path": str(path.resolve())}, ensure_ascii=False))
             return 0
+        if args.command == "manufacturing-release-schema":
+            path = _schema_path("aicad-manufacturing-release-package.schema.json")
+            print(json.dumps({"ok": True, "schema": _load_json_object(path, "manufacturing release schema"), "path": str(path.resolve())}, ensure_ascii=False))
+            return 0
+        if args.command in {
+            "manufacturing-release-validate",
+            "manufacturing-release-build",
+            "manufacturing-release-review",
+        }:
+            package_path = args.package.expanduser().resolve(strict=True)
+            package = _load_json_object(package_path, "manufacturing release package")
+            evidence_root = (
+                args.evidence_root.expanduser().resolve(strict=True)
+                if args.evidence_root is not None
+                else package_path.parent
+            )
+            if args.command == "manufacturing-release-validate":
+                payload = validate_manufacturing_release_package(package, evidence_root)
+                print(json.dumps(payload, ensure_ascii=False))
+                return 0 if payload["ok"] else 2
+            if args.command == "manufacturing-release-build":
+                payload = build_manufacturing_release_package(
+                    package, evidence_root, args.out, args.name
+                )
+                print(json.dumps(payload, ensure_ascii=False))
+                return 0 if payload["ok"] else 2
+            report = validate_manufacturing_release_package(package, evidence_root)
+            review_path = write_manufacturing_release_review(report, args.output)
+            launch = launch_review(review_path, args.review_launch)
+            candidate_ready = (
+                report["factoryRfqCandidateReady"] or report["prototypeFabricationCandidateReady"]
+            )
+            payload = {
+                "ok": candidate_ready,
+                "factoryRfqCandidateReady": report["factoryRfqCandidateReady"],
+                "prototypeFabricationCandidateReady": report["prototypeFabricationCandidateReady"],
+                "factoryHandoffReady": report["factoryHandoffReady"],
+                "productionReady": False,
+                "candidateReviewerMayOpen": True,
+                "reviewHtml": str(review_path),
+                "reviewLaunch": launch,
+                "validation": report,
+            }
+            print(json.dumps(payload, ensure_ascii=False))
+            return 0 if candidate_ready else 2
         if args.command == "civil-review-validate":
             candidate_path = args.candidate.expanduser().resolve(strict=True)
             candidate = _load_json_object(candidate_path, "civil review candidate")

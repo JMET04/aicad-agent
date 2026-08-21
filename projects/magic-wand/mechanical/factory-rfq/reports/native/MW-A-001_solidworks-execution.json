@@ -1,0 +1,714 @@
+{
+  "schema": "aicad_solidworks_native_execution_raw_v1",
+  "subjectId": "MW-A-001",
+  "revision": "B-RFQ",
+  "operation": "native component load -> SLDASM build/save -> native reopen -> STEP export",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true,
+    "api": "SOLIDWORKS COM API / OpenDoc7 / SaveAs3",
+    "automation": "owned DispatchEx COM instance",
+    "neutralImportMode": "embedded imported solid; 3D Interconnect external links disabled"
+  },
+  "paths": {
+    "nativeAssembly": "outputs/3d/MW-A-001_magic_wand_assembly.SLDASM",
+    "step": "outputs/3d/MW-A-001_magic_wand_assembly.step"
+  },
+  "components": [
+    {
+      "instanceId": "MW-M-001A:1",
+      "partId": "MW-M-001A",
+      "nativeCadPath": "outputs/3d/MW-M-001A_upper_grip_shell.SLDPRT",
+      "nativeCadSizeBytes": 211701,
+      "nativeCadSha256": "09fc88a1f0cf63130e2698c6b5787da176b75233ac9625f49502542a00c28452",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        -0.0,
+        5e-11,
+        0.005,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        5.0
+      ],
+      "actualTranslationMm": [
+        -0.0,
+        0.0,
+        5.0
+      ],
+      "translationDeltaMm": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-001B:1",
+      "partId": "MW-M-001B",
+      "nativeCadPath": "outputs/3d/MW-M-001B_lower_grip_shell.SLDPRT",
+      "nativeCadSizeBytes": 186015,
+      "nativeCadSha256": "d7fd029d462817e8371e0ab74561d472872a1cfad2773f0dea8855a7685feea5",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        -0.0,
+        0.0,
+        0.005,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        5.0
+      ],
+      "actualTranslationMm": [
+        -0.0,
+        0.0,
+        5.0
+      ],
+      "translationDeltaMm": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-002:1",
+      "partId": "MW-M-002",
+      "nativeCadPath": "outputs/3d/MW-M-002_internal_carrier.SLDPRT",
+      "nativeCadSizeBytes": 119463,
+      "nativeCadSha256": "e2648b0e52892a312b22b32b394d0e733c230090a1a5e31c13bd9e45cf451616",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -0.0,
+        0.009,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        9.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        -0.0,
+        9.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-003:1",
+      "partId": "MW-M-003",
+      "nativeCadPath": "outputs/3d/MW-M-003_rear_end_cap.SLDPRT",
+      "nativeCadSizeBytes": 144825,
+      "nativeCadSha256": "26ac265efec0531fa0efe8a18c886d6360f01950894046df487ecd02114d5727",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-004:1",
+      "partId": "MW-M-004",
+      "nativeCadPath": "outputs/3d/MW-M-004_rod_connector.SLDPRT",
+      "nativeCadSizeBytes": 167399,
+      "nativeCadSha256": "17e9b5d9bdddb0f426f55d3b15b3925ad847c382a404a96903820296e7ca5aed",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.1,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        100.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        100.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-005:1",
+      "partId": "MW-M-005",
+      "nativeCadPath": "outputs/3d/MW-M-005_press_to_arm_plunger.SLDPRT",
+      "nativeCadSizeBytes": 96430,
+      "nativeCadSha256": "59acf9dda4c17d462aca854cfae9ce8df5daf605cde9510580484973a2bd8ae8",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.00619999995,
+        0.072,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        6.2,
+        72.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        6.2,
+        72.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-P-001:1",
+      "partId": "MW-P-001",
+      "nativeCadPath": "outputs/3d/MW-P-001_gfrp_spine.SLDPRT",
+      "nativeCadSizeBytes": 50075,
+      "nativeCadSha256": "d967f4045c3e03cca5790545f87b17391432607c2a969fb19e7671227f0dc30b",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.095,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        95.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        95.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "component-native-load",
+      "status": "pass",
+      "detail": "OpenDoc7 loaded 7 final native component documents"
+    },
+    {
+      "id": "assembly-native-save",
+      "status": "pass",
+      "detail": "SaveAs3 created an authentic SLDASM with Silent|SaveReferenced options"
+    },
+    {
+      "id": "assembly-native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 returned warningCode=0 and 7 resolved components; bbox mm=[-13.5, -13.5, 0.0, 13.5, 15.3, 315.0]"
+    },
+    {
+      "id": "component-transform-closure",
+      "status": "pass",
+      "detail": "all 7 resolved native components match released translation transforms within 0.000001 mm"
+    },
+    {
+      "id": "assembly-step-roundtrip",
+      "status": "pass",
+      "detail": "reopened SLDASM exported a valid 7-solid STEP"
+    }
+  ],
+  "nativeReopen": {
+    "errorCode": 0,
+    "warningCode": 0,
+    "warningNames": [],
+    "documentType": "assembly",
+    "componentCount": 7,
+    "bboxMm": [
+      -13.5,
+      -13.5,
+      0.0,
+      13.5,
+      15.3,
+      315.0
+    ]
+  },
+  "componentClosure": [
+    {
+      "instanceId": "MW-M-001A:1",
+      "partId": "MW-M-001A",
+      "nativeCadPath": "outputs/3d/MW-M-001A_upper_grip_shell.SLDPRT",
+      "nativeCadSizeBytes": 211701,
+      "nativeCadSha256": "09fc88a1f0cf63130e2698c6b5787da176b75233ac9625f49502542a00c28452",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        -0.0,
+        5e-11,
+        0.005,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        5.0
+      ],
+      "actualTranslationMm": [
+        -0.0,
+        0.0,
+        5.0
+      ],
+      "translationDeltaMm": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-001B:1",
+      "partId": "MW-M-001B",
+      "nativeCadPath": "outputs/3d/MW-M-001B_lower_grip_shell.SLDPRT",
+      "nativeCadSizeBytes": 186015,
+      "nativeCadSha256": "d7fd029d462817e8371e0ab74561d472872a1cfad2773f0dea8855a7685feea5",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        -0.0,
+        0.0,
+        0.005,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        5.0
+      ],
+      "actualTranslationMm": [
+        -0.0,
+        0.0,
+        5.0
+      ],
+      "translationDeltaMm": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-002:1",
+      "partId": "MW-M-002",
+      "nativeCadPath": "outputs/3d/MW-M-002_internal_carrier.SLDPRT",
+      "nativeCadSizeBytes": 119463,
+      "nativeCadSha256": "e2648b0e52892a312b22b32b394d0e733c230090a1a5e31c13bd9e45cf451616",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -0.0,
+        0.009,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        9.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        -0.0,
+        9.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-003:1",
+      "partId": "MW-M-003",
+      "nativeCadPath": "outputs/3d/MW-M-003_rear_end_cap.SLDPRT",
+      "nativeCadSizeBytes": 144825,
+      "nativeCadSha256": "26ac265efec0531fa0efe8a18c886d6360f01950894046df487ecd02114d5727",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-004:1",
+      "partId": "MW-M-004",
+      "nativeCadPath": "outputs/3d/MW-M-004_rod_connector.SLDPRT",
+      "nativeCadSizeBytes": 167399,
+      "nativeCadSha256": "17e9b5d9bdddb0f426f55d3b15b3925ad847c382a404a96903820296e7ca5aed",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.1,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        100.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        100.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-M-005:1",
+      "partId": "MW-M-005",
+      "nativeCadPath": "outputs/3d/MW-M-005_press_to_arm_plunger.SLDPRT",
+      "nativeCadSizeBytes": 96430,
+      "nativeCadSha256": "59acf9dda4c17d462aca854cfae9ce8df5daf605cde9510580484973a2bd8ae8",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.00619999995,
+        0.072,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        6.2,
+        72.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        6.2,
+        72.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    },
+    {
+      "instanceId": "MW-P-001:1",
+      "partId": "MW-P-001",
+      "nativeCadPath": "outputs/3d/MW-P-001_gfrp_spine.SLDPRT",
+      "nativeCadSizeBytes": 50075,
+      "nativeCadSha256": "d967f4045c3e03cca5790545f87b17391432607c2a969fb19e7671227f0dc30b",
+      "suppressionState": 2,
+      "suppressionStateName": "swComponentFullyResolved",
+      "referencedConfiguration": "默认",
+      "transformArray": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.095,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expectedTranslationMm": [
+        0.0,
+        0.0,
+        95.0
+      ],
+      "actualTranslationMm": [
+        0.0,
+        0.0,
+        95.0
+      ],
+      "translationDeltaMm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "transformMatches": true
+    }
+  ],
+  "nativeAssembly": {
+    "path": "outputs/3d/MW-A-001_magic_wand_assembly.SLDASM",
+    "sizeBytes": 358505,
+    "sha256": "ca53ccb0bac21e87b49560bef4c6be3697cd34ff97e5ba8c0604c8c56031227e"
+  },
+  "finalStep": {
+    "path": "outputs/3d/MW-A-001_magic_wand_assembly.step",
+    "sizeBytes": 1125713,
+    "sha256": "e1f1c89b921944da9e7dcdbd05f6e75c171a72bcaf852bd11527bb0a64a54531",
+    "metrics": {
+      "valid": true,
+      "solidCount": 7,
+      "volumeMm3": 47320.855843,
+      "bboxMm": [
+        -13.5,
+        -13.5,
+        -0.0,
+        13.5,
+        15.3,
+        315.0
+      ]
+    }
+  },
+  "positionsEvidence": {
+    "path": "outputs/documents/MW-A-001_assembly-positions.json",
+    "sizeBytes": 2716,
+    "sha256": "4ea276dd0af6531be4f119528cfb420d4f87725ab7003899f7fe08f1c77da3cd"
+  },
+  "interferenceEvidence": {
+    "path": "reports/MW-A-001_brep-interference-report.json",
+    "sizeBytes": 5518,
+    "sha256": "ab67fb52736708174335fa79a910618c48fb1c2369cd5529e5149eec8db5877d"
+  }
+}

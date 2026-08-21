@@ -1,0 +1,20 @@
+{
+  "schema": "aicad_factory_brep_interference_report_v2",
+  "assemblyId": "MW-A-101",
+  "revision": "B-RFQ",
+  "units": "mm",
+  "coordinateSystemId": "MODEL_XYZ",
+  "algorithm": "exact Open CASCADE BREP common-volume and minimum-distance evaluation",
+  "rows": [
+    {
+      "first": "MW-M-101",
+      "second": "MW-M-102",
+      "minimum_distance_mm": 0.0,
+      "intersection_volume_mm3": 0,
+      "classification": "contact_no_positive_volume",
+      "design_intent": "0.15 mm per-side skirt fit; no positive-volume overlap"
+    }
+  ],
+  "unexpectedInterferenceCount": 0,
+  "passed": true
+}

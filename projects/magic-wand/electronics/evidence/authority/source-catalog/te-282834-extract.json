@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "TE Connectivity",
+  "coveredMpns": ["282834-2", "282834-3"],
+  "documentNumber": "282834",
+  "revision": "D (PCN-21-107524, 2022-05-12)",
+  "originalOfficialUrl": "https://www.te.com/en/product-282834-2.html",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_te-282834-drawing.pdf", "size": 146255, "sha256": "422a1e080b62976618269d812aa0a5f95e779c88eb33f5624a990cffdf4b04e1"},
+  "page": 1,
+  "section": "Customer drawing 282834 Rev D; recommended PC board layout",
+  "coordinateFrame": {"origin": "terminal-row center", "xPositive": "right along row", "yPositive": "toward wire entry", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"pitchMm": 2.54, "padDiameterMm": 2.1, "finishedHoleDiameterMm": 1.1, "terminalCountByMpn": {"282834-2": 2, "282834-3": 3}}, "bodyDatum": {"bodyEnvelopeByMpnMm": {"282834-2": [5.54, 6.5], "282834-3": [8.08, 6.5]}, "nominalHeightMm": 10.0}, "heightBasis": "customer drawing overall product envelope"},
+  "humanExtractionDeclaration": "Manually transcribed from TE controlled customer drawing 282834 Rev D and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

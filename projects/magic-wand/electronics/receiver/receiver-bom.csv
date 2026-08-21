@@ -1,0 +1,34 @@
+Comment,Designator,Footprint,Manufacturer,MPN,LCSC Part #,DNP,Assembly Notes
+10uF 10V X5R,C_BUCK_IN,MW_FACTORY:receiver_C_BUCK_IN,Murata,GRM21BR61A106KE19L,,NO,
+22uF 6.3V X5R,C_BUCK_OUT,MW_FACTORY:receiver_C_BUCK_OUT,Murata,GRM21BR60J226ME39L,,NO,
+10uF 6.3V X5R,C_U1,MW_FACTORY:receiver_C_U1,Murata,GRM21BR60J106KE19L,,NO,
+100nF 16V X7R,C_U3A,MW_FACTORY:receiver_C_U3A,Murata,GRM155R71C104KA88D,,NO,
+100nF 16V X7R,C_U3B,MW_FACTORY:receiver_C_U3B,Murata,GRM155R71C104KA88D,,NO,
+100nF 16V X7R,C_U4A,MW_FACTORY:receiver_C_U4A,Murata,GRM155R71C104KA88D,,NO,
+100nF 16V X7R,C_U4B,MW_FACTORY:receiver_C_U4B,Murata,GRM155R71C104KA88D,,NO,
+10uF 10V X5R,C_USB,MW_FACTORY:receiver_C_USB,Murata,GRM21BR61A106KE19L,,NO,
+SS24 flyback,D1,MW_FACTORY:receiver_D1,Diodes Inc.,SS24-13-F,,NO,
+500mA PTC,F1,MW_FACTORY:receiver_F1,Bourns,MF-FSMF050X-2,,NO,
+USB-C-16P,J1,MW_FACTORY:receiver_J1,JAE,DX07S016JA1R1500,,NO,USB power/service only
+DF13A-5P-1.25H(51),J2,MW_FACTORY:receiver_J2,Hirose Electric,DF13A-5P-1.25H(51),,NO,Current gold-plated 5-position right-angle SMT header; mates DF13-5S-1.25C with DF13-2630SCFA(05) AWG26-30 contacts; mating direction +Y toward receiver board edge
+ISO_OC_2P,J3,MW_FACTORY:receiver_J3,TE Connectivity,282834-2,,NO,"3.3-24V target, 10mA max; side wire entry faces receiver +X/right edge; no mains"
+LOAD_OUT_3P,J4,MW_FACTORY:receiver_J4,TE Connectivity,282834-3,,NO,5-12V SELV only; 1A continuous EVT limit; side wire entry faces source +Y / mechanical bottom edge
+2.2uH,L1,MW_FACTORY:receiver_L1,Murata,LQH32PN2R2NN0L,,NO,
+CSD17313Q2,Q1,MW_FACTORY:receiver_Q1,Texas Instruments,CSD17313Q2,,NO,
+5.1k,R_CC1,MW_FACTORY:receiver_R_CC1,Yageo,RC0402FR-075K1L,,NO,
+5.1k,R_CC2,MW_FACTORY:receiver_R_CC2,Yageo,RC0402FR-075K1L,,NO,
+33R,R_GATE,MW_FACTORY:receiver_R_GATE,Yageo,RC0402FR-0733RL,,NO,
+100k,R_GATE_PD,MW_FACTORY:receiver_R_GATE_PD,Yageo,RC0402FR-07100KL,,NO,
+430R,R_OPTO,MW_FACTORY:receiver_R_OPTO,Yageo,RC0402FR-07430RL,,NO,
+10k,R_PG,MW_FACTORY:receiver_R_PG,Yageo,RC0402FR-0710KL,,NO,
+33R,R_PWM,MW_FACTORY:receiver_R_PWM,Yageo,RC0402FR-0733RL,,NO,
+100k,R_PWM_PD,MW_FACTORY:receiver_R_PWM_PD,Yageo,RC0402FR-07100KL,,NO,
+100k,R_RX_PD,MW_FACTORY:receiver_R_RX_PD,Yageo,RC0402FR-07100KL,,NO,
+33R,R_TX,MW_FACTORY:receiver_R_TX,Yageo,RC0402FR-0733RL,,NO,
+100k,R_TX_PD,MW_FACTORY:receiver_R_TX_PD,Yageo,RC0402FR-07100KL,,NO,
+NINA-B302-00B-00,U1,MW_FACTORY:receiver_U1,u-blox,NINA-B302-00B-00,,NO,Internal PIFA faces right nonconductive enclosure edge
+TPS62162DSGR,U2,MW_FACTORY:receiver_U2,Texas Instruments,TPS62162DSGR,,NO,
+SN74LVC2T45DCUR,U3,MW_FACTORY:receiver_U3,Texas Instruments,SN74LVC2T45DCUR,,NO,
+SN74LVC2T45DCUR,U4,MW_FACTORY:receiver_U4,Texas Instruments,SN74LVC2T45DCUR,,NO,
+TLP291(SE),U5,MW_FACTORY:receiver_U5,Toshiba,"TLP291(GB-TP,SE)",,NO,Low-voltage signal isolation only
+USBLC6-2SC6,U6,MW_FACTORY:receiver_U6,STMicroelectronics,USBLC6-2SC6,,NO,

@@ -1,0 +1,16 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "JST",
+  "coveredMpns": ["SM02B-SRSS-TB(LF)(SN)", "SM03B-SRSS-TB(LF)(SN)"],
+  "documentNumber": "JST SH CONNECTOR catalog",
+  "revision": "PDF creation 2024-10-04",
+  "originalOfficialUrl": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_jst-sh.pdf", "size": 84427, "sha256": "ea3071ca5ee5a6069eba534fa39a10f34c9fb742ee42135a69ab4156bfa0f5de"},
+  "page": "1 and 3",
+  "section": "Side entry type PC board layout; header model table",
+  "coordinateFrame": {"origin": "signal-row center", "xPositive": "right along row", "yPositive": "toward connector body", "units": "mm", "view": "connector mounting surface"},
+  "geometry": {"physicalPads": {"contactPitchMm": 1.0, "contactLandMm": [0.6, 1.55], "mountPadCount": 2}, "bodyDatum": {"bodyEnvelopeByCircuitCountMm": {"2": [4.0, 4.25], "3": [5.0, 4.25]}, "nominalHeightMm": 3.0}, "heightBasis": "catalog side-entry assembly layout"},
+  "supplierConfirmationRequired": true,
+  "humanExtractionDeclaration": "Manually transcribed from the JST catalog PDF and checked against the original PDF SHA-256. The catalog labels PCB dimensions as reference values, so supplier confirmation remains required; no generated authority inventory was used."
+}

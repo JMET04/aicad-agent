@@ -1,0 +1,112 @@
+{
+  "schema": "aicad_solidworks_native_execution_raw_v1",
+  "subjectId": "MW-M-004",
+  "revision": "B-RFQ",
+  "operation": "STEP import -> native SLDPRT save -> native reopen -> STEP export",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Dassault Systemes SOLIDWORKS Premium",
+    "version": "34.0.0",
+    "nativeExecution": true,
+    "api": "SOLIDWORKS COM API / OpenDoc7 / SaveAs3",
+    "automation": "owned DispatchEx COM instance",
+    "neutralImportMode": "embedded imported solid; 3D Interconnect external links disabled"
+  },
+  "paths": {
+    "nativeCad": "outputs/3d/MW-M-004_rod_connector.SLDPRT",
+    "step": "outputs/3d/MW-M-004_rod_connector.step"
+  },
+  "checks": [
+    {
+      "id": "source-brep",
+      "status": "pass",
+      "detail": "valid single-solid source BREP"
+    },
+    {
+      "id": "solidworks-import",
+      "status": "pass",
+      "detail": "LoadFile4 imported the source STEP without error"
+    },
+    {
+      "id": "native-save",
+      "status": "pass",
+      "detail": "SaveAs3 created an authentic SLDPRT"
+    },
+    {
+      "id": "native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 returned one solid body; bbox mm=[-13.5, -13.5, -0.0, 13.5, 13.5, 25.0]"
+    },
+    {
+      "id": "step-roundtrip",
+      "status": "pass",
+      "detail": "reopened native document exported valid single-solid STEP; volume delta 0.006484000 mm3"
+    },
+    {
+      "id": "post-assembly-native-reopen",
+      "status": "pass",
+      "detail": "OpenDoc7 warningCode=0, one solid body, and STEP export did not mutate final SLDPRT bytes after SaveReferenced"
+    }
+  ],
+  "source": {
+    "kind": "authoritative generated BREP",
+    "path": "reports/geometry/MW-M-004_rod_connector.brep",
+    "sizeBytes": 48756,
+    "sha256": "2f0a321880be1ec8d64c5bf705dbbfcf9c0bb334102363aa9b0226942eb77432",
+    "solidWorksImportStepSizeBytes": 111355,
+    "solidWorksImportStepSha256": "dcbd6bbf0ee0745d71ea46b4cfbce797b2af70b884a9f5436a86f8e7d0d3d762",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 10260.46713,
+      "bboxMm": [
+        -13.5,
+        -13.5,
+        -0.0,
+        13.5,
+        13.5,
+        25.0
+      ]
+    }
+  },
+  "nativeReopen": {
+    "errorCode": 0,
+    "warningCode": 0,
+    "warningNames": [],
+    "documentType": "part",
+    "bodyCount": 1,
+    "bboxMm": [
+      -13.5,
+      -13.5,
+      -0.0,
+      13.5,
+      13.5,
+      25.0
+    ],
+    "phase": "post-assembly SaveReferenced final closure"
+  },
+  "nativeCad": {
+    "path": "outputs/3d/MW-M-004_rod_connector.SLDPRT",
+    "sizeBytes": 167399,
+    "sha256": "17e9b5d9bdddb0f426f55d3b15b3925ad847c382a404a96903820296e7ca5aed"
+  },
+  "finalStep": {
+    "path": "outputs/3d/MW-M-004_rod_connector.step",
+    "sizeBytes": 88637,
+    "sha256": "72f91adb6c77c309b983d8fddbba97775367751f948ea0bc64e7e68634bed904",
+    "metrics": {
+      "valid": true,
+      "solidCount": 1,
+      "volumeMm3": 10260.473614,
+      "bboxMm": [
+        -13.5,
+        -13.5,
+        -0.0,
+        13.5,
+        13.5,
+        25.0
+      ]
+    },
+    "volumeDeltaMm3": 0.006484
+  }
+}

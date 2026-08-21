@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Texas Instruments",
+  "coveredMpns": ["CSD17313Q2"],
+  "documentNumber": "SLPS260E / DQK0008A",
+  "revision": "E",
+  "originalOfficialUrl": "https://www.ti.com/lit/ds/symlink/csd17313q2.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_csd17313q2.pdf", "size": 480071, "sha256": "a833a4cc6cc5471d2aa2faaed97ab37414a66162131a496d4a33080ae818910f"},
+  "page": 9,
+  "section": "7.2 Recommended PCB Pattern; DQK package drawing",
+  "coordinateFrame": {"origin": "package center", "xPositive": "right", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"terminalCount": 8, "duplicateDrainLands": 4, "sourcePackage": "DQK0008A"}, "bodyDatum": {"bodyEnvelopeMm": [2.0, 2.0], "maximumHeightMm": 0.8}, "heightBasis": "DQK package maximum height"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified TI PDF page and checked against the original PDF SHA-256; vector drawing entities were reviewed visually and no generated authority inventory was used."
+}

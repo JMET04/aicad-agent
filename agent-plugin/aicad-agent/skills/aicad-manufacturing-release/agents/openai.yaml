@@ -1,0 +1,6 @@
+interface:
+  display_name: "AICAD Manufacturing Release"
+  short_description: "Build hash-closed factory review and handoff candidates"
+  default_prompt: "Use $aicad-manufacturing-release to validate and package my mechanical or PCB factory deliverables."
+policy:
+  allow_implicit_invocation: true

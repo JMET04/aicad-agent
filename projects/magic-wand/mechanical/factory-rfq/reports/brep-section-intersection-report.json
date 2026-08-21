@@ -1,0 +1,703 @@
+{
+  "schema": "aicad_factory_brep_section_intersections_v2",
+  "requiredFeatureIds": [
+    "MW-M-001A-O01",
+    "MW-M-001A-O02",
+    "MW-M-001A-W01",
+    "MW-M-001B-O01",
+    "MW-M-001B-O02",
+    "MW-M-001B-W01",
+    "MW-M-002-B01",
+    "MW-M-002-F01",
+    "MW-M-002-W01",
+    "MW-M-003-F01",
+    "MW-M-003-F02",
+    "MW-M-003-W01",
+    "MW-M-004-F01",
+    "MW-M-004-G01",
+    "MW-M-004-H01",
+    "MW-M-004-H02",
+    "MW-M-005-F01",
+    "MW-M-005-F02",
+    "MW-M-101-H01",
+    "MW-M-101-I01",
+    "MW-M-101-W01",
+    "MW-M-102-F01",
+    "MW-M-102-H01",
+    "MW-M-102-W01",
+    "MW-P-001-P01",
+    "MW-P-001-P02"
+  ],
+  "coveredFeatureIds": [
+    "BASE",
+    "BUTTON-APERTURE",
+    "CAP",
+    "CARRIER",
+    "CARRIER-SWITCH-SHELF",
+    "CASE-SCREW",
+    "CONNECTOR",
+    "CONNECTOR-OPENINGS",
+    "GFRP",
+    "LID",
+    "MW-M-001A-O01",
+    "MW-M-001A-O02",
+    "MW-M-001A-W01",
+    "MW-M-001B-O01",
+    "MW-M-001B-O02",
+    "MW-M-001B-W01",
+    "MW-M-002-B01",
+    "MW-M-002-F01",
+    "MW-M-002-W01",
+    "MW-M-003-F01",
+    "MW-M-003-F02",
+    "MW-M-003-W01",
+    "MW-M-004-F01",
+    "MW-M-004-G01",
+    "MW-M-004-H01",
+    "MW-M-004-H02",
+    "MW-M-005-F01",
+    "MW-M-005-F02",
+    "MW-M-101-H01",
+    "MW-M-101-I01",
+    "MW-M-101-W01",
+    "MW-M-102-F01",
+    "MW-M-102-H01",
+    "MW-M-102-W01",
+    "MW-P-001-P01",
+    "MW-P-001-P02",
+    "PCB-SUPPORT",
+    "PLUNGER",
+    "SHELL-WALL"
+  ],
+  "missingFeatureIds": [],
+  "sections": [
+    {
+      "sectionId": "MW-M-001A:section-A-A",
+      "planeAxis": "Z",
+      "coordinate": 67.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 2,
+        "volume_mm3": 6.342536,
+        "bbox": {
+          "min": [
+            -13.493892,
+            -0.55,
+            66.95
+          ],
+          "max": [
+            13.493892,
+            15.3,
+            67.05
+          ],
+          "size": [
+            26.987784,
+            15.85,
+            0.1
+          ]
+        },
+        "edge_count": 73,
+        "face_count": 28
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        -0.0,
+        110.0
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-001A-W01",
+        "MW-M-001A-O01",
+        "MW-M-001A-O02"
+      ],
+      "purpose": "transverse button aperture, guard/head pocket and shell wall",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-001A"
+    },
+    {
+      "sectionId": "MW-M-001B:section-A-A",
+      "planeAxis": "Z",
+      "coordinate": 42.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 3,
+        "volume_mm3": 7.100775,
+        "bbox": {
+          "min": [
+            -13.493892,
+            -12.544684,
+            41.95
+          ],
+          "max": [
+            13.493892,
+            0.0,
+            42.05
+          ],
+          "size": [
+            26.987783,
+            12.544684,
+            0.1
+          ]
+        },
+        "edge_count": 51,
+        "face_count": 23
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        -0.0,
+        110.0
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-001B-W01",
+        "MW-M-001B-O01"
+      ],
+      "purpose": "transverse USB-C opening and shell wall",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-001B"
+    },
+    {
+      "sectionId": "MW-M-001B:section-B-B",
+      "planeAxis": "Z",
+      "coordinate": 55.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 3,
+        "volume_mm3": 7.525155,
+        "bbox": {
+          "min": [
+            -13.493892,
+            -12.894652,
+            54.95
+          ],
+          "max": [
+            13.493892,
+            0.0,
+            55.05
+          ],
+          "size": [
+            26.987783,
+            12.894652,
+            0.1
+          ]
+        },
+        "edge_count": 51,
+        "face_count": 23
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        -0.0,
+        110.0
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-001B-O02"
+      ],
+      "purpose": "transverse debug opening",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-001B"
+    },
+    {
+      "sectionId": "MW-M-002:section-A-A",
+      "planeAxis": "Z",
+      "coordinate": 68.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 1,
+        "volume_mm3": 7.376934,
+        "bbox": {
+          "min": [
+            -8.8,
+            -6.3,
+            67.95
+          ],
+          "max": [
+            8.8,
+            6.3,
+            68.05
+          ],
+          "size": [
+            17.6,
+            12.6,
+            0.1
+          ]
+        },
+        "edge_count": 108,
+        "face_count": 38
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        0.0,
+        90.0
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-002-W01",
+        "MW-M-002-B01",
+        "MW-M-002-F01"
+      ],
+      "purpose": "boss station, wall taper and keyed base",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-002"
+    },
+    {
+      "sectionId": "MW-M-003:section-A-A",
+      "planeAxis": "X",
+      "coordinate": 0.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 2,
+        "volume_mm3": 20.392818,
+        "bbox": {
+          "min": [
+            -0.05,
+            -13.5,
+            -0.0
+          ],
+          "max": [
+            0.05,
+            13.5,
+            9.0
+          ],
+          "size": [
+            0.1,
+            27.0,
+            9.0
+          ]
+        },
+        "edge_count": 51,
+        "face_count": 21
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        -13.5,
+        13.5
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-003-F01",
+        "MW-M-003-F02",
+        "MW-M-003-W01"
+      ],
+      "purpose": "axial cap/plug/energy-director section",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-003"
+    },
+    {
+      "sectionId": "MW-M-004:section-A-A",
+      "planeAxis": "X",
+      "coordinate": 0.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 2,
+        "volume_mm3": 34.413512,
+        "bbox": {
+          "min": [
+            -0.05,
+            -13.5,
+            -0.0
+          ],
+          "max": [
+            0.05,
+            13.5,
+            25.0
+          ],
+          "size": [
+            0.1,
+            27.0,
+            25.0
+          ]
+        },
+        "edge_count": 90,
+        "face_count": 34
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        -13.5,
+        13.5
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-004-F01",
+        "MW-M-004-H01",
+        "MW-M-004-G01",
+        "MW-M-004-H02"
+      ],
+      "purpose": "axial connector, adhesive bore and groove section",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-004"
+    },
+    {
+      "sectionId": "MW-M-005:section-A-A",
+      "planeAxis": "X",
+      "coordinate": 0.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 1,
+        "volume_mm3": 6.797238,
+        "bbox": {
+          "min": [
+            -0.05,
+            -0.0,
+            -5.4
+          ],
+          "max": [
+            0.05,
+            8.5,
+            5.4
+          ],
+          "size": [
+            0.1,
+            8.5,
+            10.8
+          ]
+        },
+        "edge_count": 36,
+        "face_count": 14
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        -5.4,
+        5.4
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-005-F01",
+        "MW-M-005-F02"
+      ],
+      "purpose": "axial plunger stem/head section",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-005"
+    },
+    {
+      "sectionId": "MW-P-001:section-A-A",
+      "planeAxis": "X",
+      "coordinate": 0.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 1,
+        "volume_mm3": 153.994762,
+        "bbox": {
+          "min": [
+            -0.05,
+            -3.5,
+            0.0
+          ],
+          "max": [
+            0.05,
+            3.5,
+            220.0
+          ],
+          "size": [
+            0.1,
+            7.0,
+            220.0
+          ]
+        },
+        "edge_count": 12,
+        "face_count": 6
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        -3.5,
+        3.5
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-P-001-P01",
+        "MW-P-001-P02"
+      ],
+      "purpose": "axial purchased spine section",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-P-001"
+    },
+    {
+      "sectionId": "MW-M-101:section-A-A",
+      "planeAxis": "Z",
+      "coordinate": 6.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 1,
+        "volume_mm3": 50.216185,
+        "bbox": {
+          "min": [
+            -32.0,
+            -28.0,
+            5.95
+          ],
+          "max": [
+            32.0,
+            28.0,
+            6.05
+          ],
+          "size": [
+            64.0,
+            56.0,
+            0.1
+          ]
+        },
+        "edge_count": 57,
+        "face_count": 21
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        0.0,
+        12.0
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-101-W01",
+        "MW-M-101-I01",
+        "MW-M-101-H01"
+      ],
+      "purpose": "horizontal PCB posts, bosses and connector wall openings",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-101"
+    },
+    {
+      "sectionId": "MW-M-102:section-A-A",
+      "planeAxis": "X",
+      "coordinate": -28.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 3,
+        "volume_mm3": 34.017433,
+        "bbox": {
+          "min": [
+            -28.05,
+            -28.112485,
+            0.0
+          ],
+          "max": [
+            -27.95,
+            28.112485,
+            8.0
+          ],
+          "size": [
+            0.1,
+            56.224969,
+            8.0
+          ]
+        },
+        "edge_count": 84,
+        "face_count": 34
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "PART_LOCAL_XYZ",
+      "subjectBboxAxisRange": [
+        -32.2,
+        32.2
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "MW-M-102-W01",
+        "MW-M-102-F01",
+        "MW-M-102-H01"
+      ],
+      "purpose": "vertical skirt wall and lid screw/counterbore station",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-M-102"
+    },
+    {
+      "sectionId": "MW-A-001-SE:section-A-A",
+      "planeAxis": "X",
+      "coordinate": 0.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 11,
+        "volume_mm3": 308.928808,
+        "bbox": {
+          "min": [
+            -0.05,
+            -13.5,
+            -0.0
+          ],
+          "max": [
+            0.05,
+            15.3,
+            315.0
+          ],
+          "size": [
+            0.1,
+            28.8,
+            315.0
+          ]
+        },
+        "edge_count": 309,
+        "face_count": 125
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "ASSEMBLY_MODEL_XYZ",
+      "subjectBboxAxisRange": [
+        -13.5,
+        13.5
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "SHELL-WALL",
+        "CARRIER",
+        "CAP",
+        "CONNECTOR",
+        "GFRP"
+      ],
+      "purpose": "axial product-stack section",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-A-001"
+    },
+    {
+      "sectionId": "MW-A-001-SE:section-B-B",
+      "planeAxis": "Z",
+      "coordinate": 72.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 5,
+        "volume_mm3": 30.485629,
+        "bbox": {
+          "min": [
+            -13.493892,
+            -13.5,
+            71.95
+          ],
+          "max": [
+            13.493892,
+            15.3,
+            72.05
+          ],
+          "size": [
+            26.987784,
+            28.8,
+            0.1
+          ]
+        },
+        "edge_count": 235,
+        "face_count": 88
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "ASSEMBLY_MODEL_XYZ",
+      "subjectBboxAxisRange": [
+        0.0,
+        315.0
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "BUTTON-APERTURE",
+        "PLUNGER",
+        "CARRIER-SWITCH-SHELF"
+      ],
+      "purpose": "transverse press-to-arm interface section",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-A-001"
+    },
+    {
+      "sectionId": "MW-A-101-SE:section-A-A",
+      "planeAxis": "X",
+      "coordinate": -28.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 4,
+        "volume_mm3": 54.856769,
+        "bbox": {
+          "min": [
+            -28.05,
+            -28.112485,
+            -0.0
+          ],
+          "max": [
+            -27.95,
+            28.112485,
+            14.0
+          ],
+          "size": [
+            0.1,
+            56.224969,
+            14.0
+          ]
+        },
+        "edge_count": 144,
+        "face_count": 56
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "ASSEMBLY_MODEL_XYZ",
+      "subjectBboxAxisRange": [
+        -32.2,
+        32.2
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "BASE",
+        "LID",
+        "CASE-SCREW"
+      ],
+      "purpose": "vertical enclosure closure/screw section",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-A-101"
+    },
+    {
+      "sectionId": "MW-A-101-SE:section-B-B",
+      "planeAxis": "Z",
+      "coordinate": 6.0,
+      "slabThickness": 0.1,
+      "intersection": {
+        "valid": true,
+        "solid_count": 4,
+        "volume_mm3": 69.430987,
+        "bbox": {
+          "min": [
+            -32.0,
+            -28.0,
+            5.95
+          ],
+          "max": [
+            32.0,
+            28.0,
+            6.05
+          ],
+          "size": [
+            64.0,
+            56.0,
+            0.1
+          ]
+        },
+        "edge_count": 117,
+        "face_count": 47
+      },
+      "sourceType": "build123d BREP boolean intersection",
+      "coordinateFrame": "ASSEMBLY_MODEL_XYZ",
+      "subjectBboxAxisRange": [
+        0.0,
+        14.0
+      ],
+      "planeWithinSubjectBbox": true,
+      "featureIdsCovered": [
+        "PCB-SUPPORT",
+        "CONNECTOR-OPENINGS"
+      ],
+      "purpose": "horizontal receiver interface section",
+      "decorativeHatchUsed": false,
+      "subjectId": "MW-A-101"
+    }
+  ],
+  "passed": true
+}

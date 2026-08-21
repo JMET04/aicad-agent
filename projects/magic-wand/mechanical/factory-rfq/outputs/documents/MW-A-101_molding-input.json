@@ -1,0 +1,48 @@
+{
+  "schema": "aicad_molding_input_v1",
+  "assemblyId": "MW-A-101",
+  "revision": "B-RFQ",
+  "units": "mm",
+  "coordinateSystemId": "MODEL_XYZ",
+  "moldedPartIds": [
+    "MW-M-101",
+    "MW-M-102"
+  ],
+  "toolingInputs": [
+    {
+      "key": "shrinkage",
+      "value": "Nominal finished-part CAD; resin-specific compensated scale requires vendor DFM approval before tool authorization",
+      "source": "factory-design-input.json#molding_defaults/shrinkage"
+    },
+    {
+      "key": "draft",
+      "value": "General 1.5 deg; add 1.0 deg on textured pull faces",
+      "source": "factory-design-input.json#molding_defaults/draft"
+    },
+    {
+      "key": "partingLine",
+      "value": "Use each part drawing MOLD PULL / PARTING feature row as the controlled RFQ basis",
+      "source": "factory-design-input.json#molding_defaults/partingLine"
+    },
+    {
+      "key": "gate",
+      "value": "Vendor shall propose gate type, count and vestige location with fill/pack evidence before tool authorization",
+      "source": "factory-design-input.json#molding_defaults/gate"
+    },
+    {
+      "key": "ejection",
+      "value": "Vendor shall propose ejector layout outside cosmetic, sealing, RF and controlled-fit surfaces",
+      "source": "factory-design-input.json#molding_defaults/ejection"
+    },
+    {
+      "key": "surfaceFinish",
+      "value": "SPI B-2 visual starting point on exposed grip; hidden/internal as-machined unless DFM changes it",
+      "source": "factory-design-input.json#molding_defaults/surfaceFinish"
+    },
+    {
+      "key": "tolerance",
+      "value": "ISO 2768-m where explicitly invoked; otherwise drawing-specific limits control",
+      "source": "factory-design-input.json#molding_defaults/tolerance"
+    }
+  ]
+}

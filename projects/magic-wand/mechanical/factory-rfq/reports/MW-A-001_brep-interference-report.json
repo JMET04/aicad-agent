@@ -1,0 +1,180 @@
+{
+  "schema": "aicad_factory_brep_interference_report_v2",
+  "assemblyId": "MW-A-001",
+  "revision": "B-RFQ",
+  "units": "mm",
+  "coordinateSystemId": "MODEL_XYZ",
+  "algorithm": "exact Open CASCADE BREP common-volume and minimum-distance evaluation",
+  "rows": [
+    {
+      "first": "MW-M-001A",
+      "second": "MW-M-001B",
+      "minimum_distance_mm": 0.0,
+      "intersection_volume_mm3": 0.0,
+      "classification": "contact_no_positive_volume",
+      "design_intent": "parting-plane/tongue-groove locating contact; no positive-volume overlap allowed"
+    },
+    {
+      "first": "MW-M-001A",
+      "second": "MW-M-002",
+      "minimum_distance_mm": 0.91983,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-001A",
+      "second": "MW-M-003",
+      "minimum_distance_mm": 0.0,
+      "intersection_volume_mm3": 0.364248,
+      "classification": "intended_process_interference",
+      "design_intent": "rear energy-director interference is intentional and requires weld DOE"
+    },
+    {
+      "first": "MW-M-001A",
+      "second": "MW-M-004",
+      "minimum_distance_mm": 0.0,
+      "intersection_volume_mm3": 0.0,
+      "classification": "contact_no_positive_volume",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-001A",
+      "second": "MW-M-005",
+      "minimum_distance_mm": 0.249397,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-001A",
+      "second": "MW-P-001",
+      "minimum_distance_mm": 7.9,
+      "intersection_volume_mm3": 0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-001B",
+      "second": "MW-M-002",
+      "minimum_distance_mm": 0.531507,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-001B",
+      "second": "MW-M-003",
+      "minimum_distance_mm": 0.0,
+      "intersection_volume_mm3": 0.364254,
+      "classification": "intended_process_interference",
+      "design_intent": "rear energy-director interference is intentional and requires weld DOE"
+    },
+    {
+      "first": "MW-M-001B",
+      "second": "MW-M-004",
+      "minimum_distance_mm": 0.0,
+      "intersection_volume_mm3": 0.0,
+      "classification": "contact_no_positive_volume",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-001B",
+      "second": "MW-M-005",
+      "minimum_distance_mm": 10.074262,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-001B",
+      "second": "MW-P-001",
+      "minimum_distance_mm": 3.2,
+      "intersection_volume_mm3": 0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-002",
+      "second": "MW-M-003",
+      "minimum_distance_mm": 0.0,
+      "intersection_volume_mm3": 0.0,
+      "classification": "contact_no_positive_volume",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-002",
+      "second": "MW-M-004",
+      "minimum_distance_mm": 1.0,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-002",
+      "second": "MW-M-005",
+      "minimum_distance_mm": 0.8,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-002",
+      "second": "MW-P-001",
+      "minimum_distance_mm": 1.2,
+      "intersection_volume_mm3": 0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-003",
+      "second": "MW-M-004",
+      "minimum_distance_mm": 91.0,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-003",
+      "second": "MW-M-005",
+      "minimum_distance_mm": 57.664158,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-003",
+      "second": "MW-P-001",
+      "minimum_distance_mm": 86.0,
+      "intersection_volume_mm3": 0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-004",
+      "second": "MW-M-005",
+      "minimum_distance_mm": 22.757596,
+      "intersection_volume_mm3": 0.0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    },
+    {
+      "first": "MW-M-004",
+      "second": "MW-P-001",
+      "minimum_distance_mm": 0.2,
+      "intersection_volume_mm3": 0,
+      "classification": "clear",
+      "design_intent": "nominal adhesive annulus; no positive-volume overlap allowed"
+    },
+    {
+      "first": "MW-M-005",
+      "second": "MW-P-001",
+      "minimum_distance_mm": 19.428525,
+      "intersection_volume_mm3": 0,
+      "classification": "clear",
+      "design_intent": "clearance relationship"
+    }
+  ],
+  "unexpectedInterferenceCount": 0,
+  "passed": true
+}

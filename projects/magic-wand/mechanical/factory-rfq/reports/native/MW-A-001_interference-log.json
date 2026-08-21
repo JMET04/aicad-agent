@@ -1,0 +1,29 @@
+{
+  "schema": "aicad_native_tool_execution_log_v1",
+  "gate": "mechanical_assembly_interference",
+  "status": "pass",
+  "nativeTool": {
+    "name": "Open CASCADE Technology BREP engine via build123d",
+    "version": "7.8.1.1.post1",
+    "nativeExecution": true
+  },
+  "subjectId": "MW-A-001",
+  "revision": "B-RFQ",
+  "inputSha256ByRole": {
+    "nativeAssembly": "ca53ccb0bac21e87b49560bef4c6be3697cd34ff97e5ba8c0604c8c56031227e",
+    "positions": "4ea276dd0af6531be4f119528cfb420d4f87725ab7003899f7fe08f1c77da3cd"
+  },
+  "outputSha256ByRole": {},
+  "checks": [
+    {
+      "id": "exact-brep-pair-evaluation",
+      "status": "pass",
+      "detail": "Evaluated 21 released component pairs with exact BREP common volume and minimum distance; unexpected positive-volume count is zero"
+    },
+    {
+      "id": "interference-report-binding",
+      "status": "pass",
+      "detail": "Detailed interference report SHA256 is ab67fb52736708174335fa79a910618c48fb1c2369cd5529e5149eec8db5877d"
+    }
+  ]
+}

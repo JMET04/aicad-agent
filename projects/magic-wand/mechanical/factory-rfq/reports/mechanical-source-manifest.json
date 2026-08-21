@@ -1,0 +1,1038 @@
+{
+  "schema": "aicad_magic_wand_mechanical_source_manifest_v1",
+  "status": "candidate",
+  "packageId": "MW-FACTORY-RFQ-001",
+  "revision": "B-RFQ",
+  "coordinateSystem": {
+    "id": "MODEL_XYZ",
+    "handedness": "right",
+    "origin": "datum A, rear-cap exterior plane on the common wand axis",
+    "positive_z": "from rear cap toward rod tip",
+    "positive_y": "toward the press-to-arm button"
+  },
+  "pathBasis": "projects/magic-wand",
+  "parts": [
+    {
+      "subjectId": "MW-M-001A",
+      "partId": "MW-M-001A",
+      "revision": "B-RFQ",
+      "process": "injection molding",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-001A_upper_grip_shell.SLDPRT",
+          "size": 211701,
+          "sha256": "09fc88a1f0cf63130e2698c6b5787da176b75233ac9625f49502542a00c28452"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-001A_upper_grip_shell.step",
+          "size": 389719,
+          "sha256": "845f32f0f4065eac595ac64bc9f38e25bb296ffc15387fbf6fe691fa8d254bba"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-M-001A_upper_grip_shell.dxf",
+          "size": 1884180,
+          "sha256": "d68789a4d1f1b178810f5139018a332407e2542d96c3eebee25ca071ba77a29b"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-001A_drawing-preview.png",
+          "size": 1169300,
+          "sha256": "a197c574c01474d493086f0e56ef202973cd9dbc2969810fad6b770f37da14f7",
+          "subjectId": "MW-M-001A",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-001A_upper_grip_shell.dxf",
+          "sourceSha256": "d68789a4d1f1b178810f5139018a332407e2542d96c3eebee25ca071ba77a29b",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-001A_model-preview.png",
+          "size": 142833,
+          "sha256": "67ff58c0da230ef875492c32256a6ba5a62209e7921283afe80cb14bb5d45a2b",
+          "subjectId": "MW-M-001A",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-001A_upper_grip_shell.step",
+          "sourceSha256": "845f32f0f4065eac595ac64bc9f38e25bb296ffc15387fbf6fe691fa8d254bba",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-M-001A_native-reopen-log.json",
+          "size": 1282,
+          "sha256": "b7fe42792bacf6bae0cb14abd527018725413912774a6b2454654b1edc7987c1"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-001A_model-preview.png",
+          "size": 142833,
+          "sha256": "67ff58c0da230ef875492c32256a6ba5a62209e7921283afe80cb14bb5d45a2b",
+          "subjectId": "MW-M-001A",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-001A_upper_grip_shell.step",
+          "sourceSha256": "845f32f0f4065eac595ac64bc9f38e25bb296ffc15387fbf6fe691fa8d254bba",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-001A_drawing-preview.png",
+          "size": 1169300,
+          "sha256": "a197c574c01474d493086f0e56ef202973cd9dbc2969810fad6b770f37da14f7",
+          "subjectId": "MW-M-001A",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-001A_upper_grip_shell.dxf",
+          "sourceSha256": "d68789a4d1f1b178810f5139018a332407e2542d96c3eebee25ca071ba77a29b",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-001B",
+      "partId": "MW-M-001B",
+      "revision": "B-RFQ",
+      "process": "injection molding",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-001B_lower_grip_shell.SLDPRT",
+          "size": 186015,
+          "sha256": "d7fd029d462817e8371e0ab74561d472872a1cfad2773f0dea8855a7685feea5"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-001B_lower_grip_shell.step",
+          "size": 339606,
+          "sha256": "17e7e36191d4d2e51ae2441748079ec3c4895f7c2b74c4864c747c308913bbeb"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-M-001B_lower_grip_shell.dxf",
+          "size": 1696966,
+          "sha256": "279fb4c63990285bf49613384ab855237d62b50e1a39072e9aaa9fab0ac3dd46"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-001B_drawing-preview.png",
+          "size": 1141576,
+          "sha256": "a3634cf4b4950685256dd1d09297f519c33761fe30dab353563f23eac90678e2",
+          "subjectId": "MW-M-001B",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-001B_lower_grip_shell.dxf",
+          "sourceSha256": "279fb4c63990285bf49613384ab855237d62b50e1a39072e9aaa9fab0ac3dd46",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-001B_model-preview.png",
+          "size": 147661,
+          "sha256": "826bcd5c1e6c642992d942a00a545967c5e9136d142037910e6e6a0da04b267f",
+          "subjectId": "MW-M-001B",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-001B_lower_grip_shell.step",
+          "sourceSha256": "17e7e36191d4d2e51ae2441748079ec3c4895f7c2b74c4864c747c308913bbeb",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-M-001B_native-reopen-log.json",
+          "size": 1282,
+          "sha256": "599a9a198922a2abe41e1bb116aba797f916e65dd22e4713d9a4f28b46b93dc7"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-001B_model-preview.png",
+          "size": 147661,
+          "sha256": "826bcd5c1e6c642992d942a00a545967c5e9136d142037910e6e6a0da04b267f",
+          "subjectId": "MW-M-001B",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-001B_lower_grip_shell.step",
+          "sourceSha256": "17e7e36191d4d2e51ae2441748079ec3c4895f7c2b74c4864c747c308913bbeb",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-001B_drawing-preview.png",
+          "size": 1141576,
+          "sha256": "a3634cf4b4950685256dd1d09297f519c33761fe30dab353563f23eac90678e2",
+          "subjectId": "MW-M-001B",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-001B_lower_grip_shell.dxf",
+          "sourceSha256": "279fb4c63990285bf49613384ab855237d62b50e1a39072e9aaa9fab0ac3dd46",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-002",
+      "partId": "MW-M-002",
+      "revision": "B-RFQ",
+      "process": "injection molding",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-002_internal_carrier.SLDPRT",
+          "size": 119463,
+          "sha256": "e2648b0e52892a312b22b32b394d0e733c230090a1a5e31c13bd9e45cf451616"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-002_internal_carrier.step",
+          "size": 164117,
+          "sha256": "80717e29b665e110f5c65467ac485c82e257a6a783122d73241decea22b974fa"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-M-002_internal_carrier.dxf",
+          "size": 1359607,
+          "sha256": "cfcdb6ad15d90a1ed3ffbe6a81cc4ad68c6e5127df7bd563061496e0f119cf1c"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-002_drawing-preview.png",
+          "size": 945942,
+          "sha256": "caff251c3102bdd0d337ca73ac60dfc93f2225b8b62e82f2904a52a117f8eac1",
+          "subjectId": "MW-M-002",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-002_internal_carrier.dxf",
+          "sourceSha256": "cfcdb6ad15d90a1ed3ffbe6a81cc4ad68c6e5127df7bd563061496e0f119cf1c",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-002_model-preview.png",
+          "size": 134972,
+          "sha256": "71bc5252dd252ad3699774470744809a548f052f678881da69acd147961f649a",
+          "subjectId": "MW-M-002",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-002_internal_carrier.step",
+          "sourceSha256": "80717e29b665e110f5c65467ac485c82e257a6a783122d73241decea22b974fa",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-M-002_native-reopen-log.json",
+          "size": 1281,
+          "sha256": "e76e749e7169427b316665236fd9f3654c147aebc796521ca49211b685c2ac66"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-002_model-preview.png",
+          "size": 134972,
+          "sha256": "71bc5252dd252ad3699774470744809a548f052f678881da69acd147961f649a",
+          "subjectId": "MW-M-002",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-002_internal_carrier.step",
+          "sourceSha256": "80717e29b665e110f5c65467ac485c82e257a6a783122d73241decea22b974fa",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-002_drawing-preview.png",
+          "size": 945942,
+          "sha256": "caff251c3102bdd0d337ca73ac60dfc93f2225b8b62e82f2904a52a117f8eac1",
+          "subjectId": "MW-M-002",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-002_internal_carrier.dxf",
+          "sourceSha256": "cfcdb6ad15d90a1ed3ffbe6a81cc4ad68c6e5127df7bd563061496e0f119cf1c",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-003",
+      "partId": "MW-M-003",
+      "revision": "B-RFQ",
+      "process": "injection molding",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-003_rear_end_cap.SLDPRT",
+          "size": 144825,
+          "sha256": "26ac265efec0531fa0efe8a18c886d6360f01950894046df487ecd02114d5727"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-003_rear_end_cap.step",
+          "size": 59292,
+          "sha256": "30f44acfc44f9dfbb4a9820776c23a923f70d136d8e7a0f0e946adbfcb79f97e"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-M-003_rear_end_cap.dxf",
+          "size": 494163,
+          "sha256": "d65a91d7dbaf9a349b86a30aa3eb4d647373f194505b86449609c0d66601ecba"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-003_drawing-preview.png",
+          "size": 1215543,
+          "sha256": "c4e51d2446449f11b26586f93d50fcf964a33ee53b8cd419f054aa9c407612a7",
+          "subjectId": "MW-M-003",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-003_rear_end_cap.dxf",
+          "sourceSha256": "d65a91d7dbaf9a349b86a30aa3eb4d647373f194505b86449609c0d66601ecba",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-003_model-preview.png",
+          "size": 374956,
+          "sha256": "908789b2c30f88cc224d3db1ae7a3cf1cff5a202c01343db91425edc22df2b2b",
+          "subjectId": "MW-M-003",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-003_rear_end_cap.step",
+          "sourceSha256": "30f44acfc44f9dfbb4a9820776c23a923f70d136d8e7a0f0e946adbfcb79f97e",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-M-003_native-reopen-log.json",
+          "size": 1281,
+          "sha256": "bbb35b318c4c5a445096792458e094a753d98f06f2ccbbd79a086861892222d1"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-003_model-preview.png",
+          "size": 374956,
+          "sha256": "908789b2c30f88cc224d3db1ae7a3cf1cff5a202c01343db91425edc22df2b2b",
+          "subjectId": "MW-M-003",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-003_rear_end_cap.step",
+          "sourceSha256": "30f44acfc44f9dfbb4a9820776c23a923f70d136d8e7a0f0e946adbfcb79f97e",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-003_drawing-preview.png",
+          "size": 1215543,
+          "sha256": "c4e51d2446449f11b26586f93d50fcf964a33ee53b8cd419f054aa9c407612a7",
+          "subjectId": "MW-M-003",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-003_rear_end_cap.dxf",
+          "sourceSha256": "d65a91d7dbaf9a349b86a30aa3eb4d647373f194505b86449609c0d66601ecba",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-004",
+      "partId": "MW-M-004",
+      "revision": "B-RFQ",
+      "process": "injection molding",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-004_rod_connector.SLDPRT",
+          "size": 167399,
+          "sha256": "17e9b5d9bdddb0f426f55d3b15b3925ad847c382a404a96903820296e7ca5aed"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-004_rod_connector.step",
+          "size": 88637,
+          "sha256": "72f91adb6c77c309b983d8fddbba97775367751f948ea0bc64e7e68634bed904"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-M-004_rod_connector.dxf",
+          "size": 940013,
+          "sha256": "2acb748377a7c37e34d28c6adba34b932e231aece2a33e76ab992c3437946637"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-004_drawing-preview.png",
+          "size": 1199019,
+          "sha256": "76e8d078570a5c58f5282116422f658200e4dec0b917f8f10bb5c5de34b1ca6a",
+          "subjectId": "MW-M-004",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-004_rod_connector.dxf",
+          "sourceSha256": "2acb748377a7c37e34d28c6adba34b932e231aece2a33e76ab992c3437946637",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-004_model-preview.png",
+          "size": 524176,
+          "sha256": "21869ab42adfc97ccfea9e04350d9520dd6d40a3670878761322d09e90a711d6",
+          "subjectId": "MW-M-004",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-004_rod_connector.step",
+          "sourceSha256": "72f91adb6c77c309b983d8fddbba97775367751f948ea0bc64e7e68634bed904",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-M-004_native-reopen-log.json",
+          "size": 1281,
+          "sha256": "60c314fcee7513936c95bbc94db5d6d10bd17684de6393505b19f632158317f3"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-004_model-preview.png",
+          "size": 524176,
+          "sha256": "21869ab42adfc97ccfea9e04350d9520dd6d40a3670878761322d09e90a711d6",
+          "subjectId": "MW-M-004",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-004_rod_connector.step",
+          "sourceSha256": "72f91adb6c77c309b983d8fddbba97775367751f948ea0bc64e7e68634bed904",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-004_drawing-preview.png",
+          "size": 1199019,
+          "sha256": "76e8d078570a5c58f5282116422f658200e4dec0b917f8f10bb5c5de34b1ca6a",
+          "subjectId": "MW-M-004",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-004_rod_connector.dxf",
+          "sourceSha256": "2acb748377a7c37e34d28c6adba34b932e231aece2a33e76ab992c3437946637",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-005",
+      "partId": "MW-M-005",
+      "revision": "B-RFQ",
+      "process": "injection molding",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-005_press_to_arm_plunger.SLDPRT",
+          "size": 96430,
+          "sha256": "59acf9dda4c17d462aca854cfae9ce8df5daf605cde9510580484973a2bd8ae8"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-005_press_to_arm_plunger.step",
+          "size": 37200,
+          "sha256": "8abd05957a002f3ac05e07d792bd0fd97a885a171e11edd5c22487d5b44d7a07"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-M-005_press_to_arm_plunger.dxf",
+          "size": 327871,
+          "sha256": "a163019e2934766535168103ee38838648f41e54cf510565468bfba44d65da46"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-005_drawing-preview.png",
+          "size": 1081054,
+          "sha256": "6c18af948cda8cb79b9aa0570ad1b6837bbc76031b56cac829d6ee540477b20b",
+          "subjectId": "MW-M-005",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-005_press_to_arm_plunger.dxf",
+          "sourceSha256": "a163019e2934766535168103ee38838648f41e54cf510565468bfba44d65da46",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-005_model-preview.png",
+          "size": 399364,
+          "sha256": "e89ea48273b708ceaedfc2056cbcc23fefa3dd942814b03419c0d39f58004741",
+          "subjectId": "MW-M-005",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-005_press_to_arm_plunger.step",
+          "sourceSha256": "8abd05957a002f3ac05e07d792bd0fd97a885a171e11edd5c22487d5b44d7a07",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-M-005_native-reopen-log.json",
+          "size": 1281,
+          "sha256": "2532610ce15f9b1fc4243c99933e89b173d14c4fe3e59fa6c7ee4248296baaa0"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-005_model-preview.png",
+          "size": 399364,
+          "sha256": "e89ea48273b708ceaedfc2056cbcc23fefa3dd942814b03419c0d39f58004741",
+          "subjectId": "MW-M-005",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-005_press_to_arm_plunger.step",
+          "sourceSha256": "8abd05957a002f3ac05e07d792bd0fd97a885a171e11edd5c22487d5b44d7a07",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-005_drawing-preview.png",
+          "size": 1081054,
+          "sha256": "6c18af948cda8cb79b9aa0570ad1b6837bbc76031b56cac829d6ee540477b20b",
+          "subjectId": "MW-M-005",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-005_press_to_arm_plunger.dxf",
+          "sourceSha256": "a163019e2934766535168103ee38838648f41e54cf510565468bfba44d65da46",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-P-001",
+      "partId": "MW-P-001",
+      "revision": "B-RFQ",
+      "process": "pultrusion, supplier cut/deburr/seal",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-P-001_gfrp_spine.SLDPRT",
+          "size": 50075,
+          "sha256": "d967f4045c3e03cca5790545f87b17391432607c2a969fb19e7671227f0dc30b"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-P-001_gfrp_spine.step",
+          "size": 11792,
+          "sha256": "ed6ecdb2b3e42094a91532610e4900606eb9f65da200c316511abb0c033919aa"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-P-001_gfrp_spine.dxf",
+          "size": 97259,
+          "sha256": "4b0148830b54fe398edde9b6b9123624df332b8d0c0ac861dbf64f4a13969cac"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-P-001_drawing-preview.png",
+          "size": 688731,
+          "sha256": "9b0cd609fc292c74689ad37fc5724b4d815ac0a8ae06a337559d186364034b23",
+          "subjectId": "MW-P-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-P-001_gfrp_spine.dxf",
+          "sourceSha256": "4b0148830b54fe398edde9b6b9123624df332b8d0c0ac861dbf64f4a13969cac",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-P-001_model-preview.png",
+          "size": 72529,
+          "sha256": "11ed25945b6b7820d5f3db7a46c06781171ae5b645b67fb38a6a38e13fe23b4d",
+          "subjectId": "MW-P-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-P-001_gfrp_spine.step",
+          "sourceSha256": "ed6ecdb2b3e42094a91532610e4900606eb9f65da200c316511abb0c033919aa",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-P-001_native-reopen-log.json",
+          "size": 1281,
+          "sha256": "cd58a74fcbfde557438e3ebfa82ae94e0a69b4c086a9d9c6253a8969c3ecc1d0"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-P-001_model-preview.png",
+          "size": 72529,
+          "sha256": "11ed25945b6b7820d5f3db7a46c06781171ae5b645b67fb38a6a38e13fe23b4d",
+          "subjectId": "MW-P-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-P-001_gfrp_spine.step",
+          "sourceSha256": "ed6ecdb2b3e42094a91532610e4900606eb9f65da200c316511abb0c033919aa",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-P-001_drawing-preview.png",
+          "size": 688731,
+          "sha256": "9b0cd609fc292c74689ad37fc5724b4d815ac0a8ae06a337559d186364034b23",
+          "subjectId": "MW-P-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-P-001_gfrp_spine.dxf",
+          "sourceSha256": "4b0148830b54fe398edde9b6b9123624df332b8d0c0ac861dbf64f4a13969cac",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-101",
+      "partId": "MW-M-101",
+      "revision": "B-RFQ",
+      "process": "injection molding",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-101_receiver_enclosure_base.SLDPRT",
+          "size": 118123,
+          "sha256": "42114ad3f175889f27ab1df1d844cb72c6049bc95237313cbbdf3bc538cb6e1f"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-101_receiver_enclosure_base.step",
+          "size": 168632,
+          "sha256": "42240ff0ac6da8b2a4983b1e614f54f58e7d7825d17701cc772135fe0b0a7618"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-M-101_receiver_enclosure_base.dxf",
+          "size": 1358064,
+          "sha256": "1642d37843af0ea4a874d7f3cea3bbc78b6fadc56f3db6b47c2ab923f19975ee"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-101_drawing-preview.png",
+          "size": 1029750,
+          "sha256": "b306683ea38014a04689c90207dcb4e79e7129dc85e4d4bb1cbd0f0f887ee932",
+          "subjectId": "MW-M-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-101_receiver_enclosure_base.dxf",
+          "sourceSha256": "1642d37843af0ea4a874d7f3cea3bbc78b6fadc56f3db6b47c2ab923f19975ee",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-101_model-preview.png",
+          "size": 212377,
+          "sha256": "b6a1df0c9e030344435fad0be70d8f6b0a5e9045131b4d8fcecb99d030fa8aec",
+          "subjectId": "MW-M-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-101_receiver_enclosure_base.step",
+          "sourceSha256": "42240ff0ac6da8b2a4983b1e614f54f58e7d7825d17701cc772135fe0b0a7618",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-M-101_native-reopen-log.json",
+          "size": 1281,
+          "sha256": "c24af7205e339646d388408cc0f7418eb435bc98d41de32889792c1dcdeeea32"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-101_model-preview.png",
+          "size": 212377,
+          "sha256": "b6a1df0c9e030344435fad0be70d8f6b0a5e9045131b4d8fcecb99d030fa8aec",
+          "subjectId": "MW-M-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-101_receiver_enclosure_base.step",
+          "sourceSha256": "42240ff0ac6da8b2a4983b1e614f54f58e7d7825d17701cc772135fe0b0a7618",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-101_drawing-preview.png",
+          "size": 1029750,
+          "sha256": "b306683ea38014a04689c90207dcb4e79e7129dc85e4d4bb1cbd0f0f887ee932",
+          "subjectId": "MW-M-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-101_receiver_enclosure_base.dxf",
+          "sourceSha256": "1642d37843af0ea4a874d7f3cea3bbc78b6fadc56f3db6b47c2ab923f19975ee",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-M-102",
+      "partId": "MW-M-102",
+      "revision": "B-RFQ",
+      "process": "injection molding",
+      "artifacts": {
+        "nativeCad": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-102_receiver_enclosure_lid.SLDPRT",
+          "size": 84902,
+          "sha256": "8eee47b4203e6a13f8269135abb09caecd87965fcf195a9fedb591cedb9e9400"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-M-102_receiver_enclosure_lid.step",
+          "size": 124485,
+          "sha256": "b33996fa7c416d7e38a240c890982189fde7772e1a384325495e141b90243dd7"
+        },
+        "manufacturingDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-M-102_receiver_enclosure_lid.dxf",
+          "size": 1144342,
+          "sha256": "1fef19dca282954c27443b6a939a52fc09eff8e94c91bbf7a597523e5b63cc94"
+        },
+        "drawingPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-102_drawing-preview.png",
+          "size": 1059088,
+          "sha256": "8086e3e4b52d43f48f85b60af0c92d8bfad39fd99d664e0106c154c6ae45d5c1",
+          "subjectId": "MW-M-102",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-102_receiver_enclosure_lid.dxf",
+          "sourceSha256": "1fef19dca282954c27443b6a939a52fc09eff8e94c91bbf7a597523e5b63cc94",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "modelPreview": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-102_model-preview.png",
+          "size": 171396,
+          "sha256": "1c27c544941c89be4f771d438fa5ab8b25b4b9843de76a01c74408f292c16294",
+          "subjectId": "MW-M-102",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-102_receiver_enclosure_lid.step",
+          "sourceSha256": "b33996fa7c416d7e38a240c890982189fde7772e1a384325495e141b90243dd7",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-M-102_native-reopen-log.json",
+          "size": 1281,
+          "sha256": "0b3fb19465651e48e596a4aff581d13ba0c29104c81e193a1c637adc26417369"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-102_model-preview.png",
+          "size": 171396,
+          "sha256": "1c27c544941c89be4f771d438fa5ab8b25b4b9843de76a01c74408f292c16294",
+          "subjectId": "MW-M-102",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-M-102_receiver_enclosure_lid.step",
+          "sourceSha256": "b33996fa7c416d7e38a240c890982189fde7772e1a384325495e141b90243dd7",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-M-102_drawing-preview.png",
+          "size": 1059088,
+          "sha256": "8086e3e4b52d43f48f85b60af0c92d8bfad39fd99d664e0106c154c6ae45d5c1",
+          "subjectId": "MW-M-102",
+          "revision": "B-RFQ",
+          "previewOfRole": "manufacturingDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-M-102_receiver_enclosure_lid.dxf",
+          "sourceSha256": "1fef19dca282954c27443b6a939a52fc09eff8e94c91bbf7a597523e5b63cc94",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    }
+  ],
+  "assemblies": [
+    {
+      "subjectId": "MW-A-001",
+      "assemblyId": "MW-A-001",
+      "revision": "B-RFQ",
+      "process": "native SolidWorks assembly with exact BREP interference verification",
+      "componentPartIds": [
+        "MW-M-001A",
+        "MW-M-001B",
+        "MW-M-002",
+        "MW-M-003",
+        "MW-M-004",
+        "MW-M-005",
+        "MW-P-001"
+      ],
+      "artifacts": {
+        "nativeAssembly": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-A-001_magic_wand_assembly.SLDASM",
+          "size": 358505,
+          "sha256": "ca53ccb0bac21e87b49560bef4c6be3697cd34ff97e5ba8c0604c8c56031227e"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-A-001_magic_wand_assembly.step",
+          "size": 1125713,
+          "sha256": "e1f1c89b921944da9e7dcdbd05f6e75c171a72bcaf852bd11527bb0a64a54531"
+        },
+        "assemblyDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_general_assembly.dxf",
+          "size": 4168692,
+          "sha256": "a3a61f4d30e328108ea5841b66bb3d9cc68de8d2839211cabc1ca1c9ea07ab98"
+        },
+        "explodedDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_exploded.dxf",
+          "size": 4508361,
+          "sha256": "7364c3df1b3bd4aa67009023be5fd9271ccc4ea0cd7121fa3055fc22a3daafa7"
+        },
+        "sectionDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_section_A-A.dxf",
+          "size": 3769497,
+          "sha256": "f054f8a3bdfbeae83b9909807770daf2a9c51cafabadd35a6a7b66e71462bcc2"
+        },
+        "assemblyPreview2d": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-001_wand_general_assembly_preview.png",
+          "size": 780280,
+          "sha256": "3a5bbb01600b81986ca471c029cc331d6ee2d33f7129f5426844409132f5f9df",
+          "subjectId": "MW-A-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "assemblyDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_general_assembly.dxf",
+          "sourceSha256": "a3a61f4d30e328108ea5841b66bb3d9cc68de8d2839211cabc1ca1c9ea07ab98",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "assemblyPreview3d": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-001_model-preview.png",
+          "size": 86592,
+          "sha256": "e0d1b537acdc95583487350f96b29140bb970eceb79b79c1aa5b419c40f5f3ac",
+          "subjectId": "MW-A-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-A-001_magic_wand_assembly.step",
+          "sourceSha256": "e1f1c89b921944da9e7dcdbd05f6e75c171a72bcaf852bd11527bb0a64a54531",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "assemblyWorkInstruction": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-001_assembly-work-instruction.pdf",
+          "size": 43091,
+          "sha256": "e78c04f0e2ee3a8d713fe1ef25de317a4ae71951e1863aafec54fedfb7b80aba"
+        },
+        "inspectionPlan": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-001_inspection-plan.pdf",
+          "size": 47175,
+          "sha256": "ab73e0adad0c735a206f1f16ba913d5c76787fd756c49da57f3d5c7aece075fe"
+        },
+        "moldingInput": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-001_molding-input.json",
+          "size": 1862,
+          "sha256": "1327f5fe066194455226c83adfa96cbcbf418bea001bb64e17ed5a5c25fe01c1"
+        },
+        "bom": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-001_manufacturing-bom.json",
+          "size": 828,
+          "sha256": "566bfdb8eea8f39945f65ef3284a6234ab9e357ef96aa3dc0d7dfa5d156526fd"
+        },
+        "positions": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-001_assembly-positions.json",
+          "size": 2716,
+          "sha256": "4ea276dd0af6531be4f119528cfb420d4f87725ab7003899f7fe08f1c77da3cd"
+        },
+        "interferenceLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-A-001_interference-log.json",
+          "size": 1026,
+          "sha256": "ee7bfd127accecbea396018b8def1fbdc2e49176c66d044422cbbcf847d50cce"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-A-001_native-reopen-log.json",
+          "size": 2140,
+          "sha256": "2a68b44070fa828d7467b306398e48bafc6b9abe3e19f3febe73d7498d22e35c"
+        },
+        "explodedStep": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-A-001_magic_wand_exploded.step",
+          "size": 1988433,
+          "sha256": "420220f8bb32a7853405c3ec4dcaa25854179cb81b44bafe467ceca44d56a55e"
+        },
+        "harnessDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_harness_interface.dxf",
+          "size": 4189479,
+          "sha256": "c4ff93a78edf2494613ba612146a8671048e99a3b304ff66a2575320a192f98e"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-001_model-preview.png",
+          "size": 86592,
+          "sha256": "e0d1b537acdc95583487350f96b29140bb970eceb79b79c1aa5b419c40f5f3ac",
+          "subjectId": "MW-A-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-A-001_magic_wand_assembly.step",
+          "sourceSha256": "e1f1c89b921944da9e7dcdbd05f6e75c171a72bcaf852bd11527bb0a64a54531",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-001_exploded-model-preview.png",
+          "size": 89090,
+          "sha256": "ac0d6247cd679d8275fe6c55078c41525cad8e6c34b52f281e06c85974d2bc52",
+          "subjectId": "MW-A-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "explodedStep",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-A-001_magic_wand_exploded.step",
+          "sourceSha256": "420220f8bb32a7853405c3ec4dcaa25854179cb81b44bafe467ceca44d56a55e",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-001_wand_general_assembly_preview.png",
+          "size": 780280,
+          "sha256": "3a5bbb01600b81986ca471c029cc331d6ee2d33f7129f5426844409132f5f9df",
+          "subjectId": "MW-A-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "assemblyDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_general_assembly.dxf",
+          "sourceSha256": "a3a61f4d30e328108ea5841b66bb3d9cc68de8d2839211cabc1ca1c9ea07ab98",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-001_wand_exploded_preview.png",
+          "size": 651035,
+          "sha256": "e428de6680a562ef4bba99b018f1b6decfeddda31156ae3c04d51bac0bdf36f9",
+          "subjectId": "MW-A-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "explodedDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_exploded.dxf",
+          "sourceSha256": "7364c3df1b3bd4aa67009023be5fd9271ccc4ea0cd7121fa3055fc22a3daafa7",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-001_wand_section_A-A_preview.png",
+          "size": 585942,
+          "sha256": "b53b5c971bba4701291040777fdeae248ec56fdaec3584573f1ed5e68b6dc396",
+          "subjectId": "MW-A-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "sectionDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_section_A-A.dxf",
+          "sourceSha256": "f054f8a3bdfbeae83b9909807770daf2a9c51cafabadd35a6a7b66e71462bcc2",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-001_wand_harness_interface_preview.png",
+          "size": 842908,
+          "sha256": "55d66cbec84777e37e5774fc39b236de46f5fc118c9bb0b94f034cef3c7a2be6",
+          "subjectId": "MW-A-001",
+          "revision": "B-RFQ",
+          "previewOfRole": "harnessDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-001_wand_harness_interface.dxf",
+          "sourceSha256": "c4ff93a78edf2494613ba612146a8671048e99a3b304ff66a2575320a192f98e",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    },
+    {
+      "subjectId": "MW-A-101",
+      "assemblyId": "MW-A-101",
+      "revision": "B-RFQ",
+      "process": "native SolidWorks assembly with exact BREP interference verification",
+      "componentPartIds": [
+        "MW-M-101",
+        "MW-M-102"
+      ],
+      "artifacts": {
+        "nativeAssembly": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-A-101_receiver_enclosure_assembly.SLDASM",
+          "size": 101022,
+          "sha256": "ae2f4441383c68087ff89c01b936ef6428bcaa3d93de7af4ea393304db44e02f"
+        },
+        "step": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-A-101_receiver_enclosure_assembly.step",
+          "size": 305336,
+          "sha256": "4579f6d3ea6708c473726d4cb9f480ae14c426192a4d102d75cf1bcdec20ce5a"
+        },
+        "assemblyDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-A-101_receiver_assembly.dxf",
+          "size": 1652379,
+          "sha256": "471e7ebe6e2d7591676b8015d554443f09ec59daf868140b66cdbb2d3d748f6a"
+        },
+        "explodedDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-A-101_receiver_exploded.dxf",
+          "size": 1719350,
+          "sha256": "26d712d53e8774fc45200a44f82d5b66b77384fefe61e7614f73042a294453fd"
+        },
+        "sectionDrawing": {
+          "path": "mechanical/factory-rfq/outputs/2d/MW-A-101_receiver_section_interface.dxf",
+          "size": 1456864,
+          "sha256": "13d56aa21831cf6918c8591715197d57ad4c21e7fb1d0a3b7b10518ee0a5d7f7"
+        },
+        "assemblyPreview2d": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-101_receiver_assembly_preview.png",
+          "size": 959365,
+          "sha256": "3c612eaf7eaca4db61e32c3af14250c2ee799b8101335203d030aa430248d4d9",
+          "subjectId": "MW-A-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "assemblyDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-101_receiver_assembly.dxf",
+          "sourceSha256": "471e7ebe6e2d7591676b8015d554443f09ec59daf868140b66cdbb2d3d748f6a",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        "assemblyPreview3d": {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-101_model-preview.png",
+          "size": 204258,
+          "sha256": "f1a8c79ad01a6ae387f8dfec7a72d6ff254481032d0b806fa40a8ffd20659010",
+          "subjectId": "MW-A-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-A-101_receiver_enclosure_assembly.step",
+          "sourceSha256": "4579f6d3ea6708c473726d4cb9f480ae14c426192a4d102d75cf1bcdec20ce5a",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        "assemblyWorkInstruction": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-101_assembly-work-instruction.pdf",
+          "size": 41232,
+          "sha256": "173e6e74557048a451867b709b194e26a8e768adf04bd2eafcec7e46d59b1974"
+        },
+        "inspectionPlan": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-101_inspection-plan.pdf",
+          "size": 46842,
+          "sha256": "83c674b3dbc125083409252e18eb35ec531180139072aca8e8d70238618735d9"
+        },
+        "moldingInput": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-101_molding-input.json",
+          "size": 1792,
+          "sha256": "c05ae830837d3cc6959ea58dae331d6a09e05baeca578f81ecc3d47be2b0d409"
+        },
+        "bom": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-101_manufacturing-bom.json",
+          "size": 361,
+          "sha256": "43625948657f6b239675c9c9cfc6849fc4581606db6eb557df26c582348db661"
+        },
+        "positions": {
+          "path": "mechanical/factory-rfq/outputs/documents/MW-A-101_assembly-positions.json",
+          "size": 903,
+          "sha256": "556626ec16ed9cb910767e01631dcf0642652910dd7515815d4ae7cd04162051"
+        },
+        "interferenceLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-A-101_interference-log.json",
+          "size": 1025,
+          "sha256": "b09768a196be98884095e2630fd72f1d7040cf3213759eed2033c5c3d9405573"
+        },
+        "nativeReopenLog": {
+          "path": "mechanical/factory-rfq/reports/native/MW-A-101_native-reopen-log.json",
+          "size": 2140,
+          "sha256": "06379c108ee7361daf11f43cfca5187aa7819c64bf1ce9f39f7b17af90e34109"
+        },
+        "explodedStep": {
+          "path": "mechanical/factory-rfq/outputs/3d/MW-A-101_receiver_enclosure_exploded.step",
+          "size": 381462,
+          "sha256": "cf07019c23d3fa8da31dba7a3697c2f7687f2d2eaeb9ce09cf5eb95286e15281"
+        }
+      },
+      "previews": [
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-101_model-preview.png",
+          "size": 204258,
+          "sha256": "f1a8c79ad01a6ae387f8dfec7a72d6ff254481032d0b806fa40a8ffd20659010",
+          "subjectId": "MW-A-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "step",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-A-101_receiver_enclosure_assembly.step",
+          "sourceSha256": "4579f6d3ea6708c473726d4cb9f480ae14c426192a4d102d75cf1bcdec20ce5a",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-101_exploded-model-preview.png",
+          "size": 250441,
+          "sha256": "f1df59b9b9a9e257ec32923460475d8605ce3226a3caf76ff284ddbbdd4db654",
+          "subjectId": "MW-A-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "explodedStep",
+          "previewOfPath": "mechanical/factory-rfq/outputs/3d/MW-A-101_receiver_enclosure_exploded.step",
+          "sourceSha256": "cf07019c23d3fa8da31dba7a3697c2f7687f2d2eaeb9ce09cf5eb95286e15281",
+          "rendererStyle": "step-reimport-multiview-v1"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-101_receiver_assembly_preview.png",
+          "size": 959365,
+          "sha256": "3c612eaf7eaca4db61e32c3af14250c2ee799b8101335203d030aa430248d4d9",
+          "subjectId": "MW-A-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "assemblyDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-101_receiver_assembly.dxf",
+          "sourceSha256": "471e7ebe6e2d7591676b8015d554443f09ec59daf868140b66cdbb2d3d748f6a",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-101_receiver_exploded_preview.png",
+          "size": 859027,
+          "sha256": "8fbf81f2294c2501df12cf5962895316e40ae3383daf68dbeac8108ce17b749e",
+          "subjectId": "MW-A-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "explodedDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-101_receiver_exploded.dxf",
+          "sourceSha256": "26d712d53e8774fc45200a44f82d5b66b77384fefe61e7614f73042a294453fd",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        },
+        {
+          "path": "mechanical/factory-rfq/outputs/previews/MW-A-101_receiver_section_interface_preview.png",
+          "size": 947895,
+          "sha256": "bb77a64be3d06c3aff8b4fc5897157e7b20cf551f2ef955c6180d26306a929c1",
+          "subjectId": "MW-A-101",
+          "revision": "B-RFQ",
+          "previewOfRole": "sectionDrawing",
+          "previewOfPath": "mechanical/factory-rfq/outputs/2d/MW-A-101_receiver_section_interface.dxf",
+          "sourceSha256": "13d56aa21831cf6918c8591715197d57ad4c21e7fb1d0a3b7b10518ee0a5d7f7",
+          "rendererStyle": "high-contrast-semantic-layers-bold-text-v2"
+        }
+      ]
+    }
+  ],
+  "receiverInterface": {
+    "status": "pending_electronics_final_native_drc",
+    "artifact": null,
+    "consumedSha256": null,
+    "actualSha256": null,
+    "hashMatch": false,
+    "sourceBoard": null,
+    "frozenRoutes": null,
+    "coordinateContract": null,
+    "holes": [],
+    "connectors": [],
+    "rfKeepout": null,
+    "componentHeights": [],
+    "nativeDrc": null,
+    "consistencyEvidence": {
+      "boardShaMatchesRoutes": null,
+      "roundTripCoordinateTests": null,
+      "fiveWayHashClosure": false,
+      "connectorAuthorityHashClosure": false
+    }
+  }
+}

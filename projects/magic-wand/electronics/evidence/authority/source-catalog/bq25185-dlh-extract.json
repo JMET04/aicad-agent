@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Texas Instruments",
+  "coveredMpns": ["BQ25185DLHR"],
+  "documentNumber": "SLUSF65A / DLH0010A",
+  "revision": "A; package drawing 4226298/A",
+  "originalOfficialUrl": "https://www.ti.com/lit/ds/symlink/bq25185.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_bq25185.pdf", "size": 1543832, "sha256": "80ef2bdc0d735df63f8dae74310908a8ad767dce34eafc5dbf755dd641b2aec0"},
+  "page": "29-30",
+  "section": "DLH0010A package outline and land pattern example",
+  "coordinateFrame": {"origin": "package center", "xPositive": "right", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"signalCount": 10, "pitchMm": 0.4, "signalLandMm": [0.5, 0.2], "exposedLandMm": [0.9, 1.5]}, "bodyDatum": {"bodyEnvelopeMm": [2.0, 2.0], "maximumHeightMm": 0.8}, "heightBasis": "DLH0010A package maximum height"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified TI PDF pages and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}

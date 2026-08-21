@@ -9,8 +9,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.17.0"
-PREVIOUS_VERSION = "1.16.0"
+EXPECTED_VERSION = "1.17.1"
+PREVIOUS_VERSION = "1.17.0"
 
 
 def _python_assignment(relative: str, name: str) -> str | None:
@@ -74,25 +74,72 @@ class ReleaseVersionSourceTests(unittest.TestCase):
 
     def test_ci_and_public_documentation_are_pinned_to_current_release(self) -> None:
         workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
-        self.assertIn("-Version 1.17.0", workflow)
-        self.assertIn("aicad-agent-1.17.0.zip", workflow)
+        self.assertIn("-Version 1.17.1", workflow)
+        self.assertIn("aicad-agent-1.17.1.zip", workflow)
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         plugin_readme = (ROOT / "agent-plugin/aicad-agent/README.md").read_text(
             encoding="utf-8"
         )
-        self.assertTrue(readme.startswith("# aicad-agent 1.17.0\n"))
-        self.assertTrue(plugin_readme.startswith("# aicad-agent 1.17.0\n"))
-        root_notes = (ROOT / "docs/RELEASE_NOTES_v1.17.0.md").read_bytes()
+        self.assertTrue(readme.startswith("# aicad-agent 1.17.1\n"))
+        self.assertTrue(plugin_readme.startswith("# aicad-agent 1.17.1\n"))
+        root_notes = (ROOT / "docs/RELEASE_NOTES_v1.17.1.md").read_bytes()
         plugin_notes = (
-            ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.17.0.md"
+            ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.17.1.md"
         ).read_bytes()
         self.assertEqual(root_notes, plugin_notes)
-        self.assertIn(b"# aicad-agent 1.17.0", root_notes)
+        self.assertIn(b"# aicad-agent 1.17.1", root_notes)
         self.assertIn(b"Release date: 2026-08-21", root_notes)
         overview = (ROOT / "docs/PRODUCT_OVERVIEW.zh-CN.md").read_text(
             encoding="utf-8"
         )
-        self.assertIn("RELEASE_NOTES_v1.17.0.md", overview)
+        self.assertIn("RELEASE_NOTES_v1.17.1.md", overview)
+
+        install_surfaces = (
+            "README.md",
+            "docs/INSTALL.zh-CN.md",
+            "agent-plugin/aicad-agent/docs/INSTALL.zh-CN.md",
+        )
+        for relative in install_surfaces:
+            with self.subTest(install_surface=relative):
+                text = (ROOT / relative).read_text(encoding="utf-8")
+                marketplace_versions = set(
+                    re.findall(
+                        r"codex plugin marketplace add JMET04/aicad-agent --ref v(\d+\.\d+\.\d+)",
+                        text,
+                    )
+                )
+                archive_versions = set(
+                    re.findall(r"aicad-agent-(\d+\.\d+\.\d+)\.zip", text)
+                )
+                self.assertEqual({EXPECTED_VERSION}, marketplace_versions)
+                self.assertEqual({EXPECTED_VERSION}, archive_versions)
+
+    def test_public_surfaces_state_cross_domain_maturity_boundaries(self) -> None:
+        for relative in (
+            "README.md",
+            "docs/PRODUCT_OVERVIEW.zh-CN.md",
+            "agent-plugin/aicad-agent/README.md",
+        ):
+            with self.subTest(relative=relative):
+                text = (ROOT / relative).read_text(encoding="utf-8")
+                for term in ("机械", "电子", "包装", "土木", "建筑", "钢结构", "2D", "3D"):
+                    self.assertIn(term, text)
+                self.assertIn("生产级自动设计", text)
+
+        manifest = json.loads(
+            (ROOT / "agent-plugin/aicad-agent/.codex-plugin/plugin.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        capabilities = set(manifest["interface"]["capabilities"])
+        self.assertIn(
+            "Unified mechanical, electronics, packaging, architecture, civil and steel/structural entry point",
+            capabilities,
+        )
+        self.assertIn(
+            "Maturity-gated civil and steel/structural diagnostic review candidates",
+            capabilities,
+        )
 
     def test_active_version_sources_contain_no_previous_release_token(self) -> None:
         active = (
@@ -115,9 +162,9 @@ class ReleaseVersionSourceTests(unittest.TestCase):
                 )
 
     def test_historical_release_records_are_preserved(self) -> None:
-        self.assertTrue((ROOT / "docs/RELEASE_NOTES_v1.16.0.md").is_file())
+        self.assertTrue((ROOT / "docs/RELEASE_NOTES_v1.17.0.md").is_file())
         self.assertTrue(
-            (ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.16.0.md").is_file()
+            (ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.17.0.md").is_file()
         )
         for relative in ("CHANGELOG.md", "agent-plugin/aicad-agent/CHANGELOG.md"):
             text = (ROOT / relative).read_text(encoding="utf-8")

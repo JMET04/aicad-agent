@@ -1,0 +1,15 @@
+{
+  "schema": "aicad_manufacturer_drawing_extract_v1",
+  "status": "CONTROLLED",
+  "manufacturer": "Texas Instruments",
+  "coveredMpns": ["SN74LVC2T45DCUR"],
+  "documentNumber": "SCES516N / DCU0008A",
+  "revision": "N",
+  "originalOfficialUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc2t45.pdf",
+  "originalSourceArtifact": {"path": "electronics/evidence/datasheets/_authority_sn74lvc2t45.pdf", "size": 1350026, "sha256": "f0dc4a7a46a5b2020117e8bec614aec33f4f15784a82ab73dc3fa5f91d5c86bc"},
+  "page": "28-29",
+  "section": "DCU0008A package outline and land pattern example",
+  "coordinateFrame": {"origin": "package center", "xPositive": "right", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
+  "geometry": {"physicalPads": {"terminalCount": 8, "pitchMm": 0.5, "landMm": [1.25, 0.35], "rowCenterOffsetMm": 1.4}, "bodyDatum": {"bodyEnvelopeMm": [2.3, 2.0], "maximumHeightMm": 1.1}, "heightBasis": "DCU0008A package maximum height"},
+  "humanExtractionDeclaration": "Manually transcribed from the identified TI PDF pages and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
+}
