@@ -701,6 +701,33 @@ class FactoryTableAndPcbEmissionTests(unittest.TestCase):
             self.assertTrue(saw_oval_drill, f"{board.name} must exercise oval drill width/height")
             self.assertTrue(saw_local_rotation, f"{board.name} must exercise local pad rotation")
 
+    def test_native_pcb_is_centered_on_a4_without_mutating_board_local_geometry(self) -> None:
+        for board in build.BOARDS:
+            pads = build.absolute_pads(board)
+            original_parts = [(part.ref, part.x, part.y) for part in board.parts]
+            original_keepouts = copy.deepcopy(board.keepouts)
+            net = next(pad["net"] for pad in pads if pad.get("net") not in {"", "NC"})
+            segments = [{"net": net, "start": [1.0, 2.0], "end": [3.0, 4.0], "width": 0.2, "layer": "F.Cu"}]
+            vias = [{"net": net, "x": 2.0, "y": 3.0, "size": 0.55, "drill": 0.25}]
+            with tempfile.TemporaryDirectory() as temporary:
+                pcb_text = factory_emit.write_pcb(
+                    board, Path(temporary), pads, segments, vias
+                ).read_text(encoding="utf-8")
+            origin_x, origin_y = factory_emit.worksheet_board_origin(board)
+            self.assertAlmostEqual(origin_x + board.width / 2.0, 297.0 / 2.0)
+            self.assertAlmostEqual(origin_y + board.height / 2.0, 210.0 / 2.0)
+            self.assertIn(
+                f"(start {origin_x:.3f} {origin_y:.3f}) (end {origin_x + board.width:.3f} {origin_y:.3f})",
+                pcb_text,
+            )
+            self.assertIn(
+                f"(segment (start {origin_x + 1.0:.4f} {origin_y + 2.0:.4f}) (end {origin_x + 3.0:.4f} {origin_y + 4.0:.4f})",
+                pcb_text,
+            )
+            self.assertIn(f"(via (at {origin_x + 2.0:.4f} {origin_y + 3.0:.4f})", pcb_text)
+            self.assertEqual(original_parts, [(part.ref, part.x, part.y) for part in board.parts])
+            self.assertEqual(original_keepouts, board.keepouts)
+
 
 class RouteAuthorityBindingTests(unittest.TestCase):
     def test_route_source_design_binds_authority_layers_roles_and_physical_ids(self) -> None:

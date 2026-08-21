@@ -75,7 +75,7 @@
   (footprint "MW_FACTORY:wand_U1"
     (layer "F.Cu")
     (uuid 7d221660-64ee-53bf-92d5-60327aca6266)
-    (at 7.5000 10.5000 0.0)
+    (at 148.5000 75.5000 0.0)
     (property "Reference" "U1" (at 0 -8.500 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "NINA-B302-00B-00" (at 0 8.500 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "u-blox" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -221,7 +221,7 @@
   (footprint "MW_FACTORY:wand_U2"
     (layer "F.Cu")
     (uuid 0925268d-7eaa-56e9-899d-cd3a9accf1a0)
-    (at 3.0000 25.0000 0.0)
+    (at 144.0000 90.0000 0.0)
     (property "Reference" "U2" (at 0 -2.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "LSM6DSV16XTR" (at 0 2.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "STMicroelectronics" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -261,7 +261,7 @@
   (footprint "MW_FACTORY:wand_U5"
     (layer "F.Cu")
     (uuid 0811d731-1c51-5c45-81a6-c71c81612d83)
-    (at 11.5000 25.0000 0.0)
+    (at 152.5000 90.0000 0.0)
     (property "Reference" "U5" (at 0 -2.500 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "DRV2605LDGSR" (at 0 2.500 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Texas Instruments" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -293,7 +293,7 @@
   (footprint "MW_FACTORY:wand_U4"
     (layer "F.Cu")
     (uuid 3967dcbd-bc75-57c0-a616-81cc6e6b4c9f)
-    (at 7.5000 30.0000 0.0)
+    (at 148.5000 95.0000 0.0)
     (property "Reference" "U4" (at 0 -2.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "TPS63900DSKR" (at 0 2.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Texas Instruments" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -327,7 +327,7 @@
   (footprint "MW_FACTORY:wand_L1"
     (layer "F.Cu")
     (uuid 51d84f57-18b2-5610-a54b-1595751b048c)
-    (at 6.4000 34.0000 0.0)
+    (at 147.4000 99.0000 0.0)
     (property "Reference" "L1" (at 0 -3.000 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "2.2uH" (at 0 3.000 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Coilcraft" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -343,7 +343,7 @@
   (footprint "MW_FACTORY:wand_U3"
     (layer "F.Cu")
     (uuid a454a1f1-7a87-5acd-8ebd-cc454c9091f3)
-    (at 7.5000 46.0000 0.0)
+    (at 148.5000 111.0000 0.0)
     (property "Reference" "U3" (at 0 -2.000 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "BQ25185DLHR" (at 0 2.000 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Texas Instruments" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -377,7 +377,7 @@
   (footprint "MW_FACTORY:wand_J2"
     (layer "F.Cu")
     (uuid c89f2353-8ae8-5732-94f8-1d88a70b9278)
-    (at 3.0000 57.0000 0.0)
+    (at 144.0000 122.0000 0.0)
     (property "Reference" "J2" (at 0 -3.125 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "SM03B-SRSS-TB" (at 0 3.125 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "JST" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -399,7 +399,7 @@
   (footprint "MW_FACTORY:wand_SW1"
     (layer "F.Cu")
     (uuid ed9a2e7d-474a-5a8e-9165-cb33fe8fbb67)
-    (at 7.5000 63.0000 90.0)
+    (at 148.5000 128.0000 90.0)
     (property "Reference" "SW1" (at 0 -3.600 90.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "PRESS_TO_ARM" (at 0 3.600 90.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "ALPS Alpine" (at 0 0 90.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -419,7 +419,7 @@
   (footprint "MW_FACTORY:wand_J3"
     (layer "F.Cu")
     (uuid 8336465f-6a86-5013-8037-68cb8aca7a75)
-    (at 3.0000 72.0000 0.0)
+    (at 144.0000 137.0000 0.0)
     (property "Reference" "J3" (at 0 -3.125 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "SM02B-SRSS-TB" (at 0 3.125 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "JST" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -439,7 +439,7 @@
   (footprint "MW_FACTORY:wand_U6"
     (layer "F.Cu")
     (uuid 92a6a818-8f77-566d-8b08-31d68719bbee)
-    (at 6.5000 38.0000 0.0)
+    (at 147.5000 103.0000 0.0)
     (property "Reference" "U6" (at 0 -1.850 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "USBLC6-2SC6" (at 0 1.850 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "STMicroelectronics" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -463,7 +463,7 @@
   (footprint "MW_FACTORY:wand_F1"
     (layer "F.Cu")
     (uuid 742639c9-ee5d-5e92-92b6-683567a2c761)
-    (at 3.0000 38.0000 0.0)
+    (at 144.0000 103.0000 0.0)
     (property "Reference" "F1" (at 0 -1.525 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "500mA PTC" (at 0 1.525 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Bourns" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -479,7 +479,7 @@
   (footprint "MW_FACTORY:wand_J1"
     (layer "F.Cu")
     (uuid cffb8781-6091-54f1-b823-55a9450e3167)
-    (at 12.5000 38.0000 90.0)
+    (at 153.5000 103.0000 90.0)
     (property "Reference" "J1" (at 0 -4.450 90.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "USB-C-16P" (at 0 4.450 90.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "JAE" (at 0 0 90.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -539,7 +539,7 @@
   (footprint "MW_FACTORY:wand_R_CC1"
     (layer "F.Cu")
     (uuid 3405a516-4244-5811-8d03-bb40ae80ad63)
-    (at 10.5000 32.5000 0.0)
+    (at 151.5000 97.5000 0.0)
     (property "Reference" "R_CC1" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "5.1k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -555,7 +555,7 @@
   (footprint "MW_FACTORY:wand_R_CC2"
     (layer "F.Cu")
     (uuid bd5e8da1-bd06-5371-b3f9-e82dd51f5b5b)
-    (at 10.8000 43.0000 0.0)
+    (at 151.8000 108.0000 0.0)
     (property "Reference" "R_CC2" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "5.1k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -571,7 +571,7 @@
   (footprint "MW_FACTORY:wand_R_I2C_SCL"
     (layer "F.Cu")
     (uuid fdea47f5-5d27-5dfc-a66e-f2ef6a93779c)
-    (at 2.2000 29.0000 0.0)
+    (at 143.2000 94.0000 0.0)
     (property "Reference" "R_I2C_SCL" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "4.7k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -587,7 +587,7 @@
   (footprint "MW_FACTORY:wand_R_I2C_SDA"
     (layer "F.Cu")
     (uuid 5d8b2b55-06b5-5867-bd49-d93a10d351a7)
-    (at 12.8000 29.0000 0.0)
+    (at 153.8000 94.0000 0.0)
     (property "Reference" "R_I2C_SDA" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "4.7k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -603,7 +603,7 @@
   (footprint "MW_FACTORY:wand_R_ARM"
     (layer "F.Cu")
     (uuid bbe64341-c337-5fb8-a5be-2b577abf0583)
-    (at 9.5000 60.0000 0.0)
+    (at 150.5000 125.0000 0.0)
     (property "Reference" "R_ARM" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "100k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -619,7 +619,7 @@
   (footprint "MW_FACTORY:wand_R_ARM_SER"
     (layer "F.Cu")
     (uuid f185f6e0-6523-5657-adca-580b3842bc54)
-    (at 12.5000 59.0000 0.0)
+    (at 153.5000 124.0000 0.0)
     (property "Reference" "R_ARM_SER" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "1k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -635,7 +635,7 @@
   (footprint "MW_FACTORY:wand_R_HAPTIC_EN"
     (layer "F.Cu")
     (uuid f045d251-6b7a-5a9a-a97b-69d8067f4015)
-    (at 11.0000 20.5000 0.0)
+    (at 152.0000 85.5000 0.0)
     (property "Reference" "R_HAPTIC_EN" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "100k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -651,7 +651,7 @@
   (footprint "MW_FACTORY:wand_R_STAT1"
     (layer "F.Cu")
     (uuid 9e3becd4-dec7-5d0b-859e-92a00fb03f08)
-    (at 2.2000 44.0000 0.0)
+    (at 143.2000 109.0000 0.0)
     (property "Reference" "R_STAT1" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "10k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -667,7 +667,7 @@
   (footprint "MW_FACTORY:wand_R_STAT2"
     (layer "F.Cu")
     (uuid d7bc6a58-68de-52f9-9693-6752668ff1c9)
-    (at 12.8000 44.0000 0.0)
+    (at 153.8000 109.0000 0.0)
     (property "Reference" "R_STAT2" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "10k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -683,7 +683,7 @@
   (footprint "MW_FACTORY:wand_R_ISET"
     (layer "F.Cu")
     (uuid c5d6738a-10fb-50c6-a25d-e5a5c2a517bf)
-    (at 2.2000 48.0000 0.0)
+    (at 143.2000 113.0000 0.0)
     (property "Reference" "R_ISET" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "1.00k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -699,7 +699,7 @@
   (footprint "MW_FACTORY:wand_R_ILIM"
     (layer "F.Cu")
     (uuid 176a086b-9582-50a9-8499-1566551b5635)
-    (at 12.8000 48.0000 0.0)
+    (at 153.8000 113.0000 0.0)
     (property "Reference" "R_ILIM" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "18.0k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -715,7 +715,7 @@
   (footprint "MW_FACTORY:wand_R_CFG1"
     (layer "F.Cu")
     (uuid 074275cd-0f37-5bc8-ba93-bbd0638952c6)
-    (at 2.2000 32.0000 0.0)
+    (at 143.2000 97.0000 0.0)
     (property "Reference" "R_CFG1" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "36.5k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -731,7 +731,7 @@
   (footprint "MW_FACTORY:wand_R_CFG2"
     (layer "F.Cu")
     (uuid 526531a5-eec9-5967-a642-3c2c55c66d66)
-    (at 7.5000 32.0000 0.0)
+    (at 148.5000 97.0000 0.0)
     (property "Reference" "R_CFG2" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "0R" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -747,7 +747,7 @@
   (footprint "MW_FACTORY:wand_R_CFG3"
     (layer "F.Cu")
     (uuid 59fd58db-0440-5429-947e-afd280879f06)
-    (at 12.8000 32.0000 0.0)
+    (at 153.8000 97.0000 0.0)
     (property "Reference" "R_CFG3" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "16.2k" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Yageo" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -763,7 +763,7 @@
   (footprint "MW_FACTORY:wand_C_USB"
     (layer "F.Cu")
     (uuid cbeb4ded-2e4a-5179-a94d-caf217139c91)
-    (at 7.0000 41.5000 0.0)
+    (at 148.0000 106.5000 0.0)
     (property "Reference" "C_USB" (at 0 -1.625 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "10uF 10V X5R" (at 0 1.625 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -779,7 +779,7 @@
   (footprint "MW_FACTORY:wand_C_CHG_IN"
     (layer "F.Cu")
     (uuid d66a8580-638e-5403-be8b-a1ee94a7df75)
-    (at 4.5000 43.0000 0.0)
+    (at 145.5000 108.0000 0.0)
     (property "Reference" "C_CHG_IN" (at 0 -1.625 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "10uF 10V X5R" (at 0 1.625 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -795,7 +795,7 @@
   (footprint "MW_FACTORY:wand_C_SYS"
     (layer "F.Cu")
     (uuid 1118bef4-b32a-5843-9f4a-eddb2c544e4f)
-    (at 5.0000 49.0000 0.0)
+    (at 146.0000 114.0000 0.0)
     (property "Reference" "C_SYS" (at 0 -1.625 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "10uF 10V X5R" (at 0 1.625 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -811,7 +811,7 @@
   (footprint "MW_FACTORY:wand_C_BAT"
     (layer "F.Cu")
     (uuid 689cb4eb-1506-5b92-9616-5ffc9ca2e1c1)
-    (at 10.0000 49.0000 0.0)
+    (at 151.0000 114.0000 0.0)
     (property "Reference" "C_BAT" (at 0 -1.625 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "10uF 10V X5R" (at 0 1.625 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -827,7 +827,7 @@
   (footprint "MW_FACTORY:wand_C_BUCK_IN"
     (layer "F.Cu")
     (uuid 706628ac-c305-5289-a195-97ef0ee104ca)
-    (at 3.0000 34.5000 0.0)
+    (at 144.0000 99.5000 0.0)
     (property "Reference" "C_BUCK_IN" (at 0 -1.625 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "10uF 10V X5R" (at 0 1.625 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -843,7 +843,7 @@
   (footprint "MW_FACTORY:wand_C_BUCK_OUT"
     (layer "F.Cu")
     (uuid 928d20b8-7dca-5781-a78f-560b5320b47b)
-    (at 12.0000 27.8000 0.0)
+    (at 153.0000 92.8000 0.0)
     (property "Reference" "C_BUCK_OUT" (at 0 -1.625 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "22uF 6.3V X5R" (at 0 1.625 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -859,7 +859,7 @@
   (footprint "MW_FACTORY:wand_C_IMU_VDD"
     (layer "F.Cu")
     (uuid d9a3161e-1df6-5750-abac-a27c8919dd92)
-    (at 2.2000 22.0000 0.0)
+    (at 143.2000 87.0000 0.0)
     (property "Reference" "C_IMU_VDD" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "100nF 16V X7R" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -875,7 +875,7 @@
   (footprint "MW_FACTORY:wand_C_IMU_IO"
     (layer "F.Cu")
     (uuid 604a276a-3f4a-5946-a5c9-8069405e21dd)
-    (at 4.8000 22.0000 0.0)
+    (at 145.8000 87.0000 0.0)
     (property "Reference" "C_IMU_IO" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "100nF 16V X7R" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -891,7 +891,7 @@
   (footprint "MW_FACTORY:wand_C_HAPTIC_REG"
     (layer "F.Cu")
     (uuid 955a2b9f-2c56-514b-b946-35ccfd94b58c)
-    (at 10.2000 22.0000 0.0)
+    (at 151.2000 87.0000 0.0)
     (property "Reference" "C_HAPTIC_REG" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "1uF 10V X7R" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -907,7 +907,7 @@
   (footprint "MW_FACTORY:wand_C_HAPTIC_VDD"
     (layer "F.Cu")
     (uuid c51a4d0f-eddf-51d4-867a-d9ba5061286d)
-    (at 12.8000 22.0000 0.0)
+    (at 153.8000 87.0000 0.0)
     (property "Reference" "C_HAPTIC_VDD" (at 0 -1.250 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "1uF 10V X7R" (at 0 1.250 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "Murata" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -923,7 +923,7 @@
   (footprint "MW_FACTORY:wand_TP3"
     (layer "F.Cu")
     (uuid aa786233-537f-5ecb-a882-db99bb3e813b)
-    (at 2.0000 51.5000 0.0)
+    (at 143.0000 116.5000 0.0)
     (property "Reference" "TP3" (at 0 -1.750 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "SWDIO" (at 0 1.750 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "PCB FABRICATION" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -937,7 +937,7 @@
   (footprint "MW_FACTORY:wand_TP4"
     (layer "F.Cu")
     (uuid fece3ef5-d027-503d-8795-e336a7a6dac0)
-    (at 4.5000 51.5000 0.0)
+    (at 145.5000 116.5000 0.0)
     (property "Reference" "TP4" (at 0 -1.750 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "SWDCLK" (at 0 1.750 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "PCB FABRICATION" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -951,7 +951,7 @@
   (footprint "MW_FACTORY:wand_TP5"
     (layer "F.Cu")
     (uuid 49964b73-dffe-51c5-950d-5739d3928565)
-    (at 7.0000 51.5000 0.0)
+    (at 148.0000 116.5000 0.0)
     (property "Reference" "TP5" (at 0 -1.750 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "RESET_N" (at 0 1.750 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "PCB FABRICATION" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -965,7 +965,7 @@
   (footprint "MW_FACTORY:wand_TP6"
     (layer "F.Cu")
     (uuid deb59464-8fdc-5d62-ac9f-101ee44d70ea)
-    (at 9.5000 51.5000 0.0)
+    (at 150.5000 116.5000 0.0)
     (property "Reference" "TP6" (at 0 -1.750 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "SWO" (at 0 1.750 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "PCB FABRICATION" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -979,7 +979,7 @@
   (footprint "MW_FACTORY:wand_TP1"
     (layer "F.Cu")
     (uuid 247c039e-8ee6-515b-a354-b289f08a13bc)
-    (at 12.5000 51.5000 0.0)
+    (at 153.5000 116.5000 0.0)
     (property "Reference" "TP1" (at 0 -1.750 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "3V3" (at 0 1.750 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "PCB FABRICATION" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -993,7 +993,7 @@
   (footprint "MW_FACTORY:wand_TP2"
     (layer "F.Cu")
     (uuid d21c12c7-33c7-5de5-9141-beaf12779def)
-    (at 2.0000 54.5000 0.0)
+    (at 143.0000 119.5000 0.0)
     (property "Reference" "TP2" (at 0 -1.750 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "GND" (at 0 1.750 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "PCB FABRICATION" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -1007,7 +1007,7 @@
   (footprint "MW_FACTORY:wand_TP7"
     (layer "F.Cu")
     (uuid 326c1fff-2d90-543e-9a13-84a950db542c)
-    (at 5.0000 54.5000 0.0)
+    (at 146.0000 119.5000 0.0)
     (property "Reference" "TP7" (at 0 -1.750 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "TP_IMU_INT2" (at 0 1.750 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "PCB FABRICATION" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -1021,7 +1021,7 @@
   (footprint "MW_FACTORY:wand_TP8"
     (layer "F.Cu")
     (uuid 633e77fa-27d3-5332-87a1-fd56e2fc7f65)
-    (at 8.0000 54.5000 0.0)
+    (at 149.0000 119.5000 0.0)
     (property "Reference" "TP8" (at 0 -1.750 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "SYS_RAIL" (at 0 1.750 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "PCB FABRICATION" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -1035,7 +1035,7 @@
   (footprint "MW_FACTORY:wand_H1"
     (layer "F.Cu")
     (uuid 00046ed4-791f-5a37-aab0-884500585777)
-    (at 7.5000 19.5000 0.0)
+    (at 148.5000 84.5000 0.0)
     (property "Reference" "H1" (at 0 -2.700 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "MountingHole_2.4mm" (at 0 2.700 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "MECHANICAL" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -1049,7 +1049,7 @@
   (footprint "MW_FACTORY:wand_H2"
     (layer "F.Cu")
     (uuid 9c1eca66-505a-501c-aed7-448a1647c878)
-    (at 7.5000 77.0000 0.0)
+    (at 148.5000 142.0000 0.0)
     (property "Reference" "H2" (at 0 -2.700 0.0) (layer "F.Fab") (effects (font (size 0.80 0.80)) hide))
     (property "Value" "MountingHole_2.4mm" (at 0 2.700 0.0) (layer "F.Fab") (effects (font (size 0.70 0.70))))
     (property "Manufacturer" "MECHANICAL" (at 0 0 0.0) (layer "F.Fab") (effects (font (size 0.60 0.60)) hide))
@@ -1063,14 +1063,14 @@
   (zone (net 8) (net_name "GND") (layer "In1.Cu") (uuid 9ab0b363-8f4d-54d2-b79d-99d73428a247)
     (hatch edge 0.5) (connect_pads (clearance 0.20)) (min_thickness 0.15)
     (fill yes (thermal_gap 0.30) (thermal_bridge_width 0.30))
-    (polygon (pts (xy 0.30 0.30) (xy 14.700 0.30) (xy 14.700 79.700) (xy 0.30 79.700))))
+    (polygon (pts (xy 141.300 65.300) (xy 155.700 65.300) (xy 155.700 144.700) (xy 141.300 144.700))))
   (zone (net 1) (net_name "3V3") (layer "In2.Cu") (uuid 47400b39-f6d7-5a76-b7b4-424bcdbb86ac)
     (hatch edge 0.5) (connect_pads (clearance 0.20)) (min_thickness 0.15)
     (fill yes (thermal_gap 0.30) (thermal_bridge_width 0.30))
-    (polygon (pts (xy 0.30 0.30) (xy 14.700 0.30) (xy 14.700 79.700) (xy 0.30 79.700))))
-  (gr_line (start 0 0) (end 15.000 0) (stroke (width 0.10) (type solid)) (layer "Edge.Cuts") (uuid 908d8a2b-74dc-59df-a77f-b31df2c817e2))
-  (gr_line (start 15.000 0) (end 15.000 80.000) (stroke (width 0.10) (type solid)) (layer "Edge.Cuts") (uuid 3007d0ca-c694-5391-afb7-3f91968dcc73))
-  (gr_line (start 15.000 80.000) (end 0 80.000) (stroke (width 0.10) (type solid)) (layer "Edge.Cuts") (uuid ceeb0fdd-e9bd-55a6-b70c-c91b5ca311c8))
-  (gr_line (start 0 80.000) (end 0 0) (stroke (width 0.10) (type solid)) (layer "Edge.Cuts") (uuid 5c993003-128e-5e94-85c1-36a9c5bb13fe))
-  (gr_text "Magic Wand Controller PCB / REV A0 / REVIEW ONLY" (at 7.500 78.800) (layer "F.Fab") (effects (font (size 0.80 0.80) (thickness 0.15))) (uuid 462897c5-b94b-5269-9942-6a136683fddd))
+    (polygon (pts (xy 141.300 65.300) (xy 155.700 65.300) (xy 155.700 144.700) (xy 141.300 144.700))))
+  (gr_line (start 141.000 65.000) (end 156.000 65.000) (stroke (width 0.10) (type solid)) (layer "Edge.Cuts") (uuid 908d8a2b-74dc-59df-a77f-b31df2c817e2))
+  (gr_line (start 156.000 65.000) (end 156.000 145.000) (stroke (width 0.10) (type solid)) (layer "Edge.Cuts") (uuid 3007d0ca-c694-5391-afb7-3f91968dcc73))
+  (gr_line (start 156.000 145.000) (end 141.000 145.000) (stroke (width 0.10) (type solid)) (layer "Edge.Cuts") (uuid ceeb0fdd-e9bd-55a6-b70c-c91b5ca311c8))
+  (gr_line (start 141.000 145.000) (end 141.000 65.000) (stroke (width 0.10) (type solid)) (layer "Edge.Cuts") (uuid 5c993003-128e-5e94-85c1-36a9c5bb13fe))
+  (gr_text "Magic Wand Controller PCB / REV A0 / REVIEW ONLY" (at 148.500 143.800) (layer "F.Fab") (effects (font (size 0.80 0.80) (thickness 0.15))) (uuid 462897c5-b94b-5269-9942-6a136683fddd))
 )

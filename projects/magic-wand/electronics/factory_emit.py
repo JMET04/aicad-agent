@@ -566,9 +566,20 @@ def write_project(board: Board, out_dir: Path) -> Path:
     return path
 
 
+def worksheet_board_origin(board: Board) -> tuple[float, float]:
+    """Center the board on KiCad's landscape A4 worksheet.
+
+    Design and factory coordinates remain board-local.  This translation is
+    applied only when serializing the native PCB, so relative geometry stays
+    unchanged and the generated CPL remains board-local.
+    """
+    return ((297.0 - board.width) / 2.0, (210.0 - board.height) / 2.0)
+
+
 def write_pcb(board: Board, out_dir: Path, pads: list[dict], segments: list[dict], vias: list[dict]) -> Path:
     nets = sorted({pad["net"] for pad in pads if pad.get("net") and pad["net"] != "NC"})
     net_id = {name: index + 1 for index, name in enumerate(nets)}
+    origin_x, origin_y = worksheet_board_origin(board)
     lines = [
         "(kicad_pcb", "  (version 20241229)", '  (generator "pcbnew")',
         '  (generator_version "10.0")',
@@ -613,7 +624,7 @@ def write_pcb(board: Board, out_dir: Path, pads: list[dict], segments: list[dict
             bound_y2 = max([fab_y2] + [item[3] for item in local_pad_bounds]) + 0.25
         lines += [
             f"  (footprint {q(factory_fpid(board, part))}", '    (layer "F.Cu")', f"    (uuid {uid(board.name, 'fp', part.ref)})",
-            f"    (at {part.x:.4f} {part.y:.4f} {part.rotation:.1f})",
+            f"    (at {part.x + origin_x:.4f} {part.y + origin_y:.4f} {part.rotation:.1f})",
             f"    (property \"Reference\" {q(part.ref)} (at 0 {-part.height/2 - 1:.3f} {part.rotation:.1f}) (layer \"F.Fab\") {effects(.8, True)})",
             f"    (property \"Value\" {q(part.value)} (at 0 {part.height/2 + 1:.3f} {part.rotation:.1f}) (layer \"F.Fab\") {effects(.7)})",
             f"    (property \"Manufacturer\" {q(part.manufacturer)} (at 0 0 {part.rotation:.1f}) (layer \"F.Fab\") {effects(.6, True)})",
@@ -638,37 +649,43 @@ def write_pcb(board: Board, out_dir: Path, pads: list[dict], segments: list[dict
         lines.append("  )")
     for index, segment in enumerate(segments):
         if segment["net"] in net_id:
-            lines.append(f"  (segment (start {segment['start'][0]:.4f} {segment['start'][1]:.4f}) (end {segment['end'][0]:.4f} {segment['end'][1]:.4f}) "
+            lines.append(f"  (segment (start {segment['start'][0] + origin_x:.4f} {segment['start'][1] + origin_y:.4f}) "
+                         f"(end {segment['end'][0] + origin_x:.4f} {segment['end'][1] + origin_y:.4f}) "
                          f"(width {segment['width']:.3f}) (layer {q(segment['layer'])}) (net {net_id[segment['net']]}) (uuid {uid(board.name, 'seg', index)}))")
     for index, via in enumerate(vias):
         if via["net"] in net_id:
-            lines.append(f"  (via (at {via['x']:.4f} {via['y']:.4f}) (size {via['size']:.3f}) (drill {via['drill']:.3f}) "
+            lines.append(f"  (via (at {via['x'] + origin_x:.4f} {via['y'] + origin_y:.4f}) (size {via['size']:.3f}) (drill {via['drill']:.3f}) "
                          f"(layers \"F.Cu\" \"B.Cu\") (net {net_id[via['net']]}) (uuid {uid(board.name, 'via', index)}))")
     lines += [
         f"  (zone (net {net_id.get('GND', 0)}) (net_name \"GND\") (layer \"In1.Cu\") (uuid {uid(board.name, 'gnd-zone')})",
         "    (hatch edge 0.5) (connect_pads (clearance 0.20)) (min_thickness 0.15)",
         "    (fill yes (thermal_gap 0.30) (thermal_bridge_width 0.30))",
-        f"    (polygon (pts (xy 0.30 0.30) (xy {board.width-.30:.3f} 0.30) "
-        f"(xy {board.width-.30:.3f} {board.height-.30:.3f}) (xy 0.30 {board.height-.30:.3f}))))",
+        f"    (polygon (pts (xy {origin_x + .30:.3f} {origin_y + .30:.3f}) "
+        f"(xy {origin_x + board.width - .30:.3f} {origin_y + .30:.3f}) "
+        f"(xy {origin_x + board.width - .30:.3f} {origin_y + board.height - .30:.3f}) "
+        f"(xy {origin_x + .30:.3f} {origin_y + board.height - .30:.3f}))))",
         f"  (zone (net {net_id.get('3V3', 0)}) (net_name \"3V3\") (layer \"In2.Cu\") (uuid {uid(board.name, '3v3-zone')})",
         "    (hatch edge 0.5) (connect_pads (clearance 0.20)) (min_thickness 0.15)",
         "    (fill yes (thermal_gap 0.30) (thermal_bridge_width 0.30))",
-        f"    (polygon (pts (xy 0.30 0.30) (xy {board.width-.30:.3f} 0.30) "
-        f"(xy {board.width-.30:.3f} {board.height-.30:.3f}) (xy 0.30 {board.height-.30:.3f}))))",
+        f"    (polygon (pts (xy {origin_x + .30:.3f} {origin_y + .30:.3f}) "
+        f"(xy {origin_x + board.width - .30:.3f} {origin_y + .30:.3f}) "
+        f"(xy {origin_x + board.width - .30:.3f} {origin_y + board.height - .30:.3f}) "
+        f"(xy {origin_x + .30:.3f} {origin_y + board.height - .30:.3f}))))",
     ]
     for ko_index, ko in enumerate(board.keepouts):
         lines += [
-            f"  (gr_rect (start {ko['x1']:.3f} {ko['y1']:.3f}) (end {ko['x2']:.3f} {ko['y2']:.3f}) "
+            f"  (gr_rect (start {ko['x1'] + origin_x:.3f} {ko['y1'] + origin_y:.3f}) "
+            f"(end {ko['x2'] + origin_x:.3f} {ko['y2'] + origin_y:.3f}) "
             f"(stroke (width 0.20) (type dash)) (fill none) (layer \"Dwgs.User\") (uuid {uid(board.name, 'keepout-outline', ko_index)}))",
-            f"  (gr_text {q(ko['name'])} (at {(ko['x1']+ko['x2'])/2:.3f} {(ko['y1']+ko['y2'])/2:.3f}) (layer \"Dwgs.User\") "
+            f"  (gr_text {q(ko['name'])} (at {(ko['x1']+ko['x2'])/2 + origin_x:.3f} {(ko['y1']+ko['y2'])/2 + origin_y:.3f}) (layer \"Dwgs.User\") "
             f"(effects (font (size 0.75 0.75) (thickness 0.12))) (uuid {uid(board.name, 'keepout-label', ko_index)}))",
         ]
     lines += [
-        f"  (gr_line (start 0 0) (end {board.width:.3f} 0) (stroke (width 0.10) (type solid)) (layer \"Edge.Cuts\") (uuid {uid(board.name, 'edge', 1)}))",
-        f"  (gr_line (start {board.width:.3f} 0) (end {board.width:.3f} {board.height:.3f}) (stroke (width 0.10) (type solid)) (layer \"Edge.Cuts\") (uuid {uid(board.name, 'edge', 2)}))",
-        f"  (gr_line (start {board.width:.3f} {board.height:.3f}) (end 0 {board.height:.3f}) (stroke (width 0.10) (type solid)) (layer \"Edge.Cuts\") (uuid {uid(board.name, 'edge', 3)}))",
-        f"  (gr_line (start 0 {board.height:.3f}) (end 0 0) (stroke (width 0.10) (type solid)) (layer \"Edge.Cuts\") (uuid {uid(board.name, 'edge', 4)}))",
-        f"  (gr_text {q(board.title + ' / REV A0 / REVIEW ONLY')} (at {board.width/2:.3f} {board.height-1.2:.3f}) (layer \"F.Fab\") "
+        f"  (gr_line (start {origin_x:.3f} {origin_y:.3f}) (end {origin_x + board.width:.3f} {origin_y:.3f}) (stroke (width 0.10) (type solid)) (layer \"Edge.Cuts\") (uuid {uid(board.name, 'edge', 1)}))",
+        f"  (gr_line (start {origin_x + board.width:.3f} {origin_y:.3f}) (end {origin_x + board.width:.3f} {origin_y + board.height:.3f}) (stroke (width 0.10) (type solid)) (layer \"Edge.Cuts\") (uuid {uid(board.name, 'edge', 2)}))",
+        f"  (gr_line (start {origin_x + board.width:.3f} {origin_y + board.height:.3f}) (end {origin_x:.3f} {origin_y + board.height:.3f}) (stroke (width 0.10) (type solid)) (layer \"Edge.Cuts\") (uuid {uid(board.name, 'edge', 3)}))",
+        f"  (gr_line (start {origin_x:.3f} {origin_y + board.height:.3f}) (end {origin_x:.3f} {origin_y:.3f}) (stroke (width 0.10) (type solid)) (layer \"Edge.Cuts\") (uuid {uid(board.name, 'edge', 4)}))",
+        f"  (gr_text {q(board.title + ' / REV A0 / REVIEW ONLY')} (at {origin_x + board.width/2:.3f} {origin_y + board.height-1.2:.3f}) (layer \"F.Fab\") "
         f"(effects (font (size 0.80 0.80) (thickness 0.15))) (uuid {uid(board.name, 'board-title')}))",
         ")",
     ]
