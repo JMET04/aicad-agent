@@ -40,6 +40,16 @@ try:
     from aicad.engine import PlanError, compile_plan
     from aicad.experience import recall_experience, validate_coverage_ledger
     from aicad.exporters import export_all
+    from aicad.manufacturing_api import (
+        build_manufacturing_release_value,
+        open_manufacturing_release_review_value,
+        validate_manufacturing_release_value,
+    )
+    from aicad.manufacturing_validation import validate_manufacturing_release_package
+    from aicad.manufacturing_workflow import (
+        build_manufacturing_release_package,
+        validate_manufacturing_release_review_html,
+    )
     from aicad.provider import ProviderError, generate_plan, generate_plan_with_usage
     from aicad.reference_rebuild import build_reference_reconstruction, validate_reference_rebuild
     from aicad.review_handoff import apply_review_handoff, validate_review_handoff
@@ -51,7 +61,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.17.0"
+AGENT_API_VERSION = "1.17.1"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -271,6 +281,41 @@ def capabilities() -> dict[str, Any]:
                 "script": str((PLUGIN_ROOT / "scripts" / "aicad_production_readiness_qa_v2.py").resolve()),
                 "contract_schema": str((PLUGIN_ROOT / "rules" / "production_readiness_contract_v2.schema.json").resolve()),
             },
+        },
+        "manufacturing_release_package": {
+            "available": True,
+            "schema": str(_runtime_file("schema", "aicad-manufacturing-release-package.schema.json").resolve()),
+            "workflow": [
+                "aicad_validate_manufacturing_release_package",
+                "aicad_build_manufacturing_release_package",
+                "aicad_open_manufacturing_release_review",
+            ],
+            "mechanical_exact_closure": [
+                "per-part native CAD, STEP, manufacturing drawing, actual 2D/3D source-bound previews and native reopen/export log",
+                "per-assembly native CAD, STEP, assembly/exploded/section drawings, AWI, inspection, molding input, BOM, positions, interference, actual 2D/3D previews and reopen/export logs",
+            ],
+            "pcb_exact_closure": [
+                "native KiCad project, schematic, board, exact ERC/DRC/reopen/export logs, schematic PDF, assembly/fabrication drawings and notes",
+                "actual schematic/board/assembly/fabrication/3D previews bound to exact source hashes",
+                "3D model, BOM, CPL, IPC-D-356, CAM log/job, every native fabrication-layer Gerber, PTH and NPTH drill",
+            ],
+            "controlled_evidence": "relative path plus exact byte size and SHA-256",
+            "native_tool_logs_required": True,
+            "coordinate_basis": "orthonormal right-handed X cross Y equals Z",
+            "supplier_authority": "attributable capability source plus separate exact per-package confirmation",
+            "neutral_mechanical_rfq_recipient_supported": True,
+            "readiness_layers": {
+                "factoryRfqCandidateReady": "mechanical digital closure; supplier may remain honestly unassigned",
+                "prototypeFabricationCandidateReady": "KiCad/CAM digital closure plus real PCB supplier public/qualified capabilities",
+                "digitalPackageReady": "every domain present passes its digital gate",
+                "factoryHandoffReady": "full digital closure plus real per-package confirmation from every used supplier",
+            },
+            "candidate_reviewer": "package-specific actual-preview 2D/3D console with hash-bound relative links, framed annotations, legend-only line grammar, blockers and repairs",
+            "factory_handoff_ready_is_fail_closed": True,
+            "production_release_requires_external_professional_signoff": True,
+            "tool_steel_cut_authorized": False,
+            "mass_production_authorized": False,
+            "automatic_production_acceptance": False,
         },
         "engineering_normative_preflight": {
             "available": True,
@@ -670,6 +715,11 @@ def get_civil_review_candidate_schema() -> dict[str, Any]:
     return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
 
 
+def get_manufacturing_release_schema() -> dict[str, Any]:
+    path = _runtime_file("schema", "aicad-manufacturing-release-package.schema.json")
+    return {"ok": True, "schema": json.loads(path.read_text(encoding="utf-8")), "path": str(path.resolve())}
+
+
 def validate_civil_review_candidate_value(
     value: Any, evidence_root: str | None = None
 ) -> dict[str, Any]:
@@ -972,6 +1022,53 @@ TOOLS: list[dict[str, Any]] = [
         "name": "aicad_capabilities",
         "description": "Discover supported CAD entities, constraints, artifacts, providers, and hard invariants before planning.",
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_get_manufacturing_release_schema",
+        "description": "Return the exact hash-bound mechanical/PCB manufacturing candidate package schema.",
+        "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
+    },
+    {
+        "name": "aicad_validate_manufacturing_release_package",
+        "description": "Validate controlled CAD, drawing, native-host, KiCad/CAM, supplier-authority and actual-preview closure; report digital candidate tiers separately from supplier-confirmed handoff.",
+        "inputSchema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["package"],
+            "properties": {
+                "package": {"description": "Package object, JSON string, or UTF-8 JSON file path"},
+                "evidence_root": {"type": "string", "description": "Controlled root; a file package defaults to its parent"},
+            },
+        },
+    },
+    {
+        "name": "aicad_build_manufacturing_release_package",
+        "description": "Build validation, package-specific real-preview reviewer, digital candidate manifest and gated handoff/blocker records into a fresh directory.",
+        "inputSchema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["package", "output_dir"],
+            "properties": {
+                "package": {"description": "Package object, JSON string, or UTF-8 JSON file path"},
+                "evidence_root": {"type": "string", "description": "Controlled root; a file package defaults to its parent"},
+                "output_dir": {"type": "string", "minLength": 1, "description": "New or empty output directory"},
+                "name": {"type": "string", "default": "manufacturing-release"},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "never"},
+            },
+        },
+    },
+    {
+        "name": "aicad_open_manufacturing_release_review",
+        "description": "Open an existing package-specific manufacturing reviewer only after its real-preview/hash/safety DOM contract passes.",
+        "inputSchema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["review_html"],
+            "properties": {
+                "review_html": {"type": "string", "minLength": 1},
+                "review_launch": {"type": "string", "enum": ["auto", "always", "never"], "default": "always"},
+            },
+        },
     },
     {
         "name": "aicad_get_plan_schema",
@@ -1335,6 +1432,24 @@ TOOLS: list[dict[str, Any]] = [
 def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     if name == "aicad_capabilities":
         return capabilities()
+    if name == "aicad_get_manufacturing_release_schema":
+        return get_manufacturing_release_schema()
+    if name == "aicad_validate_manufacturing_release_package":
+        return validate_manufacturing_release_value(
+            arguments.get("package"), arguments.get("evidence_root")
+        )
+    if name == "aicad_build_manufacturing_release_package":
+        return build_manufacturing_release_value(
+            arguments.get("package"), arguments.get("evidence_root"),
+            arguments.get("output_dir"),
+            str(arguments.get("name", "manufacturing-release")),
+            str(arguments.get("review_launch", "never")),
+        )
+    if name == "aicad_open_manufacturing_release_review":
+        return open_manufacturing_release_review_value(
+            str(arguments.get("review_html", "")),
+            str(arguments.get("review_launch", "always")),
+        )
     if name == "aicad_get_experience_context_schema":
         return get_experience_context_schema()
     if name == "aicad_get_review_coverage_schema":
@@ -1520,6 +1635,7 @@ def _handle_mcp(message: dict[str, Any]) -> dict[str, Any] | None:
                 {"uri": "aicad://experience-context-schema", "name": "AICAD Experience Context Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://review-coverage-schema", "name": "AICAD Review Coverage Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://civil-review-candidate-schema", "name": "AICAD Civil Review Candidate Schema", "mimeType": "application/schema+json"},
+                {"uri": "aicad://manufacturing-release-schema", "name": "AICAD Manufacturing Release Package Schema", "mimeType": "application/schema+json"},
                 {"uri": "aicad://engineering-domain-registry", "name": "AICAD Engineering Domain Registry", "mimeType": "application/json"},
                 {"uri": "aicad://capabilities", "name": "AICAD Capabilities", "mimeType": "application/json"},
             ]}
@@ -1547,6 +1663,8 @@ def _handle_mcp(message: dict[str, Any]) -> dict[str, Any] | None:
                 payload = get_review_coverage_schema()["schema"]
             elif uri == "aicad://civil-review-candidate-schema":
                 payload = get_civil_review_candidate_schema()["schema"]
+            elif uri == "aicad://manufacturing-release-schema":
+                payload = get_manufacturing_release_schema()["schema"]
             elif uri == "aicad://engineering-domain-registry":
                 payload = get_engineering_domain_registry()["registry"]
             elif uri == "aicad://capabilities":
@@ -1565,6 +1683,7 @@ def _handle_mcp(message: dict[str, Any]) -> dict[str, Any] | None:
                 "aicad://experience-context-schema",
                 "aicad://review-coverage-schema",
                 "aicad://civil-review-candidate-schema",
+                "aicad://manufacturing-release-schema",
             }
             mime_type = "application/schema+json" if uri in schema_resources else "application/json"
             response["result"] = {"contents": [{"uri": uri, "mimeType": mime_type, "text": json.dumps(payload, ensure_ascii=False)}]}
@@ -1613,6 +1732,19 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("review-coverage-schema")
     commands.add_parser("domain-registry")
     commands.add_parser("civil-review-schema")
+    commands.add_parser("manufacturing-release-schema")
+    manufacturing_validate_parser = commands.add_parser("manufacturing-release-validate")
+    manufacturing_validate_parser.add_argument("--package", required=True)
+    manufacturing_validate_parser.add_argument("--evidence-root")
+    manufacturing_build_parser = commands.add_parser("manufacturing-release-build")
+    manufacturing_build_parser.add_argument("--package", required=True)
+    manufacturing_build_parser.add_argument("--evidence-root")
+    manufacturing_build_parser.add_argument("--out", required=True)
+    manufacturing_build_parser.add_argument("--name", default="manufacturing-release")
+    manufacturing_build_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="never")
+    manufacturing_open_parser = commands.add_parser("manufacturing-release-open")
+    manufacturing_open_parser.add_argument("--review-html", required=True)
+    manufacturing_open_parser.add_argument("--review-launch", choices=REVIEW_LAUNCH_MODES, default="always")
     civil_review_parser = commands.add_parser("civil-review-validate")
     civil_review_parser.add_argument("--candidate", required=True)
     civil_review_parser.add_argument("--evidence-root")
@@ -1744,6 +1876,21 @@ def main(argv: list[str] | None = None) -> int:
         "review-coverage-schema": get_review_coverage_schema,
         "domain-registry": get_engineering_domain_registry,
         "civil-review-schema": get_civil_review_candidate_schema,
+        "manufacturing-release-schema": get_manufacturing_release_schema,
+        "manufacturing-release-validate": lambda: validate_manufacturing_release_value(
+            args.package, args.evidence_root
+        ),
+        "manufacturing-release-build": lambda: build_manufacturing_release_value(
+            args.package,
+            args.evidence_root,
+            args.out,
+            args.name,
+            args.review_launch,
+        ),
+        "manufacturing-release-open": lambda: open_manufacturing_release_review_value(
+            args.review_html,
+            args.review_launch,
+        ),
         "civil-review-validate": lambda: validate_civil_review_candidate_value(args.candidate, args.evidence_root),
         "experience-recall": lambda: recall_experience_value(args.context, args.max_cards, args.candidate_lesson_bundle),
         "coverage-validate": lambda: validate_review_coverage_value(

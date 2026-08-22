@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## 1.17.1 - 2026-08-22
+
+- Added a strict cross-domain system contract for traceable requirements, owned artifacts, interfaces, flows, evidence hashes, change impacts and non-compensatory release gates.
+- Added the `aicad-system-design` skill and workflow for PCB/enclosure/firmware/manufacturing products plus mechanical, electronics, packaging, civil and architectural coordination.
+- Added deterministic QA and negative regressions for evidence tampering, missing change propagation, invalid subsystem crossings and production claims with open gates.
+- Kept prototype build authorization separate from PCBA, purchasing, physical verification and production release.
+
+## 1.17.1 - 2026-08-21
+
+- Added the hash-closed manufacturing release schema plus Python API, CLI and MCP validation/build/review surfaces.
+- Bound actual 2D/3D review previews and native/source evidence to exact relative paths, sizes and SHA-256 digests.
+- Added fail-closed mechanical factory-RFQ and PCB prototype-fabrication candidate workflows; supplier and professional review remain mandatory.
+- Kept production and fabrication authorization locked; candidate status grants neither approval.
+
 ## 1.17.0 - 2026-08-21
 
 - Made engineering-domain maturity code-authoritative: registry text is only a declaration, while code ceilings, non-placeholder executable probes and exact regular-file SHA-256 evidence closure determine the effective boundary.

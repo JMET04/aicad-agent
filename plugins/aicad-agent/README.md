@@ -1,8 +1,10 @@
-# aicad-agent 1.17.0
+# aicad-agent 1.17.1
 
 ## 跨领域规范第一门禁
 
 任何建筑、结构、土木、机械、钣金、包装、电子、电气、给排水、暖通、工艺管道或产品设计任务，都必须先声明领域、交付阶段、适用标准、启用规则包和输入权威顺序。`normative_governance` 与对应领域规则包是阶段 0 非补偿门禁；标准和批准工程输入优先于用户偏好、参考 CAD、图片与推测。缺少适用标准、版本/范围或对应规则包时，只能输出缺项诊断，不能先画几何再用分数补偿。
+
+统一入口显式覆盖机械、电子/电气、包装、土木、建筑和钢结构，并按对象需要提供 2D、3D 与交互审查。成熟度门禁保持诚实：通用制图、包装和建筑可进入受约束生成与审查，机械与 PCB 可形成哈希闭合候选，土木仅限权威来源绑定的受约束审查候选，钢结构仅限诊断和构件关系审查；后两者绝不冒充生产级自动设计、结构计算、签章或施工放行。
 
 高优先级规范只有同时具备 schema/contract 字段、生成时约束、独立 QA 和能稳定复现旧错误的负向回归测试，才算真正落地。该原则适用于所有领域，不是建筑专用补丁。
 
@@ -88,7 +90,6 @@ The reviewer now exposes one modification list instead of separate user-facing i
 python scripts/aicad_agent.py capabilities
 python scripts/aicad_engineering_preflight.py --template mechanical --output mechanical-preflight.json
 python scripts/aicad_engineering_preflight.py --contract mechanical-preflight.json --output mechanical-preflight.report.json --markdown mechanical-preflight.report.md
-python scripts/aicad_system_engineering_qa.py system-contract.json --root evidence --output system-qa.json --markdown system-qa.md
 python scripts/aicad_production_readiness_qa_v3.py production-contract-v3.json --output production-validation-v3.json --markdown production-validation-v3.md
 python scripts/aicad_agent.py compile --plan runtime/examples/rectangle.plan.json --out smoke --name rectangle
 python scripts/aicad_agent.py build3d --plan runtime/examples/mounting_plate_3d.plan.json --out smoke3d --name plate --no-execute

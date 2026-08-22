@@ -1,0 +1,295 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aicad.local/schema/aicad-manufacturing-release-package-v1.json",
+  "title": "AICAD factory manufacturing handoff package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "packageId", "releaseBasis"],
+  "properties": {
+    "schema": {"const": "aicad_manufacturing_release_package_v1"},
+    "packageId": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "releaseBasis": {"$ref": "#/$defs/releaseBasis"},
+    "mechanical": {"$ref": "#/$defs/mechanical"},
+    "electronics": {"$ref": "#/$defs/electronics"}
+  },
+  "anyOf": [
+    {"required": ["mechanical"]},
+    {"required": ["electronics"]}
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "revision": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "size", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+        },
+        "size": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "previewEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "size", "sha256", "previewOfRole", "subjectId", "sourceSha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+        },
+        "size": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "previewOfRole": {"$ref": "#/$defs/identifier"},
+        "subjectId": {"$ref": "#/$defs/identifier"},
+        "sourceSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "vector3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"type": "number"}
+    },
+    "coordinateSystem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "units", "handedness", "origin", "xAxis", "yAxis", "zAxis", "description"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "units": {"enum": ["mm", "inch"]},
+        "handedness": {"const": "right"},
+        "origin": {"$ref": "#/$defs/vector3"},
+        "xAxis": {"$ref": "#/$defs/vector3"},
+        "yAxis": {"$ref": "#/$defs/vector3"},
+        "zAxis": {"$ref": "#/$defs/vector3"},
+        "description": {"type": "string", "minLength": 8}
+      }
+    },
+    "supplier": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["supplierId", "capabilityEvidence", "authorityEvidence"],
+          "properties": {
+            "supplierId": {"$ref": "#/$defs/identifier"},
+            "capabilityEvidence": {"$ref": "#/$defs/evidence"},
+            "authorityEvidence": {"$ref": "#/$defs/evidence"},
+            "packageConfirmationEvidence": {"$ref": "#/$defs/evidence"},
+            "confirmationAuthorityEvidence": {"$ref": "#/$defs/evidence"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["supplierId", "recipientProfile"],
+          "properties": {
+            "supplierId": {"const": "unassigned_rfq_recipient"},
+            "recipientProfile": {"$ref": "#/$defs/evidence"}
+          }
+        }
+      ]
+    },
+    "releaseBasis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["revision", "units", "coordinateSystems", "suppliers"],
+      "properties": {
+        "revision": {"$ref": "#/$defs/revision"},
+        "units": {"enum": ["mm", "inch"]},
+        "coordinateSystems": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/coordinateSystem"}
+        },
+        "suppliers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/supplier"}
+        }
+      }
+    },
+    "mechanicalPartArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nativeCad", "step", "manufacturingDrawing", "drawingPreview", "modelPreview", "nativeReopenLog"],
+      "properties": {
+        "nativeCad": {"$ref": "#/$defs/evidence"},
+        "step": {"$ref": "#/$defs/evidence"},
+        "manufacturingDrawing": {"$ref": "#/$defs/evidence"},
+        "drawingPreview": {"$ref": "#/$defs/previewEvidence"},
+        "modelPreview": {"$ref": "#/$defs/previewEvidence"},
+        "nativeReopenLog": {"$ref": "#/$defs/evidence"}
+      }
+    },
+    "mechanicalPart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partId", "revision", "coordinateSystemId", "supplierId", "process", "artifacts"],
+      "properties": {
+        "partId": {"$ref": "#/$defs/identifier"},
+        "revision": {"$ref": "#/$defs/revision"},
+        "coordinateSystemId": {"$ref": "#/$defs/identifier"},
+        "supplierId": {"$ref": "#/$defs/identifier"},
+        "process": {"$ref": "#/$defs/identifier"},
+        "artifacts": {"$ref": "#/$defs/mechanicalPartArtifacts"}
+      }
+    },
+    "mechanicalAssemblyArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nativeAssembly", "step", "assemblyDrawing", "explodedDrawing", "sectionDrawing",
+        "assemblyPreview2d", "assemblyPreview3d",
+        "assemblyWorkInstruction", "inspectionPlan", "moldingInput", "bom", "positions",
+        "interferenceLog", "nativeReopenLog"
+      ],
+      "properties": {
+        "nativeAssembly": {"$ref": "#/$defs/evidence"},
+        "step": {"$ref": "#/$defs/evidence"},
+        "assemblyDrawing": {"$ref": "#/$defs/evidence"},
+        "explodedDrawing": {"$ref": "#/$defs/evidence"},
+        "sectionDrawing": {"$ref": "#/$defs/evidence"},
+        "assemblyWorkInstruction": {"$ref": "#/$defs/evidence"},
+        "assemblyPreview2d": {"$ref": "#/$defs/previewEvidence"},
+        "assemblyPreview3d": {"$ref": "#/$defs/previewEvidence"},
+        "inspectionPlan": {"$ref": "#/$defs/evidence"},
+        "moldingInput": {"$ref": "#/$defs/evidence"},
+        "bom": {"$ref": "#/$defs/evidence"},
+        "positions": {"$ref": "#/$defs/evidence"},
+        "interferenceLog": {"$ref": "#/$defs/evidence"},
+        "nativeReopenLog": {"$ref": "#/$defs/evidence"}
+      }
+    },
+    "mechanicalAssembly": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assemblyId", "revision", "coordinateSystemId", "supplierId", "artifacts"],
+      "properties": {
+        "assemblyId": {"$ref": "#/$defs/identifier"},
+        "revision": {"$ref": "#/$defs/revision"},
+        "coordinateSystemId": {"$ref": "#/$defs/identifier"},
+        "supplierId": {"$ref": "#/$defs/identifier"},
+        "artifacts": {"$ref": "#/$defs/mechanicalAssemblyArtifacts"}
+      }
+    },
+    "mechanical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parts", "assemblies"],
+      "properties": {
+        "parts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/mechanicalPart"}
+        },
+        "assemblies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/mechanicalAssembly"}
+        }
+      }
+    },
+    "gerberLayer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layer", "artifact"],
+      "properties": {
+        "layer": {"type": "string", "pattern": "^[A-Za-z0-9._+-]{2,64}$"},
+        "artifact": {"$ref": "#/$defs/evidence"}
+      }
+    },
+    "pcbArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project", "schematic", "board", "ercLog", "drcLog", "schematicPdf",
+        "assemblyDrawing", "fabricationDrawing", "assemblyNotes", "fabricationNotes",
+        "schematicPreview", "boardPreview", "assemblyPreview", "fabricationPreview",
+        "modelPreview3d",
+        "model3d", "bom", "cpl", "connectivityNetlist", "camLog", "jobFile",
+        "pthDrill", "npthDrill", "nativeReopenLog"
+      ],
+      "properties": {
+        "project": {"$ref": "#/$defs/evidence"},
+        "schematic": {"$ref": "#/$defs/evidence"},
+        "board": {"$ref": "#/$defs/evidence"},
+        "ercLog": {"$ref": "#/$defs/evidence"},
+        "drcLog": {"$ref": "#/$defs/evidence"},
+        "schematicPdf": {"$ref": "#/$defs/evidence"},
+        "assemblyDrawing": {"$ref": "#/$defs/evidence"},
+        "fabricationDrawing": {"$ref": "#/$defs/evidence"},
+        "schematicPreview": {"$ref": "#/$defs/previewEvidence"},
+        "boardPreview": {"$ref": "#/$defs/previewEvidence"},
+        "assemblyPreview": {"$ref": "#/$defs/previewEvidence"},
+        "fabricationPreview": {"$ref": "#/$defs/previewEvidence"},
+        "modelPreview3d": {"$ref": "#/$defs/previewEvidence"},
+        "assemblyNotes": {"$ref": "#/$defs/evidence"},
+        "fabricationNotes": {"$ref": "#/$defs/evidence"},
+        "model3d": {"$ref": "#/$defs/evidence"},
+        "bom": {"$ref": "#/$defs/evidence"},
+        "cpl": {"$ref": "#/$defs/evidence"},
+        "connectivityNetlist": {"$ref": "#/$defs/evidence"},
+        "camLog": {"$ref": "#/$defs/evidence"},
+        "jobFile": {"$ref": "#/$defs/evidence"},
+        "pthDrill": {"$ref": "#/$defs/evidence"},
+        "npthDrill": {"$ref": "#/$defs/evidence"},
+        "nativeReopenLog": {"$ref": "#/$defs/evidence"}
+      }
+    },
+    "pcb": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pcbId", "revision", "coordinateSystemId", "fabricationSupplierId",
+        "assemblySupplierId", "fabricationLayers", "artifacts", "gerbers"
+      ],
+      "properties": {
+        "pcbId": {"$ref": "#/$defs/identifier"},
+        "revision": {"$ref": "#/$defs/revision"},
+        "coordinateSystemId": {"$ref": "#/$defs/identifier"},
+        "fabricationSupplierId": {"$ref": "#/$defs/identifier"},
+        "assemblySupplierId": {"$ref": "#/$defs/identifier"},
+        "fabricationLayers": {
+          "type": "array",
+          "minItems": 9,
+          "items": {"type": "string", "pattern": "^[A-Za-z0-9._+-]{2,64}$"}
+        },
+        "artifacts": {"$ref": "#/$defs/pcbArtifacts"},
+        "gerbers": {
+          "type": "array",
+          "minItems": 9,
+          "items": {"$ref": "#/$defs/gerberLayer"}
+        }
+      }
+    },
+    "electronics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pcbs"],
+      "properties": {
+        "pcbs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/pcb"}
+        }
+      }
+    }
+  }
+}
