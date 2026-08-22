@@ -445,11 +445,11 @@ class LandPatternEntityRegressionTests(unittest.TestCase):
             "wand": {
                 "size": (15.0, 80.0),
                 "placements": {
-                    "J1": (12.5, 38.0, 90.0),
-                    "SW1": (7.5, 63.0, 90.0),
+                    "J1": (12.25, 38.0, 90.0),
+                    "SW1": (7.5, 64.5, 90.0),
                     "U1": (7.5, 10.5, 0.0),
                 },
-                "holes": {"H1": (7.5, 19.5, 2.4), "H2": (7.5, 77.0, 2.4)},
+                "holes": {"H1": (7.5, 20.25, 2.4), "H2": (7.5, 77.0, 2.4)},
             },
             "receiver": {
                 "size": (50.0, 42.0),
@@ -700,6 +700,25 @@ class FactoryTableAndPcbEmissionTests(unittest.TestCase):
             self.assertEqual(len(emitted_uuids), len(set(emitted_uuids)))
             self.assertTrue(saw_oval_drill, f"{board.name} must exercise oval drill width/height")
             self.assertTrue(saw_local_rotation, f"{board.name} must exercise local pad rotation")
+
+    def test_wand_factory_placement_matches_native_drc_legalized_authority(self) -> None:
+        wand = _board("wand")
+        expected = {
+            "L1": (5.8, 33.8), "J2": (3.3, 57.0), "SW1": (7.5, 64.5),
+            "U6": (6.15, 38.0), "F1": (2.6, 38.0), "J1": (12.25, 38.0),
+            "R_CC1": (10.5, 32.0), "R_CC2": (2.0, 43.0),
+            "R_I2C_SDA": (13.8, 30.0), "R_ARM": (13.0, 62.0),
+            "R_HAPTIC_EN": (10.7, 20.0), "R_STAT1": (2.0, 45.5),
+            "R_STAT2": (13.0, 45.5), "R_CFG2": (10.5, 30.0),
+            "C_USB": (1.8, 41.0), "C_CHG_IN": (6.0, 43.0),
+            "C_BUCK_IN": (1.8, 34.0), "C_IMU_VDD": (1.3, 21.0),
+            "C_IMU_IO": (3.8, 21.0), "C_HAPTIC_REG": (13.2, 20.0),
+            "TP2": (13.0, 54.5), "TP7": (10.5, 54.5), "H1": (7.5, 20.25),
+        }
+        actual = {part.ref: (part.x, part.y) for part in wand.parts}
+        for ref, coordinate in expected.items():
+            with self.subTest(ref=ref):
+                self.assertEqual(actual[ref], coordinate)
 
     def test_native_pcb_is_centered_on_a4_without_mutating_board_local_geometry(self) -> None:
         for board in build.BOARDS:
