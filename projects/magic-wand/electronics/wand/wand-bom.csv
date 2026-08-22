@@ -10,7 +10,7 @@ Comment,Designator,Footprint,Manufacturer,MPN,LCSC Part #,DNP,Assembly Notes
 10uF 10V X5R,C_SYS,MW_FACTORY:wand_C_SYS,Murata,GRM21BR61A106KE19L,,NO,
 10uF 10V X5R,C_USB,MW_FACTORY:wand_C_USB,Murata,GRM21BR61A106KE19L,,NO,
 500mA PTC,F1,MW_FACTORY:wand_F1,Bourns,MF-FSMF050X-2,,NO,
-USB-C-16P,J1,MW_FACTORY:wand_J1,JAE,DX07S016JA1R1500,,NO,Intentional 2.0 mm board-edge overhang; mechanical radial opening datum
+USB-C-16P,J1,MW_FACTORY:wand_J1,JAE,DX07S016JA1R1500,,NO,Controlled board-edge overhang; mechanical radial opening datum
 SM03B-SRSS-TB,J2,MW_FACTORY:wand_J2,JST,SM03B-SRSS-TB(LF)(SN),,NO,
 SM02B-SRSS-TB,J3,MW_FACTORY:wand_J3,JST,SM02B-SRSS-TB(LF)(SN),,NO,
 2.2uH,L1,MW_FACTORY:wand_L1,Coilcraft,XFL4020-222MEC,,NO,

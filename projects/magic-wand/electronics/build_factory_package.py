@@ -477,6 +477,7 @@ def two_pin(
     *,
     package: str = "0402",
     assembly: str = "SMT_TOP",
+    rotation: float = 0.0,
     notes: str = "",
     dnp: bool = False,
 ) -> Part:
@@ -497,7 +498,7 @@ def two_pin(
     }[prefix]
     return Part(
         ref, value, manufacturer, mpn, footprint, x, y, size[0], size[1],
-        pins({"1": ("1", net1), "2": ("2", net2)}), assembly=assembly,
+        pins({"1": ("1", net1), "2": ("2", net2)}), assembly=assembly, rotation=rotation,
         package=package, notes=notes, dnp=dnp,
     )
 
@@ -591,7 +592,8 @@ def make_wand() -> Board:
                       "7": ("LX2", "LX2", "power_out"), "8": ("GND", "GND", "power_in"), "9": ("LX1", "LX1", "power_out"),
                       "10": ("VIN", "SYS_RAIL", "power_in"), "EP": ("THERMAL_PAD", "GND", "power_in")}), package="WSON-10-EP",
                   datasheet="https://www.ti.com/lit/ds/symlink/tps63900.pdf"))
-    p.append(two_pin("L1", "2.2uH", "Coilcraft", "XFL4020-222MEC", "LX1", "LX2", 5.8, 33.8, package="L_4x4"))
+    p.append(two_pin("L1", "2.2uH", "Coilcraft", "XFL4020-222MEC", "LX1", "LX2", 11.5, 29.8,
+                     package="L_4x4", rotation=270.0))
     p.append(Part("U3", "BQ25185DLHR", "Texas Instruments", "BQ25185DLHR", "Package_SON:Texas_DLH0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm",
                   7.5, 46.0, 3.0, 3.0, pins({
                       "1": ("SYS", "SYS_RAIL", "power_out"), "2": ("BAT", "BAT_POS", "bidirectional"), "3": ("STAT2", "CHG_STAT2_N", "open_collector"),
@@ -616,34 +618,40 @@ def make_wand() -> Board:
                   12.25, 38.0, 9.0, 7.0, usb_c_pins(), rotation=90.0, package="USB-C-16P", notes="Controlled board-edge overhang; mechanical radial opening datum"))
 
     passive_specs = [
-        ("R_CC1", "5.1k", "Yageo", "RC0402FR-075K1L", "USB_CC1", "GND", 10.5, 32.0),
+        ("R_CC1", "5.1k", "Yageo", "RC0402FR-075K1L", "USB_CC1", "GND", 2.0, 35.0),
         ("R_CC2", "5.1k", "Yageo", "RC0402FR-075K1L", "USB_CC2", "GND", 2.0, 43.0),
-        ("R_I2C_SCL", "4.7k", "Yageo", "RC0402FR-074K7L", "3V3", "I2C_SCL", 2.2, 29.0),
-        ("R_I2C_SDA", "4.7k", "Yageo", "RC0402FR-074K7L", "3V3", "I2C_SDA", 13.8, 30.0),
+        ("R_I2C_SCL", "4.7k", "Yageo", "RC0402FR-074K7L", "3V3", "I2C_SCL", 1.2, 29.5),
+        ("R_I2C_SDA", "4.7k", "Yageo", "RC0402FR-074K7L", "3V3", "I2C_SDA", 2.0, 27.2),
         ("R_ARM", "100k", "Yageo", "RC0402FR-07100KL", "3V3", "ARM_N", 13.0, 62.0),
         ("R_ARM_SER", "1k", "Yageo", "RC0402FR-071KL", "ARM_SW", "ARM_N", 12.5, 59.0),
         ("R_HAPTIC_EN", "100k", "Yageo", "RC0402FR-07100KL", "HAPTIC_EN", "GND", 10.7, 20.0),
-        ("R_STAT1", "10k", "Yageo", "RC0402FR-0710KL", "3V3", "CHG_STAT1_N", 2.0, 45.5),
-        ("R_STAT2", "10k", "Yageo", "RC0402FR-0710KL", "3V3", "CHG_STAT2_N", 13.0, 45.5),
-        ("R_ISET", "1.00k", "Yageo", "RC0402FR-071KL", "R_ISET_NODE", "GND", 2.2, 48.0),
-        ("R_ILIM", "18.0k", "Yageo", "RC0402FR-0718KL", "R_ILIM_NODE", "GND", 12.8, 48.0),
-        ("R_CFG1", "36.5k", "Yageo", "RC0402FR-0736K5L", "R_CFG1_NODE", "GND", 2.2, 32.0),
-        ("R_CFG2", "0R", "Yageo", "RC0402JR-070RL", "GND", "GND", 10.5, 30.0),
-        ("R_CFG3", "16.2k", "Yageo", "RC0402FR-0716K2L", "R_CFG3_NODE", "GND", 12.8, 32.0),
+        ("R_STAT1", "10k", "Yageo", "RC0402FR-0710KL", "3V3", "CHG_STAT1_N", 13.5, 48.5),
+        ("R_STAT2", "10k", "Yageo", "RC0402FR-0710KL", "3V3", "CHG_STAT2_N", 5.0, 43.2),
+        ("R_ISET", "1.00k", "Yageo", "RC0402FR-071KL", "R_ISET_NODE", "GND", 9.3, 48.5),
+        ("R_ILIM", "18.0k", "Yageo", "RC0402FR-0718KL", "R_ILIM_NODE", "GND", 11.4, 49.7),
+        ("R_CFG1", "36.5k", "Yageo", "RC0402FR-0736K5L", "R_CFG1_NODE", "GND", 4.0, 29.5),
+        ("R_CFG2", "0R", "Yageo", "RC0402JR-070RL", "GND", "GND", 1.2, 31.5),
+        ("R_CFG3", "16.2k", "Yageo", "RC0402FR-0716K2L", "R_CFG3_NODE", "GND", 3.6, 31.4),
         ("C_USB", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "USB_VBUS_5V", "GND", 1.8, 41.0),
-        ("C_CHG_IN", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "USB_VBUS_5V", "GND", 6.0, 43.0),
-        ("C_SYS", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "SYS_RAIL", "GND", 5.0, 49.0),
-        ("C_BAT", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "BAT_POS", "GND", 10.0, 49.0),
-        ("C_BUCK_IN", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "SYS_RAIL", "GND", 1.8, 34.0),
-        ("C_BUCK_OUT", "22uF 6.3V X5R", "Murata", "GRM21BR60J226ME39L", "3V3", "GND", 12.0, 27.8),
+        ("C_CHG_IN", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "USB_VBUS_5V", "GND", 11.7, 46.0),
+        ("C_SYS", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "SYS_RAIL", "GND", 3.3, 46.0),
+        ("C_BAT", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "BAT_POS", "GND", 4.6, 49.0),
+        ("C_BUCK_IN", "10uF 10V X5R", "Murata", "GRM21BR61A106KE19L", "SYS_RAIL", "GND", 6.2, 26.6),
+        ("C_BUCK_OUT", "22uF 6.3V X5R", "Murata", "GRM21BR60J226ME39L", "3V3", "GND", 5.8, 33.5),
         ("C_IMU_VDD", "100nF 16V X7R", "Murata", "GRM155R71C104KA88D", "3V3", "GND", 1.3, 21.0),
         ("C_IMU_IO", "100nF 16V X7R", "Murata", "GRM155R71C104KA88D", "3V3", "GND", 3.8, 21.0),
         ("C_HAPTIC_REG", "1uF 10V X7R", "Murata", "GRM155R71A105KE15D", "HAPTIC_REG", "GND", 13.2, 20.0),
         ("C_HAPTIC_VDD", "1uF 10V X7R", "Murata", "GRM155R71A105KE15D", "3V3", "GND", 12.8, 22.0),
     ]
+    wand_passive_rotations = {
+        "R_STAT1": 180.0, "R_ISET": 270.0,
+        "R_CFG1": 180.0, "R_CFG3": 180.0,
+        "C_SYS": 180.0, "C_BAT": 180.0,
+        "C_BUCK_IN": 90.0, "C_BUCK_OUT": 270.0,
+    }
     for spec in passive_specs:
         package = "0805" if spec[0] in {"C_USB", "C_CHG_IN", "C_SYS", "C_BAT", "C_BUCK_IN", "C_BUCK_OUT"} else "0402"
-        p.append(two_pin(*spec, package=package))
+        p.append(two_pin(*spec, package=package, rotation=wand_passive_rotations.get(spec[0], 0.0)))
     for ref, net, x, y in [
         ("TP3", "SWDIO", 2.0, 51.5), ("TP4", "SWDCLK", 4.5, 51.5),
         ("TP5", "RESET_N", 7.0, 51.5), ("TP6", "SWO", 9.5, 51.5),

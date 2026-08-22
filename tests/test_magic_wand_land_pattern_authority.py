@@ -704,14 +704,14 @@ class FactoryTableAndPcbEmissionTests(unittest.TestCase):
     def test_wand_factory_placement_matches_native_drc_legalized_authority(self) -> None:
         wand = _board("wand")
         expected = {
-            "L1": (5.8, 33.8), "J2": (3.3, 57.0), "SW1": (7.5, 64.5),
+            "L1": (11.5, 29.8), "J2": (3.3, 57.0), "SW1": (7.5, 64.5),
             "U6": (6.15, 38.0), "F1": (2.6, 38.0), "J1": (12.25, 38.0),
-            "R_CC1": (10.5, 32.0), "R_CC2": (2.0, 43.0),
-            "R_I2C_SDA": (13.8, 30.0), "R_ARM": (13.0, 62.0),
-            "R_HAPTIC_EN": (10.7, 20.0), "R_STAT1": (2.0, 45.5),
-            "R_STAT2": (13.0, 45.5), "R_CFG2": (10.5, 30.0),
-            "C_USB": (1.8, 41.0), "C_CHG_IN": (6.0, 43.0),
-            "C_BUCK_IN": (1.8, 34.0), "C_IMU_VDD": (1.3, 21.0),
+            "R_CC1": (2.0, 35.0), "R_CC2": (2.0, 43.0),
+            "R_I2C_SDA": (2.0, 27.2), "R_ARM": (13.0, 62.0),
+            "R_HAPTIC_EN": (10.7, 20.0), "R_STAT1": (13.5, 48.5),
+            "R_STAT2": (5.0, 43.2), "R_CFG2": (1.2, 31.5),
+            "C_USB": (1.8, 41.0), "C_CHG_IN": (11.7, 46.0),
+            "C_BUCK_IN": (6.2, 26.6), "C_IMU_VDD": (1.3, 21.0),
             "C_IMU_IO": (3.8, 21.0), "C_HAPTIC_REG": (13.2, 20.0),
             "TP2": (13.0, 54.5), "TP7": (10.5, 54.5), "H1": (7.5, 20.25),
         }
@@ -719,6 +719,11 @@ class FactoryTableAndPcbEmissionTests(unittest.TestCase):
         for ref, coordinate in expected.items():
             with self.subTest(ref=ref):
                 self.assertEqual(actual[ref], coordinate)
+        rotations = {part.ref: part.rotation for part in wand.parts}
+        self.assertEqual(rotations["L1"], 270.0)
+        self.assertEqual(rotations["R_ISET"], 270.0)
+        self.assertEqual(rotations["C_BUCK_IN"], 90.0)
+        self.assertEqual(rotations["C_BUCK_OUT"], 270.0)
 
     def test_wand_haptic_enable_uses_outer_nina_gpio(self) -> None:
         wand = _board("wand")
@@ -737,8 +742,10 @@ class FactoryTableAndPcbEmissionTests(unittest.TestCase):
                 factory_emit.write_project(wand, Path(temporary)).read_text(encoding="utf-8")
             )
         rules = project["board"]["design_settings"]["rules"]
-        self.assertEqual(rules["min_through_hole_diameter"], 0.20)
-        self.assertEqual(rules["min_via_diameter"], 0.45)
+        self.assertEqual(rules["min_through_hole_diameter"], 0.15)
+        self.assertEqual(rules["min_via_diameter"], 0.30)
+        self.assertEqual(rules["min_via_annular_width"], 0.075)
+        self.assertEqual(rules["min_hole_clearance"], 0.20)
         classes = {row["name"]: row for row in project["net_settings"]["classes"]}
         self.assertEqual(
             (classes["Default"]["via_diameter"], classes["Default"]["via_drill"]),

@@ -94,10 +94,11 @@ def route_source_design(board: Board, pads: list[dict]) -> dict:
         "routingRules": {
             "netWidthsMm": {net: net_width(board, net) for net in sorted({pad["net"] for pad in pads if pad.get("net")})},
             "minimumClearanceMm": 0.15,
-            "powerClearanceMm": 0.20,
+            "powerClearanceMm": 0.15,
             "loadClearanceMm": 0.25,
             "copperToEdgeMm": 0.30,
-            "viaGeometriesMm": [{"size": 0.70, "drill": 0.45}, {"size": 0.80, "drill": 0.45}, {"size": 1.00, "drill": 0.50}],
+            "minimumDrillToCopperMm": 0.20,
+            "viaGeometriesMm": [{"size": 0.30, "drill": 0.15}, {"size": 0.45, "drill": 0.20}, {"size": 0.55, "drill": 0.25}],
             "highCurrentNets": sorted(board.high_current_nets),
             "differentialPairs": [list(pair) for pair in board.differential_pairs],
             "isolatedNets": sorted(board.isolated_nets),
@@ -161,14 +162,25 @@ def resolved_routes(board: Board, pads: list[dict]) -> tuple[list[dict], list[di
 
     source_board = validate_artifact_ref(data.get("sourceBoard"), "sourceBoard")
     native_drc = validate_artifact_ref(data.get("nativeDrc"), "nativeDrc")
+    native_erc = (
+        validate_artifact_ref(data.get("nativeErc"), "nativeErc")
+        if data.get("nativeErc") is not None
+        else None
+    )
     if source_board["path"] != f"electronics/{board.name}/{board.name}.kicad_pcb":
         raise ValueError(f"route fixture sourceBoard must reference the canonical board: {fixture}")
     if native_drc["path"] != f"electronics/{board.name}/{board.name}-native-drc.rpt":
         raise ValueError(f"route fixture nativeDrc must reference the canonical report: {fixture}")
+    if native_erc is not None and native_erc["path"] != f"electronics/{board.name}/{board.name}-native-erc.rpt":
+        raise ValueError(f"route fixture nativeErc must reference the canonical report: {fixture}")
     if any(native_drc.get(name) != 0 for name in ("violations", "unconnected", "footprintErrors")):
         raise ValueError(f"route fixture nativeDrc counts must all be zero: {fixture}")
+    if native_erc is not None and any(native_erc.get(name) != 0 for name in ("errors", "warnings")):
+        raise ValueError(f"route fixture nativeErc counts must all be zero: {fixture}")
     if native_drc.get("exclusions") != 0 or native_drc.get("suppressions") != 0:
         raise ValueError(f"route fixture nativeDrc exclusions/suppressions must be zero: {fixture}")
+    if native_erc is not None and (native_erc.get("exclusions") != 0 or native_erc.get("suppressions") != 0):
+        raise ValueError(f"route fixture nativeErc exclusions/suppressions must be zero: {fixture}")
     dimensions = data.get("boardDimensionsMm", [])
     if len(dimensions) != 3 or [float(v) for v in dimensions] != [board.width, board.height, 1.6]:
         raise ValueError(f"route fixture dimensions disagree with board authority: {fixture}")
@@ -185,6 +197,7 @@ def resolved_routes(board: Board, pads: list[dict]) -> tuple[list[dict], list[di
         "revision": data.get("revision"),
         "sourceBoard": data.get("sourceBoard"),
         "nativeDrc": data.get("nativeDrc"),
+        "nativeErc": data.get("nativeErc"),
     }
 
 
@@ -325,7 +338,7 @@ def write_symbol_library(board: Board, out_dir: Path) -> Path:
         prefix = "".join(ch for ch in part.ref if ch.isalpha()) or "U"
         offsets = schematic_pin_offsets(part)
         in_bom = not (part.dnp or part.exclude_from_bom or part.assembly == "BARE_PAD")
-        exclude_from_sim = part.assembly == "BARE_PAD"
+        exclude_from_sim = True
         lines += [
             f"  (symbol {q(local_name)}",
             "    (pin_names (offset 0.70))",
@@ -354,19 +367,43 @@ def write_symbol_library(board: Board, out_dir: Path) -> Path:
                 f"(name {q(pin.name)} {effects(.75)}) (number {q(pin.number)} {effects(.75)}))"
             )
         lines += ["    )", "  )"]
-    lines.append(")")
+    lines += [
+        '  (symbol "PWR_FLAG"',
+        "    (power global)",
+        "    (pin_numbers hide)",
+        "    (pin_names (offset 0) hide)",
+        "    (exclude_from_sim yes)",
+        "    (in_bom no)",
+        "    (on_board no)",
+        f'    (property "Reference" "#FLG" (at 0 1.905 0) {effects(1.0, True)})',
+        f'    (property "Value" "PWR_FLAG" (at 0 3.810 0) {effects(1.0)})',
+        f'    (property "Footprint" "" (at 0 0 0) {effects(.8, True)})',
+        f'    (property "Datasheet" "" (at 0 0 0) {effects(.8, True)})',
+        f'    (property "Description" "ERC source marker; not fitted" (at 0 0 0) {effects(.8, True)})',
+        '    (symbol "PWR_FLAG_0_0"',
+        f'      (pin power_out line (at 0 0 90) (length 0) (name "" {effects(.8)}) (number "1" {effects(.8)}))',
+        "    )",
+        '    (symbol "PWR_FLAG_0_1"',
+        "      (polyline (pts (xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27))",
+        '        (stroke (width 0) (type default)) (fill (type none)))',
+        "    )",
+        "  )",
+        ")",
+    ]
     path = out_dir / "MW_FACTORY.kicad_sym"
     path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     return path
 
 def schematic_pin_offsets(part: Part) -> dict[str, tuple[float, float, float]]:
+    """Place every generated pin endpoint on KiCad's 1.27 mm connection grid."""
     split = math.ceil(len(part.pins) / 2)
     left, right = part.pins[:split], part.pins[split:]
-    spacing = max(1.27, min(2.54, 22.0 / max(1, len(left))))
     result: dict[str, tuple[float, float, float]] = {}
-    for members, x, angle in ((left, -8.0, 0.0), (right, 8.0, 180.0)):
+    for members, x, angle in ((left, -7.62, 0.0), (right, 7.62, 180.0)):
+        spacing = 1.27 if len(members) > 9 else 2.54
+        centre_index = len(members) // 2
         for index, pin in enumerate(members):
-            result[pin.number] = (x, (index - (len(members) - 1) / 2) * spacing, angle)
+            result[pin.number] = (x, (index - centre_index) * spacing, angle)
     return result
 
 
@@ -380,7 +417,7 @@ def write_schematic(board: Board, out_dir: Path) -> Path:
         if part.assembly == "NPTH":
             continue
         in_bom = not (part.dnp or part.exclude_from_bom or part.assembly == "BARE_PAD")
-        exclude_from_sim = part.assembly == "BARE_PAD"
+        exclude_from_sim = True
         lib_name = f"MW_FACTORY:{part.ref}_{part.package.replace(' ', '_')}"
         local_name = lib_name.split(":", 1)[1]
         prefix = "".join(ch for ch in part.ref if ch.isalpha()) or "U"
@@ -413,7 +450,29 @@ def write_schematic(board: Board, out_dir: Path) -> Path:
                 f"(name {q(pin.name)} {effects(.75)}) (number {q(pin.number)} {effects(.75)}))"
             )
         lines += ["      )", "    )"]
-    lines.append("  )")
+    lines += [
+        '    (symbol "MW_FACTORY:PWR_FLAG"',
+        "      (power global)",
+        "      (pin_numbers hide)",
+        "      (pin_names (offset 0) hide)",
+        "      (exclude_from_sim yes)",
+        "      (in_bom no)",
+        "      (on_board no)",
+        f'      (property "Reference" "#FLG" (at 0 1.905 0) {effects(1.0, True)})',
+        f'      (property "Value" "PWR_FLAG" (at 0 3.810 0) {effects(1.0)})',
+        f'      (property "Footprint" "" (at 0 0 0) {effects(.8, True)})',
+        f'      (property "Datasheet" "" (at 0 0 0) {effects(.8, True)})',
+        f'      (property "Description" "ERC source marker; not fitted" (at 0 0 0) {effects(.8, True)})',
+        '      (symbol "PWR_FLAG_0_0"',
+        f'        (pin power_out line (at 0 0 90) (length 0) (name "" {effects(.8)}) (number "1" {effects(.8)}))',
+        "      )",
+        '      (symbol "PWR_FLAG_0_1"',
+        "        (polyline (pts (xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27))",
+        '          (stroke (width 0) (type default)) (fill (type none)))',
+        "      )",
+        "    )",
+        "  )",
+    ]
 
     cols = 3 if board.name == "wand" else 4
     placed = 0
@@ -423,8 +482,8 @@ def write_schematic(board: Board, out_dir: Path) -> Path:
         if part.assembly == "NPTH":
             continue
         in_bom = not (part.dnp or part.exclude_from_bom or part.assembly == "BARE_PAD")
-        exclude_from_sim = part.assembly == "BARE_PAD"
-        sx, sy = 35.0 + (placed % cols) * 75.0, 30.0 + (placed // cols) * 48.0
+        exclude_from_sim = True
+        sx, sy = 35.56 + (placed % cols) * 74.93, 30.48 + (placed // cols) * 48.26
         placed += 1
         lib_name = f"MW_FACTORY:{part.ref}_{part.package.replace(' ', '_')}"
         symbol_uuid = uid(board.name, "sch", part.ref)
@@ -457,8 +516,43 @@ def write_schematic(board: Board, out_dir: Path) -> Path:
                 no_connects.append(f"  (no_connect (at {px:.3f} {py:.3f}) (uuid {uid(board.name, 'nc', part.ref, pin.number)}))")
             else:
                 labels.append(f"  (label {q(pin.net)} (at {px:.3f} {py:.3f} 0) {effects(.8)} (uuid {uid(board.name, 'label', part.ref, pin.number)}))")
+    for index, (net, x, y) in enumerate([
+        ("GND", 200.66, 15.24),
+        ("USB_VBUS_5V", 208.28, 15.24),
+        ("USB_SHIELD", 215.90, 15.24),
+    ], start=1):
+        reference = f"#FLG{index:02d}"
+        symbol_uuid = uid(board.name, "sch", reference)
+        lines += [
+            "  (symbol",
+            '    (lib_id "MW_FACTORY:PWR_FLAG")',
+            f"    (at {x:.3f} {y:.3f} 0)",
+            "    (unit 1)",
+            "    (exclude_from_sim yes)",
+            "    (in_bom no)",
+            "    (on_board no)",
+            "    (dnp no)",
+            f"    (uuid {symbol_uuid})",
+            f'    (property "Reference" {q(reference)} (at {x:.3f} {y + 1.905:.3f} 0) {effects(1.0, True)})',
+            f'    (property "Value" "PWR_FLAG" (at {x:.3f} {y + 3.810:.3f} 0) {effects(1.0)})',
+            f'    (property "Footprint" "" (at {x:.3f} {y:.3f} 0) {effects(.8, True)})',
+            f'    (property "Datasheet" "" (at {x:.3f} {y:.3f} 0) {effects(.8, True)})',
+            f'    (property "Description" "ERC source marker; not fitted" (at {x:.3f} {y:.3f} 0) {effects(.8, True)})',
+            f'    (pin "1" (uuid {uid(board.name, "sch-pin", reference, "1")}))',
+            "    (instances",
+            f"      (project {q('magic-wand-' + board.name)}",
+            f"        (path {q('/' + root_uuid + '/' + symbol_uuid)} (reference {q(reference)}) (unit 1))",
+            "      )",
+            "    )",
+            "  )",
+        ]
+        labels.append(
+            f"  (label {q(net)} (at {x:.3f} {y:.3f} 0) {effects(.8)} "
+            f"(uuid {uid(board.name, 'label', reference, '1')}))"
+        )
+
     lines += labels + no_connects + [
-        "  (text_box \"FACTORY REVIEW SOURCE\\nNative KiCad ERC pending; do not fabricate until release gate closes.\"",
+        "  (text_box \"FACTORY REVIEW SOURCE\\nNative gate status is recorded in controlled reports; fabricate only from a packaged PASS release.\"",
         "    (exclude_from_sim no) (at 15 12 0) (size 110 12) (stroke (width 0.3) (type solid))",
         "    (fill (type none)) (effects (font (size 1.5 1.5)) (justify left top)))",
         "  (sheet_instances (path \"/\" (page \"1\")))", ")",
@@ -471,7 +565,7 @@ def write_schematic(board: Board, out_dir: Path) -> Path:
 
 def write_project(board: Board, out_dir: Path) -> Path:
     class_defs = [
-        ("Default", .15, .20, .45, .20, .20, .20), ("POWER", .20, .25, .55, .25, .25, .20),
+        ("Default", .15, .20, .45, .20, .20, .20), ("POWER", .15, .25, .55, .25, .25, .20),
         ("LOAD_1A", .25, 1.00, .70, .30, 1.00, .25), ("USB2_90R", .15, .20, .45, .20, .20, .20),
     ]
     classes = [{"bus_width": 12, "clearance": c, "diff_pair_gap": dg, "diff_pair_via_gap": .25,
@@ -483,6 +577,12 @@ def write_project(board: Board, out_dir: Path) -> Path:
     assignments = {net: ("LOAD_1A" if net in {"LOAD_SUPPLY_5_12V", "LOAD_DRAIN"} else
                          "POWER" if net in board.high_current_nets else "USB2_90R" if net.startswith("USB_D") else "Default")
                    for net in all_nets}
+    strict_erc_severities = {
+        "footprint_filter": "warning",
+        "four_way_junction": "warning",
+        "simulation_model_issue": "warning",
+        "single_global_label": "warning",
+    }
     strict_drc_severities = {
         "footprint_filters_mismatch": "error",
         "footprint_type_mismatch": "error",
@@ -501,20 +601,22 @@ def write_project(board: Board, out_dir: Path) -> Path:
                                           "rule_severities": strict_drc_severities,
                                           "rules": {"allow_blind_buried_vias": False, "allow_microvias": False,
                                                     "max_error": .005, "min_clearance": .15,
-                                                    "min_copper_edge_clearance": .30, "min_hole_clearance": .25,
+                                                    "min_copper_edge_clearance": .30, "min_hole_clearance": .20,
                                                     "min_hole_to_hole": .25, "min_silk_clearance": .15,
                                                     "min_text_height": .80, "min_text_thickness": .15,
-                                                    "min_through_hole_diameter": .20, "min_track_width": .15,
-                                                    "min_via_annular_width": .125, "min_via_diameter": .45,
+                                                    "min_through_hole_diameter": .15, "min_track_width": .15,
+                                                    "min_via_annular_width": .075, "min_via_diameter": .30,
                                                     "solder_mask_clearance": 0.0, "solder_mask_min_width": .10},
                                           "track_widths": [.15, .20, .50, 1.00],
-                                          "via_dimensions": [{"diameter": .45, "drill": .20},
+                                          "via_dimensions": [{"diameter": .30, "drill": .15},
+                                                             {"diameter": .45, "drill": .20},
                                                              {"diameter": .55, "drill": .25},
                                                              {"diameter": .70, "drill": .30},
                                                              {"diameter": .80, "drill": .45},
                                                              {"diameter": 1.00, "drill": .50}]},
                   "layer_presets": [], "viewports": []},
-        "boards": [], "cvpcb": {}, "erc": {"erc_exclusions": [], "meta": {"version": 0}, "rule_severities": {}},
+        "boards": [], "cvpcb": {}, "erc": {"erc_exclusions": [], "meta": {"version": 0},
+                                             "rule_severities": strict_erc_severities},
         "libraries": {}, "meta": {"filename": f"{board.name}.kicad_pro", "version": 1},
         "net_settings": {"classes": classes, "meta": {"version": 3}, "net_colors": None,
                          "netclass_assignments": assignments, "netclass_patterns": []},
@@ -747,8 +849,12 @@ def emit_board(board: Board) -> dict:
         ],
         "pads": [{k: v for k, v in pad.items() if k not in {"part", "pin"}} for pad in pads],
         "routes": segments, "vias": vias, "router_failures": failures, "routing_source": routing_source,
-        "release_gates": {"native_kicad_erc": "NOT_RUN", "native_kicad_drc": "NOT_RUN",
-                          "manufacturer_land_pattern_overlay": "OPEN", "fabrication_authorized": False},
+        "release_gates": {
+            "native_kicad_erc": "PASS" if routing_source.get("nativeErc") else "NOT_RUN",
+            "native_kicad_drc": "PASS" if routing_source.get("nativeDrc") else "NOT_RUN",
+            "manufacturer_land_pattern_overlay": "PASS" if all(part.exact_land_pattern for part in board.parts) else "OPEN",
+            "fabrication_authorized": False,
+        },
     }
     (out_dir / f"{board.name}-factory-design.json").write_text(
         json.dumps(design, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"

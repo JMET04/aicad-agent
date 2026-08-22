@@ -1,7 +1,7 @@
 {
   "schema": "aicad_land_pattern_authority_inventory_v1",
   "status": "CONTROLLED",
-  "revision": "FACTORY-AUTHORITY-2026-08-21",
+  "revision": "FACTORY-AUTHORITY-2026-08-22",
   "summary": {
     "totalRefs": 92,
     "controlledRefs": 92,
@@ -2510,10 +2510,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 270.0
         }
       },
-      "bodyDatumFingerprint": "691E98CC65784CA70FB056FA1FAA45AFEB42ED104EFB7135C4610BF603E1E559"
+      "bodyDatumFingerprint": "DB0C43DFC92C509514AA01CADA16ECDAB6121326D6D918A5CD06A1277EB69A76"
     },
     {
       "board": "wand",
@@ -5200,10 +5200,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 180.0
         }
       },
-      "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA"
+      "bodyDatumFingerprint": "7D46B16618C0CC515A2B1489F4BA13CAC24B3AF77BF721F3C6087C6FC700C872"
     },
     {
       "board": "wand",
@@ -5444,10 +5444,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 270.0
         }
       },
-      "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA"
+      "bodyDatumFingerprint": "85667540185E8021B14CFB8735FE5E702E35B754577B86D6DFFC24323FBBB856"
     },
     {
       "board": "wand",
@@ -5688,10 +5688,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 180.0
         }
       },
-      "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA"
+      "bodyDatumFingerprint": "7D46B16618C0CC515A2B1489F4BA13CAC24B3AF77BF721F3C6087C6FC700C872"
     },
     {
       "board": "wand",
@@ -5932,10 +5932,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 180.0
         }
       },
-      "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA"
+      "bodyDatumFingerprint": "7D46B16618C0CC515A2B1489F4BA13CAC24B3AF77BF721F3C6087C6FC700C872"
     },
     {
       "board": "wand",
@@ -6298,10 +6298,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 180.0
         }
       },
-      "bodyDatumFingerprint": "46E9DA534EFFE4DE4FE8A39F7458E476FE3E7061D25E720CC139693C8832CD9F"
+      "bodyDatumFingerprint": "87E8B459A4727BADD7009CBA1D67844052C59B3F37ACDB096D0EF09E67F8CABF"
     },
     {
       "board": "wand",
@@ -6420,10 +6420,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 180.0
         }
       },
-      "bodyDatumFingerprint": "46E9DA534EFFE4DE4FE8A39F7458E476FE3E7061D25E720CC139693C8832CD9F"
+      "bodyDatumFingerprint": "87E8B459A4727BADD7009CBA1D67844052C59B3F37ACDB096D0EF09E67F8CABF"
     },
     {
       "board": "wand",
@@ -6542,10 +6542,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 90.0
         }
       },
-      "bodyDatumFingerprint": "46E9DA534EFFE4DE4FE8A39F7458E476FE3E7061D25E720CC139693C8832CD9F"
+      "bodyDatumFingerprint": "4C9492236FFDA94BD637229DEA9BA0815002955DABF7655483875A2E710D8212"
     },
     {
       "board": "wand",
@@ -6664,10 +6664,10 @@
             0.0,
             0.0
           ],
-          "placementRotationDeg": 0.0
+          "placementRotationDeg": 270.0
         }
       },
-      "bodyDatumFingerprint": "46E9DA534EFFE4DE4FE8A39F7458E476FE3E7061D25E720CC139693C8832CD9F"
+      "bodyDatumFingerprint": "18EA7B009533B0FA97DF4C594482AB0B4ACF4B8FBBD5B351299F8D7A205A792E"
     },
     {
       "board": "wand",
