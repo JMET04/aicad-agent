@@ -471,8 +471,8 @@ def write_schematic(board: Board, out_dir: Path) -> Path:
 
 def write_project(board: Board, out_dir: Path) -> Path:
     class_defs = [
-        ("Default", .15, .20, .70, .45, .20, .20), ("POWER", .20, .25, .80, .45, .25, .20),
-        ("LOAD_1A", .25, 1.00, 1.00, .50, 1.00, .25), ("USB2_90R", .15, .20, .70, .45, .20, .20),
+        ("Default", .15, .20, .45, .20, .20, .20), ("POWER", .20, .25, .55, .25, .25, .20),
+        ("LOAD_1A", .25, 1.00, .70, .30, 1.00, .25), ("USB2_90R", .15, .20, .45, .20, .20, .20),
     ]
     classes = [{"bus_width": 12, "clearance": c, "diff_pair_gap": dg, "diff_pair_via_gap": .25,
                 "diff_pair_width": dw, "line_style": 0, "microvia_diameter": .3, "microvia_drill": .1,
@@ -504,11 +504,13 @@ def write_project(board: Board, out_dir: Path) -> Path:
                                                     "min_copper_edge_clearance": .30, "min_hole_clearance": .25,
                                                     "min_hole_to_hole": .25, "min_silk_clearance": .15,
                                                     "min_text_height": .80, "min_text_thickness": .15,
-                                                    "min_through_hole_diameter": .45, "min_track_width": .15,
+                                                    "min_through_hole_diameter": .20, "min_track_width": .15,
                                                     "min_via_annular_width": .125, "min_via_diameter": .45,
                                                     "solder_mask_clearance": 0.0, "solder_mask_min_width": .10},
                                           "track_widths": [.15, .20, .50, 1.00],
-                                          "via_dimensions": [{"diameter": .70, "drill": .45},
+                                          "via_dimensions": [{"diameter": .45, "drill": .20},
+                                                             {"diameter": .55, "drill": .25},
+                                                             {"diameter": .70, "drill": .30},
                                                              {"diameter": .80, "drill": .45},
                                                              {"diameter": 1.00, "drill": .50}]},
                   "layer_presets": [], "viewports": []},

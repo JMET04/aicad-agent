@@ -532,10 +532,10 @@ def nina_pins(wand: bool) -> list[Pin]:
     }
     if wand:
         used.update({
+            "1": ("P0.13", "HAPTIC_EN", "output"),
             "5": ("P0.24", "CHG_STAT1_N", "input"), "7": ("P0.25", "CHG_STAT2_N", "input"),
             "32": ("P0.11", "I2C_SCL", "bidirectional"), "33": ("P1.09", "I2C_SDA", "bidirectional"),
             "42": ("P0.26", "IMU_INT1", "input"), "43": ("P0.06", "ARM_N", "input"),
-            "44": ("P0.27", "HAPTIC_EN", "output"),
         })
     else:
         used.update({

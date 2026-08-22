@@ -1,3 +1,4 @@
+#include "mw_board_pins.h"
 #include "mw_gesture.h"
 #include "mw_protocol.h"
 #include "mw_state_machine.h"
@@ -192,6 +193,19 @@ static int check_state_machine(void)
     return 0;
 }
 
+static int check_board_pin_authority(void)
+{
+    CHECK(MW_HAPTIC_EN_GPIO_PORT == 0U);
+    CHECK(MW_HAPTIC_EN_GPIO_PIN == 13U);
+    CHECK(MW_I2C_SCL_GPIO_PORT == 0U);
+    CHECK(MW_I2C_SCL_GPIO_PIN == 11U);
+    CHECK(MW_I2C_SDA_GPIO_PORT == 1U);
+    CHECK(MW_I2C_SDA_GPIO_PIN == 9U);
+    CHECK(MW_ARM_N_GPIO_PORT == 0U);
+    CHECK(MW_ARM_N_GPIO_PIN == 6U);
+    return 0;
+}
+
 static int check_gesture_rejection(void)
 {
     const mw_gesture_result_t result =
@@ -203,6 +217,7 @@ static int check_gesture_rejection(void)
 
 int main(void)
 {
+    CHECK(check_board_pin_authority() == 0);
     CHECK(check_protocol() == 0);
     CHECK(check_state_machine() == 0);
     CHECK(check_gesture_rejection() == 0);

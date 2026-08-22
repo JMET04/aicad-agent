@@ -720,6 +720,35 @@ class FactoryTableAndPcbEmissionTests(unittest.TestCase):
             with self.subTest(ref=ref):
                 self.assertEqual(actual[ref], coordinate)
 
+    def test_wand_haptic_enable_uses_outer_nina_gpio(self) -> None:
+        wand = _board("wand")
+        u1 = next(part for part in wand.parts if part.ref == "U1")
+        pins = {pin.number: pin for pin in u1.pins}
+        self.assertEqual(
+            (pins["1"].name, pins["1"].net, pins["1"].electrical_type),
+            ("P0.13", "HAPTIC_EN", "output"),
+        )
+        self.assertEqual((pins["44"].net, pins["44"].electrical_type), ("NC", "no_connect"))
+
+    def test_project_rules_allow_jlcpcb_standard_small_vias(self) -> None:
+        wand = _board("wand")
+        with tempfile.TemporaryDirectory() as temporary:
+            project = json.loads(
+                factory_emit.write_project(wand, Path(temporary)).read_text(encoding="utf-8")
+            )
+        rules = project["board"]["design_settings"]["rules"]
+        self.assertEqual(rules["min_through_hole_diameter"], 0.20)
+        self.assertEqual(rules["min_via_diameter"], 0.45)
+        classes = {row["name"]: row for row in project["net_settings"]["classes"]}
+        self.assertEqual(
+            (classes["Default"]["via_diameter"], classes["Default"]["via_drill"]),
+            (0.45, 0.20),
+        )
+        self.assertEqual(
+            (classes["POWER"]["via_diameter"], classes["POWER"]["via_drill"]),
+            (0.55, 0.25),
+        )
+
     def test_native_pcb_is_centered_on_a4_without_mutating_board_local_geometry(self) -> None:
         for board in build.BOARDS:
             pads = build.absolute_pads(board)

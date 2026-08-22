@@ -7,6 +7,7 @@ The skeleton intentionally separates reviewable policy from platform code:
 - `include/mw_protocol.h` / `src/mw_protocol.c`: framed AES-CCM interface, 13-byte nonce construction, authenticated header, freshness and strict monotonic replay gate. It has **no home-grown cipher**. With no reviewed CCM callback or no persistent counter readiness, it fails closed.
 - `include/mw_state_machine.h` / `src/mw_state_machine.c`: wand physical-arm and receiver output-safe state logic with a 100 ms renewable physical-arm lease, 250 ms link deadline and 500 ms command-pulse ceiling.
 - `include/mw_gesture.h` / `src/mw_gesture.c`: conservative short-window relative feature heuristic that rejects low-confidence data. It does not estimate absolute position or an exact 3D trajectory.
+- `include/mw_board_pins.h`: target-neutral NINA-B302 GPIO authority mirrored from the electronics source. `HAPTIC_EN` is assigned to the outer module pad 1 / `P0.13`; interior pad 44 / `P0.27` is intentionally unused on the wand.
 - `protocol.md`, `state-machine.md`, `gesture-dictionary.yaml`: normative review intent and calibration/test gates.
 - `src/main.c`: host-only deterministic smoke harness; it does not emulate BLE or prove timing on target.
 
@@ -29,7 +30,7 @@ The generated `build-host2/` directory is disposable verification output and mus
 3. Bind `mw_ccm_decrypt_fn` to the SDK's reviewed AES-CCM implementation or hardware-backed service, using a 16-byte tag and the exact nonce/AAD serialization in `protocol.md`.
 4. Implement atomic/rollback-resistant session and receive high-water persistence. If persistence is corrupt, exhausted or uncertain, outputs stay safe until authenticated reprovisioning.
 5. Implement signed boot/update, anti-rollback, debug policy, watchdog/brownout handling and credential lifecycle. Irreversible protection changes require a documented recovery/manufacturing plan.
-6. Bind GPIOs exactly to the electronics connectivity tables. Configure receiver output GPIOs low before enabling output drivers; validate actual reset behavior on an oscilloscope.
+6. Bind GPIOs exactly to `include/mw_board_pins.h` and the electronics connectivity tables. Configure receiver output GPIOs low before enabling output drivers; validate actual reset behavior on an oscilloscope.
 7. Compile with warnings-as-errors, static analysis and target unit/HIL tests; archive SDK/compiler versions, config, map, binary hash and test logs.
 
 ## Explicit non-goals
