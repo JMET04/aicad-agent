@@ -6,8 +6,10 @@ import importlib.util
 import json
 import math
 import sys
+import tempfile
 import unittest
-from pathlib import Path
+import zipfile
+from pathlib import Path, PurePosixPath
 
 import ezdxf
 
@@ -52,6 +54,92 @@ class MagicWandMechanicalPackageTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.params = load_json(PACKAGE / "design-parameters.json")
         cls.layout = load_json(PACKAGE / "assembly-layout.json")
+
+    def test_printable_release_json_and_zip_paths_are_portable(self) -> None:
+        printable = PACKAGE / "printable-wand"
+        outputs = printable / "outputs"
+        expected_pcb = "projects/magic-wand/electronics/wand/wand.kicad_pcb"
+
+        def assert_portable_json(value, label: str, field: str | None = None) -> None:
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    assert_portable_json(child, f"{label}.{key}", str(key))
+                return
+            if isinstance(value, list):
+                for index, child in enumerate(value):
+                    assert_portable_json(child, f"{label}[{index}]", field)
+                return
+            if not isinstance(value, str):
+                return
+
+            normalized = value.replace("\\", "/")
+            lower = normalized.casefold()
+            windows_absolute = (
+                len(value) >= 3
+                and value[0].isalpha()
+                and value[1] == ":"
+                and value[2] in "/\\"
+            )
+            self.assertNotIn("\\", value, label)
+            self.assertFalse(windows_absolute, label)
+            self.assertNotIn("/" + "users/", f"/{lower.lstrip('/')}", label)
+            self.assertNotIn("/" + "home/", f"/{lower.lstrip('/')}", label)
+            if field is not None and field.casefold().endswith("path"):
+                pure = PurePosixPath(value)
+                self.assertFalse(pure.is_absolute(), label)
+                self.assertNotIn("..", pure.parts, label)
+                self.assertNotIn(":", value, label)
+
+        design = load_json(printable / "design-input.json")
+        report = load_json(outputs / "reports" / "fit-and-power-validation.json")
+        self.assertEqual(design["sourcePcb"]["path"], expected_pcb)
+        self.assertEqual(report["sourcePcb"]["path"], expected_pcb)
+        for path in [printable / "design-input.json", *sorted(outputs.rglob("*.json"))]:
+            assert_portable_json(json.loads(path.read_text(encoding="utf-8")), path.as_posix())
+
+        archive_path = outputs / "MW_PRINTABLE_WAND_REV_A0.zip"
+        with zipfile.ZipFile(archive_path) as archive:
+            json_members = []
+            for member in archive.namelist():
+                pure = PurePosixPath(member)
+                self.assertNotIn("\\", member, member)
+                self.assertNotIn(":", member, member)
+                self.assertFalse(pure.is_absolute(), member)
+                self.assertNotIn("..", pure.parts, member)
+                if member.endswith(".json"):
+                    json_members.append(member)
+                    payload = json.loads(archive.read(member).decode("utf-8"))
+                    assert_portable_json(payload, f"ZIP:{member}")
+            self.assertEqual(
+                set(json_members),
+                {
+                    "source/design-input.json",
+                    "release-manifest.json",
+                    "reports/fit-and-power-validation.json",
+                },
+            )
+
+    def test_printable_json_gate_rejects_host_specific_and_traversal_paths(self) -> None:
+        printable = PACKAGE / "printable-wand"
+        generator = load_module(
+            printable / "build_printable_wand.py",
+            "mw_printable_portability_test",
+        )
+        bad_paths = (
+            "C:\\" + r"Users\alice\private.json",
+            "C:/" + "Users/alice/private.json",
+            "/" + "home/alice/private.json",
+            "/tmp/private.json",
+            "../private.json",
+            r"\\server\share\private.json",
+        )
+        with tempfile.TemporaryDirectory() as raw:
+            fixture = Path(raw) / "candidate.json"
+            for index, value in enumerate(bad_paths):
+                with self.subTest(index=index, value=value):
+                    fixture.write_text(json.dumps({"path": value}), encoding="utf-8")
+                    with self.assertRaisesRegex(RuntimeError, "packaged JSON"):
+                        generator.validate_packaged_json_portability([fixture])
 
     def test_single_parameter_source_controls_envelope_and_safety_locks(self) -> None:
         p = self.params
@@ -235,49 +323,77 @@ class MagicWandMechanicalPackageTests(unittest.TestCase):
         self.assertTrue(all(row["quantity"] > 0 for row in bom["rows"]))
         self.assertFalse(bom["release_locks"]["productionReleaseEligible"])
 
-    def test_system_requirements_trace_to_mechanical_parameters_and_locks(self) -> None:
+    def test_system_rev_b_traces_to_current_printable_geometry_and_locks(self) -> None:
         system = load_json(REPO_ROOT / "projects" / "magic-wand" / "system-requirements.json")
+        status = load_json(REPO_ROOT / "projects" / "magic-wand" / "integration" / "CURRENT_SYSTEM_STATUS.json")
+        printable = load_json(PACKAGE / "printable-wand" / "design-input.json")
         requirements = {row["id"]: row for row in system["requirements"]}
-        self.assertTrue({"SYS-001", "SYS-002", "SYS-007", "SYS-012"}.issubset(requirements))
+
+        self.assertEqual(set(requirements), {f"SYS-{index:03d}" for index in range(1, 13)})
         self.assertEqual(system["projectId"], self.params["project_id"])
-        self.assertEqual(system["revision"], self.params["revision"])
+        self.assertEqual(system["revision"], "B")
+        self.assertEqual(self.params["revision"], "A")
+        self.assertEqual(printable["design"], "Magic Wand printable enclosure Rev A0")
+        self.assertEqual(system["authoritativeStatus"], "integration/CURRENT_SYSTEM_STATUS.json")
+        self.assertEqual(status["schema"], "magic-wand.current-system-status.v2")
+
         sys001 = requirements["SYS-001"]
+        overall = printable["rod"]["assembledOverallLength"]
+        grip = printable["handle"]["outerDiameter"]
+        exposed = printable["rod"]["exposedAboveConnector"]
+        self.assertEqual((overall, grip, exposed), (315.0, 30.0, 179.0))
         self.assertEqual(sys001["category"], "mechanical")
-        self.assertIn(str(int(self.params["envelope"]["overall_length"])), sys001["acceptance"])
-        self.assertIn(str(int(self.params["handle_shell"]["outer_diameter"])), sys001["acceptance"])
-        self.assertIn(str(int(self.params["gfrp_spine"]["exposed_length"])), sys001["acceptance"])
-        self.assertIn("physical_test_pending", sys001["status"])
+        for value in (overall, grip, exposed):
+            self.assertIn(str(int(value)), sys001["acceptance"])
+        self.assertEqual(
+            sys001["status"],
+            "digital_geometry_and_mesh_verified_physical_first_article_pending",
+        )
+        self.assertEqual(status["printableEnclosure"]["handleOuterDiameterMm"], grip)
+        self.assertEqual(status["printableEnclosure"]["rod"]["targetOverallLengthMm"], overall)
+        self.assertEqual(status["printableEnclosure"]["meshGate"]["status"], "PASSED")
+
         sys002 = requirements["SYS-002"]
         self.assertIn("continuously held", sys002["requirement"].casefold())
-        self.assertIn("momentary hold-to-arm", self.params["press_to_arm"]["logic_boundary"])
-        self.assertIn("release requests immediate disarm", self.params["press_to_arm"]["logic_boundary"])
+        self.assertTrue(status["firmware"]["physicalArmGate"])
+        self.assertEqual(status["systemInterfaces"]["pressToArm"], "+Y face at case z=73.5 mm")
+        button = printable["sourcePcb"]["interfaces"]["button"]
+        self.assertEqual(button["openingFace"], "+Y")
+        self.assertEqual(button["caseCenter"][2], 73.5)
         self.assertIn("pending", sys002["status"])
+
         sys007 = requirements["SYS-007"]
         self.assertIn("nina-b302", sys007["requirement"].casefold())
         self.assertIn("nonconductive", sys007["requirement"].casefold())
-        self.assertIn("nina-b302", self.params["antenna_keepout"]["reference"].casefold())
-        self.assertIn("integration manual", self.params["antenna_keepout"]["authority_boundary"].casefold())
-        self.assertIn("pending", sys007["status"])
-        sys012 = requirements["SYS-012"]
-        self.assertEqual(sys012["status"], "enforced")
-        self.assertIn("review-only", sys012["acceptance"].casefold())
-        expected_locks = {
-            "reviewOnly": self.params["safety_locks"]["reviewOnly"],
-            "accepted": self.params["safety_locks"]["accepted"],
-            "technicalPackageReady": self.params["safety_locks"]["technicalPackageReady"],
-            "manufacturingAuthorized": self.params["safety_locks"]["manufacturingAuthorized"],
-            "fabricationAuthorized": self.params["safety_locks"]["fabricationAuthorized"],
-            "productionReleaseEligible": self.params["safety_locks"]["productionReleaseEligible"],
-            "humanEngineeringReviewRequired": self.params["safety_locks"]["human_engineering_review_required"],
-        }
-        self.assertEqual(system["releaseLocks"], expected_locks)
-        self.assertTrue(system["releaseLocks"]["reviewOnly"])
-        for key in (
-            "accepted", "technicalPackageReady", "manufacturingAuthorized",
-            "fabricationAuthorized", "productionReleaseEligible",
-        ):
-            self.assertFalse(system["releaseLocks"][key], key)
+        self.assertEqual(printable["powerReservation"]["antennaKeepoutZ"], [5.0, 30.0])
+        self.assertIn("conductive", printable["rod"]["prohibitedMaterialNearAntenna"])
+        self.assertEqual(status["printableEnclosure"]["batteryToAntennaGapMm"], 11.0)
+        self.assertEqual(
+            sys007["status"],
+            "pcb_and_enclosure_keepout_verified_physical_rf_test_pending",
+        )
 
+        sys012 = requirements["SYS-012"]
+        self.assertEqual(sys012["status"], "prototype_and_production_locks_separated")
+        self.assertIn("owner-authorized prototype bare-pcb", sys012["acceptance"].casefold())
+        locks = system["releaseLocks"]
+        for key in (
+            "prototypeOnly", "wandBarePcbTechnicalPackageReady",
+            "printableEnclosureTechnicalPackageReady",
+            "prototypeBarePcbFabricationAuthorized", "prototype3dPrintingAuthorized",
+            "humanEngineeringReviewRequiredForProduction",
+        ):
+            self.assertTrue(locks[key], key)
+        for key in (
+            "systemAccepted", "pcbaOrderAuthorized", "targetFirmwareReleaseEligible",
+            "productionReleaseEligible",
+        ):
+            self.assertFalse(locks[key], key)
+        self.assertTrue(status["releaseLocks"]["prototypeBarePcbFabricationAuthorizedByOwner"])
+        self.assertTrue(status["releaseLocks"]["prototype3dPrintingAuthorizedByOwner"])
+        self.assertFalse(status["releaseLocks"]["pcbaOrderAuthorized"])
+        self.assertFalse(status["releaseLocks"]["targetFirmwareReleaseEligible"])
+        self.assertFalse(status["releaseLocks"]["productionReleaseEligible"])
     def test_known_bad_dimension_offset_and_duplicate_boundary_are_regression_locked(self) -> None:
         plan = load_json(PACKAGE / "drawings2d" / "wand_general_arrangement.drawing.plan.json")
         bad_offset = copy.deepcopy(plan)

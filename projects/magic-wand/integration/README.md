@@ -16,6 +16,8 @@ Status: **legacy Rev A baseline, superseded for current execution status by `CUR
 - `CURRENT_SYSTEM_STATUS.json`：当前事实、授权、哈希和开放门；
 - `SYSTEM_ENGINEERING_HANDOFF.md`：当前接口、制造交接和经验教训；
 - `system-design-contract.json` / `system-design-qa-report.*`：当前跨域合同与自动 QA。
+- `current-system-traceability.json`：Rev B `SYS-001..012` 到当前合同、门禁与证据的源忠实机器映射；
+- `current-delivery-manifest.json`：当前状态、合同、QA、交接与四项工具证据的哈希闭包。
 
 历史 Rev A 文件（只用于追溯，内容不得解释为当前结论）：
 

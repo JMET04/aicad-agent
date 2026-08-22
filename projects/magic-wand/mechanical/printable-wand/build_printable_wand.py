@@ -7,7 +7,7 @@ import shutil
 import sys
 import zipfile
 from datetime import datetime
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
 import matplotlib
@@ -37,6 +37,7 @@ from build123d import (
 
 
 ROOT = Path(__file__).resolve().parent
+REPO_ROOT = ROOT.parents[3]
 DESIGN_PATH = ROOT / "design-input.json"
 OUTPUT_ROOT = ROOT / "outputs"
 STEP_ROOT = OUTPUT_ROOT / "step"
@@ -66,6 +67,76 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest().upper()
+
+
+def resolve_repository_file(relative: str) -> Path:
+    """Resolve one canonical repository-relative POSIX path, fail closed otherwise."""
+    if not isinstance(relative, str) or not relative or "\\" in relative or ":" in relative:
+        raise ValueError(f"non-portable repository path: {relative!r}")
+    pure = PurePosixPath(relative)
+    if pure.is_absolute() or ".." in pure.parts:
+        raise ValueError(f"unsafe repository path: {relative!r}")
+    path = REPO_ROOT.joinpath(*pure.parts).resolve()
+    try:
+        path.relative_to(REPO_ROOT.resolve())
+    except ValueError as exc:
+        raise ValueError(f"repository path escapes root: {relative!r}") from exc
+    return path
+
+
+def repository_relative_posix(path: Path) -> str:
+    """Return a canonical repository-relative POSIX path for packaged evidence."""
+    try:
+        relative = path.resolve().relative_to(REPO_ROOT.resolve())
+    except ValueError as exc:
+        raise ValueError(f"packaged evidence is outside repository: {path}") from exc
+    portable = relative.as_posix()
+    if "\\" in portable or ":" in portable or PurePosixPath(portable).is_absolute():
+        raise ValueError(f"non-portable packaged evidence path: {portable!r}")
+    return portable
+
+
+def validate_packaged_json_portability(paths: Iterable[Path]) -> None:
+    """Reject host-specific or traversal paths before any JSON enters the ZIP."""
+
+    def visit(value: Any, location: str, field: str | None = None) -> None:
+        if isinstance(value, dict):
+            for key, child in value.items():
+                visit(child, f"{location}.{key}", str(key))
+            return
+        if isinstance(value, list):
+            for index, child in enumerate(value):
+                visit(child, f"{location}[{index}]", field)
+            return
+        if not isinstance(value, str):
+            return
+
+        normalized = value.replace("\\", "/")
+        lower = normalized.casefold()
+        windows_absolute = (
+            len(value) >= 3
+            and value[0].isalpha()
+            and value[1] == ":"
+            and value[2] in "/\\"
+        )
+        personal_path = any(
+            marker in f"/{lower.lstrip('/')}" for marker in ("/users/", "/home/")
+        )
+        if "\\" in value or windows_absolute or value.startswith("\\\\") or personal_path:
+            raise RuntimeError(
+                f"host-specific string in packaged JSON at {location}: {value!r}"
+            )
+
+        if field is not None and field.casefold().endswith("path"):
+            pure = PurePosixPath(value)
+            if pure.is_absolute() or ".." in pure.parts or ":" in value:
+                raise RuntimeError(
+                    f"non-portable path in packaged JSON at {location}: {value!r}"
+                )
+
+    for path in paths:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        visit(payload, path.name)
 
 
 def _axis_y_cylinder(radius: float, length: float, y_start: float, x: float, z: float):
@@ -407,7 +478,10 @@ def build_validation(parts: dict[str, Any], pcb_path: Path) -> dict[str, Any]:
     return {
         "schemaVersion": 1,
         "status": "VERIFIED_PRINT_CANDIDATE" if passed else "BLOCKED",
-        "sourcePcb": {"path": str(pcb_path), "sha256": sha256(pcb_path)},
+        "sourcePcb": {
+            "path": repository_relative_posix(pcb_path),
+            "sha256": sha256(pcb_path),
+        },
         "checks": checks,
         "powerReservation": POWER,
         "assemblyNotes": [
@@ -643,6 +717,8 @@ def write_manifest_and_zip() -> None:
     manifest_path = OUTPUT_ROOT / "release-manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    validate_packaged_json_portability([DESIGN_PATH, *sorted(OUTPUT_ROOT.rglob("*.json"))])
+
     zip_path = OUTPUT_ROOT / "MW_PRINTABLE_WAND_REV_A0.zip"
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         archive.write(DESIGN_PATH, "source/design-input.json")
@@ -658,7 +734,7 @@ def write_manifest_and_zip() -> None:
 def main() -> int:
     if OUTPUT_ROOT.parent.resolve() != ROOT.resolve() or OUTPUT_ROOT.name != "outputs":
         raise RuntimeError(f"Unsafe output path: {OUTPUT_ROOT}")
-    pcb_path = (ROOT / str(PCB["path"])).resolve()
+    pcb_path = resolve_repository_file(str(PCB["path"]))
     if not pcb_path.is_file():
         raise FileNotFoundError(pcb_path)
     if sha256(pcb_path) != str(PCB["sha256"]).upper():

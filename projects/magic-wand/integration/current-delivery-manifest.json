@@ -1,0 +1,158 @@
+{
+  "schema": "magic-wand.current-delivery-manifest.v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "systemRequirementsRevision": "B",
+  "systemContractRevision": "2026-08-22-prototype-contract-1",
+  "sourceFiles": [
+    {
+      "path": "projects/magic-wand/README.md",
+      "size": 2162,
+      "sha256": "862C546913A1A7D53535EE09FEA5A5FF17FD3A418EA1B9E7F1BFDF3C18E9E698",
+      "role": "entry",
+      "kind": "current_project_entry"
+    },
+    {
+      "path": "projects/magic-wand/integration/README.md",
+      "size": 4150,
+      "sha256": "75DA9CEFE1BAD0D7FB207DBF8915BF44C2F933D726A18894B7EFF924E21277EC",
+      "role": "entry",
+      "kind": "current_integration_index"
+    },
+    {
+      "path": "projects/magic-wand/system-requirements.json",
+      "size": 7955,
+      "sha256": "6F851CF8D829697C17C496A96498BAA92E15BCAF1308A0ED302ECC65FE713E19",
+      "role": "authority",
+      "kind": "system_requirements"
+    },
+    {
+      "path": "projects/magic-wand/integration/CURRENT_SYSTEM_STATUS.json",
+      "size": 5834,
+      "sha256": "CDAD0373FD53CB38A0409CD8DEE84F7F5EAD3DDC53651975BBF7542812FB986E",
+      "role": "authority",
+      "kind": "current_system_status"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-design-contract.json",
+      "size": 29583,
+      "sha256": "BC48A0AA2F0ED5A78BD0B3516A32E039807BCD481BF5B057B7383F124C13CE40",
+      "role": "authority",
+      "kind": "system_engineering_contract"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-design-qa-report.json",
+      "size": 1055,
+      "sha256": "CA57CB92DC6CC5FE8FCC2141D9E94AB784396A545530E273AEE0331B16F98D33",
+      "role": "report",
+      "kind": "system_engineering_qa"
+    },
+    {
+      "path": "projects/magic-wand/integration/system-design-qa-report.md",
+      "size": 576,
+      "sha256": "F219BB3C5A9F2084C24532CE502B80FEEF2519E83014CAC024C518C77645843D",
+      "role": "report",
+      "kind": "human_system_qa"
+    },
+    {
+      "path": "projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md",
+      "size": 11050,
+      "sha256": "1F42E9C9CF7DCA3A89170ADF50418F7F225C185C8F59DD9B4C9DB8DF97BAC865",
+      "role": "handoff",
+      "kind": "current_handoff"
+    },
+    {
+      "path": "projects/magic-wand/integration/current-system-traceability.json",
+      "size": 14554,
+      "sha256": "D7D4422045F98F5F0D728EABB3F7C3800130807B40900D999822EFE2D81D8C03",
+      "role": "trace",
+      "kind": "source_faithful_trace"
+    },
+    {
+      "path": "projects/magic-wand/integration/build_current_evidence.py",
+      "size": 12680,
+      "sha256": "891C757B3CADB104128E1582BC4EA972C7C56BCD00B9009878C7C8916452FF1A",
+      "role": "builder",
+      "kind": "deterministic_builder"
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+      "size": 222240,
+      "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
+      "role": "evidence",
+      "kind": "tool_verified_artifact",
+      "evidenceId": "EVID-PCB-SOURCE",
+      "level": "tool_verified",
+      "toolVersion": "KiCad CLI 10.0.5"
+    },
+    {
+      "path": "projects/magic-wand/electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
+      "size": 62544,
+      "sha256": "EC3C07314F5ED3463697A1235EC2C4B8D2BB2BC2A0B1B4C8A42807E09C8AC1C6",
+      "role": "evidence",
+      "kind": "tool_verified_artifact",
+      "evidenceId": "EVID-JLC-BARE-ZIP",
+      "level": "tool_verified",
+      "toolVersion": "KiCad CLI 10.0.5 and package builder"
+    },
+    {
+      "path": "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
+      "size": 4533750,
+      "sha256": "68CA7CAD227236D243F0FE72D7BB59BEC80C4576DA91966E571882E2FD036441",
+      "role": "evidence",
+      "kind": "tool_verified_artifact",
+      "evidenceId": "EVID-PRINT-PACKAGE",
+      "level": "tool_verified",
+      "toolVersion": "build123d 0.10.0 package builder"
+    },
+    {
+      "path": "projects/magic-wand/firmware/gesture-host-evidence.json",
+      "size": 3470,
+      "sha256": "F8EE9559DF6645B329F46D8FA2CA05DFD532096097DA9D2271D2C6E3AFB33AD7",
+      "role": "evidence",
+      "kind": "tool_verified_artifact",
+      "evidenceId": "EVID-FW-HOST",
+      "level": "tool_verified",
+      "toolVersion": "GCC MinGW-W64 16.1.0, CMake 4.3.2, Ninja 1.13.2"
+    }
+  ],
+  "counts": {
+    "sourceFiles": 10,
+    "evidenceFiles": 4,
+    "totalBoundFiles": 14
+  },
+  "readiness": {
+    "systemContractReady": true,
+    "technicalReady": false,
+    "physicalVerified": false,
+    "productionReleaseEligible": false
+  },
+  "ownerAuthorizations": {
+    "publicSourceRelease": true,
+    "prototypeBarePcbOrder": true,
+    "prototype3dPrint": true,
+    "jlcpcbCheckoutRequestedAfterDesignCompletion": true,
+    "pcbaAssemblyOrder": false,
+    "productionRelease": false
+  },
+  "releaseLocks": {
+    "prototypeBarePcbFabricationAuthorizedByOwner": true,
+    "prototype3dPrintingAuthorizedByOwner": true,
+    "pcbaOrderAuthorized": false,
+    "targetFirmwareReleaseEligible": false,
+    "productionReleaseEligible": false
+  },
+  "openReleaseGates": [
+    "GATE-FIRST-ARTICLE-001",
+    "GATE-PCBA-001",
+    "GATE-PRODUCTION-001",
+    "GATE-RECEIVER-001",
+    "GATE-TARGET-FW-001"
+  ],
+  "selfHashPolicy": {
+    "currentDeliveryManifestExcluded": true,
+    "reason": "the manifest cannot contain its own stable digest"
+  },
+  "claimBoundary": "A pass proves contract consistency and bound-file integrity only; it does not replay domain tools, prove engineering adequacy, or grant manufacturing/production release."
+}

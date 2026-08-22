@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "VERIFIED_PRINT_CANDIDATE",
   "sourcePcb": {
-    "path": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\electronics\\wand\\wand.kicad_pcb",
+    "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
     "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9"
   },
   "checks": {

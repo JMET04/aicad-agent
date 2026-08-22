@@ -319,7 +319,7 @@ class GitHubShowcaseVerifierTests(unittest.TestCase):
         }
         errors: list[str] = []
         RELEASE_VERIFY.verify_release_versions(
-            {"version": "1.13.0"}, stale, "1.17.1", errors
+            {"version": "1.13.0"}, stale, "1.17.2", errors
         )
         self.assertIn("expected-version-mismatch", errors)
         self.assertIn("component-version-mismatch", errors)
@@ -327,15 +327,15 @@ class GitHubShowcaseVerifierTests(unittest.TestCase):
 
     def test_release_version_verifier_rejects_component_drift(self) -> None:
         manifest = {
-            "version": "1.17.1",
+            "version": "1.17.2",
             "componentVersions": {
-                "agentPlugin": "1.17.1",
+                "agentPlugin": "1.17.2",
                 "pythonConstraintCompiler": "1.13.0",
             },
         }
         errors: list[str] = []
         RELEASE_VERIFY.verify_release_versions(
-            {"version": "1.17.1"}, manifest, "1.17.1", errors
+            {"version": "1.17.2"}, manifest, "1.17.2", errors
         )
         self.assertEqual(["component-version-mismatch"], errors)
 
@@ -414,9 +414,9 @@ class GitHubShowcaseVerifierTests(unittest.TestCase):
                 root = Path(temporary)
                 plugin_path = root / ".codex-plugin" / "plugin.json"
                 plugin_path.parent.mkdir(parents=True)
-                plugin_path.write_text(json.dumps({"name": "aicad-agent", "version": "1.17.1"}), encoding="utf-8")
+                plugin_path.write_text(json.dumps({"name": "aicad-agent", "version": "1.17.2"}), encoding="utf-8")
                 manifest_path = root / "integration-manifest.json"
-                manifest_path.write_text(json.dumps({"version": "1.17.1", "files": []}), encoding="utf-8")
+                manifest_path.write_text(json.dumps({"version": "1.17.2", "files": []}), encoding="utf-8")
                 (root / "SHA256SUMS").write_text("", encoding="utf-8")
                 target = root / filename
                 target.write_text(json.dumps(payload), encoding="utf-8")

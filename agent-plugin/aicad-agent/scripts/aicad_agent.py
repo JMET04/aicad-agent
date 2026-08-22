@@ -61,7 +61,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.17.1"
+AGENT_API_VERSION = "1.17.2"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 

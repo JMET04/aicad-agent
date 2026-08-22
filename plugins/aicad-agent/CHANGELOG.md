@@ -2,12 +2,13 @@
 
 ## Unreleased
 
-## 1.17.1 - 2026-08-22
+## 1.17.2 - 2026-08-22
 
-- Added a strict cross-domain system contract for traceable requirements, owned artifacts, interfaces, flows, evidence hashes, change impacts and non-compensatory release gates.
-- Added the `aicad-system-design` skill and workflow for PCB/enclosure/firmware/manufacturing products plus mechanical, electronics, packaging, civil and architectural coordination.
-- Added deterministic QA and negative regressions for evidence tampering, missing change propagation, invalid subsystem crossings and production claims with open gates.
-- Kept prototype build authorization separate from PCBA, purchasing, physical verification and production release.
+- Published the cross-domain system contract, deterministic QA and public manufacturing-release schema/API/CLI/MCP/reviewer capability under immutable version 1.17.2.
+- Added the source-faithful Rev B `SYS-001..012` machine map and current delivery manifest binding status, contract, QA, handoff and four tool-verified artifacts by portable path, size and SHA-256.
+- Regenerated the printable-wand candidate with repository-relative POSIX source-PCB metadata and added packaged-JSON regressions against drive-letter or absolute backslash paths.
+- Aligned plugin, runtime API, compiler, CI, installer, verifier, documentation, public trees and archive metadata at 1.17.2 while retaining the historical `v1.17.1` WIP tag.
+- Kept owner-authorized prototype bare-PCB ordering and 3D printing separate from PCBA, target firmware, physical first-article acceptance and production release, which remain locked.
 
 ## 1.17.1 - 2026-08-21
 

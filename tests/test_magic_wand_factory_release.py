@@ -524,7 +524,7 @@ class FactoryReleaseUnitTests(unittest.TestCase):
             "electronics/probe-wand/wand.kicad_pcb",
             "electronics/wand/WIP/wand.kicad_pcb",
             "electronics/wand/temp-routes/wand-frozen-routes.json",
-            "C:/Users/operator/wand-native-drc.rpt",
+            "C:/" + "Users/operator/wand-native-drc.rpt",
         ]
         for path in invalid:
             broken = _valid_wand_interface()

@@ -1,6 +1,6 @@
 # aicad-agent 产品介绍
 
-版本：1.17.1
+版本：1.17.2
 形态：Codex 插件 + 本地 MCP + 确定性 CAD/EDA 工程流水线
 许可证：MIT
 
@@ -122,7 +122,7 @@ packagingGated=true
 ## 当前可验证状态
 
 - 四领域公开展示：建筑平面、三层钢结构、复杂机械零件、四层工业控制器 PCB；
-- 发布版本：v1.17.1；
+- 发布版本：v1.17.2；
 - 安装方式：GitHub marketplace 或 Release ZIP；
 - CI：每次 push 和 pull request 重建并复核根级测试、插件测试、发布包、GitHub 净化源码和打包插件；
 - 本地运行：Python 3.10+；AutoCAD/SolidWorks 属于可选宿主能力。
@@ -132,5 +132,5 @@ packagingGated=true
 1. 查看[四领域工程展示](../showcase/README.md)，先判断输出风格和审查材料是否符合预期；
 2. 阅读[安装和使用指南](INSTALL.zh-CN.md)，安装插件并新建 Codex 任务；
 3. 阅读[详细功能说明](FUNCTIONS.zh-CN.md)，了解命令、输出和降级行为；
-4. 查看[v1.17.1 发布说明](RELEASE_NOTES_v1.17.1.md)，了解哈希闭合制造发布契约、真实 2D/3D 来源绑定审查、机械 RFQ 与 PCB 原型制造候选工作流及 fail-closed 外部审核边界；
+4. 查看[v1.17.2 发布说明](RELEASE_NOTES_v1.17.2.md)，了解不可变发布闭包、跨域系统设计契约、证据哈希、变更重检与非补偿发布门禁；
 5. 任何制造或投板决定都应继续经过对应专业人员、原生工具和组织审批流程。

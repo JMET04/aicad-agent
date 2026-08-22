@@ -1,0 +1,377 @@
+{
+  "schema": "magic-wand.current-system-traceability.v1",
+  "projectId": "MW-PROTOTYPE-001",
+  "systemRequirementsRevision": "B",
+  "systemContractRevision": "2026-08-22-prototype-contract-1",
+  "status": "MAPPED_WITH_OPEN_VERIFICATION_GATES",
+  "authorityPaths": {
+    "systemRequirements": "projects/magic-wand/system-requirements.json",
+    "currentStatus": "projects/magic-wand/integration/CURRENT_SYSTEM_STATUS.json",
+    "systemContract": "projects/magic-wand/integration/system-design-contract.json",
+    "systemQa": "projects/magic-wand/integration/system-design-qa-report.json"
+  },
+  "coverage": {
+    "required": 12,
+    "mapped": 12,
+    "missing": [],
+    "verificationOpen": [
+      "SYS-001",
+      "SYS-002",
+      "SYS-003",
+      "SYS-004",
+      "SYS-005",
+      "SYS-006",
+      "SYS-007",
+      "SYS-008",
+      "SYS-009",
+      "SYS-010",
+      "SYS-011",
+      "SYS-012"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "SYS-001",
+      "category": "mechanical",
+      "requirement": "The assembled prototype shall target 315 mm overall length with a 30 mm nominal grip and 179 mm exposed nonconductive GFRP rod above the connector.",
+      "acceptance": "Overall length 315 +/- 2 mm; grip OD 30 +/- 0.3 mm; exposed rod 179 +/- 1 mm; each printable STL passes the single-body watertight mesh gate.",
+      "verification": "drawing inspection plus physical first-article measurement",
+      "sourceStatus": "digital_geometry_and_mesh_verified_physical_first_article_pending",
+      "contractRequirementIds": [
+        "FIT-001",
+        "PHYSICAL-001"
+      ],
+      "gateIds": [
+        "GATE-MECH-TOOL-001",
+        "GATE-FIRST-ARTICLE-001"
+      ],
+      "gateStatuses": {
+        "GATE-MECH-TOOL-001": "passed",
+        "GATE-FIRST-ARTICLE-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [
+        "EVID-PCB-SOURCE",
+        "EVID-PRINT-PACKAGE"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+        "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip"
+      ]
+    },
+    {
+      "id": "SYS-002",
+      "category": "functional_safety",
+      "requirement": "Commands shall be enabled only while the recessed press-to-arm control is continuously held.",
+      "acceptance": "Release requests local disarm and receiver safe state within 100 ms target; measured worst case shall be recorded before use.",
+      "verification": "hardware-in-loop timing test over normal, reset and packet-loss cases",
+      "sourceStatus": "implementation_and_test_pending",
+      "contractRequirementIds": [
+        "GESTURE-001",
+        "TARGET-001",
+        "RECEIVER-001"
+      ],
+      "gateIds": [
+        "GATE-FW-HOST-001",
+        "GATE-TARGET-FW-001",
+        "GATE-RECEIVER-001"
+      ],
+      "gateStatuses": {
+        "GATE-FW-HOST-001": "passed",
+        "GATE-TARGET-FW-001": "open",
+        "GATE-RECEIVER-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [
+        "EVID-FW-HOST"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/firmware/gesture-host-evidence.json"
+      ]
+    },
+    {
+      "id": "SYS-003",
+      "category": "functional_safety",
+      "requirement": "Boot, reset, brownout, watchdog expiry and radio-link loss shall force every receiver output inactive.",
+      "acceptance": "No output pulse on boot/reset; link-loss safe state within 250 ms target; recovery requires a fresh armed session.",
+      "verification": "oscilloscope capture and fault-injection test",
+      "sourceStatus": "implementation_and_test_pending",
+      "contractRequirementIds": [
+        "TARGET-001",
+        "RECEIVER-001"
+      ],
+      "gateIds": [
+        "GATE-TARGET-FW-001",
+        "GATE-RECEIVER-001"
+      ],
+      "gateStatuses": {
+        "GATE-TARGET-FW-001": "open",
+        "GATE-RECEIVER-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [],
+      "evidencePaths": []
+    },
+    {
+      "id": "SYS-004",
+      "category": "gesture",
+      "requirement": "The six-axis IMU shall classify calibrated short-window relative orientation and motion gestures; it shall not claim absolute position or an exact free-space 3D path.",
+      "acceptance": "Per-class confusion matrix, rejection threshold and false-activation rate are recorded on representative users; low-confidence windows cause no action.",
+      "verification": "labelled gesture dataset and supervised usability test",
+      "sourceStatus": "eight_class_host_pipeline_verified_target_and_representative_dataset_pending",
+      "contractRequirementIds": [
+        "GESTURE-001",
+        "TARGET-001"
+      ],
+      "gateIds": [
+        "GATE-FW-HOST-001",
+        "GATE-TARGET-FW-001"
+      ],
+      "gateStatuses": {
+        "GATE-FW-HOST-001": "passed",
+        "GATE-TARGET-FW-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [
+        "EVID-FW-HOST"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/firmware/gesture-host-evidence.json"
+      ]
+    },
+    {
+      "id": "SYS-005",
+      "category": "communications_security",
+      "requirement": "The BLE link shall use LE Secure Connections with physical pairing authorization and unique device credentials; commands shall also carry authenticated encryption, direction/session binding and a monotonic anti-replay sequence.",
+      "acceptance": "Duplicate, stale, cross-device, unauthenticated and nonce-reuse test vectors are rejected without output activation.",
+      "verification": "protocol unit tests, packet capture and negative security tests",
+      "sourceStatus": "implementation_and_security_review_pending",
+      "contractRequirementIds": [
+        "GESTURE-001",
+        "RECEIVER-001"
+      ],
+      "gateIds": [
+        "GATE-FW-HOST-001",
+        "GATE-TARGET-FW-001",
+        "GATE-RECEIVER-001"
+      ],
+      "gateStatuses": {
+        "GATE-FW-HOST-001": "passed",
+        "GATE-TARGET-FW-001": "open",
+        "GATE-RECEIVER-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [
+        "EVID-FW-HOST"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/firmware/gesture-host-evidence.json"
+      ]
+    },
+    {
+      "id": "SYS-006",
+      "category": "power",
+      "requirement": "The wand shall use one protected 1S LiPo cell with NTC supervision, a 5 V USB-C sink-only charge input and a regulated logic rail.",
+      "acceptance": "Cell protection is present in the selected ordered part or an external protector; charge/current/temperature limits match the cell; no USB source role is exposed.",
+      "verification": "ordered-part review, bench charge/thermal test and USB-C sink compliance check",
+      "sourceStatus": "pcb_and_enclosure_reservation_verified_exact_ordered_cell_and_bench_test_pending",
+      "contractRequirementIds": [
+        "POWER-001",
+        "PHYSICAL-001"
+      ],
+      "gateIds": [
+        "GATE-MECH-TOOL-001",
+        "GATE-FIRST-ARTICLE-001"
+      ],
+      "gateStatuses": {
+        "GATE-MECH-TOOL-001": "passed",
+        "GATE-FIRST-ARTICLE-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [
+        "EVID-PCB-SOURCE",
+        "EVID-PRINT-PACKAGE"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+        "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip"
+      ]
+    },
+    {
+      "id": "SYS-007",
+      "category": "radio_mechanical",
+      "requirement": "The NINA-B302 antenna end shall face a nonconductive enclosure region and obey the current u-blox host-ground, metal, battery and enclosure restrictions.",
+      "acceptance": "Layout keepout is checked against the controlled module integration manual and representative enclosure RF performance is measured.",
+      "verification": "PCB/enclosure overlay review plus conducted or radiated RF comparison test",
+      "sourceStatus": "pcb_and_enclosure_keepout_verified_physical_rf_test_pending",
+      "contractRequirementIds": [
+        "RF-001",
+        "PHYSICAL-001"
+      ],
+      "gateIds": [
+        "GATE-MECH-TOOL-001",
+        "GATE-FIRST-ARTICLE-001",
+        "GATE-TARGET-FW-001"
+      ],
+      "gateStatuses": {
+        "GATE-MECH-TOOL-001": "passed",
+        "GATE-FIRST-ARTICLE-001": "open",
+        "GATE-TARGET-FW-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [
+        "EVID-PCB-SOURCE",
+        "EVID-PRINT-PACKAGE"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+        "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip"
+      ]
+    },
+    {
+      "id": "SYS-008",
+      "category": "receiver_interfaces",
+      "requirement": "The receiver may expose only documented SELV interfaces: 3.3/5 V UART or PWM, an isolated open-collector interface, and a common-ground 5-12 V low-side MOSFET channel within declared ratings.",
+      "acceptance": "Every connector pin, voltage domain, current limit, default state and external flyback requirement is labelled and tested.",
+      "verification": "schematic/layout review, load test and connector fault injection",
+      "sourceStatus": "eda_and_bench_test_pending",
+      "contractRequirementIds": [
+        "RECEIVER-001"
+      ],
+      "gateIds": [
+        "GATE-RECEIVER-001"
+      ],
+      "gateStatuses": {
+        "GATE-RECEIVER-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [],
+      "evidencePaths": []
+    },
+    {
+      "id": "SYS-009",
+      "category": "mains_boundary",
+      "requirement": "Mains loads shall be controlled only through a separately certified enclosed relay or contactor module using a receiver SELV control output.",
+      "acceptance": "No mains conductor enters either AICAD PCB or enclosure; relay certification, ratings, creepage, wiring and installation remain external evidence.",
+      "verification": "installation boundary review by a qualified electrical professional",
+      "sourceStatus": "external_specialist_required",
+      "contractRequirementIds": [
+        "RECEIVER-001",
+        "PRODUCTION-001"
+      ],
+      "gateIds": [
+        "GATE-RECEIVER-001",
+        "GATE-PRODUCTION-001"
+      ],
+      "gateStatuses": {
+        "GATE-RECEIVER-001": "open",
+        "GATE-PRODUCTION-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [],
+      "evidencePaths": []
+    },
+    {
+      "id": "SYS-010",
+      "category": "drone_boundary",
+      "requirement": "Drone integration is limited to an autopilot-configured, non-flight-critical AUX or telemetry channel; the receiver shall not drive motors, ESC power stages, arming or primary flight controls.",
+      "acceptance": "Autopilot configuration rejects the channel for arming/propulsion and fails safe on receiver loss; ground and restrained-prop tests precede any flight.",
+      "verification": "qualified flight-system integrator review and staged ground test",
+      "sourceStatus": "external_specialist_required",
+      "contractRequirementIds": [
+        "RECEIVER-001",
+        "PRODUCTION-001"
+      ],
+      "gateIds": [
+        "GATE-RECEIVER-001",
+        "GATE-PRODUCTION-001"
+      ],
+      "gateStatuses": {
+        "GATE-RECEIVER-001": "open",
+        "GATE-PRODUCTION-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [],
+      "evidencePaths": []
+    },
+    {
+      "id": "SYS-011",
+      "category": "human_factors",
+      "requirement": "Command feedback shall distinguish paired, armed, accepted, rejected and fault states without relying on motion alone.",
+      "acceptance": "Haptic/indicator patterns are unambiguous in a blinded user test and fault feedback never activates an output.",
+      "verification": "firmware state-machine test and supervised usability study",
+      "sourceStatus": "haptic_reservation_and_host_state_pipeline_defined_physical_usability_test_pending",
+      "contractRequirementIds": [
+        "HAPTIC-001",
+        "PHYSICAL-001",
+        "TARGET-001"
+      ],
+      "gateIds": [
+        "GATE-MECH-TOOL-001",
+        "GATE-FIRST-ARTICLE-001",
+        "GATE-TARGET-FW-001"
+      ],
+      "gateStatuses": {
+        "GATE-MECH-TOOL-001": "passed",
+        "GATE-FIRST-ARTICLE-001": "open",
+        "GATE-TARGET-FW-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [
+        "EVID-PCB-SOURCE",
+        "EVID-PRINT-PACKAGE"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+        "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip"
+      ]
+    },
+    {
+      "id": "SYS-012",
+      "category": "release",
+      "requirement": "Prototype fabrication authorization shall be recorded separately from PCBA, target-firmware and production release eligibility.",
+      "acceptance": "Owner-authorized prototype bare-PCB and 3D-print locks may be true while PCBA, target-firmware and production locks remain false until their evidence gates close.",
+      "verification": "delivery-manifest and release-gate audit",
+      "sourceStatus": "prototype_and_production_locks_separated",
+      "contractRequirementIds": [
+        "FAB-001",
+        "PCBA-001",
+        "PRODUCTION-001"
+      ],
+      "gateIds": [
+        "GATE-JLC-BARE-001",
+        "GATE-PCBA-001",
+        "GATE-PRODUCTION-001"
+      ],
+      "gateStatuses": {
+        "GATE-JLC-BARE-001": "passed",
+        "GATE-PCBA-001": "open",
+        "GATE-PRODUCTION-001": "open"
+      },
+      "verificationClosed": false,
+      "evidenceIds": [
+        "EVID-JLC-BARE-ZIP",
+        "EVID-PCB-SOURCE"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
+        "projects/magic-wand/electronics/wand/wand.kicad_pcb"
+      ]
+    }
+  ],
+  "openReleaseGates": [
+    "GATE-FIRST-ARTICLE-001",
+    "GATE-PCBA-001",
+    "GATE-PRODUCTION-001",
+    "GATE-RECEIVER-001",
+    "GATE-TARGET-FW-001"
+  ],
+  "releaseLocks": {
+    "prototypeBarePcbFabricationAuthorizedByOwner": true,
+    "prototype3dPrintingAuthorizedByOwner": true,
+    "pcbaOrderAuthorized": false,
+    "targetFirmwareReleaseEligible": false,
+    "productionReleaseEligible": false
+  },
+  "claimBoundary": "A pass proves contract consistency and bound-file integrity only; it does not replay domain tools, prove engineering adequacy, or grant manufacturing/production release."
+}

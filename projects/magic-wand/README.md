@@ -10,6 +10,8 @@
 - [可打印外壳包](mechanical/printable-wand/) — 含电池位、触觉位、STEP/STL、3D 预览和网格门禁；
 - [八类手势主机证据](firmware/gesture-host-evidence.json) — 主机管线证据，不代替目标固件/HIL；
 - [系统合同与 QA](integration/system-design-contract.json) — 跨域接口、证据和放行锁；
+- [当前 SYS-001..012 追踪](integration/current-system-traceability.json) — Rev B 需求到当前合同、门禁和证据的机器映射；
+- [当前交付哈希清单](integration/current-delivery-manifest.json) — 当前状态、合同、QA、交接和四项工具证据的精确闭包；
 - [历史机械/电子/整合包](integration/README.md) — Rev A 追溯材料，不再是当前状态源；
 - [整机审查 SVG](integration/system-review-overview.svg)；
 - [成本粗算](integration/rough-cost-estimate.md)；

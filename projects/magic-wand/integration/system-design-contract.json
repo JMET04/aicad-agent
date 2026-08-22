@@ -458,8 +458,8 @@
     {
       "id": "EVID-PRINT-PACKAGE",
       "path": "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
-      "size": 4532931,
-      "sha256": "6C901C458CCBCA13D95FE5D149A386C456EBFEBA9C368584E7883DB6CDFC40F3",
+      "size": 4533750,
+      "sha256": "68CA7CAD227236D243F0FE72D7BB59BEC80C4576DA91966E571882E2FD036441",
       "level": "tool_verified",
       "toolVersion": "build123d 0.10.0 package builder"
     },

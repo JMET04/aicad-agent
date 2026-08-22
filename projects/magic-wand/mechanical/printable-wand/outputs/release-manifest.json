@@ -9,7 +9,7 @@
   },
   "sourceDesign": {
     "path": "design-input.json",
-    "sha256": "8859BAE7E94B06B6E8E5240FE80004E829CB364E0C61D939B5A781F0929A9DB0"
+    "sha256": "821ACEE7DFDB94B8406B5CA53FE411BFA81375F91993061DCC221A921594F581"
   },
   "files": [
     {
@@ -34,8 +34,8 @@
     },
     {
       "path": "reports/fit-and-power-validation.json",
-      "size": 5344,
-      "sha256": "611FD98750CEBF8D671EB157E12BB5553A7E6EDB14493AC63A5E9CA845D0A775"
+      "size": 5290,
+      "sha256": "80C564F3B7EEC1B36FE9FA40C8B1BFA24351E5BC761B35ACA598007F5E9F39CA"
     },
     {
       "path": "reviewer.html",
@@ -45,12 +45,12 @@
     {
       "path": "step/MW-P-000_assembly_with_reserved_volumes.step",
       "size": 1923069,
-      "sha256": "153CBDD245AB84E0459F1ED498A9D0D30EEE2728E3BCC4EA48D6ABB661F161D4"
+      "sha256": "FED074EC66FCCB7A99D8B40E017F9BF4CE9EE67CA3C61626547347C8A9369C03"
     },
     {
       "path": "step/MW-P-000_printable_assembly.step",
       "size": 1874526,
-      "sha256": "62E325604A2429963F429CD6419FD34ECEBA51437EAE52A0685CD36335108B23"
+      "sha256": "D21F8E6E02F97221CFEB4BF767DD86135D4CB129C2EDED68346B4FA6DD20F7A6"
     },
     {
       "path": "step/MW-P-001A_upper_shell.step",

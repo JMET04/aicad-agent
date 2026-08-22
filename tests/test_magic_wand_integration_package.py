@@ -16,17 +16,6 @@ PACKAGE = MAGIC_WAND / "integration"
 XHTML_NS = "http://www.w3.org/1999/xhtml"
 SVG_NS = "http://www.w3.org/2000/svg"
 
-EXPECTED_LOCKS = {
-    "reviewOnly": True,
-    "accepted": False,
-    "technicalPackageReady": False,
-    "manufacturingAuthorized": False,
-    "fabricationAuthorized": False,
-    "productionReleaseEligible": False,
-    "humanEngineeringReviewRequired": True,
-}
-
-
 def load_json(path: Path) -> dict:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -60,34 +49,48 @@ def markdown_blocker_ids(path: Path) -> set[str]:
 class MagicWandIntegrationPackageTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.trace = load_json(PACKAGE / "system-traceability.json")
+        cls.trace = load_json(PACKAGE / "current-system-traceability.json")
+        cls.status = load_json(PACKAGE / "CURRENT_SYSTEM_STATUS.json")
+        cls.contract = load_json(PACKAGE / "system-design-contract.json")
+        cls.qa = load_json(PACKAGE / "system-design-qa-report.json")
         cls.blockers = load_json(PACKAGE / "system-blockers.json")
 
-    def test_top_level_entry_is_explicitly_review_only_and_links_all_domains(self) -> None:
+    def test_top_level_entry_identifies_current_rev_b_authority_and_open_release_gates(self) -> None:
         entry = MAGIC_WAND / "README.md"
         self.assertTrue(entry.is_file())
         text = entry.read_text(encoding="utf-8")
-        self.assertIn("review only", text.casefold())
-        self.assertIn("18 个阻塞项", text)
-        self.assertIn("禁止直接 pcb 投板", text.casefold())
+        self.assertIn("Rev B", text)
+        self.assertIn("prototype bare-PCB", text)
+        self.assertIn("prototype 3D printing", text)
+        self.assertIn("PCBA", text)
+        self.assertIn("production", text.casefold())
         linked = (
-            "mechanical/README.md", "electronics/README.md", "firmware/README.md", "integration/README.md",
-            "integration/system-review-overview.svg", "integration/rough-cost-estimate.md", "integration/combined-bom.csv",
+            "mechanical/printable-wand/", "electronics/manufacturing/jlcpcb-wand-rev-a0/", "integration/README.md",
+            "integration/CURRENT_SYSTEM_STATUS.json", "integration/SYSTEM_ENGINEERING_HANDOFF.md",
+            "integration/current-system-traceability.json", "integration/current-delivery-manifest.json",
+            "firmware/gesture-host-evidence.json",
         )
         for relative in linked:
             with self.subTest(relative=relative):
                 self.assertIn(f"]({relative})", text)
-                self.assertTrue((MAGIC_WAND / PurePosixPath(relative)).is_file())
+                self.assertTrue((MAGIC_WAND / PurePosixPath(relative)).exists())
+        legacy_readme = (PACKAGE / "README.md").read_text(encoding="utf-8")
+        self.assertIn("legacy Rev A", legacy_readme)
+        self.assertIn("superseded", legacy_readme.casefold())
+        self.assertIn("delivery-manifest.json", legacy_readme)
 
-    def test_generated_package_is_current_and_reproducible(self) -> None:
-        module = load_module(PACKAGE / "build_package.py")
+    def test_current_evidence_and_system_qa_are_reproducible(self) -> None:
+        module = load_module(PACKAGE / "build_current_evidence.py")
         self.assertEqual(module.generate(check=True), [])
-        status = load_json(PACKAGE / "integration-status.json")
-        host = status["firmwareHostReview"]
-        self.assertEqual(host["compileAndLink"], "PASSED_6_OF_6_BUILD_STEPS")
-        self.assertEqual(host["ctest"], "PASSED_1_OF_1")
-        self.assertTrue(host["targetCompile"].startswith("NOT_RUN"))
-        self.assertTrue(any("not cryptography" in item.casefold() for item in host["claimLimits"]))
+        qa_module = load_module(
+            REPO_ROOT / "agent-plugin" / "aicad-agent" / "scripts" / "aicad_system_engineering_qa.py"
+        )
+        self.assertEqual(qa_module.validate_contract(self.contract, REPO_ROOT), self.qa)
+        self.assertTrue(self.qa["ok"])
+        self.assertEqual(self.qa["errors"], [])
+        self.assertIn("SYS-PROTOTYPE-001", {row["code"] for row in self.qa["warnings"]})
+        self.assertFalse(self.qa["productionReleaseEligible"])
+        self.assertIn("does not", self.qa["claimBoundary"])
 
     def test_sys_001_through_012_are_exactly_and_source_faithfully_traced(self) -> None:
         system = load_json(MAGIC_WAND / "system-requirements.json")
@@ -95,19 +98,45 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
         observed = {row["id"]: row for row in self.trace["requirements"]}
         self.assertEqual(set(expected), {f"SYS-{index:03d}" for index in range(1, 13)})
         self.assertEqual(set(observed), set(expected))
-        self.assertEqual(self.trace["coverage"], {"required": 12, "traced": 12, "missing": []})
-        blocker_ids = {row["id"] for row in self.blockers["blockers"]}
+        self.assertEqual(self.trace["coverage"]["required"], 12)
+        self.assertEqual(self.trace["coverage"]["mapped"], 12)
+        self.assertEqual(self.trace["coverage"]["missing"], [])
+        self.assertEqual(set(self.trace["coverage"]["verificationOpen"]), set(expected))
+        contract_requirements = {row["id"] for row in self.contract["requirements"]}
+        contract_gates = {row["id"]: row for row in self.contract["verificationGates"]}
+        evidence = {row["id"]: row for row in self.contract["evidenceBindings"]}
         for requirement_id, source in expected.items():
             with self.subTest(requirement=requirement_id):
                 row = observed[requirement_id]
                 for field in ("category", "requirement", "acceptance", "verification"):
                     self.assertEqual(row[field], source[field])
                 self.assertEqual(row["sourceStatus"], source["status"])
-                self.assertFalse(row["verificationClosed"])
-                self.assertTrue(row["evidencePaths"])
+                self.assertTrue(set(row["contractRequirementIds"]).issubset(contract_requirements))
+                self.assertTrue(set(row["gateIds"]).issubset(contract_gates))
+                self.assertEqual(
+                    row["gateStatuses"],
+                    {gate_id: contract_gates[gate_id]["status"] for gate_id in row["gateIds"]},
+                )
+                self.assertEqual(
+                    row["verificationClosed"],
+                    all(value == "passed" for value in row["gateStatuses"].values()),
+                )
+                self.assertEqual(
+                    row["evidencePaths"],
+                    [evidence[evidence_id]["path"] for evidence_id in row["evidenceIds"]],
+                )
                 for path_text in row["evidencePaths"]:
-                    self.assertTrue((REPO_ROOT / path_text).is_file(), path_text)
-                self.assertTrue(set(row["openBlockerIds"]).issubset(blocker_ids))
+                    portable = PurePosixPath(path_text)
+                    self.assertFalse(portable.is_absolute())
+                    self.assertNotIn("..", portable.parts)
+                    self.assertNotIn("\\", path_text)
+                    self.assertTrue((REPO_ROOT / portable).is_file(), path_text)
+        self.assertIn("315 mm", observed["SYS-001"]["requirement"])
+        self.assertIn("30 mm", observed["SYS-001"]["requirement"])
+        self.assertIn("179 mm", observed["SYS-001"]["requirement"])
+        self.assertEqual(len(self.status["firmware"]["recognizedGestures"]), 8)
+        self.assertIn("eight_class_host_pipeline_verified", observed["SYS-004"]["sourceStatus"])
+        self.assertIn("GATE-PRODUCTION-001", observed["SYS-012"]["gateIds"])
 
     def test_combined_bom_has_unique_rows_and_null_unknown_prices(self) -> None:
         bom = load_json(PACKAGE / "combined-bom.json")
@@ -123,20 +152,52 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
         self.assertEqual([row["uid"] for row in csv_rows], [row["uid"] for row in rows])
         self.assertTrue(all(row["unit_price_cny"] == "" and row["extended_price_cny"] == "" for row in csv_rows))
 
-    def test_every_machine_readable_deliverable_keeps_release_locks_closed(self) -> None:
-        json_files = sorted(PACKAGE.glob("*.json"))
-        self.assertGreaterEqual(len(json_files), 9)
-        for path in json_files:
-            with self.subTest(path=path.name):
-                self.assertEqual(load_json(path)["releaseLocks"], EXPECTED_LOCKS)
+    def test_current_authorities_keep_prototype_and_production_locks_separate(self) -> None:
+        self.assertEqual(
+            self.status["releaseLocks"],
+            {
+                "prototypeBarePcbFabricationAuthorizedByOwner": True,
+                "prototype3dPrintingAuthorizedByOwner": True,
+                "pcbaOrderAuthorized": False,
+                "targetFirmwareReleaseEligible": False,
+                "productionReleaseEligible": False,
+            },
+        )
+        self.assertEqual(
+            self.contract["releaseLocks"],
+            {
+                "reviewOnly": True,
+                "technicalReady": False,
+                "physicalVerified": False,
+                "productionReleaseEligible": False,
+            },
+        )
+        requirements = load_json(MAGIC_WAND / "system-requirements.json")
+        self.assertTrue(requirements["releaseLocks"]["prototypeOnly"])
+        self.assertFalse(requirements["releaseLocks"]["systemAccepted"])
+        self.assertTrue(requirements["releaseLocks"]["prototypeBarePcbFabricationAuthorized"])
+        self.assertTrue(requirements["releaseLocks"]["prototype3dPrintingAuthorized"])
+        self.assertFalse(requirements["releaseLocks"]["pcbaOrderAuthorized"])
+        self.assertFalse(requirements["releaseLocks"]["targetFirmwareReleaseEligible"])
+        self.assertFalse(requirements["releaseLocks"]["productionReleaseEligible"])
+        self.assertTrue(requirements["releaseLocks"]["humanEngineeringReviewRequiredForProduction"])
+        self.assertFalse(self.qa["technicalReady"])
+        self.assertFalse(self.qa["physicalVerified"])
+        self.assertFalse(self.qa["productionReleaseEligible"])
 
-    def test_manifest_binds_real_files_by_path_size_and_sha256(self) -> None:
-        manifest = load_json(PACKAGE / "delivery-manifest.json")
-        self.assertTrue(manifest["selfHashPolicy"]["deliveryManifestExcluded"])
-        self.assertTrue(manifest["sourceInputs"])
-        self.assertTrue(manifest["deliverables"])
+    def test_current_manifest_binds_real_files_by_path_size_and_sha256(self) -> None:
+        manifest = load_json(PACKAGE / "current-delivery-manifest.json")
+        self.assertTrue(manifest["selfHashPolicy"]["currentDeliveryManifestExcluded"])
+        self.assertTrue(manifest["sourceFiles"])
+        self.assertTrue(manifest["evidenceFiles"])
+        self.assertEqual(manifest["counts"]["sourceFiles"], len(manifest["sourceFiles"]))
+        self.assertEqual(manifest["counts"]["evidenceFiles"], len(manifest["evidenceFiles"]))
+        self.assertEqual(
+            manifest["counts"]["totalBoundFiles"],
+            len(manifest["sourceFiles"]) + len(manifest["evidenceFiles"]),
+        )
         paths: set[str] = set()
-        for row in [*manifest["sourceInputs"], *manifest["deliverables"]]:
+        for row in [*manifest["sourceFiles"], *manifest["evidenceFiles"]]:
             with self.subTest(path=row["path"]):
                 self.assertNotIn(row["path"].casefold(), paths)
                 paths.add(row["path"].casefold())
@@ -146,20 +207,38 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
                 portable = PurePosixPath(row["path"])
                 self.assertFalse(portable.is_absolute())
                 self.assertNotIn("..", portable.parts)
-                lowered_parts = {part.casefold() for part in portable.parts}
-                self.assertFalse(lowered_parts.intersection({"build-host", "build-host2", "cmakefiles", "testing"}))
-                self.assertIn(row["kind"], {"source_evidence", "integration_deliverable"})
                 self.assertTrue(path.is_file(), path)
                 self.assertGreater(path.stat().st_size, 0)
                 self.assertEqual(path.stat().st_size, row["size"])
-                self.assertEqual(sha256_file(path), row["sha256"])
-        expected_deliverables = {
-            "README.md", "integration-status.json", "system-blockers.json", "system-traceability.json",
-            "system-interface-control.json", "system-interface-control.md", "combined-bom.json", "combined-bom.csv",
-            "system-fmea.json", "evt-dvt-pvt-plan.json", "evt-dvt-pvt-plan.md",
-            "rough-cost-estimate.json", "rough-cost-estimate.md", "system-review-overview.svg", "build_package.py",
+                self.assertEqual(sha256_file(path).upper(), row["sha256"])
+        expected_sources = {
+            "projects/magic-wand/README.md",
+            "projects/magic-wand/integration/README.md",
+            "projects/magic-wand/system-requirements.json",
+            "projects/magic-wand/integration/CURRENT_SYSTEM_STATUS.json",
+            "projects/magic-wand/integration/system-design-contract.json",
+            "projects/magic-wand/integration/system-design-qa-report.json",
+            "projects/magic-wand/integration/system-design-qa-report.md",
+            "projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md",
+            "projects/magic-wand/integration/current-system-traceability.json",
+            "projects/magic-wand/integration/build_current_evidence.py",
         }
-        self.assertEqual({Path(row["path"]).name for row in manifest["deliverables"]}, expected_deliverables)
+        self.assertEqual({row["path"] for row in manifest["sourceFiles"]}, expected_sources)
+        expected_evidence = {
+            "EVID-PCB-SOURCE": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+            "EVID-JLC-BARE-ZIP": "projects/magic-wand/electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
+            "EVID-PRINT-PACKAGE": "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
+            "EVID-FW-HOST": "projects/magic-wand/firmware/gesture-host-evidence.json",
+        }
+        self.assertEqual(
+            {row["evidenceId"]: row["path"] for row in manifest["evidenceFiles"]},
+            expected_evidence,
+        )
+        self.assertEqual(manifest["openReleaseGates"], self.qa["summary"]["openGates"])
+        self.assertTrue(manifest["releaseLocks"]["prototypeBarePcbFabricationAuthorizedByOwner"])
+        self.assertTrue(manifest["releaseLocks"]["prototype3dPrintingAuthorizedByOwner"])
+        self.assertFalse(manifest["releaseLocks"]["pcbaOrderAuthorized"])
+        self.assertFalse(manifest["readiness"]["productionReleaseEligible"])
 
     def test_svg_text_is_inside_frames_and_line_semantics_are_distinct(self) -> None:
         path = PACKAGE / "system-review-overview.svg"

@@ -25,7 +25,7 @@ from .review_launch import REVIEW_LAUNCH_MODES, launch_review
 from .settings import config_path, get_api_key, load_config, save_config, set_api_key
 
 
-VERSION = "1.17.1"
+VERSION = "1.17.2"
 
 
 def _parser() -> argparse.ArgumentParser:

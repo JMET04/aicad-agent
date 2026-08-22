@@ -1,6 +1,6 @@
 {
   "name": "aicad-agent",
-  "version": "1.17.1",
+  "version": "1.17.2",
   "description": "Agent-native 2D/3D engineering review across mechanical, electronics, packaging, architecture, civil, and steel/structural workflows, with hash-closed mechanical and PCB manufacturing candidates.",
   "author": {
     "name": "AI CAD Constraint Project"

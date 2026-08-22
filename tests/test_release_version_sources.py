@@ -9,8 +9,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.17.1"
-PREVIOUS_VERSION = "1.17.0"
+EXPECTED_VERSION = "1.17.2"
+PREVIOUS_VERSION = "1.17.1"
 
 
 def _python_assignment(relative: str, name: str) -> str | None:
@@ -74,25 +74,25 @@ class ReleaseVersionSourceTests(unittest.TestCase):
 
     def test_ci_and_public_documentation_are_pinned_to_current_release(self) -> None:
         workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
-        self.assertIn("-Version 1.17.1", workflow)
-        self.assertIn("aicad-agent-1.17.1.zip", workflow)
+        self.assertIn("-Version 1.17.2", workflow)
+        self.assertIn("aicad-agent-1.17.2.zip", workflow)
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         plugin_readme = (ROOT / "agent-plugin/aicad-agent/README.md").read_text(
             encoding="utf-8"
         )
-        self.assertTrue(readme.startswith("# aicad-agent 1.17.1\n"))
-        self.assertTrue(plugin_readme.startswith("# aicad-agent 1.17.1\n"))
-        root_notes = (ROOT / "docs/RELEASE_NOTES_v1.17.1.md").read_bytes()
+        self.assertTrue(readme.startswith("# aicad-agent 1.17.2\n"))
+        self.assertTrue(plugin_readme.startswith("# aicad-agent 1.17.2\n"))
+        root_notes = (ROOT / "docs/RELEASE_NOTES_v1.17.2.md").read_bytes()
         plugin_notes = (
-            ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.17.1.md"
+            ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.17.2.md"
         ).read_bytes()
         self.assertEqual(root_notes, plugin_notes)
-        self.assertIn(b"# aicad-agent 1.17.1", root_notes)
-        self.assertIn(b"Release date: 2026-08-21", root_notes)
+        self.assertIn(b"# aicad-agent 1.17.2", root_notes)
+        self.assertIn(b"Release date: 2026-08-22", root_notes)
         overview = (ROOT / "docs/PRODUCT_OVERVIEW.zh-CN.md").read_text(
             encoding="utf-8"
         )
-        self.assertIn("RELEASE_NOTES_v1.17.1.md", overview)
+        self.assertIn("RELEASE_NOTES_v1.17.2.md", overview)
 
         install_surfaces = (
             "README.md",
@@ -162,12 +162,19 @@ class ReleaseVersionSourceTests(unittest.TestCase):
                 )
 
     def test_historical_release_records_are_preserved(self) -> None:
-        self.assertTrue((ROOT / "docs/RELEASE_NOTES_v1.17.0.md").is_file())
-        self.assertTrue(
-            (ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.17.0.md").is_file()
+        for version in ("1.17.0", "1.17.1"):
+            with self.subTest(version=version):
+                self.assertTrue((ROOT / f"docs/RELEASE_NOTES_v{version}.md").is_file())
+                self.assertTrue(
+                    (ROOT / f"agent-plugin/aicad-agent/docs/RELEASE_NOTES_v{version}.md").is_file()
+                )
+        self.assertEqual(
+            (ROOT / "docs/RELEASE_NOTES_v1.17.1.md").read_bytes(),
+            (ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.17.1.md").read_bytes(),
         )
         for relative in ("CHANGELOG.md", "agent-plugin/aicad-agent/CHANGELOG.md"):
             text = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertIn("## 1.17.1 - 2026-08-21", text)
             self.assertIn("## 1.17.0 - 2026-08-21", text)
             self.assertIn("## 1.16.0 - 2026-08-20", text)
 

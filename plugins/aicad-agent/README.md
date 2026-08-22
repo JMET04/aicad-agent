@@ -1,4 +1,4 @@
-# aicad-agent 1.17.1
+# aicad-agent 1.17.2
 
 ## 跨领域规范第一门禁
 

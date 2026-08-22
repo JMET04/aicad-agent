@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 1.17.2 - 2026-08-22
+
+- Published the cross-domain system contract, deterministic QA and public manufacturing-release schema/API/CLI/MCP/reviewer capability under immutable version 1.17.2.
+- Added the source-faithful Rev B `SYS-001..012` machine map and current delivery manifest binding status, contract, QA, handoff and four tool-verified artifacts by portable path, size and SHA-256.
+- Regenerated the printable-wand candidate with repository-relative POSIX source-PCB metadata and added packaged-JSON regressions against drive-letter or absolute backslash paths.
+- Aligned plugin, runtime API, compiler, CI, installer, verifier, documentation, public trees and archive metadata at 1.17.2 while retaining the historical `v1.17.1` WIP tag.
+- Kept owner-authorized prototype bare-PCB ordering and 3D printing separate from PCBA, target firmware, physical first-article acceptance and production release, which remain locked.
+
 ## 1.17.1 - 2026-08-21
 
 - Added the hash-closed manufacturing release schema plus Python API, CLI and MCP validation/build/review surfaces.
