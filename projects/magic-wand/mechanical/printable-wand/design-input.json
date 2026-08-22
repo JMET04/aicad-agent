@@ -5,17 +5,69 @@
   "sourcePcb": {
     "path": "../../electronics/wand/wand.kicad_pcb",
     "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
-    "size": [15.0, 80.0, 1.6],
+    "size": [
+      15.0,
+      80.0,
+      1.6
+    ],
     "caseTransform": "case_x = pcb_x - 7.5; case_z = pcb_y + 9.0",
     "mounts": [
-      {"ref": "H1", "caseCenter": [0.0, 0.0, 29.25], "fastener": "M2 nylon"},
-      {"ref": "H2", "caseCenter": [0.0, 0.0, 86.0], "fastener": "M2 nylon"}
+      {
+        "ref": "H1",
+        "caseCenter": [
+          0.0,
+          0.0,
+          29.25
+        ],
+        "fastener": "M2 nylon"
+      },
+      {
+        "ref": "H2",
+        "caseCenter": [
+          0.0,
+          0.0,
+          86.0
+        ],
+        "fastener": "M2 nylon"
+      }
     ],
     "interfaces": {
-      "usbC": {"ref": "J1", "caseCenter": [4.75, 0.0, 47.0], "openingFace": "+X"},
-      "battery": {"ref": "J2", "caseCenter": [-4.2, 0.0, 66.0], "connector": "JST-SH 1.0 mm 3-pin"},
-      "button": {"ref": "SW1", "caseCenter": [0.0, 0.0, 73.5], "openingFace": "+Y"},
-      "haptic": {"ref": "J3", "caseCenter": [-4.5, 0.0, 81.0], "connector": "JST-SH 1.0 mm 2-pin"}
+      "usbC": {
+        "ref": "J1",
+        "caseCenter": [
+          4.75,
+          0.0,
+          47.0
+        ],
+        "openingFace": "+X"
+      },
+      "battery": {
+        "ref": "J2",
+        "caseCenter": [
+          -4.2,
+          0.0,
+          66.0
+        ],
+        "connector": "JST-SH 1.0 mm 3-pin"
+      },
+      "button": {
+        "ref": "SW1",
+        "caseCenter": [
+          0.0,
+          0.0,
+          73.5
+        ],
+        "openingFace": "+Y"
+      },
+      "haptic": {
+        "ref": "J3",
+        "caseCenter": [
+          -4.5,
+          0.0,
+          81.0
+        ],
+        "connector": "JST-SH 1.0 mm 2-pin"
+      }
     }
   },
   "handle": {
@@ -26,15 +78,53 @@
     "splitPlane": "Y=0",
     "seamClearancePerSide": 0.2,
     "decorativeRibHeight": 0.45,
-    "shellScrews": {"x": [-10.3, 10.3], "z": [38.0, 96.0], "size": "M2x12"}
+    "shellScrews": {
+      "x": [
+        -10.3,
+        10.3
+      ],
+      "z": [
+        38.0,
+        96.0
+      ],
+      "size": "M2x12"
+    }
   },
   "powerReservation": {
     "cellType": "protected 1S LiPo 501040/601040-class with 10k NTC",
-    "maximumEnvelope": [11.0, 6.0, 42.0],
-    "caseCenter": [0.0, -6.9, 62.0],
-    "caseBounds": {"x": [-5.5, 5.5], "y": [-9.9, -3.9], "z": [41.0, 83.0]},
-    "antennaKeepoutZ": [5.0, 30.0],
-    "wireChannel": {"minimumWidth": 4.0, "minimumDepth": 3.0, "bendReserve": 8.0},
+    "maximumEnvelope": [
+      11.0,
+      6.0,
+      42.0
+    ],
+    "caseCenter": [
+      0.0,
+      -6.9,
+      62.0
+    ],
+    "caseBounds": {
+      "x": [
+        -5.5,
+        5.5
+      ],
+      "y": [
+        -9.9,
+        -3.9
+      ],
+      "z": [
+        41.0,
+        83.0
+      ]
+    },
+    "antennaKeepoutZ": [
+      5.0,
+      30.0
+    ],
+    "wireChannel": {
+      "minimumWidth": 4.0,
+      "minimumDepth": 3.0,
+      "bendReserve": 8.0
+    },
     "service": "Open split shell; use pull ribbon under cell",
     "mandatory": [
       "Protected single-cell pack only",
@@ -51,5 +141,41 @@
     "perimeters": 4,
     "infillPercent": 35,
     "dimensionalAllowance": 0.25
+  },
+  "hapticReservation": {
+    "actuatorType": "10 mm coin LRA/ERM connected to J3; exact part must match DRV2605L configuration",
+    "maximumEnvelope": {
+      "diameter": 10.0,
+      "thickness": 3.4
+    },
+    "caseCenter": [
+      0.0,
+      7.0,
+      40.0
+    ],
+    "antennaKeepoutZ": [
+      5.0,
+      30.0
+    ],
+    "minimumAntennaGap": 5.0,
+    "retention": "Printed upper-shell cup plus thin nonconductive foam",
+    "wireRoute": {
+      "connector": "J3 JST-SH 1.0 mm 2-pin",
+      "caseConnectorCenter": [
+        -4.5,
+        0.0,
+        81.0
+      ],
+      "clipClearance": 3.0
+    }
+  },
+  "rod": {
+    "preferredMaterial": "8 mm GFRP solid rod",
+    "prohibitedMaterialNearAntenna": "conductive carbon-fiber or metal rod",
+    "diameter": 8.0,
+    "cutLength": 195.0,
+    "socketBottomCaseZ": 116.0,
+    "assembledOverallLength": 315.0,
+    "exposedAboveConnector": 179.0
   }
 }

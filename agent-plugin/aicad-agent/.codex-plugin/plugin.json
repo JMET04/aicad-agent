@@ -21,12 +21,13 @@
   "interface": {
     "displayName": "AI CAD Constraint Agent",
     "shortDescription": "Review and modify constrained 2D/3D CAD through one agent-native workflow.",
-    "longDescription": "Select geometry or parameters, read exact model measurements, toggle MODEL_XYZ, describe changes in plain language, inspect arbitrary sections, and submit one source-bound modification request back to the agent. The handoff is schema-validated, source-hash checked, previewed, applied, audited, and regenerated as a corrected selectable modifier before any artifact is written. One entry point covers mechanical, electronics, packaging, architecture, civil and steel/structural review with explicit maturity gates: civil and steel/structural outputs remain source-bound diagnostic or review candidates, never production-grade automatic design. Review HTML can be persisted by content hash without opening a tab; automated tools open tabs only for explicit auto/always requests. Protocol-4 native dimensions, exact transactions, dependency replay, host authority boundaries, production gates and audit evidence remain enforced internally.",
+    "longDescription": "Select geometry or parameters, read exact model measurements, toggle MODEL_XYZ, describe changes in plain language, inspect arbitrary sections, and submit one source-bound modification request back to the agent. The handoff is schema-validated, source-hash checked, previewed, applied, audited, and regenerated as a corrected selectable modifier before any artifact is written. One entry point covers system contracts plus mechanical, electronics, packaging, architecture, civil and steel/structural review with explicit maturity gates: civil and steel/structural outputs remain source-bound diagnostic or review candidates, never production-grade automatic design. Review HTML can be persisted by content hash without opening a tab; automated tools open tabs only for explicit auto/always requests. Protocol-4 native dimensions, exact transactions, dependency replay, host authority boundaries, production gates and audit evidence remain enforced internally.",
     "developerName": "AI CAD Constraint Project",
     "category": "Developer Tools",
     "capabilities": [
       "MCP tools",
       "Local CLI",
+      "Cross-domain system interface, evidence and change-impact QA",
       "Cross-domain normative-first preflight",
       "Unified mechanical, electronics, packaging, architecture, civil and steel/structural entry point",
       "Maturity-gated civil and steel/structural diagnostic review candidates",
@@ -78,10 +79,9 @@
       "Controlled hash-bound failure-to-lesson learning loop"
     ],
     "defaultPrompt": [
-      "Open the CAD modifier so I can click a line, point, or circle and inspect its exact model values.",
-      "Rebuild this webpage drawing as calibrated 1:1 CAD with matching annotations.",
-      "Use the plugin to draw a 120x80 mm plate with a centered 20 mm hole.",
-      "Validate this mechanical and PCB package as a hash-closed factory release candidate and open the same-page 2D/3D reviewer."
+      "Open the CAD modifier so I can inspect and change exact model geometry.",
+      "Build a cross-domain system contract for my PCB, enclosure, power, firmware and manufacturing handoff.",
+      "Validate this mechanical and PCB package as a hash-closed prototype manufacturing candidate."
     ],
     "brandColor": "#2563EB"
   },

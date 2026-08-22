@@ -1,0 +1,486 @@
+{
+  "schema": "aicad.system-engineering-contract.v1",
+  "systemId": "magic-wand-rev-a0",
+  "revision": "2026-08-22-prototype-contract-1",
+  "intendedUse": "Owner-authorized prototype fabrication of the Rev A0 magic-wand bare PCB and 3D-printed enclosure, followed by controlled bring-up and cross-domain verification.",
+  "prohibitedUses": [
+    "Production release or sale before every physical, target-firmware, receiver, PCBA, security and independent-review gate passes",
+    "PCBA ordering before supplier and LCSC mapping, exact component substitutions and assembly data are independently reviewed",
+    "Connecting a battery before exact protected-cell selection and J2 harness pin-order and polarity verification",
+    "Using conductive carbon-fiber or metal rod material inside or adjacent to the antenna keepout"
+  ],
+  "requirements": [
+    {
+      "id": "ELEC-001",
+      "statement": "The authoritative wand PCB shall remain a 15.0 mm by 80.0 mm, 4-layer design with its frozen source identity and zero-error ERC/DRC tool results preserved before fabrication.",
+      "verificationMethod": "Verify the bound KiCad board identity, then replay the pinned ERC/DRC and land-pattern checks after any electrical or layout change.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS"],
+      "gateIds": ["GATE-PCB-TOOL-001"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "FIT-001",
+      "statement": "PCB, mounting holes, USB-C and press-to-arm controls shall align to the enclosure under case_x = pcb_x - 7.5 and case_z = pcb_y + 9.0 without reserved-volume collisions.",
+      "verificationMethod": "Replay enclosure geometry QA and then inspect and measure the first printed article with the real PCB installed.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MECHANICAL"],
+      "gateIds": ["GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "POWER-001",
+      "statement": "The enclosure shall reserve a maximum 11 x 6 x 42 mm protected 1S LiPo with 10k NTC, service access, wire bend space and a J2 JST-SH 1.0 mm 3-pin BAT+/NTC/GND interface; J2 harness polarity shall be verified before connection.",
+      "verificationMethod": "Replay reserved-volume QA, select the exact protected cell and harness, continuity-check J2 and physically fit the pack before energized bring-up.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MECHANICAL"],
+      "gateIds": ["GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "HAPTIC-001",
+      "statement": "The enclosure shall reserve a 10 mm diameter by 3.4 mm maximum coin LRA/ERM, retained nonconductively and wired to J3, while the selected actuator remains compatible with the DRV2605L configuration.",
+      "verificationMethod": "Replay reserved-volume QA, review the selected actuator, physically fit it, then verify polarity, drive mode, current and thermal behavior on the first article.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MECHANICAL"],
+      "gateIds": ["GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "RF-001",
+      "statement": "The case z=5..30 mm antenna keepout shall contain no battery, metal fastener, dense filler or conductive rod, with at least 11 mm battery-to-keepout and 5 mm haptic-to-keepout separation in the current geometry.",
+      "verificationMethod": "Replay geometry checks, inspect materials and assembly, then perform target-powered RF range and coexistence testing.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MECHANICAL", "SUBSYS-FIRMWARE"],
+      "gateIds": ["GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "GESTURE-001",
+      "statement": "The armed wand shall recognize TAP, TWIST_CW, TWIST_CCW, SWISH_LEFT, SWISH_RIGHT, THRUST, CIRCLE_CW and CIRCLE_CCW, reject stationary and ambiguous motion, enforce a 250 ms refractory period and emit only authenticated encrypted 2-byte gesture events.",
+      "verificationMethod": "Run host vectors and protocol tests, build and exercise the NINA-B302 target, collect representative-user data, and prove that the compatible receiver does not directly actuate from an unauthorised gesture event.",
+      "subsystemIds": ["SUBSYS-FIRMWARE", "SUBSYS-ELECTRONICS", "SUBSYS-RECEIVER"],
+      "gateIds": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "FAB-001",
+      "statement": "The prototype fabrication upload shall contain only the verified Rev A0 bare-PCB Gerber/drill package for a 15 x 80 mm, 4-layer, 1.6 mm, 1 oz outer-copper board with black mask, white silkscreen, ENIG, tented vias and no impedance, edge-plating, castellations or gold fingers.",
+      "verificationMethod": "Verify the bound ZIP identity and inspect the generated Gerber/drill set and JLC order parameters before upload.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MANUFACTURING"],
+      "gateIds": ["GATE-JLC-BARE-001"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "PHYSICAL-001",
+      "statement": "The first printed enclosure and first assembled wand PCB shall be physically inspected for fit, shrink compensation, fastener torque, USB/button access, battery/haptic retention, current-limited bring-up, charge, thermal and RF behavior.",
+      "verificationMethod": "Record first-article measurements, photographs, torque, current, temperature, charge, USB, haptic and RF results against this configuration.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MECHANICAL", "SUBSYS-FIRMWARE"],
+      "gateIds": ["GATE-FIRST-ARTICLE-001"],
+      "status": "defined"
+    },
+    {
+      "id": "TARGET-001",
+      "statement": "A pinned nRF Connect SDK/Zephyr toolchain shall produce, flash and exercise a NINA-B302 target image implementing the host-reviewed gesture and protocol behavior.",
+      "verificationMethod": "Record toolchain lock, clean target build, image hash, flash log and hardware-in-loop results.",
+      "subsystemIds": ["SUBSYS-FIRMWARE", "SUBSYS-ELECTRONICS"],
+      "gateIds": ["GATE-TARGET-FW-001"],
+      "status": "defined"
+    },
+    {
+      "id": "RECEIVER-001",
+      "statement": "A compatible receiver shall be frozen, packaged and verified for authenticated protocol interoperability, replay resistance, timeout-safe behavior and explicit non-actuation on gesture-event receipt alone.",
+      "verificationMethod": "Run cross-device protocol, negative-security, timeout and safe-state hardware-in-loop tests against a versioned receiver artifact.",
+      "subsystemIds": ["SUBSYS-FIRMWARE", "SUBSYS-RECEIVER"],
+      "gateIds": ["GATE-RECEIVER-001"],
+      "status": "defined"
+    },
+    {
+      "id": "PCBA-001",
+      "statement": "No PCBA or production build shall be ordered until exact BOM supplier/LCSC mapping, substitutions, CPL origin/rotation, component availability and assembly constraints are complete and independently reviewed.",
+      "verificationMethod": "Review a versioned BOM/CPL/assembly package, supplier mappings and assembly DFM evidence before enabling PCBA or production release.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MANUFACTURING"],
+      "gateIds": ["GATE-PCBA-001", "GATE-PRODUCTION-001"],
+      "status": "defined"
+    },
+    {
+      "id": "PRODUCTION-001",
+      "statement": "Production release requires all technical and physical gates, representative-user gesture validation, packet-security and RF testing, receiver release and independent electrical, mechanical and security review to pass.",
+      "verificationMethod": "Audit every gate and evidence binding, perform independent reviews, and explicitly change the production authorization and release locks only after closure.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MECHANICAL", "SUBSYS-FIRMWARE", "SUBSYS-MANUFACTURING", "SUBSYS-RECEIVER"],
+      "gateIds": ["GATE-PRODUCTION-001"],
+      "status": "defined"
+    }
+  ],
+  "subsystems": [
+    {
+      "id": "SUBSYS-ELECTRONICS",
+      "domain": "electronics",
+      "scope": "Rev A0 wand PCB, power/charge path, NINA-B302, IMU, USB-C, press-to-arm input, J2 battery and J3 haptic interfaces.",
+      "artifactIds": ["ART-PCB-SOURCE"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "SUBSYS-MECHANICAL",
+      "domain": "mechanical",
+      "scope": "Split printable shell, PCB carrier, rear cap, rod connector, plunger and the protected battery, haptic, service-wire and RF material reservations.",
+      "artifactIds": ["ART-PRINT-PACKAGE"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "SUBSYS-FIRMWARE",
+      "domain": "firmware",
+      "scope": "Eight-class gesture classifier, physical arm gate, refractory logic, authenticated gesture-event protocol and NINA-B302 target integration boundary.",
+      "artifactIds": ["ART-FW-HOST-EVIDENCE"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "SUBSYS-MANUFACTURING",
+      "domain": "manufacturing",
+      "scope": "JLC-compatible bare-PCB Gerber/drill upload, order parameters and the still-open PCBA and production handoff.",
+      "artifactIds": ["ART-JLC-BARE-ZIP"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "SUBSYS-RECEIVER",
+      "domain": "systems",
+      "scope": "Compatible receiver protocol, safe-state and actuation boundary; implementation and physical evidence remain open.",
+      "artifactIds": ["ART-RECEIVER-SPEC"],
+      "status": "defined"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "ART-PCB-SOURCE",
+      "subsystemId": "SUBSYS-ELECTRONICS",
+      "kind": "KiCad PCB source",
+      "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+      "evidenceLevel": "tool_verified",
+      "evidenceIds": ["EVID-PCB-SOURCE"]
+    },
+    {
+      "id": "ART-PRINT-PACKAGE",
+      "subsystemId": "SUBSYS-MECHANICAL",
+      "kind": "Printable enclosure STL/STEP/review package",
+      "path": "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
+      "evidenceLevel": "tool_verified",
+      "evidenceIds": ["EVID-PRINT-PACKAGE"]
+    },
+    {
+      "id": "ART-FW-HOST-EVIDENCE",
+      "subsystemId": "SUBSYS-FIRMWARE",
+      "kind": "Gesture and protocol host-verification record",
+      "path": "projects/magic-wand/firmware/gesture-host-evidence.json",
+      "evidenceLevel": "tool_verified",
+      "evidenceIds": ["EVID-FW-HOST"]
+    },
+    {
+      "id": "ART-JLC-BARE-ZIP",
+      "subsystemId": "SUBSYS-MANUFACTURING",
+      "kind": "JLC bare-PCB Gerber and drill upload package",
+      "path": "projects/magic-wand/electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
+      "evidenceLevel": "tool_verified",
+      "evidenceIds": ["EVID-JLC-BARE-ZIP"]
+    },
+    {
+      "id": "ART-RECEIVER-SPEC",
+      "subsystemId": "SUBSYS-RECEIVER",
+      "kind": "Receiver-side protocol boundary specification",
+      "path": "projects/magic-wand/firmware/protocol.md",
+      "evidenceLevel": "defined",
+      "evidenceIds": []
+    }
+  ],
+  "interfaces": [
+    {
+      "id": "IFC-PCB-CASE",
+      "kind": "mechanical",
+      "providerSubsystemId": "SUBSYS-ELECTRONICS",
+      "consumerSubsystemId": "SUBSYS-MECHANICAL",
+      "contract": "The enclosure consumes the authoritative PCB coordinate frame and preserves the board, mounting, USB-C and press-to-arm locations under one frozen transform.",
+      "parameters": [
+        {"name": "pcbToCaseTransform", "value": "case_x = pcb_x - 7.5; case_z = pcb_y + 9.0", "unit": null, "authority": "printable-wand/design-input.json"},
+        {"name": "pcbEnvelope", "value": "15.0 x 80.0 x 1.6", "unit": "mm", "tolerance": "enclosure allowance 0.25 mm unless physically recalibrated", "authority": "wand.kicad_pcb and printable-wand/design-input.json"},
+        {"name": "H1CaseCenter", "value": "[0.0, 0.0, 29.25]", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "H2CaseCenter", "value": "[0.0, 0.0, 86.0]", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "usbCInterface", "value": "J1 at [4.75, 0.0, 47.0], opening +X", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "armButtonInterface", "value": "SW1 at [0.0, 0.0, 73.5], opening +Y", "unit": "mm", "authority": "printable-wand/design-input.json"}
+      ],
+      "verificationGateIds": ["GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"]
+    },
+    {
+      "id": "IFC-BATTERY-J2",
+      "kind": "energy",
+      "providerSubsystemId": "SUBSYS-MECHANICAL",
+      "consumerSubsystemId": "SUBSYS-ELECTRONICS",
+      "contract": "The shell retains and services one exact protected 1S LiPo inside the reserved envelope and delivers BAT+, 10k NTC and GND to J2 only after harness verification.",
+      "parameters": [
+        {"name": "cellClass", "value": "protected 1S LiPo 501040/601040-class with 10k NTC", "unit": null, "authority": "printable-wand/design-input.json"},
+        {"name": "maximumCellEnvelope", "value": "11.0 x 6.0 x 42.0", "unit": "mm", "tolerance": "hard maximum before enclosure redesign", "authority": "printable-wand/design-input.json"},
+        {"name": "cellCaseCenter", "value": "[0.0, -6.9, 62.0]", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "cellCaseBounds", "value": "x[-5.5,5.5], y[-9.9,-3.9], z[41.0,83.0]", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "connector", "value": "J2 JST-SH 1.0 mm 3-pin BAT+/NTC/GND; NTC reaches pin 2; verify numbering and harness polarity before connection", "unit": null, "authority": "wand.kicad_pcb and printable-wand/design-input.json"},
+        {"name": "J2CaseCenter", "value": "[-4.2, 0.0, 66.0]", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "wireBendReserve", "value": 8.0, "unit": "mm", "authority": "printable-wand/design-input.json"}
+      ],
+      "verificationGateIds": ["GATE-PCB-TOOL-001", "GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"]
+    },
+    {
+      "id": "IFC-HAPTIC-J3",
+      "kind": "electrical",
+      "providerSubsystemId": "SUBSYS-ELECTRONICS",
+      "consumerSubsystemId": "SUBSYS-MECHANICAL",
+      "contract": "J3 drives an exactly selected DRV2605L-compatible coin actuator retained in the upper-shell nonconductive cup without PCB, battery or shell collision.",
+      "parameters": [
+        {"name": "connector", "value": "J3 JST-SH 1.0 mm 2-pin", "unit": null, "authority": "wand.kicad_pcb and printable-wand/design-input.json"},
+        {"name": "J3CaseCenter", "value": "[-4.5, 0.0, 81.0]", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "maximumActuatorDiameter", "value": 10.0, "unit": "mm", "tolerance": "hard maximum before enclosure redesign", "authority": "printable-wand/design-input.json"},
+        {"name": "maximumActuatorThickness", "value": 3.4, "unit": "mm", "tolerance": "hard maximum before enclosure redesign", "authority": "printable-wand/design-input.json"},
+        {"name": "actuatorCaseCenter", "value": "[0.0, 7.0, 40.0]", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "retention", "value": "printed upper-shell cup plus thin nonconductive foam", "unit": null, "authority": "printable-wand/design-input.json"}
+      ],
+      "verificationGateIds": ["GATE-PCB-TOOL-001", "GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"]
+    },
+    {
+      "id": "IFC-RF-KEEP-OUT",
+      "kind": "rf",
+      "providerSubsystemId": "SUBSYS-ELECTRONICS",
+      "consumerSubsystemId": "SUBSYS-MECHANICAL",
+      "contract": "The mechanical stack preserves the NINA antenna volume and uses nonconductive nearby materials until target RF evidence establishes performance.",
+      "parameters": [
+        {"name": "antennaKeepoutCaseZ", "value": "5.0..30.0", "unit": "mm", "authority": "printable-wand/design-input.json"},
+        {"name": "forbiddenContents", "value": "battery, metal fasteners, dense filler, conductive carbon-fiber or metal rod", "unit": null, "authority": "printable-wand/design-input.json"},
+        {"name": "minimumBatteryGap", "value": 11.0, "unit": "mm", "authority": "printable-wand generated geometry report"},
+        {"name": "minimumHapticGap", "value": 5.0, "unit": "mm", "authority": "printable-wand generated geometry report"},
+        {"name": "preferredRod", "value": "8 mm solid GFRP, 195 mm cut length", "unit": null, "authority": "printable-wand/design-input.json"}
+      ],
+      "verificationGateIds": ["GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"]
+    },
+    {
+      "id": "IFC-TARGET-FW",
+      "kind": "data",
+      "providerSubsystemId": "SUBSYS-FIRMWARE",
+      "consumerSubsystemId": "SUBSYS-ELECTRONICS",
+      "contract": "The portable host-reviewed logic shall be integrated on the NINA-B302 without changing the gesture frame, arm gate, classifier thresholds or protocol semantics without re-verification.",
+      "parameters": [
+        {"name": "target", "value": "u-blox NINA-B302 / nRF52 with pinned nRF Connect SDK and Zephyr", "unit": null, "authority": "firmware/TARGET_GESTURE_INTEGRATION.md"},
+        {"name": "gestureFrame", "value": "wand +X tip-forward, +Y user-left, +Z arm-button-up after calibrated sensor remap", "unit": null, "authority": "current system interface contract"},
+        {"name": "physicalArmRequired", "value": true, "unit": null, "authority": "gesture-host-evidence.json"},
+        {"name": "refractory", "value": 250, "unit": "ms", "authority": "gesture-host-evidence.json"}
+      ],
+      "verificationGateIds": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001"]
+    },
+    {
+      "id": "IFC-GESTURE-PROTOCOL",
+      "kind": "data",
+      "providerSubsystemId": "SUBSYS-FIRMWARE",
+      "consumerSubsystemId": "SUBSYS-RECEIVER",
+      "contract": "The receiver consumes an authenticated encrypted gesture classification event as information only; receipt of the event alone must not enter an actuating state.",
+      "parameters": [
+        {"name": "gestureSet", "value": "TAP,TWIST_CW,TWIST_CCW,SWISH_LEFT,SWISH_RIGHT,THRUST,CIRCLE_CW,CIRCLE_CCW", "unit": null, "authority": "gesture-host-evidence.json"},
+        {"name": "gestureEventPayload", "value": "2 bytes: gesture identifier plus confidence 70..100", "unit": "byte", "authority": "firmware protocol and host evidence"},
+        {"name": "transportProtection", "value": "authenticated and encrypted protocol frame with exact-length decode", "unit": null, "authority": "gesture-host-evidence.json"},
+        {"name": "receiverActuationRule", "value": "gesture event does not directly actuate receiver state machine", "unit": null, "authority": "gesture-host-evidence.json"}
+      ],
+      "verificationGateIds": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"]
+    },
+    {
+      "id": "IFC-BARE-PCB-FAB",
+      "kind": "manufacturing",
+      "providerSubsystemId": "SUBSYS-ELECTRONICS",
+      "consumerSubsystemId": "SUBSYS-MANUFACTURING",
+      "contract": "Manufacturing receives the hash-bound Rev A0 bare-board archive and fixed prototype order parameters; it does not infer PCBA authorization from the presence of PCB fabrication data.",
+      "parameters": [
+        {"name": "orderMode", "value": "bare PCB only; PCBA excluded", "unit": null, "authority": "jlcpcb-wand-rev-a0 package"},
+        {"name": "quantity", "value": 5, "unit": "board", "authority": "owner-authorized prototype order boundary"},
+        {"name": "boardSize", "value": "15 x 80", "unit": "mm", "authority": "wand.kicad_pcb"},
+        {"name": "stack", "value": "4 layers, 1.6 mm finished thickness, 1 oz outer copper", "unit": null, "authority": "jlcpcb-wand-rev-a0 package"},
+        {"name": "finish", "value": "ENIG", "unit": null, "authority": "jlcpcb-wand-rev-a0 package"},
+        {"name": "appearance", "value": "black solder mask, white silkscreen", "unit": null, "authority": "jlcpcb-wand-rev-a0 package"},
+        {"name": "specialOptions", "value": "tented vias; remove order number; no impedance, gold fingers, castellations or edge plating", "unit": null, "authority": "jlcpcb-wand-rev-a0 package"}
+      ],
+      "verificationGateIds": ["GATE-JLC-BARE-001", "GATE-PCBA-001", "GATE-PRODUCTION-001"]
+    }
+  ],
+  "flows": [
+    {
+      "id": "FLOW-MECHANICAL-FIT",
+      "type": "material",
+      "orderedSubsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MECHANICAL"],
+      "interfaceIds": ["IFC-PCB-CASE", "IFC-RF-KEEP-OUT"],
+      "failureState": "Stop assembly and fabrication release; revise authoritative coordinates or reserved volumes, regenerate the enclosure and rerun geometry plus first-article gates."
+    },
+    {
+      "id": "FLOW-ENERGY-HAPTIC",
+      "type": "energy",
+      "orderedSubsystemIds": ["SUBSYS-MECHANICAL", "SUBSYS-ELECTRONICS"],
+      "interfaceIds": ["IFC-BATTERY-J2", "IFC-HAPTIC-J3"],
+      "failureState": "Disconnect the battery, preserve current limiting, prohibit further energization and reopen J2/J3 electrical, thermal and physical checks."
+    },
+    {
+      "id": "FLOW-GESTURE-SIGNAL",
+      "type": "signal",
+      "orderedSubsystemIds": ["SUBSYS-FIRMWARE", "SUBSYS-ELECTRONICS", "SUBSYS-RECEIVER"],
+      "interfaceIds": ["IFC-TARGET-FW", "IFC-GESTURE-PROTOCOL"],
+      "failureState": "Remain non-actuating, reject the event or target image, record the failure and reopen host, target and receiver verification."
+    },
+    {
+      "id": "FLOW-BARE-PCB-MANUFACTURING",
+      "type": "manufacturing",
+      "orderedSubsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-MANUFACTURING"],
+      "interfaceIds": ["IFC-BARE-PCB-FAB"],
+      "failureState": "Stop checkout, preserve the prototype-only boundary, regenerate from the authoritative PCB and re-verify the upload archive and order parameters."
+    }
+  ],
+  "verificationGates": [
+    {
+      "id": "GATE-PCB-TOOL-001",
+      "requirementIds": ["ELEC-001"],
+      "requiredEvidenceLevel": "tool_verified",
+      "verification": "Bound PCB identity matches the frozen Rev A0 source; recorded KiCad ERC is 0 errors/0 warnings, DRC is 0 violations/0 unconnected/0 footprint errors and 23/23 land-pattern tests pass.",
+      "status": "passed",
+      "evidenceIds": ["EVID-PCB-SOURCE"]
+    },
+    {
+      "id": "GATE-MECH-TOOL-001",
+      "requirementIds": ["FIT-001", "POWER-001", "HAPTIC-001", "RF-001"],
+      "requiredEvidenceLevel": "tool_verified",
+      "verification": "Generated printable package matches the authoritative PCB and reports no shell/PCB, shell/battery, carrier/battery, shell/haptic, PCB/haptic or battery/haptic collisions while preserving the power, haptic and RF reservations.",
+      "status": "passed",
+      "evidenceIds": ["EVID-PRINT-PACKAGE", "EVID-PCB-SOURCE"]
+    },
+    {
+      "id": "GATE-FW-HOST-001",
+      "requirementIds": ["GESTURE-001"],
+      "requiredEvidenceLevel": "tool_verified",
+      "verification": "Two host tests pass the eight positive gesture vectors, stationary and cross-axis negatives, physical-arm gate, 250 ms refractory and exact-length non-actuating gesture-event protocol behavior.",
+      "status": "passed",
+      "evidenceIds": ["EVID-FW-HOST"]
+    },
+    {
+      "id": "GATE-JLC-BARE-001",
+      "requirementIds": ["FAB-001"],
+      "requiredEvidenceLevel": "tool_verified",
+      "verification": "The hash-bound archive is the verified upload candidate containing the Rev A0 Gerber/drill set for the fixed bare-PCB order configuration.",
+      "status": "passed",
+      "evidenceIds": ["EVID-JLC-BARE-ZIP", "EVID-PCB-SOURCE"]
+    },
+    {
+      "id": "GATE-FIRST-ARTICLE-001",
+      "requirementIds": ["FIT-001", "POWER-001", "HAPTIC-001", "RF-001", "PHYSICAL-001"],
+      "requiredEvidenceLevel": "physical_verified",
+      "verification": "Print and measure the first enclosure, select and continuity-check the exact protected battery/J2 harness and haptic part, assemble under current limiting, then record fit, torque, charge, USB, haptic, temperature and RF results.",
+      "status": "open",
+      "evidenceIds": []
+    },
+    {
+      "id": "GATE-TARGET-FW-001",
+      "requirementIds": ["GESTURE-001", "TARGET-001"],
+      "requiredEvidenceLevel": "physical_verified",
+      "verification": "Build, hash, flash and hardware-in-loop test a NINA-B302 image with a pinned nRF Connect SDK/Zephyr and ARM toolchain; include representative-user gesture and safety timing data.",
+      "status": "open",
+      "evidenceIds": []
+    },
+    {
+      "id": "GATE-RECEIVER-001",
+      "requirementIds": ["GESTURE-001", "RECEIVER-001"],
+      "requiredEvidenceLevel": "physical_verified",
+      "verification": "Freeze a compatible receiver artifact and pass authenticated interoperability, replay, timeout, non-actuation and safe-state hardware-in-loop tests.",
+      "status": "open",
+      "evidenceIds": []
+    },
+    {
+      "id": "GATE-PCBA-001",
+      "requirementIds": ["PCBA-001"],
+      "requiredEvidenceLevel": "tool_verified",
+      "verification": "Complete and independently review exact BOM supplier/LCSC mapping, substitutions, CPL origin/rotation and assembly DFM before any PCBA order.",
+      "status": "open",
+      "evidenceIds": []
+    },
+    {
+      "id": "GATE-PRODUCTION-001",
+      "requirementIds": ["PCBA-001", "PRODUCTION-001"],
+      "requiredEvidenceLevel": "released",
+      "verification": "All domain, physical, target, receiver, security, RF, PCBA and independent-review gates pass and an explicit owner production authorization changes the release locks.",
+      "status": "open",
+      "evidenceIds": []
+    }
+  ],
+  "changeImpacts": [
+    {
+      "sourceId": "IFC-PCB-CASE",
+      "impactedIds": ["ART-PRINT-PACKAGE", "FIT-001", "FLOW-MECHANICAL-FIT"],
+      "requiredRechecks": ["GATE-PCB-TOOL-001", "GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"]
+    },
+    {
+      "sourceId": "IFC-BATTERY-J2",
+      "impactedIds": ["ART-PCB-SOURCE", "ART-PRINT-PACKAGE", "POWER-001", "FLOW-ENERGY-HAPTIC"],
+      "requiredRechecks": ["GATE-PCB-TOOL-001", "GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"]
+    },
+    {
+      "sourceId": "IFC-HAPTIC-J3",
+      "impactedIds": ["ART-PCB-SOURCE", "ART-PRINT-PACKAGE", "HAPTIC-001", "FLOW-ENERGY-HAPTIC"],
+      "requiredRechecks": ["GATE-PCB-TOOL-001", "GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001"]
+    },
+    {
+      "sourceId": "IFC-RF-KEEP-OUT",
+      "impactedIds": ["ART-PCB-SOURCE", "ART-PRINT-PACKAGE", "RF-001", "FLOW-MECHANICAL-FIT"],
+      "requiredRechecks": ["GATE-PCB-TOOL-001", "GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001", "GATE-TARGET-FW-001"]
+    },
+    {
+      "sourceId": "IFC-TARGET-FW",
+      "impactedIds": ["ART-PCB-SOURCE", "ART-FW-HOST-EVIDENCE", "TARGET-001", "FLOW-GESTURE-SIGNAL"],
+      "requiredRechecks": ["GATE-PCB-TOOL-001", "GATE-FW-HOST-001", "GATE-TARGET-FW-001"]
+    },
+    {
+      "sourceId": "IFC-GESTURE-PROTOCOL",
+      "impactedIds": ["ART-FW-HOST-EVIDENCE", "ART-RECEIVER-SPEC", "GESTURE-001", "RECEIVER-001", "FLOW-GESTURE-SIGNAL"],
+      "requiredRechecks": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"]
+    },
+    {
+      "sourceId": "IFC-BARE-PCB-FAB",
+      "impactedIds": ["ART-PCB-SOURCE", "ART-JLC-BARE-ZIP", "FAB-001", "PCBA-001", "FLOW-BARE-PCB-MANUFACTURING"],
+      "requiredRechecks": ["GATE-PCB-TOOL-001", "GATE-JLC-BARE-001", "GATE-PCBA-001", "GATE-PRODUCTION-001"]
+    }
+  ],
+  "evidenceBindings": [
+    {
+      "id": "EVID-PCB-SOURCE",
+      "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
+      "size": 222240,
+      "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
+      "level": "tool_verified",
+      "toolVersion": "KiCad CLI 10.0.5"
+    },
+    {
+      "id": "EVID-JLC-BARE-ZIP",
+      "path": "projects/magic-wand/electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
+      "size": 62544,
+      "sha256": "EC3C07314F5ED3463697A1235EC2C4B8D2BB2BC2A0B1B4C8A42807E09C8AC1C6",
+      "level": "tool_verified",
+      "toolVersion": "KiCad CLI 10.0.5 and package builder"
+    },
+    {
+      "id": "EVID-PRINT-PACKAGE",
+      "path": "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
+      "size": 4532931,
+      "sha256": "6C901C458CCBCA13D95FE5D149A386C456EBFEBA9C368584E7883DB6CDFC40F3",
+      "level": "tool_verified",
+      "toolVersion": "build123d 0.10.0 package builder"
+    },
+    {
+      "id": "EVID-FW-HOST",
+      "path": "projects/magic-wand/firmware/gesture-host-evidence.json",
+      "size": 3470,
+      "sha256": "F8EE9559DF6645B329F46D8FA2CA05DFD532096097DA9D2271D2C6E3AFB33AD7",
+      "level": "tool_verified",
+      "toolVersion": "GCC MinGW-W64 16.1.0, CMake 4.3.2, Ninja 1.13.2"
+    }
+  ],
+  "authorizations": {
+    "prototypeBuild": true,
+    "productionRelease": false,
+    "notes": "Owner authorization covers prototype bare-PCB fabrication and prototype 3D printing only. It does not authorize PCBA or production release."
+  },
+  "releaseLocks": {
+    "reviewOnly": true,
+    "technicalReady": false,
+    "physicalVerified": false,
+    "productionReleaseEligible": false
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "schema": "magic-wand.current-system-status.v2",
+  "observedAt": "2026-08-22",
+  "configuration": "WAND_PRINTABLE_REV_A0_PLUS_BARE_PCB_REV_A0",
+  "status": "PROTOTYPE_ARTIFACTS_VERIFIED_PHYSICAL_AND_TARGET_GATES_OPEN",
+  "ownerAuthorizations": {
+    "publicSourceRelease": true,
+    "prototypeBarePcbOrder": true,
+    "prototype3dPrint": true,
+    "jlcpcbCheckoutRequestedAfterDesignCompletion": true,
+    "pcbaAssemblyOrder": false,
+    "productionRelease": false
+  },
+  "authoritativeCheckpoints": [
+    {
+      "commit": "02889a2",
+      "scope": "zero-error wand PCB and frozen routes"
+    },
+    {
+      "commit": "29c69a8",
+      "scope": "JLC bare-PCB package and printable enclosure baseline"
+    },
+    {
+      "commit": "c6ee3e8",
+      "scope": "eight-class gesture and encrypted event pipeline"
+    }
+  ],
+  "wandPcb": {
+    "path": "../electronics/wand/wand.kicad_pcb",
+    "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
+    "sizeMm": [
+      15.0,
+      80.0
+    ],
+    "layers": 4,
+    "erc": {
+      "errors": 0,
+      "warnings": 0,
+      "ignored": 0
+    },
+    "drc": {
+      "violations": 0,
+      "unconnected": 0,
+      "footprintErrors": 0,
+      "ignored": 0
+    },
+    "landPatternTests": {
+      "passed": 23,
+      "failed": 0
+    }
+  },
+  "jlcBarePcbPackage": {
+    "path": "../electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
+    "status": "VERIFIED_UPLOAD_CANDIDATE",
+    "sha256": "EC3C07314F5ED3463697A1235EC2C4B8D2BB2BC2A0B1B4C8A42807E09C8AC1C6",
+    "quantity": 5,
+    "finish": "ENIG",
+    "solderMask": "Black",
+    "pcbaIncluded": false
+  },
+  "printableEnclosure": {
+    "path": "../mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
+    "status": "VERIFIED_PRINT_CANDIDATE",
+    "sha256": "6C901C458CCBCA13D95FE5D149A386C456EBFEBA9C368584E7883DB6CDFC40F3",
+    "handleOuterDiameterMm": 30.0,
+    "batteryMaximumEnvelopeMm": [
+      11.0,
+      6.0,
+      42.0
+    ],
+    "batteryRadialClearanceMm": 1.475,
+    "batteryToAntennaGapMm": 11.0,
+    "hapticMaximumEnvelopeMm": [
+      10.0,
+      3.4
+    ],
+    "hapticToAntennaGapMm": 5.0,
+    "collisionVolumesMm3": {
+      "shellBattery": 0.0,
+      "shellPcb": 0.0,
+      "carrierBattery": 0.0,
+      "shellHaptic": 0.0,
+      "pcbHaptic": 0.0,
+      "batteryHaptic": 0.0
+    },
+    "rod": {
+      "material": "8 mm GFRP",
+      "cutLengthMm": 195.0,
+      "targetOverallLengthMm": 315.0
+    },
+    "meshGate": {
+      "status": "PASSED",
+      "stlCount": 6,
+      "allSingleBody": true,
+      "allWatertight": true,
+      "allWindingConsistent": true,
+      "allValidVolume": true,
+      "boundaryEdges": 0,
+      "nonManifoldEdges": 0,
+      "brokenFaces": 0,
+      "degenerateFaces": 0,
+      "duplicateFaces": 0,
+      "independentSlicerImport": "NOT_RUN_NO_SUPPORTED_SLICER_CLI_INSTALLED"
+    },
+    "batteryCaseCenterMm": [
+      0.0,
+      -6.9,
+      62.0
+    ],
+    "batteryCaseBoundsMm": {
+      "x": [
+        -5.5,
+        5.5
+      ],
+      "y": [
+        -9.9,
+        -3.9
+      ],
+      "z": [
+        41.0,
+        83.0
+      ]
+    },
+    "batteryWireBendReserveMm": 8.0
+  },
+  "firmware": {
+    "portableCore": "HOST_VERIFIED",
+    "hostTests": {
+      "passed": 2,
+      "failed": 0
+    },
+    "recognizedGestures": [
+      "TAP",
+      "TWIST_CW",
+      "TWIST_CCW",
+      "SWISH_LEFT",
+      "SWISH_RIGHT",
+      "THRUST",
+      "CIRCLE_CW",
+      "CIRCLE_CCW"
+    ],
+    "physicalArmGate": true,
+    "refractoryMs": 250,
+    "ninaB302TargetImage": "NOT_BUILT_MISSING_NRF_CONNECT_SDK_ZEPHYR_WEST_AND_ARM_TOOLCHAIN",
+    "hardwareInLoop": "NOT_RUN",
+    "gestureEventPayloadBytes": 2,
+    "securityClaimBoundary": "The two-byte payload is wired to the AES-CCM protocol integration boundary; host tests use a non-encrypting callback and do not prove target encryption, BLE security, anti-replay, or receiver safety."
+  },
+  "systemInterfaces": {
+    "pcbToCaseTransform": "case_x = pcb_x - 7.5; case_z = pcb_y + 9.0",
+    "usbC": "+X face at case z=47.0 mm",
+    "pressToArm": "+Y face at case z=73.5 mm",
+    "batteryConnector": "J2 JST-SH 1.0 mm 3-pin BAT+/NTC/GND; pinout verification mandatory",
+    "hapticConnector": "J3 JST-SH 1.0 mm 2-pin",
+    "antennaKeepout": "case z=5..30 mm; no battery, metal fasteners, dense filler or conductive rod",
+    "gestureFrame": "wand +X tip-forward, +Y user-left, +Z arm-button-up after calibrated sensor remap"
+  },
+  "openReleaseGates": [
+    "Select an exact protected 1S LiPo part with 10k NTC and verify J2 harness polarity.",
+    "Complete BOM supplier/LCSC mapping before any PCBA order.",
+    "Import all six STL files into a real slicer and record zero repair, zero floating islands and successful layer generation before first physical print.",
+    "Print and physically fit the first enclosure; record shrink compensation and fastener torque.",
+    "Assemble and current-limit bring up the first wand PCB; execute charge, thermal, USB, RF and haptic tests.",
+    "Install and pin a supported nRF Connect SDK/Zephyr target toolchain and build a NINA-B302 image.",
+    "Perform representative-user gesture dataset, HIL safety timing, packet security and RF range tests.",
+    "Freeze and package a compatible receiver; the current JLC package covers the wand bare PCB only.",
+    "Independent electrical/mechanical/security review before production release."
+  ],
+  "releaseLocks": {
+    "prototypeBarePcbFabricationAuthorizedByOwner": true,
+    "prototype3dPrintingAuthorizedByOwner": true,
+    "pcbaOrderAuthorized": false,
+    "targetFirmwareReleaseEligible": false,
+    "productionReleaseEligible": false
+  }
+}

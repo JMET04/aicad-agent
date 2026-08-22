@@ -6,6 +6,10 @@
 
 高优先级规范只有同时具备 schema/contract 字段、生成时约束、独立 QA 和能稳定复现旧错误的负向回归测试，才算真正落地。该原则适用于所有领域，不是建筑专用补丁。
 
+## 多专业系统设计契约
+
+当任务同时包含 PCB、外壳、供电、固件、制造交接，或机械、电子、包装、土木、建筑等两个以上子系统时，使用 `aicad-system-design` 技能和 `aicad.system-engineering-contract.v1`。它把需求、子系统、跨域接口、能量/信号/制造流程、工件、证据哈希、变更重检和发布门禁绑定在同一张可审计关系图中，同时保留每个专业自己的规范与工具验证。`scripts/aicad_system_engineering_qa.py` 的通过只证明契约一致性和绑定文件完整性；原型授权不等于生产放行。详见 [系统工程工作流](docs/SYSTEM_ENGINEERING_WORKFLOW.md)。
+
 ## 1:1 webpage and image reference reconstruction
 
 Version 1.15.0 can rebuild calibrated webpage SVG, SVG, raster, and PDF references as editable 1:1 CAD model geometry. Vector sources are hash-pinned and read from their actual DOM object IDs; raster pixels never become dimension truth. Geometry, dimensions, exact text, annotation position/rotation, lineweight hierarchy, aspect ratio, mojibake, and overlap are separate hard gates. A bounded `optimized_offset` is allowed only when real font metrics create a measured collision. See [the reference reconstruction guide](docs/WEB_REFERENCE_REBUILD.md).
@@ -84,6 +88,7 @@ The reviewer now exposes one modification list instead of separate user-facing i
 python scripts/aicad_agent.py capabilities
 python scripts/aicad_engineering_preflight.py --template mechanical --output mechanical-preflight.json
 python scripts/aicad_engineering_preflight.py --contract mechanical-preflight.json --output mechanical-preflight.report.json --markdown mechanical-preflight.report.md
+python scripts/aicad_system_engineering_qa.py system-contract.json --root evidence --output system-qa.json --markdown system-qa.md
 python scripts/aicad_production_readiness_qa_v3.py production-contract-v3.json --output production-validation-v3.json --markdown production-validation-v3.md
 python scripts/aicad_agent.py compile --plan runtime/examples/rectangle.plan.json --out smoke --name rectangle
 python scripts/aicad_agent.py build3d --plan runtime/examples/mounting_plate_3d.plan.json --out smoke3d --name plate --no-execute

@@ -326,5 +326,12 @@
     "fabricationAuthorized": false,
     "productionReleaseEligible": false,
     "humanEngineeringReviewRequired": true
+  },
+  "legacyMetadata": {
+    "authoritative": false,
+    "historicalSnapshot": true,
+    "baseline": "Rev A pre-native-tool baseline",
+    "supersededBy": "CURRENT_SYSTEM_STATUS.json",
+    "doNotUseForCurrentRelease": true
   }
 }

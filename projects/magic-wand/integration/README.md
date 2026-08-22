@@ -1,25 +1,28 @@
 # 魔法棒系统整合审查包（Rev A）
 
-状态：**review_only_pre_evt_open_blockers**。本目录把机械、电子、固件和系统需求串成一份可审计的 EVT 前审查包；它不是工厂生产放行包。
+Status: **legacy Rev A baseline, superseded for current execution status by `CURRENT_SYSTEM_STATUS.json` and `SYSTEM_ENGINEERING_HANDOFF.md`**.
 
 ## 一眼结论
 
-- 可做：需求/接口审查、机械 STEP/DXF 询价与 DFM 讨论、KiCad 录入准备、主机侧固件契约审查、EVT→DVT→PVT 规划和粗算。
-- 不可做：PCB 投板、生产放行、直接市电控制、无人机武装/动力/主飞控，或宣称 ERC/DRC、目标固件、HIL、RF、结构、锂电和法规已经通过。
-- 当前开放阻塞项：18 个；所有授权锁保持关闭，`reviewOnly=true`。
+- Current verified artifacts: zero-error frozen wand PCB, JLC bare-board upload ZIP, printable enclosure package, and host-tested eight-class gesture core. Use them only within the explicit prototype limits.
+- Current exception: the owner authorized the verified wand **prototype bare-PCB** order and prototype 3D print. PCBA, target firmware and production release remain prohibited.
+- The legacy 18-blocker count below is retained as historical Rev A evidence; use the current status file for live gates.
 - 浏览器总览：`system-review-overview.svg`。所有注释位于边框内，电源/RF/安全/普通信号采用不同线宽和线型。
 
 ## 交付索引
 
-- `integration-status.json`：可做/不可做和各域状态；
-- `system-interface-control.json` / `.md`：wand↔receiver、机械↔PCB、电源、RF、press-to-arm、安全输出边界；
-- `system-traceability.json`：SYS-001..012 原文级追溯；
-- `combined-bom.json` / `.csv`：机械+电子合并 BOM，未询价单价保持 `null`/空白；
-- `system-fmea.json`：系统 FMEA；
-- `evt-dvt-pvt-plan.json` / `.md`：阶段门和工厂打样/询价边界；
-- `rough-cost-estimate.json` / `.md`：人工、OpenAI API、DeepSeek API 粗算；
-- `system-blockers.json`：源域阻塞项与系统级阻塞项；
-- `delivery-manifest.json`：真实 path/size/SHA-256 清单。
+当前权威文件：
+
+- `CURRENT_SYSTEM_STATUS.json`：当前事实、授权、哈希和开放门；
+- `SYSTEM_ENGINEERING_HANDOFF.md`：当前接口、制造交接和经验教训；
+- `system-design-contract.json` / `system-design-qa-report.*`：当前跨域合同与自动 QA。
+
+历史 Rev A 文件（只用于追溯，内容不得解释为当前结论）：
+
+- `integration-status.json`、`system-blockers.json`、`delivery-manifest.json`：旧状态、阻塞和旧哈希闭包；
+- `system-interface-control.json` / `.md`、`system-traceability.json`：旧 27 mm 机械/未冻结 PCB 接口基线；
+- `evt-dvt-pvt-plan.json` / `.md`、`system-review-overview.svg`：旧阶段门和旧总览；
+- `combined-bom.*`、`system-fmea.json`、`rough-cost-estimate.*`：仍可作历史分析输入，但供应链价格和状态需重新验证。
 
 ## SYS-001..012 总览
 
@@ -40,13 +43,14 @@
 
 ## 放行声明
 
-机械包虽有实际 SolidWorks 零件重开证据，仍缺侧孔、原生装配干涉、材料/结构和制造图闭环；电子包只有逻辑连接意图，没有原生 KiCad、ERC/DRC、CAM 或板级实测；固件没有目标构建、烧录、HIL 或独立安全审查。因此整机只能作为 review-only 的 EVT 输入。
+The legacy paragraph here described the pre-native baseline. Current wand PCB ERC/DRC and fabrication outputs are verified, the printable enclosure is a verified prototype candidate, and the portable gesture core passes host tests. Physical, receiver, target-firmware, security and production gates remain open.
 
-## 复现
+## 当前复核
 
-在仓库根目录执行：
+在仓库根目录执行当前外壳生成器与系统合同 QA。旧的 `integration/build_package.py`
+及其测试只复现 Rev A，且会重新生成过期结论，不应用于当前放行。
 
 ```powershell
-python projects/magic-wand/integration/build_package.py --check
-python tests/test_magic_wand_integration_package.py
+python projects/magic-wand/mechanical/printable-wand/build_printable_wand.py
+python plugins/aicad-agent/tests/test_system_engineering_contract.py -v
 ```

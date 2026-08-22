@@ -1,0 +1,6 @@
+interface:
+  display_name: "AICAD System Design"
+  short_description: "Coordinate auditable multi-discipline engineering systems"
+  default_prompt: "Use $aicad-system-design to define and verify the interfaces, flows, evidence, and release gates for my multi-subsystem design."
+policy:
+  allow_implicit_invocation: true

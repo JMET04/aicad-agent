@@ -15,6 +15,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+import numpy as np
+import trimesh
 
 import build123d
 from build123d import (
@@ -54,6 +56,7 @@ def load_design() -> dict[str, Any]:
 P = load_design()
 HANDLE = P["handle"]
 POWER = P["powerReservation"]
+HAPTIC = P["hapticReservation"]
 PCB = P["sourcePcb"]
 
 
@@ -153,6 +156,29 @@ def make_upper_shell():
     usb = PCB["interfaces"]["usbC"]["caseCenter"]
     usb_cut = _rounded_prism_x(10.2, 5.2, 1.1, 20.0, 7.5, 0.7, float(usb[2]))
     shape = shape - usb_cut
+
+    # Snap cup for a 10 x 3.4 mm coin LRA/ERM. The metal actuator starts
+    # 5 mm after the RF keepout and remains separated from PCB components.
+    motor_x, motor_y, motor_z = (float(v) for v in HAPTIC["caseCenter"])
+    motor_radius = float(HAPTIC["maximumEnvelope"]["diameter"]) / 2
+    motor_thickness = float(HAPTIC["maximumEnvelope"]["thickness"])
+    motor_low_y = motor_y - (motor_thickness / 2)
+    cup_base = _axis_y_cylinder(
+        motor_radius + 0.55, 0.70, motor_low_y - 0.80, motor_x, motor_z)
+    cup_ring = _axis_y_cylinder(
+        motor_radius + 0.55, motor_thickness + 0.30,
+        motor_low_y - 0.15, motor_x, motor_z) - _axis_y_cylinder(
+            motor_radius + 0.15, motor_thickness + 0.50,
+            motor_low_y - 0.25, motor_x, motor_z)
+    # Overlap both the cup ring and the inner shell wall.  The previous
+    # 3 mm bridges stopped at a tangent and exported as four floating bodies.
+    bridge_left = Box(
+        1.2, 4.7, 2.0, align=(Align.CENTER, Align.MIN, Align.CENTER)
+    ).translate((-5.35, motor_low_y + motor_thickness + 0.05, motor_z))
+    bridge_right = Box(
+        1.2, 4.7, 2.0, align=(Align.CENTER, Align.MIN, Align.CENTER)
+    ).translate((5.35, motor_low_y + motor_thickness + 0.05, motor_z))
+    shape = shape.fuse(cup_base, cup_ring, bridge_left, bridge_right, tol=0.02)
     shape.label = "MW-P-001A_UPPER_PRINTED_SHELL"
     shape.color = Color(0.18, 0.35, 0.68)
     return shape
@@ -180,42 +206,67 @@ def make_lower_shell():
 
 
 def make_carrier():
-    # PCB ledges, side clips and end ties.  The board is installed component
-    # side upward and retained by nylon M2 screws at the frozen H1/H2 axes.
-    left_ledge = Box(1.4, 1.2, 84.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((-7.7, -2.0, 7.0))
-    right_ledge = Box(1.4, 1.2, 84.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((7.7, -2.0, 7.0))
-    left_clip = Box(0.9, 2.8, 84.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((-8.35, -2.0, 7.0))
-    right_clip = Box(0.9, 2.8, 84.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((8.35, -2.0, 7.0))
-    shape = left_ledge + right_ledge + left_clip + right_clip
+    # Build every positive feature first, then perform one explicit fuzzy fuse.
+    # Algebraic + on disconnected intermediate solids can preserve a Compound
+    # even after later features touch it, which produced a 15-body STL.
+    additive = [
+        Box(1.4, 1.2, 84.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((-7.7, -2.0, 7.0)),
+        Box(1.4, 1.2, 84.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((7.7, -2.0, 7.0)),
+        Box(0.9, 2.8, 84.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((-8.35, -2.0, 7.0)),
+        Box(0.9, 2.8, 84.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((8.35, -2.0, 7.0)),
+    ]
     for z in (7.0, 89.8):
-        shape = shape + Box(16.6, 1.2, 1.2, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((0, -2.0, z))
+        additive.append(
+            Box(16.6, 1.2, 1.2, align=(Align.CENTER, Align.MIN, Align.MIN))
+            .translate((0, -2.0, z))
+        )
 
-    # Dedicated protected-LiPo cradle.  It includes a 0.2 mm width allowance,
-    # rigid end frames, an open wire side and a pull-ribbon slot.
-    tray_base = Box(12.0, 1.0, 46.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((0, -10.9, 41.0))
-    side_left = Box(0.8, 7.0, 46.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((-6.1, -10.9, 41.0))
-    side_right = Box(0.8, 7.0, 46.0, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((6.1, -10.9, 41.0))
-    shape = shape + tray_base + side_left + side_right
+    # Dedicated protected-LiPo cradle with an open wire side and pull ribbon.
+    additive.extend([
+        Box(12.0, 1.0, 46.0, align=(Align.CENTER, Align.MIN, Align.MIN))
+        .translate((0, -10.9, 41.0)),
+        Box(0.8, 7.0, 46.0, align=(Align.CENTER, Align.MIN, Align.MIN))
+        .translate((-6.1, -10.9, 41.0)),
+        Box(0.8, 7.0, 46.0, align=(Align.CENTER, Align.MIN, Align.MIN))
+        .translate((6.1, -10.9, 41.0)),
+    ])
+    # These rails bridge the tray to the PCB ledges outside the 11 mm cell.
+    for x in (-6.75, 6.75):
+        additive.append(
+            Box(0.9, 3.25, 46.8, align=(Align.CENTER, Align.MIN, Align.MIN))
+            .translate((x, -4.05, 40.6))
+        )
     for z in (39.8, 83.0):
-        end_frame = Box(12.8, 10.0, 1.2, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((0, -10.9, z))
-        rail_tie = Box(16.6, 1.2, 1.2, align=(Align.CENTER, Align.MIN, Align.MIN)).translate((0, -2.0, z))
-        shape = shape + end_frame + rail_tie
+        additive.extend([
+            Box(12.8, 10.0, 1.2, align=(Align.CENTER, Align.MIN, Align.MIN))
+            .translate((0, -10.9, z)),
+            Box(16.6, 1.2, 1.2, align=(Align.CENTER, Align.MIN, Align.MIN))
+            .translate((0, -2.0, z)),
+        ])
 
-    ribbon_slot = Box(5.0, 2.0, 12.0, align=(Align.CENTER, Align.CENTER, Align.CENTER)).translate((0, -10.4, 64.0))
-    shape = shape - ribbon_slot
-
+    pilots = []
     for mount in PCB["mounts"]:
         x, _, z = mount["caseCenter"]
-        boss = _axis_y_cylinder(2.2, 3.2, -4.0, float(x), float(z))
-        pilot = _axis_y_cylinder(0.90, 3.6, -4.2, float(x), float(z))
-        shape = shape + boss - pilot
+        additive.extend([
+            Box(16.6, 2.4, 1.2, align=(Align.CENTER, Align.MIN, Align.CENTER))
+            .translate((0, -3.2, float(z))),
+            _axis_y_cylinder(2.2, 3.2, -4.0, float(x), float(z)),
+        ])
+        pilots.append(_axis_y_cylinder(0.90, 3.6, -4.2, float(x), float(z)))
 
-    # Cable guide alongside J2: 8 mm axial reserve is left unobstructed between
-    # the battery lead exit and the three-pin board connector.
-    cable_guard = Box(4.8, 1.0, 12.0, align=(Align.CENTER, Align.MIN, Align.CENTER)).translate((-3.9, -3.9, 70.0))
-    shape = shape + cable_guard
-    if not hasattr(shape, "wrapped"):
-        shape = Compound(children=list(shape))
+    # J2 cable guard overlaps the left bridge but stays clear of the cell.
+    additive.append(
+        Box(5.4, 1.2, 12.0, align=(Align.CENTER, Align.MIN, Align.CENTER))
+        .translate((-3.8, -3.85, 70.0))
+    )
+
+    shape = additive[0].fuse(*additive[1:], tol=0.02)
+    ribbon_slot = Box(
+        5.0, 2.0, 12.0, align=(Align.CENTER, Align.CENTER, Align.CENTER)
+    ).translate((0, -10.4, 64.0))
+    shape = shape - ribbon_slot
+    for pilot in pilots:
+        shape = shape - pilot
     shape.label = "MW-P-002_PCB_AND_BATTERY_CARRIER"
     shape.color = Color(0.73, 0.56, 0.16)
     return shape
@@ -224,10 +275,17 @@ def make_carrier():
 def make_rear_cap():
     outer = float(HANDLE["outerDiameter"]) / 2
     inner = float(HANDLE["innerDiameter"]) / 2
-    flange = Cylinder(outer + 0.55, 4.0, align=(Align.CENTER, Align.CENTER, Align.MIN)).translate((0, 0, -4.0))
-    plug = Cone(inner - 0.25, inner - 0.40, 7.0, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    shape = flange + plug
-    lanyard = _axis_y_cylinder(2.0, 34.0, -17.0, 0.0, -2.0)
+    # The flange/plug overlap avoids a coplanar-only union.  The lanyard
+    # bore keeps 1 mm of printable wall instead of tangentially breaking both
+    # flange faces, which previously produced a non-watertight STL.
+    flange = Cylinder(
+        outer + 0.55, 5.0, align=(Align.CENTER, Align.CENTER, Align.MIN)
+    ).translate((0, 0, -5.0))
+    plug = Cone(
+        inner - 0.25, inner - 0.40, 7.4, align=(Align.CENTER, Align.CENTER, Align.MIN)
+    ).translate((0, 0, -0.4))
+    shape = flange.fuse(plug, tol=0.02)
+    lanyard = _axis_y_cylinder(1.5, 34.0, -17.0, 0.0, -2.5)
     shape = shape - lanyard
     shape.label = "MW-P-003_REAR_CAP_WITH_LANYARD"
     shape.color = Color(0.28, 0.55, 0.42)
@@ -274,6 +332,16 @@ def make_battery_placeholder():
     return shape
 
 
+def make_haptic_placeholder():
+    diameter = float(HAPTIC["maximumEnvelope"]["diameter"])
+    thickness = float(HAPTIC["maximumEnvelope"]["thickness"])
+    x, y, z = (float(v) for v in HAPTIC["caseCenter"])
+    shape = _axis_y_cylinder(diameter / 2, thickness, y - (thickness / 2), x, z)
+    shape.label = "COIN_HAPTIC_RESERVED_VOLUME"
+    shape.color = Color(0.62, 0.28, 0.68)
+    return shape
+
+
 def collision_volume(a, b) -> float:
     try:
         return float(a.intersect(b).volume)
@@ -308,6 +376,13 @@ def build_validation(parts: dict[str, Any], pcb_path: Path) -> dict[str, Any]:
         "shellToBatteryCollisionMm3": round(collision_volume(lower_upper, parts["battery"]), 6),
         "shellToPcbCollisionMm3": round(collision_volume(lower_upper, parts["pcb"]), 6),
         "carrierToBatteryCollisionMm3": round(collision_volume(parts["carrier"], parts["battery"]), 6),
+        "shellToHapticCollisionMm3": round(collision_volume(lower_upper, parts["haptic"]), 6),
+        "pcbToHapticCollisionMm3": round(collision_volume(parts["pcb"], parts["haptic"]), 6),
+        "batteryToHapticCollisionMm3": round(collision_volume(parts["battery"], parts["haptic"]), 6),
+        "hapticToAntennaAxialGapMm": round(
+            float(HAPTIC["caseCenter"][2]) -
+            (float(HAPTIC["maximumEnvelope"]["diameter"]) / 2) -
+            float(HAPTIC["antennaKeepoutZ"][1]), 3),
         "wireBendReserveMm": float(POWER["wireChannel"]["bendReserve"]),
         "minimumShellWallMm": float(HANDLE["minimumWall"]),
         "firstShellScrewToAntennaGapMm": round(
@@ -321,6 +396,10 @@ def build_validation(parts: dict[str, Any], pcb_path: Path) -> dict[str, Any]:
         and checks["shellToBatteryCollisionMm3"] <= 0.01
         and checks["shellToPcbCollisionMm3"] <= 0.01
         and checks["carrierToBatteryCollisionMm3"] <= 0.01
+        and checks["shellToHapticCollisionMm3"] <= 0.01
+        and checks["pcbToHapticCollisionMm3"] <= 0.01
+        and checks["batteryToHapticCollisionMm3"] <= 0.01
+        and checks["hapticToAntennaAxialGapMm"] >= 5.0
         and checks["wireBendReserveMm"] >= 8.0
         and checks["minimumShellWallMm"] >= 2.0
         and checks["firstShellScrewToAntennaGapMm"] >= 8.0
@@ -337,6 +416,7 @@ def build_validation(parts: dict[str, Any], pcb_path: Path) -> dict[str, Any]:
             "Use nylon M2 hardware at PCB H1/H2 and preferably at shell stations during RF validation.",
             "Keep the z=5..30 mm antenna volume free of battery, metal hardware, shielding and dense filler.",
             "Verify JST-SH pin order and cell polarity with a multimeter before first connection.",
+            "Fit the exact 10 mm haptic actuator in the upper cup with thin nonconductive foam and route it to J3.",
         ],
     }
 
@@ -394,15 +474,30 @@ Status: **{status}**
 - The battery begins at z=41 mm, leaving 11 mm after the RF antenna keepout ends at z=30 mm.
 - Confirm J2 BAT+/NTC/GND order and polarity with a multimeter before connection.
 
+## Haptic reservation
+
+- Reserved actuator envelope: 10 mm diameter x 3.4 mm thick coin LRA/ERM.
+- Fit in the upper-shell printed cup with thin nonconductive foam; route its two-wire lead to J3.
+- The metal envelope begins at z=35 mm, leaving 5 mm after the RF antenna keepout.
+- The exact actuator must match the DRV2605L library/configuration used by target firmware.
+
+## Wand rod
+
+- Use an 8 mm solid GFRP rod cut to 195 mm.
+- Insert it to the socket bottom at case z=116 mm; the resulting target overall length is 315 mm.
+- Exposed rod above the connector is 179 mm. Verify the first article before adhesive bonding.
+- Do not substitute conductive carbon-fiber or metal rod without a renewed RF/mechanical review.
+
 ## Assembly order
 
 1. Deburr and dry-fit both shells, rear cap, rod connector and plunger.
 2. Seat the protected cell in the carrier with a pull ribbon and thin nonconductive foam if needed.
 3. Route the lead through the J2 channel. Do not crease or pinch the NTC lead.
-4. Install the PCB component-side upward on H1/H2 using nylon M2 screws.
-5. Fit the press-to-arm plunger and verify free return before closing the shell.
-6. Close with M2x12 screws. Start all screws before tightening; do not overtighten printed bosses.
-7. Perform USB charge, button, radio range and gesture tests before attaching the decorative rod.
+4. Fit the 10 mm haptic actuator in the upper-shell cup and route its lead to J3.
+5. Install the PCB component-side upward on H1/H2 using nylon M2 screws.
+6. Fit the press-to-arm plunger and verify free return before closing the shell.
+7. Close with M2x12 screws. Start all screws before tightening; do not overtighten printed bosses.
+8. Perform USB charge, button, haptic, radio range and gesture tests before attaching the decorative rod.
 
 This is a verified prototype print candidate, not an injection-mold release. Battery supplier drawing,
 actual printed shrinkage and the first-article fit remain physical acceptance gates.
@@ -429,6 +524,7 @@ code{{background:#edf1f5;padding:2px 5px;border-radius:5px}}@media(max-width:800
 <tr><td>电池径向最小余量</td><td>{validation['checks']['batteryRadialClearanceMm']} mm</td></tr>
 <tr><td>电池距天线区</td><td>{validation['checks']['batteryToAntennaAxialGapMm']} mm</td></tr>
 <tr><td>线束弯曲预留</td><td>{validation['checks']['wireBendReserveMm']} mm</td></tr>
+<tr><td>Haptic envelope</td><td>10 mm dia x 3.4 mm; RF gap {validation['checks']['hapticToAntennaAxialGapMm']} mm</td></tr>
 <tr><td>PCB 源哈希</td><td>{'一致' if validation['checks']['sourcePcbSha256Matches'] else '不一致'}</td></tr>
 <tr><td>USB-C</td><td>+X 面，中心 z=47 mm</td></tr>
 <tr><td>按键</td><td>+Y 面，中心 z=73.5 mm</td></tr>
@@ -458,9 +554,69 @@ def export_parts(parts: dict[str, Any]) -> None:
     printable_assembly = Compound(
         children=[parts["upper_shell"], parts["lower_shell"], parts["carrier"], parts["rear_cap"], connector_installed, parts["plunger"]]
     )
-    review_assembly = Compound(children=[printable_assembly, parts["pcb"], parts["battery"]])
+    review_assembly = Compound(children=[
+        printable_assembly, parts["pcb"], parts["battery"], parts["haptic"]])
     export_step(printable_assembly, STEP_ROOT / "MW-P-000_printable_assembly.step", timestamp=RELEASE_STAMP)
     export_step(review_assembly, STEP_ROOT / "MW-P-000_assembly_with_reserved_volumes.step", timestamp=RELEASE_STAMP)
+
+
+def validate_stl_meshes() -> dict[str, Any]:
+    criteria = {
+        "watertight": True,
+        "windingConsistent": True,
+        "isVolume": True,
+        "bodyCount": 1,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "brokenFaceCount": 0,
+        "degenerateFaceCount": 0,
+        "duplicateFaceCount": 0,
+        "minimumVolumeMm3Exclusive": 0.0,
+    }
+    files: dict[str, Any] = {}
+    all_passed = True
+    for path in sorted(STL_ROOT.glob("*.stl")):
+        mesh = trimesh.load_mesh(path, process=True)
+        edge_counts = np.bincount(mesh.edges_unique_inverse)
+        broken_faces = trimesh.repair.broken_faces(mesh)
+        degenerate_count = int(len(mesh.faces) - int(mesh.nondegenerate_faces().sum()))
+        duplicate_count = int(len(mesh.faces) - int(mesh.unique_faces().sum()))
+        checks = {
+            "watertight": bool(mesh.is_watertight),
+            "windingConsistent": bool(mesh.is_winding_consistent),
+            "isVolume": bool(mesh.is_volume),
+            "bodyCount": int(mesh.body_count),
+            "boundaryEdgeCount": int((edge_counts == 1).sum()),
+            "nonManifoldEdgeCount": int((edge_counts > 2).sum()),
+            "brokenFaceCount": int(len(broken_faces)),
+            "degenerateFaceCount": degenerate_count,
+            "duplicateFaceCount": duplicate_count,
+            "volumeMm3": round(float(mesh.volume), 3),
+            "faceCount": int(len(mesh.faces)),
+        }
+        passed = (
+            checks["watertight"]
+            and checks["windingConsistent"]
+            and checks["isVolume"]
+            and checks["bodyCount"] == 1
+            and checks["boundaryEdgeCount"] == 0
+            and checks["nonManifoldEdgeCount"] == 0
+            and checks["brokenFaceCount"] == 0
+            and checks["degenerateFaceCount"] == 0
+            and checks["duplicateFaceCount"] == 0
+            and checks["volumeMm3"] > 0
+        )
+        files[path.name] = {"passed": passed, **checks}
+        all_passed = all_passed and passed
+    if len(files) != 6:
+        all_passed = False
+    return {
+        "passed": all_passed,
+        "expectedStlCount": 6,
+        "actualStlCount": len(files),
+        "criteria": criteria,
+        "files": files,
+    }
 
 
 def write_manifest_and_zip() -> None:
@@ -475,7 +631,12 @@ def write_manifest_and_zip() -> None:
     manifest = {
         "schemaVersion": 1,
         "release": "MW_PRINTABLE_WAND_REV_A0",
-        "generator": {"python": sys.version.split()[0], "build123d": build123d.__version__},
+        "generator": {
+            "python": sys.version.split()[0],
+            "build123d": build123d.__version__,
+            "trimesh": trimesh.__version__,
+            "numpy": np.__version__,
+        },
         "sourceDesign": {"path": DESIGN_PATH.name, "sha256": sha256(DESIGN_PATH)},
         "files": files,
     }
@@ -517,6 +678,7 @@ def main() -> int:
         "plunger": make_button_plunger(),
         "pcb": make_pcb_placeholder(),
         "battery": make_battery_placeholder(),
+        "haptic": make_haptic_placeholder(),
     }
     validation = build_validation(parts, pcb_path)
     if validation["status"] != "VERIFIED_PRINT_CANDIDATE":
@@ -526,6 +688,16 @@ def main() -> int:
         raise RuntimeError(json.dumps(validation["checks"], ensure_ascii=False))
 
     export_parts(parts)
+    mesh_validation = validate_stl_meshes()
+    validation["meshValidation"] = mesh_validation
+    validation["checks"]["allStlMeshesSingleBodyWatertight"] = mesh_validation["passed"]
+    if not mesh_validation["passed"]:
+        validation["status"] = "BLOCKED_INVALID_STL_MESH"
+        (REPORT_ROOT / "fit-and-power-validation.json").write_text(
+            json.dumps(validation, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        raise RuntimeError(json.dumps(mesh_validation, ensure_ascii=False))
+
     connector_installed = parts["rod_connector"].moved(Location((0, 0, 103.0)))
     render_preview(
         PREVIEW_ROOT / "assembly.png",
@@ -537,6 +709,7 @@ def main() -> int:
             (connector_installed, "#627ec7", 0.95),
             (parts["pcb"], "#1f9d55", 0.95),
             (parts["battery"], "#d14a46", 0.95),
+            (parts["haptic"], "#9a4fa8", 0.98),
             (parts["plunger"], "#e24e42", 1.0),
         ],
         elev=18,
@@ -550,6 +723,7 @@ def main() -> int:
             (parts["carrier"].moved(Location((0, -8, 0))), "#d59e27", 0.95),
             (parts["pcb"].moved(Location((0, 8, 0))), "#1f9d55", 0.95),
             (parts["battery"], "#d14a46", 0.95),
+            (parts["haptic"], "#9a4fa8", 0.98),
             (parts["rear_cap"], "#4e9a70", 0.95),
             (connector_installed, "#627ec7", 0.95),
         ],
@@ -563,6 +737,7 @@ def main() -> int:
             (parts["carrier"], "#d59e27", 0.92),
             (parts["pcb"], "#1f9d55", 0.86),
             (parts["battery"], "#d14a46", 0.98),
+            (parts["haptic"], "#9a4fa8", 0.98),
         ],
         elev=8,
         azim=18,

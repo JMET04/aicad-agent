@@ -1,8 +1,8 @@
 {
-  "schema": "aicad_magic_wand_system_requirements_v1",
+  "schema": "aicad_magic_wand_system_requirements_v2",
   "projectId": "MW-PROTOTYPE-001",
-  "revision": "A",
-  "status": "review_only_prototype",
+  "revision": "B",
+  "status": "owner_authorized_prototype_fabrication_physical_and_target_validation_pending",
   "intendedUse": "Supervised indoor gesture controller for low-energy receiver interfaces.",
   "prohibitedUses": [
     "impact or striking use",
@@ -15,10 +15,10 @@
     {
       "id": "SYS-001",
       "category": "mechanical",
-      "requirement": "The assembled review prototype shall be 315 mm long with a 27 mm nominal grip and a 190 mm exposed nonconductive spine.",
-      "acceptance": "Overall length 315 +/- 2 mm; grip OD 27 +/- 0.2 mm; exposed spine 190 +/- 1 mm.",
+      "requirement": "The assembled prototype shall target 315 mm overall length with a 30 mm nominal grip and 179 mm exposed nonconductive GFRP rod above the connector.",
+      "acceptance": "Overall length 315 +/- 2 mm; grip OD 30 +/- 0.3 mm; exposed rod 179 +/- 1 mm; each printable STL passes the single-body watertight mesh gate.",
       "verification": "drawing inspection plus physical first-article measurement",
-      "status": "design_defined_physical_test_pending"
+      "status": "digital_geometry_and_mesh_verified_physical_first_article_pending"
     },
     {
       "id": "SYS-002",
@@ -42,7 +42,7 @@
       "requirement": "The six-axis IMU shall classify calibrated short-window relative orientation and motion gestures; it shall not claim absolute position or an exact free-space 3D path.",
       "acceptance": "Per-class confusion matrix, rejection threshold and false-activation rate are recorded on representative users; low-confidence windows cause no action.",
       "verification": "labelled gesture dataset and supervised usability test",
-      "status": "algorithm_and_dataset_pending"
+      "status": "eight_class_host_pipeline_verified_target_and_representative_dataset_pending"
     },
     {
       "id": "SYS-005",
@@ -58,7 +58,7 @@
       "requirement": "The wand shall use one protected 1S LiPo cell with NTC supervision, a 5 V USB-C sink-only charge input and a regulated logic rail.",
       "acceptance": "Cell protection is present in the selected ordered part or an external protector; charge/current/temperature limits match the cell; no USB source role is exposed.",
       "verification": "ordered-part review, bench charge/thermal test and USB-C sink compliance check",
-      "status": "ordered_parts_and_bench_test_pending"
+      "status": "pcb_and_enclosure_reservation_verified_exact_ordered_cell_and_bench_test_pending"
     },
     {
       "id": "SYS-007",
@@ -66,7 +66,7 @@
       "requirement": "The NINA-B302 antenna end shall face a nonconductive enclosure region and obey the current u-blox host-ground, metal, battery and enclosure restrictions.",
       "acceptance": "Layout keepout is checked against the controlled module integration manual and representative enclosure RF performance is measured.",
       "verification": "PCB/enclosure overlay review plus conducted or radiated RF comparison test",
-      "status": "pcb_layout_and_rf_test_pending"
+      "status": "pcb_and_enclosure_keepout_verified_physical_rf_test_pending"
     },
     {
       "id": "SYS-008",
@@ -98,24 +98,28 @@
       "requirement": "Command feedback shall distinguish paired, armed, accepted, rejected and fault states without relying on motion alone.",
       "acceptance": "Haptic/indicator patterns are unambiguous in a blinded user test and fault feedback never activates an output.",
       "verification": "firmware state-machine test and supervised usability study",
-      "status": "implementation_and_test_pending"
+      "status": "haptic_reservation_and_host_state_pipeline_defined_physical_usability_test_pending"
     },
     {
       "id": "SYS-012",
       "category": "release",
-      "requirement": "No drawing, model, schematic, PCB, firmware or BOM shall be marked factory/production released until its native-host, ordered-part, physical test and independent engineering gates close.",
-      "acceptance": "All release locks remain false while any blocker is open; prototype quotation files are visibly marked review-only.",
+      "requirement": "Prototype fabrication authorization shall be recorded separately from PCBA, target-firmware and production release eligibility.",
+      "acceptance": "Owner-authorized prototype bare-PCB and 3D-print locks may be true while PCBA, target-firmware and production locks remain false until their evidence gates close.",
       "verification": "delivery-manifest and release-gate audit",
-      "status": "enforced"
+      "status": "prototype_and_production_locks_separated"
     }
   ],
   "releaseLocks": {
-    "reviewOnly": true,
-    "accepted": false,
-    "technicalPackageReady": false,
-    "manufacturingAuthorized": false,
-    "fabricationAuthorized": false,
+    "prototypeOnly": true,
+    "systemAccepted": false,
+    "wandBarePcbTechnicalPackageReady": true,
+    "printableEnclosureTechnicalPackageReady": true,
+    "prototypeBarePcbFabricationAuthorized": true,
+    "prototype3dPrintingAuthorized": true,
+    "pcbaOrderAuthorized": false,
+    "targetFirmwareReleaseEligible": false,
     "productionReleaseEligible": false,
-    "humanEngineeringReviewRequired": true
-  }
+    "humanEngineeringReviewRequiredForProduction": true
+  },
+  "authoritativeStatus": "integration/CURRENT_SYSTEM_STATUS.json"
 }
