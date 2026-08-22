@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "release": "MW_PRINTABLE_WAND_REV_A0",
+  "generator": {
+    "python": "3.12.6",
+    "build123d": "0.10.0"
+  },
+  "sourceDesign": {
+    "path": "design-input.json",
+    "sha256": "0C165CAC2AE81823E0AB3E31A2A9CE72C3B180C3CD8A70CAE15FDAB7E9F245A8"
+  },
+  "files": [
+    {
+      "path": "previews/assembly.png",
+      "size": 218853,
+      "sha256": "BC3AF50CD33B5C53661DAA8763FC6DD9A87A03B1D19F781856A540DFDDFC1818"
+    },
+    {
+      "path": "previews/exploded.png",
+      "size": 327268,
+      "sha256": "9AB9A59E4F48287ED8F27C9DE3E38D2EFC9C2200D647A87BCBE7AAB5FD73B0A6"
+    },
+    {
+      "path": "previews/power-reservation.png",
+      "size": 166694,
+      "sha256": "2BCEC81FE9D5A35E698DD5C85E2507B8DB8C6E26A7DD95263B4B99EF70A8FE6C"
+    },
+    {
+      "path": "PRINT_AND_ASSEMBLY_GUIDE.md",
+      "size": 1776,
+      "sha256": "98922642D1E2D3D2F8DCB31CA3F6638115EC0086F688A569D679D6F363F9FBFC"
+    },
+    {
+      "path": "reports/fit-and-power-validation.json",
+      "size": 2041,
+      "sha256": "9C1791B9EB467C70E05096E21FF562ACAD65A6779AE077E929D5AC993E7FA4FE"
+    },
+    {
+      "path": "reviewer.html",
+      "size": 2592,
+      "sha256": "13D8BBCAF10D4B7E1CB78F5172E6FBD3806C4DAA50474647989666B249E6FF00"
+    },
+    {
+      "path": "step/MW-P-000_assembly_with_reserved_volumes.step",
+      "size": 1769302,
+      "sha256": "AE49829909F19E8FBAC7835F45F896178B3C132F475C1896256FBAB2AD8A2FB8"
+    },
+    {
+      "path": "step/MW-P-000_printable_assembly.step",
+      "size": 1729216,
+      "sha256": "715585DE80BF4769FD13D4F5BCC545B11557401B1709507EBB6559229C178E67"
+    },
+    {
+      "path": "step/MW-P-001A_upper_shell.step",
+      "size": 873278,
+      "sha256": "27775D5AD88B21620576DB159823BD84F295F1FBBF8BCF0091DC85B4BEB85347"
+    },
+    {
+      "path": "step/MW-P-001B_lower_shell.step",
+      "size": 492900,
+      "sha256": "CC6B6863393DCE6C91632ACF88987FE83EC810AE924390B5700393B261601AF6"
+    },
+    {
+      "path": "step/MW-P-002_pcb_battery_carrier.step",
+      "size": 205819,
+      "sha256": "BB496BE2FCA8C4B898AE7BC69A91EABD9E7912993E2EE272BF5D530AF8141280"
+    },
+    {
+      "path": "step/MW-P-003_rear_cap.step",
+      "size": 85277,
+      "sha256": "8AAC3924A877024573054E044A86B8DDF839C36656DC5134E0BF43FFDE0BCDC6"
+    },
+    {
+      "path": "step/MW-P-004_rod_connector_8mm.step",
+      "size": 16448,
+      "sha256": "A92798FE68910514395CAEE95066AD297E80CA211C5BAD6478F19084A1A38553"
+    },
+    {
+      "path": "step/MW-P-005_press_to_arm_plunger.step",
+      "size": 14007,
+      "sha256": "268985A59D441087C873D6DE357D88471C3C6AB1B8288C9DBF3889DC8168671B"
+    },
+    {
+      "path": "stl/MW-P-001A_upper_shell.stl",
+      "size": 5230084,
+      "sha256": "3A3AD06041C87E337D38BE28B0F08712505D25440625FC96CB538DA178DFEE10"
+    },
+    {
+      "path": "stl/MW-P-001B_lower_shell.stl",
+      "size": 3785284,
+      "sha256": "B4AFA5C82117D88FA5757BD0032E013CBC52B724548E3BC385BC23E53068D0A0"
+    },
+    {
+      "path": "stl/MW-P-002_pcb_battery_carrier.stl",
+      "size": 70084,
+      "sha256": "AE7C3A4AAD8A57567993ACCEECCF23B335738DCCCA5A5FBF79B96C659BA9F092"
+    },
+    {
+      "path": "stl/MW-P-003_rear_cap.stl",
+      "size": 126484,
+      "sha256": "65DBD924653B6A1CE8759986295EB70C567E120CAF984268045C4761C230AFEA"
+    },
+    {
+      "path": "stl/MW-P-004_rod_connector_8mm.stl",
+      "size": 181584,
+      "sha256": "2BACB0F36EDCF063B2FF99EBAE900E1B072D5429884E873718EE903EBC777B78"
+    },
+    {
+      "path": "stl/MW-P-005_press_to_arm_plunger.stl",
+      "size": 94684,
+      "sha256": "F68031F334BAEAEF9AE803725FDA9E978B86A8F22F881106B5932DF447502949"
+    }
+  ]
+}

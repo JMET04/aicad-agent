@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "status": "VERIFIED_PRINT_CANDIDATE",
+  "sourcePcb": {
+    "path": "D:\\CAD绘制插件\\github-release\\aicad-agent\\projects\\magic-wand\\electronics\\wand\\wand.kicad_pcb",
+    "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9"
+  },
+  "checks": {
+    "sourcePcbSha256Matches": true,
+    "batteryRadialClearanceMm": 1.475,
+    "batteryToAntennaAxialGapMm": 11.0,
+    "shellToBatteryCollisionMm3": 0.0,
+    "shellToPcbCollisionMm3": 0.0,
+    "carrierToBatteryCollisionMm3": 0.0,
+    "wireBendReserveMm": 8.0,
+    "minimumShellWallMm": 2.2,
+    "firstShellScrewToAntennaGapMm": 8.0
+  },
+  "powerReservation": {
+    "cellType": "protected 1S LiPo 501040/601040-class with 10k NTC",
+    "maximumEnvelope": [
+      11.0,
+      6.0,
+      42.0
+    ],
+    "caseCenter": [
+      0.0,
+      -6.9,
+      62.0
+    ],
+    "caseBounds": {
+      "x": [
+        -5.5,
+        5.5
+      ],
+      "y": [
+        -9.9,
+        -3.9
+      ],
+      "z": [
+        41.0,
+        83.0
+      ]
+    },
+    "antennaKeepoutZ": [
+      5.0,
+      30.0
+    ],
+    "wireChannel": {
+      "minimumWidth": 4.0,
+      "minimumDepth": 3.0,
+      "bendReserve": 8.0
+    },
+    "service": "Open split shell; use pull ribbon under cell",
+    "mandatory": [
+      "Protected single-cell pack only",
+      "10k NTC lead must reach J2 pin 2",
+      "Verify J2 pin order before connecting",
+      "No metal or battery material inside antenna keepout"
+    ]
+  },
+  "assemblyNotes": [
+    "Install the protected 1S LiPo with a pull ribbon before installing the PCB.",
+    "Route the three-wire lead through the open J2 cable channel; do not pinch the NTC wire.",
+    "Use nylon M2 hardware at PCB H1/H2 and preferably at shell stations during RF validation.",
+    "Keep the z=5..30 mm antenna volume free of battery, metal hardware, shielding and dense filler.",
+    "Verify JST-SH pin order and cell polarity with a multimeter before first connection."
+  ]
+}

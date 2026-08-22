@@ -1,0 +1,146 @@
+{
+  "schema": "aicad.jlcpcb-manufacturing-package.v1",
+  "status": "VERIFIED_UPLOAD_CANDIDATE",
+  "revision": "A0",
+  "sourceBoard": {
+    "path": "electronics/wand/wand.kicad_pcb",
+    "size": 222240,
+    "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9"
+  },
+  "electronicGates": {
+    "ercErrors": 0,
+    "ercWarnings": 0,
+    "drcViolations": 0,
+    "unconnected": 0,
+    "footprintErrors": 0,
+    "exclusions": 0,
+    "suppressions": 0
+  },
+  "files": [
+    {
+      "path": "assembly/wand-bom.csv",
+      "size": 2680,
+      "sha256": "C2A886AE60FAD6054AEB4912E6302AE7BC3C0C39EEE4D98D80F65ED424B57F43"
+    },
+    {
+      "path": "assembly/wand-cpl.csv",
+      "size": 1246,
+      "sha256": "EEDF8B5F50DE8C72179F790415BC9B822074281D1826A3C5AC59DD278CA72D58"
+    },
+    {
+      "path": "drill/wand-NPTH-drl_map.gbr",
+      "size": 45318,
+      "sha256": "1195133EC8FCC97FB3D616E3BD108F8F9866BE11B4C1A2A3CF247CA80224D313"
+    },
+    {
+      "path": "drill/wand-NPTH.drl",
+      "size": 499,
+      "sha256": "2F93D7CB2039C17311C95BC2F8751E8BB9E950A82E0E2E3A4C8BDAD400D07501"
+    },
+    {
+      "path": "drill/wand-PTH-drl_map.gbr",
+      "size": 81775,
+      "sha256": "1118BF6CEE4EE625F0B76CAFD4DB2B3231772F546A7B08C9252437392F683BC7"
+    },
+    {
+      "path": "drill/wand-PTH.drl",
+      "size": 2189,
+      "sha256": "58B6A4198D8463F5C54ED2E433886852492F7E82C5AD83DCB8E9964A6DEF7F02"
+    },
+    {
+      "path": "gerber/wand-B_Cu.gbl",
+      "size": 6424,
+      "sha256": "9B5118D16E56E3BDE5EFAD9D04AC0BB61AB4AFD0CF2BEAEB8CB1E52BA8A407CD"
+    },
+    {
+      "path": "gerber/wand-B_Mask.gbs",
+      "size": 908,
+      "sha256": "F9B2887D70500997ECD1C6BFC63E80B2554D034CEA548BE66383F02CF813C660"
+    },
+    {
+      "path": "gerber/wand-B_Paste.gbp",
+      "size": 464,
+      "sha256": "F1D2FC9F22B7E3DE32AC090EB1FB8BD08D77D4A38C93C34171FB7B5750B3A9C4"
+    },
+    {
+      "path": "gerber/wand-B_Silkscreen.gbo",
+      "size": 920,
+      "sha256": "CA6DE4C6E973A9338899B40142FC7A3B1DDDBE40CB818332DE14133643FE496C"
+    },
+    {
+      "path": "gerber/wand-Edge_Cuts.gm1",
+      "size": 709,
+      "sha256": "2E6D7B902B23248BACA813168EFC7E987A79D6B2CA8F7274318CBCE4AF7F1040"
+    },
+    {
+      "path": "gerber/wand-F_Cu.gtl",
+      "size": 42934,
+      "sha256": "6D97BBBF67DCC4B7B11D5EE6D8380CBE789BC207B6DFFEA93E0614BE235EF626"
+    },
+    {
+      "path": "gerber/wand-F_Mask.gts",
+      "size": 10872,
+      "sha256": "4B8BDDAB5A01D2C599F2113BF4AE64A30044D7F6885F43D193DCF4DCB43244E6"
+    },
+    {
+      "path": "gerber/wand-F_Paste.gtp",
+      "size": 10045,
+      "sha256": "2559D1E4B2B5FCDC75F39F73A8F39E4C7F271DD0F6CB5CDB670CBD2861E3F6FA"
+    },
+    {
+      "path": "gerber/wand-F_Silkscreen.gto",
+      "size": 10884,
+      "sha256": "A97B3506C878ACC79405AC84F5C94FC599336932C76E796753A1B14AA66DC0F0"
+    },
+    {
+      "path": "gerber/wand-In1_Cu.g1",
+      "size": 75180,
+      "sha256": "C8C869FC969F4C657F5B9CD835B6C323A14426E7DD8A659EBAEC356DF484E3C3"
+    },
+    {
+      "path": "gerber/wand-In2_Cu.g2",
+      "size": 88171,
+      "sha256": "BF4226A34452693C13DFA606E11FE2232ED9330C8D1897E2B492E3BC621638A9"
+    },
+    {
+      "path": "gerber/wand-job.gbrjob",
+      "size": 3742,
+      "sha256": "11C52C2F326F396A2F8C2B10E3C2B0DBCB3A38621911880D9E71309B2A102778"
+    },
+    {
+      "path": "jlcpcb-order-parameters.json",
+      "size": 689,
+      "sha256": "53DCE0C1EF9C30A03FDFCC957C9483F6DE0B29A2C99ADA9AABB3625778A6AF6C"
+    },
+    {
+      "path": "JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
+      "size": 62544,
+      "sha256": "EC3C07314F5ED3463697A1235EC2C4B8D2BB2BC2A0B1B4C8A42807E09C8AC1C6"
+    },
+    {
+      "path": "README.md",
+      "size": 307,
+      "sha256": "2CFDF59AD37526F36B60C27BC7E05111C7FF5320ED362B4C5DC1C1ADB16BFA13"
+    },
+    {
+      "path": "reports/wand-drill-report.txt",
+      "size": 896,
+      "sha256": "A7487F856DFE64AEBDC2ADA4AF406CF457703ECB2D4A85133806912F6E9F2AA5"
+    },
+    {
+      "path": "reports/wand-native-drc.rpt",
+      "size": 287,
+      "sha256": "68E34D7766024BF8A2465CD246CB407C582592B1390E9DB6BC6DF7FA70394E3F"
+    },
+    {
+      "path": "reports/wand-native-erc.rpt",
+      "size": 193,
+      "sha256": "D8BC91B6952FA899F8F95327BBC462F85900E481E808CB451DFF99E58506C645"
+    },
+    {
+      "path": "tool-version.txt",
+      "size": 17,
+      "sha256": "4867ED1B1768B1B3DE1A65F56A4C6F96CF510EAFF556C425FB80EFDD9A66D38A"
+    }
+  ]
+}
