@@ -28,7 +28,8 @@ typedef enum {
     MW_CMD_SET_AUX = 16,
     MW_CMD_PULSE_ISOLATED_OC = 17,
     MW_CMD_PULSE_LOW_SIDE = 18,
-    MW_CMD_FEEDBACK = 32
+    MW_CMD_FEEDBACK = 32,
+    MW_CMD_GESTURE_EVENT = 33
 } mw_command_t;
 
 typedef struct {

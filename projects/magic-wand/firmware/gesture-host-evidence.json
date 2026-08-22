@@ -1,0 +1,104 @@
+{
+  "schema": "magic-wand.gesture-host-evidence.v1",
+  "status": "HOST_VERIFIED_TARGET_INTEGRATION_PENDING",
+  "recordedDate": "2026-08-22",
+  "toolchain": {
+    "compiler": "GCC MinGW-W64 16.1.0",
+    "cmake": "4.3.2",
+    "ninja": "1.13.2",
+    "target": "x86_64 Windows host review only"
+  },
+  "commands": [
+    "D:/mingw64/bin/cmake.exe -S projects/magic-wand/firmware -B projects/magic-wand/firmware/build-host3 -G Ninja -DCMAKE_C_COMPILER=D:/mingw64/bin/gcc.exe -DCMAKE_MAKE_PROGRAM=D:/mingw64/bin/ninja.exe -DMW_HOST_REVIEW=ON",
+    "D:/mingw64/bin/cmake.exe --build projects/magic-wand/firmware/build-host3 --config Release",
+    "D:/mingw64/bin/ctest.exe --test-dir projects/magic-wand/firmware/build-host3 --output-on-failure -C Release"
+  ],
+  "result": {
+    "testsPassed": 2,
+    "testsFailed": 0,
+    "tests": [
+      "mw_host_review",
+      "mw_gesture_vectors"
+    ],
+    "gestureVectors": [
+      "TAP",
+      "TWIST_CW",
+      "TWIST_CCW",
+      "SWISH_LEFT",
+      "SWISH_RIGHT",
+      "THRUST",
+      "CIRCLE_CW",
+      "CIRCLE_CCW"
+    ],
+    "negativeGates": [
+      "stationary rejection",
+      "ambiguous cross-axis rejection",
+      "physical-arm gate",
+      "250 ms refractory"
+    ],
+    "protocolGestureEvent": "encode_decode_exact_length_and_non_actuating_state_machine_pass"
+  },
+  "sources": [
+    {
+      "path": "CMakeLists.txt",
+      "size": 1433,
+      "sha256": "51671758E94F93E53E136C1CC3811ED6D6C47D297BBFCF0284BF38A0B4BD9FF4"
+    },
+    {
+      "path": "include/mw_gesture.h",
+      "size": 2259,
+      "sha256": "5E158D4FBBAD37ED21A4A7A489F3405E02C840A9F65DC0A8C92FC9B503FE4C2A"
+    },
+    {
+      "path": "include/mw_protocol.h",
+      "size": 2866,
+      "sha256": "FBB60B584AE6833A9617F7FC3AD931ACEB2A769CD3C6B1F4659F90A00230F4E1"
+    },
+    {
+      "path": "src/mw_gesture.c",
+      "size": 12921,
+      "sha256": "FB234550AD1CCA0ACDA0E258724B7ADBF5A62B349FE66746D59B8EA343E1C298"
+    },
+    {
+      "path": "src/mw_protocol.c",
+      "size": 5309,
+      "sha256": "3F00E7144D6719750ACC6264C543B8C1FEE1504776C092912FCC29363AF5CD8E"
+    },
+    {
+      "path": "src/mw_state_machine.c",
+      "size": 7021,
+      "sha256": "F8A7463A1219C7463C36FE96A23BAD821148BC58B596B5C0492446746C0AE91E"
+    },
+    {
+      "path": "src/main.c",
+      "size": 7953,
+      "sha256": "8A6A099B0D8948546F59911B39F751EA008731067ADC248EBFECDFF9F5CE4E68"
+    },
+    {
+      "path": "tests/gesture_vectors.c",
+      "size": 6131,
+      "sha256": "446BEC388BA4D87745223B925311B2D7369917E3C42F85EAC4D132B585710B48"
+    },
+    {
+      "path": "gesture-dictionary.yaml",
+      "size": 3596,
+      "sha256": "12DDA76AF404F1C10E17B54364CF39529AF869B720059AF4D4FDD2F66999CD9B"
+    },
+    {
+      "path": "TARGET_GESTURE_INTEGRATION.md",
+      "size": 3847,
+      "sha256": "E7E44A6B98F7AF3C856EC22CAFC2084BB537AD7D43E8211A933D6F7987E0CA94"
+    },
+    {
+      "path": "protocol.md",
+      "size": 5476,
+      "sha256": "B3C93C331F82164274506E1EC4F6D6220E655963042813DD51374D32E11B0BB7"
+    }
+  ],
+  "limitations": [
+    "No nRF Connect SDK, Zephyr west or ARM cross compiler was present on the build host.",
+    "No NINA-B302 flashable image was produced.",
+    "Synthetic host vectors do not replace representative-user data or hardware-in-loop testing.",
+    "Circle features represent relative angular loops, not absolute tip trajectories."
+  ]
+}

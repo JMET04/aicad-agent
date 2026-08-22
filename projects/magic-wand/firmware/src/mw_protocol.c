@@ -26,6 +26,7 @@ static bool command_is_known(uint8_t command)
     case MW_CMD_PULSE_ISOLATED_OC:
     case MW_CMD_PULSE_LOW_SIDE:
     case MW_CMD_FEEDBACK:
+    case MW_CMD_GESTURE_EVENT:
         return true;
     default:
         return false;
@@ -45,6 +46,8 @@ static bool payload_length_is_valid(uint8_t command, uint16_t payload_length)
         return (payload_length == 2U);
     case MW_CMD_FEEDBACK:
         return ((size_t)payload_length <= MW_MAX_PAYLOAD_BYTES);
+    case MW_CMD_GESTURE_EVENT:
+        return (payload_length == 2U);
     default:
         return false;
     }

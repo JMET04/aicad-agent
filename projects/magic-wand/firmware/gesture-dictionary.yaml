@@ -1,74 +1,90 @@
-schema: magic_wand_gesture_dictionary_v1
-status: EVT_REVIEW_ONLY
+schema: magic_wand_gesture_dictionary_v2
+status: HOST_VERIFIED_TARGET_INTEGRATION_PENDING
 sensor: LSM6DSV16X
 scope: short_window_relative_motion_classification_only
+input_contract:
+  frame: wand_frame_after_sensor_bias_and_axis_remap
+  plus_x: wand_tip_forward
+  plus_y: user_left_when_arm_button_up
+  plus_z: arm_button_up
+  note: Raw sensor axes must not be passed directly until the six-face axis test freezes the remap matrix.
 prohibited_claims:
   - absolute_position
   - exact_free_space_3d_path
   - drift_free_orientation_without_external_reference
-coordinate_frame:
-  plus_x: wand_tip_forward
-  plus_y: user_left_when_arm_button_up
-  plus_z: arm_button_up
 sampling:
-  target_hz: 200
-  window_ms: 160
-  overlap_percent: 50
+  target_odr_hz: 240
+  accepted_delta_time_ms: [2, 25]
+  window_samples: [16, 64]
+  adaptive_end_condition: six_samples_returned_to_stationary
   initial_i2c_hz: 100000
+  target_i2c_hz_after_signal_integrity_test: 400000
+  accelerometer_range_g: 4
+  gyroscope_range_dps: 2000
   calibration_required:
     - stationary_accelerometer_bias_scale
     - stationary_gyro_bias
-    - mounted_axis_alignment
+    - sensor_to_pcb_axis_sign
+    - pcb_to_wand_axis_alignment
     - per_user_range_normalization
+stream_gate:
+  physical_arm_required: true
+  refractory_ms: 250
+  start_trigger:
+    gyro_l1_dps_gt: 100
+    accel_norm_squared_delta_gt: 0.30
+    abs_accel_x_g_gt: 0.45
 rejection:
   low_confidence_behavior: GESTURE_NONE
   initial_confidence_percent_min: 70
+  ambiguous_cross_axis_behavior: GESTURE_NONE
+  missing_end_stationary_behavior: GESTURE_NONE
   out_of_distribution_behavior: GESTURE_NONE
-  arm_required_for_command: true
-  note: Thresholds are seed values only and may not be used as release limits without a held-out representative-user dataset.
+  note: Thresholds are seed values and require a held-out representative-user dataset before release.
 gestures:
   - id: TAP
-    relative_feature: brief acceleration-norm impulse returning to stationary
-    seed_threshold: norm_squared_delta_peak_gt_1.25_and_40_to_250_ms
-    implementation: prototype_heuristic
-    output_mapping: feedback_only_until_dataset_gate
+    feature: brief acceleration-norm impulse with low integrated rotation and stationary return
+    threshold: norm_squared_delta_peak_gt_1.25_and_40_to_250_ms
+    host_vector: PASS
   - id: TWIST_CW
-    relative_feature: positive integrated angular motion about wand +X with limited cross-axis motion
-    seed_threshold: integrated_x_gt_55_deg_and_abs_integrated_z_lt_30_deg
-    implementation: prototype_heuristic
-    output_mapping: configurable_non_flight_critical_aux_only
+    feature: positive integrated rotation about wand +X with cross-axis suppression
+    threshold: integrated_x_gt_55_deg
+    host_vector: PASS
   - id: TWIST_CCW
-    relative_feature: negative integrated angular motion about wand +X with limited cross-axis motion
-    seed_threshold: integrated_x_lt_minus_55_deg_and_abs_integrated_z_lt_30_deg
-    implementation: prototype_heuristic
-    output_mapping: configurable_non_flight_critical_aux_only
+    feature: negative integrated rotation about wand +X with cross-axis suppression
+    threshold: integrated_x_lt_minus_55_deg
+    host_vector: PASS
   - id: SWISH_LEFT
-    relative_feature: positive integrated angular motion about wand +Z with limited twist
-    seed_threshold: integrated_z_gt_40_deg_and_abs_integrated_x_lt_35_deg
-    implementation: prototype_heuristic
-    output_mapping: configurable_low_voltage_channel_only
+    feature: positive integrated rotation about wand +Z with twist suppression
+    threshold: integrated_z_gt_40_deg
+    host_vector: PASS
   - id: SWISH_RIGHT
-    relative_feature: negative integrated angular motion about wand +Z with limited twist
-    seed_threshold: integrated_z_lt_minus_40_deg_and_abs_integrated_x_lt_35_deg
-    implementation: prototype_heuristic
-    output_mapping: configurable_low_voltage_channel_only
+    feature: negative integrated rotation about wand +Z with twist suppression
+    threshold: integrated_z_lt_minus_40_deg
+    host_vector: PASS
   - id: THRUST
-    relative_feature: positive short-window mean acceleration along wand +X
-    seed_threshold: mean_accel_x_gt_0.60_g
-    implementation: prototype_heuristic
-    output_mapping: feedback_only_until_false_activation_gate
+    feature: positive mean acceleration along wand +X with low integrated rotation
+    threshold: mean_accel_x_gt_0.60_g
+    host_vector: PASS
   - id: CIRCLE_CW
-    relative_feature: temporal quadrature loop in two relative angular axes
-    seed_threshold: disabled_pending_validated_temporal_model
-    implementation: disabled
-    output_mapping: none
+    feature: positive signed closed-loop area in integrated wand Y/Z angular space
+    threshold: span_y_and_z_gt_35_deg_area_gt_1200_deg2_path_gt_150_deg_closure_lt_35_deg
+    host_vector: PASS
   - id: CIRCLE_CCW
-    relative_feature: opposite temporal quadrature loop in two relative angular axes
-    seed_threshold: disabled_pending_validated_temporal_model
-    implementation: disabled
-    output_mapping: none
+    feature: negative signed closed-loop area in integrated wand Y/Z angular space
+    threshold: span_y_and_z_gt_35_deg_area_gt_1200_deg2_path_gt_150_deg_closure_lt_35_deg
+    host_vector: PASS
+host_evidence:
+  compiler: GCC 16.1.0
+  cmake: 4.3.2
+  ninja: 1.13.2
+  tests:
+    - mw_host_review
+    - mw_gesture_vectors
+  result: 2_of_2_pass
 dataset_gate:
   split_rule: held_out_users_not_random_windows
+  minimum_users: 12
   required_reports:
     - per_class_precision_recall
     - confusion_matrix
@@ -76,4 +92,5 @@ dataset_gate:
     - false_activations_per_hour
     - latency_distribution
     - performance_with_haptic_active
-  release_action: keep_all_motion_outputs_disabled_until_approved
+    - performance_at_low_battery
+  release_action: keep_receiver_actuation_mapping_disabled_until_approved

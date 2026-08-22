@@ -1,19 +1,20 @@
 {
-  "schema": "magic_wand_firmware_host_review_evidence_v1",
-  "artifact_status": "EVT_REVIEW_ONLY",
-  "observed_at": "2026-08-21",
-  "scope": "Portable C11 host contract for framing, replay-gate ordering, state transitions, range rejection and low-confidence gesture rejection.",
+  "schema": "magic_wand_firmware_host_review_evidence_v2",
+  "artifact_status": "HOST_VERIFIED_TARGET_BUILD_BLOCKED",
+  "observed_at": "2026-08-22",
+  "scope": "Portable C11 host contract for framing, gesture event payloads, replay ordering, safe state transitions, eight relative gesture classes, rejection, physical-arm gating and refractory behavior.",
   "claim_limits": [
     "Not an nRF52840 or NINA-B302 target build.",
-    "Not a BLE stack, radio, timing, watchdog, GPIO, flash endurance or hardware test.",
-    "The host_noncrypto_decrypt callback deliberately tests plumbing only and is not cryptography or a security proof.",
-    "Does not prove AES-CCM, LE Secure Connections, OOB provisioning, signed boot, regulatory compliance or functional safety."
+    "Not a BLE stack, radio, target timing, watchdog, GPIO, flash endurance or hardware test.",
+    "The host_noncrypto_decrypt callback tests plumbing only and is not cryptography or a security proof.",
+    "Synthetic gesture vectors do not replace representative-user data or HIL validation."
   ],
   "toolchain": {
     "cmake": "D:/mingw64/bin/cmake.exe",
-    "cmake_version_family": "4.3",
+    "cmake_version": "4.3.2",
     "generator": "Ninja",
     "ninja": "D:/mingw64/bin/ninja.exe",
+    "ninja_version": "1.13.2",
     "compiler": "D:/mingw64/bin/gcc.exe",
     "compiler_id": "GNU",
     "compiler_version": "16.1.0",
@@ -29,26 +30,33 @@
     ]
   },
   "commands": [
-    "D:/mingw64/bin/cmake.exe -S projects/magic-wand/firmware -B projects/magic-wand/firmware/build-host2 -G Ninja -DCMAKE_C_COMPILER=D:/mingw64/bin/gcc.exe -DCMAKE_MAKE_PROGRAM=D:/mingw64/bin/ninja.exe -DMW_HOST_REVIEW=ON",
-    "D:/mingw64/bin/cmake.exe --build projects/magic-wand/firmware/build-host2 --config Release",
-    "D:/mingw64/bin/ctest.exe --test-dir projects/magic-wand/firmware/build-host2 --output-on-failure -C Release"
+    "D:/mingw64/bin/cmake.exe -S projects/magic-wand/firmware -B projects/magic-wand/firmware/build-host3 -G Ninja -DCMAKE_C_COMPILER=D:/mingw64/bin/gcc.exe -DCMAKE_MAKE_PROGRAM=D:/mingw64/bin/ninja.exe -DMW_HOST_REVIEW=ON",
+    "D:/mingw64/bin/cmake.exe --build projects/magic-wand/firmware/build-host3 --config Release",
+    "D:/mingw64/bin/ctest.exe --test-dir projects/magic-wand/firmware/build-host3 --output-on-failure -C Release"
   ],
   "results": {
     "configure": "PASSED",
-    "compile_and_link": "PASSED_6_OF_6_BUILD_STEPS",
-    "ctest": "PASSED_1_OF_1",
-    "ctest_elapsed_seconds": 0.11,
-    "target_compile": "NOT_RUN_NO_ARM_NONE_EABI_GCC_OR_NRF_CONNECT_SDK"
+    "compile_and_link": "PASSED_8_OF_8_BUILD_STEPS",
+    "ctest": "PASSED_2_OF_2",
+    "ctest_elapsed_seconds": 0.05,
+    "tests": [
+      "mw_host_review",
+      "mw_gesture_vectors"
+    ],
+    "target_compile": "NOT_RUN_NO_ARM_NONE_EABI_GCC_NRF_CONNECT_SDK_OR_ZEPHYR_WEST"
   },
   "source_sha256": {
-    "CMakeLists.txt": "1C6CC03F862086DB820954CED2DEC893E11316FBB2BF176FA63F0FF7607A0339",
-    "include/mw_protocol.h": "6359981D417152C8453E1DBBEEDFCE7CA33D8A8451EAE09825CED0C89E2C98BF",
+    "CMakeLists.txt": "51671758E94F93E53E136C1CC3811ED6D6C47D297BBFCF0284BF38A0B4BD9FF4",
+    "include/mw_board_pins.h": "8570D328DE3A77247A5D4CD85F119FA4BD7754C4FD11797F0B1DA02BED24F2D1",
+    "include/mw_protocol.h": "FBB60B584AE6833A9617F7FC3AD931ACEB2A769CD3C6B1F4659F90A00230F4E1",
     "include/mw_state_machine.h": "F9F30855BA9848A305784B01E71C7D57798D69E57D82CDA8BE31D55210814B0E",
-    "include/mw_gesture.h": "276599231D2C0C6197EA73BF8B83113A6DB058A9A48C0DA574409963621067DF",
-    "src/mw_protocol.c": "A6DE16F1F45E553F5EF92B7FC6BB910251CD6FBE81A7B9018CE0EDC2F7C1C170",
-    "src/mw_state_machine.c": "2A528B69A16B1AB26D73282513FA6F4B7D582E378C6085E4E6019C5A8557785B",
-    "src/mw_gesture.c": "5C96567ABD8B083EFC456F9226274E8E19CA8F61B3181E19C82D0BAFF1E749C0",
-    "src/main.c": "CE072B48BE6D5AE795D6A39B5A343C32F8EE7EA646DEE838A49BE05387CD2097"
+    "include/mw_gesture.h": "5E158D4FBBAD37ED21A4A7A489F3405E02C840A9F65DC0A8C92FC9B503FE4C2A",
+    "src/mw_protocol.c": "3F00E7144D6719750ACC6264C543B8C1FEE1504776C092912FCC29363AF5CD8E",
+    "src/mw_state_machine.c": "F8A7463A1219C7463C36FE96A23BAD821148BC58B596B5C0492446746C0AE91E",
+    "src/mw_gesture.c": "FB234550AD1CCA0ACDA0E258724B7ADBF5A62B349FE66746D59B8EA343E1C298",
+    "src/main.c": "8A6A099B0D8948546F59911B39F751EA008731067ADC248EBFECDFF9F5CE4E68",
+    "tests/gesture_vectors.c": "446BEC388BA4D87745223B925311B2D7369917E3C42F85EAC4D132B585710B48"
   },
-  "reproduction_note": "Delete/create a fresh build directory and rerun all three commands with the exact hashed source files. Build outputs are intentionally not committed; this JSON is the stable evidence record."
+  "gesture_detail_evidence": "gesture-host-evidence.json",
+  "reproduction_note": "Use a fresh build-host3 directory and run all three pinned commands. Build output is disposable and not part of the release evidence."
 }

@@ -208,6 +208,7 @@ bool mw_state_machine_receiver_command(
     case MW_CMD_HEARTBEAT:
     case MW_CMD_ARM_LEASE:
     case MW_CMD_FEEDBACK:
+    case MW_CMD_GESTURE_EVENT:
     default:
         return false;
     }

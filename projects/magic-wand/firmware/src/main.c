@@ -146,6 +146,35 @@ static int check_protocol(void)
         host_commit_high_water,
         &persistence,
         plaintext));
+
+    frame.header.command = (uint8_t)MW_CMD_GESTURE_EVENT;
+    frame.header.sequence = 2U;
+    frame.header.payload_length = 1U;
+    frame.ciphertext[0] = (uint8_t)MW_GESTURE_CIRCLE_CW;
+    frame.ciphertext[1] = UINT8_C(82);
+    CHECK(!mw_protocol_accept_and_decrypt(
+        &guard,
+        &frame,
+        MW_DIRECTION_WAND_TO_RECEIVER,
+        1050U,
+        host_noncrypto_decrypt,
+        NULL,
+        host_commit_high_water,
+        &persistence,
+        plaintext));
+    frame.header.payload_length = 2U;
+    CHECK(mw_protocol_accept_and_decrypt(
+        &guard,
+        &frame,
+        MW_DIRECTION_WAND_TO_RECEIVER,
+        1050U,
+        host_noncrypto_decrypt,
+        NULL,
+        host_commit_high_water,
+        &persistence,
+        plaintext));
+    CHECK(plaintext[0] == (uint8_t)MW_GESTURE_CIRCLE_CW);
+    CHECK(plaintext[1] == UINT8_C(82));
     return 0;
 }
 

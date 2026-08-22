@@ -57,8 +57,9 @@ Flash endurance requires a reviewed journal/monotonic storage design, not writin
 | 17 | PULSE_ISOLATED_OC | Pulse floating open collector for 1–500 ms, still gated by the 100 ms renewable arm lease. |
 | 18 | PULSE_LOW_SIDE | Pulse common-ground 5–12 V low-side output for 1–500 ms, still gated by the arm lease and hardware limits. |
 | 32 | FEEDBACK | Receiver→wand state/result indication; never causes a receiver output. |
+| 33 | GESTURE_EVENT | Wand-to-receiver two-byte payload: validated gesture ID then confidence percent (70-100). It is telemetry only at the protocol layer and never directly changes an output. |
 
-Unknown commands/flags, zero-length-required violations, range errors or mixed directions are rejected. There is intentionally no mains command, emergency-stop command, flight arm, propulsion, motor or primary flight-control command.
+GESTURE_EVENT is accepted only with an exact two-byte authenticated payload; the receiver application must decode it with `mw_gesture_decode_event()` before any reviewed policy mapping. Unknown commands/flags, zero-length-required violations, range errors or mixed directions are rejected. There is intentionally no mains command, emergency-stop command, flight arm, propulsion, motor or primary flight-control command.
 
 ## Required negative tests
 
