@@ -1,6 +1,6 @@
 # 魔法杖跨域工程原型包（Rev B）
 
-> **CURRENT 2026-08-23:** Wand 配置与既有裸板候选保持冻结；独立 receiver-effects 的八槽/八效果 host 逻辑已验证，但其 PCB/CAM 正在整改，所有旧 receiver CAM 均为 **REJECTED**。授权仅覆盖原型裸板与原型 3D 打印；PCBA、目标固件、HIL 和量产仍锁定，见 `integration/CURRENT_SYSTEM_STATUS.json`。
+> **CURRENT 2026-08-23:** Wand 配置与既有裸板候选保持冻结；独立 receiver-effects 的八槽/八效果 host 逻辑已验证，A1 裸板候选已通过原生 ERC/DRC 并哈希绑定（旧 receiver CAM 仍为 **REJECTED**）。授权仅覆盖原型裸板与原型 3D 打印；PCBA、目标固件、HIL 和量产仍锁定，见 `integration/CURRENT_SYSTEM_STATUS.json`。
 
 当前入口：
 
