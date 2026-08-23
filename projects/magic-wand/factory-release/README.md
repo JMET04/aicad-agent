@@ -42,6 +42,19 @@ The main review entry is:
 
 `built/magic-wand-factory-release.review.html`
 
+
+## Current freeze status (2026-08-23)
+
+The unified factory-release cannot freeze yet. The mechanical factory-RFQ
+package (including the MW-A-101 receiver enclosure) was designed for the
+superseded 50.3 x 42.3 mm receiver board, and its receiver interface remains
+`pending_electronics_final_native_drc` with no `receiver-mechanical-interface.json`.
+The authoritative receiver is now the A1 relayout (60 x 50 mm, ERC/DRC 0/0/0,
+hash-bound JLC bare-PCB package). Closing this gate requires a new A1 receiver
+enclosure design and `receiver-mechanical-interface.json` with frozen
+coordinates/holes/connectors/RF keepout, then a fresh `--freeze-source-lock`.
+The 9 factory-release tests stay intentionally skipped until then; no stale
+50 x 42 interface is frozen in its place.
 ## Truth boundary
 
 Mechanical subjects may use the explicitly neutral

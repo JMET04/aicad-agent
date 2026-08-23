@@ -143,7 +143,7 @@ V2 的接收事务必须按以下顺序失败关闭：
 | L4 板级 Bring-up | 电流限制上电、5 V/3.3 V、复位、SPI、I2S、背光、硬件静音、SWD | **待证据** |
 | L5 物理媒体 | 实屏帧率/撕裂、八效果可辨识、声压/失真/温升、故障静音 | **待证据** |
 | L6 系统 HIL/安全 | 八设备、跨通道攻击、BLE/AES-CCM、掉电持久化、断链/低电/故障、媒体绝不驱动输出 | **待证据** |
-| L7 EMI/RF/热/机械 | 天线性能、SPI/I2S/类D预扫、USB/功放热、屏幕/扬声器/壳体装配 | **待证据** |
+| L7 EMI/RF/热/机械 | 天线性能、SPI/I2S/类D预扫、USB/功放热、屏幕/扬声器/壳体装配 | **待证据**。A1（60×50）接收器尚无外壳/机械接口（`receiver-mechanical-interface.json` 未生成；旧 50.3×42.3 外壳已被 A1 重排取代），统一 factory-release 冻结因此保持开放 |
 | L8 DFM/首件 | BOM/LCSC、CPL、Gerber/drill、装配图、工艺、AOI/ICT、首件检验 | 旧 CAM 已显式 **REJECTED**；A1 裸板包已重建并验证为上传候选，PCBA 因 2 个空 LCSC 与供应链未闭环仍 **NOT READY** |
 
 旧 receiver-effects Gerber/Drill/CAM 已被显式作废，不再是订购输入；A1 权威 PCB 已通过 ERC、原生 DRC、未连接、原理图一致性、功率线宽/颈缩、回流路径、板框和 CPL 原点审计，其裸板包（`manufacturing/jlcpcb-receiver-effects-rev-a1`）已重新生成并 SHA-256 绑定，可作为**裸板候选**提交报价。当前 BOM 仍有 2 个空 LCSC 编码（C_USB_RAW、L1），故 PCBA 明确为 **NOT READY**，不得用裸板通过代替 PCBA 物料放行。

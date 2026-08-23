@@ -758,7 +758,7 @@ def test_receiver_interface_freeze_is_fail_closed() -> None:
     receiver = design["interfaces"]["receiver_enclosure"]
     delivery = load_json(REPORTS / "factory-delivery-manifest.json")
     if receiver["interface_status"] != "frozen_electronics_native_drc":
-        raise unittest.SkipTest("electronics receiver interface is not final/frozen yet")
+        raise unittest.SkipTest("receiver A1 (60x50) mechanical interface/enclosure is not designed yet; legacy 50x42 receiver enclosure was superseded by the A1 relayout")
     interface_path = REPOSITORY / receiver["interface_source"]
     assert interface_path.is_file()
     interface = load_json(interface_path)
