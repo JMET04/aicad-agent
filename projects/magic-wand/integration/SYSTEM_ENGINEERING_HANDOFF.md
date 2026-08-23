@@ -4,7 +4,7 @@
 
 魔法杖配置：`WAND_PRINTABLE_REV_A0_PLUS_BARE_PCB_REV_A0`
 
-接收器状态：`RECEIVER_EFFECTS_DIRECT_ENDPOINT_PRE_CAM_RELEASE`
+接收器状态：`RECEIVER_EFFECTS_RELAYOUT_A1_DRC_CLEAN_PROTOTYPE_BARE_PCB_CANDIDATE`
 
 机器可读状态：`CURRENT_SYSTEM_STATUS.json`（该文件需在接收器最终 CAM 通过后同步刷新）
 
@@ -20,10 +20,10 @@
 - 便携式固件核心能区分轻敲、顺/逆旋、左/右挥、前刺、顺/逆时针画圈共 8 类动作，并具有实体按键门控、回稳拒识、跨轴含混拒识和 250 ms 防连击；
 - `receiver-effects` 是独立、直接与魔法杖配对的 BLE 媒体端点，带有自己的 NINA-B302，不是中继器；它维护 8 个相互隔离的设备/会话/通道槽，并把 8 类动作映射为 8 种屏幕动画与音效；
 - 配对、已连接、断开、低电、未知命令和故障仅是状态提示，不占用魔咒通道；显示/音效也绝不隐式授权继电器、点火器、电机或其他危险输出，危险输出权限默认关闭；
-- 接收器主机证据达到干净构建 25/25、CTest 8/8、cppcheck 9/9、源文件哈希 37/37；证据文件 SHA-256 为 `73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70`；
+- 接收器主机证据：2026-08-23 用干净构建重新验证，CTest 10/10 通过（含 gesture_event_v2、receiver_runtime、receiver_multichannel、pattern_effect、epoch_record/store、target_contract 向量）；它只证明主机侧协议/会话/调度逻辑，不证明真实 BLE、NINA 目标构建或 HIL；
 - 上述主机证据验证协议、会话隔离、状态机、媒体调度和主机侧边界，不证明真实 BLE/密码学、NINA-B302 目标构建、显示/I²S、电源/EMI、RF 或 HIL；这些目标/实物门仍保持开放；
-- 接收器当前 PCB 设计边界为 50.3 × 42.3 mm、4 层。此前导出的 CAM 因高电流网络被自动布线器降为 0.25 mm，以及局部回流路径和 CPL 坐标仍需复核，已明确标记为 **REJECTED**；旧 ZIP 不得上传或下单；
-- 接收器正在按主干宽度、受限短颈缩、有效平面入口和局部回流重新整改。最终 ERC/DRC/未连接/原理图一致性、线宽审计、CPL 多点反算和新 CAM 哈希均为**待替换最终结果**，本文件不得提前写成“接收器已通过制造审查”。
+- 接收器当前规范板为 **60 × 50 mm A1 重排板**（`verification/relayout-a1`），原生 KiCad ERC 0/0、DRC 0/0/0、封装错误 0；SWDIO/SWDCLK/RESET_N/PWR_GOOD_N 调试线已布通，过孔置于模块体下方以保 In1 接地参考面（RESET_N 为焊盘内过孔原型妥协）；
+- 接收器 A1 嘉立创裸板包已生成并复核（ZIP `JLCPCB_RECEIVER_EFFECTS_REV_A1_GERBER_DRILL.zip`，SHA-256 `F87E17C82B541FE367CB119FD6A66BBE2AF54E7A668F8779CC58226186AF2A62`）。唯一剩余生产门禁：NINA In1 接地覆盖率 96%（插件要求 98%，原型可接受；量产需把 RGB/USB/PWR_GOOD_N 过孔迁出模块体或微调 C_NINA_BULK）。PCBA、目标固件、真实 BLE/HIL 和实物验证仍未放行；
 
 魔法杖原型裸板和原型打印已经得到所有者授权；接收器只授权在最终 CAM 通过后制作原型裸板。量产、PCBA、目标固件发布和整机性能声明仍未放行。
 
@@ -112,12 +112,12 @@ V2 的 14 字节字段宽度为 1+1+1+1+1+1+4+4；`battery = 0xff` 表示未知�
 
 - 主要 IC 为 U1 NINA-B302-00B-00（LCSC C6335962）、U2 TPS62162DSGR（C40256）、U3 USBLC6-2SC6（C7519）和 U4 MAX98357AETE+T（C910544）；
 - 外接 Waveshare 1.28inch LCD Module（GC9A01、SKU 19192、240×240）和 XHXDZ 30MM-4Ω3W-TFHM 喇叭（C50387216）；屏与喇叭都是线外附件，不得列入板载 PCBA；
-- 目标订单为嘉立创 **5 片原型裸板**：4 层、50.3 × 42.3 mm、1.6 mm、外层 1 oz、最小成品孔按 0.30 mm/焊盘 0.60 mm 约束，默认绿油；只有实时报价仍满足免费条件时才选择黑油；
+- 目标订单为嘉立创 **5 片原型裸板**：4 层、60 × 50 mm（A1 重排）、1.6 mm、外层 1 oz、ENIG/黑油，默认绿油；只有实时报价仍满足免费条件时才选择黑油；
 - NINA/QFN 设计优先沉金，但免费资格和工艺价格必须以创建订单时的实时 CAM/报价为准，不能靠文档预判；
 - 本轮只授权裸板，不授权 PCBA。BOM/CPL 用于审查和后续装配准备，不改变裸板交付边界；
-- 旧接收器 Gerber/CAM 已拒绝。只有在 `USB_VBUS_RAW`/`USB_VBUS_5V` 主干 0.8 mm、`SPK_PLUS`/`SPK_MINUS` 主干 0.6 mm、`3V3`/`BUCK_SW` 主干 0.5 mm，并且细间距焊盘只保留有边界的短颈缩后，重新通过 ERC、DRC、未连接、原理图一致性、线宽比例、平面入口、回流路径和 CPL 多点反算，才能生成新的可上传 ZIP；
+- A1 板电源主干已按要求实现（VBUS 0.8、SPK 0.6、3V3/BUCK_SW 0.5 mm），原生 ERC/DRC/未连接/封装全部 0；专项电源/回流/RF 审计仅剩 NINA In1 接地覆盖率 96%（目标 98%）。BOM 仍为审查级，LCSC 料号部分空缺，PCBA 未放行；
 - CPL 不能只看“文件可解析”。必须固定制造原点、单位、正反面镜像规则和旋转约定，并用至少三个不共线器件从 KiCad 坐标正算到 CPL、再从工厂预览反算回 PCB；若任一点不一致，CAM 包仍是候选件而不是交付件；
-- 最终接收器 CAM 文件名、ZIP SHA-256、板源 SHA-256、ERC/DRC/一致性结果、线宽审计摘要和 CPL 反算结果：**待功率宽度/局部回流/CPL 整改完成后替换**。
+- 最终接收器 A1 包：上传 ZIP SHA-256 `F87E17C82B541FE367CB119FD6A66BBE2AF54E7A668F8779CC58226186AF2A62`，板源 SHA-256 `7849BC197C6287DB636E8BBE8A52CDB032BBBAF11D459D803F8603914052083D`，ERC 0/0、DRC 0/0/0；CPL 反算、PCBA 供应链和实物验证仍为开放门。
 
 ### 外壳打印
 
@@ -134,7 +134,7 @@ V2 的 14 字节字段宽度为 1+1+1+1+1+1+4+4；`battery = 0xff` 表示未知�
 
 ## 5. 尚未完成的工作（按风险排序）
 
-1. 完成接收器高电流线宽、短颈缩、平面入口和局部回流整改；重新执行 ERC/DRC/未连接/原理图一致性及独立线宽审计，不得复用旧 CAM；
+1. （量产级）把接收器 NINA In1 接地覆盖率从 96% 补到 98%：需重排 RGB/USB/PWR_GOOD_N 过孔或微调 C_NINA_BULK；原型裸板可按 96% 先行下单；
 2. 固定接收器 CAM/CPL 原点和旋转规则，用至少三个不共线器件反算工厂坐标，生成并独立审查新的 Gerber/钻孔/BOM/CPL/manifest；
 3. 安装固定版本的 nRF Connect SDK/Zephyr/ARM 工具链，建立 NINA-B302 板级定义并生成、刷写、哈希化魔法杖和接收器目标镜像；
 4. 在真实屏、功放、喇叭和 USB 5V/2A 电源上测试启动、背光、动画、I²S、BTL 音频、峰值电流、压降、温升、复位和 EMI；
