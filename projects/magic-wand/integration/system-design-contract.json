@@ -152,7 +152,7 @@
     },
     {
       "id": "RECEIVER-PCB-001",
-      "statement": "The independent receiver-effects working PCB shall remain a 50.3 mm by 42.3 mm, 4-layer direct BLE endpoint using NINA-B302-00B-00, TPS62162DSGR, USBLC6-2SC6 and MAX98357AETE+T, with the external Waveshare 1.28inch GC9A01 SKU 19192 display and XHXDZ 30MM-4Ω3W-TFHM C50387216 BTL speaker. Existing receiver CAM is REJECTED and PCBA is not authorized.",
+      "statement": "The independent receiver-effects working PCB shall remain a 60 mm by 50 mm A1, 4-layer direct BLE endpoint using NINA-B302-00B-00, TPS62162DSGR, USBLC6-2SC6 and MAX98357AETE+T, with the external Waveshare 1.28inch GC9A01 SKU 19192 display and XHXDZ 30MM-4Ω3W-TFHM C50387216 BTL speaker. Pre-A1 receiver CAM is REJECTED; the A1 bare-PCB package is a hash-bound upload candidate and PCBA is not authorized.",
       "verificationMethod": "Complete the power-width, bounded-neckdown, plane-entry, return-path and CPL-origin rework; rerun ERC, native DRC, unconnected and schematic-parity checks; then regenerate and hash-bind a new bare-board CAM package before any upload. Keep the hardware/HIL and PCBA gates open.",
       "subsystemIds": [
         "SUBSYS-ELECTRONICS",
@@ -773,7 +773,7 @@
         "RECEIVER-001"
       ],
       "requiredEvidenceLevel": "tool_verified",
-      "verification": "The bound receiver host record reports a clean 25/25 build, 8/8 CTest, cppcheck 9/9 selected files with no findings and 37/37 source-hash matches for exact V1/V2 profiles, eight isolated slots, fail-closed runtime, renderer, audio and media scheduling.",
+      "verification": "The bound receiver host record reports a clean 34/34 build, 10/10 CTest, cppcheck 9/9 selected files with no findings and 52/52 source-hash matches for exact V1/V2 profiles, eight isolated slots, fail-closed runtime, renderer, audio and media scheduling.",
       "status": "passed",
       "evidenceIds": [
         "EVID-RECEIVER-FW-HOST"
@@ -823,7 +823,7 @@
         "RECEIVER-PCB-001"
       ],
       "requiredEvidenceLevel": "tool_verified",
-      "verification": "Complete and independently review the 50.3 x 42.3 mm 4-layer receiver-effects source after power-width, bounded-neckdown, plane-entry, return-path and CPL-origin rework; require zero ERC/DRC/unconnected/parity findings and a newly generated hash-bound bare-board CAM. Prior CAM remains REJECTED.",
+      "verification": "Complete and independently review the 60 x 50 mm A1 4-layer receiver-effects source (power-width, bounded-neckdown, plane-entry, return-path and CPL-origin checks; zero ERC/DRC/unconnected/parity findings and a hash-bound bare-board CAM package). Pre-A1 CAM remains REJECTED; independent EDA/DFM review and physical first-article are still required before the gate closes.",
       "status": "open",
       "evidenceIds": []
     },

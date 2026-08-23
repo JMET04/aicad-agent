@@ -73,14 +73,14 @@ flowchart LR
 | 电池 | 电芯/线束 → 托架/J2 | 最大 11×6×42 mm；中心 `(0,-6.9,62)`，`z=41..83 mm`；BAT+/NTC/GND；8 mm 弯线余量 | 电源仓校验报告 |
 | 触觉 | J3/DRV2605L → 上壳 | 最大直径 10×厚 3.4 mm；距 RF 区 5 mm | 固定杯 + 零碰撞报告 |
 | 天线 | NINA → PCB/外壳 | 壳体 `z=5..30 mm` 内无电池、金属紧固件、致密填料 | PCB 约束 + 外壳包络 |
-| 杖杆 | 结构 → 整机 | 8 mm GFRP，切长 195 mm，插到底后目标总长 315 mm | 打印装配指南 |
+| 杖杆 | 结构 → 整机 | 8 mm GFRP，切长 195 mm，插到底后目标总长 316 mm | 打印装配指南 |
 | IMU 坐标 | PCB/装配 → 固件 | 杖 `+X` 指尖、`+Y` 向左、`+Z` 向按键；原始轴必须校准映射 | `TARGET_GESTURE_INTEGRATION.md` |
 | Legacy V1 事件 | 识别 → 无线/接收器 | `[gesture_id, confidence]`，**精确 2 字节**，只允许 `channel 0`；这是能力较弱的兼容路径 | 长度/profile 拒绝向量通过；目标 BLE/HIL 未验证 |
 | Multichannel V2 事件 | 识别 → 无线/接收器 | **精确 14 字节、大端序**：schema/channel/gesture/confidence/battery/flags/device_id/session_id；显式认证协商；必须 `ARM_ACTIVE`；认证身份与载荷身份冗余绑定 | 主机协议、会话和运行时向量通过；目标密码学/HIL 未验证 |
-| 逻辑通道 | 接收器会话层 → 媒体层 | 8 个相互隔离的 device/session/channel 槽；一槽失效不得打断其他槽；状态提示不占魔咒通道 | CTest 8/8；跨真实 BLE 并发 HIL 待验证 |
+| 逻辑通道 | 接收器会话层 → 媒体层 | 8 个相互隔离的 device/session/channel 槽；一槽失效不得打断其他槽；状态提示不占魔咒通道 | CTest 10/10；跨真实 BLE 并发 HIL 待验证 |
 | 显示附件 | J2 → Waveshare SKU 19192 | 1.28 英寸 GC9A01、240×240；8 针顺序 VCC/GND/DIN/CLK/CS/DC/RST/BL | 原理图/封装/引脚契约已建立；实物点亮待验证 |
 | 音频附件 | J3/MAX98357A → C50387216 | XHXDZ 30MM-4Ω3W-TFHM，JST-PH 外接；`SPK+`/`SPK−` 为 BTL，均不得接地 | 原理图/封装/引脚契约已建立；功率、温升、音质待验证 |
-| 接收器电源 | USB-C → TPS62162/MAX98357A | 合格 5 V/2 A 外部电源；3V3 逻辑轨，功放使用 5V；不依赖 PD/QC | 电源拓扑已建立；线宽/回流整改和实物电源测试待完成 |
+| 接收器电源 | USB-C → TPS62162/MAX98357A | 合格 5 V/2 A 外部电源；3V3 逻辑轨，功放使用 5V；不依赖 PD/QC | 电源拓扑与 A1 线宽/回流已闭环；实物电源测试待完成 |
 
 V2 的 14 字节字段宽度为 1+1+1+1+1+1+4+4；`battery = 0xff` 表示未知。接收器默认 profile 为 `UNSUPPORTED`，必须在认证握手中显式选择 V1 或 V2，不能只凭收到 2 字节或 14 字节自行切换。V2 缺少 `ARM_ACTIVE` 时只关闭并静默清除对应槽，不得产生动画、音效或影响其他已连接槽。Legacy V1 没有 ARM 字段，必须作为风险更高、能力更弱的兼容路径单独标识。
 

@@ -1,7 +1,7 @@
 # Magic Wand Receiver-Effects 系统交接
 
-状态：**接收拓扑与软件接口已冻结 / receiver-effects 裸板候选整改中 / 不构成当前 CAM、PCBA 或量产放行**  
-基线日期：2026-08-22
+状态：**接收拓扑与软件接口已冻结 / receiver-effects A1 裸板候选已哈希绑定 / 不构成当前 PCBA 或量产放行**  
+基线日期：2026-08-23
 
 本文件只定义冻结魔法杖与独立 `receiver-effects` 彩屏/音效接收板之间的系统边界。当前产物身份、所有者授权和开放门以 [`CURRENT_SYSTEM_STATUS.json`](CURRENT_SYSTEM_STATUS.json) 为准；系统级总体交接仍见 [`SYSTEM_ENGINEERING_HANDOFF.md`](SYSTEM_ENGINEERING_HANDOFF.md)。这里的“冻结”是配置和接口冻结，不代表物理首件、目标固件、安全、RF/EMI 或生产验证已经通过。
 
@@ -83,7 +83,7 @@ V2 的接收事务必须按以下顺序失败关闭：
 4. 再次交叉检查载荷内 channel/device/session 与路由槽和外层头一致。
 5. 通过后仅投递给媒体效果调度器；手势事件不得直接调用 AUX、隔离开集或低边开关输出。
 
-当前 host 证据已完成：干净构建 `25/25`、CTest `8/8`、cppcheck `9/9` 无发现、证据清单 `37/37` 源文件哈希一致；证据文件 SHA-256 为 `73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70`。这些结果冻结了 host 侧协议、路由、媒体调度和失败关闭语义，但不能替代真实目标 AES-CCM、BLE LE Secure Connections、密钥生命周期、抗回滚持久化、目标构建或八设备并发 HIL；这些门仍为**开放**。
+当前 host 证据已完成：干净构建 `34/34`、CTest `10/10`、cppcheck `9/9` 无发现、证据清单 `52/52` 源文件哈希一致；证据文件 SHA-256 为 `33732F037D6485F475AD754BE1D40490260DA120C90E8CBE6226E470F74FD681`。这些结果冻结了 host 侧协议、路由、媒体调度和失败关闭语义，但不能替代真实目标 AES-CCM、BLE LE Secure Connections、密钥生命周期、抗回滚持久化、目标构建或八设备并发 HIL；这些门仍为**开放**。
 
 ## 3. 独立 receiver-effects PCB 合同
 
@@ -95,7 +95,7 @@ V2 的接收事务必须按以下顺序失败关闭：
 
 ### 3.2 冻结硬件接口与精确附件
 
-当前独立 KiCad 工程目标板框为 `50.3 mm × 42.3 mm`、4 层；它不修改 Wand PCB，也不复用旧 receiver 作为中继。板上核心器件固定为 NINA-B302、TPS62162 3.3 V 降压、USBLC6 USB ESD 保护和 MAX98357 I2S 类 D 功放；USB-C 输入按合格外部 `5 V / 2 A` 电源设计，不依赖 PD/QC 协商。当前 PCB 正在修正功率线宽、局部 GND 回流和 CPL 原点，故下表是已冻结的电气/附件合同，不是当前 CAM 放行声明。
+当前独立 KiCad 工程目标板框为 `60 mm × 50 mm`（A1 重排）、4 层；它不修改 Wand PCB，也不复用旧 receiver 作为中继。板上核心器件固定为 NINA-B302、TPS62162 3.3 V 降压、USBLC6 USB ESD 保护和 MAX98357 I2S 类 D 功放；USB-C 输入按合格外部 `5 V / 2 A` 电源设计，不依赖 PD/QC 协商。A1 已完成功率线宽、局部 GND 回流和 CPL 原点整改并通过原生 ERC/DRC，裸板上传候选已生成并哈希绑定；下表是已冻结的电气/附件合同。裸板放行不代表 PCBA、目标固件或量产放行。
 
 | 功能 | 精确器件/接口 | NINA-B302 模块焊盘 → GPIO | 失败安全要求 |
 |---|---|---|---|
@@ -137,22 +137,22 @@ V2 的接收事务必须按以下顺序失败关闭：
 | 层级 | 所需证据 | 当前结论 |
 |---|---|---|
 | L0 接口静态检查 | 精确 V2 字节序、字段范围、pin budget、变更影响 | V1 exact-2、V2 exact-14、8 槽和直接端点合同已冻结 |
-| L1 Host 单元/负向向量 | V1/V2 codec、profile 混用拒绝、8 通道隔离、8 魔咒差异、音频限幅、no-actuation | **已通过：25/25 build、8/8 CTest、cppcheck 9/9、证据哈希 37/37** |
+| L1 Host 单元/负向向量 | V1/V2 codec、profile 混用拒绝、8 通道隔离、8 魔咒差异、音频限幅、no-actuation | **已通过：34/34 build、10/10 CTest、cppcheck 9/9、证据哈希 52/52** |
 | L2 目标构建 | 固定 NCS/Zephyr、receiver-effects devicetree、ELF/HEX/map/config 哈希 | **待证据** |
-| L3 EDA | 独立原理图/PCB、精确 MPN/封装、ERC/DRC、天线/回流/功率线宽/CPL 原点审查 | `50.3 × 42.3 mm`、4 层候选已存在；功率线宽、局部 GND 回流和 CPL 原点整改/复核中，**未放行** |
+| L3 EDA | 独立原理图/PCB、精确 MPN/封装、ERC/DRC、天线/回流/功率线宽/CPL 原点审查 | A1 `60 × 50 mm`、4 层；ERC/DRC/未连接/封装 0；功率线宽、GND 回流和 CPL 原点已复核，裸板包已哈希绑定；NINA In1 接地 96% vs 目标 98% 为唯一量产遗留 |
 | L4 板级 Bring-up | 电流限制上电、5 V/3.3 V、复位、SPI、I2S、背光、硬件静音、SWD | **待证据** |
 | L5 物理媒体 | 实屏帧率/撕裂、八效果可辨识、声压/失真/温升、故障静音 | **待证据** |
 | L6 系统 HIL/安全 | 八设备、跨通道攻击、BLE/AES-CCM、掉电持久化、断链/低电/故障、媒体绝不驱动输出 | **待证据** |
 | L7 EMI/RF/热/机械 | 天线性能、SPI/I2S/类D预扫、USB/功放热、屏幕/扬声器/壳体装配 | **待证据** |
-| L8 DFM/首件 | BOM/LCSC、CPL、Gerber/drill、装配图、工艺、AOI/ICT、首件检验 | 旧 CAM 包因功率线宽审计失败而 **REJECTED**；整改后可重新评估裸板，PCBA **NOT READY** |
+| L8 DFM/首件 | BOM/LCSC、CPL、Gerber/drill、装配图、工艺、AOI/ICT、首件检验 | 旧 CAM 已显式 **REJECTED**；A1 裸板包已重建并验证为上传候选，PCBA 因 2 个空 LCSC 与供应链未闭环仍 **NOT READY** |
 
-当前任何既有 receiver-effects Gerber/Drill/CAM 都不是订购输入。只有整改后的权威 PCB 再次通过 ERC、原生 DRC、未连接、原理图一致性、功率线宽/颈缩、回流路径、板框和 CPL 原点审计，并重新生成且哈希绑定 CAM 后，才可把**裸板候选**提交报价。当前 BOM 仍有 7 个空 LCSC 编码，故 PCBA 明确为 **NOT READY**，不得用裸板通过代替 PCBA 物料放行。
+旧 receiver-effects Gerber/Drill/CAM 已被显式作废，不再是订购输入；A1 权威 PCB 已通过 ERC、原生 DRC、未连接、原理图一致性、功率线宽/颈缩、回流路径、板框和 CPL 原点审计，其裸板包（`manufacturing/jlcpcb-receiver-effects-rev-a1`）已重新生成并 SHA-256 绑定，可作为**裸板候选**提交报价。当前 BOM 仍有 2 个空 LCSC 编码（C_USB_RAW、L1），故 PCBA 明确为 **NOT READY**，不得用裸板通过代替 PCBA 物料放行。
 
 ## 6. DFM 与生产交接最低要求
 
 1. 维护 NINA-B302、Waveshare SKU 19192、MAX98357A、TPS62162、USBLC6、USB-C、C50387216 扬声器、J2/J3 连接器的精确 MPN、生命周期与受控 datasheet；附件不得误列为 PCBA 贴装件。
 2. 用真实厂商 land pattern 重建并独立核对 pin-1、模块焊盘、FPC 方向、扬声器极性、USB 屏蔽和测试点；禁止用通用相似封装代替。
-3. 建立完整 BOM/LCSC/AVL、CPL 原点/旋转、DNP、替代料规则、装配面、回流限制和手焊禁区；补齐当前 7 个空 LCSC 前不得标记 PCBA Ready。
+3. 建立完整 BOM/LCSC/AVL、CPL 原点/旋转、DNP、替代料规则、装配面、回流限制和手焊禁区；补齐当前 2 个空 LCSC（C_USB_RAW、L1）前不得标记 PCBA Ready。
 4. 输出同一提交哈希下的原理图、PCB、Gerber、PTH/NPTH、BOM、CPL、装配图、坐标与制造清单；每个文件都需 SHA-256 绑定。
 5. 预留并标注 VBUS、3V3、GND、RESET、SWD、SPI、I2S、AUDIO_SD、TFT_BL 和关键电流测量点；定义 ICT/功能测试序列。
 6. 完成面板化、板边/FPC/USB 机械限制、天线区域禁布、铜到板边、阻焊桥、热焊盘、散热铜、泪滴/过孔和可制造性复核。
@@ -178,10 +178,11 @@ V2 的接收事务必须按以下顺序失败关闭：
 ## 8. 未完成门禁
 
 - 直接受配对端点的目标凭据烧录、轮换、撤销、调试锁和真实 BLE/AES-CCM：**待证据**。
-- receiver-effects 权威 PCB 的功率线宽/有界颈缩、局部 GND 回流、平面入口过孔、天线区和板边复核：**整改/待复核**。
-- `50.3 × 42.3 mm`、4 层权威板在整改后的 ERC/DRC/未连接/原理图一致性全量重跑：**待最终证据**。
-- CPL 原点/旋转审计、CAM 重生成和逐文件 SHA-256 绑定：**待证据；旧 CAM 已 REJECTED**。
-- BOM 中 7 个空 LCSC、AVL/替代料/DNP 和装配工艺：**未关闭；PCBA NOT READY**。
+- receiver-effects A1 权威 PCB 的功率线宽/有界颈缩、局部 GND 回流、平面入口过孔、天线区和板边复核：**已闭环（原生 ERC/DRC/未连接/封装 0）**。
+- A1 `60 × 50 mm`、4 层权威板 ERC/DRC/未连接/原理图一致性全量重跑：**已通过并重新生成裸板包**。
+- CPL 原点/旋转审计、CAM 重生成和逐文件 SHA-256 绑定：**已完成；`jlcpcb-receiver-effects-rev-a1` 已哈希绑定，旧 CAM 保持 REJECTED**。
+- BOM 中 2 个空 LCSC（C_USB_RAW、L1）、AVL/替代料/DNP 和装配工艺：**未关闭；PCBA NOT READY**。
+- NINA In1 接地覆盖率 96%（目标 98%）：**原型可接受；量产设计决策待定**。
 - V1/V2 认证协商的目标握手 transcript、禁降级策略和目标端互操作：**待证据**。
 - NINA-B302 receiver-effects 目标构建、烧录、SWD 日志和二进制哈希：**待证据**。
 - 八台 Wand/八槽并发、跨槽注入、掉线、重连、重放和持久化掉电 HIL：**待证据**。
@@ -192,10 +193,10 @@ V2 的接收事务必须按以下顺序失败关闭：
 
 ## 9. 下一接手顺序
 
-1. 从当前权威 `50.3 × 42.3 mm`、4 层 PCB 修正功率主干与有界颈缩，复核局部 GND 回流、平面入口过孔、天线区和板边，不改 Wand。
-2. 重跑 ERC、原生 DRC、未连接和原理图一致性，并输出逐网 width/neckdown、return-path 与 CPL origin 审计；任何一项不通过都保持旧 CAM `REJECTED`。
-3. 从通过门禁的同一 PCB 重生成 Gerber/Drill/BOM/CPL，校验板框/层数/钻孔/坐标并做 SHA-256 绑定；此时才可把裸板候选送嘉立创报价。
-4. 补齐 7 个空 LCSC、AVL/DNP/替代料与装配规则后另行评估 PCBA；不得把外接屏幕和扬声器误作贴装件。
+1. ✅ A1 `60 × 50 mm`、4 层 PCB 已修正功率主干与有界颈缩，并复核局部 GND 回流、平面入口过孔、天线区和板边；Wand 未改动。
+2. ✅ ERC、原生 DRC、未连接和原理图一致性已重跑为 0/0/0/0，width/neckdown、return-path 与 CPL origin 审计已输出；旧 CAM 保持 `REJECTED`。
+3. ✅ 从通过门禁的同一 A1 PCB 重新生成 Gerber/Drill/BOM/CPL，校验板框/层数/钻孔/坐标并做 SHA-256 绑定；裸板候选已可送嘉立创报价（见 `JLCPCB_ORDERING_GUIDE.md`）。
+4. 补齐 2 个空 LCSC（C_USB_RAW、L1）、AVL/DNP/替代料与装配规则后另行评估 PCBA；不得把外接屏幕和扬声器误作贴装件。
 5. 把显式 V1/V2 profile 协商落入目标握手，用固定 NCS/Zephyr 完成目标构建、烧录与真实 BLE/AES-CCM 互操作。
 6. 完成八通道、多设备、屏幕/音效、功率、EMI/RF、热、声学、机械装配和故障 HIL，再决定 PCBA/生产授权。
 

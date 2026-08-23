@@ -6,8 +6,8 @@
   "sourceFiles": [
     {
       "path": "projects/magic-wand/README.md",
-      "size": 2895,
-      "sha256": "68C8C96F719D322753ED1A3B6AF19666C9153BDAA538BC8FDFFF38133AA42194",
+      "size": 2952,
+      "sha256": "510868E29E6E151496450A7C6E2989F086667276CB6DCD1A37FE566F88B17126",
       "role": "entry",
       "kind": "current_project_entry"
     },
@@ -34,8 +34,8 @@
     },
     {
       "path": "projects/magic-wand/integration/system-design-contract.json",
-      "size": 40293,
-      "sha256": "7A34A2E0912CBD74A74E3E7C129EBC698C30CCA57786C35A9B419C909790B067",
+      "size": 39404,
+      "sha256": "04E21F10C43D7EF92533B1B7CB87614821A458C467859B148FFE125F7BAA0807",
       "role": "authority",
       "kind": "system_engineering_contract"
     },
@@ -56,14 +56,14 @@
     {
       "path": "projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md",
       "size": 23816,
-      "sha256": "CDF339D5DD99F492FADA6D5F0F8134D318C90D57D44EC15B65EB058F22344BA1",
+      "sha256": "9DE6F6CA96B24CBA5CC8C39119464C6FF0BA0A179B9D1CF0009F5E202EBAC96C",
       "role": "handoff",
       "kind": "current_handoff"
     },
     {
       "path": "projects/magic-wand/integration/RECEIVER_EFFECTS_SYSTEM_HANDOFF.md",
-      "size": 20769,
-      "sha256": "C79B3D84866E2A2D8E3E7FF01AF8CDAB5C6E56DEE9A6B157F49C77F556FE837D",
+      "size": 21312,
+      "sha256": "F7103750783C8EA5E2D4D1D10A18DCA93955F6A55DBD2C7E17EA1EE1BADF607C",
       "role": "handoff",
       "kind": "receiver_effects_handoff"
     },

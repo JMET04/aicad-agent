@@ -44,7 +44,7 @@
   "hardware_bringup": "NOT_RUN",
   "regulatory_or_certification_test": "NOT_RUN",
   "firmware_host_c11_build": "PASSED_GCC_16_1_WARNINGS_AS_ERRORS",
-  "firmware_host_ctest": "PASSED_1_OF_1",
+  "firmware_host_ctest": "PASSED_10_OF_10",
   "package_contract_tests": "PASSED_10_OF_10_STANDARD_LIBRARY_RUNNER"
  },
  "host_verification_scope": {
