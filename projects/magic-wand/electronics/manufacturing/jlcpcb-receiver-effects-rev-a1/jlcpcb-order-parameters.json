@@ -1,0 +1,28 @@
+{
+  "schema": "aicad.jlcpcb-order-parameters.v1",
+  "status": "READY_FOR_BARE_PCB_UPLOAD",
+  "board": "magic-wand-receiver-effects",
+  "revision": "A1",
+  "quantity": 5,
+  "dimensionsMm": [
+    60.0,
+    50.0
+  ],
+  "layers": 4,
+  "finishedThicknessMm": 1.6,
+  "outerCopperWeightOz": 1,
+  "solderMask": "Black",
+  "silkscreen": "White",
+  "surfaceFinish": "ENIG",
+  "viaCovering": "Tented",
+  "impedanceControl": false,
+  "removeOrderNumber": true,
+  "panelization": "Single PCB",
+  "goldFingers": false,
+  "castellatedHoles": false,
+  "edgePlating": false,
+  "assembly": {
+    "requested": false,
+    "reason": "Bare-PCB order first; BOM/CPL are included for a later PCBA sourcing pass."
+  }
+}

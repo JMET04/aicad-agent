@@ -19,10 +19,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ELECTRONICS = HERE.parent
-BOARD_DIR = ELECTRONICS / "receiver-effects"
+BOARD_DIR = ELECTRONICS / "receiver-effects" / "verification" / "relayout-a1"
 BOARD = BOARD_DIR / "receiver-effects.kicad_pcb"
 SCHEMATIC = BOARD_DIR / "receiver-effects.kicad_sch"
-PACKAGE = HERE / "jlcpcb-receiver-effects-rev-a0"
+PACKAGE = HERE / "jlcpcb-receiver-effects-rev-a1"
 GERBER = PACKAGE / "gerber"
 DRILL = PACKAGE / "drill"
 ASSEMBLY = PACKAGE / "assembly"
@@ -60,7 +60,7 @@ def clean_package() -> None:
     resolved_package = PACKAGE.resolve()
     if (
         resolved_package.parent != resolved_parent
-        or resolved_package.name != "jlcpcb-receiver-effects-rev-a0"
+        or resolved_package.name != "jlcpcb-receiver-effects-rev-a1"
     ):
         raise RuntimeError(f"unsafe package target: {resolved_package}")
     if PACKAGE.exists():
@@ -87,15 +87,15 @@ def main() -> int:
         raise RuntimeError(f"unreviewed KiCad version: {version}")
 
     run("sch", "erc", "--severity-all", "--exit-code-violations",
-        "--output", str(REPORTS / "receiver-effects-native-erc.rpt"), str(SCHEMATIC))
+        "--output", str(REPORTS / "relayout-a1-native-erc.rpt"), str(SCHEMATIC))
     run("pcb", "drc", "--refill-zones", "--severity-all", "--exit-code-violations",
-        "--units", "mm", "--output", str(REPORTS / "receiver-effects-native-drc.rpt"), str(BOARD))
+        "--units", "mm", "--output", str(REPORTS / "relayout-a1-native-drc.rpt"), str(BOARD))
     run("pcb", "export", "gerbers", "--layers", ",".join(LAYERS),
         "--check-zones", "--subtract-soldermask", "--output", str(GERBER), str(BOARD))
     run("pcb", "export", "drill", "--format", "excellon", "--excellon-units", "mm",
         "--excellon-zeros-format", "decimal", "--excellon-separate-th", "--generate-map",
         "--map-format", "gerberx2", "--generate-report", "--report-path",
-        str(REPORTS / "receiver-effects-drill-report.txt"), "--output", str(DRILL), str(BOARD))
+        str(REPORTS / "relayout-a1-drill-report.txt"), "--output", str(DRILL), str(BOARD))
 
     shutil.copy2(BOARD_DIR / "receiver-effects-bom.csv", ASSEMBLY / "receiver-effects-bom.csv")
     shutil.copy2(BOARD_DIR / "receiver-effects-cpl.csv", ASSEMBLY / "receiver-effects-cpl.csv")
@@ -112,9 +112,9 @@ def main() -> int:
         "schema": "aicad.jlcpcb-order-parameters.v1",
         "status": "READY_FOR_BARE_PCB_UPLOAD",
         "board": "magic-wand-receiver-effects",
-        "revision": "A0",
+        "revision": "A1",
         "quantity": 5,
-        "dimensionsMm": [50.3, 42.3],
+        "dimensionsMm": [60.0, 50.0],
         "layers": 4,
         "finishedThicknessMm": 1.6,
         "outerCopperWeightOz": 1,
@@ -135,17 +135,17 @@ def main() -> int:
     }
     write_json(PACKAGE / "jlcpcb-order-parameters.json", order_parameters)
     (PACKAGE / "README.md").write_text(
-        "# JLCPCB receiver-effects PCB REV A0\n\n"
-        "Upload `JLCPCB_RECEIVER_EFFECTS_REV_A0_GERBER_DRILL.zip` as a bare-PCB order. "
+        "# JLCPCB receiver-effects PCB REV A1\n\n"
+        "Upload `JLCPCB_RECEIVER_EFFECTS_REV_A1_GERBER_DRILL.zip` as a bare-PCB order. "
         "Apply the exact values in `jlcpcb-order-parameters.json`.\n\n"
         "Electronic gates: native KiCad ERC 0/0 and DRC 0/0/0. "
         "BOM/CPL are supplied for review but PCBA is intentionally not selected in this order; "
-        "several passive LCSC part numbers remain open and must be resolved before any PCBA order.\n",
+        "several passive LCSC part numbers remain open and must be resolved before any PCBA order; NINA In1 GND coverage is 96% vs the 98% production target, acceptable for bare-PCB prototype.\n",
         encoding="utf-8", newline="\n",
     )
     (PACKAGE / "tool-version.txt").write_text(f"KiCad CLI {version}\n", encoding="utf-8", newline="\n")
 
-    upload_zip = PACKAGE / "JLCPCB_RECEIVER_EFFECTS_REV_A0_GERBER_DRILL.zip"
+    upload_zip = PACKAGE / "JLCPCB_RECEIVER_EFFECTS_REV_A1_GERBER_DRILL.zip"
     with zipfile.ZipFile(upload_zip, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in gerbers + upload_drills:
             archive.write(path, arcname=path.name)
@@ -157,9 +157,9 @@ def main() -> int:
     manifest = {
         "schema": "aicad.jlcpcb-manufacturing-package.v1",
         "status": "VERIFIED_UPLOAD_CANDIDATE",
-        "revision": "A0",
+        "revision": "A1",
         "sourceBoard": {
-            "path": "electronics/receiver-effects/receiver-effects.kicad_pcb",
+            "path": "electronics/receiver-effects/verification/relayout-a1/receiver-effects.kicad_pcb",
             "size": BOARD.stat().st_size,
             "sha256": sha256(BOARD),
         },

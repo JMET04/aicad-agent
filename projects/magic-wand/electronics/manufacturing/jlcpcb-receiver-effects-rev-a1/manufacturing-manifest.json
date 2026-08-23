@@ -1,0 +1,146 @@
+{
+  "schema": "aicad.jlcpcb-manufacturing-package.v1",
+  "status": "VERIFIED_UPLOAD_CANDIDATE",
+  "revision": "A1",
+  "sourceBoard": {
+    "path": "electronics/receiver-effects/verification/relayout-a1/receiver-effects.kicad_pcb",
+    "size": 744379,
+    "sha256": "7849BC197C6287DB636E8BBE8A52CDB032BBBAF11D459D803F8603914052083D"
+  },
+  "electronicGates": {
+    "ercErrors": 0,
+    "ercWarnings": 0,
+    "drcViolations": 0,
+    "unconnected": 0,
+    "footprintErrors": 0,
+    "exclusions": 0,
+    "suppressions": 0
+  },
+  "files": [
+    {
+      "path": "assembly/receiver-effects-bom.csv",
+      "size": 3637,
+      "sha256": "0EE5B50AF0F4B54C6BB3FE043EF7BCCCE4FD663C1E326A1EA25A9E0FD41B8745"
+    },
+    {
+      "path": "assembly/receiver-effects-cpl.csv",
+      "size": 1085,
+      "sha256": "A7082F137EF9791CB481CDE66DE0036CBB9DC70AB9616680C12F46B84FAB556B"
+    },
+    {
+      "path": "drill/receiver-effects-NPTH-drl_map.gbr",
+      "size": 42840,
+      "sha256": "4D6D1AAD7B7CC7DC744BA41D31B0B058DB10ADF968CCAF42B4A6DB7E017F6EFE"
+    },
+    {
+      "path": "drill/receiver-effects-NPTH.drl",
+      "size": 502,
+      "sha256": "0D1F6DE12BE869BE5E756817D593718EEE1F0A12F85E83E13A9013B35CB44BAD"
+    },
+    {
+      "path": "drill/receiver-effects-PTH-drl_map.gbr",
+      "size": 48062,
+      "sha256": "E3DEFC8E861652C6F53AF08457789D5E6EB7E65B620EBE7D6A2C9B718A32E6B4"
+    },
+    {
+      "path": "drill/receiver-effects-PTH.drl",
+      "size": 1995,
+      "sha256": "9B8129BE2373F1FCBEEFFFE5A17B511D712C66D66F97DF13F084A64A1F123FD7"
+    },
+    {
+      "path": "gerber/receiver-effects-B_Cu.gbl",
+      "size": 104278,
+      "sha256": "0A746BE930DE095280C6D93944F6070CCFAC10AE1D0C3FDF89F86298BA41A9A1"
+    },
+    {
+      "path": "gerber/receiver-effects-B_Mask.gbs",
+      "size": 978,
+      "sha256": "81F077EF6DCDF468948DE1751A11751A4B2DF3F2EA6D95107ECEF7B3EC96590B"
+    },
+    {
+      "path": "gerber/receiver-effects-B_Paste.gbp",
+      "size": 476,
+      "sha256": "C048BE10E4D16A0A0EF9F071012A46A53CFB2D7CEC9A1C9B869F025308A3B558"
+    },
+    {
+      "path": "gerber/receiver-effects-B_Silkscreen.gbo",
+      "size": 990,
+      "sha256": "ABB46FB2CB828AA7C4B9F0F8B7983D156AFE1564181560F8893CAD5422741667"
+    },
+    {
+      "path": "gerber/receiver-effects-Edge_Cuts.gm1",
+      "size": 721,
+      "sha256": "C9212015FF348B4D137FCBFCE72841BFB95B6A17DC189978B72C2D7C29BC94F8"
+    },
+    {
+      "path": "gerber/receiver-effects-F_Cu.gtl",
+      "size": 184745,
+      "sha256": "A59FF29815CC8AA27A19C9215D828A91C602678E4119C0C607E40AE4D1AC5CB7"
+    },
+    {
+      "path": "gerber/receiver-effects-F_Mask.gts",
+      "size": 10026,
+      "sha256": "E9DA9B1629D99E1102A996C938BDB566E9CAEB7F8B9433E633799FF56CFA657A"
+    },
+    {
+      "path": "gerber/receiver-effects-F_Paste.gtp",
+      "size": 9171,
+      "sha256": "81B84263A57285A05CB2381E68DBCB6175697C6C6126B5406344AADA883073E8"
+    },
+    {
+      "path": "gerber/receiver-effects-F_Silkscreen.gto",
+      "size": 10038,
+      "sha256": "8147D3B2FAFF5FF4F700EA30A42CF1F2A2BE1AA1C41A82A6667B95F95EFC74F9"
+    },
+    {
+      "path": "gerber/receiver-effects-In1_Cu.g1",
+      "size": 99528,
+      "sha256": "0F49718643F95D37237358DF6DE1012E85445E5AD2B6C34BE98E0EFB84B26CA3"
+    },
+    {
+      "path": "gerber/receiver-effects-In2_Cu.g2",
+      "size": 115960,
+      "sha256": "E9F04ED2CE3E835276DBC71E6CC52188B17760B547D76A12D6F8EDA027EA3B77"
+    },
+    {
+      "path": "gerber/receiver-effects-job.gbrjob",
+      "size": 3911,
+      "sha256": "BAA6958059AE9F41A8A1411563188A5B9CFE95140A8A67358DC43DB501416546"
+    },
+    {
+      "path": "jlcpcb-order-parameters.json",
+      "size": 695,
+      "sha256": "441FA1A88F5E0ACEBBA6988B66A66300D1BA18AE0B0EFED08FBA9DDD1B8C1052"
+    },
+    {
+      "path": "JLCPCB_RECEIVER_EFFECTS_REV_A1_GERBER_DRILL.zip",
+      "size": 122445,
+      "sha256": "F87E17C82B541FE367CB119FD6A66BBE2AF54E7A668F8779CC58226186AF2A62"
+    },
+    {
+      "path": "README.md",
+      "size": 499,
+      "sha256": "811638EB7E160842BBF3BB542D695E4C66FE620AE4C30D8DECADF82AFA33A92E"
+    },
+    {
+      "path": "reports/relayout-a1-drill-report.txt",
+      "size": 844,
+      "sha256": "5DC3C868B1057119B4B877F91663B9C0B97D7B17B2238DD96D4FE3907A0F203F"
+    },
+    {
+      "path": "reports/relayout-a1-native-drc.rpt",
+      "size": 299,
+      "sha256": "514F1E91A1DDF5201D4AADA17B4EB456E170871D033E4C12FEA7BE542A1E8F0C"
+    },
+    {
+      "path": "reports/relayout-a1-native-erc.rpt",
+      "size": 193,
+      "sha256": "6EB68C9A0CCDA847F48B66E9FC5A4CDE7B4BA144CF8AB18407064AAD7FC8778C"
+    },
+    {
+      "path": "tool-version.txt",
+      "size": 17,
+      "sha256": "4867ED1B1768B1B3DE1A65F56A4C6F96CF510EAFF556C425FB80EFDD9A66D38A"
+    }
+  ]
+}
