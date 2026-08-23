@@ -456,7 +456,7 @@
       "dnp": false,
       "notes": "Internal PIFA faces board end",
       "datasheet": "https://content.u-blox.com/sites/default/files/NINA-B3_DataSheet_UBX-17052099.pdf",
-      "lcsc": "",
+      "lcsc": "C6335962",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -3496,8 +3496,8 @@
         "bodyDatumFingerprint": "8BF5CFF01C92E7C81879F0F088CE1E3EEF8D500CE600632D17CECD6927452F14",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -3640,7 +3640,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "https://www.st.com/resource/en/datasheet/lsm6dsv16x.pdf",
-      "lcsc": "",
+      "lcsc": "C5267406",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -4341,8 +4341,8 @@
         "bodyDatumFingerprint": "5A3F80CB1847670CDCFC75399F929C4283309DF71184BED4FC8ED1E08C9962A3",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -4455,7 +4455,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "https://www.ti.com/lit/ds/symlink/drv2605l.pdf",
-      "lcsc": "",
+      "lcsc": "C527464",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -4981,8 +4981,8 @@
         "bodyDatumFingerprint": "8262E0EC44D68AD3E84E5ADB39F5A380F54AE8DBD39D19F55D655F27D75BC9D6",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -5101,7 +5101,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "https://www.ti.com/lit/ds/symlink/tps63900.pdf",
-      "lcsc": "",
+      "lcsc": "C1518762",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -5671,8 +5671,8 @@
         "bodyDatumFingerprint": "1B9EA3D4BC723E2BB0C54505E26B991CCDE754409E38842F792ED2245987CE88",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -5737,7 +5737,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C122469",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -5911,8 +5911,8 @@
         "bodyDatumFingerprint": "DB0C43DFC92C509514AA01CADA16ECDAB6121326D6D918A5CD06A1277EB69A76",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -6031,7 +6031,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "https://www.ti.com/lit/ds/symlink/bq25185.pdf",
-      "lcsc": "",
+      "lcsc": "C19725033",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -6601,8 +6601,8 @@
         "bodyDatumFingerprint": "9E42B8FC9397E0FF1B93B3E3951011195C7CFCF9A9F18E2FCA2DA3BC00446400",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -6673,7 +6673,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C160403",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -6976,8 +6976,8 @@
         "bodyDatumFingerprint": "3668E19D0D69B7AF55E52FA337C6C954B769822C63E9DEE4D511D05F69D0D391",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -7047,7 +7047,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C202424",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -7306,8 +7306,8 @@
         "bodyDatumFingerprint": "D636C843650B8EB02A14F56D1929F392CD2DC0CC4CF53ACD910D577F3D7971BB",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -7378,7 +7378,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C160402",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -7637,8 +7637,8 @@
         "bodyDatumFingerprint": "0A6A85040E2F001F6A9CE9D0F9787FEA20FC51709E245D3E776FCAB1CEE21333",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -7732,7 +7732,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "https://www.st.com/resource/en/datasheet/usblc6-2.pdf",
-      "lcsc": "",
+      "lcsc": "C7519",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -8081,8 +8081,8 @@
         "bodyDatumFingerprint": "DCACFB9724891DD241957DE1E4E9FC105B64448EE94F201BB089413084B7B24F",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -8147,7 +8147,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C210357",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -8321,8 +8321,8 @@
         "bodyDatumFingerprint": "60D3B2ADFC3FDBD17CAEC35B45D0ABA96A0EBA43158B751C7B2C9A510A890CDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -8477,7 +8477,7 @@
       "dnp": false,
       "notes": "Controlled board-edge overhang; mechanical radial opening datum",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C3197885",
       "exact_land_pattern": true,
       "pad_positions": {
         "A1": [
@@ -9576,8 +9576,8 @@
         "bodyDatumFingerprint": "0317ACC4C09053FCD3D7C8C8658C53A22E459A31ABEE647F8C4D424A9FDAFFA9",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -9648,7 +9648,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C25905",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -9821,8 +9821,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -9887,7 +9887,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C25905",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -10060,8 +10060,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -10126,7 +10126,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C105871",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -10299,8 +10299,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -10365,7 +10365,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C105871",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -10538,8 +10538,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -10604,7 +10604,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C25741",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -10777,8 +10777,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -10843,7 +10843,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C106235",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -11016,8 +11016,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -11082,7 +11082,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C25741",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -11255,8 +11255,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -11321,7 +11321,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C25744",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -11494,8 +11494,8 @@
         "bodyDatumFingerprint": "7D46B16618C0CC515A2B1489F4BA13CAC24B3AF77BF721F3C6087C6FC700C872",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -11560,7 +11560,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C25744",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -11733,8 +11733,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -11799,7 +11799,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C106235",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -11972,8 +11972,8 @@
         "bodyDatumFingerprint": "85667540185E8021B14CFB8735FE5E702E35B754577B86D6DFFC24323FBBB856",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -12038,7 +12038,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C138044",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -12211,8 +12211,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -12277,7 +12277,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C15011",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -12450,8 +12450,8 @@
         "bodyDatumFingerprint": "7D46B16618C0CC515A2B1489F4BA13CAC24B3AF77BF721F3C6087C6FC700C872",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -12516,7 +12516,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C17168",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -12689,8 +12689,8 @@
         "bodyDatumFingerprint": "4F2AE06DACF1D42727556CE5852A2F435A5C6FBCD60C000B266259BC37978DDA",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -12755,7 +12755,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C138050",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -12928,8 +12928,8 @@
         "bodyDatumFingerprint": "7D46B16618C0CC515A2B1489F4BA13CAC24B3AF77BF721F3C6087C6FC700C872",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -12994,7 +12994,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C77073",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -13167,8 +13167,8 @@
         "bodyDatumFingerprint": "46E9DA534EFFE4DE4FE8A39F7458E476FE3E7061D25E720CC139693C8832CD9F",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -13233,7 +13233,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C77073",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -13406,8 +13406,8 @@
         "bodyDatumFingerprint": "46E9DA534EFFE4DE4FE8A39F7458E476FE3E7061D25E720CC139693C8832CD9F",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -13472,7 +13472,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C77073",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -13645,8 +13645,8 @@
         "bodyDatumFingerprint": "87E8B459A4727BADD7009CBA1D67844052C59B3F37ACDB096D0EF09E67F8CABF",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -13711,7 +13711,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C77073",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -13884,8 +13884,8 @@
         "bodyDatumFingerprint": "87E8B459A4727BADD7009CBA1D67844052C59B3F37ACDB096D0EF09E67F8CABF",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -13950,7 +13950,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C77073",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -14123,8 +14123,8 @@
         "bodyDatumFingerprint": "4C9492236FFDA94BD637229DEA9BA0815002955DABF7655483875A2E710D8212",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -14189,7 +14189,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C77071",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -14362,8 +14362,8 @@
         "bodyDatumFingerprint": "18EA7B009533B0FA97DF4C594482AB0B4ACF4B8FBBD5B351299F8D7A205A792E",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -14428,7 +14428,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C1525",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -14601,8 +14601,8 @@
         "bodyDatumFingerprint": "9FDC0922C3C52671391C0BA33BC713D13ABDC4A5FFF702C00CDB93571D90E66A",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -14667,7 +14667,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C1525",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -14840,8 +14840,8 @@
         "bodyDatumFingerprint": "9FDC0922C3C52671391C0BA33BC713D13ABDC4A5FFF702C00CDB93571D90E66A",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -14878,9 +14878,9 @@
     },
     {
       "ref": "C_HAPTIC_REG",
-      "value": "1uF 10V X7R",
-      "manufacturer": "Murata",
-      "mpn": "GRM155R71A105KE15D",
+      "value": "1uF 10V X5R",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "mpn": "CL05A105KP5NNNC",
       "footprint": "MW_FACTORY:wand_C_HAPTIC_REG",
       "x": 13.2,
       "y": 20.0,
@@ -14906,7 +14906,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C14445",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -14961,10 +14961,10 @@
         }
       ],
       "land_pattern_authority": {
-        "authorityId": "magic-wand:wand:C_HAPTIC_REG:GRM155R71A105KE15D",
+        "authorityId": "magic-wand:wand:C_HAPTIC_REG:CL05A105KP5NNNC",
         "status": "CONTROLLED",
-        "manufacturer": "Murata",
-        "mpn": "GRM155R71A105KE15D",
+        "manufacturer": "Samsung Electro-Mechanics",
+        "mpn": "CL05A105KP5NNNC",
         "sourceKind": "controlledKiCadLibrary",
         "documentNumber": "KiCad 10.0.5 Capacitor_SMD C_0402_1005Metric",
         "revision": "10.0.5; footprint version 20260206",
@@ -15079,8 +15079,8 @@
         "bodyDatumFingerprint": "9FDC0922C3C52671391C0BA33BC713D13ABDC4A5FFF702C00CDB93571D90E66A",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -15117,9 +15117,9 @@
     },
     {
       "ref": "C_HAPTIC_VDD",
-      "value": "1uF 10V X7R",
-      "manufacturer": "Murata",
-      "mpn": "GRM155R71A105KE15D",
+      "value": "1uF 10V X5R",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "mpn": "CL05A105KP5NNNC",
       "footprint": "MW_FACTORY:wand_C_HAPTIC_VDD",
       "x": 12.8,
       "y": 22.0,
@@ -15145,7 +15145,7 @@
       "dnp": false,
       "notes": "",
       "datasheet": "",
-      "lcsc": "",
+      "lcsc": "C14445",
       "exact_land_pattern": true,
       "pad_positions": {
         "1": [
@@ -15200,10 +15200,10 @@
         }
       ],
       "land_pattern_authority": {
-        "authorityId": "magic-wand:wand:C_HAPTIC_VDD:GRM155R71A105KE15D",
+        "authorityId": "magic-wand:wand:C_HAPTIC_VDD:CL05A105KP5NNNC",
         "status": "CONTROLLED",
-        "manufacturer": "Murata",
-        "mpn": "GRM155R71A105KE15D",
+        "manufacturer": "Samsung Electro-Mechanics",
+        "mpn": "CL05A105KP5NNNC",
         "sourceKind": "controlledKiCadLibrary",
         "documentNumber": "KiCad 10.0.5 Capacitor_SMD C_0402_1005Metric",
         "revision": "10.0.5; footprint version 20260206",
@@ -15318,8 +15318,8 @@
         "bodyDatumFingerprint": "9FDC0922C3C52671391C0BA33BC713D13ABDC4A5FFF702C00CDB93571D90E66A",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -15505,8 +15505,8 @@
         "bodyDatumFingerprint": "E56A8DCC8469E4D86078EDDA32C030DDF50B48B657725152AA233CE9DC23878C",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -15692,8 +15692,8 @@
         "bodyDatumFingerprint": "E56A8DCC8469E4D86078EDDA32C030DDF50B48B657725152AA233CE9DC23878C",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -15879,8 +15879,8 @@
         "bodyDatumFingerprint": "E56A8DCC8469E4D86078EDDA32C030DDF50B48B657725152AA233CE9DC23878C",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -16066,8 +16066,8 @@
         "bodyDatumFingerprint": "E56A8DCC8469E4D86078EDDA32C030DDF50B48B657725152AA233CE9DC23878C",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -16253,8 +16253,8 @@
         "bodyDatumFingerprint": "E56A8DCC8469E4D86078EDDA32C030DDF50B48B657725152AA233CE9DC23878C",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -16440,8 +16440,8 @@
         "bodyDatumFingerprint": "E56A8DCC8469E4D86078EDDA32C030DDF50B48B657725152AA233CE9DC23878C",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -16627,8 +16627,8 @@
         "bodyDatumFingerprint": "E56A8DCC8469E4D86078EDDA32C030DDF50B48B657725152AA233CE9DC23878C",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -16814,8 +16814,8 @@
         "bodyDatumFingerprint": "E56A8DCC8469E4D86078EDDA32C030DDF50B48B657725152AA233CE9DC23878C",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -16996,8 +16996,8 @@
         "bodyDatumFingerprint": "DD3129039158F694C6CA9FCA724F580B3FB05A4345ADD509484DBD0D1567F3CC",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -17180,8 +17180,8 @@
         "bodyDatumFingerprint": "DD3129039158F694C6CA9FCA724F580B3FB05A4345ADD509484DBD0D1567F3CC",
         "evidence": {
           "path": "electronics/evidence/authority/land-pattern-authority-inventory-final.json",
-          "size": 449287,
-          "sha256": "B34AF26F09FFFD59FE64F65D644229F6837B595DD25708ABA55B75C81BB971BE",
+          "size": 449313,
+          "sha256": "83E33974E11BFC74F85DD6317177BC42AF9D66BF2940230385A45B3D39DA47DA",
           "kind": "land_pattern_authority"
         }
       },
@@ -31601,14 +31601,14 @@
     "revision": "A0-WAND-NATIVE-DRC0-20260822",
     "sourceBoard": {
       "path": "electronics/wand/wand.kicad_pcb",
-      "size": 222240,
-      "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
+      "size": 222272,
+      "sha256": "30F0D3E7FEF29B05BB2BD50A11CB4DA4DBC7EB5E83DB712135E2724FD59A24F9",
       "kind": "native_kicad_pcb"
     },
     "nativeDrc": {
       "path": "electronics/wand/wand-native-drc.rpt",
       "size": 287,
-      "sha256": "B7E54B974BC056F6AF54471B296FDEF8E19170FFC1377D1F1434F2A892D8D465",
+      "sha256": "3E44BBD2B552186388A01313A73084E8D420E85EC707173B932827D69E056194",
       "kind": "native_kicad_drc_report",
       "violations": 0,
       "unconnected": 0,
@@ -31619,7 +31619,7 @@
     "nativeErc": {
       "path": "electronics/wand/wand-native-erc.rpt",
       "size": 193,
-      "sha256": "8A8AACC6F8B6505E1E1BC5703831FD73E16419463B7F4514D4D932E190AE1FF2",
+      "sha256": "8F60BC3348F658E3B75762E425F6CB6B1831063AC9BC72E3849CF13CB937A836",
       "kind": "native_kicad_erc_report",
       "errors": 0,
       "warnings": 0,

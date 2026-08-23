@@ -27,7 +27,7 @@
   ],
   "wandPcb": {
     "path": "../electronics/wand/wand.kicad_pcb",
-    "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
+    "sha256": "30F0D3E7FEF29B05BB2BD50A11CB4DA4DBC7EB5E83DB712135E2724FD59A24F9",
     "configurationFrozen": true,
     "changePolicy": "DO_NOT_MODIFY_FOR_RECEIVER_EFFECTS",
     "sizeMm": [
@@ -55,11 +55,28 @@
     "path": "../electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
     "scope": "FROZEN_WAND_BARE_PCB_ONLY",
     "status": "VERIFIED_UPLOAD_CANDIDATE",
-    "sha256": "EC3C07314F5ED3463697A1235EC2C4B8D2BB2BC2A0B1B4C8A42807E09C8AC1C6",
+    "sha256": "55A93C02C0EFBFFA30EDB611A86DB2DF68A16928839772B8CEEDAA20F6E091F2",
     "quantity": 5,
     "finish": "ENIG",
     "solderMask": "Black",
-    "pcbaIncluded": false
+    "pcbaIncluded": false,
+    "bomLcsc": {
+      "status": "COMPLETE_36_OF_36",
+      "missingRefs": [],
+      "substitutions": [
+        {
+          "refs": [
+            "C_HAPTIC_REG",
+            "C_HAPTIC_VDD"
+          ],
+          "from": "Murata GRM155R71A105KE15D (1uF 10V X7R 0402)",
+          "to": "Samsung CL05A105KP5NNNC (1uF 10V X5R 0402), LCSC C14445",
+          "reason": "same footprint/capacitance/voltage; temperature class X7R->X5R non-critical for DRV2605 REG/VDD decoupling",
+          "evidence": "electronics/evidence/sourcing/wand-lcsc-evidence.json"
+        }
+      ],
+      "orderTimeAction": "re-verify stock/lead time for extended or out-of-stock lines (BQ25185DLHR, XFL4020-222MEC) and sign the X5R substitution before selecting SMT assembly"
+    }
   },
   "printableEnclosure": {
     "path": "../mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
@@ -321,7 +338,7 @@
   },
   "openReleaseGates": [
     "Select an exact protected 1S LiPo part with 10k NTC and verify J2 harness polarity.",
-    "Complete BOM supplier/LCSC mapping before any PCBA order.",
+    "Wand BOM LCSC mapping complete (36/36, C_HAPTIC_REG/VDD substituted to Samsung CL05A105KP5NNNC/C14445 with sign-off); receiver-effects BOM/LCSC/AVL, DNP, substitution and assembly review before any PCBA order.",
     "Import all six STL files into a real slicer and record zero repair, zero floating islands and successful layer generation before first physical print.",
     "Print and physically fit the first enclosure; record shrink compensation and fastener torque.",
     "Assemble and current-limit bring up the first wand PCB; execute charge, thermal, USB, RF and haptic tests.",

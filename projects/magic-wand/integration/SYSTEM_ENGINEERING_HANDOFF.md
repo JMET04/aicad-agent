@@ -106,7 +106,7 @@ V2 的 14 字节字段宽度为 1+1+1+1+1+1+4+4；`battery = 0xff` 表示未知�
 - 上传：`electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip`；
 - 数量 5，4 层，板厚 1.6 mm，外层 1 oz，黑油白字，沉金，过孔盖油，单板；
 - 不勾选阻抗、金手指、半孔、包边和拼板；去除订单号；
-- 本次只下裸板。BOM/CPL 没有完整 LCSC/C-number 和替代料批准，不能勾选 SMT 贴装后假装“直接可用”。
+- 本次只下裸板。wand BOM/CPL 已补全 LCSC/C-number（36/36，证据见 electronics/evidence/sourcing/wand-lcsc-evidence.json），其中 C_HAPTIC_REG/C_HAPTIC_VDD 为有依据的等效替代（Samsung CL05A105KP5NNNC/C14445，X7R→X5R）；但 PCBA 仍需材料审查与替代料签核后才能勾选 SMT，接收器 BOM 仍缺部分 LCSC。
 
 ### 接收器效果板
 
@@ -115,7 +115,7 @@ V2 的 14 字节字段宽度为 1+1+1+1+1+1+4+4；`battery = 0xff` 表示未知�
 - 目标订单为嘉立创 **5 片原型裸板**：4 层、60 × 50 mm（A1 重排）、1.6 mm、外层 1 oz、ENIG/黑油，默认绿油；只有实时报价仍满足免费条件时才选择黑油；
 - NINA/QFN 设计优先沉金，但免费资格和工艺价格必须以创建订单时的实时 CAM/报价为准，不能靠文档预判；
 - 本轮只授权裸板，不授权 PCBA。BOM/CPL 用于审查和后续装配准备，不改变裸板交付边界；
-- A1 板电源主干已按要求实现（VBUS 0.8、SPK 0.6、3V3/BUCK_SW 0.5 mm），原生 ERC/DRC/未连接/封装全部 0；专项电源/回流/RF 审计仅剩 NINA In1 接地覆盖率 96%（目标 98%）。BOM 仍为审查级，LCSC 料号部分空缺，PCBA 未放行；
+- A1 板电源主干已按要求实现（VBUS 0.8、SPK 0.6、3V3/BUCK_SW 0.5 mm），原生 ERC/DRC/未连接/封装全部 0；专项电源/回流/RF 审计仅剩 NINA In1 接地覆盖率 96%（目标 98%）。BOM 仍为审查级（部分 LCSC 空缺），PCBA 未放行；
 - CPL 不能只看“文件可解析”。必须固定制造原点、单位、正反面镜像规则和旋转约定，并用至少三个不共线器件从 KiCad 坐标正算到 CPL、再从工厂预览反算回 PCB；若任一点不一致，CAM 包仍是候选件而不是交付件；
 - 最终接收器 A1 包：上传 ZIP SHA-256 `C3AAEA29D94C5FA84BC3B2370A941615BF3BDD16308BFC2B7FB9E0BBD87CE699`，板源 SHA-256 `140A637EC4DEC92C20D52D531B9F82D5946E580DC2D78EE2339BEA779B639ABA`，ERC 0/0、DRC 0/0/0；CPL 反算、PCBA 供应链和实物验证仍为开放门。
 
