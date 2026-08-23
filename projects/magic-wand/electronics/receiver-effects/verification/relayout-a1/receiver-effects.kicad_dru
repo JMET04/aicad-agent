@@ -1,0 +1,21 @@
+(version 1)
+(rule "Global manufacturing track width"
+  (condition "A.Type == 'track'")
+  (constraint track_width (min 0.15mm)))
+(rule "Global manufacturing clearance"
+  (condition "A.Type == 'track' && B.Type == 'track' && A.Net != B.Net")
+  (constraint clearance (min 0.15mm)))
+(rule "Board edge copper clearance"
+  (condition "A.Type == 'track' && B.Layer == 'Edge.Cuts'")
+  (constraint clearance (min 0.30mm)))
+(rule "Receiver load copper"
+  (condition "A.NetName == 'LOAD_DRAIN' || A.NetName == 'LOAD_SUPPLY_5_12V'")
+  (constraint track_width (min 1.00mm))
+  (constraint clearance (min 0.25mm)))
+(rule "Manufacturer fine-pitch same-footprint pads"
+  (condition "A.Reference == B.Reference && (A.Reference == 'U3' || A.Reference == 'U4')")
+  (constraint clearance (min 0.15mm)))
+
+(rule "GCT USB4105 official locator clearance"
+  (condition "A.Reference == 'J1' && B.Reference == 'J1'")
+  (constraint hole_clearance (min 0.18mm)))

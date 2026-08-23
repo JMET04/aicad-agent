@@ -349,3 +349,74 @@ def rgb_group() -> tuple[list[dict], list[dict]]:
         _via("RGB_R_N", 50.20, 16.80), _via("RGB_R_N", 50.20, 24.50),
     ]
     return s, v
+
+
+def debug_group() -> tuple[list[dict], list[dict]]:
+    """SWD/reset test points and PWR_GOOD_N to NINA.
+
+    SWDIO/SWDCLK use vias BELOW the module body (y>18.55) so the NINA In1
+    ground reference stays continuous; SWDCLK fans up into pad 11 on F.Cu.
+    The SWDIO bottom run sits at y=48.8 clear of the H4 mounting-hole pad and
+    the RESET_N via, and jogs around H4.  RESET_N uses a via in pad 19
+    (prototype compromise; the pad is boxed in by NINA no-net pins and EGP
+    ground pads).  PWR_GOOD_N is the exact freerouting-verified path.
+    """
+    s: list[dict] = []
+    v: list[dict] = []
+
+    # SWDIO: TP4 (17.00, 46.00) -> U1 pad 15 (56.75, 14.22).
+    s += [
+        _seg("SWDIO", "F.Cu", (17.00, 46.00), (17.00, 48.80), .15),
+        _seg("SWDIO", "B.Cu", (17.00, 48.80), (55.20, 48.80), .15),
+        _seg("SWDIO", "B.Cu", (55.20, 48.80), (55.20, 45.00), .15),
+        _seg("SWDIO", "B.Cu", (55.20, 45.00), (57.30, 45.00), .15),
+        _seg("SWDIO", "B.Cu", (57.30, 45.00), (57.30, 19.50), .15),
+        _seg("SWDIO", "F.Cu", (57.30, 19.50), (57.30, 14.22), .15),
+        _seg("SWDIO", "F.Cu", (57.30, 14.22), (56.75, 14.22), .15),
+    ]
+    v += [_via("SWDIO", 17.00, 48.80), _via("SWDIO", 57.30, 19.50)]
+
+    # SWDCLK: TP5 (20.00, 46.00) -> U1 pad 11 (52.75, 14.22).
+    s += [
+        _seg("SWDCLK", "F.Cu", (20.00, 46.00), (20.00, 48.00), .15),
+        _seg("SWDCLK", "B.Cu", (20.00, 48.00), (54.50, 48.00), .15),
+        _seg("SWDCLK", "B.Cu", (54.50, 48.00), (54.50, 19.50), .15),
+        _seg("SWDCLK", "F.Cu", (54.50, 19.50), (52.75, 14.22), .15),
+    ]
+    v += [_via("SWDCLK", 20.00, 48.00), _via("SWDCLK", 54.50, 19.50)]
+
+    # RESET_N: TP6 (23.00, 46.00) -> U1 pad 19 (58.88, 11.30), via in pad.
+    s += [
+        _seg("RESET_N", "F.Cu", (23.00, 46.00), (23.00, 49.40), .15),
+        _seg("RESET_N", "B.Cu", (23.00, 49.40), (58.88, 49.40), .15),
+        _seg("RESET_N", "B.Cu", (58.88, 49.40), (58.88, 11.30), .15),
+    ]
+    v += [_via("RESET_N", 23.00, 49.40), _via("RESET_N", 58.88, 11.30)]
+
+    # PWR_GOOD_N: U2.8 -> R_PG.2 -> U1 pad 46 (53.10, 6.75).  Exact
+    # freerouting-verified path in board-local coordinates.
+    s += [
+        _seg("PWR_GOOD_N", "F.Cu", (20.95, 35.25), (21.55, 34.65), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (21.55, 34.65), (23.11, 34.65), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (23.11, 34.65), (23.80, 35.34), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (23.80, 35.34), (23.80, 36.68), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (23.80, 36.68), (25.41, 38.29), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (25.41, 38.29), (26.25, 38.29), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (26.25, 38.29), (27.68, 36.85), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (27.68, 36.85), (27.68, 33.05), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (27.68, 33.05), (27.56, 33.05), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (27.56, 33.05), (26.01, 31.50), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (27.68, 33.05), (39.93, 33.05), .15),
+        _seg("PWR_GOOD_N", "B.Cu", (39.93, 33.05), (40.78, 33.90), .15),
+        _seg("PWR_GOOD_N", "B.Cu", (40.78, 33.90), (44.95, 33.90), .15),
+        _seg("PWR_GOOD_N", "B.Cu", (44.95, 33.90), (45.35, 33.50), .15),
+        _seg("PWR_GOOD_N", "B.Cu", (45.35, 33.50), (45.97, 33.50), .15),
+        _seg("PWR_GOOD_N", "B.Cu", (45.97, 33.50), (53.82, 25.65), .15),
+        _seg("PWR_GOOD_N", "B.Cu", (53.82, 25.65), (53.82, 8.97), .15),
+        _seg("PWR_GOOD_N", "B.Cu", (53.82, 8.97), (53.09, 8.24), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (53.09, 8.24), (53.09, 7.41), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (53.09, 7.41), (53.10, 7.40), .15),
+        _seg("PWR_GOOD_N", "F.Cu", (53.10, 7.40), (53.10, 6.75), .15),
+    ]
+    v += [_via("PWR_GOOD_N", 39.93, 33.05), _via("PWR_GOOD_N", 53.09, 8.24)]
+    return s, v

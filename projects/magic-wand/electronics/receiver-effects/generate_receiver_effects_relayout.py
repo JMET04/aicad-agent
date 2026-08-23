@@ -32,7 +32,7 @@ from generate_receiver_effects import (
     normalize_project_vias,
 )
 from receiver_effects_parity import align_root_labels, set_board_fields
-from receiver_effects_relayout_routes import audio_group, display_spi_group, rgb_group, usb_data_group
+from receiver_effects_relayout_routes import audio_group, debug_group, display_spi_group, rgb_group, usb_data_group
 
 
 OUT = HERE / "verification" / "relayout-a1"
@@ -291,6 +291,7 @@ def power_skeleton() -> tuple[list[dict], list[dict]]:
         (42.00, 38.00), (44.00, 33.00), (46.00, 34.20),  # U4 EP/pad return
         (53.20, 19.00),                        # NINA local return
         (52.80, 3.20),                         # U1 pads 30/53 F.Cu island to In1; clear of SPI lanes/paste pads
+    (50.70, 10.40),                        # U1 pad 6 F.Cu island to In1
         (29.40, 7.80),                        # display connector return
         (15.00, 24.00), (30.00, 24.00), (40.00, 24.00),  # plane/route return spine
         (15.00, 40.00), (30.00, 40.00), (40.00, 45.00),
@@ -386,27 +387,31 @@ def lock_and_fill(path: Path, model) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--stage", choices=("power", "usb", "spi", "audio", "rgb"), default="power")
+        "--stage", choices=("power", "usb", "spi", "audio", "rgb", "debug"), default="power")
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     board = relayout_board()
     pads = absolute_pads(board, require_controlled=False)
     segments, vias = power_skeleton()
     power_segment_count, power_via_count = len(segments), len(vias)
-    if args.stage in ("usb", "spi", "audio", "rgb"):
+    if args.stage in ("usb", "spi", "audio", "rgb", "debug"):
         signal_segments, signal_vias = usb_data_group()
         segments.extend(signal_segments)
         vias.extend(signal_vias)
-    if args.stage in ("spi", "audio", "rgb"):
+    if args.stage in ("spi", "audio", "rgb", "debug"):
         signal_segments, signal_vias = display_spi_group()
         segments.extend(signal_segments)
         vias.extend(signal_vias)
-    if args.stage in ("audio", "rgb"):
+    if args.stage in ("audio", "rgb", "debug"):
         signal_segments, signal_vias = audio_group()
         segments.extend(signal_segments)
         vias.extend(signal_vias)
-    if args.stage == "rgb":
+    if args.stage in ("rgb", "debug"):
         signal_segments, signal_vias = rgb_group()
+        segments.extend(signal_segments)
+        vias.extend(signal_vias)
+    if args.stage == "debug":
+        signal_segments, signal_vias = debug_group()
         segments.extend(signal_segments)
         vias.extend(signal_vias)
     project = write_project(board, OUT)

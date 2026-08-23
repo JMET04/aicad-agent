@@ -1,0 +1,26 @@
+{
+  "schema": "magic_wand_receiver_effects_clean_relayout_v1",
+  "status": "DEBUG_STAGE_NOT_FABRICATION_RELEASED",
+  "revision": "A1",
+  "dimensions_mm": [
+    60.0,
+    50.0
+  ],
+  "layers": [
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "B.Cu"
+  ],
+  "components": 45,
+  "pads": 200,
+  "power_segments": 56,
+  "power_and_return_vias": 47,
+  "signal_segments": 233,
+  "signal_vias": 50,
+  "power_nets_locked": true,
+  "global_labels_aligned": 146,
+  "next_gate": "native KiCad DRC: zero geometry violations before adding the next signal group",
+  "usb_data_status": "UNVERIFIED_USB_FS_HIL_OPEN",
+  "fabrication_authorized": false
+}

@@ -1,0 +1,32 @@
+Comment,Designator,Footprint,Manufacturer,MPN,LCSC Part #,DNP,Assembly Notes
+10uF 10V X5R,C_AUDIO_10U,MW_FACTORY:receiver-effects_C_AUDIO_10U,Murata,GRM21BR61A106KE19L,C77073,NO,
+22uF 10V X5R,C_AUDIO_BULK,MW_FACTORY:receiver-effects_C_AUDIO_BULK,Murata,GRM21BR61A226ME44L,C441864,NO,
+100nF 16V X7R,C_AUDIO_HF,MW_FACTORY:receiver-effects_C_AUDIO_HF,Murata,GRM155R71C104KA88D,C1525,NO,
+10uF 10V X5R,C_BUCK_IN,MW_FACTORY:receiver-effects_C_BUCK_IN,Murata,GRM21BR61A106KE19L,C77073,NO,
+22uF 6.3V X5R,C_BUCK_OUT,MW_FACTORY:receiver-effects_C_BUCK_OUT,Murata,GRM21BR60J226ME39L,C77071,NO,
+10uF 10V X5R,C_NINA_BULK,MW_FACTORY:receiver-effects_C_NINA_BULK,Murata,GRM21BR61A106KE19L,C77073,NO,
+100nF 16V X7R,C_NINA_HF,MW_FACTORY:receiver-effects_C_NINA_HF,Murata,GRM155R71C104KA88D,C1525,NO,
+1uF 10V X7R,C_USB_RAW,MW_FACTORY:receiver-effects_C_USB_RAW,Murata,GRM155R71A105KE15D,,NO,
+RGB COMMON ANODE,D1,MW_FACTORY:receiver-effects_D1,Lite-On,LTST-C19HE1WT,C458749,NO,Discrete common-anode 3.3V status LED; all channels active-low through individual resistors
+1.5A PTC,F1,MW_FACTORY:receiver-effects_F1,Bourns,MF-MSMF150-2,C89648,NO,6V resettable fuse candidate; hold/trip and enclosure-temperature HIL remain a gate
+USB-C 5V INPUT,J1,MW_FACTORY:receiver-effects_J1,GCT,USB4105-GF-A-120,C5184243,NO,5V sink/service only; use an externally qualified 5V/2A source; no USB-PD or QC
+GC9A01A 1.28in SPI,J2,MW_FACTORY:receiver-effects_J2,JST,SM08B-GHS-TB(LF)(SN),C265111,NO,"External Waveshare SKU19192 via straight-through JST-GH-to-PH2.0 harness; 3.3V SPI, no MISO; order VCC/GND/DIN/CLK/CS/DC/RST/BL"
+4OHM BTL SPEAKER,J3,MW_FACTORY:receiver-effects_J3,JST,S2B-PH-SM4-TB(LF)(SN),C295747,NO,"BTL 4ohm speaker only, rated >=3W; neither terminal may connect to chassis or GND"
+2.2uH,L1,MW_FACTORY:receiver-effects_L1,Murata,LQH32PN2R2NN0L,,NO,
+AO3401A,Q1,MW_FACTORY:receiver-effects_Q1,Alpha & Omega Semiconductor,AO3401A,C15127,NO,P-channel high-side backlight switch; firmware PWM is active-low; 100k pull-up defaults off
+100k,R_BL_PU,MW_FACTORY:receiver-effects_R_BL_PU,Yageo,RC0402FR-07100KL,C25741,NO,
+100R,R_BL_SER,MW_FACTORY:receiver-effects_R_BL_SER,Yageo,RC0402FR-07100RL,C25076,NO,
+5.1k,R_CC1,MW_FACTORY:receiver-effects_R_CC1,Yageo,RC0402FR-075K1L,C25905,NO,
+5.1k,R_CC2,MW_FACTORY:receiver-effects_R_CC2,Yageo,RC0402FR-075K1L,C25905,NO,
+0R,R_GAIN,MW_FACTORY:receiver-effects_R_GAIN,Yageo,RC0402JR-070RL,C17168,NO,
+150R,R_LED_B,MW_FACTORY:receiver-effects_R_LED_B,Yageo,RC0402FR-07150RL,C25082,NO,
+150R,R_LED_G,MW_FACTORY:receiver-effects_R_LED_G,Yageo,RC0402FR-07150RL,C25082,NO,
+330R,R_LED_R,MW_FACTORY:receiver-effects_R_LED_R,Yageo,RC0402FR-07330RL,C25104,NO,
+10k,R_PG,MW_FACTORY:receiver-effects_R_PG,Yageo,RC0402FR-0710KL,C25744,NO,
+2.2k,R_SD,MW_FACTORY:receiver-effects_R_SD,Yageo,RC0402FR-072K2L,C25879,NO,
+100k,R_SD_PD,MW_FACTORY:receiver-effects_R_SD_PD,Yageo,RC0402FR-07100KL,C25741,NO,
+0R,R_SH,MW_FACTORY:receiver-effects_R_SH,Yageo,RC0402JR-070RL,C17168,NO,
+NINA-B302-00B-00,U1,MW_FACTORY:receiver-effects_U1,u-blox,NINA-B302-00B-00,C6335962,NO,Module antenna points toward +X/right board edge; keep all enclosure metal and cables out of the antenna projection
+TPS62162DSGR,U2,MW_FACTORY:receiver-effects_U2,Texas Instruments,TPS62162DSGR,C40256,NO,Fixed 3.3V / 1A buck; 3-17V input rating does not authorize >5V board input
+USBLC6-2SC6,U3,MW_FACTORY:receiver-effects_U3,STMicroelectronics,USBLC6-2SC6,C7519,NO,
+MAX98357AETE+T,U4,MW_FACTORY:receiver-effects_U4,Analog Devices,MAX98357AETE+T,C910544,NO,5V BTL mono amp; GAIN_SLOT=GND gives 12dB gain; SD_MODE hardware-low at reset; speaker 4ohm >=3W
