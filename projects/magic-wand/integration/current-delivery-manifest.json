@@ -27,15 +27,15 @@
     },
     {
       "path": "projects/magic-wand/integration/CURRENT_SYSTEM_STATUS.json",
-      "size": 10699,
-      "sha256": "BE5F8EAF6E27D1D768D67B61F4EB62880C84791712671CD6591A4FF98981182A",
+      "size": 10946,
+      "sha256": "4734F93B2687D106298773CF122848DB6DA4A2C06389D825D739BB2CCB483326",
       "role": "authority",
       "kind": "current_system_status"
     },
     {
       "path": "projects/magic-wand/integration/system-design-contract.json",
-      "size": 35491,
-      "sha256": "547BA062D66D7D239B2C2F2A4B97F261AED382D707019B7DC071075B2B4C7768",
+      "size": 40292,
+      "sha256": "A72A11889FEAD4FA1E4412FE36E2B8577444EA09407268BDED689C3B08FA8DBF",
       "role": "authority",
       "kind": "system_engineering_contract"
     },
@@ -55,8 +55,8 @@
     },
     {
       "path": "projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md",
-      "size": 20477,
-      "sha256": "3BEA4FC07B3EE5BAEA798133DF3013A6465D8F30B5CBFF34DDF30646E7191DC6",
+      "size": 23816,
+      "sha256": "EF48EFC01AD117BC03753568EF8BECA274B0F70B006F6580F83D9AF3C049E701",
       "role": "handoff",
       "kind": "current_handoff"
     },
@@ -105,8 +105,8 @@
     },
     {
       "path": "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
-      "size": 4533750,
-      "sha256": "68CA7CAD227236D243F0FE72D7BB59BEC80C4576DA91966E571882E2FD036441",
+      "size": 5175853,
+      "sha256": "2FD129C823CBCB89EF96BD5F00451A0F5939BF04C41640E6678F8FC7E8CC94E0",
       "role": "evidence",
       "kind": "tool_verified_artifact",
       "evidenceId": "EVID-PRINT-PACKAGE",

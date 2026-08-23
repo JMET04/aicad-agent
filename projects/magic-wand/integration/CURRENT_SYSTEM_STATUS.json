@@ -248,15 +248,19 @@
     "pcb": {
       "path": "../electronics/receiver-effects/receiver-effects.kicad_pcb",
       "sizeMm": [
-        50.3,
-        42.3
+        60.0,
+        50.0
       ],
       "layers": 4,
       "status": "RELAYOUT_A1_DEBUG_STAGE_DRC_CLEAN",
       "previousCamStatus": "REJECTED",
       "previousCamReason": "POWER_TRACE_WIDTH_AUDIT_FAILED_AFTER_NATIVE_DRC",
       "currentBareBoardUploadCandidate": false,
-      "nativeDrc": {"violations": 0, "unconnected": 0, "footprintErrors": 0},
+      "nativeDrc": {
+        "violations": 0,
+        "unconnected": 0,
+        "footprintErrors": 0
+      },
       "remainingGate": "NINA In1 GND coverage 96% vs 98% target; move RGB/USB/PWR_GOOD_N vias out of module body for production",
       "pcbaIncluded": false,
       "pcbaStatus": "NOT_READY"

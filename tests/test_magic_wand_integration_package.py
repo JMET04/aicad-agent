@@ -100,9 +100,9 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
                 (7, "CIRCLE_CCW", "PORTAL"),
             ],
         )
-        self.assertEqual(receiver["pcb"]["sizeMm"], [50.3, 42.3])
+        self.assertEqual(receiver["pcb"]["sizeMm"], [60.0, 50.0])
         self.assertEqual(receiver["pcb"]["layers"], 4)
-        self.assertEqual(receiver["pcb"]["status"], "HARDWARE_CAM_REWORK_IN_PROGRESS")
+        self.assertEqual(receiver["pcb"]["status"], "RELAYOUT_A1_DEBUG_STAGE_DRC_CLEAN")
         self.assertEqual(receiver["pcb"]["previousCamStatus"], "REJECTED")
         self.assertFalse(receiver["pcb"]["currentBareBoardUploadCandidate"])
         self.assertFalse(receiver["pcb"]["pcbaIncluded"])
