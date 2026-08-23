@@ -62,8 +62,8 @@
     },
     {
       "path": "projects/magic-wand/integration/RECEIVER_EFFECTS_SYSTEM_HANDOFF.md",
-      "size": 21312,
-      "sha256": "F7103750783C8EA5E2D4D1D10A18DCA93955F6A55DBD2C7E17EA1EE1BADF607C",
+      "size": 21826,
+      "sha256": "C360DD49B0C7A02F81A34D9E8E43741E15EF7A4D61F23CDFE1F95C06C6ED6F02",
       "role": "handoff",
       "kind": "receiver_effects_handoff"
     },

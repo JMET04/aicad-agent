@@ -182,7 +182,7 @@ V2 的接收事务必须按以下顺序失败关闭：
 - A1 `60 × 50 mm`、4 层权威板 ERC/DRC/未连接/原理图一致性全量重跑：**已通过并重新生成裸板包**。
 - CPL 原点/旋转审计、CAM 重生成和逐文件 SHA-256 绑定：**已完成；`jlcpcb-receiver-effects-rev-a1` 已哈希绑定，旧 CAM 保持 REJECTED**。
 - BOM 中 2 个空 LCSC（C_USB_RAW、L1）、AVL/替代料/DNP 和装配工艺：**未关闭；PCBA NOT READY**。
-- NINA In1 接地覆盖率 96%（目标 98%）：**原型可接受；量产设计决策待定**。
+- NINA In1 接地覆盖率 96%（576/600，目标 98%）：**原型可接受；量产需做模块逃逸区专项重排**。实测把 RGB_R/G/B、3V3、I2S_BCLK 等 5 个模块体下过孔迁移到体下走廊后覆盖率可升到 98.5%（591/600），但模块体下方被 C_NINA_BULK/C_NINA_HF 去耦电容与 6 条既有 B.Cu 通道（I2S_LRCLK x=48.9、AUDIO_SD_CTRL x=48.0、I2S_DOUT x=47.2、I2S_BCLK x=49.6、USB_VBUS_5V x=51.9、PWR_GOOD_N x=53.82）占据，简单挪孔会引入 26 项 DRC 违规（过孔间距/压线/短路），必须作为一次专项逃逸区重排处理，不能当作小改动。
 - V1/V2 认证协商的目标握手 transcript、禁降级策略和目标端互操作：**待证据**。
 - NINA-B302 receiver-effects 目标构建、烧录、SWD 日志和二进制哈希：**待证据**。
 - 八台 Wand/八槽并发、跨槽注入、掉线、重连、重放和持久化掉电 HIL：**待证据**。
