@@ -1,6 +1,6 @@
 {
   "schema": "magic_wand_receiver_effects_contract_v1",
-  "status": "DESIGN_INPUT_ONLY_FABRICATION_BLOCKED",
+  "status": "RELAYOUT_A1_DRC_CLEAN_PROTOTYPE_BARE_PCB_CANDIDATE",
   "observed_at": "2026-08-23",
   "board": {
     "name": "receiver-effects",
@@ -159,14 +159,15 @@
     "dangerous_outputs": "not populated and no firmware authority"
   },
   "artifact_state": {
-    "kicad_schematic": "NOT_CREATED",
-    "kicad_pcb": "NOT_CREATED",
-    "erc": "NOT_RUN",
-    "drc": "NOT_RUN",
-    "gerber": "NOT_CREATED",
-    "drill": "NOT_CREATED",
-    "bom": "DESIGN_INPUT_ONLY",
-    "pick_place": "NOT_CREATED",
-    "fabrication_authorized": false
+    "kicad_schematic": "CREATED_RELAYOUT_A1",
+    "kicad_pcb": "CREATED_RELAYOUT_A1_DRC_CLEAN",
+    "erc": "0_ERRORS_0_WARNINGS",
+    "drc": "0_VIOLATIONS_0_UNCONNECTED_0_FOOTPRINT",
+    "gerber": "CREATED_A1_PACKAGE",
+    "drill": "CREATED_A1_PACKAGE",
+    "bom": "DESIGN_INPUT_ONLY_LCSC_PARTLY_OPEN",
+    "pick_place": "CREATED_A1",
+    "fabrication_authorized": false,
+    "note": "Prototype bare-PCB upload candidate; NINA In1 GND coverage 96% vs 98% production target remains open."
   }
 }
