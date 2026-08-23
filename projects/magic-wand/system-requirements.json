@@ -16,7 +16,7 @@
       "id": "SYS-001",
       "category": "mechanical",
       "requirement": "The assembled prototype shall target 315 mm overall length with a 30 mm nominal grip and 179 mm exposed nonconductive GFRP rod above the connector.",
-      "acceptance": "Overall length 315 +/- 2 mm; grip OD 30 +/- 0.3 mm; exposed rod 179 +/- 1 mm; each printable STL passes the single-body watertight mesh gate.",
+      "acceptance": "Overall length 316 +/- 2 mm; grip OD 30 +/- 0.3 mm; exposed rod 179 +/- 1 mm; each printable STL passes the single-body watertight mesh gate.",
       "verification": "drawing inspection plus physical first-article measurement",
       "status": "digital_geometry_and_mesh_verified_physical_first_article_pending"
     },

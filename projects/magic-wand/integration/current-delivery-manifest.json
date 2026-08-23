@@ -20,22 +20,22 @@
     },
     {
       "path": "projects/magic-wand/system-requirements.json",
-      "size": 7955,
-      "sha256": "6F851CF8D829697C17C496A96498BAA92E15BCAF1308A0ED302ECC65FE713E19",
+      "size": 7830,
+      "sha256": "ADD40586E1B146C26F4597A0B234ABF1C555F6474645566D6F8E2782B538C81F",
       "role": "authority",
       "kind": "system_requirements"
     },
     {
       "path": "projects/magic-wand/integration/CURRENT_SYSTEM_STATUS.json",
-      "size": 10946,
-      "sha256": "4734F93B2687D106298773CF122848DB6DA4A2C06389D825D739BB2CCB483326",
+      "size": 10596,
+      "sha256": "67109A746FC1BFBD284A48BC1FB66C7E8BEF1D0CDAB6219F9FE2EF8E4E67BC03",
       "role": "authority",
       "kind": "current_system_status"
     },
     {
       "path": "projects/magic-wand/integration/system-design-contract.json",
-      "size": 40292,
-      "sha256": "A72A11889FEAD4FA1E4412FE36E2B8577444EA09407268BDED689C3B08FA8DBF",
+      "size": 40293,
+      "sha256": "7A34A2E0912CBD74A74E3E7C129EBC698C30CCA57786C35A9B419C909790B067",
       "role": "authority",
       "kind": "system_engineering_contract"
     },
@@ -56,7 +56,7 @@
     {
       "path": "projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md",
       "size": 23816,
-      "sha256": "EF48EFC01AD117BC03753568EF8BECA274B0F70B006F6580F83D9AF3C049E701",
+      "sha256": "CDF339D5DD99F492FADA6D5F0F8134D318C90D57D44EC15B65EB058F22344BA1",
       "role": "handoff",
       "kind": "current_handoff"
     },
@@ -70,7 +70,7 @@
     {
       "path": "projects/magic-wand/integration/current-system-traceability.json",
       "size": 15933,
-      "sha256": "8999974EFEC24E5FB86A83B6968CE8A809FECFA4F93CBE9A9EC5DDEE1933C441",
+      "sha256": "C8F91DB3BC9FFB9D1EB6E2965395D43C748AC7FE636BF8B9D3ED7D467F369A6A",
       "role": "trace",
       "kind": "source_faithful_trace"
     },
@@ -125,8 +125,8 @@
     },
     {
       "path": "projects/magic-wand/firmware/host-review-evidence.json",
-      "size": 6820,
-      "sha256": "73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70",
+      "size": 10345,
+      "sha256": "33732F037D6485F475AD754BE1D40490260DA120C90E8CBE6226E470F74FD681",
       "role": "evidence",
       "kind": "tool_verified_artifact",
       "evidenceId": "EVID-RECEIVER-FW-HOST",

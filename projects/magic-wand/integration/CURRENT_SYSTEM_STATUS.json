@@ -89,7 +89,7 @@
     "rod": {
       "material": "8 mm GFRP",
       "cutLengthMm": 195.0,
-      "targetOverallLengthMm": 315.0
+      "targetOverallLengthMm": 316.0
     },
     "meshGate": {
       "status": "PASSED",
@@ -135,15 +135,15 @@
     },
     "receiverRuntimeHostEvidence": {
       "path": "../firmware/host-review-evidence.json",
-      "status": "HOST_VERIFIED_TARGET_AND_HIL_BLOCKED",
-      "size": 6820,
-      "sha256": "73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70",
+      "status": "HOST_VERIFIED_TARGET_AND_HIL_OPEN",
+      "size": 10345,
+      "sha256": "33732F037D6485F475AD754BE1D40490260DA120C90E8CBE6226E470F74FD681",
       "buildSteps": {
-        "passed": 25,
+        "passed": 34,
         "failed": 0
       },
       "ctest": {
-        "passed": 8,
+        "passed": 10,
         "failed": 0
       },
       "cppcheckFiles": {
@@ -152,7 +152,7 @@
         "findings": 0
       },
       "sourceHashInventory": {
-        "matched": 37,
+        "matched": 52,
         "mismatched": 0
       }
     },

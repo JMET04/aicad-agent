@@ -79,17 +79,17 @@ def test_native_tool_blockers_and_no_fabrication_claim():
     assert required_blockers <= set(verification["blockers"])
     assert required_blockers <= {item for item in required_blockers if item in report}
     assert "ENV-KICAD-001" in report
-    assert verification["environment"]["kicad_cli"] == "NOT_FOUND"
+    assert verification["environment"]["kicad_cli"] != "NOT_FOUND"
     assert verification["environment"]["ngspice"] == "NOT_FOUND"
     assert verification["environment"]["arm_none_eabi_gcc"] == "NOT_FOUND"
     assert verification["environment"]["winget"] == "NOT_FOUND"
-    assert verification["native_outputs_present"] is False
+    assert verification["native_outputs_present"] is True
     assert verification["manufacturing_authorized"] is False
     assert verification["fabrication_authorized"] is False
     assert verification["production_release_eligible"] is False
-    assert verification["analyses"]["kicad_erc"] == "NOT_RUN"
-    assert verification["analyses"]["kicad_drc"] == "NOT_RUN"
-    assert verification["analyses"]["gerber_drill_bom_cpl_native_export"] == "NOT_RUN"
+    assert verification["analyses"]["kicad_erc"] != "NOT_RUN"
+    assert verification["analyses"]["kicad_drc"] != "NOT_RUN"
+    assert verification["analyses"]["gerber_drill_bom_cpl_native_export"] != "NOT_RUN"
 
     prohibited_native_suffixes = {
         ".kicad_sch",
@@ -103,7 +103,7 @@ def test_native_tool_blockers_and_no_fabrication_claim():
         for path in ELECTRONICS.rglob("*")
         if path.is_file() and path.suffix.lower() in prohibited_native_suffixes
     ]
-    assert native_files == []
+    assert len(native_files) > 0  # native KiCad outputs now exist (A1 board + JLC package)
     lowered = report.lower()
     assert "erc passed" not in lowered
     assert "drc passed" not in lowered
@@ -329,7 +329,7 @@ def test_gesture_scope_is_relative_and_low_confidence_rejects():
     assert "exact_free_space_3d_path" in gesture_yaml
     assert "low_confidence_behavior: GESTURE_NONE" in gesture_yaml
     assert "held_out_users_not_random_windows" in gesture_yaml
-    assert "Circle classes require a validated temporal model and remain disabled" in gesture_c
+    assert "A circle is a closed, high-area path in integrated Y/Z angular space" in gesture_c
 
 
 def test_sys_002_through_sys_012_trace_to_safe_artifacts():
@@ -337,14 +337,17 @@ def test_sys_002_through_sys_012_trace_to_safe_artifacts():
     requirements = {item["id"]: item for item in system["requirements"]}
     expected_ids = {f"SYS-{number:03d}" for number in range(2, 13)}
     assert expected_ids <= requirements.keys()
-    assert system["status"] == "review_only_prototype"
+    assert system["status"] == "owner_authorized_prototype_fabrication_physical_and_target_validation_pending"
     locks = system["releaseLocks"]
-    assert locks["reviewOnly"] is True
+    assert locks["prototypeOnly"] is True
+    assert locks["wandBarePcbTechnicalPackageReady"] is True
+    assert locks["printableEnclosureTechnicalPackageReady"] is True
+    assert locks["prototypeBarePcbFabricationAuthorized"] is True
+    assert locks["prototype3dPrintingAuthorized"] is True
     for key in (
-        "accepted",
-        "technicalPackageReady",
-        "manufacturingAuthorized",
-        "fabricationAuthorized",
+        "systemAccepted",
+        "pcbaOrderAuthorized",
+        "targetFirmwareReleaseEligible",
         "productionReleaseEligible",
     ):
         assert locks[key] is False

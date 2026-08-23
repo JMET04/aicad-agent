@@ -1,64 +1,70 @@
 {
-  "artifact_status": "EVT_REVIEW_ONLY",
-  "observed_at": "2026-08-21",
-  "environment": {
-    "kicad_expected_version": "10.0.5",
-    "kicad_cli": "NOT_FOUND",
-    "ngspice": "NOT_FOUND",
-    "arm_none_eabi_gcc": "NOT_FOUND",
-    "winget": "NOT_FOUND",
-    "official_windows_x64_installer_bytes": 967270176,
-    "free_bytes_observed": {
-      "C": 2037940224,
-      "D": 891183104
-    },
-    "installation_decision": "BLOCKED_INSUFFICIENT_SAFE_FREE_SPACE",
-    "files_deleted_to_make_space": false,
-    "download_or_install_attempted": false
+ "artifact_status": "EVT_REVIEW_ONLY",
+ "observed_at": "2026-08-23",
+ "environment": {
+  "kicad_expected_version": "10.0.5",
+  "kicad_cli": "FOUND_10_0_5",
+  "ngspice": "NOT_FOUND",
+  "arm_none_eabi_gcc": "NOT_FOUND",
+  "winget": "NOT_FOUND",
+  "official_windows_x64_installer_bytes": 967270176,
+  "free_bytes_observed": {
+   "C": 2037940224,
+   "D": 891183104
   },
-  "tool_search": {
-    "path_lookup": ["where.exe kicad-cli", "where.exe ngspice", "where.exe arm-none-eabi-gcc", "where.exe winget"],
-    "common_paths_checked": [
-      "C:/Program Files/KiCad",
-      "C:/Program Files/ngspice",
-      "C:/Program Files (x86)/KiCad",
-      "C:/Program Files (x86)/ngspice",
-      "D:/KiCad"
-    ]
-  },
-  "analyses": {
-    "official_datasheet_pin_power_decoupling_review": "PERFORMED_MANUALLY",
-    "requirements_traceability_SYS_002_to_SYS_012": "DOCUMENTED_CONTRACT_TEST_PASSED_10_OF_10",
-    "kicad_erc": "NOT_RUN",
-    "kicad_drc": "NOT_RUN",
-    "spice": "NOT_RUN",
-    "si_pi_rf_thermal_fea": "NOT_RUN",
-    "gerber_drill_bom_cpl_native_export": "NOT_RUN",
-    "firmware_target_compile": "NOT_RUN",
-    "hardware_bringup": "NOT_RUN",
-    "regulatory_or_certification_test": "NOT_RUN",
-    "firmware_host_c11_build": "PASSED_GCC_16_1_WARNINGS_AS_ERRORS",
-    "firmware_host_ctest": "PASSED_1_OF_1",
-    "package_contract_tests": "PASSED_10_OF_10_STANDARD_LIBRARY_RUNNER"
-  },
-  "host_verification_scope": {
-    "compiler": "GCC 16.1.0",
-    "cmake_configure": "PASSED with complete D:/mingw64 toolchain",
-    "warnings_as_errors_build": "PASSED",
-    "ctest": "PASSED 1/1",
-    "evidence": "../firmware/host-review-evidence.json",
-    "claim_limit": "Host logic/syntax only; no nRF target, BLE, cryptographic primitive, timing, hardware or certification claim"
-  },
-  "native_outputs_present": false,
-  "native_validation_recipe": "native-validation.md",
-  "manufacturing_authorized": false,
-  "fabrication_authorized": false,
-  "production_release_eligible": false,
-  "blockers": [
-    "BLK-EDA-001",
-    "BLK-SIM-001",
-    "BLK-FW-001",
-    "BLK-MECH-001",
-    "BLK-SAFE-001"
+  "installation_decision": "INSTALLED",
+  "files_deleted_to_make_space": false,
+  "download_or_install_attempted": false,
+  "path": "C:/Users/刘佳明/AppData/Local/Programs/KiCad/10.0/bin/kicad-cli.exe"
+ },
+ "tool_search": {
+  "path_lookup": [
+   "where.exe kicad-cli",
+   "where.exe ngspice",
+   "where.exe arm-none-eabi-gcc",
+   "where.exe winget"
+  ],
+  "common_paths_checked": [
+   "C:/Program Files/KiCad",
+   "C:/Program Files/ngspice",
+   "C:/Program Files (x86)/KiCad",
+   "C:/Program Files (x86)/ngspice",
+   "D:/KiCad"
   ]
+ },
+ "analyses": {
+  "official_datasheet_pin_power_decoupling_review": "PERFORMED_MANUALLY",
+  "requirements_traceability_SYS_002_to_SYS_012": "DOCUMENTED_CONTRACT_TEST_PASSED_10_OF_10",
+  "kicad_erc": "PASSED_0_ERRORS_0_WARNINGS_RECEIVER_EFFECTS_A1",
+  "kicad_drc": "PASSED_0_VIOLATIONS_0_UNCONNECTED_RECEIVER_EFFECTS_A1",
+  "spice": "NOT_RUN",
+  "si_pi_rf_thermal_fea": "NOT_RUN",
+  "gerber_drill_bom_cpl_native_export": "CREATED_REV_A1_BARE_PCB_PACKAGE",
+  "firmware_target_compile": "NOT_RUN",
+  "hardware_bringup": "NOT_RUN",
+  "regulatory_or_certification_test": "NOT_RUN",
+  "firmware_host_c11_build": "PASSED_GCC_16_1_WARNINGS_AS_ERRORS",
+  "firmware_host_ctest": "PASSED_1_OF_1",
+  "package_contract_tests": "PASSED_10_OF_10_STANDARD_LIBRARY_RUNNER"
+ },
+ "host_verification_scope": {
+  "compiler": "GCC 16.1.0",
+  "cmake_configure": "PASSED with complete D:/mingw64 toolchain",
+  "warnings_as_errors_build": "PASSED",
+  "ctest": "PASSED 10/10",
+  "evidence": "../firmware/host-review-evidence.json (34/34 build steps)",
+  "claim_limit": "Host logic/syntax only; no nRF target, BLE, cryptographic primitive, timing, hardware or certification claim"
+ },
+ "native_outputs_present": true,
+ "native_validation_recipe": "native-validation.md (KiCad 10.0.5 ERC/DRC replayed 2026-08-23)",
+ "manufacturing_authorized": false,
+ "fabrication_authorized": false,
+ "production_release_eligible": false,
+ "blockers": [
+  "BLK-EDA-001",
+  "BLK-SIM-001",
+  "BLK-FW-001",
+  "BLK-MECH-001",
+  "BLK-SAFE-001"
+ ]
 }

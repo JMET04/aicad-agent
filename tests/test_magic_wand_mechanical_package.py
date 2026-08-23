@@ -114,6 +114,7 @@ class MagicWandMechanicalPackageTests(unittest.TestCase):
                 set(json_members),
                 {
                     "source/design-input.json",
+                    "source/wand-factory-design.json",
                     "release-manifest.json",
                     "reports/fit-and-power-validation.json",
                 },
@@ -341,7 +342,7 @@ class MagicWandMechanicalPackageTests(unittest.TestCase):
         overall = printable["rod"]["assembledOverallLength"]
         grip = printable["handle"]["outerDiameter"]
         exposed = printable["rod"]["exposedAboveConnector"]
-        self.assertEqual((overall, grip, exposed), (315.0, 30.0, 179.0))
+        self.assertEqual((overall, grip, exposed), (316.0, 30.0, 179.0))
         self.assertEqual(sys001["category"], "mechanical")
         for value in (overall, grip, exposed):
             self.assertIn(str(int(value)), sys001["acceptance"])

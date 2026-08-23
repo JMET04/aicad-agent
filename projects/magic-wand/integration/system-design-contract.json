@@ -1004,8 +1004,8 @@
     {
       "id": "EVID-RECEIVER-FW-HOST",
       "path": "projects/magic-wand/firmware/host-review-evidence.json",
-      "size": 6820,
-      "sha256": "73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70",
+      "size": 10345,
+      "sha256": "33732F037D6485F475AD754BE1D40490260DA120C90E8CBE6226E470F74FD681",
       "level": "tool_verified",
       "toolVersion": "GCC MinGW-W64 16.1.0, CMake 4.3.2, Ninja 1.13.2, cppcheck"
     }

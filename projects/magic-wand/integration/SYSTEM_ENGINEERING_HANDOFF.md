@@ -23,7 +23,7 @@
 - 接收器主机证据：2026-08-23 用干净构建重新验证，CTest 10/10 通过（含 gesture_event_v2、receiver_runtime、receiver_multichannel、pattern_effect、epoch_record/store、target_contract 向量）；它只证明主机侧协议/会话/调度逻辑，不证明真实 BLE、NINA 目标构建或 HIL；
 - 上述主机证据验证协议、会话隔离、状态机、媒体调度和主机侧边界，不证明真实 BLE/密码学、NINA-B302 目标构建、显示/I²S、电源/EMI、RF 或 HIL；这些目标/实物门仍保持开放；
 - 接收器当前规范板为 **60 × 50 mm A1 重排板**（`verification/relayout-a1`），原生 KiCad ERC 0/0、DRC 0/0/0、封装错误 0；SWDIO/SWDCLK/RESET_N/PWR_GOOD_N 调试线已布通，过孔置于模块体下方以保 In1 接地参考面（RESET_N 为焊盘内过孔原型妥协）；
-- 接收器 A1 嘉立创裸板包已生成并复核（ZIP `JLCPCB_RECEIVER_EFFECTS_REV_A1_GERBER_DRILL.zip`，SHA-256 `F87E17C82B541FE367CB119FD6A66BBE2AF54E7A668F8779CC58226186AF2A62`）。唯一剩余生产门禁：NINA In1 接地覆盖率 96%（插件要求 98%，原型可接受；量产需把 RGB/USB/PWR_GOOD_N 过孔迁出模块体或微调 C_NINA_BULK）。PCBA、目标固件、真实 BLE/HIL 和实物验证仍未放行；
+- 接收器 A1 嘉立创裸板包已生成并复核（ZIP `JLCPCB_RECEIVER_EFFECTS_REV_A1_GERBER_DRILL.zip`，SHA-256 `C3AAEA29D94C5FA84BC3B2370A941615BF3BDD16308BFC2B7FB9E0BBD87CE699`）。唯一剩余生产门禁：NINA In1 接地覆盖率 96%（插件要求 98%，原型可接受；量产需把 RGB/USB/PWR_GOOD_N 过孔迁出模块体或微调 C_NINA_BULK）。PCBA、目标固件、真实 BLE/HIL 和实物验证仍未放行；
 
 魔法杖原型裸板和原型打印已经得到所有者授权；接收器只授权在最终 CAM 通过后制作原型裸板。量产、PCBA、目标固件发布和整机性能声明仍未放行。
 
@@ -117,7 +117,7 @@ V2 的 14 字节字段宽度为 1+1+1+1+1+1+4+4；`battery = 0xff` 表示未知�
 - 本轮只授权裸板，不授权 PCBA。BOM/CPL 用于审查和后续装配准备，不改变裸板交付边界；
 - A1 板电源主干已按要求实现（VBUS 0.8、SPK 0.6、3V3/BUCK_SW 0.5 mm），原生 ERC/DRC/未连接/封装全部 0；专项电源/回流/RF 审计仅剩 NINA In1 接地覆盖率 96%（目标 98%）。BOM 仍为审查级，LCSC 料号部分空缺，PCBA 未放行；
 - CPL 不能只看“文件可解析”。必须固定制造原点、单位、正反面镜像规则和旋转约定，并用至少三个不共线器件从 KiCad 坐标正算到 CPL、再从工厂预览反算回 PCB；若任一点不一致，CAM 包仍是候选件而不是交付件；
-- 最终接收器 A1 包：上传 ZIP SHA-256 `F87E17C82B541FE367CB119FD6A66BBE2AF54E7A668F8779CC58226186AF2A62`，板源 SHA-256 `7849BC197C6287DB636E8BBE8A52CDB032BBBAF11D459D803F8603914052083D`，ERC 0/0、DRC 0/0/0；CPL 反算、PCBA 供应链和实物验证仍为开放门。
+- 最终接收器 A1 包：上传 ZIP SHA-256 `C3AAEA29D94C5FA84BC3B2370A941615BF3BDD16308BFC2B7FB9E0BBD87CE699`，板源 SHA-256 `140A637EC4DEC92C20D52D531B9F82D5946E580DC2D78EE2339BEA779B639ABA`，ERC 0/0、DRC 0/0/0；CPL 反算、PCBA 供应链和实物验证仍为开放门。
 
 ### 外壳打印
 
