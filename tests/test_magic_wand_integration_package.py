@@ -131,10 +131,10 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
         self.assertEqual(host["cppcheckFiles"], {"passed": 9, "failed": 0, "findings": 0})
         self.assertEqual(host["sourceHashInventory"], {"matched": 52, "mismatched": 0})
         evidence = {row["id"]: row for row in self.contract["evidenceBindings"]}
-        self.assertEqual(evidence["EVID-RECEIVER-FW-HOST"]["size"], 10345)
+        self.assertEqual(evidence["EVID-RECEIVER-FW-HOST"]["size"], 10228)
         self.assertEqual(
             evidence["EVID-RECEIVER-FW-HOST"]["sha256"],
-            "33732F037D6485F475AD754BE1D40490260DA120C90E8CBE6226E470F74FD681",
+            "99FE178E4658C4A760D701D973BAD88AF3470FBF6469CB9862337657E41C8E99",
         )
         gates = {row["id"]: row for row in self.contract["verificationGates"]}
         self.assertEqual(gates["GATE-RECEIVER-FW-HOST-001"]["status"], "passed")

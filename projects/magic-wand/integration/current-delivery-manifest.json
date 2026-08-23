@@ -6,8 +6,8 @@
   "sourceFiles": [
     {
       "path": "projects/magic-wand/README.md",
-      "size": 2976,
-      "sha256": "AC574D4B2BFB4EA6EB152DEA25B182240EECD879389C752A70984E3934F9CE89",
+      "size": 3144,
+      "sha256": "0A7D1D912B66CB6ACA6CA65DBAC95ECE11D4540FFC2681E9A9BCFB57F397461C",
       "role": "entry",
       "kind": "current_project_entry"
     },
@@ -27,15 +27,15 @@
     },
     {
       "path": "projects/magic-wand/integration/CURRENT_SYSTEM_STATUS.json",
-      "size": 10596,
-      "sha256": "67109A746FC1BFBD284A48BC1FB66C7E8BEF1D0CDAB6219F9FE2EF8E4E67BC03",
+      "size": 11862,
+      "sha256": "8E8B7836FD0F008FB93148E4E1E2B10408D8AA27EBB5BB24D84CC94EDC4B7834",
       "role": "authority",
       "kind": "current_system_status"
     },
     {
       "path": "projects/magic-wand/integration/system-design-contract.json",
-      "size": 39404,
-      "sha256": "04E21F10C43D7EF92533B1B7CB87614821A458C467859B148FFE125F7BAA0807",
+      "size": 40429,
+      "sha256": "CA641167CB2ACDA3BBC98D32974E6198B680EE0C4BA68E9C804CC342B7EC7BAE",
       "role": "authority",
       "kind": "system_engineering_contract"
     },
@@ -55,8 +55,8 @@
     },
     {
       "path": "projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md",
-      "size": 23816,
-      "sha256": "9DE6F6CA96B24CBA5CC8C39119464C6FF0BA0A179B9D1CF0009F5E202EBAC96C",
+      "size": 24033,
+      "sha256": "1D9C319FC72EF69F05BD51442D0302D88C1C2EC23AC750E39599C5C0D20DB879",
       "role": "handoff",
       "kind": "current_handoff"
     },
@@ -85,8 +85,8 @@
   "evidenceFiles": [
     {
       "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
-      "size": 222240,
-      "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
+      "size": 222272,
+      "sha256": "30F0D3E7FEF29B05BB2BD50A11CB4DA4DBC7EB5E83DB712135E2724FD59A24F9",
       "role": "evidence",
       "kind": "tool_verified_artifact",
       "evidenceId": "EVID-PCB-SOURCE",
@@ -95,8 +95,8 @@
     },
     {
       "path": "projects/magic-wand/electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
-      "size": 62544,
-      "sha256": "EC3C07314F5ED3463697A1235EC2C4B8D2BB2BC2A0B1B4C8A42807E09C8AC1C6",
+      "size": 62550,
+      "sha256": "55A93C02C0EFBFFA30EDB611A86DB2DF68A16928839772B8CEEDAA20F6E091F2",
       "role": "evidence",
       "kind": "tool_verified_artifact",
       "evidenceId": "EVID-JLC-BARE-ZIP",
@@ -125,8 +125,8 @@
     },
     {
       "path": "projects/magic-wand/firmware/host-review-evidence.json",
-      "size": 10345,
-      "sha256": "33732F037D6485F475AD754BE1D40490260DA120C90E8CBE6226E470F74FD681",
+      "size": 10228,
+      "sha256": "99FE178E4658C4A760D701D973BAD88AF3470FBF6469CB9862337657E41C8E99",
       "role": "evidence",
       "kind": "tool_verified_artifact",
       "evidenceId": "EVID-RECEIVER-FW-HOST",

@@ -20,8 +20,8 @@
     "cmake": "D:/mingw64/mingw64/bin/cmake.exe",
     "cmake_version": "4.3.2",
     "generator": "Ninja",
-    "ninja": "C:/Users/刘佳明/AppData/Local/Programs/Python/Python312/Scripts/ninja.exe",
-    "ninja_version": "1.13.0.git.kitware.jobserver-pipe-1",
+    "ninja": "D:/mingw64/mingw64/bin/ninja.exe",
+    "ninja_version": "1.13.2",
     "compiler": "D:/mingw64/bin/gcc.exe",
     "compiler_id": "GNU",
     "compiler_version": "16.1.0",
@@ -41,7 +41,7 @@
     ]
   },
   "commands": [
-    "D:/mingw64/mingw64/bin/cmake.exe -S <FIRMWARE_DIR> -B <BUILD_DIR> -G Ninja -DCMAKE_C_COMPILER=D:/mingw64/bin/gcc.exe -DCMAKE_MAKE_PROGRAM=C:/Users/刘佳明/AppData/Local/Programs/Python/Python312/Scripts/ninja.exe -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DMW_HOST_REVIEW=ON",
+    "D:/mingw64/mingw64/bin/cmake.exe -S <FIRMWARE_DIR> -B <BUILD_DIR> -G Ninja -DCMAKE_C_COMPILER=D:/mingw64/bin/gcc.exe -DCMAKE_MAKE_PROGRAM=D:/mingw64/mingw64/bin/ninja.exe -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DMW_HOST_REVIEW=ON",
     "D:/mingw64/mingw64/bin/cmake.exe --build <BUILD_DIR> --parallel 1",
     "D:/mingw64/mingw64/bin/ctest.exe --test-dir <BUILD_DIR> --show-only=json-v1",
     "D:/mingw64/mingw64/bin/ctest.exe --test-dir <BUILD_DIR> --output-on-failure --output-junit <BUILD_DIR>/ctest-junit.xml",
@@ -51,7 +51,7 @@
     "configure": "PASSED",
     "compile_and_link": "PASSED_34_OF_34_BUILD_STEPS",
     "ctest": "PASSED_10_OF_10",
-    "ctest_elapsed_seconds": 0.31,
+    "ctest_elapsed_seconds": 0.78,
     "tests": [
       "mw_host_review",
       "mw_gesture_vectors",
@@ -84,7 +84,7 @@
     "includes_transitive_ctest_inputs": true
   },
   "source_sha256": {
-    "../electronics/wand/wand-factory-design.json": "A0DBC115AEE2E0C3D3DC2949EB48A66F8CA304E8A973C279EBB7B0609E883687",
+    "../electronics/wand/wand-factory-design.json": "FABD8E399FA2E7072E0D8E68D25FD6B555E29CD57AC394373226BCB2D958793D",
     "CMakeLists.txt": "8A656AB37DDFD05CA4FFE053097C1420FAABAA8BAF06D7A23B718B025681361A",
     "README.md": "DEB65A5FFED5CEC7401267CD669F96DC7740E98FA72913F37C2326892A66185F",
     "RECEIVER_RUNTIME_HIL.md": "95A2D20F74D2D4F46C864EBA8D5E7DAE07C1C56AB268C00FFA83F221460E4207",

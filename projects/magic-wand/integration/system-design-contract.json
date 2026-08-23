@@ -972,16 +972,16 @@
     {
       "id": "EVID-PCB-SOURCE",
       "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
-      "size": 222240,
-      "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
+      "size": 222272,
+      "sha256": "30F0D3E7FEF29B05BB2BD50A11CB4DA4DBC7EB5E83DB712135E2724FD59A24F9",
       "level": "tool_verified",
       "toolVersion": "KiCad CLI 10.0.5"
     },
     {
       "id": "EVID-JLC-BARE-ZIP",
       "path": "projects/magic-wand/electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
-      "size": 62544,
-      "sha256": "EC3C07314F5ED3463697A1235EC2C4B8D2BB2BC2A0B1B4C8A42807E09C8AC1C6",
+      "size": 62550,
+      "sha256": "55A93C02C0EFBFFA30EDB611A86DB2DF68A16928839772B8CEEDAA20F6E091F2",
       "level": "tool_verified",
       "toolVersion": "KiCad CLI 10.0.5 and package builder"
     },
@@ -1004,8 +1004,8 @@
     {
       "id": "EVID-RECEIVER-FW-HOST",
       "path": "projects/magic-wand/firmware/host-review-evidence.json",
-      "size": 10345,
-      "sha256": "33732F037D6485F475AD754BE1D40490260DA120C90E8CBE6226E470F74FD681",
+      "size": 10228,
+      "sha256": "99FE178E4658C4A760D701D973BAD88AF3470FBF6469CB9862337657E41C8E99",
       "level": "tool_verified",
       "toolVersion": "GCC MinGW-W64 16.1.0, CMake 4.3.2, Ninja 1.13.2, cppcheck"
     }
