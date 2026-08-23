@@ -4,11 +4,12 @@ Comment,Designator,Footprint,Manufacturer,MPN,LCSC Part #,DNP,Assembly Notes
 100nF 16V X7R,C_AUDIO_HF,MW_FACTORY:receiver-effects_C_AUDIO_HF,Murata,GRM155R71C104KA88D,C1525,NO,
 10uF 10V X5R,C_BUCK_IN,MW_FACTORY:receiver-effects_C_BUCK_IN,Murata,GRM21BR61A106KE19L,C77073,NO,
 22uF 6.3V X5R,C_BUCK_OUT,MW_FACTORY:receiver-effects_C_BUCK_OUT,Murata,GRM21BR60J226ME39L,C77071,NO,
+100nF 16V X7R,C_BUS,MW_FACTORY:receiver-effects_C_BUS,Murata,GRM155R71C104KA88D,C1525,NO,
 10uF 10V X5R,C_NINA_BULK,MW_FACTORY:receiver-effects_C_NINA_BULK,Murata,GRM21BR61A106KE19L,C77073,NO,
 100nF 16V X7R,C_NINA_HF,MW_FACTORY:receiver-effects_C_NINA_HF,Murata,GRM155R71C104KA88D,C1525,NO,
 1uF 10V X7R,C_USB_RAW,MW_FACTORY:receiver-effects_C_USB_RAW,Murata,GRM155R71A105KE15D,,NO,
 RGB COMMON ANODE,D1,MW_FACTORY:receiver-effects_D1,Lite-On,LTST-C19HE1WT,C458749,NO,Discrete common-anode 3.3V status LED; all channels active-low through individual resistors
-1.5A PTC,F1,MW_FACTORY:receiver-effects_F1,Bourns,MF-MSMF150-2,C89648,NO,6V resettable fuse candidate; hold/trip and enclosure-temperature HIL remain a gate
+1.5A PTC,F1,MW_FACTORY:receiver-effects_F1,Bourns,MF-MSMF150/24X-2,C78695,NO,6V resettable fuse; Bourns MF-MSMF150/24X-2 (LCSC C78695); hold/trip and enclosure-temperature HIL remain a gate
 USB-C 5V INPUT,J1,MW_FACTORY:receiver-effects_J1,GCT,USB4105-GF-A-120,C5184243,NO,5V sink/service only; use an externally qualified 5V/2A source; no USB-PD or QC
 GC9A01A 1.28in SPI,J2,MW_FACTORY:receiver-effects_J2,JST,SM08B-GHS-TB(LF)(SN),C265111,NO,"External Waveshare SKU19192 via straight-through JST-GH-to-PH2.0 harness; 3.3V SPI, no MISO; order VCC/GND/DIN/CLK/CS/DC/RST/BL"
 4OHM BTL SPEAKER,J3,MW_FACTORY:receiver-effects_J3,JST,S2B-PH-SM4-TB(LF)(SN),C295747,NO,"BTL 4ohm speaker only, rated >=3W; neither terminal may connect to chassis or GND"

@@ -726,7 +726,7 @@ class LandPatternEntityRegressionTests(unittest.TestCase):
     def test_receiver_effects_u3_has_local_vbus_decoupling_at_a1(self) -> None:
         placements = _literal_assignment(RECEIVER_EFFECTS_RELAYOUT, "PLACEMENTS")
         self.assertIn("C_BUS", placements)
-        self.assertEqual(placements["C_BUS"], (14.70, 28.00, 0.0))
+        self.assertEqual(placements["C_BUS"], (16.90, 28.00, 0.0))
 
         board = receiver_effects.make_board()
         by_ref = {part.ref: part for part in board.parts}
@@ -773,8 +773,8 @@ class LandPatternEntityRegressionTests(unittest.TestCase):
         self.assertEqual(
             c_bus_pads,
             {
-                "1": (14.22, 28.00, 0.56, 0.62, "USB_VBUS_5V"),
-                "2": (15.18, 28.00, 0.56, 0.62, "GND"),
+                "1": (16.42, 28.00, 0.56, 0.62, "USB_VBUS_5V"),
+                "2": (17.38, 28.00, 0.56, 0.62, "GND"),
             },
         )
         u3_vbus = next(
@@ -808,21 +808,19 @@ class LandPatternEntityRegressionTests(unittest.TestCase):
             for row in segments
         }
         self.assertIn(
-            (
-                "USB_VBUS_5V",
-                "F.Cu",
-                (13.15, 28.00),
-                (14.22, 28.00),
-                0.40,
-            ),
+            ("USB_VBUS_5V", "F.Cu", (13.15, 28.00), (14.00, 28.00), 0.40),
             segment_signatures,
         )
         self.assertIn(
-            ("GND", "F.Cu", (15.18, 28.00), (15.60, 28.00), 0.30),
+            ("USB_VBUS_5V", "F.Cu", (14.00, 28.00), (16.42, 28.00), 0.40),
             segment_signatures,
         )
         self.assertIn(
-            ("GND", 15.60, 28.00, 0.60, 0.30),
+            ("GND", "F.Cu", (17.38, 28.00), (17.38, 29.50), 0.30),
+            segment_signatures,
+        )
+        self.assertIn(
+            ("GND", 17.38, 29.50, 0.60, 0.30),
             {
                 (row["net"], row["x"], row["y"], row["size"], row["drill"])
                 for row in vias

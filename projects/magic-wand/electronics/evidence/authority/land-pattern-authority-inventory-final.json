@@ -10513,7 +10513,7 @@
         {
           "path": "electronics/evidence/authority/source-catalog/tps62162-dsg-extract.json",
           "size": 1158,
-          "sha256": "d4ab09b0306629296287bf563aec1ce39ddbc98250dd0ca9961ff071dd2d741c",
+          "sha256": "65A7A5F826D1897885376734F4B155F1114BF94FEA57EC2E79C4B44E69622C0E",
           "kind": "manufacturerDrawingExtract"
         }
       ],
@@ -10522,7 +10522,7 @@
           "documentNumber": "SLVSAM2E / DSG0008A",
           "page": "39-40",
           "section": "DSG0008A WSON package outline and land pattern example",
-          "sourceArtifactSha256": "d4ab09b0306629296287bf563aec1ce39ddbc98250dd0ca9961ff071dd2d741c",
+          "sourceArtifactSha256": "65A7A5F826D1897885376734F4B155F1114BF94FEA57EC2E79C4B44E69622C0E",
           "extractedFields": [
             "physicalPads",
             "bodyDatum",

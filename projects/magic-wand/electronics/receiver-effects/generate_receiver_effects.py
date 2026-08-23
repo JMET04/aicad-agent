@@ -140,14 +140,21 @@ def make_board() -> Board:
         }), package="SOT-23-6", lcsc="C7519",
         datasheet="https://www.st.com/resource/en/datasheet/usblc6-2.pdf",
     ))
-    p.append(two_pin("F1", "1.5A PTC", "Bourns", "MF-MSMF150-2",
+    # Local USB_VBUS_5V decoupling at the ESD clamp (U3), 0402.
+    p.append(two_pin("C_BUS", "100nF 16V X7R", "Murata", "GRM155R71C104KA88D",
+                     "USB_VBUS_5V", "GND", 14.70, 28.00, package="0402"))
+    p[-1].lcsc = "C1525"
+    p[-1].datasheet = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM155R71C104KA88-01.pdf"
+
+    p.append(two_pin("F1", "1.5A PTC", "Bourns", "MF-MSMF150/24X-2",
                      "USB_VBUS_RAW", "USB_VBUS_5V", 11.0, 13.5, package="1812",
-                     notes="6V resettable fuse candidate; hold/trip and enclosure-temperature HIL remain a gate"))
+                     notes="6V resettable fuse; Bourns MF-MSMF150/24X-2 (LCSC C78695); hold/trip and enclosure-temperature HIL remain a gate"))
     p[-1].footprint = "Fuse:Fuse_1812_4532Metric"
-    p[-1].lcsc = "C89648"
+    p[-1].lcsc = "C78695"
+    p[-1].datasheet = "https://www.bourns.com/docs/product-datasheets/mf-msmf.pdf"
     set_custom_geometry(p[-1], [
-        smd("terminal-1", "1", -2.1375, 0, 1.125, 3.4),
-        smd("terminal-2", "2", 2.1375, 0, 1.125, 3.4),
+        smd("terminal-1", "1", -2.390, 0, 1.68, 2.95),
+        smd("terminal-2", "2", 2.390, 0, 1.68, 2.95),
     ], body=(4.5, 3.2, 1.2), courtyard=(-2.75, -1.95, 2.75, 1.95))
 
     p.append(Part(
@@ -164,6 +171,17 @@ def make_board() -> Board:
         notes="Fixed 3.3V / 1A buck; 3-17V input rating does not authorize >5V board input",
         datasheet="https://www.ti.com/lit/ds/symlink/tps62162.pdf",
     ))
+    set_custom_geometry(p[-1], [
+        smd("pad-1", "1", -0.95, -0.75, 0.50, 0.25),
+        smd("pad-2", "2", -0.95, -0.25, 0.50, 0.25),
+        smd("pad-3", "3", -0.95, 0.25, 0.50, 0.25),
+        smd("pad-4", "4", -0.95, 0.75, 0.50, 0.25),
+        smd("pad-5", "5", 0.95, 0.75, 0.50, 0.25),
+        smd("pad-6", "6", 0.95, 0.25, 0.50, 0.25),
+        smd("pad-7", "7", 0.95, -0.25, 0.50, 0.25),
+        smd("pad-8", "8", 0.95, -0.75, 0.50, 0.25),
+        smd("thermal-ep", "EP", 0.0, 0.0, 0.90, 1.60, role="thermal"),
+    ], body=(2.0, 2.0, 0.9), courtyard=(-1.25, -1.25, 1.25, 1.25))
     p.append(two_pin("L1", "2.2uH", "Murata", "LQH32PN2R2NN0L",
                      "BUCK_SW", "3V3", 20.0, 17.0, package="L_4x4"))
     p[-1].footprint = "Inductor_SMD:L_1210_3225Metric"
@@ -231,13 +249,13 @@ def make_board() -> Board:
     )
     tqfn_pads = []
     for n, y in zip(range(1, 5), (-.75, -.25, .25, .75)):
-        tqfn_pads.append(smd(f"land-{n}", str(n), -1.4375, y, .825, .25))
+        tqfn_pads.append(smd(f"land-{n}", str(n), -1.425, y, .80, .30))
     for n, x in zip(range(5, 9), (-.75, -.25, .25, .75)):
-        tqfn_pads.append(smd(f"land-{n}", str(n), x, 1.4375, .25, .825))
+        tqfn_pads.append(smd(f"land-{n}", str(n), x, 1.425, .30, .80))
     for n, y in zip(range(9, 13), (.75, .25, -.25, -.75)):
-        tqfn_pads.append(smd(f"land-{n}", str(n), 1.4375, y, .825, .25))
+        tqfn_pads.append(smd(f"land-{n}", str(n), 1.425, y, .80, .30))
     for n, x in zip(range(13, 17), (.75, .25, -.25, -.75)):
-        tqfn_pads.append(smd(f"land-{n}", str(n), x, -1.4375, .25, .825))
+        tqfn_pads.append(smd(f"land-{n}", str(n), x, -1.425, .30, .80))
     tqfn_pads.append(smd("exposed-pad", "17", 0, 0, 1.23, 1.23, role="thermal"))
     set_custom_geometry(u4, tqfn_pads, body=(3.0, 3.0, .8), courtyard=(-2.1, -2.1, 2.1, 2.1))
     p.append(u4)

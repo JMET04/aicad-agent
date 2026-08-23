@@ -261,9 +261,10 @@
         "unconnected": 0,
         "footprintErrors": 0
       },
-      "remainingGate": "NINA In1 GND coverage 96% vs 98% target; move RGB/USB/PWR_GOOD_N vias out of module body for production",
+      "remainingGate": "NINA In1 GND coverage 96% vs 98% target",
       "pcbaIncluded": false,
-      "pcbaStatus": "NOT_READY"
+      "pcbaStatus": "NOT_READY",
+      "landPatternCorrections": "APPLIED_2026-08-23"
     },
     "coreIcs": [
       {

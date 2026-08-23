@@ -10,6 +10,6 @@
   "page": "39-40",
   "section": "DSG0008A WSON package outline and land pattern example",
   "coordinateFrame": {"origin": "package center", "xPositive": "right", "yPositive": "down", "units": "mm", "view": "PCB mounting surface"},
-  "geometry": {"physicalPads": {"signalCount": 8, "pitchMm": 0.5, "signalLandMm": [0.6, 0.25], "exposedLandMm": [0.9, 1.6]}, "bodyDatum": {"bodyEnvelopeMm": [2.0, 2.0], "maximumHeightMm": 0.8}, "heightBasis": "DSG0008A package maximum height"},
+  "geometry": {"physicalPads": {"signalCount": 8, "pitchMm": 0.5, "signalLandMm": [0.5, 0.25], "exposedLandMm": [0.9, 1.6]}, "bodyDatum": {"bodyEnvelopeMm": [2.0, 2.0], "maximumHeightMm": 0.8}, "heightBasis": "DSG0008A package maximum height"},
   "humanExtractionDeclaration": "Manually transcribed from the identified TI PDF pages and checked against the original PDF SHA-256; no generated authority inventory was used as source evidence."
 }

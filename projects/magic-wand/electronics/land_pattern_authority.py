@@ -467,6 +467,9 @@ def authority_metadata(part):
         "CSD17313Q2": ("CSD17313Q2/DQK0008A", "REV-H", "https://www.ti.com/lit/ds/symlink/csd17313q2.pdf"),
         "XFL4020-222MEC": ("745-3/XFL4020", "2026-03-10", "https://www.coilcraft.com/getmedia/50632d43-da1b-4cdb-8ab4-3029cab51df3/xfl4020.pdf"),
         "MF-FSMF050X-2": ("MF-FSMF", "CURRENT-2026-08-21", "https://www.bourns.com/docs/product-datasheets/mf-fsmf.pdf"),
+        "MF-MSMF150/24X-2": ("MF-MSMF", "CURRENT-2026-08-23", "https://www.bourns.com/docs/product-datasheets/mf-msmf.pdf"),
+        "MAX98357AETE+T": ("90-0031", "CURRENT-2026-08-23", "https://www.analog.com/media/en/package-pcb-resources/land-pattern/90-0031.pdf"),
+        "TPS62162DSGR": ("SLVSAM2E / DSG0008A", "E", "https://www.ti.com/lit/ds/symlink/tps62160.pdf"),
         "SS24-13-F": ("SS22-SS210", "CURRENT-2026-08-21", "https://www.diodes.com/assets/Datasheets/ds13003.pdf"),
         "SMBJ15A": ("SMBJ", "CURRENT-2026-08-21", "https://www.littelfuse.com/assetdocs/littelfuse-tvs-diode-smbj-datasheet"),
     }

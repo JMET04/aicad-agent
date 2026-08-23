@@ -1,5 +1,5 @@
 Drill report for receiver-effects.kicad_pcb
-Created on 2026-08-23T11:17:48
+Created on 2026-08-23T12:29:17
 
 Copper Layer Stackup:
     =============================================================
@@ -12,10 +12,10 @@ Copper Layer Stackup:
 Drill file 'receiver-effects-PTH.drl' contains
     plated through holes:
     =============================================================
-    T1  0.300mm  0.0118"  (97 holes))
+    T1  0.300mm  0.0118"  (98 holes))
     T2  0.600mm  0.0236"  (4 holes)  (with 4 slots)
 
-    Total plated holes count 101
+    Total plated holes count 102
 
 
 Drill file 'receiver-effects-NPTH.drl' contains

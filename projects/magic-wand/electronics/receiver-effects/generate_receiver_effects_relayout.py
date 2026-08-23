@@ -46,6 +46,7 @@ PLACEMENTS: dict[str, tuple[float, float, float | None]] = {
     "U1": (54.75, 11.00, 0.0),
     # USB protection and the compact RAW -> buck power corridor.
     "U3": (12.00, 28.00, 0.0),
+    "C_BUS": (16.90, 28.00, 0.0),
     "F1": (15.00, 36.00, 0.0),
     "U2": (20.00, 36.00, 0.0),
     "L1": (23.80, 36.00, 0.0),
@@ -178,8 +179,11 @@ def power_skeleton() -> tuple[list[dict], list[dict]]:
     v.append(via("USB_VBUS_5V", 17.40, 38.00, 0.70))
 
     # USB ESD reference supply gets a direct, short entry into the 5 V plane.
-    s.append(seg("USB_VBUS_5V", "F.Cu", (13.15, 28.00), (14.20, 28.00), 0.80))
-    v.append(via("USB_VBUS_5V", 14.20, 28.00, 0.70))
+    s.append(seg("USB_VBUS_5V", "F.Cu", (13.15, 28.00), (14.00, 28.00), 0.40))
+    s.append(seg("USB_VBUS_5V", "F.Cu", (14.00, 28.00), (16.42, 28.00), 0.40))
+    v.append(via("USB_VBUS_5V", 14.00, 28.00, 0.70))
+    s.append(seg("GND", "F.Cu", (17.38, 28.00), (17.38, 29.50), 0.30))
+    v.append(via("GND", 17.38, 29.50))
 
     # Buck switch node is compact and all-front-layer.  VOS uses a short
     # Kelvin-style escape before joining the 3V3 output trunk.
@@ -369,6 +373,7 @@ def set_project_rules(project_path: Path) -> None:
             '  (constraint hole_clearance (min 0.18mm)))\n'
         )
         dru_path.write_text(dru_text, encoding="utf-8", newline="\n")
+    
 
 
 def lock_and_fill(path: Path, model) -> None:
