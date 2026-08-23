@@ -26,11 +26,11 @@ REQUIREMENT_MAP: dict[str, dict[str, list[str]]] = {
     },
     "SYS-002": {
         "contractRequirementIds": ["GESTURE-001", "TARGET-001", "RECEIVER-001"],
-        "gateIds": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"],
+        "gateIds": ["GATE-FW-HOST-001", "GATE-RECEIVER-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"],
     },
     "SYS-003": {
         "contractRequirementIds": ["TARGET-001", "RECEIVER-001"],
-        "gateIds": ["GATE-TARGET-FW-001", "GATE-RECEIVER-001"],
+        "gateIds": ["GATE-RECEIVER-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"],
     },
     "SYS-004": {
         "contractRequirementIds": ["GESTURE-001", "TARGET-001"],
@@ -38,7 +38,7 @@ REQUIREMENT_MAP: dict[str, dict[str, list[str]]] = {
     },
     "SYS-005": {
         "contractRequirementIds": ["GESTURE-001", "RECEIVER-001"],
-        "gateIds": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"],
+        "gateIds": ["GATE-FW-HOST-001", "GATE-RECEIVER-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"],
     },
     "SYS-006": {
         "contractRequirementIds": ["POWER-001", "PHYSICAL-001"],
@@ -49,24 +49,24 @@ REQUIREMENT_MAP: dict[str, dict[str, list[str]]] = {
         "gateIds": ["GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001", "GATE-TARGET-FW-001"],
     },
     "SYS-008": {
-        "contractRequirementIds": ["RECEIVER-001"],
-        "gateIds": ["GATE-RECEIVER-001"],
+        "contractRequirementIds": ["RECEIVER-001", "RECEIVER-PCB-001"],
+        "gateIds": ["GATE-RECEIVER-FW-HOST-001", "GATE-RECEIVER-PCB-001", "GATE-RECEIVER-001"],
     },
     "SYS-009": {
         "contractRequirementIds": ["RECEIVER-001", "PRODUCTION-001"],
-        "gateIds": ["GATE-RECEIVER-001", "GATE-PRODUCTION-001"],
+        "gateIds": ["GATE-RECEIVER-FW-HOST-001", "GATE-RECEIVER-001", "GATE-PRODUCTION-001"],
     },
     "SYS-010": {
         "contractRequirementIds": ["RECEIVER-001", "PRODUCTION-001"],
-        "gateIds": ["GATE-RECEIVER-001", "GATE-PRODUCTION-001"],
+        "gateIds": ["GATE-RECEIVER-FW-HOST-001", "GATE-RECEIVER-001", "GATE-PRODUCTION-001"],
     },
     "SYS-011": {
         "contractRequirementIds": ["HAPTIC-001", "PHYSICAL-001", "TARGET-001"],
         "gateIds": ["GATE-MECH-TOOL-001", "GATE-FIRST-ARTICLE-001", "GATE-TARGET-FW-001"],
     },
     "SYS-012": {
-        "contractRequirementIds": ["FAB-001", "PCBA-001", "PRODUCTION-001"],
-        "gateIds": ["GATE-JLC-BARE-001", "GATE-PCBA-001", "GATE-PRODUCTION-001"],
+        "contractRequirementIds": ["FAB-001", "RECEIVER-PCB-001", "PCBA-001", "PRODUCTION-001"],
+        "gateIds": ["GATE-JLC-BARE-001", "GATE-RECEIVER-PCB-001", "GATE-PCBA-001", "GATE-PRODUCTION-001"],
     },
 }
 
@@ -216,6 +216,7 @@ def build_manifest(trace_bytes: bytes) -> dict[str, Any]:
         (QA_REL, "report", "system_engineering_qa"),
         ("projects/magic-wand/integration/system-design-qa-report.md", "report", "human_system_qa"),
         ("projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md", "handoff", "current_handoff"),
+        ("projects/magic-wand/integration/RECEIVER_EFFECTS_SYSTEM_HANDOFF.md", "handoff", "receiver_effects_handoff"),
         ("projects/magic-wand/integration/current-system-traceability.json", "trace", "source_faithful_trace"),
         ("projects/magic-wand/integration/build_current_evidence.py", "builder", "deterministic_builder"),
     )

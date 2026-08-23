@@ -1,8 +1,8 @@
 {
   "schema": "magic-wand.current-system-status.v2",
-  "observedAt": "2026-08-22",
-  "configuration": "WAND_PRINTABLE_REV_A0_PLUS_BARE_PCB_REV_A0",
-  "status": "PROTOTYPE_ARTIFACTS_VERIFIED_PHYSICAL_AND_TARGET_GATES_OPEN",
+  "observedAt": "2026-08-23",
+  "configuration": "WAND_FROZEN_REV_A0_PLUS_RECEIVER_EFFECTS_DIRECT_ENDPOINT_REV_B",
+  "status": "WAND_ARTIFACTS_VERIFIED_RECEIVER_RUNTIME_HOST_VERIFIED_RECEIVER_CAM_REWORK_PHYSICAL_TARGET_AND_PCBA_GATES_OPEN",
   "ownerAuthorizations": {
     "publicSourceRelease": true,
     "prototypeBarePcbOrder": true,
@@ -18,7 +18,7 @@
     },
     {
       "commit": "29c69a8",
-      "scope": "JLC bare-PCB package and printable enclosure baseline"
+      "scope": "JLC wand bare-PCB package and printable enclosure baseline"
     },
     {
       "commit": "c6ee3e8",
@@ -28,6 +28,8 @@
   "wandPcb": {
     "path": "../electronics/wand/wand.kicad_pcb",
     "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9",
+    "configurationFrozen": true,
+    "changePolicy": "DO_NOT_MODIFY_FOR_RECEIVER_EFFECTS",
     "sizeMm": [
       15.0,
       80.0
@@ -51,6 +53,7 @@
   },
   "jlcBarePcbPackage": {
     "path": "../electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
+    "scope": "FROZEN_WAND_BARE_PCB_ONLY",
     "status": "VERIFIED_UPLOAD_CANDIDATE",
     "sha256": "EC3C07314F5ED3463697A1235EC2C4B8D2BB2BC2A0B1B4C8A42807E09C8AC1C6",
     "quantity": 5,
@@ -124,10 +127,34 @@
     "batteryWireBendReserveMm": 8.0
   },
   "firmware": {
-    "portableCore": "HOST_VERIFIED",
-    "hostTests": {
+    "portableCore": "HOST_VERIFIED_TARGET_AND_HIL_OPEN",
+    "wandGestureHostEvidence": {
+      "path": "../firmware/gesture-host-evidence.json",
       "passed": 2,
       "failed": 0
+    },
+    "receiverRuntimeHostEvidence": {
+      "path": "../firmware/host-review-evidence.json",
+      "status": "HOST_VERIFIED_TARGET_AND_HIL_BLOCKED",
+      "size": 6820,
+      "sha256": "73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70",
+      "buildSteps": {
+        "passed": 25,
+        "failed": 0
+      },
+      "ctest": {
+        "passed": 8,
+        "failed": 0
+      },
+      "cppcheckFiles": {
+        "passed": 9,
+        "failed": 0,
+        "findings": 0
+      },
+      "sourceHashInventory": {
+        "matched": 37,
+        "mismatched": 0
+      }
     },
     "recognizedGestures": [
       "TAP",
@@ -139,12 +166,142 @@
       "CIRCLE_CW",
       "CIRCLE_CCW"
     ],
+    "receiverLogicalSlots": 8,
+    "gestureEventProfiles": {
+      "negotiation": "EXPLICIT_AUTHENTICATED_PROFILE_ONLY_NO_LENGTH_SNIFFING_OR_AUTO_DOWNGRADE",
+      "legacyV1": {
+        "payloadBytes": 2,
+        "allowedLogicalChannels": [
+          0
+        ],
+        "exactLengthRequired": true
+      },
+      "multichannelV2": {
+        "payloadBytes": 14,
+        "allowedLogicalChannels": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "exactLengthRequired": true,
+        "requiresArmActive": true,
+        "requiresOuterAndPayloadDeviceSessionBinding": true
+      }
+    },
     "physicalArmGate": true,
     "refractoryMs": 250,
-    "ninaB302TargetImage": "NOT_BUILT_MISSING_NRF_CONNECT_SDK_ZEPHYR_WEST_AND_ARM_TOOLCHAIN",
+    "ninaB302TargetImage": "NOT_BUILT_MISSING_PINNED_NRF_CONNECT_SDK_ZEPHYR_WEST_AND_ARM_TOOLCHAIN",
     "hardwareInLoop": "NOT_RUN",
-    "gestureEventPayloadBytes": 2,
-    "securityClaimBoundary": "The two-byte payload is wired to the AES-CCM protocol integration boundary; host tests use a non-encrypting callback and do not prove target encryption, BLE security, anti-replay, or receiver safety."
+    "securityClaimBoundary": "Host vectors prove deterministic profile, routing, media and fail-closed transaction logic only. They do not prove target BLE LE Secure Connections, AES-CCM, credential lifecycle, anti-replay persistence under power loss, RF behavior or physical output timing."
+  },
+  "receiverEffects": {
+    "topology": "DIRECT_PAIRED_BLE_ENDPOINT_WITH_OWN_NINA_B302_NOT_A_RELAY",
+    "authority": "MEDIA_ONLY_NO_IMPLICIT_DANGEROUS_OUTPUT_AUTHORITY",
+    "logicalSlots": 8,
+    "effects": [
+      {
+        "channel": 0,
+        "gesture": "TAP",
+        "effect": "EXPLOSION"
+      },
+      {
+        "channel": 1,
+        "gesture": "TWIST_CW",
+        "effect": "FIRE"
+      },
+      {
+        "channel": 2,
+        "gesture": "TWIST_CCW",
+        "effect": "ICE"
+      },
+      {
+        "channel": 3,
+        "gesture": "SWISH_LEFT",
+        "effect": "LIGHTNING"
+      },
+      {
+        "channel": 4,
+        "gesture": "SWISH_RIGHT",
+        "effect": "SHIELD"
+      },
+      {
+        "channel": 5,
+        "gesture": "THRUST",
+        "effect": "ARCANE"
+      },
+      {
+        "channel": 6,
+        "gesture": "CIRCLE_CW",
+        "effect": "HEAL"
+      },
+      {
+        "channel": 7,
+        "gesture": "CIRCLE_CCW",
+        "effect": "PORTAL"
+      }
+    ],
+    "pcb": {
+      "path": "../electronics/receiver-effects/receiver-effects.kicad_pcb",
+      "sizeMm": [
+        50.3,
+        42.3
+      ],
+      "layers": 4,
+      "status": "HARDWARE_CAM_REWORK_IN_PROGRESS",
+      "previousCamStatus": "REJECTED",
+      "previousCamReason": "POWER_TRACE_WIDTH_AUDIT_FAILED_AFTER_NATIVE_DRC",
+      "currentBareBoardUploadCandidate": false,
+      "pcbaIncluded": false,
+      "pcbaStatus": "NOT_READY"
+    },
+    "coreIcs": [
+      {
+        "reference": "U1",
+        "mpn": "NINA-B302-00B-00",
+        "lcsc": "C6335962",
+        "function": "BLE endpoint"
+      },
+      {
+        "reference": "U2",
+        "mpn": "TPS62162DSGR",
+        "lcsc": "C40256",
+        "function": "3.3 V 1 A buck"
+      },
+      {
+        "reference": "U3",
+        "mpn": "USBLC6-2SC6",
+        "lcsc": "C7519",
+        "function": "USB ESD protection"
+      },
+      {
+        "reference": "U4",
+        "mpn": "MAX98357AETE+T",
+        "lcsc": "C910544",
+        "function": "5 V I2S class-D amplifier"
+      }
+    ],
+    "displayAccessory": {
+      "manufacturer": "Waveshare",
+      "model": "1.28inch LCD Module",
+      "controller": "GC9A01",
+      "sku": "19192",
+      "resolution": "240x240",
+      "connectorPinOrder": "VCC/GND/DIN/CLK/CS/DC/RST/BL",
+      "pcbaComponent": false
+    },
+    "speakerAccessory": {
+      "manufacturer": "XHXDZ",
+      "model": "30MM-4Ω3W-TFHM",
+      "lcsc": "C50387216",
+      "connection": "external JST-PH pigtail",
+      "outputType": "BTL_DIFFERENTIAL_NEITHER_TERMINAL_TO_GROUND",
+      "pcbaComponent": false
+    }
   },
   "systemInterfaces": {
     "pcbToCaseTransform": "case_x = pcb_x - 7.5; case_z = pcb_y + 9.0",
@@ -161,10 +318,12 @@
     "Import all six STL files into a real slicer and record zero repair, zero floating islands and successful layer generation before first physical print.",
     "Print and physically fit the first enclosure; record shrink compensation and fastener torque.",
     "Assemble and current-limit bring up the first wand PCB; execute charge, thermal, USB, RF and haptic tests.",
-    "Install and pin a supported nRF Connect SDK/Zephyr target toolchain and build a NINA-B302 image.",
-    "Perform representative-user gesture dataset, HIL safety timing, packet security and RF range tests.",
-    "Freeze and package a compatible receiver; the current JLC package covers the wand bare PCB only.",
-    "Independent electrical/mechanical/security review before production release."
+    "Install and pin a supported nRF Connect SDK/Zephyr target toolchain and build both wand and receiver-effects NINA-B302 images.",
+    "Perform representative-user gesture dataset, real BLE/AES-CCM interoperability, anti-replay persistence, eight-slot HIL safety timing and RF range tests.",
+    "Finish receiver-effects power-width, bounded-neckdown, return-path and CPL-origin rework; rerun ERC/DRC/unconnected/parity audits and bind newly generated CAM hashes before any upload. All prior receiver-effects CAM remains REJECTED.",
+    "Current-limit bring up the first receiver-effects board and physically verify USB power, 3.3 V, display, backlight, I2S/BTL audio, RGB, RF, EMI, thermal and fault-mute behavior.",
+    "Complete receiver-effects BOM/LCSC/AVL, DNP, substitution and assembly review before any PCBA order.",
+    "Independent electrical, mechanical, firmware, security, EMC and manufacturing review before production release."
   ],
   "releaseLocks": {
     "prototypeBarePcbFabricationAuthorizedByOwner": true,

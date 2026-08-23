@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-DRAWING-TEXT-OUTSIDE-FRAMES: Center text in exact title cells; frame view labels, feature callouts and five general-note rows; move the section note to a free band. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

@@ -1,0 +1,1 @@
+Final 180-entity plan starts with TOP_CL_Y_HI at [0,0] and validates with 54/54 preflight gates.

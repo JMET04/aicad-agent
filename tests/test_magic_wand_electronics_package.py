@@ -2,12 +2,15 @@ import csv
 import json
 import hashlib
 from pathlib import Path
+import runpy
 
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / "projects" / "magic-wand"
 ELECTRONICS = PROJECT / "electronics"
 FIRMWARE = PROJECT / "firmware"
+HOST_EVIDENCE_GENERATOR_PATH = FIRMWARE / "scripts" / "generate_host_review_evidence.py"
+HOST_EVIDENCE_GENERATOR = runpy.run_path(str(HOST_EVIDENCE_GENERATOR_PATH))
 
 
 def read_text(path: Path) -> str:
@@ -43,6 +46,7 @@ def test_review_package_has_required_source_of_truth_files():
         ELECTRONICS / "requirements-traceability.csv",
         ELECTRONICS / "bring-up-and-production-test.md",
         FIRMWARE / "host-review-evidence.json",
+        HOST_EVIDENCE_GENERATOR_PATH,
         ELECTRONICS / "wand" / "connectivity.csv",
         ELECTRONICS / "receiver" / "connectivity.csv",
         FIRMWARE / "README.md",
@@ -217,6 +221,40 @@ def test_connectivity_tables_encode_pin_power_and_interface_safety():
         assert forbidden not in receiver_text
 
 
+def test_host_review_evidence_generator_manifest_is_complete():
+    source_paths = set(HOST_EVIDENCE_GENERATOR["SOURCE_PATHS"])
+    expected_ctest_tests = HOST_EVIDENCE_GENERATOR["EXPECTED_CTEST_TESTS"]
+
+    assert HOST_EVIDENCE_GENERATOR["EXPECTED_BUILD_RESULT"] == (
+        "PASSED_34_OF_34_BUILD_STEPS"
+    )
+    assert len(expected_ctest_tests) == 10
+    assert expected_ctest_tests[-3:] == (
+        "mw_epoch_record_vectors",
+        "mw_epoch_store_vectors",
+        "mw_target_contract",
+    )
+    assert len(source_paths) == 52
+    assert {
+        "../electronics/wand/wand-factory-design.json",
+        "target/receiver-effects/src/mw_epoch_record.c",
+        "target/receiver-effects/src/mw_epoch_record.h",
+        "target/receiver-effects/src/mw_epoch_store.c",
+        "target/receiver-effects/src/mw_epoch_store.h",
+        "target/receiver-effects/tests/epoch_record_vectors.c",
+        "target/receiver-effects/tests/epoch_store_vectors.c",
+        "target/zephyr/CMakeLists.txt",
+        "target/zephyr/Kconfig",
+        "target/zephyr/boards/c08-005.conf",
+        "target/zephyr/boards/c08-005.overlay",
+        "target/zephyr/boards/ubx_evkninab3_nrf52840.overlay",
+        "target/zephyr/prj.conf",
+        "target/zephyr/src/main.c",
+        "target/zephyr/verify_target_contract.py",
+        "tools/export_effect_previews.c",
+    } <= source_paths
+
+
 def test_firmware_security_replay_and_output_ranges_are_fail_closed():
     protocol_h = read_text(FIRMWARE / "include" / "mw_protocol.h")
     protocol_c = read_text(FIRMWARE / "src" / "mw_protocol.c")
@@ -234,6 +272,8 @@ def test_firmware_security_replay_and_output_ranges_are_fail_closed():
     assert "!guard->persistence_ready" in protocol_c
     assert "frame->header.flags != 0U" in protocol_c
     assert "payload_length_is_valid" in protocol_c
+    assert "MW_GESTURE_PAYLOAD_PROFILE_MULTICHANNEL_V2" in protocol_h
+    assert "mw_replay_guard_set_gesture_profile" in protocol_h
     assert "frame->header.sequence <= guard->receive_high_water" in protocol_c
     assert "LE Secure Connections" in protocol_doc
     assert "out-of-band" in protocol_doc
@@ -255,12 +295,29 @@ def test_firmware_security_replay_and_output_ranges_are_fail_closed():
 
 
     host_evidence = read_json(FIRMWARE / "host-review-evidence.json")
-    assert host_evidence["results"]["compile_and_link"] == "PASSED_6_OF_6_BUILD_STEPS"
-    assert host_evidence["results"]["ctest"] == "PASSED_1_OF_1"
-    assert host_evidence["results"]["target_compile"].startswith("NOT_RUN")
+    results = host_evidence["results"]
+    expected_sources = set(HOST_EVIDENCE_GENERATOR["SOURCE_PATHS"])
+    assert results["compile_and_link"] == HOST_EVIDENCE_GENERATOR["EXPECTED_BUILD_RESULT"]
+    assert results["ctest"] == HOST_EVIDENCE_GENERATOR["EXPECTED_CTEST_RESULT"]
+    assert results["tests"] == list(HOST_EVIDENCE_GENERATOR["EXPECTED_CTEST_TESTS"])
+    assert results["cppcheck"] == HOST_EVIDENCE_GENERATOR["EXPECTED_CPPCHECK_RESULT"]
+    assert results["cppcheck_files"] == list(HOST_EVIDENCE_GENERATOR["CPPCHECK_PATHS"])
+    assert results["target_compile"].startswith("NOT_RUN")
+    assert host_evidence["source_manifest"] == {
+        "policy": HOST_EVIDENCE_GENERATOR["SOURCE_MANIFEST_POLICY"],
+        "count": len(expected_sources),
+        "includes_transitive_ctest_inputs": True,
+    }
+    assert set(host_evidence["source_sha256"]) == expected_sources
     for relative_path, expected_hash in host_evidence["source_sha256"].items():
         actual_hash = hashlib.sha256((FIRMWARE / relative_path).read_bytes()).hexdigest().upper()
         assert actual_hash == expected_hash
+    assert host_evidence["generator"]["script"] == (
+        "scripts/generate_host_review_evidence.py"
+    )
+    assert host_evidence["generator"]["script_sha256"] == hashlib.sha256(
+        HOST_EVIDENCE_GENERATOR_PATH.read_bytes()
+    ).hexdigest().upper()
     assert any("not cryptography" in item.lower() for item in host_evidence["claim_limits"])
 
 def test_gesture_scope_is_relative_and_low_confidence_rejects():

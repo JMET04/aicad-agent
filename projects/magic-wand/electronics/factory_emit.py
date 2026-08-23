@@ -255,7 +255,7 @@ def emit_kicad_pad(
 
 
 def _footprint_attr(part: Part) -> str:
-    if part.package == "USB-C-16P":
+    if part.package in {"USB-C-16P", "USB4105-16P"}:
         return ""
     if part.assembly == "THT":
         return "    (attr through_hole)"
@@ -264,6 +264,19 @@ def _footprint_attr(part: Part) -> str:
     if part.assembly == "BARE_PAD":
         return "    (attr smd exclude_from_pos_files exclude_from_bom)"
     return "    (attr smd)"
+
+
+def _footprint_model(part: Part, indent: str) -> list[str]:
+    if part.package != "USB4105-16P":
+        return []
+    return [
+        indent + '(model "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/'
+        'USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal.step"',
+        indent + "  (offset (xyz 0 0 0))",
+        indent + "  (scale (xyz 1 1 1))",
+        indent + "  (rotate (xyz 0 0 0))",
+        indent + ")",
+    ]
 
 
 def write_footprint_library(board: Board, out_dir: Path, pads: list[dict]) -> Path:
@@ -310,6 +323,7 @@ def write_footprint_library(board: Board, out_dir: Path, pads: list[dict]) -> Pa
             lines.append(emit_kicad_pad(
                 board, part, pad, float(pad["local_x"]), float(pad["local_y"]), None,
             ).lstrip())
+        lines.extend(_footprint_model(part, "  "))
         lines.append(")")
         (pretty / f"{name}.kicad_mod").write_text(
             "\n".join(lines) + "\n", encoding="utf-8", newline="\n",
@@ -627,6 +641,15 @@ def write_project(board: Board, out_dir: Path) -> Path:
     }
     path = out_dir / f"{board.name}.kicad_pro"
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    jae_rule = textwrap.dedent("""\
+        # JAE SJ121837 intentionally places contacts 0.175 mm from an internal
+        # precision locator.  This applies only inside the exact J1 footprint;
+        # board-edge and all external clearances remain at the global minima.
+        (rule "JAE SJ121837 internal locator geometry"
+          (condition "A.Reference == 'J1' && B.Reference == 'J1'")
+          (constraint hole_clearance (min 0.15mm))
+          (constraint edge_clearance (min 0.15mm)))
+        """) if any(part.mpn == "DX07S016JA1R1500" for part in board.parts) else ""
     (out_dir / f"{board.name}.kicad_dru").write_text(textwrap.dedent("""\
         (version 1)
         (rule "Global manufacturing track width"
@@ -645,14 +668,7 @@ def write_project(board: Board, out_dir: Path) -> Path:
         (rule "Manufacturer fine-pitch same-footprint pads"
           (condition "A.Reference == B.Reference && (A.Reference == 'U3' || A.Reference == 'U4')")
           (constraint clearance (min 0.15mm)))
-        # JAE SJ121837 intentionally places contacts 0.175 mm from an internal
-        # precision locator.  This applies only inside the exact J1 footprint;
-        # board-edge and all external clearances remain at the global minima.
-        (rule "JAE SJ121837 internal locator geometry"
-          (condition "A.Reference == 'J1' && B.Reference == 'J1'")
-          (constraint hole_clearance (min 0.15mm))
-          (constraint edge_clearance (min 0.15mm)))
-        """), encoding="utf-8", newline="\n")
+        """) + jae_rule, encoding="utf-8", newline="\n")
     (out_dir / "fp-lib-table").write_text(
         "(fp_lib_table\n"
         "    (version 7)\n"
@@ -750,6 +766,7 @@ def write_pcb(board: Board, out_dir: Path, pads: list[dict], segments: list[dict
                 board, part, pad, dx, dy, net_id,
                 rotation_deg=float(pad.get("rotation", 0.0)),
             ))
+        lines.extend(_footprint_model(part, "    "))
         lines.append("  )")
     for index, segment in enumerate(segments):
         if segment["net"] in net_id:
@@ -876,4 +893,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

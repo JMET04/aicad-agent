@@ -1,0 +1,94 @@
+{
+  "schema": "aicad_test_failure_report_v1",
+  "reportId": "REPORT-SIFC-NORMALITY-BOOTSTRAP-001",
+  "status": "failed",
+  "failedChecks": [
+    {
+      "failureId": "FAIL-SIFC-NORMALITY-ORIGIN-BOOTSTRAP",
+      "failureAlias": "mechanical.normality_origin_bootstrap_missing_from_excluded_profile",
+      "domain": "mechanical",
+      "failingCheck": "aicad_normality_prover plan_geometry hard gate",
+      "symptom": "The plan_geometry gate failed while its printed mapping, layer, endpoint, metadata, anchor and dimension evidence were all green.",
+      "rootCause": "The run-specific plan omitted the prover's additional contract that the first plan entity must be an excluded line anchored at the global origin.",
+      "correction": "Add ORIGIN_BOOTSTRAP as the first origin-anchored plan line and list it in excludedEntityIds without adding it to logical production geometry.",
+      "candidateRule": {
+        "id": "MECH-G035",
+        "requirement": "A bounded mechanical normality plan must begin with one explicit excluded global-origin bootstrap before production entities.",
+        "prevention": "Generate and validate the origin bootstrap and excludedEntityIds membership together, then assert the plan_geometry predicate before invoking the full prover.",
+        "regressionTest": "A fixture with correct production bijection but no excluded origin bootstrap must fail plan_geometry; adding exactly one first origin bootstrap must pass without changing production IDs.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-normality-bootstrap/repro/missing-origin-bootstrap.txt",
+        "size": 379,
+        "sha256": "3ff76df497b6d29f0b449c54c59ade072707eb79d53a2140bb8f593c4a81e41f"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-normality-bootstrap/evidence/red-plan-geometry.txt",
+            "size": 232,
+            "sha256": "db516b86ab8a643429f8b1bef1ac2bffbbd6e18cdad454c226aa924415aad414"
+          },
+          {
+            "path": "learning/complex-servo-indexer-normality-bootstrap/evidence/green-plan-geometry.txt",
+            "size": 128,
+            "sha256": "bdeb1594b691edfa90c6c7d5b57eb4a2e4cfd6b07e73bea7762615a1150d4ce0"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/build_governance.py",
+            "size": 13303,
+            "sha256": "2800044088c956a3bbfdea6e56a12442b19b1a72c859537b4184f63d1b67eccd"
+          },
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_normality_prover.py",
+            "size": 50415,
+            "sha256": "4c81d1b8882aba18efec4ec3d88796d2b2714b4d67da533def6908f0e27839bf"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-normality-bootstrap/affected/normality-bootstrap-contract.txt",
+            "size": 236,
+            "sha256": "22dc5927c5ce9aec608c7b59a1799e62808ee17db1fe37a7e290cf161084f393"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/normality.plan.json",
+            "size": 3744,
+            "sha256": "4863e96c328a4b6d81325c8ef078c191f9013da10bff86cba4ee38945557d42a"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/normality.template.json",
+            "size": 11712,
+            "sha256": "e28bdba59eb92e18d7180524f89c76f8630b7cac1896cba3c0829f96105780d4"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/normality.report.json",
+            "size": 9885,
+            "sha256": "e8a7a25eec6e187072ec93c1623985764f177df534946e4f3d020cae6d6a4f1b"
+          }
+        ]
+      }
+    }
+  ],
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

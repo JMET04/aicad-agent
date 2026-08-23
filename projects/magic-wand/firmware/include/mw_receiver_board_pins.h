@@ -1,0 +1,30 @@
+#ifndef MW_RECEIVER_BOARD_PINS_H
+#define MW_RECEIVER_BOARD_PINS_H
+
+/*
+ * Receiver NINA-B302 GPIO authority mirrored from the tracked
+ * electronics/receiver/connectivity.csv source. These are nRF52840 GPIO
+ * identifiers, not NINA outer-module pad numbers.
+ */
+#define MW_RECEIVER_UART_TX_GPIO_PORT 0u
+#define MW_RECEIVER_UART_TX_GPIO_PIN 11u
+#define MW_RECEIVER_UART_RX_GPIO_PORT 1u
+#define MW_RECEIVER_UART_RX_GPIO_PIN 9u
+#define MW_RECEIVER_PWM_AUX_GPIO_PORT 0u
+#define MW_RECEIVER_PWM_AUX_GPIO_PIN 26u
+#define MW_RECEIVER_OPTO_DRV_GPIO_PORT 0u
+#define MW_RECEIVER_OPTO_DRV_GPIO_PIN 6u
+#define MW_RECEIVER_LOAD_GATE_GPIO_PORT 0u
+#define MW_RECEIVER_LOAD_GATE_GPIO_PIN 27u
+#define MW_RECEIVER_PWR_GOOD_GPIO_PORT 0u
+#define MW_RECEIVER_PWR_GOOD_GPIO_PIN 12u
+
+/* Corresponding NINA-B302 outer-module pad numbers. */
+#define MW_RECEIVER_UART_TX_MODULE_PAD 32u
+#define MW_RECEIVER_UART_RX_MODULE_PAD 33u
+#define MW_RECEIVER_PWM_AUX_MODULE_PAD 42u
+#define MW_RECEIVER_OPTO_DRV_MODULE_PAD 43u
+#define MW_RECEIVER_LOAD_GATE_MODULE_PAD 44u
+#define MW_RECEIVER_PWR_GOOD_MODULE_PAD 46u
+
+#endif

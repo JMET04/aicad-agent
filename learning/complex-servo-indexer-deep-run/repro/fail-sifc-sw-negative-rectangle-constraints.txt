@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-SW-NEGATIVE-RECTANGLE-CONSTRAINTS: SolidWorks native build F004 sketch_constraint_status. The first native build stopped at negative-X rectangle F004 with sketch status 2 and two underdefined points.

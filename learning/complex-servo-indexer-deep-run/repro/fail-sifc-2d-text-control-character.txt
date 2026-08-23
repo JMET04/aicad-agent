@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-2D-TEXT-CONTROL-CHARACTER: aicad-agent validate SEC_NOTE text control-character gate. Validation rejected SEC_NOTE because a newline was embedded in a single native text entity.

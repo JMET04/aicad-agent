@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-CLI-ENTRYPOINT-PATH-GUESSED: python aicad_agent.py --help. The command failed because aicad_agent.py is under agent-plugin/aicad-agent/scripts, not repository root.

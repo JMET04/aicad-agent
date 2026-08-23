@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-2D-TEXT-CONTROL-CHARACTER: Replace the newline with a semicolon-separated single line and place it in a dedicated framed row. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

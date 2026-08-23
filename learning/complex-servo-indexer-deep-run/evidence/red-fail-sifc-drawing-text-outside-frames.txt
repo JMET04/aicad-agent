@@ -1,0 +1,1 @@
+User review: written text was not inside boxes; intermediate section callout frame obscured the view.

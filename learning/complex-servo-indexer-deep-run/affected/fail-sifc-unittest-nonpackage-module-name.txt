@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-UNITTEST-NONPACKAGE-MODULE-NAME: Use unittest discover with -s tests and an explicit -p filename pattern. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

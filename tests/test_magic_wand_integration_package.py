@@ -67,8 +67,10 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
         linked = (
             "mechanical/printable-wand/", "electronics/manufacturing/jlcpcb-wand-rev-a0/", "integration/README.md",
             "integration/CURRENT_SYSTEM_STATUS.json", "integration/SYSTEM_ENGINEERING_HANDOFF.md",
+            "integration/RECEIVER_EFFECTS_SYSTEM_HANDOFF.md",
             "integration/current-system-traceability.json", "integration/current-delivery-manifest.json",
-            "firmware/gesture-host-evidence.json",
+            "electronics/receiver-effects/", "firmware/gesture-host-evidence.json",
+            "firmware/host-review-evidence.json",
         )
         for relative in linked:
             with self.subTest(relative=relative):
@@ -78,6 +80,66 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
         self.assertIn("legacy Rev A", legacy_readme)
         self.assertIn("superseded", legacy_readme.casefold())
         self.assertIn("delivery-manifest.json", legacy_readme)
+
+    def test_receiver_effects_current_status_and_host_evidence_are_explicit(self) -> None:
+        self.assertEqual(self.contract["revision"], "2026-08-23-prototype-contract-2")
+        receiver = self.status["receiverEffects"]
+        self.assertEqual(receiver["topology"], "DIRECT_PAIRED_BLE_ENDPOINT_WITH_OWN_NINA_B302_NOT_A_RELAY")
+        self.assertEqual(receiver["authority"], "MEDIA_ONLY_NO_IMPLICIT_DANGEROUS_OUTPUT_AUTHORITY")
+        self.assertEqual(receiver["logicalSlots"], 8)
+        self.assertEqual(
+            [(row["channel"], row["gesture"], row["effect"]) for row in receiver["effects"]],
+            [
+                (0, "TAP", "EXPLOSION"),
+                (1, "TWIST_CW", "FIRE"),
+                (2, "TWIST_CCW", "ICE"),
+                (3, "SWISH_LEFT", "LIGHTNING"),
+                (4, "SWISH_RIGHT", "SHIELD"),
+                (5, "THRUST", "ARCANE"),
+                (6, "CIRCLE_CW", "HEAL"),
+                (7, "CIRCLE_CCW", "PORTAL"),
+            ],
+        )
+        self.assertEqual(receiver["pcb"]["sizeMm"], [50.3, 42.3])
+        self.assertEqual(receiver["pcb"]["layers"], 4)
+        self.assertEqual(receiver["pcb"]["status"], "HARDWARE_CAM_REWORK_IN_PROGRESS")
+        self.assertEqual(receiver["pcb"]["previousCamStatus"], "REJECTED")
+        self.assertFalse(receiver["pcb"]["currentBareBoardUploadCandidate"])
+        self.assertFalse(receiver["pcb"]["pcbaIncluded"])
+        self.assertEqual(
+            {row["mpn"] for row in receiver["coreIcs"]},
+            {"NINA-B302-00B-00", "TPS62162DSGR", "USBLC6-2SC6", "MAX98357AETE+T"},
+        )
+        self.assertEqual(receiver["displayAccessory"]["sku"], "19192")
+        self.assertEqual(receiver["displayAccessory"]["controller"], "GC9A01")
+        self.assertFalse(receiver["displayAccessory"]["pcbaComponent"])
+        self.assertEqual(receiver["speakerAccessory"]["model"], "30MM-4Ω3W-TFHM")
+        self.assertEqual(receiver["speakerAccessory"]["lcsc"], "C50387216")
+        self.assertFalse(receiver["speakerAccessory"]["pcbaComponent"])
+
+        profiles = self.status["firmware"]["gestureEventProfiles"]
+        self.assertEqual(profiles["legacyV1"]["payloadBytes"], 2)
+        self.assertEqual(profiles["legacyV1"]["allowedLogicalChannels"], [0])
+        self.assertEqual(profiles["multichannelV2"]["payloadBytes"], 14)
+        self.assertEqual(profiles["multichannelV2"]["allowedLogicalChannels"], list(range(8)))
+        self.assertTrue(profiles["multichannelV2"]["requiresArmActive"])
+        self.assertTrue(profiles["multichannelV2"]["requiresOuterAndPayloadDeviceSessionBinding"])
+
+        host = self.status["firmware"]["receiverRuntimeHostEvidence"]
+        self.assertEqual(host["buildSteps"], {"passed": 25, "failed": 0})
+        self.assertEqual(host["ctest"], {"passed": 8, "failed": 0})
+        self.assertEqual(host["cppcheckFiles"], {"passed": 9, "failed": 0, "findings": 0})
+        self.assertEqual(host["sourceHashInventory"], {"matched": 37, "mismatched": 0})
+        evidence = {row["id"]: row for row in self.contract["evidenceBindings"]}
+        self.assertEqual(evidence["EVID-RECEIVER-FW-HOST"]["size"], 6820)
+        self.assertEqual(
+            evidence["EVID-RECEIVER-FW-HOST"]["sha256"],
+            "73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70",
+        )
+        gates = {row["id"]: row for row in self.contract["verificationGates"]}
+        self.assertEqual(gates["GATE-RECEIVER-FW-HOST-001"]["status"], "passed")
+        self.assertEqual(gates["GATE-RECEIVER-PCB-001"]["status"], "open")
+        self.assertEqual(gates["GATE-RECEIVER-001"]["status"], "open")
 
     def test_current_evidence_and_system_qa_are_reproducible(self) -> None:
         module = load_module(PACKAGE / "build_current_evidence.py")
@@ -220,6 +282,7 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
             "projects/magic-wand/integration/system-design-qa-report.json",
             "projects/magic-wand/integration/system-design-qa-report.md",
             "projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md",
+            "projects/magic-wand/integration/RECEIVER_EFFECTS_SYSTEM_HANDOFF.md",
             "projects/magic-wand/integration/current-system-traceability.json",
             "projects/magic-wand/integration/build_current_evidence.py",
         }
@@ -229,6 +292,7 @@ class MagicWandIntegrationPackageTests(unittest.TestCase):
             "EVID-JLC-BARE-ZIP": "projects/magic-wand/electronics/manufacturing/jlcpcb-wand-rev-a0/JLCPCB_WAND_REV_A0_GERBER_DRILL.zip",
             "EVID-PRINT-PACKAGE": "projects/magic-wand/mechanical/printable-wand/outputs/MW_PRINTABLE_WAND_REV_A0.zip",
             "EVID-FW-HOST": "projects/magic-wand/firmware/gesture-host-evidence.json",
+            "EVID-RECEIVER-FW-HOST": "projects/magic-wand/firmware/host-review-evidence.json",
         }
         self.assertEqual(
             {row["evidenceId"]: row["path"] for row in manifest["evidenceFiles"]},

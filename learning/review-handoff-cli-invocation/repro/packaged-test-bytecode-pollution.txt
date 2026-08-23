@@ -1,0 +1,6 @@
+Reproducer:
+1. Build release/v1.16.0/aicad-agent from a clean source tree.
+2. Run the packaged suite with python -B but without PYTHONDONTWRITEBYTECODE=1.
+3. Some test subprocesses start fresh interpreters without -B and create runtime/src/aicad/__pycache__/*.pyc.
+4. Run verify_release_package.py; it must fail on cache, manifest-unlisted, and sums-unlisted entries.
+

@@ -1,0 +1,1422 @@
+{
+  "schema": "aicad_test_failure_report_v1",
+  "reportId": "REPORT-SIFC-DEEP-RUN-001",
+  "status": "failed",
+  "failedChecks": [
+    {
+      "failureId": "FAIL-SIFC-SW-NEGATIVE-RECTANGLE-CONSTRAINTS",
+      "failureAlias": "software.solidworks_negative_rectangle_underdefined",
+      "domain": "software",
+      "failingCheck": "SolidWorks native build F004 sketch_constraint_status",
+      "symptom": "The first native build stopped at negative-X rectangle F004 with sketch status 2 and two underdefined points.",
+      "rootCause": "FullyDefineSketch did not deterministically constrain lower-left placement for all negative-offset rectangles.",
+      "correction": "Add explicit rectangle width, height and lower-left X/Y dimensions or zero relations before FullyDefineSketch.",
+      "candidateRule": {
+        "id": "SW-G007",
+        "requirement": "Every native rectangle must receive deterministic size and position constraints before automatic full definition.",
+        "prevention": "Create explicit width, height, X and Y constraints and assert status 3 before feature creation.",
+        "regressionTest": "A negative-X rectangle fixture must save/reopen fully constrained with zero feature error codes.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-sw-negative-rectangle-constraints.txt",
+        "size": 220,
+        "sha256": "e104094b2c1a10916d8d88957435ec43e83ec6cd7d93af6512f41f774eb5453f"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-sw-negative-rectangle-constraints.txt",
+            "size": 71,
+            "sha256": "4f006c7cb2c147db3822ff810f134f2fb485b7566d0ff31a66f71c55b7e70a4b"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-sw-negative-rectangle-constraints.txt",
+            "size": 121,
+            "sha256": "da5aedebc78c42839858edc18014c75d6dcfe4e9191dc285941ace5e71dfcd59"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "solidworks-host/AiCad.SolidWorksHost/Program.cs",
+            "size": 80200,
+            "sha256": "344369c14714afc4348a1ee575f084d8dde5762e4cd0d598e89d445cb8cf1dc0"
+          },
+          {
+            "path": "tests/test_solidworks_native_topology.py",
+            "size": 2514,
+            "sha256": "01497ab4bbf76e553c6356e0415d0c1cd208bfb222761a77a5a7d85e6029b08a"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/build_3d_plan.py",
+            "size": 5645,
+            "sha256": "70343ed30386a549217ffc56cfaa603a12830370f01dd5467932d1ef9c182fff"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-sw-negative-rectangle-constraints.txt",
+            "size": 274,
+            "sha256": "a2b49a4ab72edbdae207891db95305904c5ec7026b05711ee000e21094bfbaa3"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/model3d_native_r2/SIFC_220_REV_A.solidworks-report.json",
+            "size": 297334,
+            "sha256": "69b77edc82a342cb5c98bc42e1e5c6deee540c2334d442af7d7e89b40a027720"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/model3d_native_r2/SIFC_220_REV_A.reopen-report.json",
+            "size": 194620,
+            "sha256": "40d225cff95ac21b6cf6b341a6a50de44b1f4d2d21fffda5b389133e3d29f7cf"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/model3d_native_r2/SIFC_220_REV_A.SLDPRT",
+            "size": 364777,
+            "sha256": "bd94dbc6bf58783d403e080a0e96cc481263f92a9f9d53c92c33b5b415664535"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-2D-FIRST-ENTITY-NOT-ORIGIN-ANCHORED",
+      "failureAlias": "mechanical.first_2d_entity_not_origin_anchored",
+      "domain": "mechanical",
+      "failingCheck": "aicad-agent validate first-entity origin hard gate",
+      "symptom": "The initial 2D plan was rejected because its first production entity did not begin at the drawing origin.",
+      "rootCause": "The drawing builder started from an outline edge instead of the datum-B centreline segment anchored at origin.",
+      "correction": "Make the upper datum-B centreline the first meaningful entity from [0,0] to [0,145].",
+      "candidateRule": {
+        "id": "MECH-G036",
+        "requirement": "A mechanical drawing must begin with meaningful origin-anchored production geometry, not a fake bootstrap.",
+        "prevention": "Select an actual datum or centreline through origin as entity one and validate before adding the remaining sheet.",
+        "regressionTest": "A drawing whose first entity misses origin must fail; replacing it with the real datum centreline must pass without excluded geometry.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-2d-first-entity-not-origin-anchored.txt",
+        "size": 215,
+        "sha256": "a5431c840d4504647a77c43c65acd52aebd8409b23382b4d0711f0e06f7e1e80"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-2d-first-entity-not-origin-anchored.txt",
+            "size": 57,
+            "sha256": "a73e8f3bddd2283d5674009ad60242c15fa35d2d42440afea86fa0ac536b3bb0"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-2d-first-entity-not-origin-anchored.txt",
+            "size": 97,
+            "sha256": "0be25a6271081ee2bd8fe368a3a502ef2ee58dd2b74a6dd01a0d7d2bedcbaf40"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/build_2d_drawing.py",
+            "size": 13562,
+            "sha256": "271711aa4ba458d8ba86255a9804046bc5b44c60b48800f2477cfac5986b67d9"
+          },
+          {
+            "path": "src/aicad/engine.py",
+            "size": 34107,
+            "sha256": "bf50b6b2453a4c18e7fecbf78acaf1991ac2dccd3d7a74f5d20d7679f6395327"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-2d-first-entity-not-origin-anchored.txt",
+            "size": 250,
+            "sha256": "1e56086704bebe6a85bee9b2f91b7d800a8a46fcbcfa48e30142e43c012de6cc"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING.plan.json",
+            "size": 216638,
+            "sha256": "d8f9b56b3a0e17811ead0974b2684a018625bf5c7fe071fb29072735a93ed686"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING.dxf",
+            "size": 64054,
+            "sha256": "8a8c8f877c51830debf93c00f4c6d98c9e7d7216bfa65e928406577507cbcc55"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-2D-TEXT-CONTROL-CHARACTER",
+      "failureAlias": "software.2d_text_newline_control_character",
+      "domain": "software",
+      "failingCheck": "aicad-agent validate SEC_NOTE text control-character gate",
+      "symptom": "Validation rejected SEC_NOTE because a newline was embedded in a single native text entity.",
+      "rootCause": "The builder treated a multiline note as one native text value although the schema permits only safe single-line content.",
+      "correction": "Replace the newline with a semicolon-separated single line and place it in a dedicated framed row.",
+      "candidateRule": {
+        "id": "SW-G008",
+        "requirement": "Native text values must be sanitized to supported single-line characters before plan validation.",
+        "prevention": "Normalize line breaks into explicit separate text entities or safe separators before emitting the plan.",
+        "regressionTest": "A text fixture containing CR/LF must fail before compile; sanitized rows must validate and render verbatim.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-2d-text-control-character.txt",
+        "size": 198,
+        "sha256": "f5724e8fbab4740c94225dafc7926324c7c9ec4576a159ba3c48310c6166f5a8"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-2d-text-control-character.txt",
+            "size": 77,
+            "sha256": "d3edd3e7fe49189e4be0589ecc4a16766c3d6fc637498ee2bb90a223db758a94"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-2d-text-control-character.txt",
+            "size": 89,
+            "sha256": "71417b63e526a97cea2583b04c0a6ed38af59bb9d4e1da786284abd3dbff114d"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/build_2d_drawing.py",
+            "size": 13562,
+            "sha256": "271711aa4ba458d8ba86255a9804046bc5b44c60b48800f2477cfac5986b67d9"
+          },
+          {
+            "path": "src/aicad/engine.py",
+            "size": 34107,
+            "sha256": "bf50b6b2453a4c18e7fecbf78acaf1991ac2dccd3d7a74f5d20d7679f6395327"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-2d-text-control-character.txt",
+            "size": 254,
+            "sha256": "6c62d2300ebd121a4ad4351ac8820035567d479bb672fce3fbd9c1895f1a5874"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING.plan.json",
+            "size": 216638,
+            "sha256": "d8f9b56b3a0e17811ead0974b2684a018625bf5c7fe071fb29072735a93ed686"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING-review.review.html",
+            "size": 535647,
+            "sha256": "f093cd2a7a5b76bef5363ae655c24fe619a68989b9bd458258c6de4e63bca5fc"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-REVIEWER-ROLE-MISSING-SINGLE-DOCUMENT",
+      "failureAlias": "software.single_document_modifier_role_missing",
+      "domain": "software",
+      "failingCheck": "aicad-agent open-review selectable-vector modifier contract",
+      "symptom": "The generated mechanical reviewers were rejected for missing interactive_drawing_modifier role.",
+      "rootCause": "The renderer emitted the role only for multi-storey document sets, while the opener required it for every reviewer.",
+      "correction": "Emit single_document modifier mode, role and document-scoped selection attributes on every non-document-set reviewer.",
+      "candidateRule": {
+        "id": "SW-G009",
+        "requirement": "Renderer and reviewer-first opener must share one mandatory modifier identity contract for every document mode.",
+        "prevention": "Validate generated HTML with validate_interactive_modifier_contract in the renderer regression suite.",
+        "regressionTest": "Both 2D and 3D single-document pages must satisfy the strong opener contract and reject raster-only wrappers.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-reviewer-role-missing-single-document.txt",
+        "size": 216,
+        "sha256": "8c8a04c48e35d9e1fbe82a2fb06f540794f166d8e6ae49382f382f31de78ba8f"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-reviewer-role-missing-single-document.txt",
+            "size": 56,
+            "sha256": "ef96fde94e5f39bdb087dfa28ea55bb1ca066f72b0a58681b44abfe4577b1e03"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-reviewer-role-missing-single-document.txt",
+            "size": 86,
+            "sha256": "e93516b1042118d0f0bb7137ad50c4b4fb85ca6e7775ed1ea87d342146fb613d"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "src/aicad/review_ui_v2.py",
+            "size": 67586,
+            "sha256": "46032672ee63a897552f175109acfcfb276bcf0c215577a7883ce7b50c367708"
+          },
+          {
+            "path": "src/aicad/review_launch.py",
+            "size": 14166,
+            "sha256": "7b2536f37b9f63faa9eb8dcffe59d4782ddd774305a222f29a15833b82ce0679"
+          },
+          {
+            "path": "tests/test_modifier_ui_v2.py",
+            "size": 10638,
+            "sha256": "438f3b1eb443cacc478b7d14502aa87838756df666f655436bac10d23af8b194"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-reviewer-role-missing-single-document.txt",
+            "size": 285,
+            "sha256": "55f3c8b3bded19108dd1ae2e67645063fdfec041351e581c4597ea77af190eb0"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING-review.review.html",
+            "size": 535647,
+            "sha256": "f093cd2a7a5b76bef5363ae655c24fe619a68989b9bd458258c6de4e63bca5fc"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/model3d_native_r2/SIFC_220_REV_A-review.review.html",
+            "size": 1787592,
+            "sha256": "a5c9478159bfdc36c25f8c1a8dab1adeb21801cab5ef56101cb40864495ac118"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-UNITTEST-NONPACKAGE-MODULE-NAME",
+      "failureAlias": "software.unittest_nonpackage_module_invocation",
+      "domain": "software",
+      "failingCheck": "python -m unittest tests.test_modifier_ui_v2",
+      "symptom": "Focused tests failed to import because tests is not a Python package in this repository.",
+      "rootCause": "The invocation assumed dotted package modules instead of this repository's unittest discovery layout.",
+      "correction": "Use unittest discover with -s tests and an explicit -p filename pattern.",
+      "candidateRule": {
+        "id": "SW-G010",
+        "requirement": "Repository test commands must match the declared discovery layout and must not assume package markers.",
+        "prevention": "Publish and reuse discovery commands from the package manifest or build script.",
+        "regressionTest": "The dotted invocation must reproduce ImportError; the equivalent discover invocation must execute the intended tests.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-unittest-nonpackage-module-name.txt",
+        "size": 188,
+        "sha256": "57e95c5ad181b2160a3c912b550da379951426169ac54713b851783e87da76b4"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-unittest-nonpackage-module-name.txt",
+            "size": 64,
+            "sha256": "06e82400f7ef2b80bba56c3597f00175b468d329a6a6dc5dd241a84c4da8f427"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-unittest-nonpackage-module-name.txt",
+            "size": 91,
+            "sha256": "062b22daa240c6772a1a51b2190d34e4502f62cf2aaae8044db810e17862558c"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "pyproject.toml",
+            "size": 345,
+            "sha256": "33b6365de6e404324ce1b72f45e4fe2b11beaeea09f72fd569970237d159995b"
+          },
+          {
+            "path": "tests/test_modifier_ui_v2.py",
+            "size": 10638,
+            "sha256": "438f3b1eb443cacc478b7d14502aa87838756df666f655436bac10d23af8b194"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-unittest-nonpackage-module-name.txt",
+            "size": 234,
+            "sha256": "37f641e693b5135b9fb2f0dca0ac523826155e19adc0b2ae0fc9f0f9562afcb4"
+          },
+          {
+            "path": "release/v1.16.0/aicad-agent-1.16.0.zip",
+            "size": 795753,
+            "sha256": "06cde3496fa1cace3502e866cc3c389845863fc599f610727767b267f9cba535"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-CLI-ENTRYPOINT-PATH-GUESSED",
+      "failureAlias": "software.cli_entrypoint_path_guessed",
+      "domain": "software",
+      "failingCheck": "python aicad_agent.py --help",
+      "symptom": "The command failed because aicad_agent.py is under agent-plugin/aicad-agent/scripts, not repository root.",
+      "rootCause": "The operational command was guessed instead of resolved from the repository inventory.",
+      "correction": "Resolve CLI locations with rg --files and invoke the canonical agent-plugin script path.",
+      "candidateRule": {
+        "id": "SW-G011",
+        "requirement": "Operational entrypoints must be resolved from the checked repository tree before invocation.",
+        "prevention": "Use a file inventory lookup once per workspace and cache the exact safe-relative entrypoint.",
+        "regressionTest": "A root-relative guessed path must fail; the discovered canonical path must print capabilities and help.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-cli-entrypoint-path-guessed.txt",
+        "size": 185,
+        "sha256": "967d824e08eb234e8d68612c0d32c214193c48d52a03b926bd58b5bad91f2d12"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-cli-entrypoint-path-guessed.txt",
+            "size": 55,
+            "sha256": "f954dc5e68ec9e1bac29f9ee2c459cfbcedac2c41cc7ab761e66971d07e4333f"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-cli-entrypoint-path-guessed.txt",
+            "size": 101,
+            "sha256": "09015173f5a59273584c64dc75e0f035b57fbbaa355d73a25e9bf9fb409a7f87"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_agent.py",
+            "size": 69178,
+            "sha256": "5dece2ff38bac26de62329164341024da01742b3a0d436e4b04b19705c87b14d"
+          },
+          {
+            "path": "pyproject.toml",
+            "size": 345,
+            "sha256": "33b6365de6e404324ce1b72f45e4fe2b11beaeea09f72fd569970237d159995b"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-cli-entrypoint-path-guessed.txt",
+            "size": 246,
+            "sha256": "2e47d11c7016cb6910e0c69c0d42f7a0ba3f601926236211c7a5b8391e19d27c"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING.manifest.json",
+            "size": 1611,
+            "sha256": "8e08446b0afa1e69379e9c87c31a7d92ed1284d7037fa13b3d63e1acf4390bfe"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-PLAYWRIGHT-HELP-WINDOWS-ASSERTION",
+      "failureAlias": "software.playwright_cli_help_windows_assertion",
+      "domain": "software",
+      "failingCheck": "playwright-cli --help runtime exit contract",
+      "symptom": "The CLI printed complete help but exited 1 with a Windows libuv UV_HANDLE_CLOSING assertion.",
+      "rootCause": "This Playwright CLI/runtime combination can crash during help teardown even when commands remain usable.",
+      "correction": "Treat help output as capability evidence only; verify a real session command and preserve the nonzero teardown evidence.",
+      "candidateRule": {
+        "id": "SW-G012",
+        "requirement": "Browser-tool readiness must be proven by a real open/snapshot command, not only a help-command exit code.",
+        "prevention": "Run a bounded local-page smoke after help and separate help-teardown defects from command capability.",
+        "regressionTest": "The help command must retain the nonzero assertion evidence while a real HTTP open and snapshot must succeed.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-playwright-help-windows-assertion.txt",
+        "size": 193,
+        "sha256": "c99506d579b94be8f65867a87a17ed84a93da479c3132217f4cbf41a6443f78b"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-playwright-help-windows-assertion.txt",
+            "size": 83,
+            "sha256": "5e632e25ac5bde55c131dfc329183122cb3facc6b1fc9e63cec79464b5343184"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-playwright-help-windows-assertion.txt",
+            "size": 94,
+            "sha256": "7e43beac91d0e865e10d236b5f9d00dcf1dfc4064f8395f3a790ec647e3c79ae"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING-review.review.html",
+            "size": 535647,
+            "sha256": "f093cd2a7a5b76bef5363ae655c24fe619a68989b9bd458258c6de4e63bca5fc"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-playwright-help-windows-assertion.txt",
+            "size": 284,
+            "sha256": "68c394c5b987c82735a8ded4dbd7b4a3f3f9977986ef0cfc9411d5c277b4483c"
+          },
+          {
+            "path": "output/playwright/SIFC_220_REV_A_2D_review_final.png",
+            "size": 139701,
+            "sha256": "484998c148cf1a7ad4134c35c0a940435f64eace6a8a49af984e4b9776d7084b"
+          },
+          {
+            "path": "output/playwright/SIFC_220_REV_A_3D_review.png",
+            "size": 148014,
+            "sha256": "3126baa1307c20d19f2fb198c088a4d11424b3e80746701701ff23d23e52fa53"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-PLAYWRIGHT-FILE-PROTOCOL-BLOCKED",
+      "failureAlias": "software.playwright_local_file_protocol_blocked",
+      "domain": "software",
+      "failingCheck": "Playwright local reviewer navigation",
+      "symptom": "Playwright blocked navigation to file:///C:/Users/Public/AICADReview/.../review.html.",
+      "rootCause": "The browser automation security policy forbids the file protocol even for a staged local reviewer.",
+      "correction": "Serve the staged directory read-only on 127.0.0.1 and navigate through HTTP.",
+      "candidateRule": {
+        "id": "SW-G013",
+        "requirement": "Automated local reviewer QA must use a loopback-only HTTP origin when file navigation is blocked.",
+        "prevention": "Start a hidden 127.0.0.1 server with an explicit directory and fixed bounded port, then snapshot over HTTP.",
+        "regressionTest": "file:// navigation must be rejected; the same page over loopback HTTP must render with zero functional console errors.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-playwright-file-protocol-blocked.txt",
+        "size": 178,
+        "sha256": "1e887a1bf6bb4554bb0854732e342c172f236827113acb8a0c416b47f47021dc"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-playwright-file-protocol-blocked.txt",
+            "size": 44,
+            "sha256": "61d7aaef8ca04606183a9b2727b2b6b96d5add331415a5faae3c89652b9ee3cd"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-playwright-file-protocol-blocked.txt",
+            "size": 84,
+            "sha256": "fe26c77851b75c89447258d8842673a13334e2ac40a80d065580d44cfec45e84"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING-review.review.html",
+            "size": 535647,
+            "sha256": "f093cd2a7a5b76bef5363ae655c24fe619a68989b9bd458258c6de4e63bca5fc"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-playwright-file-protocol-blocked.txt",
+            "size": 239,
+            "sha256": "4c43f0e248c177a895289f6ddd9dce039e316962f47f6eaa52c75f2fd29fff37"
+          },
+          {
+            "path": "output/playwright/SIFC_220_REV_A_2D_review_final.png",
+            "size": 139701,
+            "sha256": "484998c148cf1a7ad4134c35c0a940435f64eace6a8a49af984e4b9776d7084b"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-MECHANICAL-DIMENSION-FONT-280",
+      "failureAlias": "mechanical.architecture_dimension_font_reused",
+      "domain": "mechanical",
+      "failingCheck": "1920x1080 visual review of mechanical 2D modifier",
+      "symptom": "Dimension labels rendered at font-size 280 and obscured nearly all geometry.",
+      "rootCause": "The 2D view mapper hard-coded the architecture millimetre text height for every domain.",
+      "correction": "Use 280 only for architecture and 4 for mechanical/generic drawings; add a full-sheet 2D card layout.",
+      "candidateRule": {
+        "id": "MECH-G037",
+        "requirement": "Dimension annotation scale must be domain appropriate and visually bounded by the sheet extent.",
+        "prevention": "Derive display height from drawing domain and assert generated mechanical HTML never contains font-size 280.",
+        "regressionTest": "The same dimension fixture must keep 280 for architecture and use 4 for mechanical with no geometry occlusion.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-mechanical-dimension-font-280.txt",
+        "size": 179,
+        "sha256": "d91b3c7a57f8ee2d2af0740b75e774f491d11797077e00623ed7f0fc015f34aa"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-mechanical-dimension-font-280.txt",
+            "size": 79,
+            "sha256": "4f434b6bc8a9565c4a4834298c67e6ae8c2389ec5457981a7c3b9c5fef9026dc"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-mechanical-dimension-font-280.txt",
+            "size": 86,
+            "sha256": "b30adaa2a6a3c4d6941dda93afce0937f5d5811a5ec21d56c70ac7f977cbb998"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "src/aicad/viewmap.py",
+            "size": 56436,
+            "sha256": "b6c49570c8f006c536574b54a8475446b807f0d6d0f48c176c2571aaabdfe54d"
+          },
+          {
+            "path": "src/aicad/review_ui_v2.py",
+            "size": 67586,
+            "sha256": "46032672ee63a897552f175109acfcfb276bcf0c215577a7883ce7b50c367708"
+          },
+          {
+            "path": "tests/test_modifier_ui_v2.py",
+            "size": 10638,
+            "sha256": "438f3b1eb443cacc478b7d14502aa87838756df666f655436bac10d23af8b194"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-mechanical-dimension-font-280.txt",
+            "size": 261,
+            "sha256": "602a57db865b9bb44fbd363c07819414472c9d8598bb41f12c5a310428285478"
+          },
+          {
+            "path": "output/playwright/SIFC_220_REV_A_2D_review_final.png",
+            "size": 139701,
+            "sha256": "484998c148cf1a7ad4134c35c0a940435f64eace6a8a49af984e4b9776d7084b"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING-review.review.html",
+            "size": 535647,
+            "sha256": "f093cd2a7a5b76bef5363ae655c24fe619a68989b9bd458258c6de4e63bca5fc"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-MECHANICAL-LINEWEIGHTS-INDISTINGUISHABLE",
+      "failureAlias": "mechanical.layer_lineweights_indistinguishable",
+      "domain": "mechanical",
+      "failingCheck": "user visual review of mechanical 2D drawing",
+      "symptom": "Outline, hole, hidden, centre, dimension, hatch and title geometry appeared nearly identical.",
+      "rootCause": "The reviewer had semantic lineweights for architecture layers but no mechanical layer-specific styles.",
+      "correction": "Add distinct width, colour and dash patterns for OUTLINE, HOLE, HIDDEN, CENTER, DIMENSION, HATCH and TITLE.",
+      "candidateRule": {
+        "id": "MECH-G038",
+        "requirement": "Mechanical review views must preserve visible hierarchy across standard semantic line classes.",
+        "prevention": "Render each mechanical layer token with an explicit style and cover hidden and centre dash patterns in tests.",
+        "regressionTest": "A fixture containing all mechanical layers must show unique computed stroke width or dash style per role.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-mechanical-lineweights-indistinguishable.txt",
+        "size": 201,
+        "sha256": "329bf41ac686d6d287dc0af1fa5dfb99fab4488a11afd987887db397c1a6a2f7"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-mechanical-lineweights-indistinguishable.txt",
+            "size": 78,
+            "sha256": "606f107a5d81fca5b73d7412892a433349f672e78f727919390c18e7c7e8e0be"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-mechanical-lineweights-indistinguishable.txt",
+            "size": 131,
+            "sha256": "6a2ea89a6ce3efedfea027267cbaa95dd149db21c26a07fb00525966a291af93"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "src/aicad/review_ui_v2.py",
+            "size": 67586,
+            "sha256": "46032672ee63a897552f175109acfcfb276bcf0c215577a7883ce7b50c367708"
+          },
+          {
+            "path": "tests/test_modifier_ui_v2.py",
+            "size": 10638,
+            "sha256": "438f3b1eb443cacc478b7d14502aa87838756df666f655436bac10d23af8b194"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/build_2d_drawing.py",
+            "size": 13562,
+            "sha256": "271711aa4ba458d8ba86255a9804046bc5b44c60b48800f2477cfac5986b67d9"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-mechanical-lineweights-indistinguishable.txt",
+            "size": 278,
+            "sha256": "bdd5f66833514eea9d1311f92f16212627c6c051ddea684e4d19bff19f334058"
+          },
+          {
+            "path": "output/playwright/SIFC_220_REV_A_2D_review_final.png",
+            "size": 139701,
+            "sha256": "484998c148cf1a7ad4134c35c0a940435f64eace6a8a49af984e4b9776d7084b"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING.dxf",
+            "size": 64054,
+            "sha256": "8a8c8f877c51830debf93c00f4c6d98c9e7d7216bfa65e928406577507cbcc55"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-DRAWING-TEXT-OUTSIDE-FRAMES",
+      "failureAlias": "mechanical.title_and_notes_not_cell_bound",
+      "domain": "mechanical",
+      "failingCheck": "user visual review of title block and notes",
+      "symptom": "Title text was anchored around cell edges, general notes were unframed and the first section-note frame overlapped the section geometry.",
+      "rootCause": "The builder supplied edge-like insertion coordinates while the renderer uses centered text anchors, and notes lacked row geometry.",
+      "correction": "Center text in exact title cells; frame view labels, feature callouts and five general-note rows; move the section note to a free band.",
+      "candidateRule": {
+        "id": "MECH-G039",
+        "requirement": "Controlled drawing text must be cell-bound, non-overlapping and traceable to explicit frame geometry.",
+        "prevention": "Compute cell centres from frame bounds and run a visual collision audit before final handoff.",
+        "regressionTest": "A title/notes fixture must keep every text bounding box inside its declared frame and outside production geometry.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-drawing-text-outside-frames.txt",
+        "size": 231,
+        "sha256": "c7a0897b4405a8c68eb04572d9d38812c57774d79f3296c76e94ac5c8df55da4"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-drawing-text-outside-frames.txt",
+            "size": 102,
+            "sha256": "1f5ee1cc80ce81f0e463adad0ab3ee0cf594f1c0040ea1a9045f036dcdd7f71e"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-drawing-text-outside-frames.txt",
+            "size": 148,
+            "sha256": "4e45f1b329a0e7383158491045112d0af05f78a479f86b8cf46de867f6ebb26b"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/build_2d_drawing.py",
+            "size": 13562,
+            "sha256": "271711aa4ba458d8ba86255a9804046bc5b44c60b48800f2477cfac5986b67d9"
+          },
+          {
+            "path": "src/aicad/review_ui_v2.py",
+            "size": 67586,
+            "sha256": "46032672ee63a897552f175109acfcfb276bcf0c215577a7883ce7b50c367708"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-drawing-text-outside-frames.txt",
+            "size": 293,
+            "sha256": "1b5071577b2ce9a54ed3395d83c4435ebd1264b08fdc2066bd72d8b6bacea15d"
+          },
+          {
+            "path": "output/playwright/SIFC_220_REV_A_2D_review_final.png",
+            "size": 139701,
+            "sha256": "484998c148cf1a7ad4134c35c0a940435f64eace6a8a49af984e4b9776d7084b"
+          },
+          {
+            "path": "runs/complex_servo_indexer_v116_20260820/drawing2d_final/SIFC_220_REV_A_DRAWING.plan.json",
+            "size": 216638,
+            "sha256": "d8f9b56b3a0e17811ead0974b2684a018625bf5c7fe071fb29072735a93ed686"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-RELEASE-SCRIPT-NAME-GUESSED",
+      "failureAlias": "software.release_script_name_guessed",
+      "domain": "software",
+      "failingCheck": "release package entrypoint lookup",
+      "symptom": "Both package-release.ps1 and package_release.ps1 were absent.",
+      "rootCause": "The release entrypoint name was inferred from prior context instead of resolved from scripts inventory.",
+      "correction": "List the scripts directory and use build-agent-plugin.ps1 plus build-github-source.ps1.",
+      "candidateRule": {
+        "id": "SW-G014",
+        "requirement": "Release commands must be resolved from the current repository and never guessed from another workspace.",
+        "prevention": "Inventory scripts once and bind the selected entrypoint hash into the release record.",
+        "regressionTest": "Guessed names must fail; the discovered build-agent-plugin and build-github-source scripts must succeed.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-release-script-name-guessed.txt",
+        "size": 146,
+        "sha256": "56f8dbdf954acfbecc4b13fa32eb09b181bd9913dd11d1f3c3dc4eaa92f2fff2"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-release-script-name-guessed.txt",
+            "size": 66,
+            "sha256": "f57c9cc092324f4941d28e102dcbcb69d0709ea72cf6a4ccd9841582af3f06ca"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-release-script-name-guessed.txt",
+            "size": 70,
+            "sha256": "5fd7dd874d95eb21937515f8660fdce7532133eb61404f50d9bbd57d973f47d7"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "scripts/build-agent-plugin.ps1",
+            "size": 22591,
+            "sha256": "e6ae63ab27cecf212b11423bec0d876e693eec46bd933c83ae6a896d13a3794a"
+          },
+          {
+            "path": "scripts/build-github-source.ps1",
+            "size": 13998,
+            "sha256": "2a42981989cb8d0c83bbea9b361b8bd46e2737b17f482104ee3013089bc6b7b0"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-release-script-name-guessed.txt",
+            "size": 245,
+            "sha256": "da10f7ce28b27189c076885c0e745262abcad7cf559a06247dd80c733bb98a8c"
+          },
+          {
+            "path": "release/v1.16.0/aicad-agent-1.16.0.zip",
+            "size": 795753,
+            "sha256": "06cde3496fa1cace3502e866cc3c389845863fc599f610727767b267f9cba535"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-RELEASE-OUTPUT-EQUAL-BOUNDARY",
+      "failureAlias": "software.release_output_equal_boundary_rejected",
+      "domain": "software",
+      "failingCheck": "build-agent-plugin release containment gate",
+      "symptom": "Using OutputDirectory=release was rejected because output must be a child of release, not the boundary itself.",
+      "rootCause": "The command supplied the protected release root rather than a version-scoped child directory.",
+      "correction": "Use release/v1.16.0 so transactional stage and backup paths remain bounded below release.",
+      "candidateRule": {
+        "id": "SW-G015",
+        "requirement": "Release output must be a version-scoped descendant of the protected release root.",
+        "prevention": "Resolve and compare the output path before build, requiring releaseRoot plus a directory separator prefix.",
+        "regressionTest": "Output equal to release root must fail; release/v1.16.0 must pass and atomically publish.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-release-output-equal-boundary.txt",
+        "size": 207,
+        "sha256": "d1cfc581a790edc3c201dc3dd99cd86b820e98cc643d80f560070628d336d4c9"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-release-output-equal-boundary.txt",
+            "size": 59,
+            "sha256": "c251f0235b52cbf18ccc007814933e7c57052f7cd0c82efe3ae539f0a8f0fe2b"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-release-output-equal-boundary.txt",
+            "size": 80,
+            "sha256": "acf531f96f46a2548baefc9eeeb4e0ea54ab3866249abc57db454e80a6d65ff4"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "scripts/build-agent-plugin.ps1",
+            "size": 22591,
+            "sha256": "e6ae63ab27cecf212b11423bec0d876e693eec46bd933c83ae6a896d13a3794a"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-release-output-equal-boundary.txt",
+            "size": 249,
+            "sha256": "40fa567068ce380ceff9873144754d0ae631a08af23583396dd83a504021fd87"
+          },
+          {
+            "path": "release/v1.16.0/aicad-agent-1.16.0.zip",
+            "size": 795753,
+            "sha256": "06cde3496fa1cace3502e866cc3c389845863fc599f610727767b267f9cba535"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-PROPRIETARY-INTEROP-RELEASE-BLOCKED",
+      "failureAlias": "software.proprietary_solidworks_binaries_blocked",
+      "domain": "software",
+      "failingCheck": "independent release proprietary-binary gate",
+      "symptom": "The IncludeSolidWorksInterop build was rejected for the host executable and two SolidWorks interop DLLs.",
+      "rootCause": "Public source release policy forbids redistributing proprietary or prebuilt host binaries.",
+      "correction": "Publish audited host source and build script only; keep locally built binaries outside the public package.",
+      "candidateRule": {
+        "id": "SW-G016",
+        "requirement": "Public plugin packages must exclude proprietary CAD interop binaries while retaining reproducible source integration.",
+        "prevention": "Run proprietary-binary scanning before promotion and provide an explicit source-only fallback build.",
+        "regressionTest": "Including the three binaries must fail; source-only packaging must pass with identical public capabilities and build instructions.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-proprietary-interop-release-blocked.txt",
+        "size": 207,
+        "sha256": "1fc7e2371e682a2b4c9056608670ee3905e811a1deba020b6bed2691a3d1e1e4"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-proprietary-interop-release-blocked.txt",
+            "size": 99,
+            "sha256": "5d03495bbf2da5b1fb3aedaabce87f279512d3ec8cbcc01fd5ed4219290bf4d9"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-proprietary-interop-release-blocked.txt",
+            "size": 80,
+            "sha256": "e2b8bcf4e28a4c1ff3322c2f74c5de4ab8902d462e09869642b481e7ae88f85c"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "scripts/build-agent-plugin.ps1",
+            "size": 22591,
+            "sha256": "e6ae63ab27cecf212b11423bec0d876e693eec46bd933c83ae6a896d13a3794a"
+          },
+          {
+            "path": "solidworks-host/AiCad.SolidWorksHost/Program.cs",
+            "size": 80200,
+            "sha256": "344369c14714afc4348a1ee575f084d8dde5762e4cd0d598e89d445cb8cf1dc0"
+          },
+          {
+            "path": "scripts/build-solidworks-host.ps1",
+            "size": 1716,
+            "sha256": "b4dde02101d44b9789c8ea0a1c92e5fc536cf13998207a0b842baf5ca4f47fcf"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-proprietary-interop-release-blocked.txt",
+            "size": 272,
+            "sha256": "5cc4b78e444707d6c56a6feb6ca7ed34b876a6bf15e166b32e452846d4cabc0f"
+          },
+          {
+            "path": "release/v1.16.0/aicad-agent-1.16.0.zip",
+            "size": 795753,
+            "sha256": "06cde3496fa1cace3502e866cc3c389845863fc599f610727767b267f9cba535"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-LEARNING-HARVESTER-BACKSLASH-PATH",
+      "failureAlias": "software.learning_harvester_backslash_path_rejected",
+      "domain": "software",
+      "failingCheck": "aicad_lesson_harvester safe-relative input gate",
+      "symptom": "The harvester rejected a Windows backslash path as unsafe relative input.",
+      "rootCause": "The command used shell-native backslashes although the learning contract requires portable forward-slash paths.",
+      "correction": "Pass every report, existing bundle and output path with forward slashes.",
+      "candidateRule": {
+        "id": "SW-G017",
+        "requirement": "Controlled-learning CLI paths must use portable forward-slash safe-relative syntax on every platform.",
+        "prevention": "Normalize separators before invocation and reject drive-qualified, parent-traversal and backslash forms.",
+        "regressionTest": "The backslash form must fail; the forward-slash equivalent must harvest with exact bidirectional closure.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-learning-harvester-backslash-path.txt",
+        "size": 178,
+        "sha256": "35f9f6f653829695f0bc564eddf56520bb1320267126a75c1e7f771303d3a6d4"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-learning-harvester-backslash-path.txt",
+            "size": 77,
+            "sha256": "58d56430fb554d274d0e2ea14cf90fb7a72a9bdf4029cc61d5f1f272a423ae58"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-learning-harvester-backslash-path.txt",
+            "size": 80,
+            "sha256": "254a2a9ffec517327f18f15a8663fbd867ea3347542bc2334e803aa3c910b3bc"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_lesson_harvester.py",
+            "size": 3817,
+            "sha256": "f3d2600d523f6d8bcc8b85afadba368f73ee73efd5094b425cf12672b0141d18"
+          },
+          {
+            "path": "src/aicad/continuous_learning.py",
+            "size": 35165,
+            "sha256": "2e6282b5f9834444d1e090b290fa4a95163a133c84c027d8038b99c40f672ec1"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-learning-harvester-backslash-path.txt",
+            "size": 236,
+            "sha256": "612c84e6f795efc3c474cebf2fb1882043a6cf4457cb8301c4d310ab88e4d477"
+          },
+          {
+            "path": "learning/complex-servo-indexer-normality-bootstrap/candidates.json",
+            "size": 40649,
+            "sha256": "94f5f5b98c6d9a8872850e1cd898d53f59a6055c981eb978a88abb21b5feeba9"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-LEARNING-QA-BACKSLASH-PATH",
+      "failureAlias": "software.learning_qa_backslash_path_rejected",
+      "domain": "software",
+      "failingCheck": "aicad_continuous_learning_qa safe-relative bundle gate",
+      "symptom": "The learning QA rejected a Windows backslash bundle path as unsafe relative input.",
+      "rootCause": "The QA intentionally shares the portable path policy, but the invocation reused a shell-native path.",
+      "correction": "Use forward slashes for bundle, root-relative output and optional ledger/manifest paths.",
+      "candidateRule": {
+        "id": "SW-G018",
+        "requirement": "Controlled-learning QA invocation must preserve the same portable path grammar as the harvester.",
+        "prevention": "Build commands from canonical POSIX-style relative paths independent of the host shell.",
+        "regressionTest": "The backslash form must fail; the forward-slash form must audit the merged bundle without enabling any rule.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-learning-qa-backslash-path.txt",
+        "size": 187,
+        "sha256": "8e4b3a2c3a45cee90db6edc0727753eadaddc529e31282698f2d560b6132f016"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-learning-qa-backslash-path.txt",
+            "size": 75,
+            "sha256": "97306f813a309e89aa1e47fda3dbde074badd8723a4a799545960196adc8db93"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-learning-qa-backslash-path.txt",
+            "size": 78,
+            "sha256": "8327f5337258aa1011387f876488ce0c00f33ab548cf033d632ca8e5b306022b"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_continuous_learning_qa.py",
+            "size": 12713,
+            "sha256": "478da232d1515db73eaca826b82bdd958e01c43db024e06c62e1a6b9ddec17e3"
+          },
+          {
+            "path": "src/aicad/continuous_learning.py",
+            "size": 35165,
+            "sha256": "2e6282b5f9834444d1e090b290fa4a95163a133c84c027d8038b99c40f672ec1"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-learning-qa-backslash-path.txt",
+            "size": 245,
+            "sha256": "0dfce919a88ad7f8a2cf56f8885069865d5dae1b82fb39cd8fbb1084c3b6b90d"
+          },
+          {
+            "path": "learning/complex-servo-indexer-normality-bootstrap/candidates.json",
+            "size": 40649,
+            "sha256": "94f5f5b98c6d9a8872850e1cd898d53f59a6055c981eb978a88abb21b5feeba9"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-EXISTING-LESSON-SOURCE-HASH-STALE",
+      "failureAlias": "software.existing_lesson_source_hash_stale_after_regression_edit",
+      "domain": "software",
+      "failingCheck": "aicad_lesson_harvester existing bundle hash closure",
+      "symptom": "The merge rejected existing lesson 9 because tests/test_modifier_ui_v2.py changed during the current corrective work.",
+      "rootCause": "The historical report and derived candidate bundle still bound the pre-fix source hash while exact closure is evaluated against the current workspace.",
+      "correction": "Refresh the original failure report closures from current safe-relative files and deterministically re-harvest the report chain before merging new lessons.",
+      "candidateRule": {
+        "id": "SW-G019",
+        "requirement": "A lesson bundle used as merge input must be re-harvested whenever an exact-closure source or affected artifact changes.",
+        "prevention": "Check every existing closure hash before merge and rebuild from immutable failure reports rather than patching derived lesson IDs.",
+        "regressionTest": "Editing a closure-bound test must make the stale bundle fail; refreshing the source report and re-harvesting must preserve exact failure/lesson bijection.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-existing-lesson-source-hash-stale.txt",
+        "size": 226,
+        "sha256": "6aefe356b0a54f2617bc3bd0511457044450f8568cb73aa8e7de05b9b40483a1"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-existing-lesson-source-hash-stale.txt",
+            "size": 92,
+            "sha256": "7f86037251f7266a57d3463a852528b8ff66f307434dcacef2a480f81d47ec02"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-existing-lesson-source-hash-stale.txt",
+            "size": 99,
+            "sha256": "020fefc1f1eab862c63785d523171e82c418437d756769c65c78466fc84fc89d"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "tests/test_modifier_ui_v2.py",
+            "size": 10638,
+            "sha256": "438f3b1eb443cacc478b7d14502aa87838756df666f655436bac10d23af8b194"
+          },
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_lesson_harvester.py",
+            "size": 3817,
+            "sha256": "f3d2600d523f6d8bcc8b85afadba368f73ee73efd5094b425cf12672b0141d18"
+          },
+          {
+            "path": "src/aicad/continuous_learning.py",
+            "size": 35165,
+            "sha256": "2e6282b5f9834444d1e090b290fa4a95163a133c84c027d8038b99c40f672ec1"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-existing-lesson-source-hash-stale.txt",
+            "size": 319,
+            "sha256": "09ab11d05617bd67f6f3143b46a400e840d1b7555c12f4362064baf018318926"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/reports/failures.json",
+            "size": 30902,
+            "sha256": "3bb79a3299c05bd86bd5915ab6ca81fc60c551774d16e3606e92869ec82a1c78"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-LEARNING-QA-RAN-AFTER-HARVEST-FAILURE",
+      "failureAlias": "software.learning_qa_cascade_after_missing_bundle",
+      "domain": "software",
+      "failingCheck": "continuous-learning orchestration dependency gate",
+      "symptom": "QA ran after the harvester failed and reported the derived candidate bundle missing.",
+      "rootCause": "The sequential orchestration collected both results without gating QA execution on the required harvester success status.",
+      "correction": "Invoke QA only after the candidate bundle exists and the harvester exits zero.",
+      "candidateRule": {
+        "id": "SW-G020",
+        "requirement": "Dependent learning QA must be short-circuited when lesson harvesting fails or produces no bundle.",
+        "prevention": "Assert the harvester exit code and output existence before constructing the QA command.",
+        "regressionTest": "A forced harvest failure must skip QA; a successful harvest must produce the exact bundle consumed by QA.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-learning-qa-ran-after-harvest-failure.txt",
+        "size": 195,
+        "sha256": "f29297b1d5fb334c5436dbb2f7a1d4664f842ebc7299df8fbe2da2fe225bbd7c"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-learning-qa-ran-after-harvest-failure.txt",
+            "size": 95,
+            "sha256": "dc35ded2a33874e3bcae092cc13ffa06f351828befe492b3d076d86c329aad91"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-learning-qa-ran-after-harvest-failure.txt",
+            "size": 95,
+            "sha256": "0e9a6a3c835002372c61a3419a12cde39e015686acc4ee9b14507efb0dd4233c"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_continuous_learning_qa.py",
+            "size": 12713,
+            "sha256": "478da232d1515db73eaca826b82bdd958e01c43db024e06c62e1a6b9ddec17e3"
+          },
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_lesson_harvester.py",
+            "size": 3817,
+            "sha256": "f3d2600d523f6d8bcc8b85afadba368f73ee73efd5094b425cf12672b0141d18"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-learning-qa-ran-after-harvest-failure.txt",
+            "size": 246,
+            "sha256": "efedafd2d1633c490430338df35df074401758d3c4143b68b445308fe25a2a24"
+          },
+          {
+            "path": "learning/complex-servo-indexer-normality-bootstrap/candidates.json",
+            "size": 40649,
+            "sha256": "94f5f5b98c6d9a8872850e1cd898d53f59a6055c981eb978a88abb21b5feeba9"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-SIFC-LEARNING-QA-DEFAULT-RULES-PATH-MISSING",
+      "failureAlias": "software.learning_qa_default_rules_path_missing",
+      "domain": "software",
+      "failingCheck": "continuous-learning QA authoritative rules lookup",
+      "symptom": "QA failed because its default rules/continuous_learning_rules.json path does not exist at repository root.",
+      "rootCause": "The command used --root . but omitted the plugin-scoped --rules path required by this repository layout.",
+      "correction": "Pass --rules agent-plugin/aicad-agent/rules/continuous_learning_rules.json explicitly.",
+      "candidateRule": {
+        "id": "SW-G021",
+        "requirement": "Continuous-learning QA must bind the authoritative rules file explicitly when the evidence root is above the plugin root.",
+        "prevention": "Resolve the plugin-scoped rules path before QA and include it as a safe-relative argument.",
+        "regressionTest": "Omitting --rules at repository root must fail; the explicit agent-plugin rules path must pass without modifying the file.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/complex-servo-indexer-deep-run/repro/fail-sifc-learning-qa-default-rules-path-missing.txt",
+        "size": 218,
+        "sha256": "524f5b04e3fef4b34224220ed81734a623dbbee3d528a39dbd34178b6d2781da"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/red-fail-sifc-learning-qa-default-rules-path-missing.txt",
+            "size": 69,
+            "sha256": "ce34f1497236f7be508aaed0ead57d0c8ca137335b50e4b95cb59a30dc470a2b"
+          },
+          {
+            "path": "learning/complex-servo-indexer-deep-run/evidence/green-fail-sifc-learning-qa-default-rules-path-missing.txt",
+            "size": 98,
+            "sha256": "fbff9421c493bfcdadf35b5b42c9602a6ccff47bb9500bd9475fc9449ffd50b6"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_continuous_learning_qa.py",
+            "size": 12713,
+            "sha256": "478da232d1515db73eaca826b82bdd958e01c43db024e06c62e1a6b9ddec17e3"
+          },
+          {
+            "path": "agent-plugin/aicad-agent/rules/continuous_learning_rules.json",
+            "size": 97015,
+            "sha256": "d13a543fcc37c0fdefb16de4f6c83cb57a22137c949e632fe58800bcdcbf9d2d"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/complex-servo-indexer-deep-run/affected/fail-sifc-learning-qa-default-rules-path-missing.txt",
+            "size": 255,
+            "sha256": "7126b2faa1e7c2598e0a976209549935f7de56d2c23097b94a476a96e7026883"
+          },
+          {
+            "path": "learning/complex-servo-indexer-normality-bootstrap/candidates.json",
+            "size": 40649,
+            "sha256": "94f5f5b98c6d9a8872850e1cd898d53f59a6055c981eb978a88abb21b5feeba9"
+          }
+        ]
+      }
+    }
+  ],
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

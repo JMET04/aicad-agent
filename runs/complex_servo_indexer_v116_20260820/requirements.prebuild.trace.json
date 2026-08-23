@@ -1,0 +1,336 @@
+{
+  "schema": "aicad_drawing_requirement_trace_v1",
+  "contractId": "REQ.SIFC.220.REV.A",
+  "contractSha256": "d6a5dde3f7cc2a51327e5ab69162d8110a5cd3ba3132be138aec5dbcfac14edc",
+  "designIdentity": {
+    "productType": "servo_indexer_bearing_cartridge",
+    "structureFamily": "SIFC_BOUNDED_ENVELOPE",
+    "standard": "ISO GPS plus GB/T mechanical drawing controlled design basis",
+    "topClosure": "bearing_side",
+    "bottomClosure": "mounting_side",
+    "units": "mm"
+  },
+  "requirementEvidence": [
+    {
+      "requirementId": "REQ.PRODUCT",
+      "status": "satisfied",
+      "observed": "servo_indexer_bearing_cartridge",
+      "actualBinding": {
+        "source": "normality_template",
+        "transform": "identity",
+        "jsonPointer": "/productType"
+      },
+      "evidence": [
+        {
+          "method": "typed_identity",
+          "sourcePath": "prebuild-intent/REQ.PRODUCT",
+          "note": "Satisfied means source-bound prebuild intent; it does not assert generated geometry or manufacturing acceptance."
+        }
+      ]
+    },
+    {
+      "requirementId": "REQ.STRUCTURE",
+      "status": "satisfied",
+      "observed": "SIFC_BOUNDED_ENVELOPE",
+      "actualBinding": {
+        "source": "normality_template",
+        "transform": "identity",
+        "jsonPointer": "/profileId"
+      },
+      "evidence": [
+        {
+          "method": "typed_identity",
+          "sourcePath": "prebuild-intent/REQ.STRUCTURE",
+          "note": "Satisfied means source-bound prebuild intent; it does not assert generated geometry or manufacturing acceptance."
+        }
+      ]
+    },
+    {
+      "requirementId": "REQ.MATERIAL",
+      "status": "satisfied",
+      "observed": "7075-T651",
+      "actualBinding": {
+        "source": "contract",
+        "transform": "identity",
+        "jsonPointer": "/sources/1/description"
+      },
+      "evidence": [
+        {
+          "method": "exact_value",
+          "sourcePath": "prebuild-intent/REQ.MATERIAL",
+          "note": "Satisfied means source-bound prebuild intent; it does not assert generated geometry or manufacturing acceptance."
+        }
+      ]
+    },
+    {
+      "requirementId": "REQ.DIMENSIONS",
+      "status": "satisfied",
+      "observed": [
+        220,
+        180,
+        20,
+        56,
+        130,
+        80,
+        36,
+        50,
+        92,
+        6,
+        108,
+        9,
+        104,
+        7,
+        14,
+        24,
+        10,
+        8,
+        42,
+        72,
+        12,
+        36,
+        34,
+        10
+      ],
+      "actualBinding": {
+        "source": "normality_instance",
+        "transform": "normality_parameters",
+        "parameterIds": [
+          "BASE_W",
+          "BASE_H",
+          "BASE_T",
+          "TOTAL_H",
+          "BOSS_D",
+          "SEAT_D",
+          "SEAT_DEPTH",
+          "SHAFT_D",
+          "SEAL_D",
+          "SEAL_DEPTH",
+          "INDEXER_PCD",
+          "INDEXER_HOLE_D",
+          "COVER_PCD",
+          "COVER_HOLE_D",
+          "FRAME_HOLE_D",
+          "FRAME_CB_D",
+          "FRAME_CB_DEPTH",
+          "DOWEL_D",
+          "RIB_W",
+          "RIB_H",
+          "RIB_DEPTH",
+          "POCKET_W",
+          "POCKET_H",
+          "POCKET_DEPTH"
+        ]
+      },
+      "evidence": [
+        {
+          "method": "formula",
+          "sourcePath": "prebuild-intent/REQ.DIMENSIONS",
+          "note": "Satisfied means source-bound prebuild intent; it does not assert generated geometry or manufacturing acceptance."
+        }
+      ]
+    },
+    {
+      "requirementId": "REQ.FEATURE_INTENT",
+      "status": "satisfied",
+      "observed": [
+        "base_plate",
+        "bearing_boss",
+        "bearing_seat",
+        "shaft_clearance",
+        "seal_recess",
+        "indexer_hole_pattern",
+        "cover_hole_pattern",
+        "frame_mount_holes",
+        "frame_counterbores",
+        "dowel_holes",
+        "rib_pads",
+        "lightening_pockets",
+        "manufacturing_drawing",
+        "selectable_2d_reviewer",
+        "selectable_3d_reviewer"
+      ],
+      "actualBinding": {
+        "source": "normality_template",
+        "transform": "identity",
+        "jsonPointer": "/majorFeatures"
+      },
+      "evidence": [
+        {
+          "method": "entity_query",
+          "sourcePath": "prebuild-intent/REQ.FEATURE_INTENT",
+          "note": "Satisfied means source-bound prebuild intent; it does not assert generated geometry or manufacturing acceptance."
+        }
+      ]
+    },
+    {
+      "requirementId": "REQ.LOCKS",
+      "status": "satisfied",
+      "observed": true,
+      "actualBinding": {
+        "source": "normality_instance",
+        "transform": "all_review_locks_closed",
+        "jsonPointer": "/locks"
+      },
+      "evidence": [
+        {
+          "method": "entity_query",
+          "sourcePath": "prebuild-intent/REQ.LOCKS",
+          "note": "Satisfied means source-bound prebuild intent; it does not assert generated geometry or manufacturing acceptance."
+        }
+      ]
+    }
+  ],
+  "declaredMajorFeatures": [
+    "base_plate",
+    "bearing_boss",
+    "bearing_seat",
+    "shaft_clearance",
+    "seal_recess",
+    "indexer_hole_pattern",
+    "cover_hole_pattern",
+    "frame_mount_holes",
+    "frame_counterbores",
+    "dowel_holes",
+    "rib_pads",
+    "lightening_pockets",
+    "manufacturing_drawing",
+    "selectable_2d_reviewer",
+    "selectable_3d_reviewer"
+  ],
+  "dimensionSources": [
+    {
+      "dimensionId": "BASE_W",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "BASE_H",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "BASE_T",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "TOTAL_H",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "BOSS_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "SEAT_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "SEAT_DEPTH",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "SHAFT_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "SEAL_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "SEAL_DEPTH",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "INDEXER_PCD",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "INDEXER_HOLE_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "COVER_PCD",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "COVER_HOLE_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "FRAME_HOLE_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "FRAME_CB_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "FRAME_CB_DEPTH",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "DOWEL_D",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "RIB_W",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "RIB_H",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "RIB_DEPTH",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "POCKET_W",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "POCKET_H",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    },
+    {
+      "dimensionId": "POCKET_DEPTH",
+      "sourceId": "ENGINEERING",
+      "derivedFromImagePixels": false
+    }
+  ],
+  "outputsPlanned": [
+    "plan.json",
+    "aicad",
+    "scr",
+    "dxf",
+    "audit.md",
+    "manifest.json"
+  ],
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

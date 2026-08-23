@@ -1,0 +1,3 @@
+Affected check: tests/test_modifier_ui_v2.py
+Resolution: invoke this non-package test module through unittest discovery with an exact filename pattern.
+No production behavior was weakened or bypassed.

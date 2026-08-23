@@ -13,6 +13,7 @@ static void clear_outputs(mw_state_machine_t *machine)
     machine->outputs.isolated_oc_active = false;
     machine->outputs.low_side_active = false;
     machine->output_deadline_ms = 0U;
+    machine->output_deadline_active = false;
 }
 
 static void enter_safe_state(mw_state_machine_t *machine, mw_state_t next_state)
@@ -116,7 +117,7 @@ void mw_state_machine_tick(mw_state_machine_t *machine, uint32_t now_ms)
     }
 
     if ((machine->state == MW_STATE_COMMAND_PENDING) &&
-        (machine->output_deadline_ms != 0U) &&
+        machine->output_deadline_active &&
         deadline_reached(now_ms, machine->output_deadline_ms)) {
         clear_outputs(machine);
         machine->state = MW_STATE_ARMED;
@@ -168,7 +169,14 @@ bool mw_state_machine_receiver_command(
     if (command == MW_CMD_ARM_LEASE) {
         machine->arm_lease_deadline_ms = now_ms + MW_ARM_LEASE_MS;
         machine->link_deadline_ms = now_ms + MW_LINK_LOSS_MS;
-        machine->state = MW_STATE_ARMED;
+        /*
+         * A lease refresh authorizes time, not state transition. Preserve a
+         * live command and its immutable output deadline; otherwise normal
+         * 25 ms refresh traffic could bypass a bounded pulse cutoff.
+         */
+        if (machine->state != MW_STATE_COMMAND_PENDING) {
+            machine->state = MW_STATE_ARMED;
+        }
         return true;
     }
 
@@ -202,6 +210,7 @@ bool mw_state_machine_receiver_command(
         machine->outputs.low_side_active =
             (command == MW_CMD_PULSE_LOW_SIDE);
         machine->output_deadline_ms = now_ms + pulse_ms;
+        machine->output_deadline_active = true;
         machine->state = MW_STATE_COMMAND_PENDING;
         return true;
     case MW_CMD_DISARM:

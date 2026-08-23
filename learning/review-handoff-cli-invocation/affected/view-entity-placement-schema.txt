@@ -1,0 +1,3 @@
+Affected contract: aicad-view-package.schema.json $defs.view_entity.
+Resolution: declare optional placement_path and two-number placement_point on the same strict entity object that emits them.
+The selection_ref declaration remains unchanged and consistent.

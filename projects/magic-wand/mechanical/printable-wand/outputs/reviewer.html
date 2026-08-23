@@ -3,15 +3,16 @@
 <title>Magic Wand 3D Print Review</title><style>
 body{margin:0;font:15px/1.55 system-ui,'Microsoft YaHei',sans-serif;background:#eef2f7;color:#172033}
 main{max-width:1180px;margin:auto;padding:28px}h1{margin:0 0 6px;font-size:32px}.sub{color:#536176;margin-bottom:22px}
-.status{display:inline-block;padding:7px 12px;border-radius:999px;font-weight:700}.ok{background:#d9f7e5;color:#17623a}.bad{background:#ffe1e1;color:#8c2020}
+.status{display:inline-block;padding:7px 12px;border-radius:999px;font-weight:700}.ok{background:#d9f7e5;color:#17623a}.warn{background:#fff1bf;color:#775400}.bad{background:#ffe1e1;color:#8c2020}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}.card{background:white;border-radius:16px;padding:18px;box-shadow:0 7px 30px #24344b18}
 img{width:100%;border-radius:10px;background:#eef2f7}table{width:100%;border-collapse:collapse}td{padding:8px;border-bottom:1px solid #e6ebf1}td:first-child{color:#637086}
 code{background:#edf1f5;padding:2px 5px;border-radius:5px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
-</style></head><body><main><h1>魔法杖 3D 打印装配审查</h1><div class="sub">Rev A0 · PCB / 电池 / 天线 / 外壳跨域联调</div>
-<span class="status ok">VERIFIED_PRINT_CANDIDATE</span>
+</style></head><body><main><h1>魔法杖 3D 打印装配审查</h1><div class="sub">Rev A0.2 · PCB / 元件包络 / 电池 / 天线 / 外壳跨域联调</div>
+<span class="status warn">GEOMETRY_VERIFIED_PHYSICAL_GATES_OPEN</span>
 <div class="grid"><section class="card"><h2>装配视图</h2><img src="previews/assembly.png" alt="assembly"></section>
 <section class="card"><h2>爆炸视图</h2><img src="previews/exploded.png" alt="exploded"></section>
 <section class="card"><h2>电源仓剖开展示</h2><img src="previews/power-reservation.png" alt="power reservation"></section>
+<section class="card"><h2>元件与工具服务空间</h2><img src="previews/service-clearance.png" alt="component and tool clearance"></section>
 <section class="card"><h2>关键校核</h2><table>
 <tr><td>电池最大包络</td><td>11 × 6 × 42 mm</td></tr>
 <tr><td>电池径向最小余量</td><td>1.475 mm</td></tr>
@@ -19,6 +20,9 @@ code{background:#edf1f5;padding:2px 5px;border-radius:5px}@media(max-width:800px
 <tr><td>线束弯曲预留</td><td>8.0 mm</td></tr>
 <tr><td>Haptic envelope</td><td>10 mm dia x 3.4 mm; RF gap 5.0 mm</td></tr>
 <tr><td>PCB 源哈希</td><td>一致</td></tr>
+<tr><td>元件包络源哈希</td><td>一致</td></tr>
+<tr><td>受控 SMT 包络</td><td>36 / 36；碰撞 0.0 mm³</td></tr>
+<tr><td>M2 工具扫掠</td><td>4 处；径向余量 0.25 mm</td></tr>
 <tr><td>USB-C</td><td>+X 面，中心 z=47 mm</td></tr>
 <tr><td>按键</td><td>+Y 面，中心 z=73.5 mm</td></tr>
 </table></section></div>

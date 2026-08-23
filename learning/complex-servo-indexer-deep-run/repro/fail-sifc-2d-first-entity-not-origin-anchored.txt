@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-2D-FIRST-ENTITY-NOT-ORIGIN-ANCHORED: aicad-agent validate first-entity origin hard gate. The initial 2D plan was rejected because its first production entity did not begin at the drawing origin.

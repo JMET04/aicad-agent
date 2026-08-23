@@ -1,0 +1,31 @@
+{
+  "generator": "factory_emit.py",
+  "boards": [
+    "wand",
+    "receiver"
+  ],
+  "router_failures": {
+    "wand": [
+      "USB_DP_PROT:U6.6->U1.54",
+      "USB_DM_PROT:U6.4->U1.55",
+      "I2C_SCL:U2.13->U1.32",
+      "I2C_SCL:U5.2->U1.32",
+      "I2C_SCL:R_I2C_SCL.2->U1.32",
+      "I2C_SDA:U2.14->U1.33",
+      "I2C_SDA:U5.3->U1.33",
+      "I2C_SDA:R_I2C_SDA.2->U1.33"
+    ],
+    "receiver": [
+      "USB_DP_PROT:U6.6->U1.54",
+      "USB_DM_PROT:U6.4->U1.55",
+      "ISO_OC_COL:J3.1->U5.4",
+      "ISO_OC_EMIT:J3.2->U5.3",
+      "UART_RX_3V3:U4.2->U1.33",
+      "PWR_GOOD_N:U2.8->U1.46",
+      "PWR_GOOD_N:R_PG.2->U1.46",
+      "UART_TX_3V3:U3.2->U1.32",
+      "UART_TX_3V3:R_TX_PD.1->U1.32"
+    ]
+  },
+  "native_gate": "NOT_RUN"
+}

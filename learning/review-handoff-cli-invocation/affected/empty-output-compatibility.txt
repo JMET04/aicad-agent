@@ -1,0 +1,3 @@
+Affected behavior: apply_review_handoff output directory promotion.
+Resolution: accept only an existing empty directory, move it to a temporary rollback slot, atomically promote the complete staged directory, and restore the empty destination if promotion fails.
+Non-empty destinations remain fail-closed and byte-preserving.

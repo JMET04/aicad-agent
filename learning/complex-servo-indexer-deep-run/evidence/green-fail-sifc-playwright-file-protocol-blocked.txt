@@ -1,0 +1,1 @@
+Loopback HTTP loaded the page; the only console error was a benign missing favicon.

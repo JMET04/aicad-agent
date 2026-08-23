@@ -22,6 +22,12 @@ typedef enum {
 } mw_direction_t;
 
 typedef enum {
+    MW_GESTURE_PAYLOAD_PROFILE_UNSUPPORTED = 0,
+    MW_GESTURE_PAYLOAD_PROFILE_LEGACY_V1 = 1,
+    MW_GESTURE_PAYLOAD_PROFILE_MULTICHANNEL_V2 = 2
+} mw_gesture_payload_profile_t;
+
+typedef enum {
     MW_CMD_DISARM = 1,
     MW_CMD_HEARTBEAT = 2,
     MW_CMD_ARM_LEASE = 3,
@@ -54,7 +60,11 @@ typedef struct {
     uint32_t expected_device_id;
     uint32_t expected_session_id;
     uint32_t receive_high_water;
+    uint32_t durable_session_id;
+    uint32_t reserved_sequence_ceiling;
+    mw_gesture_payload_profile_t gesture_payload_profile;
     bool persistence_ready;
+    bool durable_session_window_bound;
 } mw_replay_guard_t;
 
 /*
@@ -72,7 +82,14 @@ typedef bool (*mw_ccm_decrypt_fn)(
     const uint8_t tag[MW_TAG_BYTES],
     uint8_t *plaintext_out);
 
-/* Atomically persist a strictly greater receive high-water mark. */
+/*
+ * Commit a strictly greater receive high-water mark before plaintext is
+ * exposed. In the default, unbound mode this callback must atomically persist
+ * every accepted sequence. Only after a durable session window is explicitly
+ * bound may the callback atomically update session-local RAM instead: reset
+ * recovery is then provided by the already-persisted session epoch, and the
+ * same session must never be activated again after reset.
+ */
 typedef bool (*mw_commit_high_water_fn)(
     void *context,
     uint32_t sequence);
@@ -83,6 +100,27 @@ void mw_replay_guard_init(
     uint32_t expected_session_id,
     uint32_t persisted_receive_high_water,
     bool persistence_ready);
+
+/*
+ * Select the exact authenticated GESTURE_EVENT payload profile for this
+ * session. Init defaults to UNSUPPORTED; both legacy V1 and multichannel V2
+ * must be explicitly installed. Unsupported values fail closed.
+ */
+bool mw_replay_guard_set_gesture_profile(
+    mw_replay_guard_t *guard,
+    mw_gesture_payload_profile_t profile);
+
+/*
+ * Opt into one durable session-epoch commit plus an in-session RAM replay
+ * high-water mark. Binding is one-shot, requires a fresh guard with high-water
+ * zero and an explicitly selected gesture profile, and reserves only sequence
+ * values 1..reserved_sequence_ceiling. Init leaves this mode disabled so old
+ * callers retain exact per-frame persistence semantics.
+ */
+bool mw_replay_guard_bind_durable_session_window(
+    mw_replay_guard_t *guard,
+    uint32_t durable_session_id,
+    uint32_t reserved_sequence_ceiling);
 
 void mw_protocol_build_nonce(
     const mw_frame_header_t *header,

@@ -1,0 +1,7 @@
+Command:
+python -B -m unittest discover -s tests -p "test_agent_plugin.py" -v
+
+Exit code: 0
+Passing check: AgentPluginTests.test_mcp_handshake_tool_listing_and_call
+Ran 17 tests in 2.124s
+OK

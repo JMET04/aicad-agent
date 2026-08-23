@@ -1,0 +1,7 @@
+Command:
+python -B -m unittest discover -s tests -p "test_review_handoff.py" -v
+
+Exit code: 0
+Passing check: test_2d_radius_handoff_applies_and_regenerates_modifier
+Ran 7 tests in 0.404s
+OK

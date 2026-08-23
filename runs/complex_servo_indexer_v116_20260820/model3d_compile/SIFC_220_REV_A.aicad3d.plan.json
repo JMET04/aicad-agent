@@ -1,0 +1,2393 @@
+{
+  "schema_version": "1.0",
+  "part": {
+    "name": "SIFC_220_REV_A",
+    "id": "SIFC220REVA",
+    "units": "mm",
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "tolerance": 0.001,
+    "domain": "mechanical",
+    "locks": [
+      "review_only",
+      "not_accepted",
+      "not_manufacturing_release"
+    ],
+    "review_policy": {
+      "reviewOnly": true,
+      "accepted": false,
+      "ruleEnabled": false,
+      "domainGated": true
+    }
+  },
+  "engineering_normative_preflight": {
+    "schema": "aicad_engineering_normative_preflight_v1",
+    "contractId": "SIFC-220-REV-A-MECHANICAL-PREFLIGHT",
+    "revision": 1,
+    "domain": "mechanical",
+    "deliveryStage": "review",
+    "canonicalRulesSchema": "aicad_production_readiness_rules_v3",
+    "canonicalRulesVersion": "3.0.0",
+    "authorityOrder": [
+      "selected_standard",
+      "approved_engineering_input",
+      "user_explicit_numeric",
+      "user_explicit_semantic",
+      "reference_cad",
+      "reference_image",
+      "inferred_assumption"
+    ],
+    "sources": [
+      {
+        "id": "STD_AUTHORITY",
+        "kind": "selected_standard",
+        "description": "Selected ISO GPS, fit, surface, edge, fastener and reference-temperature ledger for review-candidate generation.",
+        "path": "runs/complex_servo_indexer_v116_20260820/standards-authority.md",
+        "sha256": "3ac4f4e815ed8bd8df162f040e7e7389b05c51bf49f9acd07c61e8e65f485ac4"
+      },
+      {
+        "id": "DESIGN_BASIS",
+        "kind": "approved_engineering_input",
+        "description": "Task-approved controlled-generation design basis for SIFC-220-REV-A; not production acceptance.",
+        "path": "runs/complex_servo_indexer_v116_20260820/design-basis.md",
+        "sha256": "9dd32bad245c844a2c2611b8c78957ab74adc410a6e3380c75528e142260e09f"
+      },
+      {
+        "id": "ANALYSIS_BASIS",
+        "kind": "approved_engineering_input",
+        "description": "Independent preliminary strength, joint, bearing, thermal and tolerance calculations.",
+        "path": "runs/complex_servo_indexer_v116_20260820/analysis-basis.md",
+        "sha256": "f895f2145fdd03366717cae81a6baf8a0fdf25563578ce9f6b8662df12da7367"
+      },
+      {
+        "id": "MFG_DEFINITION",
+        "kind": "approved_engineering_input",
+        "description": "Controlled material, process, GPS, finish, edge, fixturing and process-capability definition.",
+        "path": "runs/complex_servo_indexer_v116_20260820/manufacturing-definition.md",
+        "sha256": "d5828102d3d3b1d1bb326b7b679f24b39a50a15a02ffd744aa8ad78223befb74"
+      },
+      {
+        "id": "INSPECTION_PLAN",
+        "kind": "approved_engineering_input",
+        "description": "Characteristic-to-method inspection closure at the 20 degree Celsius reference condition.",
+        "path": "runs/complex_servo_indexer_v116_20260820/inspection-plan.md",
+        "sha256": "0bc1bd196b6db9285e03ef0fcd0eead84a5e295ce195a57da3a93c325016aa42"
+      }
+    ],
+    "applicableStandards": [
+      {
+        "standard": "ISO 8015:2011",
+        "applicability": "GPS fundamentals",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 14405-1:2025",
+        "applicability": "dimensional tolerancing",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 5459:2024",
+        "applicability": "datums and datum systems",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 1101:2017",
+        "applicability": "geometrical tolerancing",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 22081:2021",
+        "applicability": "general geometrical and size specifications",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 13715:2017",
+        "applicability": "edges of undefined shape",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 21920-1:2021",
+        "applicability": "surface texture indication",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 1:2022",
+        "applicability": "reference temperature for specification and verification",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 2768-1:1989",
+        "applicability": "general linear and angular tolerances when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 286-1:2010",
+        "applicability": "limits and fits basis when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 286-2:2010",
+        "applicability": "limit deviations for holes and shafts when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 965-1:2026",
+        "applicability": "metric thread tolerances when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 898-1:2013",
+        "applicability": "steel fastener properties when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      },
+      {
+        "standard": "ISO 16047:2005+Amd 1:2012",
+        "applicability": "fastener torque-clamp testing when invoked",
+        "sourceId": "STD_AUTHORITY",
+        "scopeDecision": "Applicable to metric review-candidate generation of SIFC-220-REV-A within the stated GPS, fit, texture, edge, fastener or reference-temperature scope."
+      }
+    ],
+    "ruleApplications": [
+      {
+        "gatePath": "mechanical.intent.wholeIntent",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.wholeIntent before controlled generation. The generated design and its later evidence plan must bind /intent/wholeIntent to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Freeze part SIFC-220-REV-A as a dual-6208 servo-indexer flange cartridge with the declared function, 220 x 180 x 56 mm envelope, review delivery stage and no production claim.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.dimensionalAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.dimensionalAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/dimensionalAuthority to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Derive every hard model and drawing dimension from design-basis.md; screen pixels, visual proportions and unconstrained inferred dimensions are forbidden.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.materialAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.materialAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/materialAuthority to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Assign EN AW-7075-T651 to the native part and drawing; material substitution requires a new design basis and recalculation.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.processAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.processAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/processAuthority to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Constrain the design to two-setup CNC milling, in-process probing, masked hard anodize and post-finish inspection defined by MFG_DEFINITION.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.standardsApplicabilityAndEditionResolved",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.standardsApplicabilityAndEditionResolved before controlled generation. The generated design and its later evidence plan must bind /standards/applicabilityAndEditionResolved to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Bind the exact canonical ISO edition/applicability rows and project scope decisions; no undeclared or superseded sole authority is permitted.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.materialAndFastenerPropertySourcesBound",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.materialAndFastenerPropertySourcesBound before controlled generation. The generated design and its later evidence plan must bind /standards/materialAndFastenerPropertySourcesBound to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Use the declared 7075-T651 yield basis and ISO 898-1 class 10.9 fastener property source in all preliminary calculations.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/operatingEnvelopeDutyCycleAndDesignLifeAuthority to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Constrain geometry and checks to 4.5 kN radial, 2.0 kN axial, 350 N m moment, 500 N m torque, 2 g abnormal case, 120 r/min, 30 percent duty, 20,000 h and -10 to +60 C.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.assemblyConfigurationAndInterfaceAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.assemblyConfigurationAndInterfaceAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/assemblyConfigurationAndInterfaceAuthority to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Preserve paired 6208 seat, axial cover retention, four M12 frame bolts, two Ø8 H7 dowels, both flange patterns and datum A/B/C interfaces.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.safetyRegulatoryAndRiskApplicabilityResolved",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.safetyRegulatoryAndRiskApplicabilityResolved before controlled generation. The generated design and its later evidence plan must bind /intent/safetyRegulatoryAndRiskApplicabilityResolved to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Treat bearing creep, frame slip, ligament yielding, misalignment, thermal loosening and service-tool access as explicit controlled failure modes; retain release authorization false.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.currentStandardsLedger",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.currentStandardsLedger before controlled generation. The generated design and its later evidence plan must bind /standards/requiredCurrentBaselines to the rule-owned expected value [{\"applicability\": \"GPS fundamentals\", \"standard\": \"ISO 8015:2011\", \"status\": \"published\"}, {\"applicability\": \"dimensional tolerancing\", \"standard\": \"ISO 14405-1:2025\", \"status\": \"published\"}, {\"applicability\": \"datums and datum systems\", \"standard\": \"ISO 5459:2024\", \"status\": \"published\"}, {\"applicability\": \"geometrical tolerancing\", \"standard\": \"ISO 1101:2017\", \"status\": \"published\"}, {\"applicability\": \"general geometrical and size specifications\", \"standard\": \"ISO 22081:2021\", \"status\": \"published\"}, {\"applicability\": \"edges of undefined shape\", \"standard\": \"ISO 13715:2017\", \"status\": \"published\"}, {\"applicability\": \"surface texture indication\", \"standard\": \"ISO 21920-1:2021\", \"status\": \"published\"}, {\"applicability\": \"reference temperature for specification and verification\", \"standard\": \"ISO 1:2022\", \"status\": \"published\"}, {\"applicability\": \"general linear and angular tolerances when invoked\", \"standard\": \"ISO 2768-1:1989\", \"status\": \"published\"}, {\"applicability\": \"limits and fits basis when invoked\", \"standard\": \"ISO 286-1:2010\", \"status\": \"published\"}, {\"applicability\": \"limit deviations for holes and shafts when invoked\", \"standard\": \"ISO 286-2:2010\", \"status\": \"published\"}, {\"applicability\": \"metric thread tolerances when invoked\", \"standard\": \"ISO 965-1:2026\", \"status\": \"published\"}, {\"applicability\": \"steel fastener properties when invoked\", \"standard\": \"ISO 898-1:2013\", \"status\": \"published\"}, {\"applicability\": \"fastener torque-clamp testing when invoked\", \"standard\": \"ISO 16047:2005+Amd 1:2012\", \"status\": \"published\"}].",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Carry the exact 14 canonical published ISO baseline rows into the preflight and later evidence contract.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021",
+          "ISO 13715:2017",
+          "ISO 21920-1:2021",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "mechanical.intent.noRetiredSoleAuthority",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.intent.noRetiredSoleAuthority before controlled generation. The generated design and its later evidence plan must bind /standards/retiredOrWithdrawnSoleAuthorityCount to the rule-owned expected value 0.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS"
+        ],
+        "verificationMethod": "Verify exact source hashes, requirement-contract bindings and standards-ledger identity before any geometry.",
+        "generationConstraint": "Set retired-or-withdrawn sole-authority count to zero and block generation if the standards ledger changes without scope review.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.constraintCompile",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.constraintCompile before controlled generation. The generated design and its later evidence plan must bind /design/constraintCompile to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Require schema-valid ordered 3D features, fully constrained sketches, declared supports/dependencies, embedded passing preflight and zero partial artifact exposure on failure.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.detailProof",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.detailProof before controlled generation. The generated design and its later evidence plan must bind /design/detailProof to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Trace each boss, bore, pocket, pattern, mounting feature and drawing characteristic to a frozen requirement and later normality proof.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.loadCasesAndServiceConditions",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.loadCasesAndServiceConditions before controlled generation. The generated design and its later evidence plan must bind /engineering/loadCasesAndServiceConditionsDefined to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Model service, torque-reaction and 2 g abnormal load cases with the declared temperature, duty and life envelope.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.analysisInputUnitsAndProvenance",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.analysisInputUnitsAndProvenance before controlled generation. The generated design and its later evidence plan must bind /engineering/inputUnitsAndProvenanceComplete to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Keep all calculation inputs explicitly dimensioned in N, mm, MPa, r/min, degrees Celsius and hours with source-file SHA binding.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.analysisRecomputedFromDeclaredInputs",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.analysisRecomputedFromDeclaredInputs before controlled generation. The generated design and its later evidence plan must bind /engineering/resultsIndependentlyRecomputedFromDeclaredInputs to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Recompute ligament stress, base bending, bolt slip, bearing L10h and differential thermal growth from the declared numeric inputs before delivery.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.criticalLoadPathCoverage",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.criticalLoadPathCoverage before controlled generation. The generated design and its later evidence plan must bind /engineering/criticalLoadPathsComplete to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Maintain continuous load paths from bearing seat through Ø130 boss, intersecting rib pads, 20 mm base, M12 holes and dowels into the frame.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.loadCombinationAndAbnormalCaseCoverage",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.loadCombinationAndAbnormalCaseCoverage before controlled generation. The generated design and its later evidence plan must bind /engineering/loadCombinationAndAbnormalCaseCoverageComplete to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Check simultaneous radial/axial/moment/torque service reactions and a separate 2 g abnormal case; unrelated passing checks cannot compensate.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.analysisEquationInputOutputMarginTrace",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.analysisEquationInputOutputMarginTrace before controlled generation. The generated design and its later evidence plan must bind /engineering/equationInputOutputMarginTraceComplete to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Persist equations, numeric inputs, outputs and margins in analysis-basis.md and bind them to the drawing requirement trace.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.strength",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.strength before controlled generation. The generated design and its later evidence plan must bind /engineering/strengthPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Keep 25 mm minimum boss wall and abnormal nominal stress at or below 98.34 MPa so preliminary yield factor remains at least 4.42.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.stiffness",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.stiffness before controlled generation. The generated design and its later evidence plan must bind /engineering/stiffnessPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Preserve the 20 mm base, Ø130 boss and four intersecting 42 x 72 x 12 mm rib pads; detailed FEA remains mandatory before release.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.fatigueApplicabilityAndResult",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.fatigueApplicabilityAndResult before controlled generation. The generated design and its later evidence plan must bind /engineering/fatigueApplicabilityAndResultValid to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Treat 30 percent cyclic duty over 20,000 h as fatigue-applicable; avoid unsupported sharp internal geometry and retain detailed fatigue analysis as a release gate.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.factorOfSafety",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.factorOfSafety before controlled generation. The generated design and its later evidence plan must bind /engineering/factorOfSafetyMeetsAuthority to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Require preliminary abnormal yield factor at least 2.0 and calculated 4.42 or higher; any geometry change must trigger recalculation.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.jointBearingAndEdgeChecks",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.jointBearingAndEdgeChecks before controlled generation. The generated design and its later evidence plan must bind /engineering/jointBearingAndEdgeChecksComplete to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Verify 6208 seat wall, M12 hole edge distances, dowel ligaments, counterbore floors and all hole-to-pocket separations remain positive.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 1:2022",
+          "ISO 13715:2017",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.fastenerPreloadSlipAndCapacity",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.fastenerPreloadSlipAndCapacity before controlled generation. The generated design and its later evidence plan must bind /engineering/fastenerPreloadSlipAndCapacityPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Preserve four M12 class 10.9 joints, 48.98 kN target preload per bolt, 117.6 N m review torque and abnormal slip ratio at least 3.27.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.bearingLife",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.bearingLife before controlled generation. The generated design and its later evidence plan must bind /engineering/bearingLifePass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Use paired 6208 review basis C=32.5 kN, P=5.2 kN and require calculated L10h at least 33,900 h versus 20,000 h target.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 1:2022"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.thermalEnvelope",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.thermalEnvelope before controlled generation. The generated design and its later evidence plan must bind /engineering/thermalEnvelopePass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Carry the -10 to +60 C range and 0.0387 mm calculated aluminium/steel differential fit growth into fit and retention review.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 1:2022"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.fitAndMatingInterfaces",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.fitAndMatingInterfaces before controlled generation. The generated design and its later evidence plan must bind /engineering/fitAndMatingInterfacesPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Specify Ø80 H7 bearing seat, Ø8 H7 dowels, Ø92 H8 cover recess, Ø50 coaxial clearance and mating cover/frame interfaces.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 1:2022"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.toleranceStack",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.toleranceStack before controlled generation. The generated design and its later evidence plan must bind /design/toleranceStackPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Constrain the 36.00 +0.05/0.00 mm seat depth, two 18 mm bearings and 0.05-0.15 mm cover shim/shoulder allowance.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 22081:2021"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.failureModesAndResidualRiskControls",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.failureModesAndResidualRiskControls before controlled generation. The generated design and its later evidence plan must bind /engineering/failureModesAndResidualRiskControlsPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Bind every declared failure mode to its dimensional, joint, fit, datum, inspection or later-analysis control; unresolved risks block release.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.design.assemblyServiceAndToolClearance",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.design.assemblyServiceAndToolClearance before controlled generation. The generated design and its later evidence plan must bind /engineering/assemblyServiceAndToolClearancePass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS"
+        ],
+        "verificationMethod": "Recompute analysis-basis equations, validate the constrained plan, inspect feature trace, and require native save/reopen geometry evidence.",
+        "generationConstraint": "Keep Ø24 M12 counterbores, cover fastener access, bearing insertion/removal path and CMM/probe access unobstructed.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.materialDesignation",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialDesignation before controlled generation. The generated design and its later evidence plan must bind /definition/materialDesignationPresent to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Put EN AW-7075-T651 and part ID SIFC-220-REV-A on native properties and the drawing title block.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.materialConditionAndHeatTreatment",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialConditionAndHeatTreatment before controlled generation. The generated design and its later evidence plan must bind /definition/materialConditionAndHeatTreatmentDefined to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Require supplied T651 condition and explicitly prohibit unreviewed post-machining heat treatment.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.materialCertificateRequirementAndIncomingInspection",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialCertificateRequirementAndIncomingInspection before controlled generation. The generated design and its later evidence plan must bind /definition/materialCertificateRequirementAndIncomingInspectionDefined to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Require traceable 3.1-equivalent material certificate review and incoming identity verification per inspection plan.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.generalAndFeatureTolerances",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.generalAndFeatureTolerances before controlled generation. The generated design and its later evidence plan must bind /definition/toleranceCoveragePercent to the rule-owned expected value 100.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Provide individual fit/GPS tolerances plus ISO 2768-m for every remaining size so tolerance coverage is 100 percent.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 2768-1:1989",
+          "ISO 22081:2021"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.gdandtDatumScheme",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.gdandtDatumScheme before controlled generation. The generated design and its later evidence plan must bind /definition/gdandtDatumSchemeValid to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Use datum A bottom face, B Ø80 seat axis and C primary dowel axis with flatness, perpendicularity, coaxiality and true-position controls.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.surfaceRoughness",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.surfaceRoughness before controlled generation. The generated design and its later evidence plan must bind /definition/roughnessCoveragePercent to the rule-owned expected value 100.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Assign Ra 1.6 to bearing/dowel fits, Ra 3.2 to datum A and Ra 6.3 to all other machined surfaces unless overridden.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 21920-1:2021"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.stockAndPrimaryProcess",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.stockAndPrimaryProcess before controlled generation. The generated design and its later evidence plan must bind /definition/stockAndPrimaryProcessDefined to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Use minimum 230 x 190 x 60 mm 7075-T651 stock and a documented nominal two-setup CNC route.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.fixturingFeasibility",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.fixturingFeasibility before controlled generation. The generated design and its later evidence plan must bind /manufacturability/fixturingPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Keep datum-A full support for setup 1 and distortion-controlled soft-jaw or expanding-arbor reference for setup 2.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.toolAccessibility",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.toolAccessibility before controlled generation. The generated design and its later evidence plan must bind /manufacturability/toolAccessibilityPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Keep all holes normal to A, Ø24 counterbores tool-accessible and no pocket/rib geometry inside required cutter or socket envelopes.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.coatingDimensionalCompensation",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.coatingDimensionalCompensation before controlled generation. The generated design and its later evidence plan must bind /manufacturability/coatingDimensionalCompensationPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Specify 25 ±5 µm hard anodize only on non-fit surfaces and mask A, Ø80, Ø8, Ø50 and retained interfaces.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.processAndFinish",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.processAndFinish before controlled generation. The generated design and its later evidence plan must bind /definition/processAndFinishDefined to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Carry CNC milling, probing, deburr, masked clear hard anodize and post-finish critical inspection as an ordered process.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 21920-1:2021"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.threadsStandardPartsAndFastenerDefinition",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.threadsStandardPartsAndFastenerDefinition before controlled generation. The generated design and its later evidence plan must bind /definition/threadsStandardPartsAndFastenersComplete to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Define the M12 class 10.9 frame joint, validated washer/nut/lubricant stack and ISO metric tolerance basis; no anonymous fastener callouts.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl before controlled generation. The generated design and its later evidence plan must bind /definition/undefinedEdgesDeburrAndSharpEdgeControlComplete to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Apply ISO 13715 and drawing note break sharp edges 0.2-0.5 mm, burr-free; native fillet/chamfer geometry is not assumed.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 13715:2017"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure before controlled generation. The generated design and its later evidence plan must bind /definition/assemblyBomItemRevisionAndQuantityClosurePass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Close the part-level BOM as item 1 SIFC-220-REV-A quantity 1 and mark bearings, cover and hardware as mating references not included.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod before controlled generation. The generated design and its later evidence plan must bind /manufacturability/criticalCharacteristicProcessCapabilityAndMeasurementMethodPass to the rule-owned expected value true.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Require Cpk at least 1.33 after qualification for Ø80 H7, dowel position and A-to-B perpendicularity with declared measurement methods.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "mechanical.manufacturingDefinition.inspectionPlan",
+        "disposition": "constrained",
+        "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.inspectionPlan before controlled generation. The generated design and its later evidence plan must bind /definition/inspectionCharacteristicCoveragePercent to the rule-owned expected value 100.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Cross-check manufacturing-definition and inspection-plan characteristic closure against the drawing and native model readback.",
+        "generationConstraint": "Bind 100 percent of drawing characteristics to the inspection-plan matrix and inspect all critical characteristics on each qualification part.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025"
+        ]
+      },
+      {
+        "gatePath": "shared.rules.PROD-G001",
+        "disposition": "constrained",
+        "requirement": "The requested product, use, dimensions, materials, applicable jurisdiction and drawing stage shall be explicit and traceable to authoritative inputs.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Require independent requirement, constraint, drawing, native-host and evidence-contract gates; retain every authorization lock false.",
+        "generationConstraint": "Trace product, use, dimensions, material, selected standards and review-only stage to the five hash-bound controlled sources.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021",
+          "ISO 13715:2017",
+          "ISO 21920-1:2021",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "shared.rules.PROD-G002",
+        "disposition": "constrained",
+        "requirement": "Origin protocol, constraint compilation, whole-intent checks, detail proof and domain QA shall all pass independently.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Require independent requirement, constraint, drawing, native-host and evidence-contract gates; retain every authorization lock false.",
+        "generationConstraint": "Require origin protocol, constraint compile, whole-intent contract, normality proof, domain QA and native save/reopen to pass independently.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021",
+          "ISO 13715:2017",
+          "ISO 21920-1:2021",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "shared.rules.PROD-G003",
+        "disposition": "constrained",
+        "requirement": "Drawing layers, linetypes, lineweights, dimensions, annotation matrix, axes and axis identifiers shall satisfy the selected discipline and stage.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Require independent requirement, constraint, drawing, native-host and evidence-contract gates; retain every authorization lock false.",
+        "generationConstraint": "Generate a populated mechanical sheet with line hierarchy, centerlines, dimensions, GPS callouts, notes, title/revision/status and section/isometric references.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021",
+          "ISO 13715:2017",
+          "ISO 21920-1:2021",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "shared.rules.PROD-G004",
+        "disposition": "constrained",
+        "requirement": "Required product details and furnishings shall be represented by typed, selectable geometry with a component matrix; labels and occupancy rectangles are not substitutes.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Require independent requirement, constraint, drawing, native-host and evidence-contract gates; retain every authorization lock false.",
+        "generationConstraint": "Represent every required feature as typed selectable source-bound geometry; labels and screenshots never substitute for model features.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021",
+          "ISO 13715:2017",
+          "ISO 21920-1:2021",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "shared.rules.PROD-G005",
+        "disposition": "constrained",
+        "requirement": "Production candidates shall include populated paper-space sheets, title blocks, sheet numbers, plot scales, revisions, statuses, schedules and section/elevation/detail references where required.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Require independent requirement, constraint, drawing, native-host and evidence-contract gates; retain every authorization lock false.",
+        "generationConstraint": "Provide populated paper-space drawing sheets, title block, SIFC-220-REV-A, sheet number, scale, revision A, REVIEW status and required detail/section views.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021",
+          "ISO 13715:2017",
+          "ISO 21920-1:2021",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "shared.rules.PROD-G006",
+        "disposition": "constrained",
+        "requirement": "Site survey, geotechnical, structural, MEP, fire, accessibility, manufacturing or equivalent discipline evidence required by the project shall be present and current.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Require independent requirement, constraint, drawing, native-host and evidence-contract gates; retain every authorization lock false.",
+        "generationConstraint": "Carry material, manufacturing, preliminary engineering and inspection evidence; missing signed FEA/release evidence keeps all authorization locks false.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021",
+          "ISO 13715:2017",
+          "ISO 21920-1:2021",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      },
+      {
+        "gatePath": "shared.rules.PROD-G013",
+        "disposition": "constrained",
+        "requirement": "Required manufacturing and fabrication gates are a conjunction: no score, waiver, visual approval, portable export or unrelated passing analysis may offset one failed or unavailable gate.",
+        "sourceIds": [
+          "STD_AUTHORITY",
+          "DESIGN_BASIS",
+          "ANALYSIS_BASIS",
+          "MFG_DEFINITION",
+          "INSPECTION_PLAN"
+        ],
+        "verificationMethod": "Require independent requirement, constraint, drawing, native-host and evidence-contract gates; retain every authorization lock false.",
+        "generationConstraint": "Treat all 54 generation gates and later evidence gates as a conjunction; no visual approval, portable export or unrelated pass offsets a failure.",
+        "standardIds": [
+          "ISO 8015:2011",
+          "ISO 14405-1:2025",
+          "ISO 5459:2024",
+          "ISO 1101:2017",
+          "ISO 22081:2021",
+          "ISO 13715:2017",
+          "ISO 21920-1:2021",
+          "ISO 1:2022",
+          "ISO 2768-1:1989",
+          "ISO 286-1:2010",
+          "ISO 286-2:2010",
+          "ISO 965-1:2026",
+          "ISO 898-1:2013",
+          "ISO 16047:2005+Amd 1:2012"
+        ]
+      }
+    ],
+    "conflicts": [],
+    "locks": {
+      "reviewOnly": true,
+      "accepted": false,
+      "ruleEnabled": false,
+      "packagingGated": true,
+      "technicalPackageReady": false,
+      "productionReleaseEligible": false,
+      "manufacturingAuthorized": false,
+      "fabricationAuthorized": false
+    }
+  },
+  "features": [
+    {
+      "id": "F001",
+      "type": "base_extrude",
+      "purpose": "220 x 180 x 20 datum-A mounting base",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          0,
+          0
+        ],
+        "width": 220,
+        "height": 180
+      },
+      "depth": 20,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "width",
+          "value": 220
+        },
+        {
+          "kind": "height",
+          "value": 180
+        },
+        {
+          "kind": "depth",
+          "value": 20
+        }
+      ],
+      "role": "base_plate",
+      "roles": [
+        "base_plate",
+        "review_selectable"
+      ],
+      "editable": true
+    },
+    {
+      "id": "F002",
+      "type": "boss_extrude",
+      "purpose": "diameter 130 dual-bearing housing boss",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 65.0
+      },
+      "depth": 36,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 65.0
+        },
+        {
+          "kind": "depth",
+          "value": 36
+        }
+      ],
+      "role": "bearing_boss",
+      "roles": [
+        "bearing_boss",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F003",
+      "type": "boss_extrude",
+      "purpose": "right vertical stiffness rib pad",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          48,
+          0
+        ],
+        "width": 42,
+        "height": 72
+      },
+      "depth": 12,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 48,
+          "dy": 0
+        },
+        {
+          "kind": "width",
+          "value": 42
+        },
+        {
+          "kind": "height",
+          "value": 72
+        },
+        {
+          "kind": "depth",
+          "value": 12
+        }
+      ],
+      "role": "rib_pad",
+      "roles": [
+        "rib_pad",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F004",
+      "type": "boss_extrude",
+      "purpose": "left vertical stiffness rib pad",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          -48,
+          0
+        ],
+        "width": 42,
+        "height": 72
+      },
+      "depth": 12,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": -48,
+          "dy": 0
+        },
+        {
+          "kind": "width",
+          "value": 42
+        },
+        {
+          "kind": "height",
+          "value": 72
+        },
+        {
+          "kind": "depth",
+          "value": 12
+        }
+      ],
+      "role": "rib_pad",
+      "roles": [
+        "rib_pad",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F005",
+      "type": "boss_extrude",
+      "purpose": "upper horizontal stiffness rib pad",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          0,
+          48
+        ],
+        "width": 72,
+        "height": 42
+      },
+      "depth": 12,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 48
+        },
+        {
+          "kind": "width",
+          "value": 72
+        },
+        {
+          "kind": "height",
+          "value": 42
+        },
+        {
+          "kind": "depth",
+          "value": 12
+        }
+      ],
+      "role": "rib_pad",
+      "roles": [
+        "rib_pad",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F006",
+      "type": "boss_extrude",
+      "purpose": "lower horizontal stiffness rib pad",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          0,
+          -48
+        ],
+        "width": 72,
+        "height": 42
+      },
+      "depth": 12,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": -48
+        },
+        {
+          "kind": "width",
+          "value": 72
+        },
+        {
+          "kind": "height",
+          "value": 42
+        },
+        {
+          "kind": "depth",
+          "value": 12
+        }
+      ],
+      "role": "rib_pad",
+      "roles": [
+        "rib_pad",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F007",
+      "type": "cut_extrude",
+      "purpose": "diameter 92 H8 seal and cover recess",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F002"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 46.0
+      },
+      "depth": 6,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F002"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 46.0
+        },
+        {
+          "kind": "depth",
+          "value": 6
+        }
+      ],
+      "role": "seal_recess",
+      "roles": [
+        "seal_recess",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F002"
+    },
+    {
+      "id": "F008",
+      "type": "cut_extrude",
+      "purpose": "diameter 80 H7 paired-6208 bearing seat",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F002"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 40.0
+      },
+      "depth": 36,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F002"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 40.0
+        },
+        {
+          "kind": "depth",
+          "value": 36
+        }
+      ],
+      "role": "bearing_seat",
+      "roles": [
+        "bearing_seat",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F002"
+    },
+    {
+      "id": "F009",
+      "type": "cut_extrude",
+      "purpose": "diameter 50 shaft clearance through bore",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F002"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 25.0
+      },
+      "depth": 56,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F002"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 25.0
+        },
+        {
+          "kind": "depth",
+          "value": 56
+        }
+      ],
+      "role": "shaft_clearance",
+      "roles": [
+        "shaft_clearance",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F002"
+    },
+    {
+      "id": "F010",
+      "type": "cut_extrude",
+      "purpose": "eight diameter 9 indexer holes on diameter 108 PCD",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F002"
+      ],
+      "profile": {
+        "kind": "circle_pattern",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 4.5,
+        "count": 8,
+        "bolt_circle_radius": 54,
+        "start_angle_deg": 22.5
+      },
+      "depth": 56,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F002"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 4.5
+        },
+        {
+          "kind": "pattern_count",
+          "value": 8
+        },
+        {
+          "kind": "bolt_circle_radius",
+          "value": 54
+        },
+        {
+          "kind": "depth",
+          "value": 56
+        }
+      ],
+      "role": "indexer_hole_pattern",
+      "roles": [
+        "indexer_hole_pattern",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F002"
+    },
+    {
+      "id": "F011",
+      "type": "cut_extrude",
+      "purpose": "four diameter 7 cover holes on diameter 104 PCD",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F002"
+      ],
+      "profile": {
+        "kind": "circle_pattern",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 3.5,
+        "count": 4,
+        "bolt_circle_radius": 52,
+        "start_angle_deg": 45
+      },
+      "depth": 56,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F002"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 3.5
+        },
+        {
+          "kind": "pattern_count",
+          "value": 4
+        },
+        {
+          "kind": "bolt_circle_radius",
+          "value": 52
+        },
+        {
+          "kind": "depth",
+          "value": 56
+        }
+      ],
+      "role": "cover_hole_pattern",
+      "roles": [
+        "cover_hole_pattern",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F002"
+    },
+    {
+      "id": "F012",
+      "type": "cut_extrude",
+      "purpose": "frame mounting through hole 1",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          85,
+          65
+        ],
+        "radius": 7.0
+      },
+      "depth": 20,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 85,
+          "dy": 65
+        },
+        {
+          "kind": "radius",
+          "value": 7.0
+        },
+        {
+          "kind": "depth",
+          "value": 20
+        }
+      ],
+      "role": "frame_mount_hole",
+      "roles": [
+        "frame_mount_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F013",
+      "type": "cut_extrude",
+      "purpose": "frame mounting through hole 2",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          -85,
+          65
+        ],
+        "radius": 7.0
+      },
+      "depth": 20,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": -85,
+          "dy": 65
+        },
+        {
+          "kind": "radius",
+          "value": 7.0
+        },
+        {
+          "kind": "depth",
+          "value": 20
+        }
+      ],
+      "role": "frame_mount_hole",
+      "roles": [
+        "frame_mount_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F014",
+      "type": "cut_extrude",
+      "purpose": "frame mounting through hole 3",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          -85,
+          -65
+        ],
+        "radius": 7.0
+      },
+      "depth": 20,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": -85,
+          "dy": -65
+        },
+        {
+          "kind": "radius",
+          "value": 7.0
+        },
+        {
+          "kind": "depth",
+          "value": 20
+        }
+      ],
+      "role": "frame_mount_hole",
+      "roles": [
+        "frame_mount_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F015",
+      "type": "cut_extrude",
+      "purpose": "frame mounting through hole 4",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          85,
+          -65
+        ],
+        "radius": 7.0
+      },
+      "depth": 20,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 85,
+          "dy": -65
+        },
+        {
+          "kind": "radius",
+          "value": 7.0
+        },
+        {
+          "kind": "depth",
+          "value": 20
+        }
+      ],
+      "role": "frame_mount_hole",
+      "roles": [
+        "frame_mount_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F016",
+      "type": "cut_extrude",
+      "purpose": "diameter 24 by 10 frame counterbore 1",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          85,
+          65
+        ],
+        "radius": 12.0
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 85,
+          "dy": 65
+        },
+        {
+          "kind": "radius",
+          "value": 12.0
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "role": "frame_counterbore",
+      "roles": [
+        "frame_counterbore",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F017",
+      "type": "cut_extrude",
+      "purpose": "diameter 24 by 10 frame counterbore 2",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          -85,
+          65
+        ],
+        "radius": 12.0
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": -85,
+          "dy": 65
+        },
+        {
+          "kind": "radius",
+          "value": 12.0
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "role": "frame_counterbore",
+      "roles": [
+        "frame_counterbore",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F018",
+      "type": "cut_extrude",
+      "purpose": "diameter 24 by 10 frame counterbore 3",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          -85,
+          -65
+        ],
+        "radius": 12.0
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": -85,
+          "dy": -65
+        },
+        {
+          "kind": "radius",
+          "value": 12.0
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "role": "frame_counterbore",
+      "roles": [
+        "frame_counterbore",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F019",
+      "type": "cut_extrude",
+      "purpose": "diameter 24 by 10 frame counterbore 4",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          85,
+          -65
+        ],
+        "radius": 12.0
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 85,
+          "dy": -65
+        },
+        {
+          "kind": "radius",
+          "value": 12.0
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "role": "frame_counterbore",
+      "roles": [
+        "frame_counterbore",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F020",
+      "type": "cut_extrude",
+      "purpose": "primary diameter 8 H7 datum-C dowel hole",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          70,
+          0
+        ],
+        "radius": 4.0
+      },
+      "depth": 20,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 70,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 4.0
+        },
+        {
+          "kind": "depth",
+          "value": 20
+        }
+      ],
+      "role": "dowel_hole",
+      "roles": [
+        "dowel_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F021",
+      "type": "cut_extrude",
+      "purpose": "secondary diameter 8 H7 dowel hole",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "circle",
+        "center": [
+          -70,
+          0
+        ],
+        "radius": 4.0
+      },
+      "depth": 20,
+      "end_condition": "through_all",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": -70,
+          "dy": 0
+        },
+        {
+          "kind": "radius",
+          "value": 4.0
+        },
+        {
+          "kind": "depth",
+          "value": 20
+        }
+      ],
+      "role": "dowel_hole",
+      "roles": [
+        "dowel_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F022",
+      "type": "cut_extrude",
+      "purpose": "36 x 34 x 10 non-through lightening pocket 1",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          86,
+          30
+        ],
+        "width": 36,
+        "height": 34
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 86,
+          "dy": 30
+        },
+        {
+          "kind": "width",
+          "value": 36
+        },
+        {
+          "kind": "height",
+          "value": 34
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "role": "lightening_pocket",
+      "roles": [
+        "lightening_pocket",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F023",
+      "type": "cut_extrude",
+      "purpose": "36 x 34 x 10 non-through lightening pocket 2",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          -86,
+          30
+        ],
+        "width": 36,
+        "height": 34
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": -86,
+          "dy": 30
+        },
+        {
+          "kind": "width",
+          "value": 36
+        },
+        {
+          "kind": "height",
+          "value": 34
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "role": "lightening_pocket",
+      "roles": [
+        "lightening_pocket",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F024",
+      "type": "cut_extrude",
+      "purpose": "36 x 34 x 10 non-through lightening pocket 3",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          -86,
+          -30
+        ],
+        "width": 36,
+        "height": 34
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": -86,
+          "dy": -30
+        },
+        {
+          "kind": "width",
+          "value": 36
+        },
+        {
+          "kind": "height",
+          "value": 34
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "role": "lightening_pocket",
+      "roles": [
+        "lightening_pocket",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    },
+    {
+      "id": "F025",
+      "type": "cut_extrude",
+      "purpose": "36 x 34 x 10 non-through lightening pocket 4",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "depends_on": [
+        "F001"
+      ],
+      "profile": {
+        "kind": "center_rectangle",
+        "center": [
+          86,
+          -30
+        ],
+        "width": 36,
+        "height": 34
+      },
+      "depth": 10,
+      "end_condition": "blind",
+      "constraints": [
+        {
+          "kind": "support_coincident",
+          "target": "F001"
+        },
+        {
+          "kind": "center_offset",
+          "target": "origin",
+          "dx": 86,
+          "dy": -30
+        },
+        {
+          "kind": "width",
+          "value": 36
+        },
+        {
+          "kind": "height",
+          "value": 34
+        },
+        {
+          "kind": "depth",
+          "value": 10
+        }
+      ],
+      "role": "lightening_pocket",
+      "roles": [
+        "lightening_pocket",
+        "review_selectable"
+      ],
+      "editable": true,
+      "support_feature": "F001"
+    }
+  ]
+}

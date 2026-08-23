@@ -1,0 +1,669 @@
+{
+  "schema": "aicad_engineering_normative_preflight_v1",
+  "contractId": "MECHANICAL_NORMATIVE_PREFLIGHT_DRAFT",
+  "revision": 1,
+  "domain": "mechanical",
+  "deliveryStage": "review",
+  "canonicalRulesSchema": "aicad_production_readiness_rules_v3",
+  "canonicalRulesVersion": "3.0.0",
+  "authorityOrder": [
+    "selected_standard",
+    "approved_engineering_input",
+    "user_explicit_numeric",
+    "user_explicit_semantic",
+    "reference_cad",
+    "reference_image",
+    "inferred_assumption"
+  ],
+  "sources": [
+    {
+      "id": "STD_AUTHORITY",
+      "kind": "selected_standard",
+      "description": "Replace with the controlled standards source and edition/scope evidence."
+    },
+    {
+      "id": "ENG_INPUT",
+      "kind": "approved_engineering_input",
+      "description": "Replace with the approved design basis, calculations, interfaces and process capability."
+    }
+  ],
+  "applicableStandards": [
+    {
+      "standard": "ISO 8015:2011",
+      "applicability": "GPS fundamentals",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 14405-1:2025",
+      "applicability": "dimensional tolerancing",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 5459:2024",
+      "applicability": "datums and datum systems",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 1101:2017",
+      "applicability": "geometrical tolerancing",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 22081:2021",
+      "applicability": "general geometrical and size specifications",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 13715:2017",
+      "applicability": "edges of undefined shape",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 21920-1:2021",
+      "applicability": "surface texture indication",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 1:2022",
+      "applicability": "reference temperature for specification and verification",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 2768-1:1989",
+      "applicability": "general linear and angular tolerances when invoked",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 286-1:2010",
+      "applicability": "limits and fits basis when invoked",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 286-2:2010",
+      "applicability": "limit deviations for holes and shafts when invoked",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 965-1:2026",
+      "applicability": "metric thread tolerances when invoked",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 898-1:2013",
+      "applicability": "steel fastener properties when invoked",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    },
+    {
+      "standard": "ISO 16047:2005+Amd 1:2012",
+      "applicability": "fastener torque-clamp testing when invoked",
+      "sourceId": "STD_AUTHORITY",
+      "scopeDecision": "Confirm applicability and edition against the controlled project design basis."
+    }
+  ],
+  "ruleApplications": [
+    {
+      "gatePath": "mechanical.intent.wholeIntent",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.wholeIntent before controlled generation. The generated design and its later evidence plan must bind /intent/wholeIntent to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.dimensionalAuthority",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.dimensionalAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/dimensionalAuthority to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.materialAuthority",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.materialAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/materialAuthority to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.processAuthority",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.processAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/processAuthority to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.standardsApplicabilityAndEditionResolved",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.standardsApplicabilityAndEditionResolved before controlled generation. The generated design and its later evidence plan must bind /standards/applicabilityAndEditionResolved to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.materialAndFastenerPropertySourcesBound",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.materialAndFastenerPropertySourcesBound before controlled generation. The generated design and its later evidence plan must bind /standards/materialAndFastenerPropertySourcesBound to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/operatingEnvelopeDutyCycleAndDesignLifeAuthority to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.assemblyConfigurationAndInterfaceAuthority",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.assemblyConfigurationAndInterfaceAuthority before controlled generation. The generated design and its later evidence plan must bind /intent/assemblyConfigurationAndInterfaceAuthority to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.safetyRegulatoryAndRiskApplicabilityResolved",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.safetyRegulatoryAndRiskApplicabilityResolved before controlled generation. The generated design and its later evidence plan must bind /intent/safetyRegulatoryAndRiskApplicabilityResolved to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.currentStandardsLedger",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.currentStandardsLedger before controlled generation. The generated design and its later evidence plan must bind /standards/requiredCurrentBaselines to the rule-owned expected value [{\"applicability\": \"GPS fundamentals\", \"standard\": \"ISO 8015:2011\", \"status\": \"published\"}, {\"applicability\": \"dimensional tolerancing\", \"standard\": \"ISO 14405-1:2025\", \"status\": \"published\"}, {\"applicability\": \"datums and datum systems\", \"standard\": \"ISO 5459:2024\", \"status\": \"published\"}, {\"applicability\": \"geometrical tolerancing\", \"standard\": \"ISO 1101:2017\", \"status\": \"published\"}, {\"applicability\": \"general geometrical and size specifications\", \"standard\": \"ISO 22081:2021\", \"status\": \"published\"}, {\"applicability\": \"edges of undefined shape\", \"standard\": \"ISO 13715:2017\", \"status\": \"published\"}, {\"applicability\": \"surface texture indication\", \"standard\": \"ISO 21920-1:2021\", \"status\": \"published\"}, {\"applicability\": \"reference temperature for specification and verification\", \"standard\": \"ISO 1:2022\", \"status\": \"published\"}, {\"applicability\": \"general linear and angular tolerances when invoked\", \"standard\": \"ISO 2768-1:1989\", \"status\": \"published\"}, {\"applicability\": \"limits and fits basis when invoked\", \"standard\": \"ISO 286-1:2010\", \"status\": \"published\"}, {\"applicability\": \"limit deviations for holes and shafts when invoked\", \"standard\": \"ISO 286-2:2010\", \"status\": \"published\"}, {\"applicability\": \"metric thread tolerances when invoked\", \"standard\": \"ISO 965-1:2026\", \"status\": \"published\"}, {\"applicability\": \"steel fastener properties when invoked\", \"standard\": \"ISO 898-1:2013\", \"status\": \"published\"}, {\"applicability\": \"fastener torque-clamp testing when invoked\", \"standard\": \"ISO 16047:2005+Amd 1:2012\", \"status\": \"published\"}].",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.intent.noRetiredSoleAuthority",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.intent.noRetiredSoleAuthority before controlled generation. The generated design and its later evidence plan must bind /standards/retiredOrWithdrawnSoleAuthorityCount to the rule-owned expected value 0.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.constraintCompile",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.constraintCompile before controlled generation. The generated design and its later evidence plan must bind /design/constraintCompile to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.detailProof",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.detailProof before controlled generation. The generated design and its later evidence plan must bind /design/detailProof to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.loadCasesAndServiceConditions",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.loadCasesAndServiceConditions before controlled generation. The generated design and its later evidence plan must bind /engineering/loadCasesAndServiceConditionsDefined to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.analysisInputUnitsAndProvenance",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.analysisInputUnitsAndProvenance before controlled generation. The generated design and its later evidence plan must bind /engineering/inputUnitsAndProvenanceComplete to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.analysisRecomputedFromDeclaredInputs",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.analysisRecomputedFromDeclaredInputs before controlled generation. The generated design and its later evidence plan must bind /engineering/resultsIndependentlyRecomputedFromDeclaredInputs to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.criticalLoadPathCoverage",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.criticalLoadPathCoverage before controlled generation. The generated design and its later evidence plan must bind /engineering/criticalLoadPathsComplete to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.loadCombinationAndAbnormalCaseCoverage",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.loadCombinationAndAbnormalCaseCoverage before controlled generation. The generated design and its later evidence plan must bind /engineering/loadCombinationAndAbnormalCaseCoverageComplete to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.analysisEquationInputOutputMarginTrace",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.analysisEquationInputOutputMarginTrace before controlled generation. The generated design and its later evidence plan must bind /engineering/equationInputOutputMarginTraceComplete to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.strength",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.strength before controlled generation. The generated design and its later evidence plan must bind /engineering/strengthPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.stiffness",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.stiffness before controlled generation. The generated design and its later evidence plan must bind /engineering/stiffnessPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.fatigueApplicabilityAndResult",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.fatigueApplicabilityAndResult before controlled generation. The generated design and its later evidence plan must bind /engineering/fatigueApplicabilityAndResultValid to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.factorOfSafety",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.factorOfSafety before controlled generation. The generated design and its later evidence plan must bind /engineering/factorOfSafetyMeetsAuthority to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.jointBearingAndEdgeChecks",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.jointBearingAndEdgeChecks before controlled generation. The generated design and its later evidence plan must bind /engineering/jointBearingAndEdgeChecksComplete to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.fastenerPreloadSlipAndCapacity",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.fastenerPreloadSlipAndCapacity before controlled generation. The generated design and its later evidence plan must bind /engineering/fastenerPreloadSlipAndCapacityPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.bearingLife",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.bearingLife before controlled generation. The generated design and its later evidence plan must bind /engineering/bearingLifePass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.thermalEnvelope",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.thermalEnvelope before controlled generation. The generated design and its later evidence plan must bind /engineering/thermalEnvelopePass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.fitAndMatingInterfaces",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.fitAndMatingInterfaces before controlled generation. The generated design and its later evidence plan must bind /engineering/fitAndMatingInterfacesPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.toleranceStack",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.toleranceStack before controlled generation. The generated design and its later evidence plan must bind /design/toleranceStackPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.failureModesAndResidualRiskControls",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.failureModesAndResidualRiskControls before controlled generation. The generated design and its later evidence plan must bind /engineering/failureModesAndResidualRiskControlsPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.design.assemblyServiceAndToolClearance",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.design.assemblyServiceAndToolClearance before controlled generation. The generated design and its later evidence plan must bind /engineering/assemblyServiceAndToolClearancePass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.materialDesignation",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialDesignation before controlled generation. The generated design and its later evidence plan must bind /definition/materialDesignationPresent to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.materialConditionAndHeatTreatment",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialConditionAndHeatTreatment before controlled generation. The generated design and its later evidence plan must bind /definition/materialConditionAndHeatTreatmentDefined to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.materialCertificateRequirementAndIncomingInspection",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.materialCertificateRequirementAndIncomingInspection before controlled generation. The generated design and its later evidence plan must bind /definition/materialCertificateRequirementAndIncomingInspectionDefined to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.generalAndFeatureTolerances",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.generalAndFeatureTolerances before controlled generation. The generated design and its later evidence plan must bind /definition/toleranceCoveragePercent to the rule-owned expected value 100.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.gdandtDatumScheme",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.gdandtDatumScheme before controlled generation. The generated design and its later evidence plan must bind /definition/gdandtDatumSchemeValid to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.surfaceRoughness",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.surfaceRoughness before controlled generation. The generated design and its later evidence plan must bind /definition/roughnessCoveragePercent to the rule-owned expected value 100.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.stockAndPrimaryProcess",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.stockAndPrimaryProcess before controlled generation. The generated design and its later evidence plan must bind /definition/stockAndPrimaryProcessDefined to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.fixturingFeasibility",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.fixturingFeasibility before controlled generation. The generated design and its later evidence plan must bind /manufacturability/fixturingPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.toolAccessibility",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.toolAccessibility before controlled generation. The generated design and its later evidence plan must bind /manufacturability/toolAccessibilityPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.coatingDimensionalCompensation",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.coatingDimensionalCompensation before controlled generation. The generated design and its later evidence plan must bind /manufacturability/coatingDimensionalCompensationPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.processAndFinish",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.processAndFinish before controlled generation. The generated design and its later evidence plan must bind /definition/processAndFinishDefined to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.threadsStandardPartsAndFastenerDefinition",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.threadsStandardPartsAndFastenerDefinition before controlled generation. The generated design and its later evidence plan must bind /definition/threadsStandardPartsAndFastenersComplete to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl before controlled generation. The generated design and its later evidence plan must bind /definition/undefinedEdgesDeburrAndSharpEdgeControlComplete to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure before controlled generation. The generated design and its later evidence plan must bind /definition/assemblyBomItemRevisionAndQuantityClosurePass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod before controlled generation. The generated design and its later evidence plan must bind /manufacturability/criticalCharacteristicProcessCapabilityAndMeasurementMethodPass to the rule-owned expected value true.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "mechanical.manufacturingDefinition.inspectionPlan",
+      "disposition": "unresolved",
+      "requirement": "Resolve canonical gate mechanical.manufacturingDefinition.inspectionPlan before controlled generation. The generated design and its later evidence plan must bind /definition/inspectionCharacteristicCoveragePercent to the rule-owned expected value 100.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "shared.rules.PROD-G001",
+      "disposition": "unresolved",
+      "requirement": "The requested product, use, dimensions, materials, applicable jurisdiction and drawing stage shall be explicit and traceable to authoritative inputs.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "shared.rules.PROD-G002",
+      "disposition": "unresolved",
+      "requirement": "Origin protocol, constraint compilation, whole-intent checks, detail proof and domain QA shall all pass independently.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "shared.rules.PROD-G003",
+      "disposition": "unresolved",
+      "requirement": "Drawing layers, linetypes, lineweights, dimensions, annotation matrix, axes and axis identifiers shall satisfy the selected discipline and stage.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "shared.rules.PROD-G004",
+      "disposition": "unresolved",
+      "requirement": "Required product details and furnishings shall be represented by typed, selectable geometry with a component matrix; labels and occupancy rectangles are not substitutes.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "shared.rules.PROD-G005",
+      "disposition": "unresolved",
+      "requirement": "Production candidates shall include populated paper-space sheets, title blocks, sheet numbers, plot scales, revisions, statuses, schedules and section/elevation/detail references where required.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "shared.rules.PROD-G006",
+      "disposition": "unresolved",
+      "requirement": "Site survey, geotechnical, structural, MEP, fire, accessibility, manufacturing or equivalent discipline evidence required by the project shall be present and current.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    },
+    {
+      "gatePath": "shared.rules.PROD-G013",
+      "disposition": "unresolved",
+      "requirement": "Required manufacturing and fabrication gates are a conjunction: no score, waiver, visual approval, portable export or unrelated passing analysis may offset one failed or unavailable gate.",
+      "sourceIds": [
+        "STD_AUTHORITY",
+        "ENG_INPUT"
+      ],
+      "verificationMethod": "Replace with the calculation, rule check, native-host check or inspection method."
+    }
+  ],
+  "conflicts": [],
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true,
+    "technicalPackageReady": false,
+    "productionReleaseEligible": false,
+    "manufacturingAuthorized": false,
+    "fabricationAuthorized": false
+  }
+}

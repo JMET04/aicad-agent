@@ -1,0 +1,4 @@
+RED: ReviewerFirstOpenPolicyTests.test_generic_request_blocks_native_file
+Result: ERROR
+PlanError: review request requires a selectable vector CAD modifier; missing SVG cad-view, view-hit target, entity/source identifiers, semantic catalog, measurement inspector, typed correction surface, reviewOnly=true, and accepted=false.
+

@@ -1,0 +1,12 @@
+reference,function,quantity,candidate,lcsc,status,manufacturing_note
+U1,MCU and BLE module,1,NINA-B302-00B-00,,REUSE_CONCEPT_OPEN,Exact source and antenna keepout review required
+U2,3V3 buck,1,TPS62162,,REUSE_CONCEPT_OPEN,Load transient and thermal budget open
+U3,I2S class-D amplifier,1,MAX98357AETE+T,C910544,CANDIDATE_NOT_QUALIFIED,Gain SD_MODE decoupling thermal and EMI open
+J1,USB-C 5V input,1,TBD,,OPEN,Must support reviewed 5V 2A policy
+F1,resettable fuse,1,MF-MSMF150-2,C89648,CANDIDATE_NOT_QUALIFIED,Hold trip inrush and temperature review open
+J2,GC9A01A 8-pin display connector,1,TBD,,OPEN,Exact module SKU pin order and footprint required
+J3,differential speaker connector,1,JST-PH 2-pin,,OPEN,No speaker terminal may be tied to ground
+SPK1,4 ohm speaker interface,1,TBD,,OPEN,Power SPL enclosure and thermal qualification required
+D1,discrete 3V3 RGB status LED,1,TBD,,OPEN,Common topology and resistor values required
+Q1,display backlight switch,1,TBD,,OPEN,GPIO may not source backlight current
+C_AUDIO,amplifier bulk and HF decoupling,TBD,TBD,,OPEN,Place per qualified amplifier reference layout

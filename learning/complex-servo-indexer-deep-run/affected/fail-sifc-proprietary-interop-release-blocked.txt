@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-PROPRIETARY-INTEROP-RELEASE-BLOCKED: Publish audited host source and build script only; keep locally built binaries outside the public package. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

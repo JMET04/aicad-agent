@@ -1,0 +1,1 @@
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING) after complete help output.

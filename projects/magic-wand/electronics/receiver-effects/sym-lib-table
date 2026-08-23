@@ -1,0 +1,4 @@
+(sym_lib_table
+    (version 7)
+    (lib (name "MW_FACTORY") (type "KiCad") (uri "${KIPRJMOD}/MW_FACTORY.kicad_sym") (options "") (descr "Self-contained reviewed symbols"))
+)

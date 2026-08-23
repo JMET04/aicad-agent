@@ -2,23 +2,24 @@
   "schema": "aicad.system-engineering-qa-report.v1",
   "ok": true,
   "systemId": "magic-wand-rev-a0",
-  "revision": "2026-08-22-prototype-contract-1",
+  "revision": "2026-08-23-prototype-contract-2",
   "summary": {
-    "requirements": 12,
+    "requirements": 13,
     "subsystems": 5,
     "domains": 5,
-    "artifacts": 5,
+    "artifacts": 7,
     "interfaces": 7,
     "flows": 4,
-    "gates": 9,
+    "gates": 11,
     "openGates": [
       "GATE-FIRST-ARTICLE-001",
       "GATE-PCBA-001",
       "GATE-PRODUCTION-001",
       "GATE-RECEIVER-001",
+      "GATE-RECEIVER-PCB-001",
       "GATE-TARGET-FW-001"
     ],
-    "evidenceBindings": 4
+    "evidenceBindings": 5
   },
   "systemContractReady": true,
   "technicalReady": false,

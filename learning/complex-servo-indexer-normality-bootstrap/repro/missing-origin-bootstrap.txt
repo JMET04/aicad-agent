@@ -1,0 +1,1 @@
+Run aicad_normality_prover.py against the original SIFC normality plan whose excludedEntityIds array was empty and whose first plan entity was ENV_BOTTOM. The plan_geometry gate fails even though ID, layer, endpoint, metadata, anchor and dimension evidence rows all pass, because the prover contract also requires the first plan entity to be an excluded global-origin bootstrap.

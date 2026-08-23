@@ -1,0 +1,19 @@
+interface,pin_or_net,direction,electrical_contract,reset_state
+GC9A01A,J2-1 3V3,power,qualified module 3V3 only,off until rail stable
+GC9A01A,J2-2 GND,power_return,logic return,connected
+GC9A01A,J2-3 SCK P0.19,output,SPI clock,low
+GC9A01A,J2-4 MOSI P0.20,output,SPI data,low
+GC9A01A,J2-5 CS P0.17,output,active low chip select,high
+GC9A01A,J2-6 DC P0.21,output,command data select,low
+GC9A01A,J2-7 RST P0.22,output,active low reset,asserted
+GC9A01A,J2-8 BL P0.23,output,to transistor or load switch only,off
+MAX98357A,BCLK P0.13,output,I2S bit clock,low
+MAX98357A,LRCLK P0.14,output,I2S word select,low
+MAX98357A,DIN P0.15,output,I2S data,low
+MAX98357A,SD_MODE P0.16,output,hardware pull-down mute,low muted
+SPEAKER,J3 SPK_PLUS/output,differential,no ground connection,muted
+SPEAKER,J3 SPK_MINUS/output,differential,no ground connection,muted
+RGB,RED P0.24,output,3V3 LED through resistor,off
+RGB,GREEN P0.25,output,3V3 LED through resistor,off
+RGB,BLUE P1.00,output,3V3 LED through resistor,off
+POWER,J1 VBUS,input,qualified 5V 2A USB-C supply,absent

@@ -1,0 +1,91 @@
+{
+  "schema": "aicad.prebuild-normality-geometry.v1",
+  "design": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  },
+  "entities": [
+    {
+      "id": "ENV_BOTTOM",
+      "type": "LINE",
+      "layer": "OUTLINE",
+      "start": [
+        0,
+        0
+      ],
+      "end": [
+        220,
+        0
+      ],
+      "purpose": "base lower edge",
+      "reasoning": "Resolved from frozen prebuild envelope parameters.",
+      "dependencies": [
+        "BASE_W",
+        "BASE_H",
+        "GLOBAL_ORIGIN"
+      ]
+    },
+    {
+      "id": "ENV_RIGHT",
+      "type": "LINE",
+      "layer": "OUTLINE",
+      "start": [
+        220,
+        0
+      ],
+      "end": [
+        220,
+        180
+      ],
+      "purpose": "base right edge",
+      "reasoning": "Resolved from frozen prebuild envelope parameters.",
+      "dependencies": [
+        "BASE_W",
+        "BASE_H",
+        "GLOBAL_ORIGIN"
+      ]
+    },
+    {
+      "id": "ENV_TOP",
+      "type": "LINE",
+      "layer": "OUTLINE",
+      "start": [
+        220,
+        180
+      ],
+      "end": [
+        0,
+        180
+      ],
+      "purpose": "base upper edge",
+      "reasoning": "Resolved from frozen prebuild envelope parameters.",
+      "dependencies": [
+        "BASE_W",
+        "BASE_H",
+        "GLOBAL_ORIGIN"
+      ]
+    },
+    {
+      "id": "ENV_LEFT",
+      "type": "LINE",
+      "layer": "OUTLINE",
+      "start": [
+        0,
+        180
+      ],
+      "end": [
+        0,
+        0
+      ],
+      "purpose": "base left edge",
+      "reasoning": "Resolved from frozen prebuild envelope parameters.",
+      "dependencies": [
+        "BASE_W",
+        "BASE_H",
+        "GLOBAL_ORIGIN"
+      ]
+    }
+  ]
+}

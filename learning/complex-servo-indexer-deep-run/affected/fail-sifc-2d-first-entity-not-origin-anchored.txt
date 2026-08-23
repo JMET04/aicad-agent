@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-2D-FIRST-ENTITY-NOT-ORIGIN-ANCHORED: Make the upper datum-B centreline the first meaningful entity from [0,0] to [0,145]. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

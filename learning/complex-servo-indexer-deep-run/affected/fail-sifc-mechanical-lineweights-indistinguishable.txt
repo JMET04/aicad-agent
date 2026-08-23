@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-MECHANICAL-LINEWEIGHTS-INDISTINGUISHABLE: Add distinct width, colour and dash patterns for OUTLINE, HOLE, HIDDEN, CENTER, DIMENSION, HATCH and TITLE. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

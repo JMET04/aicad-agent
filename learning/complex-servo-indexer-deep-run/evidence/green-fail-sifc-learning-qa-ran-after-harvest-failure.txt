@@ -1,0 +1,1 @@
+The corrected sequence refreshes reports, harvests each stage successfully, then runs QA once.

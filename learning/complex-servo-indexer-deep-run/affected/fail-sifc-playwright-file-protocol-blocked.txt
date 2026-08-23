@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-PLAYWRIGHT-FILE-PROTOCOL-BLOCKED: Serve the staged directory read-only on 127.0.0.1 and navigate through HTTP. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

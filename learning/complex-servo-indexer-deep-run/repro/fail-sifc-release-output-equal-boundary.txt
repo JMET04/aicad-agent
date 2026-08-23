@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-RELEASE-OUTPUT-EQUAL-BOUNDARY: build-agent-plugin release containment gate. Using OutputDirectory=release was rejected because output must be a child of release, not the boundary itself.

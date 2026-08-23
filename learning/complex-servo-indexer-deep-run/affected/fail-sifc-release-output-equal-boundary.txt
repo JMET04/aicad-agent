@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-RELEASE-OUTPUT-EQUAL-BOUNDARY: Use release/v1.16.0 so transactional stage and backup paths remain bounded below release. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

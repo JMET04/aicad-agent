@@ -2,19 +2,19 @@
   "schema": "magic-wand.current-delivery-manifest.v1",
   "projectId": "MW-PROTOTYPE-001",
   "systemRequirementsRevision": "B",
-  "systemContractRevision": "2026-08-22-prototype-contract-1",
+  "systemContractRevision": "2026-08-23-prototype-contract-2",
   "sourceFiles": [
     {
       "path": "projects/magic-wand/README.md",
-      "size": 2162,
-      "sha256": "862C546913A1A7D53535EE09FEA5A5FF17FD3A418EA1B9E7F1BFDF3C18E9E698",
+      "size": 2895,
+      "sha256": "68C8C96F719D322753ED1A3B6AF19666C9153BDAA538BC8FDFFF38133AA42194",
       "role": "entry",
       "kind": "current_project_entry"
     },
     {
       "path": "projects/magic-wand/integration/README.md",
-      "size": 4150,
-      "sha256": "75DA9CEFE1BAD0D7FB207DBF8915BF44C2F933D726A18894B7EFF924E21277EC",
+      "size": 5015,
+      "sha256": "F96CAAE96A18AFF46CE3326EEB11C373487E4C29DD9905C14218CD19B37B9C74",
       "role": "entry",
       "kind": "current_integration_index"
     },
@@ -27,50 +27,57 @@
     },
     {
       "path": "projects/magic-wand/integration/CURRENT_SYSTEM_STATUS.json",
-      "size": 5834,
-      "sha256": "CDAD0373FD53CB38A0409CD8DEE84F7F5EAD3DDC53651975BBF7542812FB986E",
+      "size": 10699,
+      "sha256": "BE5F8EAF6E27D1D768D67B61F4EB62880C84791712671CD6591A4FF98981182A",
       "role": "authority",
       "kind": "current_system_status"
     },
     {
       "path": "projects/magic-wand/integration/system-design-contract.json",
-      "size": 29583,
-      "sha256": "BC48A0AA2F0ED5A78BD0B3516A32E039807BCD481BF5B057B7383F124C13CE40",
+      "size": 35491,
+      "sha256": "547BA062D66D7D239B2C2F2A4B97F261AED382D707019B7DC071075B2B4C7768",
       "role": "authority",
       "kind": "system_engineering_contract"
     },
     {
       "path": "projects/magic-wand/integration/system-design-qa-report.json",
-      "size": 1055,
-      "sha256": "CA57CB92DC6CC5FE8FCC2141D9E94AB784396A545530E273AEE0331B16F98D33",
+      "size": 1088,
+      "sha256": "3C4EF1B02D47D5FEC8E89000DDCBB5D34C8322F84B34B93A1CA6C05971BF7DAB",
       "role": "report",
       "kind": "system_engineering_qa"
     },
     {
       "path": "projects/magic-wand/integration/system-design-qa-report.md",
-      "size": 576,
-      "sha256": "F219BB3C5A9F2084C24532CE502B80FEEF2519E83014CAC024C518C77645843D",
+      "size": 599,
+      "sha256": "7518E270FB65AEEDF35803246B23720680C4FF0BD6530792E720FE1E4FE4934C",
       "role": "report",
       "kind": "human_system_qa"
     },
     {
       "path": "projects/magic-wand/integration/SYSTEM_ENGINEERING_HANDOFF.md",
-      "size": 11050,
-      "sha256": "1F42E9C9CF7DCA3A89170ADF50418F7F225C185C8F59DD9B4C9DB8DF97BAC865",
+      "size": 20477,
+      "sha256": "3BEA4FC07B3EE5BAEA798133DF3013A6465D8F30B5CBFF34DDF30646E7191DC6",
       "role": "handoff",
       "kind": "current_handoff"
     },
     {
+      "path": "projects/magic-wand/integration/RECEIVER_EFFECTS_SYSTEM_HANDOFF.md",
+      "size": 20769,
+      "sha256": "C79B3D84866E2A2D8E3E7FF01AF8CDAB5C6E56DEE9A6B157F49C77F556FE837D",
+      "role": "handoff",
+      "kind": "receiver_effects_handoff"
+    },
+    {
       "path": "projects/magic-wand/integration/current-system-traceability.json",
-      "size": 14554,
-      "sha256": "D7D4422045F98F5F0D728EABB3F7C3800130807B40900D999822EFE2D81D8C03",
+      "size": 15933,
+      "sha256": "8999974EFEC24E5FB86A83B6968CE8A809FECFA4F93CBE9A9EC5DDEE1933C441",
       "role": "trace",
       "kind": "source_faithful_trace"
     },
     {
       "path": "projects/magic-wand/integration/build_current_evidence.py",
-      "size": 12680,
-      "sha256": "891C757B3CADB104128E1582BC4EA972C7C56BCD00B9009878C7C8916452FF1A",
+      "size": 13064,
+      "sha256": "99F1CF7433AC4A30C17F5FCA5D06300C548BD5F5E1A0FAD3F97A3D3CB234E5D7",
       "role": "builder",
       "kind": "deterministic_builder"
     }
@@ -115,12 +122,22 @@
       "evidenceId": "EVID-FW-HOST",
       "level": "tool_verified",
       "toolVersion": "GCC MinGW-W64 16.1.0, CMake 4.3.2, Ninja 1.13.2"
+    },
+    {
+      "path": "projects/magic-wand/firmware/host-review-evidence.json",
+      "size": 6820,
+      "sha256": "73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70",
+      "role": "evidence",
+      "kind": "tool_verified_artifact",
+      "evidenceId": "EVID-RECEIVER-FW-HOST",
+      "level": "tool_verified",
+      "toolVersion": "GCC MinGW-W64 16.1.0, CMake 4.3.2, Ninja 1.13.2, cppcheck"
     }
   ],
   "counts": {
-    "sourceFiles": 10,
-    "evidenceFiles": 4,
-    "totalBoundFiles": 14
+    "sourceFiles": 11,
+    "evidenceFiles": 5,
+    "totalBoundFiles": 16
   },
   "readiness": {
     "systemContractReady": true,
@@ -148,6 +165,7 @@
     "GATE-PCBA-001",
     "GATE-PRODUCTION-001",
     "GATE-RECEIVER-001",
+    "GATE-RECEIVER-PCB-001",
     "GATE-TARGET-FW-001"
   ],
   "selfHashPolicy": {

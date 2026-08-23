@@ -91,10 +91,10 @@ def _smd(Pad, physical_id, number, x, y, width, height, *, rotation=0.0,
 
 def _tht(Pad, physical_id, number, x, y, width, height, drill_width,
          drill_height=None, *, rotation=0.0, role="signal", shape="oval",
-         net_override=None):
+         net_override=None, layers=THT_LAYERS):
     return Pad(physical_id, number, x, y, width, height, "tht", shape,
                drill_width, drill_height or drill_width, rotation,
-               THT_LAYERS, role, net_override)
+               layers, role, net_override)
 
 
 def _npth(Pad, physical_id, x, y, width, height=None, *, rotation=0.0,
@@ -151,6 +151,43 @@ def _jae_usb_c(Pad):
              role="hold_down"),
         _smd(Pad, "hold-down-right", "", 1.4, 1.15, 1.0, 2.0,
              role="hold_down"),
+    ]
+    return pads
+
+
+def _gct_usb4105(Pad):
+    """GCT USB4105 Rev B4 / KiCad 10 controlled land pattern.
+
+    The selected ``-120`` variant changes the shell stake length, not the PCB
+    land geometry.  The four shell pads intentionally include F.Paste exactly
+    as the official KiCad footprint does.
+    """
+    contacts = [
+        ("A1", -3.20, 0.60), ("A4", -2.40, 0.60),
+        ("A5", -1.25, 0.30), ("A6", -0.25, 0.30),
+        ("A7", 0.25, 0.30), ("A8", 1.25, 0.30),
+        ("A9", 2.40, 0.60), ("A12", 3.20, 0.60),
+        ("B1", 3.20, 0.60), ("B4", 2.40, 0.60),
+        ("B5", 1.75, 0.30), ("B6", 0.75, 0.30),
+        ("B7", -0.75, 0.30), ("B8", -1.75, 0.30),
+        ("B9", -2.40, 0.60), ("B12", -3.20, 0.60),
+    ]
+    pads = [
+        _smd(Pad, f"contact-{number}", number, x, -3.68, width, 1.15)
+        for number, x, width in contacts
+    ]
+    shell_layers = THT_LAYERS + ("F.Paste",)
+    pads += [
+        _tht(Pad, "shell-left-front", "SH", -4.32, -3.105, 1.00, 2.10,
+             0.60, 1.70, role="mount", layers=shell_layers),
+        _tht(Pad, "shell-left-rear", "SH", -4.32, 1.075, 1.00, 1.80,
+             0.60, 1.40, role="mount", layers=shell_layers),
+        _tht(Pad, "shell-right-front", "SH", 4.32, -3.105, 1.00, 2.10,
+             0.60, 1.70, role="mount", layers=shell_layers),
+        _tht(Pad, "shell-right-rear", "SH", 4.32, 1.075, 1.00, 1.80,
+             0.60, 1.40, role="mount", layers=shell_layers),
+        _npth(Pad, "locator-left", -2.89, -2.605, 0.65),
+        _npth(Pad, "locator-right", 2.89, -2.605, 0.65),
     ]
     return pads
 
@@ -244,6 +281,10 @@ def physical_pads_for_part(board_name, part, Pad, derive_positions: Callable):
                      role="testpoint", shape="circle", layers=("F.Cu", "F.Mask"))]
     if package == "USB-C-16P":
         return _jae_usb_c(Pad)
+    if package == "USB4105-16P":
+        if part.mpn != "USB4105-GF-A-120":
+            raise ValueError(f"unsupported USB4105 variant: {part.mpn}")
+        return _gct_usb4105(Pad)
     if package == "LGA-55":
         return _nina(Pad)
     if package == "LGA-14":
@@ -337,6 +378,7 @@ def configure_body_and_datum(board_name, part):
         "SOT-23-6": (3.0, 1.7, 1.45),
         "Texas_DQK": (2.0, 2.0, 0.80),
         "USB-C-16P": (8.94, 6.90, 3.60),
+        "USB4105-16P": (8.94, 7.35, 3.31),
         "JST-SH-3": (5.0, 4.25, 3.0),
         "JST-SH-2": (4.0, 4.25, 3.0),
         "SKQG": (5.2, 5.2, 1.5),
@@ -367,6 +409,9 @@ def configure_body_and_datum(board_name, part):
                              -max(part.height / 2, max(pad_y)) - margin,
                              max(part.width / 2, max(pad_x)) + margin,
                              max(part.height / 2, max(pad_y)) + margin)
+    if package == "USB4105-16P":
+        # Exact official KiCad 10 courtyard, including the rear overhang.
+        part.courtyard_bounds = (-5.32, -4.76, 5.32, 4.18)
     datum = {
         "anchor": "footprint-origin",
         "sourceAxes": {"x": "right", "y": "down", "units": "mm"},
@@ -376,6 +421,12 @@ def configure_body_and_datum(board_name, part):
     if package == "USB-C-16P":
         datum.update({"drawingNumber": "SJ121837", "matingFaceLocalYmm": -3.60,
                       "matingAxisLocal": [0.0, 1.0] if board_name == "wand" else [0.0, -1.0]})
+    elif package == "USB4105-16P":
+        datum.update({"drawingNumber": "USB4105", "drawingRevision": "B4",
+                      "boardEdgeLocalYmm": 3.675,
+                      "matingFaceLocalYmm": 3.675,
+                      "matingAxisLocal": [0.0, 1.0],
+                      "shellStakeLengthMm": 1.20})
     elif package == "SKQG":
         datum.update({"actuatorCenterLocalMm": [0.0, 0.0], "travelMm": 0.25,
                       "actuationAxis": "normal-to-F.Cu"})
@@ -406,6 +457,7 @@ def authority_metadata(part):
     explicit = {
         "NINA-B302-00B-00": ("UBX-17052099/UBX-17056748", "R15", "https://content.u-blox.com/sites/default/files/NINA-B3_SIM_UBX-17056748.pdf"),
         "DX07S016JA1R1500": ("SJ121837", "CURRENT-2026-08-21", "https://www.jae.com/en/connectors/series/detail/product/id=68295"),
+        "USB4105-GF-A-120": ("USB4105", "B4", "https://gct.co/files/drawings/usb4105.pdf"),
         "SM03B-SRSS-TB(LF)(SN)": ("JST-SH-SM03B-2D", "CURRENT-2026-08-21", "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf"),
         "SM02B-SRSS-TB(LF)(SN)": ("JST-SH-SM02B-2D", "CURRENT-2026-08-21", "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf"),
         "SKQGAFE010": ("SKQGAFE010-SPEC", "2025", "https://tech.alpsalpine.com/e/products/detail/SKQGAFE010/"),

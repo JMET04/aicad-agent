@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-RELEASE-SCRIPT-NAME-GUESSED: List the scripts directory and use build-agent-plugin.ps1 plus build-github-source.ps1. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

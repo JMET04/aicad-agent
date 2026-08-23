@@ -1,0 +1,3 @@
+GREEN: ReviewerFirstOpenPolicyTests.test_explicit_native_request_opens_reviewer_first
+The contract-complete fixture opens the selectable reviewer before the explicitly requested native CAD target and preserves the exact open_order contract.
+

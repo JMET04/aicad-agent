@@ -4,8 +4,9 @@ Status: **legacy Rev A baseline, superseded for current execution status by `CUR
 
 ## 一眼结论
 
-- Current verified artifacts: zero-error frozen wand PCB, JLC bare-board upload ZIP, printable enclosure package, and host-tested eight-class gesture core. Use them only within the explicit prototype limits.
-- Current exception: the owner authorized the verified wand **prototype bare-PCB** order and prototype 3D print. PCBA, target firmware and production release remain prohibited.
+- Current verified artifacts: zero-error frozen Wand PCB, its JLC bare-board upload ZIP, printable enclosure package, the eight-class Wand gesture core, and the receiver-effects host runtime. Use them only within the explicit prototype limits.
+- Receiver-effects is now a direct paired NINA-B302 BLE endpoint with 8 isolated slots and 8 media effects. Legacy V1 is exact 2-byte/channel-0 only; Multichannel V2 is exact 14-byte with explicit authenticated profile, ARM and device/session binding.
+- The owner authorization covers **prototype bare-PCB** fabrication and prototype 3D printing only. Receiver-effects PCB/CAM is still under power-width/return-path/CPL rework, every prior receiver CAM is **REJECTED**, and PCBA, target firmware, HIL and production release remain prohibited.
 - The legacy 18-blocker count below is retained as historical Rev A evidence; use the current status file for live gates.
 - 浏览器总览：`system-review-overview.svg`。所有注释位于边框内，电源/RF/安全/普通信号采用不同线宽和线型。
 
@@ -14,10 +15,11 @@ Status: **legacy Rev A baseline, superseded for current execution status by `CUR
 当前权威文件：
 
 - `CURRENT_SYSTEM_STATUS.json`：当前事实、授权、哈希和开放门；
-- `SYSTEM_ENGINEERING_HANDOFF.md`：当前接口、制造交接和经验教训；
-- `system-design-contract.json` / `system-design-qa-report.*`：当前跨域合同与自动 QA。
+- `SYSTEM_ENGINEERING_HANDOFF.md`：当前总体接口、制造交接和经验教训；
+- `RECEIVER_EFFECTS_SYSTEM_HANDOFF.md`：直接接收拓扑、V1/V2、八槽/八效果、精确显示/扬声器/核心 IC 与硬件开放门；
+- `system-design-contract.json` / `system-design-qa-report.*`：当前跨域合同与自动 QA；
 - `current-system-traceability.json`：Rev B `SYS-001..012` 到当前合同、门禁与证据的源忠实机器映射；
-- `current-delivery-manifest.json`：当前状态、合同、QA、交接与四项工具证据的哈希闭包。
+- `current-delivery-manifest.json`：当前状态、合同、QA、双交接与五项工具证据的哈希闭包。
 
 历史 Rev A 文件（只用于追溯，内容不得解释为当前结论）：
 
@@ -45,7 +47,7 @@ Status: **legacy Rev A baseline, superseded for current execution status by `CUR
 
 ## 放行声明
 
-The legacy paragraph here described the pre-native baseline. Current wand PCB ERC/DRC and fabrication outputs are verified, the printable enclosure is a verified prototype candidate, and the portable gesture core passes host tests. Physical, receiver, target-firmware, security and production gates remain open.
+The legacy paragraph here described the pre-native baseline. The frozen Wand PCB ERC/DRC and fabrication outputs are verified, the printable enclosure is a verified prototype candidate, and both the Wand classifier and receiver-effects portable runtime pass their bound host gates. Receiver-effects PCB/CAM, all physical tests, target firmware, real BLE/cryptography, HIL, PCBA, security and production gates remain open.
 
 ## 当前复核
 
@@ -54,5 +56,7 @@ The legacy paragraph here described the pre-native baseline. Current wand PCB ER
 
 ```powershell
 python projects/magic-wand/mechanical/printable-wand/build_printable_wand.py
-python plugins/aicad-agent/tests/test_system_engineering_contract.py -v
+python agent-plugin/aicad-agent/scripts/aicad_system_engineering_qa.py projects/magic-wand/integration/system-design-contract.json --root .
+python projects/magic-wand/integration/build_current_evidence.py --check
+python tests/test_magic_wand_integration_package.py -v
 ```

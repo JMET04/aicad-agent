@@ -1,0 +1,172 @@
+{
+  "schema": "magic_wand_receiver_effects_contract_v1",
+  "status": "DESIGN_INPUT_ONLY_FABRICATION_BLOCKED",
+  "observed_at": "2026-08-23",
+  "board": {
+    "name": "receiver-effects",
+    "revision": "A0",
+    "relationship": "standalone_receiver_board_order_separately_from_wand",
+    "reuse": [
+      "NINA-B302 concept",
+      "USB-C input concept",
+      "3.3 V buck concept"
+    ],
+    "omit": [
+      "legacy UART level translator",
+      "opto-isolated output",
+      "12 V low-side MOSFET output",
+      "dangerous actuator connectors"
+    ]
+  },
+  "scope_guards": {
+    "wand_changes_forbidden": true,
+    "wand_fabrication_package_unchanged": true,
+    "existing_receiver_kicad_unchanged": true
+  },
+  "capabilities": {
+    "logical_channels": 8,
+    "display": "1.28 inch round GC9A01A 240x240 SPI module via 8-pin connector",
+    "audio": "MAX98357A I2S class-D with differential JST-PH 2-pin 4 ohm speaker interface",
+    "status": "discrete 3.3 V RGB LED with three resistors",
+    "media_only_no_actuator_authority": true
+  },
+  "pin_contract": {
+    "tft": {
+      "sck": "NINA pad 52 / P0.19",
+      "mosi": "pad 50 / P0.20",
+      "cs": "pad 51 / P0.17",
+      "dc": "pad 48 / P0.21",
+      "reset": "pad 49 / P0.22",
+      "backlight_control": "pad 47 / P0.23 through transistor or load switch"
+    },
+    "audio": {
+      "bclk": "pad 1 / P0.13",
+      "lrclk": "pad 2 / P0.14",
+      "data": "pad 3 / P0.15",
+      "sd_mode_mute": "pad 4 / P0.16 with hardware pull-down"
+    },
+    "rgb": {
+      "red": "pad 5 / P0.24",
+      "green": "pad 7 / P0.25",
+      "blue": "pad 8 / P1.00"
+    }
+  },
+  "power_contract": {
+    "input": "qualified USB-C 5 V / 2 A supply; ordinary PC port prohibited",
+    "ptc_candidate": {
+      "mpn": "MF-MSMF150-2",
+      "lcsc": "C89648",
+      "qualification": "OPEN"
+    },
+    "logic_rail": "3.3 V buck; load/transient/thermal validation OPEN",
+    "amplifier_rail": "protected 5 V with local bulk and high-frequency decoupling",
+    "boot_defaults": [
+      "amplifier SD/MODE hardware-low",
+      "display backlight off",
+      "RGB off"
+    ]
+  },
+  "sourcing_candidates": [
+    {
+      "function": "USB-C input receptacle",
+      "mpn": "USB4105-GF-A-120",
+      "lcsc": "C5184243",
+      "status": "selected_geometry_authority_closed_checkout_price_and_rotation_preview_open"
+    },
+    {
+      "function": "I2S amplifier",
+      "mpn": "MAX98357AETE+T",
+      "lcsc": "C910544",
+      "status": "candidate_stock_observed_not_qualified"
+    },
+    {
+      "function": "display",
+      "mpn": "GC9A01A 1.28 inch 240x240 8-pin module",
+      "lcsc": null,
+      "status": "exact module and pin order OPEN"
+    },
+    {
+      "function": "RGB",
+      "mpn": "discrete 3.3 V RGB LED",
+      "lcsc": null,
+      "status": "exact common-anode/cathode and resistor values OPEN"
+    },
+    {
+      "function": "speaker connector",
+      "mpn": "JST-PH 2-pin differential",
+      "lcsc": null,
+      "status": "exact footprint and speaker rating OPEN"
+    }
+  ],
+  "effect_map": [
+    {
+      "gesture": "TAP",
+      "effect": "EXPLOSION",
+      "visual": "white-yellow flash and radial shockwave",
+      "audio": "limited synthesized boom"
+    },
+    {
+      "gesture": "TWIST_CW",
+      "effect": "FIRE",
+      "visual": "red-orange rotating spiral and sparks",
+      "audio": "synthesized whoosh/crackle"
+    },
+    {
+      "gesture": "TWIST_CCW",
+      "effect": "ICE",
+      "visual": "blue-white expanding crystal",
+      "audio": "synthesized chime/ice crack"
+    },
+    {
+      "gesture": "SWISH_LEFT",
+      "effect": "LIGHTNING"
+    },
+    {
+      "gesture": "SWISH_RIGHT",
+      "effect": "SHIELD"
+    },
+    {
+      "gesture": "THRUST",
+      "effect": "ARCANE"
+    },
+    {
+      "gesture": "CIRCLE_CW",
+      "effect": "HEAL"
+    },
+    {
+      "gesture": "CIRCLE_CCW",
+      "effect": "PORTAL"
+    },
+    {
+      "gesture": "UNKNOWN",
+      "effect": "UNKNOWN"
+    }
+  ],
+  "firmware_budget": {
+    "framebuffer_policy": "no full 115200-byte framebuffer; stream 240-pixel RGB565 rows",
+    "row_double_buffer_bytes": 960,
+    "audio_policy": "mono 16 kHz signed 16-bit procedural PCM",
+    "audio_double_buffer_candidate_bytes": 1024,
+    "digital_master_limit_percent": 40,
+    "explosion_limit_percent": 25,
+    "target_flash_ram_cpu_measurement": "OPEN_NO_TARGET_BUILD"
+  },
+  "safety": {
+    "copyright": "procedural synthesis only; no third-party sound asset",
+    "audio_reset_mute_required": true,
+    "display_backlight_gpio_must_not_source_led_current": true,
+    "speaker_outputs_differential_no_ground": true,
+    "dangerous_outputs": "not populated and no firmware authority"
+  },
+  "artifact_state": {
+    "kicad_schematic": "NOT_CREATED",
+    "kicad_pcb": "NOT_CREATED",
+    "erc": "NOT_RUN",
+    "drc": "NOT_RUN",
+    "gerber": "NOT_CREATED",
+    "drill": "NOT_CREATED",
+    "bom": "DESIGN_INPUT_ONLY",
+    "pick_place": "NOT_CREATED",
+    "fabrication_authorized": false
+  }
+}

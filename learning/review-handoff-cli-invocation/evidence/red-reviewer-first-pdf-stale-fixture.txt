@@ -1,0 +1,4 @@
+RED: ReviewerFirstOpenPolicyTests.test_pdf_cannot_be_native_target
+Result: FAIL
+The expected non-CAD rejection was masked by the invalid placeholder modifier, so the assertion received the selectable-vector contract error before reaching the PDF suffix gate.
+

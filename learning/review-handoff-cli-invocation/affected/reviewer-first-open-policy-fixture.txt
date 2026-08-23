@@ -1,0 +1,3 @@
+Affected surface: agent-plugin/aicad-agent/tests/test_reviewer_first_open_policy.py
+The shared MODIFIER fixture must represent the minimum accepted selectable vector review contract. Production validation remains strict; only the stale test input is corrected.
+

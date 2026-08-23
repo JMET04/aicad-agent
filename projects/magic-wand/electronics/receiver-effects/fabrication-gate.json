@@ -1,0 +1,36 @@
+{
+  "schema": "magic_wand_receiver_effects_fabrication_gate_v1",
+  "board": "receiver-effects A0",
+  "fabrication_authorized": false,
+  "order_separately_from_wand": true,
+  "wand_package_modified": false,
+  "evidence": {
+    "schematic": "ABSENT",
+    "pcb": "ABSENT",
+    "native_erc": "NOT_RUN",
+    "native_drc": "NOT_RUN",
+    "gerber": "ABSENT",
+    "drill": "ABSENT",
+    "bom": "UNQUALIFIED_CONCEPT",
+    "placement": "ABSENT",
+    "target_firmware": "NOT_COMPILED",
+    "display_hil": "NOT_RUN",
+    "audio_hil": "NOT_RUN"
+  },
+  "blockers": [
+    "Select and archive exact GC9A01A module SKU, 8-pin order, mechanical drawing, connector and current.",
+    "Complete USB-C 5 V / 2 A current-advertisement, input protection, PTC, load switch, inrush and brownout design.",
+    "Validate NINA, display/backlight, RGB and MAX98357A simultaneous current, regulator transient and thermal margins.",
+    "Select speaker, connector, MAX98357 gain/SD_MODE network, bulk decoupling and EMI/filter/layout rules.",
+    "Create independent KiCad schematic and PCB with NINA antenna keepout and enclosure constraints.",
+    "Pass native KiCad ERC and DRC with zero unresolved errors and zero unconnected items.",
+    "Generate JLC Gerber/drill/BOM/placement from reviewed source and verify source/artifact hashes.",
+    "Compile a pinned NINA-B302 Zephyr target and run SPI display, I2S audio, mute/backlight/reset, power and RF HIL."
+  ],
+  "prohibited_shortcuts": [
+    "Do not use current receiver reopen candidate.",
+    "Do not copy legacy high-power output channels.",
+    "Do not modify or bundle the wand PCB order.",
+    "Do not mark host CTest as PCB or target evidence."
+  ]
+}

@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-LEARNING-QA-DEFAULT-RULES-PATH-MISSING: Pass --rules agent-plugin/aicad-agent/rules/continuous_learning_rules.json explicitly. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

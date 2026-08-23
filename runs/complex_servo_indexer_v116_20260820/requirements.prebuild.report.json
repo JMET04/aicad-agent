@@ -1,0 +1,261 @@
+{
+  "schema": "aicad_requirement_conformance_report_v1",
+  "status": "pass",
+  "contract": {
+    "id": "REQ.SIFC.220.REV.A",
+    "revision": 1,
+    "canonicalSha256": "d6a5dde3f7cc2a51327e5ab69162d8110a5cd3ba3132be138aec5dbcfac14edc",
+    "requestSummary": "Prebuild, review-only intent contract for a complex native SolidWorks servo-indexer bearing cartridge and selectable 2D/3D review evidence."
+  },
+  "designIdentity": {
+    "productType": "servo_indexer_bearing_cartridge",
+    "structureFamily": "SIFC_BOUNDED_ENVELOPE",
+    "standard": "ISO GPS plus GB/T mechanical drawing controlled design basis",
+    "topClosure": "bearing_side",
+    "bottomClosure": "mounting_side",
+    "units": "mm"
+  },
+  "ruleIds": [
+    "NORM-G001",
+    "NORM-G002",
+    "NORM-G003",
+    "NORM-G004",
+    "PKG-G024",
+    "PKG-G025"
+  ],
+  "checks": {
+    "contractCompleteAndAuthorityOrdered": true,
+    "normativeRulesPrecedePreferencesReferencesAndGeometry": true,
+    "traceBindsExactContractRevision": true,
+    "everyHardRequirementActualBoundToControlledSource": true,
+    "everyHardRequirementIndependentlyProven": true,
+    "highImpactAssumptionsConfirmed": true,
+    "allSourceConflictsResolved": true,
+    "dimensionsUseAuthoritativeNonPixelSources": true,
+    "typedDesignIdentityMatchesContractAndTemplate": true,
+    "majorFeaturesAreRequiredOrExplicitlyAllowed": true,
+    "requiredOutputsPlanned": true,
+    "reviewSafetyLocksClosed": true
+  },
+  "counts": {
+    "sources": 6,
+    "hardRequirements": 6,
+    "hardRequirementsPassed": 6,
+    "actualBindings": 6,
+    "actualBindingsPassed": 6,
+    "assumptions": 1,
+    "conflicts": 0,
+    "requiredMajorFeatures": 15,
+    "actualMajorFeatures": 15,
+    "requiredOutputs": 6
+  },
+  "hardRequirementResults": [
+    {
+      "requirementId": "REQ.PRODUCT",
+      "category": "overall_shape",
+      "pass": true,
+      "status": "satisfied",
+      "independentComparisonPass": true,
+      "comparison": "expected exact 'servo_indexer_bearing_cartridge', observed 'servo_indexer_bearing_cartridge'",
+      "actualBinding": {
+        "source": "normality_template",
+        "transform": "identity",
+        "jsonPointer": "/productType"
+      },
+      "boundActual": "servo_indexer_bearing_cartridge",
+      "bindingMatchesObserved": true,
+      "bindingComparison": "expected exact 'servo_indexer_bearing_cartridge', observed 'servo_indexer_bearing_cartridge'",
+      "bindingError": null,
+      "evidencePresent": true,
+      "confirmationRequired": false,
+      "humanConfirmationPresent": true
+    },
+    {
+      "requirementId": "REQ.STRUCTURE",
+      "category": "structure_family",
+      "pass": true,
+      "status": "satisfied",
+      "independentComparisonPass": true,
+      "comparison": "expected exact 'SIFC_BOUNDED_ENVELOPE', observed 'SIFC_BOUNDED_ENVELOPE'",
+      "actualBinding": {
+        "source": "normality_template",
+        "transform": "identity",
+        "jsonPointer": "/profileId"
+      },
+      "boundActual": "SIFC_BOUNDED_ENVELOPE",
+      "bindingMatchesObserved": true,
+      "bindingComparison": "expected exact 'SIFC_BOUNDED_ENVELOPE', observed 'SIFC_BOUNDED_ENVELOPE'",
+      "bindingError": null,
+      "evidencePresent": true,
+      "confirmationRequired": false,
+      "humanConfirmationPresent": true
+    },
+    {
+      "requirementId": "REQ.MATERIAL",
+      "category": "material",
+      "pass": true,
+      "status": "satisfied",
+      "independentComparisonPass": true,
+      "comparison": "expected exact '7075-T651', observed '7075-T651'",
+      "actualBinding": {
+        "source": "contract",
+        "transform": "identity",
+        "jsonPointer": "/sources/1/description"
+      },
+      "boundActual": "7075-T651",
+      "bindingMatchesObserved": true,
+      "bindingComparison": "expected exact '7075-T651', observed '7075-T651'",
+      "bindingError": null,
+      "evidencePresent": true,
+      "confirmationRequired": false,
+      "humanConfirmationPresent": true
+    },
+    {
+      "requirementId": "REQ.DIMENSIONS",
+      "category": "dimensions",
+      "pass": true,
+      "status": "satisfied",
+      "independentComparisonPass": true,
+      "comparison": "expected exact [220, 180, 20, 56, 130, 80, 36, 50, 92, 6, 108, 9, 104, 7, 14, 24, 10, 8, 42, 72, 12, 36, 34, 10], observed [220, 180, 20, 56, 130, 80, 36, 50, 92, 6, 108, 9, 104, 7, 14, 24, 10, 8, 42, 72, 12, 36, 34, 10]",
+      "actualBinding": {
+        "source": "normality_instance",
+        "transform": "normality_parameters",
+        "parameterIds": [
+          "BASE_W",
+          "BASE_H",
+          "BASE_T",
+          "TOTAL_H",
+          "BOSS_D",
+          "SEAT_D",
+          "SEAT_DEPTH",
+          "SHAFT_D",
+          "SEAL_D",
+          "SEAL_DEPTH",
+          "INDEXER_PCD",
+          "INDEXER_HOLE_D",
+          "COVER_PCD",
+          "COVER_HOLE_D",
+          "FRAME_HOLE_D",
+          "FRAME_CB_D",
+          "FRAME_CB_DEPTH",
+          "DOWEL_D",
+          "RIB_W",
+          "RIB_H",
+          "RIB_DEPTH",
+          "POCKET_W",
+          "POCKET_H",
+          "POCKET_DEPTH"
+        ]
+      },
+      "boundActual": [
+        220.0,
+        180.0,
+        20.0,
+        56.0,
+        130.0,
+        80.0,
+        36.0,
+        50.0,
+        92.0,
+        6.0,
+        108.0,
+        9.0,
+        104.0,
+        7.0,
+        14.0,
+        24.0,
+        10.0,
+        8.0,
+        42.0,
+        72.0,
+        12.0,
+        36.0,
+        34.0,
+        10.0
+      ],
+      "bindingMatchesObserved": true,
+      "bindingComparison": "expected exact [220.0, 180.0, 20.0, 56.0, 130.0, 80.0, 36.0, 50.0, 92.0, 6.0, 108.0, 9.0, 104.0, 7.0, 14.0, 24.0, 10.0, 8.0, 42.0, 72.0, 12.0, 36.0, 34.0, 10.0], observed [220, 180, 20, 56, 130, 80, 36, 50, 92, 6, 108, 9, 104, 7, 14, 24, 10, 8, 42, 72, 12, 36, 34, 10]",
+      "bindingError": null,
+      "evidencePresent": true,
+      "confirmationRequired": false,
+      "humanConfirmationPresent": true
+    },
+    {
+      "requirementId": "REQ.FEATURE_INTENT",
+      "category": "overall_shape",
+      "pass": true,
+      "status": "satisfied",
+      "independentComparisonPass": true,
+      "comparison": "expected set containing ['base_plate', 'bearing_boss', 'bearing_seat', 'cover_hole_pattern', 'dowel_holes', 'frame_counterbores', 'frame_mount_holes', 'indexer_hole_pattern', 'lightening_pockets', 'manufacturing_drawing', 'rib_pads', 'seal_recess', 'selectable_2d_reviewer', 'selectable_3d_reviewer', 'shaft_clearance'], observed ['base_plate', 'bearing_boss', 'bearing_seat', 'cover_hole_pattern', 'dowel_holes', 'frame_counterbores', 'frame_mount_holes', 'indexer_hole_pattern', 'lightening_pockets', 'manufacturing_drawing', 'rib_pads', 'seal_recess', 'selectable_2d_reviewer', 'selectable_3d_reviewer', 'shaft_clearance']",
+      "actualBinding": {
+        "source": "normality_template",
+        "transform": "identity",
+        "jsonPointer": "/majorFeatures"
+      },
+      "boundActual": [
+        "base_plate",
+        "bearing_boss",
+        "bearing_seat",
+        "shaft_clearance",
+        "seal_recess",
+        "indexer_hole_pattern",
+        "cover_hole_pattern",
+        "frame_mount_holes",
+        "frame_counterbores",
+        "dowel_holes",
+        "rib_pads",
+        "lightening_pockets",
+        "manufacturing_drawing",
+        "selectable_2d_reviewer",
+        "selectable_3d_reviewer"
+      ],
+      "bindingMatchesObserved": true,
+      "bindingComparison": "expected exact ['base_plate', 'bearing_boss', 'bearing_seat', 'shaft_clearance', 'seal_recess', 'indexer_hole_pattern', 'cover_hole_pattern', 'frame_mount_holes', 'frame_counterbores', 'dowel_holes', 'rib_pads', 'lightening_pockets', 'manufacturing_drawing', 'selectable_2d_reviewer', 'selectable_3d_reviewer'], observed ['base_plate', 'bearing_boss', 'bearing_seat', 'shaft_clearance', 'seal_recess', 'indexer_hole_pattern', 'cover_hole_pattern', 'frame_mount_holes', 'frame_counterbores', 'dowel_holes', 'rib_pads', 'lightening_pockets', 'manufacturing_drawing', 'selectable_2d_reviewer', 'selectable_3d_reviewer']",
+      "bindingError": null,
+      "evidencePresent": true,
+      "confirmationRequired": false,
+      "humanConfirmationPresent": true
+    },
+    {
+      "requirementId": "REQ.LOCKS",
+      "category": "safety",
+      "pass": true,
+      "status": "satisfied",
+      "independentComparisonPass": true,
+      "comparison": "expected exact True, observed True",
+      "actualBinding": {
+        "source": "normality_instance",
+        "transform": "all_review_locks_closed",
+        "jsonPointer": "/locks"
+      },
+      "boundActual": true,
+      "bindingMatchesObserved": true,
+      "bindingComparison": "expected exact True, observed True",
+      "bindingError": null,
+      "evidencePresent": true,
+      "confirmationRequired": false,
+      "humanConfirmationPresent": true
+    }
+  ],
+  "failures": [],
+  "normativeGate": {
+    "stage": 0,
+    "name": "cross_domain_normative_preflight",
+    "nextStageAllowed": true,
+    "nonCompensatory": true,
+    "meaning": "Applicable domain standards and source authority must be resolved before geometry; visual quality cannot compensate for a normative failure."
+  },
+  "orderedGate": {
+    "stage": 1,
+    "name": "overall_user_requirement_conformance",
+    "nextStageAllowed": true,
+    "nonCompensatory": true,
+    "meaning": "A failed overall requirement cannot be offset by perfect line geometry."
+  },
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

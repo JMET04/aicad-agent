@@ -1,5 +1,8 @@
 #include "mw_protocol.h"
 
+#include "mw_gesture.h"
+#include "mw_gesture_event_v2.h"
+
 #include <string.h>
 
 static void put_u16_be(uint8_t *output, uint16_t value)
@@ -32,7 +35,22 @@ static bool command_is_known(uint8_t command)
         return false;
     }
 }
-static bool payload_length_is_valid(uint8_t command, uint16_t payload_length)
+
+static bool command_direction_is_valid(uint8_t command, uint8_t direction)
+{
+    if (direction == (uint8_t)MW_DIRECTION_WAND_TO_RECEIVER) {
+        return command != (uint8_t)MW_CMD_FEEDBACK;
+    }
+    if (direction == (uint8_t)MW_DIRECTION_RECEIVER_TO_WAND) {
+        return command == (uint8_t)MW_CMD_FEEDBACK;
+    }
+    return false;
+}
+
+static bool payload_length_is_valid(
+    uint8_t command,
+    uint16_t payload_length,
+    mw_gesture_payload_profile_t gesture_profile)
 {
     switch ((mw_command_t)command) {
     case MW_CMD_DISARM:
@@ -47,7 +65,15 @@ static bool payload_length_is_valid(uint8_t command, uint16_t payload_length)
     case MW_CMD_FEEDBACK:
         return ((size_t)payload_length <= MW_MAX_PAYLOAD_BYTES);
     case MW_CMD_GESTURE_EVENT:
-        return (payload_length == 2U);
+        if (gesture_profile == MW_GESTURE_PAYLOAD_PROFILE_LEGACY_V1) {
+            return (size_t)payload_length ==
+                MW_GESTURE_EVENT_PAYLOAD_BYTES;
+        }
+        if (gesture_profile ==
+            MW_GESTURE_PAYLOAD_PROFILE_MULTICHANNEL_V2) {
+            return (size_t)payload_length == MW_GESTURE_EVENT_V2_BYTES;
+        }
+        return false;
     default:
         return false;
     }
@@ -68,7 +94,59 @@ void mw_replay_guard_init(
     guard->expected_device_id = expected_device_id;
     guard->expected_session_id = expected_session_id;
     guard->receive_high_water = persisted_receive_high_water;
+    guard->durable_session_id = UINT32_C(0);
+    guard->reserved_sequence_ceiling = UINT32_C(0);
+    guard->gesture_payload_profile =
+        MW_GESTURE_PAYLOAD_PROFILE_UNSUPPORTED;
     guard->persistence_ready = persistence_ready;
+    guard->durable_session_window_bound = false;
+}
+
+bool mw_replay_guard_set_gesture_profile(
+    mw_replay_guard_t *guard,
+    mw_gesture_payload_profile_t profile)
+{
+    if (guard == NULL) {
+        return false;
+    }
+    if (guard->durable_session_window_bound) {
+        return profile == guard->gesture_payload_profile;
+    }
+    if ((profile != MW_GESTURE_PAYLOAD_PROFILE_LEGACY_V1) &&
+        (profile != MW_GESTURE_PAYLOAD_PROFILE_MULTICHANNEL_V2)) {
+        guard->gesture_payload_profile =
+            MW_GESTURE_PAYLOAD_PROFILE_UNSUPPORTED;
+        return false;
+    }
+    guard->gesture_payload_profile = profile;
+    return true;
+}
+
+bool mw_replay_guard_bind_durable_session_window(
+    mw_replay_guard_t *guard,
+    uint32_t durable_session_id,
+    uint32_t reserved_sequence_ceiling)
+{
+    if ((guard == NULL) || !guard->persistence_ready ||
+        guard->durable_session_window_bound ||
+        (guard->expected_device_id == UINT32_C(0)) ||
+        (guard->expected_session_id == UINT32_C(0)) ||
+        (guard->expected_session_id == UINT32_MAX) ||
+        (durable_session_id != guard->expected_session_id) ||
+        (guard->receive_high_water != UINT32_C(0)) ||
+        (reserved_sequence_ceiling == UINT32_C(0)) ||
+        (reserved_sequence_ceiling == UINT32_MAX) ||
+        ((guard->gesture_payload_profile !=
+          MW_GESTURE_PAYLOAD_PROFILE_LEGACY_V1) &&
+         (guard->gesture_payload_profile !=
+          MW_GESTURE_PAYLOAD_PROFILE_MULTICHANNEL_V2))) {
+        return false;
+    }
+
+    guard->durable_session_id = durable_session_id;
+    guard->reserved_sequence_ceiling = reserved_sequence_ceiling;
+    guard->durable_session_window_bound = true;
+    return true;
 }
 
 void mw_protocol_build_nonce(
@@ -118,7 +196,7 @@ bool mw_protocol_accept_and_decrypt(
 {
     uint8_t nonce[MW_NONCE_BYTES] = {0};
     uint8_t aad[MW_AAD_BYTES] = {0};
-    uint32_t age_ms;
+    int32_t age_ms;
 
     if (plaintext_out != NULL) {
         (void)memset(plaintext_out, 0, MW_MAX_PAYLOAD_BYTES);
@@ -133,18 +211,33 @@ bool mw_protocol_accept_and_decrypt(
     if ((frame->header.version != MW_PROTOCOL_VERSION) ||
         (frame->header.direction != (uint8_t)expected_direction) ||
         !command_is_known(frame->header.command) ||
+        !command_direction_is_valid(frame->header.command,
+                                    frame->header.direction) ||
         (frame->header.device_id != guard->expected_device_id) ||
         (frame->header.flags != 0U) ||
         (frame->header.session_id != guard->expected_session_id) ||
-        !payload_length_is_valid(frame->header.command, frame->header.payload_length) ||
+        !payload_length_is_valid(
+            frame->header.command,
+            frame->header.payload_length,
+            guard->gesture_payload_profile) ||
         (frame->header.sequence == 0U) ||
+        (frame->header.sequence == UINT32_MAX) ||
         (frame->header.sequence <= guard->receive_high_water) ||
+        (guard->durable_session_window_bound &&
+         ((guard->durable_session_id == UINT32_C(0)) ||
+          (guard->durable_session_id == UINT32_MAX) ||
+          (guard->durable_session_id != guard->expected_session_id) ||
+          (frame->header.session_id != guard->durable_session_id) ||
+          (guard->reserved_sequence_ceiling == UINT32_C(0)) ||
+          (guard->reserved_sequence_ceiling == UINT32_MAX) ||
+          (frame->header.sequence >
+           guard->reserved_sequence_ceiling))) ||
         ((size_t)frame->header.payload_length > MW_MAX_PAYLOAD_BYTES)) {
         return false;
     }
 
-    age_ms = now_ms - frame->header.issued_ms;
-    if (age_ms > MW_COMMAND_FRESHNESS_MS) {
+    age_ms = (int32_t)(now_ms - frame->header.issued_ms);
+    if ((age_ms < 0) || ((uint32_t)age_ms > MW_COMMAND_FRESHNESS_MS)) {
         return false;
     }
 
@@ -166,9 +259,10 @@ bool mw_protocol_accept_and_decrypt(
         return false;
     }
 
-    /* Persist before exposing acceptance to an output state machine. */
+    /* Commit replay state before exposing plaintext to an output policy. */
     if (!commit_high_water(persistence_context, frame->header.sequence)) {
         (void)memset(plaintext_out, 0, MW_MAX_PAYLOAD_BYTES);
+        guard->persistence_ready = false;
         return false;
     }
 

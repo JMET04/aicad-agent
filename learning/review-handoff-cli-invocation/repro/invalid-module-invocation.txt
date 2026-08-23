@@ -1,0 +1,8 @@
+Command:
+python -B -m unittest tests.test_review_handoff tests.test_modifier_ui_v2 tests.test_universal -v
+
+Expected negative result:
+The repository tests directory has no __init__.py, so dotted tests.* module imports fail before test discovery.
+
+Correct invocation family:
+python -B -m unittest discover -s tests -p "test_<name>.py" -v

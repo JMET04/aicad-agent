@@ -1,0 +1,9 @@
+Root suite command:
+python -B -m unittest discover -s tests -v
+
+Exit code: 1
+Failed check: test_2d_line_length_and_coordinates_are_authoritative
+ValidationError: Additional properties are not allowed ('placement_path', 'placement_point' were unexpected)
+Instance: views[0].entities[0]
+
+Root suite summary: Ran 169 tests; FAILED (failures=1, errors=1)

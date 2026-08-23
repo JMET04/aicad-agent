@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-DRAWING-TEXT-OUTSIDE-FRAMES: user visual review of title block and notes. Title text was anchored around cell edges, general notes were unframed and the first section-note frame overlapped the section geometry.

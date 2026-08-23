@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-LEARNING-QA-DEFAULT-RULES-PATH-MISSING: continuous-learning QA authoritative rules lookup. QA failed because its default rules/continuous_learning_rules.json path does not exist at repository root.

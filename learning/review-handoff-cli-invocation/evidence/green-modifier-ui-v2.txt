@@ -1,0 +1,6 @@
+Command:
+python -B -m unittest discover -s tests -p "test_modifier_ui_v2.py" -v
+
+Exit code: 0
+Ran 5 tests in 1.923s
+OK

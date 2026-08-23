@@ -1,0 +1,1 @@
+{"status":"failed","failedGates":["plan_geometry"],"evidence":{"mappingErrors":[],"actualLayerCounts":{"OUTLINE":4},"expectedLayerCounts":{"OUTLINE":4},"failedEntities":[]},"hiddenFailedPredicate":"plan.entities[0].id in excluded"}

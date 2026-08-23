@@ -1,0 +1,529 @@
+{
+  "schema": "aicad_normality_template_v1",
+  "profileId": "SIFC_BOUNDED_ENVELOPE",
+  "profileVersion": "1.0.0",
+  "productType": "servo_indexer_bearing_cartridge",
+  "majorFeatures": [
+    "base_plate",
+    "bearing_boss",
+    "bearing_seat",
+    "shaft_clearance",
+    "seal_recess",
+    "indexer_hole_pattern",
+    "cover_hole_pattern",
+    "frame_mount_holes",
+    "frame_counterbores",
+    "dowel_holes",
+    "rib_pads",
+    "lightening_pockets",
+    "manufacturing_drawing",
+    "selectable_2d_reviewer",
+    "selectable_3d_reviewer"
+  ],
+  "structureName": "SIFC-220 prebuild bounded-envelope and parameter-domain review",
+  "closureSystem": {
+    "top": "bearing_side",
+    "bottom": "mounting_side",
+    "asymmetric": true,
+    "standard": "ISO GPS plus GB/T mechanical drawing controlled design basis"
+  },
+  "toleranceMm": 1e-06,
+  "parameters": [
+    {
+      "id": "BASE_W",
+      "role": "independent",
+      "unit": "mm",
+      "default": 220,
+      "min": 210,
+      "max": 230,
+      "purpose": "controlled base_w dimension"
+    },
+    {
+      "id": "BASE_H",
+      "role": "independent",
+      "unit": "mm",
+      "default": 180,
+      "min": 170,
+      "max": 190,
+      "purpose": "controlled base_h dimension"
+    },
+    {
+      "id": "BASE_T",
+      "role": "independent",
+      "unit": "mm",
+      "default": 20,
+      "min": 18,
+      "max": 20,
+      "purpose": "controlled base_t dimension"
+    },
+    {
+      "id": "TOTAL_H",
+      "role": "independent",
+      "unit": "mm",
+      "default": 56,
+      "min": 56,
+      "max": 60,
+      "purpose": "controlled total_h dimension"
+    },
+    {
+      "id": "BOSS_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 130,
+      "min": 125,
+      "max": 135,
+      "purpose": "controlled boss_d dimension"
+    },
+    {
+      "id": "SEAT_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 80,
+      "min": 78,
+      "max": 82,
+      "purpose": "controlled seat_d dimension"
+    },
+    {
+      "id": "SEAT_DEPTH",
+      "role": "independent",
+      "unit": "mm",
+      "default": 36,
+      "min": 34,
+      "max": 36,
+      "purpose": "controlled seat_depth dimension"
+    },
+    {
+      "id": "SHAFT_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 50,
+      "min": 48,
+      "max": 52,
+      "purpose": "controlled shaft_d dimension"
+    },
+    {
+      "id": "SEAL_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 92,
+      "min": 90,
+      "max": 94,
+      "purpose": "controlled seal_d dimension"
+    },
+    {
+      "id": "SEAL_DEPTH",
+      "role": "independent",
+      "unit": "mm",
+      "default": 6,
+      "min": 5,
+      "max": 7,
+      "purpose": "controlled seal_depth dimension"
+    },
+    {
+      "id": "INDEXER_PCD",
+      "role": "independent",
+      "unit": "mm",
+      "default": 108,
+      "min": 104,
+      "max": 110,
+      "purpose": "controlled indexer_pcd dimension"
+    },
+    {
+      "id": "INDEXER_HOLE_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 9,
+      "min": 8,
+      "max": 10,
+      "purpose": "controlled indexer_hole_d dimension"
+    },
+    {
+      "id": "COVER_PCD",
+      "role": "independent",
+      "unit": "mm",
+      "default": 104,
+      "min": 100,
+      "max": 106,
+      "purpose": "controlled cover_pcd dimension"
+    },
+    {
+      "id": "COVER_HOLE_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 7,
+      "min": 6,
+      "max": 8,
+      "purpose": "controlled cover_hole_d dimension"
+    },
+    {
+      "id": "FRAME_HOLE_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 14,
+      "min": 13,
+      "max": 15,
+      "purpose": "controlled frame_hole_d dimension"
+    },
+    {
+      "id": "FRAME_CB_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 24,
+      "min": 23,
+      "max": 25,
+      "purpose": "controlled frame_cb_d dimension"
+    },
+    {
+      "id": "FRAME_CB_DEPTH",
+      "role": "independent",
+      "unit": "mm",
+      "default": 10,
+      "min": 9,
+      "max": 11,
+      "purpose": "controlled frame_cb_depth dimension"
+    },
+    {
+      "id": "DOWEL_D",
+      "role": "independent",
+      "unit": "mm",
+      "default": 8,
+      "min": 7.8,
+      "max": 8.2,
+      "purpose": "controlled dowel_d dimension"
+    },
+    {
+      "id": "RIB_W",
+      "role": "independent",
+      "unit": "mm",
+      "default": 42,
+      "min": 40,
+      "max": 44,
+      "purpose": "controlled rib_w dimension"
+    },
+    {
+      "id": "RIB_H",
+      "role": "independent",
+      "unit": "mm",
+      "default": 72,
+      "min": 70,
+      "max": 74,
+      "purpose": "controlled rib_h dimension"
+    },
+    {
+      "id": "RIB_DEPTH",
+      "role": "independent",
+      "unit": "mm",
+      "default": 12,
+      "min": 10,
+      "max": 14,
+      "purpose": "controlled rib_depth dimension"
+    },
+    {
+      "id": "POCKET_W",
+      "role": "independent",
+      "unit": "mm",
+      "default": 36,
+      "min": 34,
+      "max": 38,
+      "purpose": "controlled pocket_w dimension"
+    },
+    {
+      "id": "POCKET_H",
+      "role": "independent",
+      "unit": "mm",
+      "default": 34,
+      "min": 32,
+      "max": 36,
+      "purpose": "controlled pocket_h dimension"
+    },
+    {
+      "id": "POCKET_DEPTH",
+      "role": "independent",
+      "unit": "mm",
+      "default": 10,
+      "min": 8,
+      "max": 12,
+      "purpose": "controlled pocket_depth dimension"
+    },
+    {
+      "id": "BOSS_H",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "TOTAL_H-BASE_T",
+      "purpose": "boss height above base"
+    },
+    {
+      "id": "RESIDUAL_WALL",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "(BOSS_D-SEAT_D)/2",
+      "purpose": "bearing housing radial wall"
+    },
+    {
+      "id": "POCKET_FLOOR",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "BASE_T-POCKET_DEPTH",
+      "purpose": "remaining pocket floor"
+    },
+    {
+      "id": "BASE_AREA",
+      "role": "derived",
+      "unit": "mm",
+      "formula": "BASE_W*BASE_H",
+      "purpose": "base plan area"
+    }
+  ],
+  "excludedEntityIds": [
+    "ORIGIN_BOOTSTRAP"
+  ],
+  "productionEntityIds": [
+    "ENV_BOTTOM",
+    "ENV_RIGHT",
+    "ENV_TOP",
+    "ENV_LEFT"
+  ],
+  "expectedLayerCounts": {
+    "OUTLINE": 4
+  },
+  "vertices": [
+    {
+      "id": "V0",
+      "purpose": "lower-left corner",
+      "x": "0",
+      "y": "0",
+      "refs": [
+        "ENV_BOTTOM.start",
+        "ENV_LEFT.end"
+      ]
+    },
+    {
+      "id": "V1",
+      "purpose": "lower-right corner",
+      "x": "BASE_W",
+      "y": "0",
+      "refs": [
+        "ENV_BOTTOM.end",
+        "ENV_RIGHT.start"
+      ]
+    },
+    {
+      "id": "V2",
+      "purpose": "upper-right corner",
+      "x": "BASE_W",
+      "y": "BASE_H",
+      "refs": [
+        "ENV_RIGHT.end",
+        "ENV_TOP.start"
+      ]
+    },
+    {
+      "id": "V3",
+      "purpose": "upper-left corner",
+      "x": "0",
+      "y": "BASE_H",
+      "refs": [
+        "ENV_TOP.end",
+        "ENV_LEFT.start"
+      ]
+    }
+  ],
+  "outerContour": [
+    "ENV_BOTTOM",
+    "ENV_RIGHT",
+    "ENV_TOP",
+    "ENV_LEFT"
+  ],
+  "features": [
+    {
+      "id": "BASE_ENVELOPE_FACE",
+      "kind": "face",
+      "purpose": "bounded base-envelope proof face",
+      "countsAsFace": true,
+      "entityIds": [
+        "ENV_BOTTOM",
+        "ENV_RIGHT",
+        "ENV_TOP",
+        "ENV_LEFT"
+      ],
+      "polygonVertexIds": [
+        "V0",
+        "V1",
+        "V2",
+        "V3"
+      ],
+      "rules": {
+        "simple": true,
+        "convex": true,
+        "minAreaMm2": 35000
+      }
+    }
+  ],
+  "measurements": [
+    {
+      "id": "WIDTH_MEASURED",
+      "kind": "abs_dx",
+      "a": "V0",
+      "b": "V1"
+    },
+    {
+      "id": "HEIGHT_MEASURED",
+      "kind": "abs_dy",
+      "a": "V0",
+      "b": "V3"
+    },
+    {
+      "id": "AREA_MEASURED",
+      "kind": "feature_area",
+      "featureId": "BASE_ENVELOPE_FACE"
+    }
+  ],
+  "domainAssertions": [
+    {
+      "id": "BASE_LANDSCAPE",
+      "purpose": "base remains wider than tall",
+      "lhs": "BASE_W",
+      "operator": ">",
+      "rhs": "BASE_H"
+    },
+    {
+      "id": "BOSS_HEIGHT",
+      "purpose": "boss contains bearing-seat depth",
+      "lhs": "BOSS_H",
+      "operator": ">=",
+      "rhs": "SEAT_DEPTH"
+    },
+    {
+      "id": "NEST_1",
+      "purpose": "boss contains seal recess",
+      "lhs": "BOSS_D",
+      "operator": ">",
+      "rhs": "SEAL_D"
+    },
+    {
+      "id": "NEST_2",
+      "purpose": "seal contains seat",
+      "lhs": "SEAL_D",
+      "operator": ">",
+      "rhs": "SEAT_D"
+    },
+    {
+      "id": "NEST_3",
+      "purpose": "seat contains shaft",
+      "lhs": "SEAT_D",
+      "operator": ">",
+      "rhs": "SHAFT_D"
+    },
+    {
+      "id": "WALL",
+      "purpose": "housing retains radial wall",
+      "lhs": "RESIDUAL_WALL",
+      "operator": ">=",
+      "rhs": "21.5"
+    },
+    {
+      "id": "INDEXER_INSIDE",
+      "purpose": "indexer holes stay inside boss",
+      "lhs": "INDEXER_PCD/2+INDEXER_HOLE_D/2",
+      "operator": "<=",
+      "rhs": "BOSS_D/2"
+    },
+    {
+      "id": "COVER_INSIDE",
+      "purpose": "cover holes stay inside boss",
+      "lhs": "COVER_PCD/2+COVER_HOLE_D/2",
+      "operator": "<=",
+      "rhs": "BOSS_D/2"
+    },
+    {
+      "id": "CB_SIZE",
+      "purpose": "counterbore exceeds through-hole",
+      "lhs": "FRAME_CB_D",
+      "operator": ">",
+      "rhs": "FRAME_HOLE_D"
+    },
+    {
+      "id": "CB_FLOOR",
+      "purpose": "counterbore retains floor",
+      "lhs": "FRAME_CB_DEPTH",
+      "operator": "<",
+      "rhs": "BASE_T"
+    },
+    {
+      "id": "POCKET_FLOOR",
+      "purpose": "pocket retains floor",
+      "lhs": "POCKET_FLOOR",
+      "operator": ">=",
+      "rhs": "6"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "WIDTH_EXACT",
+      "purpose": "measured width follows parameter",
+      "lhs": "WIDTH_MEASURED",
+      "operator": "==",
+      "rhs": "BASE_W"
+    },
+    {
+      "id": "HEIGHT_EXACT",
+      "purpose": "measured height follows parameter",
+      "lhs": "HEIGHT_MEASURED",
+      "operator": "==",
+      "rhs": "BASE_H"
+    },
+    {
+      "id": "AREA_EXACT",
+      "purpose": "face area follows parameters",
+      "lhs": "AREA_MEASURED",
+      "operator": "==",
+      "rhs": "BASE_AREA"
+    },
+    {
+      "id": "BBOX_W",
+      "purpose": "bbox width follows parameter",
+      "lhs": "ACTUAL_BBOX_WIDTH",
+      "operator": "==",
+      "rhs": "BASE_W"
+    },
+    {
+      "id": "BBOX_H",
+      "purpose": "bbox height follows parameter",
+      "lhs": "ACTUAL_BBOX_HEIGHT",
+      "operator": "==",
+      "rhs": "BASE_H"
+    }
+  ],
+  "expectedBBox": {
+    "minX": "0",
+    "minY": "0",
+    "maxX": "BASE_W",
+    "maxY": "BASE_H"
+  },
+  "sampling": {
+    "randomSeed": 22018056,
+    "randomCases": 64,
+    "explicitCases": [
+      {
+        "id": "minimum_envelope",
+        "values": {
+          "BASE_W": 210,
+          "BASE_H": 170
+        }
+      },
+      {
+        "id": "maximum_envelope",
+        "values": {
+          "BASE_W": 230,
+          "BASE_H": 190
+        }
+      }
+    ]
+  },
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

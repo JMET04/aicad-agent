@@ -1,0 +1,4 @@
+RED: independent 1.16.0 package verification after packaged tests
+Result: FAIL
+The verifier found 19 runtime/src/aicad/__pycache__/*.pyc files created by child Python processes. Each file was correctly rejected as cache, manifest-unlisted, and sums-unlisted.
+

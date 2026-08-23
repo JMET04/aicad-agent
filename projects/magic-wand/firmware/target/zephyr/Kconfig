@@ -1,0 +1,23 @@
+mainmenu "Magic Wand NINA-B302 target"
+
+source "Kconfig.zephyr"
+
+menu "Magic Wand target release gates"
+
+config MW_AXIS_MAP_APPROVED
+	bool "Enable drawing-derived sensor-to-wand axis map"
+	default n
+	help
+	  Keep this disabled until a signed six-face accelerometer and positive-axis
+	  gyroscope HIL record approves the mapping on assembled hardware. The target
+	  intentionally refuses to classify gestures while this gate is disabled.
+
+config MW_C08_005_ACTUATOR_APPROVED
+	bool "Enable the C08-005 LRA candidate"
+	default n
+	help
+	  Keep this disabled until the exact mounted C08-005 sample has passed
+	  resonance, current, thermal, acoustic and mechanical-clearance validation.
+	  Enabling the DRV2605 node without this gate produces a build-time failure.
+
+endmenu

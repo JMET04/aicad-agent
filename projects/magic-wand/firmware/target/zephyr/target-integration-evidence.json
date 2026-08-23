@@ -1,0 +1,143 @@
+{
+  "authority": "projects/magic-wand/electronics/wand/wand-factory-design.json",
+  "checks": [
+    {
+      "detail": "U1 exact module GPIO, VBUS and protected USB nets",
+      "name": "factory_nina_b302_pin_authority",
+      "pass": true
+    },
+    {
+      "detail": "mw_board_pins.h exact P0/P1 assignments",
+      "name": "portable_pin_header_matches_factory",
+      "pass": true
+    },
+    {
+      "detail": "SA0=GND selects 0x6A; CS high selects I2C; INT1 is routed",
+      "name": "lsm6dsv16x_factory_mode",
+      "pass": true
+    },
+    {
+      "detail": "Zephyr binding address/range/ODR/INT1 contract",
+      "name": "lsm6dsv16x_overlay_binding",
+      "pass": true
+    },
+    {
+      "detail": "P0.11 SCL and P1.09 SDA",
+      "name": "i2c_pinmux_matches_factory",
+      "pass": true
+    },
+    {
+      "detail": "press-to-ground via 1k, external 100k pull-up, active-low P0.06",
+      "name": "physical_arm_chain",
+      "pass": true
+    },
+    {
+      "detail": "DRV2605 I2C, enable and differential actuator nets",
+      "name": "drv2605_factory_connectivity",
+      "pass": true
+    },
+    {
+      "detail": "base node disabled; exact C08 candidate needs paired overlay/config/build assert",
+      "name": "haptic_base_fail_closed",
+      "pass": true
+    },
+    {
+      "detail": "USB input, battery/NTC connector and both raw charger status inputs reserved",
+      "name": "power_and_battery_reserve",
+      "pass": true
+    },
+    {
+      "detail": "EVK P0.13/P0.25 LEDs/buttons and unused peripherals disabled",
+      "name": "evk_conflicts_disabled",
+      "pass": true
+    },
+    {
+      "detail": "proper-rotation check, SI conversion, HIL approval off by default",
+      "name": "axis_and_units_fail_closed",
+      "pass": true
+    },
+    {
+      "detail": "14-byte big-endian V2 payload supports eight isolated logical channels",
+      "name": "gesture_event_v2_contract",
+      "pass": true
+    },
+    {
+      "detail": "no identity/session or secure queue implementation means no event leaves target",
+      "name": "secure_sink_fail_closed",
+      "pass": true
+    },
+    {
+      "detail": "DRDY sampling, stationary gyro bias, watchdog and physical arm gate",
+      "name": "target_runtime_safety",
+      "pass": true
+    }
+  ],
+  "claims": {
+    "hardware_in_loop_run": false,
+    "host_tests_recorded_here": false,
+    "static_contract_verified": true,
+    "target_compiled": false,
+    "target_flashed": false
+  },
+  "file_sha256": {
+    "projects/magic-wand/electronics/wand/wand-factory-design.json": "a0dbc115aee2e0c3d3dc2949eb48a66f8ca304e8a973c279ebb7b0609e883687",
+    "projects/magic-wand/firmware/include/mw_board_pins.h": "8570d328de3a77247a5d4cd85f119fa4bd7754c4fd11797f0b1da02bed24f2d1",
+    "projects/magic-wand/firmware/include/mw_gesture_event_v2.h": "7736498a5eb46f82a6ec3620c4bfbef65ad33792f50e2a2e00fcb8af90b1b70c",
+    "projects/magic-wand/firmware/include/mw_target_math.h": "5fd36ea77e6ff82e587e6ba9e387fedee3974be082716e931e542d81b0187d97",
+    "projects/magic-wand/firmware/src/mw_gesture_event_v2.c": "57ecffc9e8def4f9163e887f0068bed548148dfead7c298cc45a231477a79522",
+    "projects/magic-wand/firmware/src/mw_target_math.c": "d4ace5a528d8e1caa7463f373b5d0236c62469f7ac4d30e5a5876a61c2ac20ac",
+    "projects/magic-wand/firmware/target/zephyr/CMakeLists.txt": "299d09652cca488200b21315cad3e3b3f4f54ba9776fba11b966b3d54c96d4e7",
+    "projects/magic-wand/firmware/target/zephyr/Kconfig": "a026fab0b384631e997b148592b2f2f10bc92f77d3edf489e2bc785d85afd772",
+    "projects/magic-wand/firmware/target/zephyr/boards/c08-005.conf": "a4aa2b592e9a8562d15976c58e35da82088c8b15e4868d13541ffaa83a9efbe1",
+    "projects/magic-wand/firmware/target/zephyr/boards/c08-005.overlay": "c0f57ef737bd4cb57da1cd21c6d722468f5579d35afe24016518766f4de7b3b3",
+    "projects/magic-wand/firmware/target/zephyr/boards/ubx_evkninab3_nrf52840.overlay": "7aa9f20b70547f675a00a95ea33cc6acfc12902b7461b50821f1ec35ab0648a0",
+    "projects/magic-wand/firmware/target/zephyr/prj.conf": "86d539d4a968f58f917f9de9121239a5019763be93621062888d7ad0cef054e7",
+    "projects/magic-wand/firmware/target/zephyr/src/main.c": "7fd01e295fcff875cef8d95ca346bd04883e72a016d278539eeb81410b8d2b93"
+  },
+  "generated_at_utc": "2026-08-22T13:35:01.015283+00:00",
+  "remaining_gates": [
+    "Install pinned NCS v3.4.0 toolchain and reproduce both base and optional overlay builds.",
+    "Approve sensor axes only after signed six-face and positive-axis HIL evidence.",
+    "Approve C08-005 only after mounted resonance/current/thermal/mechanical HIL.",
+    "Provide authenticated identity/session and secure queue strong overrides.",
+    "Provide measured battery percentage or retain the explicit 0xFF unknown value.",
+    "Flash only a reviewed build and archive ELF/HEX/map/config hashes plus SWD log."
+  ],
+  "schema": "magic-wand.target-integration-evidence.v1",
+  "status": "STATIC_TARGET_INTEGRATION_VERIFIED_TARGET_BUILD_BLOCKED_TOOLCHAIN_MISSING",
+  "summary": {
+    "passed": 14,
+    "total": 14
+  },
+  "target_baseline": {
+    "board": "ubx_evkninab3/nrf52840",
+    "nrf_connect_sdk": "v3.4.0",
+    "zephyr": "v4.4.0"
+  },
+  "toolchain_discovery": {
+    "common_ncs_roots": {
+      "<USER_HOME>\\AppData\\Local\\Programs\\nrfconnect": false,
+      "<USER_HOME>\\ncs": false,
+      "C:\\Nordic": false,
+      "C:\\ncs": false,
+      "D:\\Nordic": false,
+      "D:\\ncs": false
+    },
+    "environment": {
+      "NRF_CONNECT_SDK": "",
+      "ZEPHYR_BASE": "",
+      "ZEPHYR_SDK_INSTALL_DIR": ""
+    },
+    "ncs_or_zephyr_root_found": false,
+    "target_build_available": false,
+    "tools": {
+      "arm-none-eabi-gcc": null,
+      "cmake": "D:\\mingw64\\mingw64\\bin\\cmake.EXE",
+      "ninja": "<USER_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\ninja.EXE",
+      "nrfjprog": null,
+      "python": "<USER_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.EXE",
+      "west": null
+    },
+    "west_python_module": false
+  }
+}

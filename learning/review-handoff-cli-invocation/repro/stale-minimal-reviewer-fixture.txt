@@ -1,0 +1,5 @@
+Reproducer:
+1. Set MODIFIER to <html data-artifact-role="interactive_drawing_modifier"><body>review</body></html>.
+2. Run: python -B -m unittest discover -s agent-plugin/aicad-agent/tests
+3. The reviewer-first policy tests reach validate_interactive_modifier_contract and reject the fixture because it lacks the selectable-vector, source-binding, measurement, correction, and safety-lock surfaces.
+

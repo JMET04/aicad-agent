@@ -1,19 +1,21 @@
 {
-  "schema": "magic_wand_firmware_host_review_evidence_v2",
-  "artifact_status": "HOST_VERIFIED_TARGET_BUILD_BLOCKED",
+  "schema": "magic_wand_firmware_host_review_evidence_v3",
+  "artifact_status": "HOST_VERIFIED_TARGET_AND_HIL_BLOCKED",
   "observed_at": "2026-08-22",
-  "scope": "Portable C11 host contract for framing, gesture event payloads, replay ordering, safe state transitions, eight relative gesture classes, rejection, physical-arm gating and refractory behavior.",
+  "scope": "Portable C11 protocol/profile gates, target math, eight gesture classes, fail-closed receiver runtime, eight isolated device/session/channel slots, output-owner arbitration, 240x240 RGB565 renderer, deterministic volume-limited procedural audio and effect scheduler.",
   "claim_limits": [
     "Not an nRF52840 or NINA-B302 target build.",
-    "Not a BLE stack, radio, target timing, watchdog, GPIO, flash endurance or hardware test.",
-    "The host_noncrypto_decrypt callback tests plumbing only and is not cryptography or a security proof.",
-    "Synthetic gesture vectors do not replace representative-user data or HIL validation."
+    "Not a BLE stack, production cryptographic implementation, target timing, watchdog, GPIO, flash-endurance or power-cut test.",
+    "Host copy-decrypt callbacks test transaction plumbing only and are not cryptography or a security proof.",
+    "Host RGB565 and PCM vectors do not prove GC9A01A SPI color/order, MAX98357A I2S timing, acoustic volume, EMC, thermal or power behavior.",
+    "No receiver-effects KiCad source, ERC/DRC, Gerber, drill, BOM or placement package is authorized by this evidence.",
+    "No wand electronics, mechanical source or fabrication package is in scope."
   ],
   "toolchain": {
-    "cmake": "D:/mingw64/bin/cmake.exe",
+    "cmake": "D:/mingw64/mingw64/bin/cmake.exe",
     "cmake_version": "4.3.2",
     "generator": "Ninja",
-    "ninja": "D:/mingw64/bin/ninja.exe",
+    "ninja": "D:/mingw64/mingw64/bin/ninja.exe",
     "ninja_version": "1.13.2",
     "compiler": "D:/mingw64/bin/gcc.exe",
     "compiler_id": "GNU",
@@ -30,33 +32,68 @@
     ]
   },
   "commands": [
-    "D:/mingw64/bin/cmake.exe -S projects/magic-wand/firmware -B projects/magic-wand/firmware/build-host3 -G Ninja -DCMAKE_C_COMPILER=D:/mingw64/bin/gcc.exe -DCMAKE_MAKE_PROGRAM=D:/mingw64/bin/ninja.exe -DMW_HOST_REVIEW=ON",
-    "D:/mingw64/bin/cmake.exe --build projects/magic-wand/firmware/build-host3 --config Release",
-    "D:/mingw64/bin/ctest.exe --test-dir projects/magic-wand/firmware/build-host3 --output-on-failure -C Release"
+    "D:/mingw64/mingw64/bin/cmake.exe -S projects/magic-wand/firmware -B D:/receiver-runtime-final-build -G Ninja -DCMAKE_C_COMPILER=D:/mingw64/bin/gcc.exe -DMW_HOST_REVIEW=ON",
+    "D:/mingw64/mingw64/bin/cmake.exe --build D:/receiver-runtime-final-build --clean-first",
+    "D:/mingw64/mingw64/bin/ctest.exe --test-dir D:/receiver-runtime-final-build --output-on-failure"
   ],
   "results": {
     "configure": "PASSED",
-    "compile_and_link": "PASSED_8_OF_8_BUILD_STEPS",
-    "ctest": "PASSED_2_OF_2",
-    "ctest_elapsed_seconds": 0.05,
+    "compile_and_link": "PASSED_25_OF_25_BUILD_STEPS",
+    "ctest": "PASSED_8_OF_8",
+    "ctest_elapsed_seconds": 0.22,
     "tests": [
       "mw_host_review",
-      "mw_gesture_vectors"
+      "mw_gesture_vectors",
+      "mw_target_math",
+      "mw_gesture_event_v2_vectors",
+      "mw_receiver_runtime_vectors",
+      "mw_receiver_multichannel_vectors",
+      "mw_pattern_effect_vectors",
+      "mw_target_contract"
     ],
-    "target_compile": "NOT_RUN_NO_ARM_NONE_EABI_GCC_NRF_CONNECT_SDK_OR_ZEPHYR_WEST"
+    "cppcheck": "PASSED_9_OF_9_SELECTED_RECEIVER_FILES_NO_FINDINGS",
+    "target_compile": "NOT_RUN_NO_PINNED_NRF_CONNECT_SDK_ZEPHYR_WEST_OR_NINA_BOARD_BUILD"
   },
   "source_sha256": {
-    "CMakeLists.txt": "51671758E94F93E53E136C1CC3811ED6D6C47D297BBFCF0284BF38A0B4BD9FF4",
+    "CMakeLists.txt": "D9F62CCE721ECA7E672C8B1F2976E1C40D3A710DEC3403C036F81EF80803AF55",
     "include/mw_board_pins.h": "8570D328DE3A77247A5D4CD85F119FA4BD7754C4FD11797F0B1DA02BED24F2D1",
-    "include/mw_protocol.h": "FBB60B584AE6833A9617F7FC3AD931ACEB2A769CD3C6B1F4659F90A00230F4E1",
-    "include/mw_state_machine.h": "F9F30855BA9848A305784B01E71C7D57798D69E57D82CDA8BE31D55210814B0E",
+    "include/mw_protocol.h": "5D23E501D0D8BFAEF4AB2159D3E59533FB8088776BD3BF45E5CF280C6C7F4277",
+    "include/mw_state_machine.h": "D4E9DAEC2AF4649AFE56FFFB212114041C01C10C6342D90B33632C5568CB347F",
     "include/mw_gesture.h": "5E158D4FBBAD37ED21A4A7A489F3405E02C840A9F65DC0A8C92FC9B503FE4C2A",
-    "src/mw_protocol.c": "3F00E7144D6719750ACC6264C543B8C1FEE1504776C092912FCC29363AF5CD8E",
-    "src/mw_state_machine.c": "F8A7463A1219C7463C36FE96A23BAD821148BC58B596B5C0492446746C0AE91E",
+    "include/mw_gesture_event_v2.h": "7736498A5EB46F82A6EC3620C4BFBEF65AD33792F50E2A2E00FCB8AF90B1B70C",
+    "include/mw_target_math.h": "5FD36EA77E6FF82E587E6BA9E387FEDEE3974BE082716E931E542D81B0187D97",
+    "include/mw_receiver_board_pins.h": "8294B0E24A291BDC27BA4EA76BA4B0C55959DDC62C51288E6398FD15933CB5E5",
+    "include/mw_receiver_runtime.h": "671516C2557715373AE463F65A0E8BF1C63F6B056CB7345F8518AE73C19E9B88",
+    "include/mw_receiver_multichannel.h": "EFDC1CAADB3C87D3FCC1A8645983CF1C38C7BC5BCD500A5EAD1D4914B58373C2",
+    "include/mw_pattern_renderer.h": "CE63B035524C540A71EEA3598F279208C0A286009169047D765479F6E3109A13",
+    "include/mw_effect_audio.h": "92502FE7EBC3FE0F0CAB8740A9CD96D61CF3BA9763BA2851823A14C4886C1D6B",
+    "include/mw_effect_scheduler.h": "EE60E3B50EA65ECF4D0CA57DD6114BB7AA3C8FA243A98A8F7F7703B85145C3E9",
+    "include/mw_receiver_rev_b_pins.h": "E120848EFDBCEEE9BF3B081A13D0DA63B3AB8A5AB93A0C28EA47188BA551114A",
+    "src/mw_protocol.c": "359C3A6205EA3244A991C8C39F1F1F555BFABFC69F1D4CB8478A8258CFA76A89",
+    "src/mw_state_machine.c": "C14E3F8D3B33FF044E737A1ADD1ED4DA5B4CEABB864963237C9A479F2E49653C",
     "src/mw_gesture.c": "FB234550AD1CCA0ACDA0E258724B7ADBF5A62B349FE66746D59B8EA343E1C298",
-    "src/main.c": "8A6A099B0D8948546F59911B39F751EA008731067ADC248EBFECDFF9F5CE4E68",
-    "tests/gesture_vectors.c": "446BEC388BA4D87745223B925311B2D7369917E3C42F85EAC4D132B585710B48"
+    "src/mw_gesture_event_v2.c": "57ECFFC9E8DEF4F9163E887F0068BED548148DFEAD7C298CC45A231477A79522",
+    "src/mw_target_math.c": "D4ACE5A528D8E1CAA7463F373B5D0236C62469F7AC4D30E5A5876A61C2AC20AC",
+    "src/mw_receiver_runtime.c": "4A76076894F05CBF7E5C667FC20307A401D29655A510E133C8880EB028857A5C",
+    "src/mw_receiver_multichannel.c": "D5555190700DE7698B54311D1683993A05496D8A7DF84C067B0E040CB623A1DE",
+    "src/mw_pattern_renderer.c": "7B562601AEBEA514AFC3716820335F0E545367D6BF8BBF0AFB27D73F840A99BF",
+    "src/mw_effect_audio.c": "0C0F529B01C7F3EE3FB9B979A39F4F3F6468852FD0EE4E88D5159BBA67E80D91",
+    "src/mw_effect_scheduler.c": "1095D6F6E54A2BFAFEA87AF6E105F84BDE3EAD6E976421F1DB3CCCEE27566777",
+    "src/main.c": "0D8EF174A5F1959DF9A671D3B6CFAE5F69A1E81453135CA046EFB36EE87D11DB",
+    "tests/gesture_vectors.c": "446BEC388BA4D87745223B925311B2D7369917E3C42F85EAC4D132B585710B48",
+    "tests/target_math.c": "520A37F79E19A9C49BA8B84ECC985086A3D0F33AF9E9EEEE17D0BF52F9DF3B39",
+    "tests/gesture_event_v2_vectors.c": "307CFFB19AC342A63F49B9AB5F9277F47DD48C6956E8780B63EF42C04BA4B129",
+    "tests/receiver_runtime_vectors.c": "CE975EE5177DE6E9D75C22201189F4D57753ECF2A53AD98523038F91B1F3B336",
+    "tests/receiver_multichannel_vectors.c": "E68E6D246B3C5DF07A56F5B79358593E692398A90DA23DC08E8EEA78DE15E1A3",
+    "tests/pattern_effect_vectors.c": "18B53F0EE34E618A282527E1C9D7881E09114330EEE67C67BA5259BD764C8DE3",
+    "target/zephyr/verify_target_contract.py": "70E61105CD037A6BFABDF7DDF6AD696A9583C72985A4B6AF4C179658A3099F3B",
+    "README.md": "DEB65A5FFED5CEC7401267CD669F96DC7740E98FA72913F37C2326892A66185F",
+    "protocol.md": "86803A55000AC36490A2ED2CD35AC7362F0675003CD33C3E99FAEB670F973785",
+    "RECEIVER_RUNTIME_HIL.md": "95A2D20F74D2D4F46C864EBA8D5E7DAE07C1C56AB268C00FFA83F221460E4207",
+    "target/receiver-effects/TARGET_INTEGRATION.md": "0663F3692FC08CB969BC1E6412CE2246E54DC87286F92C0DE090D8CB4E0A9599",
+    "target/receiver-effects/receiver-effects-overlay-contract.yaml": "6E7DDF726B250C9292AF852DAE38B4BA76E35E1D7896F4A3670B6FC5B8FFB650"
   },
-  "gesture_detail_evidence": "gesture-host-evidence.json",
-  "reproduction_note": "Use a fresh build-host3 directory and run all three pinned commands. Build output is disposable and not part of the release evidence."
+  "receiver_handoff": "RECEIVER_RUNTIME_HIL.md",
+  "receiver_effects_contract": "../electronics/receiver-effects/receiver-effects-contract.json",
+  "reproduction_note": "Use a fresh out-of-tree build directory and the three pinned commands. Build output is disposable and is not a target image or fabrication artifact."
 }

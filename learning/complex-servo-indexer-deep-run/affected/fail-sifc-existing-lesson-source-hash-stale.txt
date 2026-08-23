@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-EXISTING-LESSON-SOURCE-HASH-STALE: Refresh the original failure report closures from current safe-relative files and deterministically re-harvest the report chain before merging new lessons. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

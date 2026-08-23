@@ -1,0 +1,1 @@
+Real Playwright sessions opened both reviewers, captured snapshots and wrote visual evidence.

@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-REVIEWER-ROLE-MISSING-SINGLE-DOCUMENT: aicad-agent open-review selectable-vector modifier contract. The generated mechanical reviewers were rejected for missing interactive_drawing_modifier role.

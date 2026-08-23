@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-MECHANICAL-DIMENSION-FONT-280: Use 280 only for architecture and 4 for mechanical/generic drawings; add a full-sheet 2D card layout. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

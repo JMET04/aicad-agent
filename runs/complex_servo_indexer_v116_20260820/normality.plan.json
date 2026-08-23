@@ -1,0 +1,180 @@
+{
+  "schema_version": "2.0",
+  "drawing": {
+    "name": "SIFC_220_prebuild_normality",
+    "units": "mm",
+    "origin": [
+      0,
+      0
+    ],
+    "tolerance": 1e-06,
+    "domain": "mechanical"
+  },
+  "steps": [
+    {
+      "id": "ORIGIN_BOOTSTRAP",
+      "type": "line",
+      "purpose": "excluded origin anchor proving the plan starts from the global datum",
+      "reasoning": "Frozen envelope parameters and named vertices determine this proof edge.",
+      "start": {
+        "point": [
+          0,
+          0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            1,
+            1
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "length",
+          "value": 1.4142135623730951
+        }
+      ]
+    },
+    {
+      "id": "ENV_BOTTOM",
+      "type": "line",
+      "purpose": "base lower edge",
+      "reasoning": "Frozen envelope parameters and named vertices determine this proof edge.",
+      "start": {
+        "point": [
+          0,
+          0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            220,
+            0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 0
+        },
+        {
+          "kind": "length",
+          "value": 220.0
+        }
+      ]
+    },
+    {
+      "id": "ENV_RIGHT",
+      "type": "line",
+      "purpose": "base right edge",
+      "reasoning": "Frozen envelope parameters and named vertices determine this proof edge.",
+      "start": {
+        "point": [
+          220,
+          0
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            220,
+            180
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 220,
+          "dy": 0
+        },
+        {
+          "kind": "length",
+          "value": 180.0
+        }
+      ]
+    },
+    {
+      "id": "ENV_TOP",
+      "type": "line",
+      "purpose": "base upper edge",
+      "reasoning": "Frozen envelope parameters and named vertices determine this proof edge.",
+      "start": {
+        "point": [
+          220,
+          180
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            0,
+            180
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 220,
+          "dy": 180
+        },
+        {
+          "kind": "length",
+          "value": 220.0
+        }
+      ]
+    },
+    {
+      "id": "ENV_LEFT",
+      "type": "line",
+      "purpose": "base left edge",
+      "reasoning": "Frozen envelope parameters and named vertices determine this proof edge.",
+      "start": {
+        "point": [
+          0,
+          180
+        ]
+      },
+      "construction": {
+        "kind": "to_point",
+        "target": {
+          "point": [
+            0,
+            0
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "kind": "start_offset",
+          "target": "origin",
+          "dx": 0,
+          "dy": 180
+        },
+        {
+          "kind": "length",
+          "value": 180.0
+        }
+      ]
+    }
+  ]
+}

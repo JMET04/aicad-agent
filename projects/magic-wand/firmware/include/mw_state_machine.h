@@ -48,6 +48,7 @@ typedef struct {
     uint32_t link_deadline_ms;
     uint32_t output_deadline_ms;
     uint8_t pending_disarm_frames;
+    bool output_deadline_active;
     bool paired;
     bool physical_arm_pressed;
 } mw_state_machine_t;

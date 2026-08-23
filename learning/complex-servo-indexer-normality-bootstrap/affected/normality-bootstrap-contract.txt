@@ -1,0 +1,1 @@
+The corrected normality plan begins with an explicit ORIGIN_BOOTSTRAP line from the global origin, and the template excludes only that entity from production geometry. Production IDs, layer counts and feature topology remain unchanged.

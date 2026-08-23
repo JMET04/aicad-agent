@@ -1,6 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "design": "Magic Wand printable enclosure Rev A0",
+  "mechanicalClosureRevision": "A0.2",
   "units": "mm",
   "sourcePcb": {
     "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
@@ -11,6 +12,21 @@
       1.6
     ],
     "caseTransform": "case_x = pcb_x - 7.5; case_z = pcb_y + 9.0",
+    "caseTransformMm": {
+      "xOffset": -7.5,
+      "zOffset": 9.0,
+      "topSurfaceY": 0.8
+    },
+    "componentEnvelope": {
+      "factoryDesignPath": "projects/magic-wand/electronics/wand/wand-factory-design.json",
+      "factoryDesignSha256": "A0DBC115AEE2E0C3D3DC2949EB48A66F8CA304E8A973C279EBB7B0609E883687",
+      "includedAssemblies": [
+        "SMT_TOP"
+      ],
+      "expectedIncludedCount": 36,
+      "planarClearancePerSide": 0.25,
+      "normalClearance": 0.3
+    },
     "mounts": [
       {
         "ref": "H1",
@@ -77,6 +93,7 @@
     "minimumWall": 2.2,
     "splitPlane": "Y=0",
     "seamClearancePerSide": 0.2,
+    "splitFacePrintStrategy": "flush screw-registered split; no feature crosses Y=0",
     "decorativeRibHeight": 0.45,
     "shellScrews": {
       "x": [
@@ -87,8 +104,26 @@
         38.0,
         96.0
       ],
-      "size": "M2x12"
+      "size": "M2x12",
+      "bossRadius": 2.65,
+      "driverSweep": {
+        "radius": 2.0,
+        "seatY": 8.1,
+        "entryY": 18.0,
+        "counterboreRadius": 2.25,
+        "minimumRadialClearance": 0.2
+      }
     }
+  },
+  "carrier": {
+    "axialBounds": [
+      7.0,
+      91.0
+    ],
+    "shellBossClearance": 0.3,
+    "axialStopClearance": 0.3,
+    "lateralKeyClearance": 0.3,
+    "retention": "hidden lower-shell axial stops and symmetric anti-rotation keys captured when the split shell is closed"
   },
   "powerReservation": {
     "cellType": "protected 1S LiPo 501040/601040-class with 10k NTC",
@@ -125,7 +160,16 @@
       "minimumDepth": 3.0,
       "bendReserve": 8.0
     },
-    "service": "Open split shell; use pull ribbon under cell",
+    "carrierFit": {
+      "sideClearancePerSide": 0.4,
+      "axialClearancePerEnd": 0.4,
+      "lateralClipThickness": 0.8,
+      "strapSlotWidth": 4.0,
+      "strapSlotLength": 2.2,
+      "maximumStrapThickness": 0.5,
+      "retention": "removable 3 mm nonconductive strap through twin floor slots plus pull ribbon"
+    },
+    "service": "Open split shell; release the nonconductive strap and use the pull ribbon under the cell",
     "mandatory": [
       "Protected single-cell pack only",
       "10k NTC lead must reach J2 pin 2",
@@ -150,7 +194,7 @@
     },
     "caseCenter": [
       0.0,
-      7.0,
+      7.5,
       40.0
     ],
     "antennaKeepoutZ": [
@@ -169,13 +213,72 @@
       "clipClearance": 3.0
     }
   },
+  "buttonMechanism": {
+    "switch": {
+      "manufacturerPartNumber": "SKQGAFE010",
+      "bodyPlanarSize": [
+        5.2,
+        5.2
+      ],
+      "bodyHeight": 1.5,
+      "travel": 0.25,
+      "pcbComponentSurfaceCaseY": 0.8
+    },
+    "plunger": {
+      "headRadius": 2.3,
+      "headLength": 1.8,
+      "headReleasedYStart": 12.6,
+      "stemRadius": 1.75,
+      "stemReleasedYStart": 2.35,
+      "guideRadius": 1.95,
+      "guideOuterRadius": 3.2,
+      "hardStopY": 12.35,
+      "releasedSwitchGap": 0.05,
+      "pressedTravel": 0.25,
+      "retainerOuterRadius": 2.55,
+      "retainerInnerRadius": 1.45,
+      "retainerLength": 0.6,
+      "retainerReleasedYStart": 11.2
+    }
+  },
+  "usbService": {
+    "receptacleMatingFaceOffsetX": 3.6,
+    "externalOpeningSize": [
+      10.2,
+      5.2
+    ],
+    "externalOpeningCenterY": 0.7,
+    "internalCounterboreSize": [
+      11.2,
+      6.2
+    ],
+    "internalCounterboreDepth": 5.0,
+    "internalCounterboreCenterX": 11.0,
+    "plugSweep": {
+      "widthY": 9.4,
+      "heightZ": 4.4,
+      "cornerRadius": 0.8,
+      "nominalReach": 7.0,
+      "minimumProcessClearance": 0.3,
+      "actualCableSelected": false
+    }
+  },
+  "physicalAcceptanceGates": {
+    "actualUsbCableSelectedAndFitChecked": false,
+    "slicerLayerReviewComplete": false,
+    "firstArticlePrintedAndAssembled": false,
+    "buttonCycleTestComplete": false,
+    "carrierAndRodRetentionPullTestComplete": false,
+    "pcbComponentEnvelopeVerified": false,
+    "fastenerToolSweepVerified": false
+  },
   "rod": {
     "preferredMaterial": "8 mm GFRP solid rod",
     "prohibitedMaterialNearAntenna": "conductive carbon-fiber or metal rod",
     "diameter": 8.0,
     "cutLength": 195.0,
     "socketBottomCaseZ": 116.0,
-    "assembledOverallLength": 315.0,
+    "assembledOverallLength": 316.0,
     "exposedAboveConnector": 179.0
   }
 }

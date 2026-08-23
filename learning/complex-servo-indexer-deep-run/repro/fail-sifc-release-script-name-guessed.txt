@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-RELEASE-SCRIPT-NAME-GUESSED: release package entrypoint lookup. Both package-release.ps1 and package_release.ps1 were absent.

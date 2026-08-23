@@ -1,47 +1,75 @@
-# Magic Wand printable enclosure Rev A0
+# Magic Wand printable enclosure Rev A0.2
 
-Status: **VERIFIED_PRINT_CANDIDATE**
+Status: **GEOMETRY_VERIFIED_PHYSICAL_GATES_OPEN**
+
+Computational geometry gates: **PASS**
+
+## Mandatory physical gates still open
+
+- [ ] actualUsbCableSelectedAndFitChecked
+- [ ] slicerLayerReviewComplete
+- [ ] firstArticlePrintedAndAssembled
+- [ ] buttonCycleTestComplete
+- [ ] carrierAndRodRetentionPullTestComplete
+- [ ] pcbComponentEnvelopeVerified
+- [ ] fastenerToolSweepVerified
+- [ ] actualUsbCableParameterSelected
+
+This package is not a fully verified print candidate until the actual cable,
+slicer layer review and physical first article close the gates above.
 
 ## Print settings
 
 - Shells: PETG/ASA/ABS/PA12, 0.20 mm layers, 4 perimeters, 35% gyroid.
 - Carrier: PETG or PA12, 0.20 mm layers, 4 perimeters, 35% gyroid.
-- Upper/lower shells: print with the flat split face on the bed; supports should not be required.
+- Place each flush Y=0 shell split face on the bed.
 - Carrier: print PCB rails upward. Rear cap and rod connector: print flange on the bed.
-- First fit: deburr the seam and holes; do not force the PCB or cell.
+- A real slicer first-layer review remains mandatory.
 
-## Power reservation
+## Geometry closure
 
-- Maximum reserved pack envelope: **11 x 6 x 42 mm** including protection/insulation.
-- Pack: protected 1S LiPo, 10k NTC, JST-SH 1.0 mm 3-pin harness.
-- Install a pull ribbon beneath the cell. Keep at least the modeled 8 mm lead-bend reserve.
-- The battery begins at z=41 mm, leaving 11 mm after the RF antenna keepout ends at z=30 mm.
-- Confirm J2 BAT+/NTC/GND order and polarity with a multimeter before connection.
+- Frozen factory-design component envelopes: 36/36 bodies, shell/carrier collision 0.0 / 0.0 mm^3.
+- M2 driver access: 4 sweeps, 0.25 mm radial clearance, shell/internal collision 0.0 / 0.0 mm^3.
+- Shell/carrier collision: 0.0 / 0.0 mm^3.
+- Carrier shell-boss relief radius: 2.95 mm.
+- Battery side/axial clearance: 0.4 / 0.4 mm.
+- Plunger released/pressed collision: 0.0 / 0.0 mm^3.
+- USB recess and gauge reach margin: 6.634 / 0.066 mm.
+- Complete reserved assembly length: 316.0 mm.
 
-## Haptic reservation
+## Power reservation and service
 
-- Reserved actuator envelope: 10 mm diameter x 3.4 mm thick coin LRA/ERM.
-- Fit in the upper-shell printed cup with thin nonconductive foam; route its two-wire lead to J3.
-- The metal envelope begins at z=35 mm, leaving 5 mm after the RF antenna keepout.
-- The exact actuator must match the DRV2605L library/configuration used by target firmware.
+- Maximum protected pack envelope: **11 x 6 x 42 mm** including insulation.
+- Thread a removable 3 mm nonconductive strap through both floor slots.
+- Install a pull ribbon beneath the cell and retain the modeled 8 mm lead-bend reserve.
+- Confirm J2 BAT+/NTC/GND order and polarity before connection.
+
+## Press-to-arm button
+
+- Placeholder: SKQGAFE010, 5.2 x 5.2 x 1.5 mm, 0.25 mm maximum travel.
+- Insert MW-P-005 from outside and snap MW-P-006 into its internal groove.
+- Verify free return and the printed 0.25 mm hard stop.
+- External head remains 4.6 mm diameter x 1.8 mm long.
+
+## USB-C
+
+- J1 and the visible +X opening remain at the frozen coordinates.
+- The enlarged feature is an internal-only stepped counterbore.
+- The parameterized plug sweep is a geometry gauge, not a selected cable.
+- Select and physically fit-test the real cable before release.
 
 ## Wand rod
 
 - Use an 8 mm solid GFRP rod cut to 195 mm.
-- Insert it to the socket bottom at case z=116 mm; the resulting target overall length is 315 mm.
-- Exposed rod above the connector is 179 mm. Verify the first article before adhesive bonding.
-- Do not substitute conductive carbon-fiber or metal rod without a renewed RF/mechanical review.
+- Insert to case z=116 mm; complete reserved overall length is 316 mm.
+- Do not substitute conductive carbon-fiber or metal rod without renewed RF review.
 
 ## Assembly order
 
-1. Deburr and dry-fit both shells, rear cap, rod connector and plunger.
-2. Seat the protected cell in the carrier with a pull ribbon and thin nonconductive foam if needed.
-3. Route the lead through the J2 channel. Do not crease or pinch the NTC lead.
-4. Fit the 10 mm haptic actuator in the upper-shell cup and route its lead to J3.
-5. Install the PCB component-side upward on H1/H2 using nylon M2 screws.
-6. Fit the press-to-arm plunger and verify free return before closing the shell.
-7. Close with M2x12 screws. Start all screws before tightening; do not overtighten printed bosses.
-8. Perform USB charge, button, haptic, radio range and gesture tests before attaching the decorative rod.
-
-This is a verified prototype print candidate, not an injection-mold release. Battery supplier drawing,
-actual printed shrinkage and the first-article fit remain physical acceptance gates.
+1. Deburr and dry-fit the shells, cap, connector, plunger and C-retainer.
+2. Thread the battery strap and pull ribbon into the carrier.
+3. Seat the protected cell and close the strap without crushing the pouch.
+4. Route the J2 lead, fit the haptic actuator, and install the PCB on H1/H2.
+5. Insert MW-P-005 and snap MW-P-006 into its groove.
+6. Verify return and hard-stop travel before closing with M2x12 screws.
+7. Perform USB, charging, button, haptic and RF tests before bonding the rod.

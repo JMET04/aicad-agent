@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-LEARNING-QA-BACKSLASH-PATH: aicad_continuous_learning_qa safe-relative bundle gate. The learning QA rejected a Windows backslash bundle path as unsafe relative input.

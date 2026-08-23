@@ -1,0 +1,223 @@
+{
+  "board": {
+    "design_settings": {
+      "defaults": {
+        "board_outline_line_width": 0.1,
+        "copper_line_width": 0.2,
+        "courtyard_line_width": 0.05,
+        "fab_line_width": 0.1,
+        "silk_line_width": 0.15,
+        "silk_text_size_h": 1.0,
+        "silk_text_size_v": 1.0
+      },
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.2,
+          "via_gap": 0.25,
+          "width": 0.2
+        }
+      ],
+      "drc_exclusions": [],
+      "meta": {
+        "version": 2
+      },
+      "rule_severities": {
+        "footprint_filters_mismatch": "error",
+        "footprint_type_mismatch": "error",
+        "lib_footprint_issues": "error",
+        "malformed_courtyard": "error",
+        "missing_courtyard": "error",
+        "track_not_centered_on_via": "error",
+        "tuning_profile_track_geometries": "error"
+      },
+      "rules": {
+        "allow_blind_buried_vias": false,
+        "allow_microvias": false,
+        "max_error": 0.005,
+        "min_clearance": 0.15,
+        "min_copper_edge_clearance": 0.3,
+        "min_hole_clearance": 0.2,
+        "min_hole_to_hole": 0.25,
+        "min_silk_clearance": 0.15,
+        "min_text_height": 0.8,
+        "min_text_thickness": 0.15,
+        "min_through_hole_diameter": 0.15,
+        "min_track_width": 0.15,
+        "min_via_annular_width": 0.075,
+        "min_via_diameter": 0.6,
+        "solder_mask_clearance": 0.0,
+        "solder_mask_min_width": 0.1
+      },
+      "track_widths": [
+        0.15,
+        0.2,
+        0.5,
+        1.0
+      ],
+      "via_dimensions": [
+        {
+          "diameter": 0.6,
+          "drill": 0.3
+        },
+        {
+          "diameter": 0.7,
+          "drill": 0.3
+        }
+      ]
+    },
+    "layer_presets": [],
+    "viewports": []
+  },
+  "boards": [],
+  "cvpcb": {},
+  "erc": {
+    "erc_exclusions": [],
+    "meta": {
+      "version": 0
+    },
+    "rule_severities": {
+      "footprint_filter": "warning",
+      "four_way_junction": "warning",
+      "simulation_model_issue": "warning",
+      "single_global_label": "warning"
+    }
+  },
+  "libraries": {},
+  "meta": {
+    "filename": "receiver-effects.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "bus_width": 12,
+        "clearance": 0.15,
+        "diff_pair_gap": 0.2,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "Default",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.2,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.15,
+        "diff_pair_gap": 0.2,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.25,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "POWER",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.25,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 1.0,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "LOAD_1A",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.0,
+        "via_diameter": 0.7,
+        "via_drill": 0.3,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.15,
+        "diff_pair_gap": 0.2,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "USB2_90R",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.2,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6
+      }
+    ],
+    "meta": {
+      "version": 3
+    },
+    "net_colors": null,
+    "netclass_assignments": {
+      "3V3": "POWER",
+      "AUDIO_GAIN_SLOT": "Default",
+      "AUDIO_SD_CTRL": "Default",
+      "AUDIO_SD_MODE": "Default",
+      "BUCK_SW": "POWER",
+      "GND": "POWER",
+      "I2S_BCLK": "Default",
+      "I2S_DOUT": "Default",
+      "I2S_LRCLK": "Default",
+      "PWR_GOOD_N": "Default",
+      "RESET_N": "Default",
+      "RGB_B_LED": "Default",
+      "RGB_B_N": "Default",
+      "RGB_G_LED": "Default",
+      "RGB_G_N": "Default",
+      "RGB_R_LED": "Default",
+      "RGB_R_N": "Default",
+      "SPK_MINUS": "POWER",
+      "SPK_PLUS": "POWER",
+      "SWDCLK": "Default",
+      "SWDIO": "Default",
+      "TFT_BL_3V3": "Default",
+      "TFT_BL_GATE": "Default",
+      "TFT_BL_GATE_CTRL": "Default",
+      "TFT_CS_N": "Default",
+      "TFT_DC": "Default",
+      "TFT_MOSI": "Default",
+      "TFT_RESET_N": "Default",
+      "TFT_SCK": "Default",
+      "USB_CC1": "Default",
+      "USB_CC2": "Default",
+      "USB_DM_PROT": "USB2_90R",
+      "USB_DM_RAW": "USB2_90R",
+      "USB_DP_PROT": "USB2_90R",
+      "USB_DP_RAW": "USB2_90R",
+      "USB_SHIELD": "Default",
+      "USB_VBUS_5V": "POWER",
+      "USB_VBUS_RAW": "POWER"
+    },
+    "netclass_patterns": []
+  },
+  "pcbnew": {},
+  "schematic": {
+    "annotate_start_num": 0,
+    "bom_fmt_presets": [],
+    "bom_fmt_settings": {},
+    "bom_presets": [],
+    "bom_settings": {},
+    "connection_grid_size": 50.0,
+    "drawing": {},
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  },
+  "text_variables": {
+    "PROJECT_STATUS": "RELEASE_CANDIDATE_ONLY",
+    "REVISION": "A0"
+  }
+}

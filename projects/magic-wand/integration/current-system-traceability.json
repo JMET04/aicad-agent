@@ -2,7 +2,7 @@
   "schema": "magic-wand.current-system-traceability.v1",
   "projectId": "MW-PROTOTYPE-001",
   "systemRequirementsRevision": "B",
-  "systemContractRevision": "2026-08-22-prototype-contract-1",
+  "systemContractRevision": "2026-08-23-prototype-contract-2",
   "status": "MAPPED_WITH_OPEN_VERIFICATION_GATES",
   "authorityPaths": {
     "systemRequirements": "projects/magic-wand/system-requirements.json",
@@ -73,20 +73,24 @@
       ],
       "gateIds": [
         "GATE-FW-HOST-001",
+        "GATE-RECEIVER-FW-HOST-001",
         "GATE-TARGET-FW-001",
         "GATE-RECEIVER-001"
       ],
       "gateStatuses": {
         "GATE-FW-HOST-001": "passed",
+        "GATE-RECEIVER-FW-HOST-001": "passed",
         "GATE-TARGET-FW-001": "open",
         "GATE-RECEIVER-001": "open"
       },
       "verificationClosed": false,
       "evidenceIds": [
-        "EVID-FW-HOST"
+        "EVID-FW-HOST",
+        "EVID-RECEIVER-FW-HOST"
       ],
       "evidencePaths": [
-        "projects/magic-wand/firmware/gesture-host-evidence.json"
+        "projects/magic-wand/firmware/gesture-host-evidence.json",
+        "projects/magic-wand/firmware/host-review-evidence.json"
       ]
     },
     {
@@ -101,16 +105,22 @@
         "RECEIVER-001"
       ],
       "gateIds": [
+        "GATE-RECEIVER-FW-HOST-001",
         "GATE-TARGET-FW-001",
         "GATE-RECEIVER-001"
       ],
       "gateStatuses": {
+        "GATE-RECEIVER-FW-HOST-001": "passed",
         "GATE-TARGET-FW-001": "open",
         "GATE-RECEIVER-001": "open"
       },
       "verificationClosed": false,
-      "evidenceIds": [],
-      "evidencePaths": []
+      "evidenceIds": [
+        "EVID-RECEIVER-FW-HOST"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/firmware/host-review-evidence.json"
+      ]
     },
     {
       "id": "SYS-004",
@@ -152,20 +162,24 @@
       ],
       "gateIds": [
         "GATE-FW-HOST-001",
+        "GATE-RECEIVER-FW-HOST-001",
         "GATE-TARGET-FW-001",
         "GATE-RECEIVER-001"
       ],
       "gateStatuses": {
         "GATE-FW-HOST-001": "passed",
+        "GATE-RECEIVER-FW-HOST-001": "passed",
         "GATE-TARGET-FW-001": "open",
         "GATE-RECEIVER-001": "open"
       },
       "verificationClosed": false,
       "evidenceIds": [
-        "EVID-FW-HOST"
+        "EVID-FW-HOST",
+        "EVID-RECEIVER-FW-HOST"
       ],
       "evidencePaths": [
-        "projects/magic-wand/firmware/gesture-host-evidence.json"
+        "projects/magic-wand/firmware/gesture-host-evidence.json",
+        "projects/magic-wand/firmware/host-review-evidence.json"
       ]
     },
     {
@@ -236,17 +250,26 @@
       "verification": "schematic/layout review, load test and connector fault injection",
       "sourceStatus": "eda_and_bench_test_pending",
       "contractRequirementIds": [
-        "RECEIVER-001"
+        "RECEIVER-001",
+        "RECEIVER-PCB-001"
       ],
       "gateIds": [
+        "GATE-RECEIVER-FW-HOST-001",
+        "GATE-RECEIVER-PCB-001",
         "GATE-RECEIVER-001"
       ],
       "gateStatuses": {
+        "GATE-RECEIVER-FW-HOST-001": "passed",
+        "GATE-RECEIVER-PCB-001": "open",
         "GATE-RECEIVER-001": "open"
       },
       "verificationClosed": false,
-      "evidenceIds": [],
-      "evidencePaths": []
+      "evidenceIds": [
+        "EVID-RECEIVER-FW-HOST"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/firmware/host-review-evidence.json"
+      ]
     },
     {
       "id": "SYS-009",
@@ -260,16 +283,22 @@
         "PRODUCTION-001"
       ],
       "gateIds": [
+        "GATE-RECEIVER-FW-HOST-001",
         "GATE-RECEIVER-001",
         "GATE-PRODUCTION-001"
       ],
       "gateStatuses": {
+        "GATE-RECEIVER-FW-HOST-001": "passed",
         "GATE-RECEIVER-001": "open",
         "GATE-PRODUCTION-001": "open"
       },
       "verificationClosed": false,
-      "evidenceIds": [],
-      "evidencePaths": []
+      "evidenceIds": [
+        "EVID-RECEIVER-FW-HOST"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/firmware/host-review-evidence.json"
+      ]
     },
     {
       "id": "SYS-010",
@@ -283,16 +312,22 @@
         "PRODUCTION-001"
       ],
       "gateIds": [
+        "GATE-RECEIVER-FW-HOST-001",
         "GATE-RECEIVER-001",
         "GATE-PRODUCTION-001"
       ],
       "gateStatuses": {
+        "GATE-RECEIVER-FW-HOST-001": "passed",
         "GATE-RECEIVER-001": "open",
         "GATE-PRODUCTION-001": "open"
       },
       "verificationClosed": false,
-      "evidenceIds": [],
-      "evidencePaths": []
+      "evidenceIds": [
+        "EVID-RECEIVER-FW-HOST"
+      ],
+      "evidencePaths": [
+        "projects/magic-wand/firmware/host-review-evidence.json"
+      ]
     },
     {
       "id": "SYS-011",
@@ -335,16 +370,19 @@
       "sourceStatus": "prototype_and_production_locks_separated",
       "contractRequirementIds": [
         "FAB-001",
+        "RECEIVER-PCB-001",
         "PCBA-001",
         "PRODUCTION-001"
       ],
       "gateIds": [
         "GATE-JLC-BARE-001",
+        "GATE-RECEIVER-PCB-001",
         "GATE-PCBA-001",
         "GATE-PRODUCTION-001"
       ],
       "gateStatuses": {
         "GATE-JLC-BARE-001": "passed",
+        "GATE-RECEIVER-PCB-001": "open",
         "GATE-PCBA-001": "open",
         "GATE-PRODUCTION-001": "open"
       },
@@ -364,6 +402,7 @@
     "GATE-PCBA-001",
     "GATE-PRODUCTION-001",
     "GATE-RECEIVER-001",
+    "GATE-RECEIVER-PCB-001",
     "GATE-TARGET-FW-001"
   ],
   "releaseLocks": {

@@ -1,17 +1,813 @@
 {
-  "schemaVersion": 1,
-  "status": "VERIFIED_PRINT_CANDIDATE",
+  "schemaVersion": 3,
+  "status": "GEOMETRY_VERIFIED_PHYSICAL_GATES_OPEN",
+  "geometryChecksPassed": true,
+  "physicalAcceptanceGates": {
+    "actualUsbCableSelectedAndFitChecked": false,
+    "slicerLayerReviewComplete": false,
+    "firstArticlePrintedAndAssembled": false,
+    "buttonCycleTestComplete": false,
+    "carrierAndRodRetentionPullTestComplete": false,
+    "pcbComponentEnvelopeVerified": false,
+    "fastenerToolSweepVerified": false,
+    "actualUsbCableParameterSelected": false,
+    "allClosed": false
+  },
   "sourcePcb": {
     "path": "projects/magic-wand/electronics/wand/wand.kicad_pcb",
     "sha256": "37A1C04E8D6853818B9986AA8F82979D658341A8BA4A3B3FC5CB4FCB19B23AF9"
   },
+  "pcbComponentEnvelopeEvidence": {
+    "source": {
+      "path": "projects/magic-wand/electronics/wand/wand-factory-design.json",
+      "sha256": "A0DBC115AEE2E0C3D3DC2949EB48A66F8CA304E8A973C279EBB7B0609E883687"
+    },
+    "includedAssemblies": [
+      "SMT_TOP"
+    ],
+    "planarClearancePerSideMm": 0.25,
+    "normalClearanceMm": 0.3,
+    "bodies": [
+      {
+        "ref": "U1",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 4.23,
+        "caseBoundsMm": {
+          "x": [
+            -5.25,
+            5.25
+          ],
+          "y": [
+            0.8,
+            5.33
+          ],
+          "z": [
+            11.75,
+            27.25
+          ]
+        }
+      },
+      {
+        "ref": "U2",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.9,
+        "caseBoundsMm": {
+          "x": [
+            -6.25,
+            -2.75
+          ],
+          "y": [
+            0.8,
+            2.0
+          ],
+          "z": [
+            32.5,
+            35.5
+          ]
+        }
+      },
+      {
+        "ref": "U5",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.1,
+        "caseBoundsMm": {
+          "x": [
+            2.25,
+            5.75
+          ],
+          "y": [
+            0.8,
+            2.2
+          ],
+          "z": [
+            32.25,
+            35.75
+          ]
+        }
+      },
+      {
+        "ref": "U4",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.8,
+        "caseBoundsMm": {
+          "x": [
+            -1.5,
+            1.5
+          ],
+          "y": [
+            0.8,
+            1.9
+          ],
+          "z": [
+            37.5,
+            40.5
+          ]
+        }
+      },
+      {
+        "ref": "L1",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 2.1,
+        "caseBoundsMm": {
+          "x": [
+            1.75,
+            6.25
+          ],
+          "y": [
+            0.8,
+            3.2
+          ],
+          "z": [
+            36.55,
+            41.05
+          ]
+        }
+      },
+      {
+        "ref": "U3",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.8,
+        "caseBoundsMm": {
+          "x": [
+            -1.25,
+            1.25
+          ],
+          "y": [
+            0.8,
+            1.9
+          ],
+          "z": [
+            53.75,
+            56.25
+          ]
+        }
+      },
+      {
+        "ref": "J2",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 3.0,
+        "caseBoundsMm": {
+          "x": [
+            -6.95,
+            -1.45
+          ],
+          "y": [
+            0.8,
+            4.1
+          ],
+          "z": [
+            63.625,
+            68.375
+          ]
+        }
+      },
+      {
+        "ref": "SW1",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.5,
+        "caseBoundsMm": {
+          "x": [
+            -2.85,
+            2.85
+          ],
+          "y": [
+            0.8,
+            2.6
+          ],
+          "z": [
+            70.65,
+            76.35
+          ]
+        }
+      },
+      {
+        "ref": "J3",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 3.0,
+        "caseBoundsMm": {
+          "x": [
+            -6.75,
+            -2.25
+          ],
+          "y": [
+            0.8,
+            4.1
+          ],
+          "z": [
+            78.625,
+            83.375
+          ]
+        }
+      },
+      {
+        "ref": "U6",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.45,
+        "caseBoundsMm": {
+          "x": [
+            -3.1,
+            0.4
+          ],
+          "y": [
+            0.8,
+            2.55
+          ],
+          "z": [
+            45.9,
+            48.1
+          ]
+        }
+      },
+      {
+        "ref": "F1",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.0,
+        "caseBoundsMm": {
+          "x": [
+            -6.075,
+            -3.725
+          ],
+          "y": [
+            0.8,
+            2.1
+          ],
+          "z": [
+            46.225,
+            47.775
+          ]
+        }
+      },
+      {
+        "ref": "J1",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 3.6,
+        "caseBoundsMm": {
+          "x": [
+            1.05,
+            8.45
+          ],
+          "y": [
+            0.8,
+            4.7
+          ],
+          "z": [
+            42.28,
+            51.72
+          ]
+        }
+      },
+      {
+        "ref": "R_CC1",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -6.25,
+            -4.75
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            43.5,
+            44.5
+          ]
+        }
+      },
+      {
+        "ref": "R_CC2",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -6.25,
+            -4.75
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            51.5,
+            52.5
+          ]
+        }
+      },
+      {
+        "ref": "R_I2C_SCL",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -7.05,
+            -5.55
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            38.0,
+            39.0
+          ]
+        }
+      },
+      {
+        "ref": "R_I2C_SDA",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -6.25,
+            -4.75
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            35.7,
+            36.7
+          ]
+        }
+      },
+      {
+        "ref": "R_ARM",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            4.75,
+            6.25
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            70.5,
+            71.5
+          ]
+        }
+      },
+      {
+        "ref": "R_ARM_SER",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            4.25,
+            5.75
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            67.5,
+            68.5
+          ]
+        }
+      },
+      {
+        "ref": "R_HAPTIC_EN",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            2.45,
+            3.95
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            28.5,
+            29.5
+          ]
+        }
+      },
+      {
+        "ref": "R_STAT1",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            5.25,
+            6.75
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            57.0,
+            58.0
+          ]
+        }
+      },
+      {
+        "ref": "R_STAT2",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -3.25,
+            -1.75
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            51.7,
+            52.7
+          ]
+        }
+      },
+      {
+        "ref": "R_ISET",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            1.3,
+            2.3
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            56.75,
+            58.25
+          ]
+        }
+      },
+      {
+        "ref": "R_ILIM",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            3.15,
+            4.65
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            58.2,
+            59.2
+          ]
+        }
+      },
+      {
+        "ref": "R_CFG1",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -4.25,
+            -2.75
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            38.0,
+            39.0
+          ]
+        }
+      },
+      {
+        "ref": "R_CFG2",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -7.05,
+            -5.55
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            40.0,
+            41.0
+          ]
+        }
+      },
+      {
+        "ref": "R_CFG3",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -4.65,
+            -3.15
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            39.9,
+            40.9
+          ]
+        }
+      },
+      {
+        "ref": "C_USB",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.35,
+        "caseBoundsMm": {
+          "x": [
+            -6.95,
+            -4.45
+          ],
+          "y": [
+            0.8,
+            2.45
+          ],
+          "z": [
+            49.125,
+            50.875
+          ]
+        }
+      },
+      {
+        "ref": "C_CHG_IN",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.35,
+        "caseBoundsMm": {
+          "x": [
+            2.95,
+            5.45
+          ],
+          "y": [
+            0.8,
+            2.45
+          ],
+          "z": [
+            54.125,
+            55.875
+          ]
+        }
+      },
+      {
+        "ref": "C_SYS",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.35,
+        "caseBoundsMm": {
+          "x": [
+            -5.45,
+            -2.95
+          ],
+          "y": [
+            0.8,
+            2.45
+          ],
+          "z": [
+            54.125,
+            55.875
+          ]
+        }
+      },
+      {
+        "ref": "C_BAT",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.35,
+        "caseBoundsMm": {
+          "x": [
+            -4.15,
+            -1.65
+          ],
+          "y": [
+            0.8,
+            2.45
+          ],
+          "z": [
+            57.125,
+            58.875
+          ]
+        }
+      },
+      {
+        "ref": "C_BUCK_IN",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.35,
+        "caseBoundsMm": {
+          "x": [
+            -2.175,
+            -0.425
+          ],
+          "y": [
+            0.8,
+            2.45
+          ],
+          "z": [
+            34.35,
+            36.85
+          ]
+        }
+      },
+      {
+        "ref": "C_BUCK_OUT",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 1.35,
+        "caseBoundsMm": {
+          "x": [
+            -2.575,
+            -0.825
+          ],
+          "y": [
+            0.8,
+            2.45
+          ],
+          "z": [
+            41.25,
+            43.75
+          ]
+        }
+      },
+      {
+        "ref": "C_IMU_VDD",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -6.95,
+            -5.45
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            29.5,
+            30.5
+          ]
+        }
+      },
+      {
+        "ref": "C_IMU_IO",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            -4.45,
+            -2.95
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            29.5,
+            30.5
+          ]
+        }
+      },
+      {
+        "ref": "C_HAPTIC_REG",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            4.95,
+            6.45
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            28.5,
+            29.5
+          ]
+        }
+      },
+      {
+        "ref": "C_HAPTIC_VDD",
+        "assembly": "SMT_TOP",
+        "bodyHeightMm": 0.55,
+        "caseBoundsMm": {
+          "x": [
+            4.55,
+            6.05
+          ],
+          "y": [
+            0.8,
+            1.65
+          ],
+          "z": [
+            30.5,
+            31.5
+          ]
+        }
+      }
+    ]
+  },
+  "fastenerToolSweepEvidence": {
+    "counterboreRadiusMm": 2.25,
+    "minimumRadialClearanceMm": 0.2,
+    "sweeps": [
+      {
+        "caseCenterXZMm": [
+          -10.3,
+          38.0
+        ],
+        "radiusMm": 2.0,
+        "seatYmm": 8.1,
+        "entryYmm": 18.0
+      },
+      {
+        "caseCenterXZMm": [
+          -10.3,
+          96.0
+        ],
+        "radiusMm": 2.0,
+        "seatYmm": 8.1,
+        "entryYmm": 18.0
+      },
+      {
+        "caseCenterXZMm": [
+          10.3,
+          38.0
+        ],
+        "radiusMm": 2.0,
+        "seatYmm": 8.1,
+        "entryYmm": 18.0
+      },
+      {
+        "caseCenterXZMm": [
+          10.3,
+          96.0
+        ],
+        "radiusMm": 2.0,
+        "seatYmm": 8.1,
+        "entryYmm": 18.0
+      }
+    ]
+  },
   "checks": {
     "sourcePcbSha256Matches": true,
+    "sourceFactoryDesignSha256Matches": true,
+    "pcbComponentEnvelopeCount": 36,
+    "pcbComponentEnvelopeExpectedCount": 36,
+    "shellToPcbComponentEnvelopeCollisionMm3": 0.0,
+    "carrierToPcbComponentEnvelopeCollisionMm3": 0.0,
+    "pcbComponentEnvelopeCollisionReferences": [],
+    "fastenerToolSweepCount": 4,
+    "fastenerToolSweepRadialClearanceMm": 0.25,
+    "fastenerToolSweepToUpperShellCollisionMm3": 0.0,
+    "fastenerToolSweepToInternalReservedVolumeCollisionMm3": 0.0,
     "batteryRadialClearanceMm": 1.475,
     "batteryToAntennaAxialGapMm": 11.0,
+    "batterySideClearancePerSideMm": 0.4,
+    "batteryAxialClearancePerEndMm": 0.4,
+    "batteryRetentionStrategyPresent": true,
     "shellToBatteryCollisionMm3": 0.0,
     "shellToPcbCollisionMm3": 0.0,
+    "upperShellToCarrierCollisionMm3": 0.0,
+    "lowerShellToCarrierCollisionMm3": 0.0,
     "carrierToBatteryCollisionMm3": 0.0,
+    "carrierSolidCount": 1,
+    "carrierBossReliefRadiusMm": 2.95,
+    "carrierAxialStopClearanceMm": 0.3,
+    "carrierLateralKeyClearanceMm": 0.3,
+    "upperShellToPlungerReleasedCollisionMm3": 0.0,
+    "upperShellToPlungerPressedCollisionMm3": 0.0,
+    "upperShellToRetainerReleasedCollisionMm3": 0.0,
+    "upperShellToRetainerPressedCollisionMm3": 0.0,
+    "plungerToRetainerCollisionMm3": 0.0,
+    "buttonReleasedSwitchGapMm": 0.05,
+    "buttonPressedActuationMm": 0.2,
+    "buttonMaximumSwitchTravelMm": 0.25,
+    "buttonHardStopTravelMm": 0.25,
+    "buttonRetainerRadialCaptureMm": 0.6,
+    "buttonRetainerAxialClearanceMm": 0.05,
+    "switchBodyToShellCollisionMm3": 0.0,
+    "switchBodyToCarrierCollisionMm3": 0.0,
+    "usbMatingFaceCaseXmm": 8.35,
+    "usbOuterSurfaceCaseXmm": 14.984,
+    "usbRecessMm": 6.634,
+    "usbRequiredReachWithProcessClearanceMm": 6.934,
+    "usbNominalPlugSweepReachMm": 7.0,
+    "usbReachMarginMm": 0.066,
+    "usbPlugLateralClearanceMm": 0.4,
+    "usbPlugVerticalClearanceMm": 0.4,
+    "usbPlugSweepToShellCollisionMm3": 0.0,
+    "upperSplitFaceBelowY0Mm": 0.0,
+    "lowerSplitFaceAboveY0Mm": 0.0,
+    "completeAssemblyOverallLengthMm": 316.0,
+    "targetAssemblyOverallLengthMm": 316.0,
     "shellToHapticCollisionMm3": 0.0,
     "pcbToHapticCollisionMm3": 0.0,
     "batteryToHapticCollisionMm3": 0.0,
@@ -56,7 +852,16 @@
       "minimumDepth": 3.0,
       "bendReserve": 8.0
     },
-    "service": "Open split shell; use pull ribbon under cell",
+    "carrierFit": {
+      "sideClearancePerSide": 0.4,
+      "axialClearancePerEnd": 0.4,
+      "lateralClipThickness": 0.8,
+      "strapSlotWidth": 4.0,
+      "strapSlotLength": 2.2,
+      "maximumStrapThickness": 0.5,
+      "retention": "removable 3 mm nonconductive strap through twin floor slots plus pull ribbon"
+    },
+    "service": "Open split shell; release the nonconductive strap and use the pull ribbon under the cell",
     "mandatory": [
       "Protected single-cell pack only",
       "10k NTC lead must reach J2 pin 2",
@@ -65,17 +870,17 @@
     ]
   },
   "assemblyNotes": [
-    "Install the protected 1S LiPo with a pull ribbon before installing the PCB.",
-    "Route the three-wire lead through the open J2 cable channel; do not pinch the NTC wire.",
+    "Install the pull ribbon and removable nonconductive strap before the protected 1S LiPo.",
+    "Route the three-wire lead through the open J2 channel; do not pinch the NTC wire.",
     "Use nylon M2 hardware at PCB H1/H2 and preferably at shell stations during RF validation.",
     "Keep the z=5..30 mm antenna volume free of battery, metal hardware, shielding and dense filler.",
-    "Verify JST-SH pin order and cell polarity with a multimeter before first connection.",
-    "Fit the exact 10 mm haptic actuator in the upper cup with thin nonconductive foam and route it to J3."
+    "Insert the plunger from outside, snap MW-P-006 into its stem groove, then verify free return and the 0.25 mm hard stop.",
+    "The parameterized USB sweep is a geometry gauge only; an actual cable and first article remain mandatory physical gates."
   ],
   "meshValidation": {
     "passed": true,
-    "expectedStlCount": 6,
-    "actualStlCount": 6,
+    "expectedStlCount": 7,
+    "actualStlCount": 7,
     "criteria": {
       "watertight": true,
       "windingConsistent": true,
@@ -100,8 +905,8 @@
         "brokenFaceCount": 0,
         "degenerateFaceCount": 0,
         "duplicateFaceCount": 0,
-        "volumeMm3": 11004.738,
-        "faceCount": 105936
+        "volumeMm3": 11181.762,
+        "faceCount": 103944
       },
       "MW-P-001B_lower_shell.stl": {
         "passed": true,
@@ -114,8 +919,8 @@
         "brokenFaceCount": 0,
         "degenerateFaceCount": 0,
         "duplicateFaceCount": 0,
-        "volumeMm3": 11373.432,
-        "faceCount": 75704
+        "volumeMm3": 11479.447,
+        "faceCount": 76218
       },
       "MW-P-002_pcb_battery_carrier.stl": {
         "passed": true,
@@ -128,8 +933,8 @@
         "brokenFaceCount": 0,
         "degenerateFaceCount": 0,
         "duplicateFaceCount": 0,
-        "volumeMm3": 2370.442,
-        "faceCount": 2760
+        "volumeMm3": 1950.327,
+        "faceCount": 3354
       },
       "MW-P-003_rear_cap.stl": {
         "passed": true,
@@ -170,8 +975,22 @@
         "brokenFaceCount": 0,
         "degenerateFaceCount": 0,
         "duplicateFaceCount": 0,
-        "volumeMm3": 137.613,
-        "faceCount": 1892
+        "volumeMm3": 126.688,
+        "faceCount": 2524
+      },
+      "MW-P-006_plunger_c_retainer.stl": {
+        "passed": true,
+        "watertight": true,
+        "windingConsistent": true,
+        "isVolume": true,
+        "bodyCount": 1,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "brokenFaceCount": 0,
+        "degenerateFaceCount": 0,
+        "duplicateFaceCount": 0,
+        "volumeMm3": 7.486,
+        "faceCount": 1132
       }
     }
   }

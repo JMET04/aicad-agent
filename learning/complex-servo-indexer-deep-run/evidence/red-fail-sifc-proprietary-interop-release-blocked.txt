@@ -1,0 +1,1 @@
+Verifier reported proprietary-binary for AiCad.SolidWorksHost.exe and two SolidWorks.Interop DLLs.

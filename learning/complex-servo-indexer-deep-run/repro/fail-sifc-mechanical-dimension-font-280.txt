@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-MECHANICAL-DIMENSION-FONT-280: 1920x1080 visual review of mechanical 2D modifier. Dimension labels rendered at font-size 280 and obscured nearly all geometry.

@@ -1,0 +1,9 @@
+/*
+ * Optional Precision Microdrives C08-005 LRA candidate.
+ * The base target keeps the DRV2605 disabled. Pair this overlay with
+ * c08-005.conf; main.c then enforces the approval and 1.85 V clamps at build
+ * time. This is still not permission to manufacture without mounted-unit HIL.
+ */
+&haptic {
+	status = "okay";
+};

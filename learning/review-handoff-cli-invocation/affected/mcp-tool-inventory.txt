@@ -1,0 +1,2 @@
+Affected contract: the exact MCP tools/list inventory in tests/test_agent_plugin.py.
+Resolution: add the three implemented review-handoff tools to the expected set while retaining exact equality, so missing and extra tools continue to fail.

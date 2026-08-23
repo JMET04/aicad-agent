@@ -1,0 +1,37 @@
+{
+  "schema": "aicad_review_only_post_generation_evidence_v1",
+  "artifactSha256ById": {
+    "sifc-220-native-cad": "bd94dbc6bf58783d403e080a0e96cc481263f92a9f9d53c92c33b5b415664535",
+    "sifc-220-neutral-step": "93c677a4be8bdba0d986a37aba3ed96e5bb8d14274998ad5435cdab82dd78f8a",
+    "sifc-220-controlled-drawing": "8a8c8f877c51830debf93c00f4c6d98c9e7d7216bfa65e928406577507cbcc55"
+  },
+  "intent": {
+    "wholeIntent": true
+  },
+  "design": {
+    "constraintCompile": true
+  },
+  "definition": {
+    "materialDesignationPresent": true
+  },
+  "verification": {
+    "drawingCompleteness": false,
+    "reason": "Controlled review drawing exists, but full manufacturing GD&T, roughness coverage, licensed approval and release evidence are intentionally absent."
+  },
+  "host": {
+    "nativeCadSaveReopenByArtifactId": {
+      "sifc-220-native-cad": true
+    },
+    "nativeSourceSaveHashMatchesArtifact": true
+  },
+  "release": {
+    "manufacturingReviewRecorded": false,
+    "reviewerIdentityPresent": false,
+    "recordedApprovalSignaturePresent": false
+  },
+  "readinessBoundary": {
+    "technicalPackageReady": false,
+    "productionReleaseEligible": false,
+    "manufacturingAuthorized": false
+  }
+}

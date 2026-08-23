@@ -1,0 +1,8 @@
+Command:
+python -B -m unittest discover -s tests -p "test_modifier_ui_v3_measurements.py" -v
+
+Failing check:
+ModifierUiV3MeasurementTests.test_2d_line_length_and_coordinates_are_authoritative
+
+Minimal mutation:
+Emit placement_path and placement_point on a 2D view entity while the strict view_entity schema omits both properties.

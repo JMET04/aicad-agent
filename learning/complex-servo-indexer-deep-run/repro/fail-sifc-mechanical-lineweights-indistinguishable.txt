@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-MECHANICAL-LINEWEIGHTS-INDISTINGUISHABLE: user visual review of mechanical 2D drawing. Outline, hole, hidden, centre, dimension, hatch and title geometry appeared nearly identical.

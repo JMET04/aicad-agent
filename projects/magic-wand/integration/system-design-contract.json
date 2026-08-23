@@ -1,11 +1,12 @@
 {
   "schema": "aicad.system-engineering-contract.v1",
   "systemId": "magic-wand-rev-a0",
-  "revision": "2026-08-22-prototype-contract-1",
-  "intendedUse": "Owner-authorized prototype fabrication of the Rev A0 magic-wand bare PCB and 3D-printed enclosure, followed by controlled bring-up and cross-domain verification.",
+  "revision": "2026-08-23-prototype-contract-2",
+  "intendedUse": "Owner-authorized prototype bare-PCB fabrication of the frozen Rev A0 wand and, only after its open EDA/CAM gate passes, the independent receiver-effects board; prototype 3D printing and controlled cross-domain bring-up remain allowed, while PCBA and production remain locked.",
   "prohibitedUses": [
     "Production release or sale before every physical, target-firmware, receiver, PCBA, security and independent-review gate passes",
     "PCBA ordering before supplier and LCSC mapping, exact component substitutions and assembly data are independently reviewed",
+    "Uploading or ordering any receiver-effects Gerber/drill/CAM created before the current power-width and return-path rework; every prior receiver-effects CAM package is REJECTED",
     "Connecting a battery before exact protected-cell selection and J2 harness pin-order and polarity verification",
     "Using conductive carbon-fiber or metal rod material inside or adjacent to the antenna keepout"
   ],
@@ -52,8 +53,8 @@
     },
     {
       "id": "GESTURE-001",
-      "statement": "The armed wand shall recognize TAP, TWIST_CW, TWIST_CCW, SWISH_LEFT, SWISH_RIGHT, THRUST, CIRCLE_CW and CIRCLE_CCW, reject stationary and ambiguous motion, enforce a 250 ms refractory period and emit only authenticated encrypted 2-byte gesture events.",
-      "verificationMethod": "Run host vectors and protocol tests, build and exercise the NINA-B302 target, collect representative-user data, and prove that the compatible receiver does not directly actuate from an unauthorised gesture event.",
+      "statement": "The armed wand shall recognize TAP, TWIST_CW, TWIST_CCW, SWISH_LEFT, SWISH_RIGHT, THRUST, CIRCLE_CW and CIRCLE_CCW, reject stationary and ambiguous motion and enforce a 250 ms refractory period. GESTURE_EVENT shall use an explicitly authenticated negotiated profile: Legacy V1 is exactly 2 bytes and channel 0 only; Multichannel V2 is exactly 14 bytes and requires ARM_ACTIVE plus outer/payload device-session binding.",
+      "verificationMethod": "Run gesture and exact-length/profile host vectors, then build and exercise both NINA-B302 targets, collect representative-user data, prove real BLE/AES-CCM interoperability and show that rejected, unauthenticated, disarmed or cross-device/session events produce no media or dangerous output.",
       "subsystemIds": ["SUBSYS-FIRMWARE", "SUBSYS-ELECTRONICS", "SUBSYS-RECEIVER"],
       "gateIds": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"],
       "status": "tool_verified"
@@ -84,10 +85,18 @@
     },
     {
       "id": "RECEIVER-001",
-      "statement": "A compatible receiver shall be frozen, packaged and verified for authenticated protocol interoperability, replay resistance, timeout-safe behavior and explicit non-actuation on gesture-event receipt alone.",
-      "verificationMethod": "Run cross-device protocol, negative-security, timeout and safe-state hardware-in-loop tests against a versioned receiver artifact.",
+      "statement": "The receiver-effects runtime shall be a direct paired BLE endpoint with its own NINA-B302, keep eight isolated device/session/channel slots, map the eight gestures to eight media effects and default to media-only authority. It shall accept Legacy V1 only as exact 2-byte channel-0 compatibility and Multichannel V2 only as exact 14-byte explicitly authenticated profile with ARM_ACTIVE and device/session binding.",
+      "verificationMethod": "Replay the bound host build, CTest, cppcheck and source-hash inventory, then run cross-device/profile, negative-security, timeout, slot-isolation, safe-state, display/audio and no-dangerous-output hardware-in-loop tests on the versioned target and board.",
       "subsystemIds": ["SUBSYS-FIRMWARE", "SUBSYS-RECEIVER"],
-      "gateIds": ["GATE-RECEIVER-001"],
+      "gateIds": ["GATE-RECEIVER-FW-HOST-001", "GATE-RECEIVER-001"],
+      "status": "tool_verified"
+    },
+    {
+      "id": "RECEIVER-PCB-001",
+      "statement": "The independent receiver-effects working PCB shall remain a 50.3 mm by 42.3 mm, 4-layer direct BLE endpoint using NINA-B302-00B-00, TPS62162DSGR, USBLC6-2SC6 and MAX98357AETE+T, with the external Waveshare 1.28inch GC9A01 SKU 19192 display and XHXDZ 30MM-4Ω3W-TFHM C50387216 BTL speaker. Existing receiver CAM is REJECTED and PCBA is not authorized.",
+      "verificationMethod": "Complete the power-width, bounded-neckdown, plane-entry, return-path and CPL-origin rework; rerun ERC, native DRC, unconnected and schematic-parity checks; then regenerate and hash-bind a new bare-board CAM package before any upload. Keep the hardware/HIL and PCBA gates open.",
+      "subsystemIds": ["SUBSYS-ELECTRONICS", "SUBSYS-RECEIVER", "SUBSYS-MANUFACTURING"],
+      "gateIds": ["GATE-RECEIVER-PCB-001"],
       "status": "defined"
     },
     {
@@ -125,23 +134,23 @@
     {
       "id": "SUBSYS-FIRMWARE",
       "domain": "firmware",
-      "scope": "Eight-class gesture classifier, physical arm gate, refractory logic, authenticated gesture-event protocol and NINA-B302 target integration boundary.",
+      "scope": "Eight-class gesture classifier, physical arm gate, refractory logic, exact Legacy V1/Multichannel V2 profile boundary and NINA-B302 target integration boundary.",
       "artifactIds": ["ART-FW-HOST-EVIDENCE"],
       "status": "tool_verified"
     },
     {
       "id": "SUBSYS-MANUFACTURING",
       "domain": "manufacturing",
-      "scope": "JLC-compatible bare-PCB Gerber/drill upload, order parameters and the still-open PCBA and production handoff.",
+      "scope": "Verified JLC-compatible frozen-wand bare-PCB upload plus the still-open receiver-effects CAM, PCBA and production handoff.",
       "artifactIds": ["ART-JLC-BARE-ZIP"],
       "status": "tool_verified"
     },
     {
       "id": "SUBSYS-RECEIVER",
       "domain": "systems",
-      "scope": "Compatible receiver protocol, safe-state and actuation boundary; implementation and physical evidence remain open.",
-      "artifactIds": ["ART-RECEIVER-SPEC"],
-      "status": "defined"
+      "scope": "Direct NINA-B302 receiver-effects endpoint with eight isolated slots, eight media effects, explicit V1/V2 profiles, display/audio scheduling and a media-only no-dangerous-output boundary. Host logic is tool-verified; target, PCB/CAM, HIL and physical evidence remain open.",
+      "artifactIds": ["ART-RECEIVER-SPEC", "ART-RECEIVER-FW-HOST-EVIDENCE", "ART-RECEIVER-PCB-WORKING"],
+      "status": "tool_verified"
     }
   ],
   "artifacts": [
@@ -180,9 +189,25 @@
     {
       "id": "ART-RECEIVER-SPEC",
       "subsystemId": "SUBSYS-RECEIVER",
-      "kind": "Receiver-side protocol boundary specification",
+      "kind": "Receiver-side protocol and profile boundary specification",
       "path": "projects/magic-wand/firmware/protocol.md",
       "evidenceLevel": "defined",
+      "evidenceIds": []
+    },
+    {
+      "id": "ART-RECEIVER-FW-HOST-EVIDENCE",
+      "subsystemId": "SUBSYS-RECEIVER",
+      "kind": "Receiver runtime, multichannel routing, media renderer/audio and fail-closed host-verification record",
+      "path": "projects/magic-wand/firmware/host-review-evidence.json",
+      "evidenceLevel": "tool_verified",
+      "evidenceIds": ["EVID-RECEIVER-FW-HOST"]
+    },
+    {
+      "id": "ART-RECEIVER-PCB-WORKING",
+      "subsystemId": "SUBSYS-RECEIVER",
+      "kind": "Receiver-effects KiCad working source; prior CAM rejected and current CAM rework open",
+      "path": "projects/magic-wand/electronics/receiver-effects/receiver-effects.kicad_pcb",
+      "evidenceLevel": "generated",
       "evidenceIds": []
     }
   ],
@@ -270,14 +295,18 @@
       "kind": "data",
       "providerSubsystemId": "SUBSYS-FIRMWARE",
       "consumerSubsystemId": "SUBSYS-RECEIVER",
-      "contract": "The receiver consumes an authenticated encrypted gesture classification event as information only; receipt of the event alone must not enter an actuating state.",
+      "contract": "The direct receiver-effects BLE endpoint consumes only an explicitly authenticated negotiated GESTURE_EVENT profile as media intent. Profile, exact length, ARM state, route channel and device/session binding are checked before an event reaches display/audio scheduling; receipt never grants dangerous-output authority.",
       "parameters": [
-        {"name": "gestureSet", "value": "TAP,TWIST_CW,TWIST_CCW,SWISH_LEFT,SWISH_RIGHT,THRUST,CIRCLE_CW,CIRCLE_CCW", "unit": null, "authority": "gesture-host-evidence.json"},
-        {"name": "gestureEventPayload", "value": "2 bytes: gesture identifier plus confidence 70..100", "unit": "byte", "authority": "firmware protocol and host evidence"},
-        {"name": "transportProtection", "value": "authenticated and encrypted protocol frame with exact-length decode", "unit": null, "authority": "gesture-host-evidence.json"},
-        {"name": "receiverActuationRule", "value": "gesture event does not directly actuate receiver state machine", "unit": null, "authority": "gesture-host-evidence.json"}
+        {"name": "gestureSet", "value": "TAP,TWIST_CW,TWIST_CCW,SWISH_LEFT,SWISH_RIGHT,THRUST,CIRCLE_CW,CIRCLE_CCW", "unit": null, "authority": "firmware/gesture-host-evidence.json and firmware/host-review-evidence.json"},
+        {"name": "profileNegotiation", "value": "explicit authenticated handshake; unsupported profile rejects; no length sniffing, automatic downgrade or mixed-profile session", "unit": null, "authority": "firmware/protocol.md and firmware/host-review-evidence.json"},
+        {"name": "legacyV1", "value": "exactly 2 bytes; channel 0 only", "unit": "byte", "authority": "firmware/protocol.md and firmware/host-review-evidence.json"},
+        {"name": "multichannelV2", "value": "exactly 14 bytes big-endian; channel 0..7; ARM_ACTIVE and payload/outer device-session equality required", "unit": "byte", "authority": "firmware/protocol.md and firmware/host-review-evidence.json"},
+        {"name": "receiverSlots", "value": 8, "unit": "logical device/session/channel slot", "authority": "firmware/host-review-evidence.json"},
+        {"name": "effectMap", "value": "TAP=EXPLOSION,TWIST_CW=FIRE,TWIST_CCW=ICE,SWISH_LEFT=LIGHTNING,SWISH_RIGHT=SHIELD,THRUST=ARCANE,CIRCLE_CW=HEAL,CIRCLE_CCW=PORTAL", "unit": null, "authority": "integration/RECEIVER_EFFECTS_SYSTEM_HANDOFF.md"},
+        {"name": "transportProtection", "value": "authenticated/encrypted target frame and replay persistence required; host copy-decrypt callbacks are not cryptographic evidence", "unit": null, "authority": "firmware/protocol.md and firmware/host-review-evidence.json"},
+        {"name": "receiverAuthority", "value": "media-only; display/audio never authorize dangerous output", "unit": null, "authority": "firmware/protocol.md and firmware/host-review-evidence.json"}
       ],
-      "verificationGateIds": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"]
+      "verificationGateIds": ["GATE-FW-HOST-001", "GATE-RECEIVER-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"]
     },
     {
       "id": "IFC-BARE-PCB-FAB",
@@ -317,7 +346,7 @@
       "type": "signal",
       "orderedSubsystemIds": ["SUBSYS-FIRMWARE", "SUBSYS-ELECTRONICS", "SUBSYS-RECEIVER"],
       "interfaceIds": ["IFC-TARGET-FW", "IFC-GESTURE-PROTOCOL"],
-      "failureState": "Remain non-actuating, reject the event or target image, record the failure and reopen host, target and receiver verification."
+      "failureState": "Reject the event or target image, close only the affected slot, keep media and every dangerous output inactive, record the failure and reopen host, target and receiver verification."
     },
     {
       "id": "FLOW-BARE-PCB-MANUFACTURING",
@@ -353,6 +382,14 @@
       "evidenceIds": ["EVID-FW-HOST"]
     },
     {
+      "id": "GATE-RECEIVER-FW-HOST-001",
+      "requirementIds": ["RECEIVER-001"],
+      "requiredEvidenceLevel": "tool_verified",
+      "verification": "The bound receiver host record reports a clean 25/25 build, 8/8 CTest, cppcheck 9/9 selected files with no findings and 37/37 source-hash matches for exact V1/V2 profiles, eight isolated slots, fail-closed runtime, renderer, audio and media scheduling.",
+      "status": "passed",
+      "evidenceIds": ["EVID-RECEIVER-FW-HOST"]
+    },
+    {
       "id": "GATE-JLC-BARE-001",
       "requirementIds": ["FAB-001"],
       "requiredEvidenceLevel": "tool_verified",
@@ -377,10 +414,18 @@
       "evidenceIds": []
     },
     {
+      "id": "GATE-RECEIVER-PCB-001",
+      "requirementIds": ["RECEIVER-PCB-001"],
+      "requiredEvidenceLevel": "tool_verified",
+      "verification": "Complete and independently review the 50.3 x 42.3 mm 4-layer receiver-effects source after power-width, bounded-neckdown, plane-entry, return-path and CPL-origin rework; require zero ERC/DRC/unconnected/parity findings and a newly generated hash-bound bare-board CAM. Prior CAM remains REJECTED.",
+      "status": "open",
+      "evidenceIds": []
+    },
+    {
       "id": "GATE-RECEIVER-001",
       "requirementIds": ["GESTURE-001", "RECEIVER-001"],
       "requiredEvidenceLevel": "physical_verified",
-      "verification": "Freeze a compatible receiver artifact and pass authenticated interoperability, replay, timeout, non-actuation and safe-state hardware-in-loop tests.",
+      "verification": "Build and flash both NINA-B302 targets, then pass real authenticated BLE/AES-CCM interoperability, profile downgrade, replay persistence, timeout, eight-slot isolation, no-dangerous-output, display/audio, fault-mute and safe-state hardware-in-loop tests on physical boards.",
       "status": "open",
       "evidenceIds": []
     },
@@ -429,8 +474,8 @@
     },
     {
       "sourceId": "IFC-GESTURE-PROTOCOL",
-      "impactedIds": ["ART-FW-HOST-EVIDENCE", "ART-RECEIVER-SPEC", "GESTURE-001", "RECEIVER-001", "FLOW-GESTURE-SIGNAL"],
-      "requiredRechecks": ["GATE-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-001"]
+      "impactedIds": ["ART-FW-HOST-EVIDENCE", "ART-RECEIVER-SPEC", "ART-RECEIVER-FW-HOST-EVIDENCE", "ART-RECEIVER-PCB-WORKING", "GESTURE-001", "RECEIVER-001", "RECEIVER-PCB-001", "FLOW-GESTURE-SIGNAL"],
+      "requiredRechecks": ["GATE-FW-HOST-001", "GATE-RECEIVER-FW-HOST-001", "GATE-TARGET-FW-001", "GATE-RECEIVER-PCB-001", "GATE-RECEIVER-001"]
     },
     {
       "sourceId": "IFC-BARE-PCB-FAB",
@@ -470,12 +515,20 @@
       "sha256": "F8EE9559DF6645B329F46D8FA2CA05DFD532096097DA9D2271D2C6E3AFB33AD7",
       "level": "tool_verified",
       "toolVersion": "GCC MinGW-W64 16.1.0, CMake 4.3.2, Ninja 1.13.2"
+    },
+    {
+      "id": "EVID-RECEIVER-FW-HOST",
+      "path": "projects/magic-wand/firmware/host-review-evidence.json",
+      "size": 6820,
+      "sha256": "73C595844F2E9526CE5D2C01A84986BA83089CBED20AF60F50E7AE5F5C4D1D70",
+      "level": "tool_verified",
+      "toolVersion": "GCC MinGW-W64 16.1.0, CMake 4.3.2, Ninja 1.13.2, cppcheck"
     }
   ],
   "authorizations": {
     "prototypeBuild": true,
     "productionRelease": false,
-    "notes": "Owner authorization covers prototype bare-PCB fabrication and prototype 3D printing only. It does not authorize PCBA or production release."
+    "notes": "Owner authorization covers prototype bare-PCB fabrication and prototype 3D printing only. Receiver-effects bare-board upload is eligible only after GATE-RECEIVER-PCB-001 passes with a newly hash-bound CAM; all prior receiver CAM is rejected. This does not authorize PCBA or production release."
   },
   "releaseLocks": {
     "reviewOnly": true,

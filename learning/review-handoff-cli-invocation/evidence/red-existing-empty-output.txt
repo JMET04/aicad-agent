@@ -1,0 +1,10 @@
+Command:
+python -B -m unittest discover -s tests -p "test_review_handoff.py" -v
+
+Exit code: 1
+
+ERROR: test_2d_radius_handoff_applies_and_regenerates_modifier
+aicad.engine.PlanError: review handoff output directory must not already exist
+
+Ran 7 tests in 0.401s
+FAILED (errors=1)

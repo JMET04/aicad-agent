@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "name": "SIFC_220_REV_A",
+  "domain": "mechanical",
+  "source_sha256": "5d214292944aa0603b537248e3d9bbd9ed64936cede5545178bb51b3e3bf4e84",
+  "feature_count": 25,
+  "feature_types": {
+    "base_extrude": 1,
+    "boss_extrude": 5,
+    "cut_extrude": 19
+  },
+  "roles": {
+    "base_plate": 1,
+    "bearing_boss": 1,
+    "bearing_seat": 1,
+    "cover_hole_pattern": 1,
+    "dowel_hole": 2,
+    "frame_counterbore": 4,
+    "frame_mount_hole": 4,
+    "indexer_hole_pattern": 1,
+    "lightening_pocket": 4,
+    "review_selectable": 25,
+    "rib_pad": 4,
+    "seal_recess": 1,
+    "shaft_clearance": 1
+  },
+  "editable_features": 25,
+  "expected_final_volume_mm3": 953444.8457807644,
+  "expected_final_bbox_mm": [
+    -110.0,
+    -90.0,
+    0.0,
+    110.0,
+    90.0,
+    56.0
+  ],
+  "artifacts": {
+    "source": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_compile\\SIFC_220_REV_A.aicad3d.plan.json",
+    "execution": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_compile\\SIFC_220_REV_A.swplan.json",
+    "audit": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_compile\\SIFC_220_REV_A.3d.audit.md",
+    "sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_compile\\SIFC_220_REV_A.SLDPRT",
+    "step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_compile\\SIFC_220_REV_A.step",
+    "host_report": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_compile\\SIFC_220_REV_A.solidworks-report.json",
+    "reopen_report": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_compile\\SIFC_220_REV_A.reopen-report.json"
+  }
+}

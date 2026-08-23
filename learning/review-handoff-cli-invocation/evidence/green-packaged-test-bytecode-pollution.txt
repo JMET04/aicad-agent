@@ -1,0 +1,3 @@
+GREEN: remove only the verified regenerable __pycache__ directory, set PYTHONDONTWRITEBYTECODE=1 for the full process tree, rerun 200 packaged tests, then rerun release verification.
+Result: tests OK (skipped=1); verifier ok=true with 176 files, 174 manifest entries, 175 sums entries, 175 source inputs, and zero errors.
+

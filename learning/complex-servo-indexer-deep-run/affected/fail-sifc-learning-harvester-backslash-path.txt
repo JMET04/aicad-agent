@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-LEARNING-HARVESTER-BACKSLASH-PATH: Pass every report, existing bundle and output path with forward slashes. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

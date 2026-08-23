@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-LEARNING-HARVESTER-BACKSLASH-PATH: aicad_lesson_harvester safe-relative input gate. The harvester rejected a Windows backslash path as unsafe relative input.

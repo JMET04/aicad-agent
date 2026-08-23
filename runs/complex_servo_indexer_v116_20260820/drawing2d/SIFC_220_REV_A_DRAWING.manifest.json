@@ -1,0 +1,71 @@
+{
+  "schema_version": "2.0",
+  "name": "SIFC_220_REV_A_MANUFACTURING_REVIEW",
+  "domain": "mechanical",
+  "source_sha256": "ca34a1494aa9634e21338a02011c82925e48ec9ef83bd8c5673be2e1fee9d166",
+  "units": "mm",
+  "origin": [
+    0.0,
+    0.0
+  ],
+  "tolerance": 1e-06,
+  "entity_count": 148,
+  "entity_types": {
+    "line": 91,
+    "circle": 28,
+    "arc": 0,
+    "text": 20,
+    "dimension": 9
+  },
+  "layers": {
+    "CENTER": 7,
+    "DIMENSION": 9,
+    "HATCH": 14,
+    "HIDDEN": 18,
+    "HOLE": 21,
+    "OUTLINE": 52,
+    "TEXT": 20,
+    "TITLE": 7
+  },
+  "roles": {
+    "annotation": 20,
+    "bearing_boss": 6,
+    "bearing_seat": 6,
+    "centerline": 5,
+    "circular_feature": 4,
+    "construction": 2,
+    "counterbore": 4,
+    "cover_pattern": 4,
+    "datum_A": 5,
+    "datum_B": 5,
+    "datum_C": 2,
+    "dimension": 9,
+    "frame_interface": 8,
+    "hatch": 14,
+    "hidden": 2,
+    "hidden_overlap": 16,
+    "hole": 18,
+    "indexer_pattern": 8,
+    "inspection_intent": 9,
+    "interface": 4,
+    "non_through": 16,
+    "outline": 14,
+    "pcd": 2,
+    "pocket": 16,
+    "review_selectable": 20,
+    "rib": 16,
+    "seal_recess": 4,
+    "section": 19,
+    "shaft_clearance": 2,
+    "side_view": 8,
+    "title_block": 7
+  },
+  "editable_entities": 148,
+  "dependency_edges": 13,
+  "artifacts": [
+    "SIFC_220_REV_A_DRAWING.aicad",
+    "SIFC_220_REV_A_DRAWING.scr",
+    "SIFC_220_REV_A_DRAWING.dxf",
+    "SIFC_220_REV_A_DRAWING.audit.md"
+  ]
+}

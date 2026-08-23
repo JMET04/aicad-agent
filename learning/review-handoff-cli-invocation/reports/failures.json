@@ -1,0 +1,643 @@
+{
+  "schema": "aicad_test_failure_report_v1",
+  "reportId": "REPORT-REVIEW-HANDOFF-CLI-INVOCATION-001",
+  "status": "failed",
+  "failedChecks": [
+    {
+      "failureId": "FAIL-REVIEW-HANDOFF-NONPACKAGE-IMPORT",
+      "failureAlias": "release.unittest_nonpackage_module_import_review_handoff",
+      "domain": "release",
+      "failingCheck": "tests.test_review_handoff dotted-module unittest startup",
+      "symptom": "The focused command failed before discovery with ModuleNotFoundError for tests.test_review_handoff.",
+      "rootCause": "The tests directory is intentionally not a Python package, but the launcher used a dotted package module name.",
+      "correction": "Invoke the test through unittest discovery with -s tests and the exact test_review_handoff.py filename pattern.",
+      "candidateRule": {
+        "id": "REL-G048",
+        "requirement": "Focused Python test launchers must select an invocation mode that matches whether the test root is a package.",
+        "prevention": "For a non-package test directory, use unittest discovery with an explicit start directory and exact filename pattern; never synthesize dotted tests.* imports.",
+        "regressionTest": "In a fixture whose tests directory has no __init__.py, require dotted import startup to fail and exact-pattern discovery to execute the intended module successfully.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/invalid-module-invocation.txt",
+        "size": 337,
+        "sha256": "72b36ef16b9a91391f94f78c71f572696738273139157d2de484ab19c9c7d355"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-before.txt",
+            "size": 807,
+            "sha256": "3c5c6966b50cf534444187083f7a717f3c081f802504f9016a19cca1e6bd4d20"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-review-handoff.txt",
+            "size": 119,
+            "sha256": "f3f2aab0b4baf55291e32a63cda650e6a24f1f3365ab4568202f91e0faa74087"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "tests/test_review_handoff.py",
+            "size": 10629,
+            "sha256": "53c9d312b7e4c5e0c3dbfc3e79624cbd087297d29e5021482e5b1a82357e728c"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/review-handoff-launcher.txt",
+            "size": 201,
+            "sha256": "5e76ac36e5111bf395f926130d056eb49b94ee5c30eece0a72cb8a2cfb401724"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-MODIFIER-UI-V2-NONPACKAGE-IMPORT",
+      "failureAlias": "release.unittest_nonpackage_module_import_modifier_ui_v2",
+      "domain": "release",
+      "failingCheck": "tests.test_modifier_ui_v2 dotted-module unittest startup",
+      "symptom": "The focused command failed before discovery with ModuleNotFoundError for tests.test_modifier_ui_v2.",
+      "rootCause": "The tests directory is intentionally not a Python package, but the launcher used a dotted package module name.",
+      "correction": "Invoke the test through unittest discovery with -s tests and the exact test_modifier_ui_v2.py filename pattern.",
+      "candidateRule": {
+        "id": "REL-G048",
+        "requirement": "Focused Python test launchers must select an invocation mode that matches whether the test root is a package.",
+        "prevention": "For a non-package test directory, use unittest discovery with an explicit start directory and exact filename pattern; never synthesize dotted tests.* imports.",
+        "regressionTest": "In a fixture whose tests directory has no __init__.py, require dotted import startup to fail and exact-pattern discovery to execute the intended module successfully.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/invalid-module-invocation.txt",
+        "size": 337,
+        "sha256": "72b36ef16b9a91391f94f78c71f572696738273139157d2de484ab19c9c7d355"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-before.txt",
+            "size": 807,
+            "sha256": "3c5c6966b50cf534444187083f7a717f3c081f802504f9016a19cca1e6bd4d20"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-modifier-ui-v2.txt",
+            "size": 119,
+            "sha256": "19c636628053bdceb4b102adc0cae01ac6fd9b9e5407b8ba5a179b47084074e8"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "tests/test_modifier_ui_v2.py",
+            "size": 10638,
+            "sha256": "438f3b1eb443cacc478b7d14502aa87838756df666f655436bac10d23af8b194"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/modifier-ui-v2-launcher.txt",
+            "size": 201,
+            "sha256": "e48afeb4dd24b837e90d9b02d7a0c8dc2d587e3b5df59299e9bc91e26a9e261a"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-UNIVERSAL-NONPACKAGE-IMPORT",
+      "failureAlias": "release.unittest_nonpackage_module_import_universal",
+      "domain": "release",
+      "failingCheck": "tests.test_universal dotted-module unittest startup",
+      "symptom": "The focused command failed before discovery with ModuleNotFoundError for tests.test_universal.",
+      "rootCause": "The tests directory is intentionally not a Python package, but the launcher used a dotted package module name.",
+      "correction": "Invoke the test through unittest discovery with -s tests and the exact test_universal.py filename pattern.",
+      "candidateRule": {
+        "id": "REL-G048",
+        "requirement": "Focused Python test launchers must select an invocation mode that matches whether the test root is a package.",
+        "prevention": "For a non-package test directory, use unittest discovery with an explicit start directory and exact filename pattern; never synthesize dotted tests.* imports.",
+        "regressionTest": "In a fixture whose tests directory has no __init__.py, require dotted import startup to fail and exact-pattern discovery to execute the intended module successfully.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/invalid-module-invocation.txt",
+        "size": 337,
+        "sha256": "72b36ef16b9a91391f94f78c71f572696738273139157d2de484ab19c9c7d355"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-before.txt",
+            "size": 807,
+            "sha256": "3c5c6966b50cf534444187083f7a717f3c081f802504f9016a19cca1e6bd4d20"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-universal.txt",
+            "size": 115,
+            "sha256": "8e76ce255a067762095af5157c06b66eb4da1a798e02fd33d93aa8516af3042e"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "tests/test_universal.py",
+            "size": 8642,
+            "sha256": "1d93d000f0589ae44babb438742f3b6987a1683482eb0e69760d9184530b2503"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/universal-launcher.txt",
+            "size": 196,
+            "sha256": "589fe28e99e4bdec13bcd14d5851a19d37785d238b710dba26d5a28eabf57b16"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-REVIEW-HANDOFF-EXISTING-EMPTY-OUTPUT",
+      "failureAlias": "software.review_handoff_existing_empty_destination_rejected",
+      "domain": "software",
+      "failingCheck": "ReviewHandoffTests.test_2d_radius_handoff_applies_and_regenerates_modifier",
+      "symptom": "A valid handoff failed because apply_review_handoff rejected the existing empty TemporaryDirectory used by the established API contract.",
+      "rootCause": "The first atomic-promotion implementation treated every existing destination as unsafe instead of distinguishing an empty rollback-safe directory from a non-empty artifact directory.",
+      "correction": "Permit only an existing empty directory, move it to a temporary rollback slot, promote the complete staged payload as one directory, and restore the empty destination if promotion fails.",
+      "candidateRule": {
+        "id": "SW-G001",
+        "requirement": "Atomic directory promotion must preserve established empty-output-directory compatibility without allowing overwrite of existing artifacts.",
+        "prevention": "Classify destinations before staging: reject files and non-empty directories, but transactionally swap an empty directory through a rollback slot and restore it on promotion failure.",
+        "regressionTest": "Apply to an existing empty TemporaryDirectory and require a complete five-artifact result, then reapply to the now non-empty directory and require rejection with byte-identical contents.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/existing-empty-output.txt",
+        "size": 279,
+        "sha256": "a1231e9f277579fbb5a2af1c59caca310305cbfda9087ba5d418cefc09d29a3d"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-existing-empty-output.txt",
+            "size": 278,
+            "sha256": "d15bb0ecbf2133129d9a3c95d39e2ef61ace4a5b4f62c905c07aaed4489d3153"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-existing-empty-output.txt",
+            "size": 190,
+            "sha256": "36daabb95d9809754727716331a50897556c856db8ad1ba6d106899cb93ae5a3"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "src/aicad/review_handoff.py",
+            "size": 9527,
+            "sha256": "d08755a65c4b62d428dd5c614b4efbea18c4e083552aac8f59139b1b1c220d63"
+          },
+          {
+            "path": "tests/test_review_handoff.py",
+            "size": 10629,
+            "sha256": "53c9d312b7e4c5e0c3dbfc3e79624cbd087297d29e5021482e5b1a82357e728c"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/empty-output-compatibility.txt",
+            "size": 326,
+            "sha256": "491d6cc0799275104badc17eb0dd0cc9d325e6b2e30805bb6aa382217848c1c1"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-VIEW-ENTITY-PLACEMENT-SCHEMA-OMISSION",
+      "failureAlias": "software.view_entity_placement_metadata_schema_omission",
+      "domain": "software",
+      "failingCheck": "ModifierUiV3MeasurementTests.test_2d_line_length_and_coordinates_are_authoritative",
+      "symptom": "Strict validation rejected placement_path and placement_point on a 2D view entity as additional properties.",
+      "rootCause": "The implementation and selection_ref schema were updated, but the separate strict view_entity definition was omitted from the same contract change.",
+      "correction": "Declare the optional placement_path enum and exact two-number placement_point array on $defs.view_entity.",
+      "candidateRule": {
+        "id": "SW-G002",
+        "requirement": "A new emitted field must be closed across every strict schema object that can physically carry it.",
+        "prevention": "Enumerate all producer locations and all additionalProperties=false schema definitions before merging a field addition, then validate representative 2D and 3D packages.",
+        "regressionTest": "Emit placement metadata on a 2D line entity and require the full view-package Draft 2020-12 validation to pass; remove either view_entity property and require failure.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/view-entity-placement-schema.txt",
+        "size": 330,
+        "sha256": "d6cd093a88ca963d0e1a660530be94ad3400742d3e6b472b29765d5707ef9292"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-view-entity-placement-schema.txt",
+            "size": 351,
+            "sha256": "86765eb58c5a41ea73791565c765c83d7c693cae17dd3aa4f3aac7ef7d16dc30"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-view-entity-placement-schema.txt",
+            "size": 132,
+            "sha256": "2ededbb74336024f9f37227e9b82d06711c309435cbd4a529872a9dbbaaf1999"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "schema/aicad-view-package.schema.json",
+            "size": 16276,
+            "sha256": "d5512b5f43ab8c0f6dce095b8ae21b2233f3cd78afff69a3335e0c82b283cd4b"
+          },
+          {
+            "path": "tests/test_modifier_ui_v3_measurements.py",
+            "size": 4554,
+            "sha256": "3b5e370a500e7c595cd6fdb8a2e1ea6d61c5c78ddcbe00b19c66b1766067ca01"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/view-entity-placement-schema.txt",
+            "size": 258,
+            "sha256": "b8392ce1c1451c2e6333f4d29c9d195d01e4ce2be009f37bfaa91897cd438fbb"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-MCP-HANDOFF-TOOL-INVENTORY-STALE",
+      "failureAlias": "software.mcp_exact_tool_inventory_stale_after_handoff_addition",
+      "domain": "software",
+      "failingCheck": "AgentPluginTests.test_mcp_handshake_tool_listing_and_call",
+      "symptom": "The runtime tools/list response correctly contained three new handoff tools, but the exact expected inventory rejected them as unexpected.",
+      "rootCause": "The MCP implementation and focused handoff test changed without updating the repository-wide exact tool-surface contract.",
+      "correction": "Add aicad_get_review_handoff_schema, aicad_validate_review_handoff and aicad_apply_review_handoff to the exact expected tool set.",
+      "candidateRule": {
+        "id": "SW-G003",
+        "requirement": "Every MCP tool addition or removal must update the one exact runtime inventory contract in the same change.",
+        "prevention": "Treat TOOLS, tools/list, build manifest and exact inventory test as a four-surface bijection and run the handshake test before the full suite.",
+        "regressionTest": "List tools through the MCP handshake and require exact equality including all three review-handoff tools; delete or add one name on either side and require failure.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/mcp-tool-inventory-stale.txt",
+        "size": 283,
+        "sha256": "06eea991e6439aed70be5be08819351dee82ad658463604676fbe21f8bcb4b3a"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-mcp-tool-inventory-stale.txt",
+            "size": 318,
+            "sha256": "dd5c82ab556e0dd8e16a0e2cfa6927cbd32242edae2c5115e073aa7e6e336ac7"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-mcp-tool-inventory-stale.txt",
+            "size": 191,
+            "sha256": "d5ce26bef2bdae3ec15b56ba3d51174d73a7c3a1a4dcaece1675a5681234408b"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/scripts/aicad_agent.py",
+            "size": 69178,
+            "sha256": "5dece2ff38bac26de62329164341024da01742b3a0d436e4b04b19705c87b14d"
+          },
+          {
+            "path": "tests/test_agent_plugin.py",
+            "size": 30401,
+            "sha256": "0fe1e5bbf6d8fdbc0ff7985b1bebe7cf29d51825751eea0f5f18735bd41c32e7"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/mcp-tool-inventory.txt",
+            "size": 241,
+            "sha256": "773c2c5e0e99c49de90a890103f696b35172b62793e78aefd428fad0d937b76d"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-REVIEWER-FIRST-GENERIC-STALE-MODIFIER-FIXTURE",
+      "failureAlias": "software.reviewer_first_generic_test_fixture_stale_after_strong_contract",
+      "domain": "software",
+      "failingCheck": "ReviewerFirstOpenPolicyTests.test_generic_request_blocks_native_file",
+      "symptom": "The generic-open policy test errored before its native-file blocking assertion because the shared HTML placeholder did not satisfy the selectable-vector modifier contract.",
+      "rootCause": "The production modifier validator was strengthened, but this packaged test retained a role-only placeholder without vector geometry, source identifiers, inspection/correction surfaces, or safety locks.",
+      "correction": "Replace the shared placeholder with a minimal contract-complete selectable vector reviewer while preserving strict production validation.",
+      "candidateRule": {
+        "id": "SW-G004",
+        "requirement": "Policy tests that cross a validated artifact boundary must use the minimum complete current artifact contract, not a role-only placeholder.",
+        "prevention": "Centralize or contract-test reviewer fixtures whenever the production modifier validator adds a mandatory surface.",
+        "regressionTest": "Require the generic request fixture to pass modifier validation, launch the reviewer, and block the supplied native file with explicit_native_cad_request_required.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/stale-minimal-reviewer-fixture.txt",
+        "size": 399,
+        "sha256": "7ec24348e53a0dc9a26c6c12212012783b3ee1c8cd3ac0550af38326793d59ac"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-reviewer-first-generic-stale-fixture.txt",
+            "size": 328,
+            "sha256": "3eb9896f08e6b98950def0b712147be34f571b3a367afaa2dc66c4a7cc1649d5"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-reviewer-first-generic-stale-fixture.txt",
+            "size": 237,
+            "sha256": "49f0ed330df294049c338adde5638134c14db91f9f3b1f592c521f8857f9ab44"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/tests/test_reviewer_first_open_policy.py",
+            "size": 3835,
+            "sha256": "631c1c0a0073dc4e3f40e392b8509fe11ba78d11651c3d9ce044d0f81bc90f3f"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/reviewer-first-open-policy-fixture.txt",
+            "size": 262,
+            "sha256": "a3a820ed5d773e39b7618178c7bfc99203dfb6ba615f517262a031d37e66c96f"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-REVIEWER-FIRST-EXPLICIT-STALE-MODIFIER-FIXTURE",
+      "failureAlias": "software.reviewer_first_explicit_test_fixture_stale_after_strong_contract",
+      "domain": "software",
+      "failingCheck": "ReviewerFirstOpenPolicyTests.test_explicit_native_request_opens_reviewer_first",
+      "symptom": "The explicit native-open policy test errored before its reviewer-first order assertion because the shared HTML placeholder failed the strong modifier contract.",
+      "rootCause": "The test input was not upgraded when selectable vector geometry, source binding, measurement, correction, and safety locks became mandatory.",
+      "correction": "Use the same minimal contract-complete reviewer fixture and keep the production validator fail-closed.",
+      "candidateRule": {
+        "id": "SW-G005",
+        "requirement": "Reviewer-first sequencing tests must prove ordering with an artifact that independently passes the current reviewer contract.",
+        "prevention": "Validate shared reviewer fixtures directly before using them to assert later native-host sequencing behavior.",
+        "regressionTest": "Require the explicit request to open the selectable reviewer before the native CAD file and return the exact two-step open_order.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/stale-minimal-reviewer-fixture.txt",
+        "size": 399,
+        "sha256": "7ec24348e53a0dc9a26c6c12212012783b3ee1c8cd3ac0550af38326793d59ac"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-reviewer-first-explicit-stale-fixture.txt",
+            "size": 289,
+            "sha256": "172bc5968f5f9be11b0aa9390c4c35190b25df1e4e84dcebe9703b33ef7d0638"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-reviewer-first-explicit-stale-fixture.txt",
+            "size": 242,
+            "sha256": "7b73dbbc81587e0ffefd25f1ecbb4404119fd9c07fe22beea3e86a087c22493b"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/tests/test_reviewer_first_open_policy.py",
+            "size": 3835,
+            "sha256": "631c1c0a0073dc4e3f40e392b8509fe11ba78d11651c3d9ce044d0f81bc90f3f"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/reviewer-first-open-policy-fixture.txt",
+            "size": 262,
+            "sha256": "a3a820ed5d773e39b7618178c7bfc99203dfb6ba615f517262a031d37e66c96f"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-REVIEWER-FIRST-PDF-STALE-MODIFIER-FIXTURE",
+      "failureAlias": "software.reviewer_first_pdf_gate_masked_by_stale_fixture",
+      "domain": "software",
+      "failingCheck": "ReviewerFirstOpenPolicyTests.test_pdf_cannot_be_native_target",
+      "symptom": "The PDF suffix assertion failed because the invalid placeholder reviewer triggered the strong modifier error before the intended non-CAD target diagnostic.",
+      "rootCause": "A stale shared fixture introduced an unrelated earlier failure and masked the policy boundary the test was designed to exercise.",
+      "correction": "Upgrade the reviewer fixture so the test reaches and verifies the explicit native-target suffix gate.",
+      "candidateRule": {
+        "id": "SW-G006",
+        "requirement": "A negative policy test must keep all prerequisite artifacts valid so the asserted gate is the first and only intended failure.",
+        "prevention": "For multi-gate workflows, validate prerequisites independently and bind the test fixture to the current upstream contract.",
+        "regressionTest": "With a valid selectable reviewer, require an explicitly requested PDF target to fail with rejects non-CAD artifacts.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/stale-minimal-reviewer-fixture.txt",
+        "size": 399,
+        "sha256": "7ec24348e53a0dc9a26c6c12212012783b3ee1c8cd3ac0550af38326793d59ac"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-reviewer-first-pdf-stale-fixture.txt",
+            "size": 260,
+            "sha256": "75205fddb1b9467bfbbda191066c66078cba9e11cbb029752f9c83b75e656297"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-reviewer-first-pdf-stale-fixture.txt",
+            "size": 216,
+            "sha256": "8f57ac09e4f1917b09721413623d96e218a1c1483cfb3251715c56f3acc9725b"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "agent-plugin/aicad-agent/tests/test_reviewer_first_open_policy.py",
+            "size": 3835,
+            "sha256": "631c1c0a0073dc4e3f40e392b8509fe11ba78d11651c3d9ce044d0f81bc90f3f"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/reviewer-first-open-policy-fixture.txt",
+            "size": 262,
+            "sha256": "a3a820ed5d773e39b7618178c7bfc99203dfb6ba615f517262a031d37e66c96f"
+          }
+        ]
+      }
+    },
+    {
+      "failureId": "FAIL-PACKAGED-TEST-BYTECODE-POLLUTION",
+      "failureAlias": "release.packaged_test_subprocess_bytecode_polluted_verified_tree",
+      "domain": "release",
+      "failingCheck": "verify_release_package.py after packaged 1.16.0 test execution",
+      "symptom": "The independent package verifier rejected 19 runtime Python bytecode cache files as cache, manifest-unlisted, and sums-unlisted contamination.",
+      "rootCause": "The packaged suite was launched with parent-interpreter -B only; child interpreters did not inherit that command-line flag and wrote __pycache__ files into the mutable assembled package.",
+      "correction": "Remove only the verified regenerable cache directory, set PYTHONDONTWRITEBYTECODE=1 for the entire process tree, rerun the packaged tests, and then rerun package verification.",
+      "candidateRule": {
+        "id": "REL-G049",
+        "requirement": "Post-build tests executed inside a manifested package tree must disable bytecode for the complete parent/child Python process tree.",
+        "prevention": "Use PYTHONDONTWRITEBYTECODE=1 together with python -B for packaged suites and always rerun the exact package verifier after tests.",
+        "regressionTest": "Prove a child interpreter can pollute the package when only -B is used, then prove the inherited environment prevents caches and the exact manifest/SHA verifier remains green.",
+        "safetyLocks": {
+          "reviewOnly": true,
+          "accepted": false,
+          "ruleEnabled": false,
+          "packagingGated": true
+        }
+      },
+      "reproducer": {
+        "path": "learning/review-handoff-cli-invocation/repro/packaged-test-bytecode-pollution.txt",
+        "size": 369,
+        "sha256": "a5baa3c1bb82f7f30e6539dc1c3c9a67b9f9efcf7f654fbf67d28e3851614cf8"
+      },
+      "evidenceClosure": {
+        "policy": "exact_declared_evidence",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/red-packaged-test-bytecode-pollution.txt",
+            "size": 260,
+            "sha256": "b6866481ae64d1b1ef5acc33dcdc8d420ae140cf9fd0983ffb122082a59f0f33"
+          },
+          {
+            "path": "learning/review-handoff-cli-invocation/evidence/green-packaged-test-bytecode-pollution.txt",
+            "size": 323,
+            "sha256": "9304ae2abf0466b48fb2cb2e4e20b9ba147c93ada75e0320b2bbf30f0b4a3d79"
+          }
+        ]
+      },
+      "sourceInputClosure": {
+        "policy": "exact_declared_inputs",
+        "entries": [
+          {
+            "path": "scripts/build-agent-plugin.ps1",
+            "size": 22591,
+            "sha256": "e6ae63ab27cecf212b11423bec0d876e693eec46bd933c83ae6a896d13a3794a"
+          },
+          {
+            "path": "scripts/verify_release_package.py",
+            "size": 45313,
+            "sha256": "3ca6879f2e43168bcc56b0243a46252ce0c85b620def749b001a3edc176469d8"
+          }
+        ]
+      },
+      "affectedArtifactClosure": {
+        "policy": "exact_declared_artifacts",
+        "entries": [
+          {
+            "path": "learning/review-handoff-cli-invocation/affected/packaged-test-bytecode-pollution.txt",
+            "size": 292,
+            "sha256": "11ba73cf1ff7dea629e7d74af89c736eb823142153997827815d6b4a96c568d7"
+          }
+        ]
+      }
+    }
+  ],
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

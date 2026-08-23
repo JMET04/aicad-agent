@@ -1,8 +1,8 @@
 # AICAD system engineering QA
 
 - Result: **PASS**
-- System: `magic-wand-rev-a0` revision `2026-08-22-prototype-contract-1`
-- Open gates: GATE-FIRST-ARTICLE-001, GATE-PCBA-001, GATE-PRODUCTION-001, GATE-RECEIVER-001, GATE-TARGET-FW-001
+- System: `magic-wand-rev-a0` revision `2026-08-23-prototype-contract-2`
+- Open gates: GATE-FIRST-ARTICLE-001, GATE-PCBA-001, GATE-PRODUCTION-001, GATE-RECEIVER-001, GATE-RECEIVER-PCB-001, GATE-TARGET-FW-001
 
 ## Errors
 

@@ -1,0 +1,4 @@
+RED: ReviewerFirstOpenPolicyTests.test_explicit_native_request_opens_reviewer_first
+Result: ERROR
+PlanError: review request requires a selectable vector CAD modifier; the minimal placeholder lacked the strong interactive modifier contract and prevented the intended open-order assertion.
+

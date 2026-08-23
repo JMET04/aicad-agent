@@ -1,0 +1,3 @@
+Affected surface: the mutable assembled plugin directory used for post-build tests.
+The archive bytes were not affected. Package verification correctly treats any bytecode cache as undeclared contamination, so test invocations must propagate PYTHONDONTWRITEBYTECODE=1 to child interpreters.
+

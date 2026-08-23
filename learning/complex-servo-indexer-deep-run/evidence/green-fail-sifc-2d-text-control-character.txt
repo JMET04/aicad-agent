@@ -1,0 +1,1 @@
+Final SEC_NOTE is a single line in its own frame and the 2D plan validates and compiles.

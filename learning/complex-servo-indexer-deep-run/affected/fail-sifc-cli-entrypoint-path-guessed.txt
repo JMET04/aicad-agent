@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-CLI-ENTRYPOINT-PATH-GUESSED: Resolve CLI locations with rg --files and invoke the canonical agent-plugin script path. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

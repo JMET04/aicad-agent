@@ -1,0 +1,1 @@
+F004 status=2; segment_statuses=[3,3,2,3]; point_statuses=[3,3,3,2,2].

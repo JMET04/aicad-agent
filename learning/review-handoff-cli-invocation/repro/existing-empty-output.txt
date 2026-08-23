@@ -1,0 +1,8 @@
+Command:
+python -B -m unittest discover -s tests -p "test_review_handoff.py" -v
+
+Failing check:
+ReviewHandoffTests.test_2d_radius_handoff_applies_and_regenerates_modifier
+
+Minimal condition:
+Pass a newly created TemporaryDirectory path itself as apply_review_handoff output_dir.

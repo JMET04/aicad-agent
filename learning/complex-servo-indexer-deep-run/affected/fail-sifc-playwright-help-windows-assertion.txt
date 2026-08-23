@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-PLAYWRIGHT-HELP-WINDOWS-ASSERTION: Treat help output as capability evidence only; verify a real session command and preserve the nonzero teardown evidence. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

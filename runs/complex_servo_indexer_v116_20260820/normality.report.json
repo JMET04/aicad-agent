@@ -1,0 +1,392 @@
+{
+  "schema": "aicad_normality_proof_v1",
+  "status": "pass",
+  "profile": {
+    "id": "SIFC_BOUNDED_ENVELOPE",
+    "version": "1.0.0"
+  },
+  "drawing": "SIFC_220_prebuild_normality",
+  "sourcePlanSha256": "446ddce54af46ed55308ad671227b284bb449da7c2dd9033e4125d1e4f6174a4",
+  "ruleIds": [
+    "PKG-G018",
+    "PKG-G022",
+    "PKG-G023"
+  ],
+  "checks": {
+    "locksClosed": true,
+    "planGeometryBijection": true,
+    "everyEndpointExactlyOneNamedVertex": true,
+    "constraintRankComplete": true,
+    "outerContourSingleSimpleClosedRing": true,
+    "allFeatureContractsPass": true,
+    "allFunctionalAssertionsAndBBoxPass": true,
+    "parameterDomainSweepPass": true
+  },
+  "counts": {
+    "productionEntities": 4,
+    "namedVertices": 4,
+    "structuralFaces": 1,
+    "featureContracts": 1,
+    "lineConstraintRows": 8,
+    "namedFunctionalAssertions": 5,
+    "effectiveInstanceEqualityRank": 36,
+    "estimatedAtomicHardChecks": 73
+  },
+  "mathematicalProof": {
+    "pass": true,
+    "coordinateDegreesOfFreedom": 8,
+    "parameterVariableCount": 28,
+    "independentDesignParameterCount": 24,
+    "derivedParameterCount": 4,
+    "totalVariableCount": 36,
+    "familyEquationCount": 12,
+    "familyIndependentRank": 12,
+    "familyNullity": 24,
+    "expectedFamilyNullity": 24,
+    "instanceEquationCount": 36,
+    "instanceIndependentRank": 36,
+    "instanceNullity": 0,
+    "redundantFamilyEquationCount": 0,
+    "redundantInstanceEquationCount": 0,
+    "interpretation": "The family may move only through declared independent parameters; binding one job instance leaves zero geometric freedom."
+  },
+  "planGeometry": {
+    "actualLayerCounts": {
+      "OUTLINE": 4
+    },
+    "expectedLayerCounts": {
+      "OUTLINE": 4
+    },
+    "entityChecks": [
+      {
+        "entityId": "ENV_BOTTOM",
+        "pass": true,
+        "startErrorMm": 0.0,
+        "endErrorMm": 0.0,
+        "metadataComplete": true,
+        "anchorRelation": true,
+        "shapeOrDimensionRelation": true
+      },
+      {
+        "entityId": "ENV_LEFT",
+        "pass": true,
+        "startErrorMm": 0.0,
+        "endErrorMm": 0.0,
+        "metadataComplete": true,
+        "anchorRelation": true,
+        "shapeOrDimensionRelation": true
+      },
+      {
+        "entityId": "ENV_RIGHT",
+        "pass": true,
+        "startErrorMm": 0.0,
+        "endErrorMm": 0.0,
+        "metadataComplete": true,
+        "anchorRelation": true,
+        "shapeOrDimensionRelation": true
+      },
+      {
+        "entityId": "ENV_TOP",
+        "pass": true,
+        "startErrorMm": 0.0,
+        "endErrorMm": 0.0,
+        "metadataComplete": true,
+        "anchorRelation": true,
+        "shapeOrDimensionRelation": true
+      }
+    ]
+  },
+  "vertices": {
+    "endpointReferenceCount": 8,
+    "expectedEndpointReferenceCount": 8,
+    "missingEndpointReferences": [],
+    "extraEndpointReferences": [],
+    "coincidenceErrors": [],
+    "duplicateNamedVertexPositions": [],
+    "formulaMismatchMm": {}
+  },
+  "outerContour": {
+    "pass": true,
+    "entityCount": 4,
+    "joins": [
+      {
+        "from": "ENV_BOTTOM",
+        "to": "ENV_RIGHT",
+        "errorMm": 0.0,
+        "pass": true
+      },
+      {
+        "from": "ENV_RIGHT",
+        "to": "ENV_TOP",
+        "errorMm": 0.0,
+        "pass": true
+      },
+      {
+        "from": "ENV_TOP",
+        "to": "ENV_LEFT",
+        "errorMm": 0.0,
+        "pass": true
+      },
+      {
+        "from": "ENV_LEFT",
+        "to": "ENV_BOTTOM",
+        "errorMm": 0.0,
+        "pass": true
+      }
+    ],
+    "simple": true,
+    "areaMm2": 39600.0
+  },
+  "features": {
+    "faceCount": 1,
+    "featureCount": 1,
+    "unassignedProductionEntities": [],
+    "unknownFeatureEntities": [],
+    "results": [
+      {
+        "id": "BASE_ENVELOPE_FACE",
+        "kind": "face",
+        "countsAsFace": true,
+        "pass": true,
+        "checks": {
+          "nonzero_area": true,
+          "minimum_area": true,
+          "simple": true,
+          "convex": true
+        },
+        "signedAreaMm2": 39600.0,
+        "areaMm2": 39600.0,
+        "vertexIds": [
+          "V0",
+          "V1",
+          "V2",
+          "V3"
+        ],
+        "entityIds": [
+          "ENV_BOTTOM",
+          "ENV_RIGHT",
+          "ENV_TOP",
+          "ENV_LEFT"
+        ]
+      },
+      {
+        "id": "STRUCTURAL_FACE_INTERIOR_OVERLAP",
+        "kind": "global",
+        "countsAsFace": false,
+        "pass": true,
+        "pairs": [],
+        "containment": []
+      }
+    ]
+  },
+  "measurements": {
+    "ACTUAL_BBOX_WIDTH": 220.0,
+    "ACTUAL_BBOX_HEIGHT": 180.0,
+    "WIDTH_MEASURED": 220.0,
+    "HEIGHT_MEASURED": 180.0,
+    "AREA_MEASURED": 39600.0
+  },
+  "functionalAssertions": [
+    {
+      "id": "WIDTH_EXACT",
+      "pass": true,
+      "purpose": "measured width follows parameter",
+      "lhs": 220.0,
+      "operator": "==",
+      "rhs": 220.0,
+      "residual": 0.0
+    },
+    {
+      "id": "HEIGHT_EXACT",
+      "pass": true,
+      "purpose": "measured height follows parameter",
+      "lhs": 180.0,
+      "operator": "==",
+      "rhs": 180.0,
+      "residual": 0.0
+    },
+    {
+      "id": "AREA_EXACT",
+      "pass": true,
+      "purpose": "face area follows parameters",
+      "lhs": 39600.0,
+      "operator": "==",
+      "rhs": 39600.0,
+      "residual": 0.0
+    },
+    {
+      "id": "BBOX_W",
+      "pass": true,
+      "purpose": "bbox width follows parameter",
+      "lhs": 220.0,
+      "operator": "==",
+      "rhs": 220.0,
+      "residual": 0.0
+    },
+    {
+      "id": "BBOX_H",
+      "pass": true,
+      "purpose": "bbox height follows parameter",
+      "lhs": 180.0,
+      "operator": "==",
+      "rhs": 180.0,
+      "residual": 0.0
+    }
+  ],
+  "closureSystem": {
+    "top": "bearing_side",
+    "bottom": "mounting_side",
+    "asymmetric": true,
+    "standard": "ISO GPS plus GB/T mechanical drawing controlled design basis",
+    "pass": true
+  },
+  "boundingBox": {
+    "pass": true,
+    "actualMm": [
+      0.0,
+      0.0,
+      220.0,
+      180.0
+    ],
+    "expectedMm": [
+      0.0,
+      0.0,
+      220.0,
+      180.0
+    ],
+    "errorsMm": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "parameterDomainSweep": {
+    "pass": true,
+    "caseCount": 67,
+    "explicitCaseCount": 3,
+    "randomCaseCount": 64,
+    "randomSamplingAttempts": 64,
+    "randomAcceptanceRate": 1.0,
+    "randomSeed": 22018056,
+    "failures": [],
+    "scope": "Template-domain geometry and functional assertions; each emitted CAD instance must still pass the full plan comparison.",
+    "actualInstanceAssertions": [
+      {
+        "id": "BASE_LANDSCAPE",
+        "pass": true,
+        "purpose": "base remains wider than tall",
+        "lhs": 220.0,
+        "operator": ">",
+        "rhs": 180.0,
+        "residual": 40.0
+      },
+      {
+        "id": "BOSS_HEIGHT",
+        "pass": true,
+        "purpose": "boss contains bearing-seat depth",
+        "lhs": 36.0,
+        "operator": ">=",
+        "rhs": 36.0,
+        "residual": 0.0
+      },
+      {
+        "id": "NEST_1",
+        "pass": true,
+        "purpose": "boss contains seal recess",
+        "lhs": 130.0,
+        "operator": ">",
+        "rhs": 92.0,
+        "residual": 38.0
+      },
+      {
+        "id": "NEST_2",
+        "pass": true,
+        "purpose": "seal contains seat",
+        "lhs": 92.0,
+        "operator": ">",
+        "rhs": 80.0,
+        "residual": 12.0
+      },
+      {
+        "id": "NEST_3",
+        "pass": true,
+        "purpose": "seat contains shaft",
+        "lhs": 80.0,
+        "operator": ">",
+        "rhs": 50.0,
+        "residual": 30.0
+      },
+      {
+        "id": "WALL",
+        "pass": true,
+        "purpose": "housing retains radial wall",
+        "lhs": 25.0,
+        "operator": ">=",
+        "rhs": 21.5,
+        "residual": 3.5
+      },
+      {
+        "id": "INDEXER_INSIDE",
+        "pass": true,
+        "purpose": "indexer holes stay inside boss",
+        "lhs": 58.5,
+        "operator": "<=",
+        "rhs": 65.0,
+        "residual": -6.5
+      },
+      {
+        "id": "COVER_INSIDE",
+        "pass": true,
+        "purpose": "cover holes stay inside boss",
+        "lhs": 55.5,
+        "operator": "<=",
+        "rhs": 65.0,
+        "residual": -9.5
+      },
+      {
+        "id": "CB_SIZE",
+        "pass": true,
+        "purpose": "counterbore exceeds through-hole",
+        "lhs": 24.0,
+        "operator": ">",
+        "rhs": 14.0,
+        "residual": 10.0
+      },
+      {
+        "id": "CB_FLOOR",
+        "pass": true,
+        "purpose": "counterbore retains floor",
+        "lhs": 10.0,
+        "operator": "<",
+        "rhs": 20.0,
+        "residual": -10.0
+      },
+      {
+        "id": "POCKET_FLOOR",
+        "pass": true,
+        "purpose": "pocket retains floor",
+        "lhs": 10.0,
+        "operator": ">=",
+        "rhs": 6.0,
+        "residual": 4.0
+      }
+    ],
+    "actualInstancePass": true
+  },
+  "failures": [],
+  "closedLoop": "detect -> locate failed gate -> explain root cause -> add persistent rule -> add red fixture -> repair -> full regression",
+  "guaranteeBoundary": {
+    "boundedGuarantee": "A pass proves this drawing is normal only inside the named structure template, declared parameter domain and implemented hard gates.",
+    "notClaimed": [
+      "material strength certification",
+      "machine/tooling tolerance certification",
+      "mass-production acceptance",
+      "unmodeled product families"
+    ],
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

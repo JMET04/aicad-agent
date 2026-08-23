@@ -1,0 +1,101 @@
+schema: magic_wand_receiver_effects_zephyr_overlay_contract_v1
+status: CONTRACT_ONLY_NOT_A_COMPILEABLE_OVERLAY
+board_target: NINA-B302 open-CPU / nRF52840
+target_baseline:
+  nrf_connect_sdk: v3.4.0
+  zephyr: v4.4.0
+  nvs_header: zephyr/kvss/nvs.h
+required_nodes:
+  epoch_storage:
+    node_label: mw_epoch_partition
+    parent_compatible: fixed-partitions
+    status: okay
+    dedicated_to: authenticated_session_epoch_journal_only
+    must_not_overlap:
+      - storage_partition
+      - zephyr_code_partition_or_application_image
+      - mcuboot_or_other_filesystem_partition
+    erase_page_aligned: true
+    minimum_sector_count: 2
+    exact_offset_and_size: BOARD_FLASH_MAP_REVIEW_REQUIRED
+    nvs_ids:
+      first: 0x4D00
+      last: 0x4D0F
+      mapping: 0x4D00 + logical_channel * 2 + copy_index
+      logical_channels: 8
+      copies_per_channel: 2
+  display_spi:
+    compatible: nordic,nrf-spim
+    pins:
+      sck: P0.19
+      mosi: P0.20
+    child:
+      compatible: ilitek,gc9a01a
+      module_vendor: Waveshare
+      module_sku: 19192
+      connector_j2:
+        pin_1: 3V3
+        pin_2: GND
+        pin_3: TFT_MOSI
+        pin_4: TFT_SCK
+        pin_5: TFT_CS_N
+        pin_6: TFT_DC
+        pin_7: TFT_RESET_N
+        pin_8: TFT_BL_SWITCHED
+      cs_gpio: P0.17
+      cs_active_low: true
+      dc_gpio: P0.21
+      reset_gpio: P0.22
+      reset_active_low: true
+      backlight_gate_gpio: P0.23
+      backlight_gate_active_high: true
+      width: 240
+      height: 240
+  audio_i2s:
+    compatible: nordic,nrf-i2s
+    pins:
+      bclk: P0.13
+      lrclk: P0.14
+      sdout: P0.15
+    sample_rate_hz: 16000
+    sample_bits: 16
+    channels: mono_duplicated_or_left_per_review
+    amp: MAX98357AETE+T
+    amp_data_net: I2S_DOUT
+    amp_sd_ctrl_gpio: P0.16
+    amp_sd_series_ohms: 2200
+    amp_sd_pulldown_ohms: 100000
+    amp_sd_enable_active_high: true
+    reset_default: hardware_low_muted
+  rgb_status:
+    red_gpio: P0.24
+    green_gpio: P0.25
+    blue_gpio: P1.00
+    common_anode: true
+    active_low: true
+    reset_default: drive_high_off
+    electrical: discrete_3v3_led_with_individual_resistors
+required_aliases:
+  - mw_tft
+  - mw_tft_backlight
+  - mw_audio_i2s
+  - mw_audio_mute
+  - mw_rgb_red
+  - mw_rgb_green
+  - mw_rgb_blue
+required_kconfig:
+  - CONFIG_FLASH=y
+  - CONFIG_FLASH_MAP=y
+  - CONFIG_FLASH_PAGE_LAYOUT=y
+  - CONFIG_NVS=y
+  - CONFIG_NVS_DATA_CRC=y
+  - CONFIG_MPU_ALLOW_FLASH_WRITE=y
+compile_gate:
+  status: OPEN
+  blockers:
+    - receiver-effects Zephyr application entrypoint and reviewed board overlay absent
+    - exact dedicated mw_epoch_partition offset and size absent
+    - real receiver application has not included the reusable CMake source fragment
+    - target power-cut and ACK-order tests not run
+    - GC9A01A init timing rotation and SPI mode not target-verified
+    - Zephyr SDK and west target build not run

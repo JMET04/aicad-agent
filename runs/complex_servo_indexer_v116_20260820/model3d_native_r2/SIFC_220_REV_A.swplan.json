@@ -1,0 +1,1281 @@
+{
+  "protocol": "AICAD_SOLIDWORKS_1",
+  "source_sha256": "5d214292944aa0603b537248e3d9bbd9ed64936cede5545178bb51b3e3bf4e84",
+  "part_name": "SIFC_220_REV_A",
+  "units": "mm",
+  "tolerance_mm": 0.001,
+  "template_path": "C:\\ProgramData\\SOLIDWORKS\\SOLIDWORKS 2026\\templates\\gb_part.prtdot",
+  "output_sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_native_r2\\SIFC_220_REV_A.SLDPRT",
+  "output_step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_native_r2\\SIFC_220_REV_A.step",
+  "features": [
+    {
+      "id": "F001",
+      "type": "base_extrude",
+      "purpose": "220 x 180 x 20 datum-A mounting base",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "base_plate",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [],
+      "support_feature": null,
+      "support_top_z_mm": 0.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 20.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": 220.0,
+        "height_mm": 180.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 0.0,
+        "volume_after_mm3": 792000.0,
+        "volume_delta_mm3": 792000.0,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          20.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F002",
+      "type": "boss_extrude",
+      "purpose": "diameter 130 dual-bearing housing boss",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "bearing_boss",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 56.0,
+      "depth_mm": 36.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 65.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 65.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 792000.0,
+        "volume_after_mm3": 1269836.2426110082,
+        "volume_delta_mm3": 477836.24261100823,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F003",
+      "type": "boss_extrude",
+      "purpose": "right vertical stiffness rib pad",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "rib_pad",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 32.0,
+      "depth_mm": 12.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": 48.0,
+        "center_y_mm": 0.0,
+        "width_mm": 42.0,
+        "height_mm": 72.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 1269836.2426110082,
+        "volume_after_mm3": 1276312.5907161941,
+        "volume_delta_mm3": 6476.348105185898,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F004",
+      "type": "boss_extrude",
+      "purpose": "left vertical stiffness rib pad",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "rib_pad",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 32.0,
+      "depth_mm": 12.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": -48.0,
+        "center_y_mm": 0.0,
+        "width_mm": 42.0,
+        "height_mm": 72.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 1276312.5907161941,
+        "volume_after_mm3": 1282788.93882138,
+        "volume_delta_mm3": 6476.348105185898,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F005",
+      "type": "boss_extrude",
+      "purpose": "upper horizontal stiffness rib pad",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "rib_pad",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 32.0,
+      "depth_mm": 12.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 48.0,
+        "width_mm": 72.0,
+        "height_mm": 42.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 1282788.93882138,
+        "volume_after_mm3": 1289265.2869265662,
+        "volume_delta_mm3": 6476.348105186131,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F006",
+      "type": "boss_extrude",
+      "purpose": "lower horizontal stiffness rib pad",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "rib_pad",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 32.0,
+      "depth_mm": 12.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": 0.0,
+        "center_y_mm": -48.0,
+        "width_mm": 72.0,
+        "height_mm": 42.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 1289265.2869265662,
+        "volume_after_mm3": 1295741.6350317523,
+        "volume_delta_mm3": 6476.348105186131,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F007",
+      "type": "cut_extrude",
+      "purpose": "diameter 92 H8 seal and cover recess",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "seal_recess",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F002"
+      ],
+      "support_feature": "F002",
+      "support_top_z_mm": 56.0,
+      "resulting_top_z_mm": 56.0,
+      "depth_mm": 6.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 46.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 46.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1295741.6350317523,
+        "volume_after_mm3": 1255855.974701776,
+        "volume_delta_mm3": -39885.66032997635,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F008",
+      "type": "cut_extrude",
+      "purpose": "diameter 80 H7 paired-6208 bearing seat",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "bearing_seat",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F002"
+      ],
+      "support_feature": "F002",
+      "support_top_z_mm": 56.0,
+      "resulting_top_z_mm": 56.0,
+      "depth_mm": 36.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 40.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 40.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1255855.974701776,
+        "volume_after_mm3": 1105059.5273294656,
+        "volume_delta_mm3": -150796.44737231033,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F009",
+      "type": "cut_extrude",
+      "purpose": "diameter 50 shaft clearance through bore",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "shaft_clearance",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F002"
+      ],
+      "support_feature": "F002",
+      "support_top_z_mm": 56.0,
+      "resulting_top_z_mm": 56.0,
+      "depth_mm": 56.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 25.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 0.0,
+            "y_mm": 0.0,
+            "radius_mm": 25.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1105059.5273294656,
+        "volume_after_mm3": 1065789.6191595932,
+        "volume_delta_mm3": -39269.90816987236,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F010",
+      "type": "cut_extrude",
+      "purpose": "eight diameter 9 indexer holes on diameter 108 PCD",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "indexer_hole_pattern",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F002"
+      ],
+      "support_feature": "F002",
+      "support_top_z_mm": 56.0,
+      "resulting_top_z_mm": 56.0,
+      "depth_mm": 56.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle_pattern",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 4.5,
+        "count": 8,
+        "bolt_circle_radius_mm": 54.0,
+        "start_angle_deg": 22.5,
+        "circles": [
+          {
+            "x_mm": 49.88949475560948,
+            "y_mm": 20.66490534771485,
+            "radius_mm": 4.5
+          },
+          {
+            "x_mm": 20.66490534771485,
+            "y_mm": 49.88949475560948,
+            "radius_mm": 4.5
+          },
+          {
+            "x_mm": -20.664905347714846,
+            "y_mm": 49.88949475560948,
+            "radius_mm": 4.5
+          },
+          {
+            "x_mm": -49.88949475560948,
+            "y_mm": 20.664905347714853,
+            "radius_mm": 4.5
+          },
+          {
+            "x_mm": -49.88949475560949,
+            "y_mm": -20.664905347714843,
+            "radius_mm": 4.5
+          },
+          {
+            "x_mm": -20.664905347714832,
+            "y_mm": -49.88949475560949,
+            "radius_mm": 4.5
+          },
+          {
+            "x_mm": 20.66490534771486,
+            "y_mm": -49.889494755609476,
+            "radius_mm": 4.5
+          },
+          {
+            "x_mm": 49.88949475560949,
+            "y_mm": -20.664905347714836,
+            "radius_mm": 4.5
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1065789.6191595932,
+        "volume_after_mm3": 1037289.0906062259,
+        "volume_delta_mm3": -28500.52855336736,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F011",
+      "type": "cut_extrude",
+      "purpose": "four diameter 7 cover holes on diameter 104 PCD",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "cover_hole_pattern",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F002"
+      ],
+      "support_feature": "F002",
+      "support_top_z_mm": 56.0,
+      "resulting_top_z_mm": 56.0,
+      "depth_mm": 56.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle_pattern",
+        "center_x_mm": 0.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 3.5,
+        "count": 4,
+        "bolt_circle_radius_mm": 52.0,
+        "start_angle_deg": 45.0,
+        "circles": [
+          {
+            "x_mm": 36.76955262170048,
+            "y_mm": 36.76955262170048,
+            "radius_mm": 3.5
+          },
+          {
+            "x_mm": -36.76955262170047,
+            "y_mm": 36.76955262170048,
+            "radius_mm": 3.5
+          },
+          {
+            "x_mm": -36.76955262170048,
+            "y_mm": -36.76955262170047,
+            "radius_mm": 3.5
+          },
+          {
+            "x_mm": 36.76955262170046,
+            "y_mm": -36.76955262170048,
+            "radius_mm": 3.5
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1037289.0906062259,
+        "volume_after_mm3": 1028668.5603647751,
+        "volume_delta_mm3": -8620.53024145076,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F012",
+      "type": "cut_extrude",
+      "purpose": "frame mounting through hole 1",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "frame_mount_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 20.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 85.0,
+        "center_y_mm": 65.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 7.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 85.0,
+            "y_mm": 65.0,
+            "radius_mm": 7.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1028668.5603647751,
+        "volume_after_mm3": 1025589.7995642571,
+        "volume_delta_mm3": -3078.760800517979,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F013",
+      "type": "cut_extrude",
+      "purpose": "frame mounting through hole 2",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "frame_mount_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 20.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": -85.0,
+        "center_y_mm": 65.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 7.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": -85.0,
+            "y_mm": 65.0,
+            "radius_mm": 7.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1025589.7995642571,
+        "volume_after_mm3": 1022511.0387637393,
+        "volume_delta_mm3": -3078.7608005178627,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F014",
+      "type": "cut_extrude",
+      "purpose": "frame mounting through hole 3",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "frame_mount_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 20.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": -85.0,
+        "center_y_mm": -65.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 7.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": -85.0,
+            "y_mm": -65.0,
+            "radius_mm": 7.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1022511.0387637393,
+        "volume_after_mm3": 1019432.2779632212,
+        "volume_delta_mm3": -3078.7608005180955,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F015",
+      "type": "cut_extrude",
+      "purpose": "frame mounting through hole 4",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "frame_mount_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 20.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 85.0,
+        "center_y_mm": -65.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 7.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 85.0,
+            "y_mm": -65.0,
+            "radius_mm": 7.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1019432.2779632212,
+        "volume_after_mm3": 1016353.5171627031,
+        "volume_delta_mm3": -3078.7608005180955,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F016",
+      "type": "cut_extrude",
+      "purpose": "diameter 24 by 10 frame counterbore 1",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "frame_counterbore",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 85.0,
+        "center_y_mm": 65.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 12.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 85.0,
+            "y_mm": 65.0,
+            "radius_mm": 12.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1016353.5171627031,
+        "volume_after_mm3": 1013369.0041417928,
+        "volume_delta_mm3": -2984.5130209103227,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F017",
+      "type": "cut_extrude",
+      "purpose": "diameter 24 by 10 frame counterbore 2",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "frame_counterbore",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": -85.0,
+        "center_y_mm": 65.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 12.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": -85.0,
+            "y_mm": 65.0,
+            "radius_mm": 12.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1013369.0041417928,
+        "volume_after_mm3": 1010384.4911208826,
+        "volume_delta_mm3": -2984.5130209102063,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F018",
+      "type": "cut_extrude",
+      "purpose": "diameter 24 by 10 frame counterbore 3",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "frame_counterbore",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": -85.0,
+        "center_y_mm": -65.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 12.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": -85.0,
+            "y_mm": -65.0,
+            "radius_mm": 12.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1010384.4911208826,
+        "volume_after_mm3": 1007399.9780999722,
+        "volume_delta_mm3": -2984.5130209103227,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F019",
+      "type": "cut_extrude",
+      "purpose": "diameter 24 by 10 frame counterbore 4",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "frame_counterbore",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 85.0,
+        "center_y_mm": -65.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 12.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 85.0,
+            "y_mm": -65.0,
+            "radius_mm": 12.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1007399.9780999722,
+        "volume_after_mm3": 1004415.4650790619,
+        "volume_delta_mm3": -2984.5130209103227,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F020",
+      "type": "cut_extrude",
+      "purpose": "primary diameter 8 H7 datum-C dowel hole",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "dowel_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 20.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": 70.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 4.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": 70.0,
+            "y_mm": 0.0,
+            "radius_mm": 4.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1004415.4650790619,
+        "volume_after_mm3": 1003410.1554299133,
+        "volume_delta_mm3": -1005.3096491486067,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F021",
+      "type": "cut_extrude",
+      "purpose": "secondary diameter 8 H7 dowel hole",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "dowel_hole",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 20.0,
+      "end_condition": "through_all",
+      "profile": {
+        "kind": "circle",
+        "center_x_mm": -70.0,
+        "center_y_mm": 0.0,
+        "width_mm": null,
+        "height_mm": null,
+        "radius_mm": 4.0,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": [
+          {
+            "x_mm": -70.0,
+            "y_mm": 0.0,
+            "radius_mm": 4.0
+          }
+        ]
+      },
+      "expected": {
+        "volume_before_mm3": 1003410.1554299133,
+        "volume_after_mm3": 1002404.8457807646,
+        "volume_delta_mm3": -1005.3096491487231,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F022",
+      "type": "cut_extrude",
+      "purpose": "36 x 34 x 10 non-through lightening pocket 1",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "lightening_pocket",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": 86.0,
+        "center_y_mm": 30.0,
+        "width_mm": 36.0,
+        "height_mm": 34.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 1002404.8457807646,
+        "volume_after_mm3": 990164.8457807646,
+        "volume_delta_mm3": -12240.0,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F023",
+      "type": "cut_extrude",
+      "purpose": "36 x 34 x 10 non-through lightening pocket 2",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "lightening_pocket",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": -86.0,
+        "center_y_mm": 30.0,
+        "width_mm": 36.0,
+        "height_mm": 34.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 990164.8457807646,
+        "volume_after_mm3": 977924.8457807646,
+        "volume_delta_mm3": -12240.0,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F024",
+      "type": "cut_extrude",
+      "purpose": "36 x 34 x 10 non-through lightening pocket 3",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "lightening_pocket",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": -86.0,
+        "center_y_mm": -30.0,
+        "width_mm": 36.0,
+        "height_mm": 34.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 977924.8457807646,
+        "volume_after_mm3": 965684.8457807644,
+        "volume_delta_mm3": -12240.000000000233,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    },
+    {
+      "id": "F025",
+      "type": "cut_extrude",
+      "purpose": "36 x 34 x 10 non-through lightening pocket 4",
+      "reasoning": "This feature is source-dimensioned, origin-anchored, fully constrained, and committed only after its declared support is validated.",
+      "roles": [
+        "lightening_pocket",
+        "review_selectable"
+      ],
+      "editable": true,
+      "depends_on": [
+        "F001"
+      ],
+      "support_feature": "F001",
+      "support_top_z_mm": 20.0,
+      "resulting_top_z_mm": 20.0,
+      "depth_mm": 10.0,
+      "end_condition": "blind",
+      "profile": {
+        "kind": "center_rectangle",
+        "center_x_mm": 86.0,
+        "center_y_mm": -30.0,
+        "width_mm": 36.0,
+        "height_mm": 34.0,
+        "radius_mm": null,
+        "count": null,
+        "bolt_circle_radius_mm": null,
+        "start_angle_deg": null,
+        "circles": []
+      },
+      "expected": {
+        "volume_before_mm3": 965684.8457807644,
+        "volume_after_mm3": 953444.8457807644,
+        "volume_delta_mm3": -12240.0,
+        "bbox_mm": [
+          -110.0,
+          -90.0,
+          0.0,
+          110.0,
+          90.0,
+          56.0
+        ],
+        "solid_body_count": 1
+      }
+    }
+  ]
+}

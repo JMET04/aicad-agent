@@ -1,0 +1,109 @@
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/i2c/i2c.h>
+#include <zephyr/dt-bindings/pinctrl/nrf-pinctrl.h>
+#include <zephyr/dt-bindings/sensor/lsm6dsv16x.h>
+
+/*
+ * The maintained EVK NINA-B3 board supplies the nRF52840/NINA-B302 clocks and
+ * memory definition. Everything EVK-specific that conflicts with the custom
+ * wand is disabled below before the factory-design pin authority is applied.
+ */
+
+/ {
+	chosen {
+		/delete-property/ zephyr,console;
+		/delete-property/ zephyr,shell-uart;
+		/delete-property/ zephyr,uart-mcumgr;
+		/delete-property/ zephyr,bt-mon-uart;
+		/delete-property/ zephyr,bt-c2h-uart;
+		/delete-property/ zephyr,ieee802154;
+	};
+
+	aliases {
+		mw-arm = &mw_arm_n;
+		mw-chg-stat1 = &mw_chg_stat1_n;
+		mw-chg-stat2 = &mw_chg_stat2_n;
+		mw-imu = &imu;
+		mw-haptic = &haptic;
+	};
+
+	mw-inputs {
+		mw_arm_n: arm-n {
+			gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+		};
+
+		mw_chg_stat1_n: charge-status-1-n {
+			gpios = <&gpio0 24 GPIO_ACTIVE_LOW>;
+		};
+
+		mw_chg_stat2_n: charge-status-2-n {
+			gpios = <&gpio0 25 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+/* EVK-only LEDs/buttons claim wand P0.13 and P0.25. */
+&led0 { status = "disabled"; };
+&led1 { status = "disabled"; };
+&led2 { status = "disabled"; };
+&red_pwm_led { status = "disabled"; };
+&green_pwm_led { status = "disabled"; };
+&blue_pwm_led { status = "disabled"; };
+&button0 { status = "disabled"; };
+&button1 { status = "disabled"; };
+
+&uart0 { status = "disabled"; };
+&spi1 { status = "disabled"; };
+&pwm0 { status = "disabled"; };
+&adc { status = "disabled"; };
+&ieee802154 { status = "disabled"; };
+&usbd { status = "disabled"; };
+
+&pinctrl {
+	mw_i2c0_default: mw_i2c0_default {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SCL, 0, 11)>,
+				<NRF_PSEL(TWIM_SDA, 1, 9)>;
+		};
+	};
+
+	mw_i2c0_sleep: mw_i2c0_sleep {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SCL, 0, 11)>,
+				<NRF_PSEL(TWIM_SDA, 1, 9)>;
+			low-power-enable;
+		};
+	};
+};
+
+&i2c0 {
+	compatible = "nordic,nrf-twim";
+	status = "okay";
+	clock-frequency = <I2C_BITRATE_STANDARD>;
+	pinctrl-0 = <&mw_i2c0_default>;
+	pinctrl-1 = <&mw_i2c0_sleep>;
+	pinctrl-names = "default", "sleep";
+
+	imu: lsm6dsv16x@6a {
+		compatible = "st,lsm6dsv16x";
+		reg = <0x6a>;
+		status = "okay";
+		int1-gpios = <&gpio0 26 GPIO_ACTIVE_HIGH>;
+		drdy-pin = <1>;
+		drdy-pulsed;
+		accel-range = <LSM6DSV16X_DT_FS_4G>;
+		gyro-range = <LSM6DSV16X_DT_FS_2000DPS>;
+		accel-odr = <LSM6DSVXXX_DT_ODR_AT_240Hz>;
+		gyro-odr = <LSM6DSVXXX_DT_ODR_AT_240Hz>;
+	};
+
+	haptic: drv2605@5a {
+		compatible = "ti,drv2605";
+		reg = <0x5a>;
+		status = "disabled";
+		actuator-mode = "LRA";
+		vib-rated-mv = <1850>;
+		vib-overdrive-mv = <1850>;
+		en-gpios = <&gpio0 13 GPIO_ACTIVE_HIGH>;
+	};
+};

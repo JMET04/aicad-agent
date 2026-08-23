@@ -1,0 +1,1 @@
+Initial validation: first entity not anchored at origin.

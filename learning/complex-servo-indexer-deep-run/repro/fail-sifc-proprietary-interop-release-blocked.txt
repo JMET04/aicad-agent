@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-PROPRIETARY-INTEROP-RELEASE-BLOCKED: independent release proprietary-binary gate. The IncludeSolidWorksInterop build was rejected for the host executable and two SolidWorks interop DLLs.

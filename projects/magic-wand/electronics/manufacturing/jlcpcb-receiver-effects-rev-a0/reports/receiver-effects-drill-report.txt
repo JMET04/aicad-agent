@@ -1,0 +1,27 @@
+Drill report for receiver-effects.kicad_pcb
+Created on 2026-08-23T10:12:00
+
+Copper Layer Stackup:
+    =============================================================
+    L1 :  F.Cu                      front
+    L2 :  In1.Cu                    in1
+    L3 :  In2.Cu                    in2
+    L4 :  B.Cu                      back
+
+
+Drill file 'receiver-effects-PTH.drl' contains
+    plated through holes:
+    =============================================================
+    T1  0.300mm  0.0118"  (39 holes))
+    T2  0.600mm  0.0236"  (4 holes)  (with 4 slots)
+
+    Total plated holes count 43
+
+
+Drill file 'receiver-effects-NPTH.drl' contains
+    unplated through holes:
+    =============================================================
+    T1  0.600mm  0.0236"  (2 holes)  (with 1 slot)
+    T2  2.400mm  0.0945"  (4 holes))
+
+    Total unplated holes count 6

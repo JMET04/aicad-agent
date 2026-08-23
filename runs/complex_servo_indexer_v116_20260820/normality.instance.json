@@ -1,0 +1,37 @@
+{
+  "schema": "aicad_normality_instance_v1",
+  "profileId": "SIFC_BOUNDED_ENVELOPE",
+  "profileVersion": "1.0.0",
+  "values": {
+    "BASE_W": 220,
+    "BASE_H": 180,
+    "BASE_T": 20,
+    "TOTAL_H": 56,
+    "BOSS_D": 130,
+    "SEAT_D": 80,
+    "SEAT_DEPTH": 36,
+    "SHAFT_D": 50,
+    "SEAL_D": 92,
+    "SEAL_DEPTH": 6,
+    "INDEXER_PCD": 108,
+    "INDEXER_HOLE_D": 9,
+    "COVER_PCD": 104,
+    "COVER_HOLE_D": 7,
+    "FRAME_HOLE_D": 14,
+    "FRAME_CB_D": 24,
+    "FRAME_CB_DEPTH": 10,
+    "DOWEL_D": 8,
+    "RIB_W": 42,
+    "RIB_H": 72,
+    "RIB_DEPTH": 12,
+    "POCKET_W": 36,
+    "POCKET_H": 34,
+    "POCKET_DEPTH": 10
+  },
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-SW-NEGATIVE-RECTANGLE-CONSTRAINTS: Add explicit rectangle width, height and lower-left X/Y dimensions or zero relations before FullyDefineSketch. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.

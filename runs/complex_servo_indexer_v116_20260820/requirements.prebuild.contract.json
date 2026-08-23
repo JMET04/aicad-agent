@@ -1,0 +1,282 @@
+{
+  "schema": "aicad_drawing_requirement_contract_v1",
+  "contractId": "REQ.SIFC.220.REV.A",
+  "revision": 1,
+  "requestSummary": "Prebuild, review-only intent contract for a complex native SolidWorks servo-indexer bearing cartridge and selectable 2D/3D review evidence.",
+  "productType": "servo_indexer_bearing_cartridge",
+  "useCase": "prebuild requirement freeze; not geometry, manufacturing, fabrication, or acceptance evidence",
+  "domain": "mechanical",
+  "deliveryStage": "review",
+  "selectedRulePacks": [
+    "normative_governance",
+    "mechanical",
+    "native_solidworks_topology",
+    "canonical_v3_generation_preflight",
+    "post_generation_evidence_contract_v3"
+  ],
+  "applicableStandards": [
+    {
+      "id": "STD.ISO.GPS",
+      "title": "ISO GPS dimensional and geometrical specification",
+      "edition": "controlled design basis",
+      "scope": "datums, fits, tolerances and inspection intent",
+      "sourceId": "STANDARD"
+    },
+    {
+      "id": "STD.GBT.DRAWING",
+      "title": "GB/T mechanical drawing convention",
+      "edition": "controlled design basis",
+      "scope": "drawing presentation intent",
+      "sourceId": "STANDARD"
+    }
+  ],
+  "units": "mm",
+  "sources": [
+    {
+      "id": "STANDARD",
+      "kind": "selected_standard",
+      "description": "ISO GPS and GB/T controlled design basis.",
+      "path": "standards-authority.md",
+      "dimensionalAuthority": true
+    },
+    {
+      "id": "ENGINEERING",
+      "kind": "approved_engineering_input",
+      "description": "7075-T651",
+      "path": "design-basis.md",
+      "dimensionalAuthority": true
+    },
+    {
+      "id": "ANALYSIS",
+      "kind": "approved_engineering_input",
+      "description": "Preliminary load and life calculations.",
+      "path": "analysis-basis.md",
+      "dimensionalAuthority": true
+    },
+    {
+      "id": "PREFLIGHT",
+      "kind": "approved_engineering_input",
+      "description": "Passed 54-gate pre-geometry report.",
+      "path": "mechanical-preflight.report.json",
+      "dimensionalAuthority": true
+    },
+    {
+      "id": "USER",
+      "kind": "user_explicit_semantic",
+      "description": "Complex drawing, 3D review and token-accounting request.",
+      "dimensionalAuthority": false
+    },
+    {
+      "id": "IMAGE",
+      "kind": "reference_image",
+      "description": "Visual topology reference only; no pixel-derived dimensions.",
+      "path": "C:/Users/刘佳明/.codex/attachments/a74454bb-fc8d-4578-8b65-74f155bcbe5d/image-1.jpg",
+      "dimensionalAuthority": false
+    }
+  ],
+  "authorityOrder": [
+    "STANDARD",
+    "ENGINEERING",
+    "ANALYSIS",
+    "PREFLIGHT",
+    "USER",
+    "IMAGE"
+  ],
+  "requirements": [
+    {
+      "id": "REQ.PRODUCT",
+      "category": "overall_shape",
+      "statement": "Freeze the cartridge product family.",
+      "priority": "hard",
+      "sourceIds": [
+        "USER",
+        "ENGINEERING"
+      ],
+      "mustConfirm": false,
+      "expected": {
+        "kind": "exact",
+        "value": "servo_indexer_bearing_cartridge"
+      }
+    },
+    {
+      "id": "REQ.STRUCTURE",
+      "category": "structure_family",
+      "statement": "Freeze the exact SIFC-220 profile.",
+      "priority": "hard",
+      "sourceIds": [
+        "STANDARD",
+        "ENGINEERING"
+      ],
+      "mustConfirm": false,
+      "expected": {
+        "kind": "exact",
+        "value": "SIFC_BOUNDED_ENVELOPE"
+      }
+    },
+    {
+      "id": "REQ.MATERIAL",
+      "category": "material",
+      "statement": "Freeze 7075-T651 as material intent.",
+      "priority": "hard",
+      "sourceIds": [
+        "ENGINEERING"
+      ],
+      "mustConfirm": false,
+      "expected": {
+        "kind": "exact",
+        "value": "7075-T651"
+      }
+    },
+    {
+      "id": "REQ.DIMENSIONS",
+      "category": "dimensions",
+      "statement": "Freeze the controlled dimension vector.",
+      "priority": "hard",
+      "sourceIds": [
+        "ENGINEERING"
+      ],
+      "mustConfirm": false,
+      "expected": {
+        "kind": "exact",
+        "value": [
+          220,
+          180,
+          20,
+          56,
+          130,
+          80,
+          36,
+          50,
+          92,
+          6,
+          108,
+          9,
+          104,
+          7,
+          14,
+          24,
+          10,
+          8,
+          42,
+          72,
+          12,
+          36,
+          34,
+          10
+        ],
+        "tolerance": 1e-06
+      }
+    },
+    {
+      "id": "REQ.FEATURE_INTENT",
+      "category": "overall_shape",
+      "statement": "Freeze the planned major-feature inventory.",
+      "priority": "hard",
+      "sourceIds": [
+        "USER",
+        "ENGINEERING"
+      ],
+      "mustConfirm": false,
+      "expected": {
+        "kind": "set_contains",
+        "values": [
+          "base_plate",
+          "bearing_boss",
+          "bearing_seat",
+          "shaft_clearance",
+          "seal_recess",
+          "indexer_hole_pattern",
+          "cover_hole_pattern",
+          "frame_mount_holes",
+          "frame_counterbores",
+          "dowel_holes",
+          "rib_pads",
+          "lightening_pockets",
+          "manufacturing_drawing",
+          "selectable_2d_reviewer",
+          "selectable_3d_reviewer"
+        ]
+      }
+    },
+    {
+      "id": "REQ.LOCKS",
+      "category": "safety",
+      "statement": "Keep review and packaging locks closed.",
+      "priority": "hard",
+      "sourceIds": [
+        "PREFLIGHT"
+      ],
+      "mustConfirm": false,
+      "expected": {
+        "kind": "exact",
+        "value": true
+      }
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "ASM.NATIVE.EDGE_BREAK",
+      "statement": "Native fillet/chamfer is outside the released matrix; edge break is drawing intent only.",
+      "impact": "high",
+      "status": "confirmed",
+      "sourceIds": [
+        "ENGINEERING",
+        "PREFLIGHT"
+      ]
+    }
+  ],
+  "conflicts": [],
+  "requiredMajorFeatures": [
+    "base_plate",
+    "bearing_boss",
+    "bearing_seat",
+    "shaft_clearance",
+    "seal_recess",
+    "indexer_hole_pattern",
+    "cover_hole_pattern",
+    "frame_mount_holes",
+    "frame_counterbores",
+    "dowel_holes",
+    "rib_pads",
+    "lightening_pockets",
+    "manufacturing_drawing",
+    "selectable_2d_reviewer",
+    "selectable_3d_reviewer"
+  ],
+  "allowedMajorFeatures": [
+    "base_plate",
+    "bearing_boss",
+    "bearing_seat",
+    "shaft_clearance",
+    "seal_recess",
+    "indexer_hole_pattern",
+    "cover_hole_pattern",
+    "frame_mount_holes",
+    "frame_counterbores",
+    "dowel_holes",
+    "rib_pads",
+    "lightening_pockets",
+    "manufacturing_drawing",
+    "selectable_2d_reviewer",
+    "selectable_3d_reviewer"
+  ],
+  "forbiddenMajorFeatures": [
+    "native_fillet",
+    "native_chamfer",
+    "assembly_mates"
+  ],
+  "requiredOutputs": [
+    "plan.json",
+    "aicad",
+    "scr",
+    "dxf",
+    "audit.md",
+    "manifest.json"
+  ],
+  "locks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true
+  }
+}

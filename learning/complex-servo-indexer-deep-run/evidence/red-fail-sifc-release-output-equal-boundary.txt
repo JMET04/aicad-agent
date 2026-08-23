@@ -1,0 +1,1 @@
+Agent-plugin output must stay inside release: .../release.

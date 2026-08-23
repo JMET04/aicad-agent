@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import ast
 import copy
 import csv
 import hashlib
+import importlib.util
 import json
 import re
 import sys
@@ -17,6 +19,21 @@ from urllib.parse import urlparse
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PROJECT_ROOT = REPO_ROOT / "projects" / "magic-wand"
 ELECTRONICS_ROOT = PROJECT_ROOT / "electronics"
+RECEIVER_EFFECTS_ROOT = ELECTRONICS_ROOT / "receiver-effects"
+RECEIVER_EFFECTS_GENERATOR = RECEIVER_EFFECTS_ROOT / "generate_receiver_effects.py"
+RECEIVER_EFFECTS_RELAYOUT = (
+    RECEIVER_EFFECTS_ROOT / "generate_receiver_effects_relayout.py"
+)
+RECEIVER_EFFECTS_ROUTES = (
+    RECEIVER_EFFECTS_ROOT / "receiver_effects_relayout_routes.py"
+)
+TPS62162_SOURCE_EXTRACT = (
+    ELECTRONICS_ROOT
+    / "evidence"
+    / "authority"
+    / "source-catalog"
+    / "tps62162-dsg-extract.json"
+)
 BUILD_SCRIPT = ELECTRONICS_ROOT / "build_factory_package.py"
 BASELINE_INVENTORY = (
     ELECTRONICS_ROOT
@@ -35,6 +52,22 @@ sys.path.insert(0, str(ELECTRONICS_ROOT))
 
 import build_factory_package as build  # noqa: E402
 import factory_emit  # noqa: E402
+import land_pattern_authority  # noqa: E402
+
+
+def _load_receiver_effects_generator():
+    spec = importlib.util.spec_from_file_location(
+        "magic_wand_receiver_effects_generator",
+        RECEIVER_EFFECTS_GENERATOR,
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError("cannot import receiver-effects generator")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+receiver_effects = _load_receiver_effects_generator()
 
 
 AUTHORITY_FIELDS = {
@@ -94,6 +127,63 @@ def _artifact_reference(path: Path, relative: str) -> dict:
         "size": len(payload),
         "sha256": hashlib.sha256(payload).hexdigest().upper(),
     }
+
+
+def _pad_signature(pad) -> tuple:
+    return (
+        pad.number,
+        pad.x,
+        pad.y,
+        pad.width,
+        pad.height,
+        pad.kind,
+        pad.shape,
+        pad.drill_width,
+        pad.drill_height,
+        pad.rotation,
+        pad.layers,
+        pad.role,
+        pad.net_override,
+    )
+
+
+def _literal_assignment(path: Path, name: str):
+    module = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    for statement in module.body:
+        if isinstance(statement, ast.Assign):
+            if any(
+                isinstance(target, ast.Name) and target.id == name
+                for target in statement.targets
+            ):
+                return ast.literal_eval(statement.value)
+        if (
+            isinstance(statement, ast.AnnAssign)
+            and isinstance(statement.target, ast.Name)
+            and statement.target.id == name
+        ):
+            return ast.literal_eval(statement.value)
+    raise AssertionError(f"{path.name} has no literal {name} assignment")
+
+
+def _source_functions(path: Path, *names: str) -> dict[str, object]:
+    """Load selected pure functions without importing KiCad's pcbnew module."""
+    module = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    wanted = set(names)
+    definitions = [
+        statement
+        for statement in module.body
+        if isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and statement.name in wanted
+    ]
+    found = {statement.name for statement in definitions}
+    if found != wanted:
+        raise AssertionError(
+            f"{path.name} missing source functions {sorted(wanted - found)}"
+        )
+    namespace: dict[str, object] = {}
+    selected = ast.Module(body=definitions, type_ignores=[])
+    exec(compile(ast.fix_missing_locations(selected), str(path), "exec"), namespace)
+    return {name: namespace[name] for name in names}
 
 
 class LandPatternAuthorityPolicyTests(unittest.TestCase):
@@ -330,6 +420,472 @@ class LandPatternEntityRegressionTests(unittest.TestCase):
                 )
                 ids = [pad.physical_id for pad in part.physical_pads]
                 self.assertEqual(len(ids), len(set(ids)))
+
+    def test_wand_j1_remains_frozen_jae_dx07_geometry(self) -> None:
+        part = _part("wand", "J1")
+        self.assertEqual(
+            (part.manufacturer, part.mpn, part.footprint, part.package),
+            (
+                "JAE",
+                "DX07S016JA1R1500",
+                "Connector_USB:USB_C_Receptacle_USB2.0_16P",
+                "USB-C-16P",
+            ),
+        )
+        self.assertEqual((part.x, part.y, part.rotation), (12.25, 38.0, 90.0))
+        self.assertEqual((part.width, part.height, part.body_height_mm), (8.94, 6.90, 3.60))
+        self.assertEqual(part.fab_bounds, (-4.47, -3.45, 4.47, 3.45))
+        self.assertEqual(part.interface_datum["drawingNumber"], "SJ121837")
+
+        smd_layers = ("F.Cu", "F.Paste", "F.Mask")
+        tht_layers = ("*.Cu", "*.Mask")
+        contacts = (
+            ("A1", -3.10, 0.52), ("A4", -2.35, 0.52),
+            ("A5", -1.75, 0.27), ("A6", -0.25, 0.27),
+            ("A7", 0.75, 0.27), ("A8", 1.75, 0.27),
+            ("A9", 2.35, 0.52), ("A12", 3.10, 0.52),
+            ("B1", 3.10, 0.52), ("B4", 2.35, 0.52),
+            ("B5", 1.25, 0.27), ("B6", 0.25, 0.27),
+            ("B7", -0.75, 0.27), ("B8", -1.25, 0.27),
+            ("B9", -2.35, 0.52), ("B12", -3.10, 0.52),
+        )
+        expected = {
+            f"contact-{number}": (
+                number, x, -3.05, width, 1.0, "smd", "roundrect",
+                0.0, 0.0, 0.0, smd_layers, "signal", None,
+            )
+            for number, x, width in contacts
+        }
+        expected.update({
+            "shell-left-front": (
+                "SH", -4.32, -2.675, 1.30, 2.30, "tht", "oval",
+                0.60, 1.60, 0.0, tht_layers, "mount", None,
+            ),
+            "shell-left-rear": (
+                "SH", -4.32, 1.15, 1.30, 2.60, "tht", "oval",
+                0.60, 1.90, 0.0, tht_layers, "mount", None,
+            ),
+            "shell-right-front": (
+                "SH", 4.32, -2.675, 1.30, 2.30, "tht", "oval",
+                0.60, 1.60, 0.0, tht_layers, "mount", None,
+            ),
+            "shell-right-rear": (
+                "SH", 4.32, 1.15, 1.30, 2.60, "tht", "oval",
+                0.60, 1.90, 0.0, tht_layers, "mount", None,
+            ),
+            "locator-left": (
+                "", -3.0, -1.95, 0.60, 0.60, "npth", "circle",
+                0.60, 0.60, 0.0, tht_layers, "locating", None,
+            ),
+            "locator-right": (
+                "", 3.0, -1.95, 0.85, 0.60, "npth", "oval",
+                0.85, 0.60, 90.0, tht_layers, "locating", None,
+            ),
+            "hold-down-left": (
+                "", -1.4, 1.15, 1.0, 2.0, "smd", "roundrect",
+                0.0, 0.0, 0.0, smd_layers, "hold_down", None,
+            ),
+            "hold-down-right": (
+                "", 1.4, 1.15, 1.0, 2.0, "smd", "roundrect",
+                0.0, 0.0, 0.0, smd_layers, "hold_down", None,
+            ),
+        })
+        self.assertEqual(
+            {pad.physical_id: _pad_signature(pad) for pad in part.physical_pads},
+            expected,
+        )
+
+    def test_receiver_effects_j1_uses_official_gct_usb4105_geometry(self) -> None:
+        board = receiver_effects.make_board()
+        part = next(row for row in board.parts if row.ref == "J1")
+        self.assertEqual(
+            (
+                part.manufacturer,
+                part.mpn,
+                part.lcsc,
+                part.footprint,
+                part.package,
+            ),
+            (
+                "GCT",
+                "USB4105-GF-A-120",
+                "C5184243",
+                "Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal",
+                "USB4105-16P",
+            ),
+        )
+        self.assertEqual((part.x, part.y, part.rotation), (3.675, 21.0, 270.0))
+        self.assertEqual((part.width, part.height, part.body_height_mm), (8.94, 7.35, 3.31))
+        self.assertEqual(part.fab_bounds, (-4.47, -3.675, 4.47, 3.675))
+        self.assertEqual(part.courtyard_bounds, (-5.32, -4.76, 5.32, 4.18))
+        self.assertEqual(part.interface_datum["boardEdgeLocalYmm"], 3.675)
+        self.assertEqual(part.interface_datum["placementRotationDeg"], 270.0)
+        self.assertEqual(part.interface_datum["shellStakeLengthMm"], 1.20)
+
+        metadata = land_pattern_authority.authority_metadata(part)
+        self.assertEqual(metadata["documentNumber"], "USB4105")
+        self.assertEqual(metadata["revision"], "B4")
+        self.assertEqual(metadata["officialUrl"], "https://gct.co/files/drawings/usb4105.pdf")
+
+        logical_contacts = {
+            "A1", "A4", "A5", "A6", "A7", "A8", "A9", "A12",
+            "B1", "B4", "B5", "B6", "B7", "B8", "B9", "B12",
+        }
+        contact_pads = [pad for pad in part.physical_pads if pad.number in logical_contacts]
+        shell_pads = [pad for pad in part.physical_pads if pad.number == "SH"]
+        locating_pads = [pad for pad in part.physical_pads if pad.kind == "npth"]
+        self.assertEqual(len(part.physical_pads), 22)
+        self.assertEqual(len(contact_pads), 16)
+        self.assertEqual(Counter(pad.number for pad in contact_pads), Counter(logical_contacts))
+        self.assertEqual(len({(pad.x, pad.y) for pad in contact_pads}), 12)
+        self.assertEqual(len(shell_pads), 4)
+        self.assertEqual(len(locating_pads), 2)
+        self.assertTrue(all("F.Paste" in pad.layers for pad in shell_pads))
+
+        smd_layers = ("F.Cu", "F.Paste", "F.Mask")
+        shell_layers = ("*.Cu", "*.Mask", "F.Paste")
+        tht_layers = ("*.Cu", "*.Mask")
+        contacts = (
+            ("A1", -3.20, 0.60), ("A4", -2.40, 0.60),
+            ("A5", -1.25, 0.30), ("A6", -0.25, 0.30),
+            ("A7", 0.25, 0.30), ("A8", 1.25, 0.30),
+            ("A9", 2.40, 0.60), ("A12", 3.20, 0.60),
+            ("B1", 3.20, 0.60), ("B4", 2.40, 0.60),
+            ("B5", 1.75, 0.30), ("B6", 0.75, 0.30),
+            ("B7", -0.75, 0.30), ("B8", -1.75, 0.30),
+            ("B9", -2.40, 0.60), ("B12", -3.20, 0.60),
+        )
+        expected = {
+            f"contact-{number}": (
+                number, x, -3.68, width, 1.15, "smd", "roundrect",
+                0.0, 0.0, 0.0, smd_layers, "signal", None,
+            )
+            for number, x, width in contacts
+        }
+        expected.update({
+            "shell-left-front": (
+                "SH", -4.32, -3.105, 1.00, 2.10, "tht", "oval",
+                0.60, 1.70, 0.0, shell_layers, "mount", None,
+            ),
+            "shell-left-rear": (
+                "SH", -4.32, 1.075, 1.00, 1.80, "tht", "oval",
+                0.60, 1.40, 0.0, shell_layers, "mount", None,
+            ),
+            "shell-right-front": (
+                "SH", 4.32, -3.105, 1.00, 2.10, "tht", "oval",
+                0.60, 1.70, 0.0, shell_layers, "mount", None,
+            ),
+            "shell-right-rear": (
+                "SH", 4.32, 1.075, 1.00, 1.80, "tht", "oval",
+                0.60, 1.40, 0.0, shell_layers, "mount", None,
+            ),
+            "locator-left": (
+                "", -2.89, -2.605, 0.65, 0.65, "npth", "circle",
+                0.65, 0.65, 0.0, tht_layers, "locating", None,
+            ),
+            "locator-right": (
+                "", 2.89, -2.605, 0.65, 0.65, "npth", "circle",
+                0.65, 0.65, 0.0, tht_layers, "locating", None,
+            ),
+        })
+        self.assertEqual(
+            {pad.physical_id: _pad_signature(pad) for pad in part.physical_pads},
+            expected,
+        )
+
+    def test_receiver_effects_a1_relayout_preserves_board_edge_mapping(self) -> None:
+        placements = _literal_assignment(RECEIVER_EFFECTS_RELAYOUT, "PLACEMENTS")
+        self.assertEqual(placements["J1"], (3.675, 28.0, 270.0))
+
+        board = receiver_effects.make_board()
+        board.width, board.height = 60.0, 50.0
+        part = next(row for row in board.parts if row.ref == "J1")
+        part.x, part.y, part.rotation = placements["J1"]
+        edge_local_y = part.interface_datum["boardEdgeLocalYmm"]
+        edge_dx, edge_dy = build.rotate_point(0.0, edge_local_y, part.rotation)
+        self.assertAlmostEqual(part.x + edge_dx, 0.0, places=9)
+        self.assertAlmostEqual(part.y + edge_dy, 28.0, places=9)
+
+        pads = build.absolute_pads(board, require_controlled=False)
+        contact_centers = {
+            (pad["x"], pad["y"])
+            for pad in pads
+            if pad["ref"] == "J1" and pad["number"] not in {"", "SH"}
+        }
+        self.assertEqual(
+            contact_centers,
+            {
+                (7.355, 24.8), (7.355, 25.6), (7.355, 26.25),
+                (7.355, 26.75), (7.355, 27.25), (7.355, 27.75),
+                (7.355, 28.25), (7.355, 28.75), (7.355, 29.25),
+                (7.355, 29.75), (7.355, 30.4), (7.355, 31.2),
+            },
+        )
+
+        origin_x, origin_y = factory_emit.worksheet_board_origin(board)
+        self.assertEqual((origin_x, origin_y), (118.5, 80.0))
+        self.assertEqual((origin_x + part.x, origin_y + part.y), (122.175, 108.0))
+        self.assertAlmostEqual(origin_x + part.x + edge_dx, 118.5, places=9)
+        self.assertAlmostEqual(origin_y + part.y + edge_dy, 108.0, places=9)
+
+    def test_receiver_effects_f1_uses_current_bourns_style2_authority(self) -> None:
+        board = receiver_effects.make_board()
+        part = next(row for row in board.parts if row.ref == "F1")
+        self.assertEqual(
+            (part.manufacturer, part.mpn, part.lcsc, part.package, part.footprint),
+            (
+                "Bourns",
+                "MF-MSMF150/24X-2",
+                "C78695",
+                "1812",
+                "Fuse:Fuse_1812_4532Metric",
+            ),
+        )
+        self.assertEqual(
+            [(pin.number, pin.net) for pin in part.pins],
+            [("1", "USB_VBUS_RAW"), ("2", "USB_VBUS_5V")],
+        )
+        self.assertEqual(
+            [
+                (pad.physical_id, pad.number, pad.x, pad.y, pad.width, pad.height)
+                for pad in part.physical_pads
+            ],
+            [
+                ("terminal-1", "1", -2.390, 0.0, 1.68, 2.95),
+                ("terminal-2", "2", 2.390, 0.0, 1.68, 2.95),
+            ],
+        )
+        metadata = land_pattern_authority.authority_metadata(part)
+        self.assertEqual(metadata["documentNumber"], "MF-MSMF")
+        self.assertEqual(
+            metadata["officialUrl"],
+            "https://www.bourns.com/docs/product-datasheets/mf-msmf.pdf",
+        )
+        self.assertEqual(
+            metadata["sourceKind"],
+            "manufacturerDrawing+controlledKiCadLibrary",
+        )
+        self.assertEqual(part.datasheet, metadata["officialUrl"])
+
+    def test_receiver_effects_u2_matches_ti_dsg0008a_source_extract(self) -> None:
+        board = receiver_effects.make_board()
+        part = next(row for row in board.parts if row.ref == "U2")
+        expected = {
+            "1": (-0.95, -0.75, 0.50, 0.25),
+            "2": (-0.95, -0.25, 0.50, 0.25),
+            "3": (-0.95, 0.25, 0.50, 0.25),
+            "4": (-0.95, 0.75, 0.50, 0.25),
+            "5": (0.95, 0.75, 0.50, 0.25),
+            "6": (0.95, 0.25, 0.50, 0.25),
+            "7": (0.95, -0.25, 0.50, 0.25),
+            "8": (0.95, -0.75, 0.50, 0.25),
+            "EP": (0.0, 0.0, 0.90, 1.60),
+        }
+        self.assertEqual(
+            {
+                pad.number: (pad.x, pad.y, pad.width, pad.height)
+                for pad in part.physical_pads
+            },
+            expected,
+        )
+        self.assertEqual(len(part.physical_pads), 9)
+        self.assertTrue(
+            all(
+                pad.role == "signal"
+                for pad in part.physical_pads
+                if pad.number != "EP"
+            )
+        )
+        ep = next(pad for pad in part.physical_pads if pad.number == "EP")
+        self.assertEqual((ep.physical_id, ep.role), ("thermal-ep", "thermal"))
+
+        extract = json.loads(TPS62162_SOURCE_EXTRACT.read_text(encoding="utf-8"))
+        self.assertEqual(extract["manufacturer"], "Texas Instruments")
+        self.assertEqual(extract["coveredMpns"], ["TPS62162DSGR"])
+        self.assertEqual(extract["documentNumber"], "SLVSAM2E / DSG0008A")
+        self.assertEqual(extract["revision"], "E")
+        self.assertEqual(extract["page"], "39-40")
+        self.assertEqual(
+            extract["originalOfficialUrl"],
+            "https://www.ti.com/lit/ds/symlink/tps62160.pdf",
+        )
+        self.assertEqual(
+            extract["geometry"]["physicalPads"],
+            {
+                "signalCount": 8,
+                "pitchMm": 0.5,
+                "signalLandMm": [0.50, 0.25],
+                "exposedLandMm": [0.90, 1.60],
+            },
+        )
+        metadata = land_pattern_authority.authority_metadata(part)
+        self.assertEqual(metadata["documentNumber"], extract["documentNumber"])
+        self.assertEqual(metadata["revision"], extract["revision"])
+        self.assertEqual(metadata["officialUrl"], extract["originalOfficialUrl"])
+
+    def test_receiver_effects_u3_has_local_vbus_decoupling_at_a1(self) -> None:
+        placements = _literal_assignment(RECEIVER_EFFECTS_RELAYOUT, "PLACEMENTS")
+        self.assertIn("C_BUS", placements)
+        self.assertEqual(placements["C_BUS"], (14.70, 28.00, 0.0))
+
+        board = receiver_effects.make_board()
+        by_ref = {part.ref: part for part in board.parts}
+        self.assertIn("C_BUS", by_ref)
+        c_bus = by_ref["C_BUS"]
+        self.assertEqual(
+            (
+                c_bus.value,
+                c_bus.manufacturer,
+                c_bus.mpn,
+                c_bus.lcsc,
+                c_bus.package,
+            ),
+            (
+                "100nF 16V X7R",
+                "Murata",
+                "GRM155R71C104KA88D",
+                "C1525",
+                "0402",
+            ),
+        )
+        self.assertEqual(
+            [(pin.number, pin.net) for pin in c_bus.pins],
+            [("1", "USB_VBUS_5V"), ("2", "GND")],
+        )
+
+        for ref, (x, y, rotation) in placements.items():
+            part = by_ref[ref]
+            part.x, part.y = x, y
+            if rotation is not None:
+                part.rotation = rotation
+        pads = build.absolute_pads(board, require_controlled=False)
+        c_bus_pads = {
+            pad["number"]: (
+                pad["x"],
+                pad["y"],
+                pad["width"],
+                pad["height"],
+                pad["net"],
+            )
+            for pad in pads
+            if pad["ref"] == "C_BUS"
+        }
+        self.assertEqual(
+            c_bus_pads,
+            {
+                "1": (14.22, 28.00, 0.56, 0.62, "USB_VBUS_5V"),
+                "2": (15.18, 28.00, 0.56, 0.62, "GND"),
+            },
+        )
+        u3_vbus = next(
+            pad
+            for pad in pads
+            if pad["ref"] == "U3" and pad["number"] == "5"
+        )
+        self.assertEqual(
+            (u3_vbus["x"], u3_vbus["y"], u3_vbus["net"]),
+            (13.15, 28.00, "USB_VBUS_5V"),
+        )
+
+        power = _source_functions(
+            RECEIVER_EFFECTS_RELAYOUT, "seg", "via", "power_skeleton"
+        )
+        usb = _source_functions(
+            RECEIVER_EFFECTS_ROUTES, "_seg", "_via", "usb_data_group"
+        )
+        segments, vias = power["power_skeleton"]()
+        usb_segments, usb_vias = usb["usb_data_group"]()
+        segments += usb_segments
+        vias += usb_vias
+        segment_signatures = {
+            (
+                row["net"],
+                row["layer"],
+                tuple(row["start"]),
+                tuple(row["end"]),
+                row["width"],
+            )
+            for row in segments
+        }
+        self.assertIn(
+            (
+                "USB_VBUS_5V",
+                "F.Cu",
+                (13.15, 28.00),
+                (14.22, 28.00),
+                0.40,
+            ),
+            segment_signatures,
+        )
+        self.assertIn(
+            ("GND", "F.Cu", (15.18, 28.00), (15.60, 28.00), 0.30),
+            segment_signatures,
+        )
+        self.assertIn(
+            ("GND", 15.60, 28.00, 0.60, 0.30),
+            {
+                (row["net"], row["x"], row["y"], row["size"], row["drill"])
+                for row in vias
+            },
+        )
+
+    def test_receiver_effects_u4_matches_adi_90_0031_land_pattern(self) -> None:
+        board = receiver_effects.make_board()
+        part = next(row for row in board.parts if row.ref == "U4")
+        self.assertEqual(
+            (part.manufacturer, part.mpn, part.package, part.footprint),
+            (
+                "Analog Devices",
+                "MAX98357AETE+T",
+                "TQFN-16-EP",
+                "Package_DFN_QFN:TQFN-16-1EP_3x3mm_P0.5mm_EP1.23x1.23mm",
+            ),
+        )
+        expected = {
+            "1": (-1.425, -0.75, 0.80, 0.30),
+            "2": (-1.425, -0.25, 0.80, 0.30),
+            "3": (-1.425, 0.25, 0.80, 0.30),
+            "4": (-1.425, 0.75, 0.80, 0.30),
+            "5": (-0.75, 1.425, 0.30, 0.80),
+            "6": (-0.25, 1.425, 0.30, 0.80),
+            "7": (0.25, 1.425, 0.30, 0.80),
+            "8": (0.75, 1.425, 0.30, 0.80),
+            "9": (1.425, 0.75, 0.80, 0.30),
+            "10": (1.425, 0.25, 0.80, 0.30),
+            "11": (1.425, -0.25, 0.80, 0.30),
+            "12": (1.425, -0.75, 0.80, 0.30),
+            "13": (0.75, -1.425, 0.30, 0.80),
+            "14": (0.25, -1.425, 0.30, 0.80),
+            "15": (-0.25, -1.425, 0.30, 0.80),
+            "16": (-0.75, -1.425, 0.30, 0.80),
+            "17": (0.0, 0.0, 1.23, 1.23),
+        }
+        self.assertEqual(len(part.physical_pads), 17)
+        self.assertEqual(
+            {
+                pad.number: (pad.x, pad.y, pad.width, pad.height)
+                for pad in part.physical_pads
+            },
+            expected,
+        )
+        self.assertTrue(
+            all(
+                pad.role == "signal"
+                for pad in part.physical_pads
+                if pad.number != "17"
+            )
+        )
+        ep = next(pad for pad in part.physical_pads if pad.number == "17")
+        self.assertEqual((ep.physical_id, ep.role), ("exposed-pad", "thermal"))
+        metadata = land_pattern_authority.authority_metadata(part)
+        self.assertEqual(metadata["documentNumber"], "90-0031")
+        self.assertEqual(
+            metadata["officialUrl"],
+            (
+                "https://www.analog.com/media/en/package-pcb-resources/"
+                "land-pattern/90-0031.pdf"
+            ),
+        )
 
     def test_wand_jst_connectors_include_both_mount_pads(self) -> None:
         expectations = {
@@ -700,6 +1256,55 @@ class FactoryTableAndPcbEmissionTests(unittest.TestCase):
             self.assertEqual(len(emitted_uuids), len(set(emitted_uuids)))
             self.assertTrue(saw_oval_drill, f"{board.name} must exercise oval drill width/height")
             self.assertTrue(saw_local_rotation, f"{board.name} must exercise local pad rotation")
+
+    def test_receiver_effects_usb4105_footprint_model_and_dru_are_board_specific(self) -> None:
+        receiver = receiver_effects.make_board()
+        receiver_pads = build.absolute_pads(receiver, require_controlled=False)
+        model_path = (
+            "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/"
+            "USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal.step"
+        )
+        jae_rule = '(rule "JAE SJ121837 internal locator geometry"'
+
+        with tempfile.TemporaryDirectory() as temporary:
+            receiver_out = Path(temporary) / "receiver-effects"
+            receiver_out.mkdir()
+            factory_emit.write_project(receiver, receiver_out)
+            pcb_path = factory_emit.write_pcb(
+                receiver, receiver_out, receiver_pads, [], []
+            )
+            footprint_path = (
+                receiver_out
+                / "MW_FACTORY.pretty"
+                / "receiver-effects_J1.kicad_mod"
+            )
+            footprint_text = footprint_path.read_text(encoding="utf-8")
+            pcb_text = pcb_path.read_text(encoding="utf-8")
+            receiver_dru = (receiver_out / "receiver-effects.kicad_dru").read_text(
+                encoding="utf-8"
+            )
+            fp_table = (receiver_out / "fp-lib-table").read_text(encoding="utf-8")
+
+        self.assertIn("${KIPRJMOD}/MW_FACTORY.pretty", fp_table)
+        self.assertEqual(footprint_text.count(f'(model "{model_path}"'), 1)
+        self.assertEqual(pcb_text.count(f'(model "{model_path}"'), 1)
+        self.assertEqual(
+            len([
+                line
+                for line in footprint_text.splitlines()
+                if line.lstrip().startswith("(pad ")
+            ]),
+            22,
+        )
+        self.assertNotIn(jae_rule, receiver_dru)
+        self.assertNotIn("DX07S016JA1R1500", receiver_dru)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            wand_out = Path(temporary) / "wand"
+            wand_out.mkdir()
+            factory_emit.write_project(_board("wand"), wand_out)
+            wand_dru = (wand_out / "wand.kicad_dru").read_text(encoding="utf-8")
+        self.assertIn(jae_rule, wand_dru)
 
     def test_wand_factory_placement_matches_native_drc_legalized_authority(self) -> None:
         wand = _board("wand")

@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-PLAYWRIGHT-HELP-WINDOWS-ASSERTION: playwright-cli --help runtime exit contract. The CLI printed complete help but exited 1 with a Windows libuv UV_HANDLE_CLOSING assertion.

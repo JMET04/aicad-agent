@@ -1,0 +1,1102 @@
+{
+  "schema": "aicad_production_readiness_validation_v3",
+  "status": "evidence_contract_incomplete",
+  "project": {
+    "id": "SIFC-220-REV-A",
+    "title": "High-stiffness servo indexer flange cartridge"
+  },
+  "requestedStage": "manufacturing",
+  "discipline": "mechanical",
+  "strictProductionOnly": true,
+  "deliveryDisposition": "blocker_report_only",
+  "evidenceContractReady": false,
+  "independentEvidenceAuthenticityVerified": false,
+  "nativeExecutionReplayedByThisQA": false,
+  "technicalPackageReady": false,
+  "recordedApprovalEvidencePresentAndHashBound": false,
+  "externalReleaseCryptographicTrustChainVerified": false,
+  "productionReleaseEligible": false,
+  "productionCandidateDeliverable": false,
+  "manufacturingAuthorized": false,
+  "fabricationAuthorized": false,
+  "productionCandidateArtifactAllowed": false,
+  "automaticAcceptanceAllowed": false,
+  "artifactSetSha256": null,
+  "artifactSubjects": [
+    {
+      "partId": "SIFC-220-REV-A",
+      "subjectType": "manufactured_part",
+      "revision": "A"
+    }
+  ],
+  "expectedArtifactClosure": [
+    {
+      "artifactId": "sifc-220-native-cad",
+      "partId": "SIFC-220-REV-A",
+      "kind": "native_cad",
+      "path": "model3d_native_r2/SIFC_220_REV_A.SLDPRT",
+      "revision": "A"
+    },
+    {
+      "artifactId": "sifc-220-neutral-step",
+      "partId": "SIFC-220-REV-A",
+      "kind": "neutral_step",
+      "path": "model3d_native_r2/SIFC_220_REV_A.step",
+      "revision": "A"
+    },
+    {
+      "artifactId": "sifc-220-controlled-drawing",
+      "partId": "SIFC-220-REV-A",
+      "kind": "manufacturing_drawing",
+      "path": "drawing2d_final/SIFC_220_REV_A_DRAWING.dxf",
+      "revision": "A"
+    }
+  ],
+  "gateResults": {
+    "artifacts.expectedClosureHashesSubjectsKindsAndUniqueness": {
+      "status": "fail",
+      "evidence": {
+        "artifacts": [
+          {
+            "artifactId": "sifc-220-native-cad",
+            "kind": "native_cad",
+            "partId": "SIFC-220-REV-A",
+            "subjectType": "manufactured_part",
+            "revision": "A",
+            "path": "model3d_native_r2/SIFC_220_REV_A.SLDPRT",
+            "exists": true,
+            "sizeBytes": 364777,
+            "declaredSha256": "bd94dbc6bf58783d403e080a0e96cc481263f92a9f9d53c92c33b5b415664535",
+            "actualSha256": "bd94dbc6bf58783d403e080a0e96cc481263f92a9f9d53c92c33b5b415664535",
+            "pass": true
+          },
+          {
+            "artifactId": "sifc-220-neutral-step",
+            "kind": "neutral_step",
+            "partId": "SIFC-220-REV-A",
+            "subjectType": "manufactured_part",
+            "revision": "A",
+            "path": "model3d_native_r2/SIFC_220_REV_A.step",
+            "exists": true,
+            "sizeBytes": 255223,
+            "declaredSha256": "93c677a4be8bdba0d986a37aba3ed96e5bb8d14274998ad5435cdab82dd78f8a",
+            "actualSha256": "93c677a4be8bdba0d986a37aba3ed96e5bb8d14274998ad5435cdab82dd78f8a",
+            "pass": true
+          },
+          {
+            "artifactId": "sifc-220-controlled-drawing",
+            "kind": "manufacturing_drawing",
+            "partId": "SIFC-220-REV-A",
+            "subjectType": "manufactured_part",
+            "revision": "A",
+            "path": "drawing2d_final/SIFC_220_REV_A_DRAWING.dxf",
+            "exists": true,
+            "sizeBytes": 64054,
+            "declaredSha256": "8a8c8f877c51830debf93c00f4c6d98c9e7d7216bfa65e928406577507cbcc55",
+            "actualSha256": "8a8c8f877c51830debf93c00f4c6d98c9e7d7216bfa65e928406577507cbcc55",
+            "pass": true
+          }
+        ],
+        "artifactSubjects": [
+          {
+            "partId": "SIFC-220-REV-A",
+            "subjectType": "manufactured_part",
+            "revision": "A"
+          }
+        ],
+        "expectedArtifactClosure": [
+          {
+            "artifactId": "sifc-220-native-cad",
+            "partId": "SIFC-220-REV-A",
+            "kind": "native_cad",
+            "path": "model3d_native_r2/SIFC_220_REV_A.SLDPRT",
+            "revision": "A"
+          },
+          {
+            "artifactId": "sifc-220-neutral-step",
+            "partId": "SIFC-220-REV-A",
+            "kind": "neutral_step",
+            "path": "model3d_native_r2/SIFC_220_REV_A.step",
+            "revision": "A"
+          },
+          {
+            "artifactId": "sifc-220-controlled-drawing",
+            "partId": "SIFC-220-REV-A",
+            "kind": "manufacturing_drawing",
+            "path": "drawing2d_final/SIFC_220_REV_A_DRAWING.dxf",
+            "revision": "A"
+          }
+        ],
+        "requiredKindsAtLeastOne": [
+          "engineering_analysis",
+          "inspection_plan",
+          "manufacturing_drawing",
+          "material_database",
+          "mechanical_bom",
+          "native_cad",
+          "neutral_step",
+          "product_structure_manifest",
+          "standards_ledger"
+        ],
+        "perSubjectRequiredKinds": {
+          "manufactured_part": [
+            "native_cad",
+            "neutral_step",
+            "manufacturing_drawing"
+          ],
+          "mechanical_assembly": [
+            "native_cad",
+            "neutral_step",
+            "manufacturing_drawing"
+          ]
+        },
+        "perSubjectRequiredKindAtLeastOne": {},
+        "subjectScopedKinds": [
+          "native_cad",
+          "neutral_step",
+          "manufacturing_drawing"
+        ],
+        "packageRequiredKinds": [
+          "mechanical_bom",
+          "product_structure_manifest",
+          "material_database",
+          "inspection_plan",
+          "engineering_analysis",
+          "standards_ledger"
+        ],
+        "closureFailures": [
+          "mechanical_bom_count_mismatch:expected=1:actual=0",
+          "package_required_kind_missing:engineering_analysis",
+          "package_required_kind_missing:inspection_plan",
+          "package_required_kind_missing:material_database",
+          "package_required_kind_missing:mechanical_bom",
+          "package_required_kind_missing:product_structure_manifest",
+          "package_required_kind_missing:standards_ledger",
+          "product_structure_manifest_count_mismatch:expected=1:actual=0",
+          "required_kind_missing:engineering_analysis",
+          "required_kind_missing:inspection_plan",
+          "required_kind_missing:material_database",
+          "required_kind_missing:mechanical_bom",
+          "required_kind_missing:product_structure_manifest",
+          "required_kind_missing:standards_ledger"
+        ],
+        "candidateDeclaredClosureConsistencyEvidence": [],
+        "duplicateIdentityOrPath": []
+      }
+    },
+    "inventory.intent": {
+      "status": "fail",
+      "evidence": {
+        "missing": [
+          "assemblyConfigurationAndInterfaceAuthority",
+          "currentStandardsLedger",
+          "dimensionalAuthority",
+          "materialAndFastenerPropertySourcesBound",
+          "materialAuthority",
+          "noRetiredSoleAuthority",
+          "operatingEnvelopeDutyCycleAndDesignLifeAuthority",
+          "processAuthority",
+          "safetyRegulatoryAndRiskApplicabilityResolved",
+          "standardsApplicabilityAndEditionResolved"
+        ],
+        "extra": []
+      }
+    },
+    "intent.wholeIntent": {
+      "status": "fail",
+      "evidence": {
+        "kind": "authority_document",
+        "expectedKind": "authority_document",
+        "path": "post_generation_evidence/review-only-evidence.json",
+        "exists": true,
+        "declaredSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "actualSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "hashPass": true,
+        "kindPass": true,
+        "jsonPointer": "/intent/wholeIntent",
+        "expectedValue": true,
+        "actualValue": true,
+        "valuePass": true,
+        "reason": "artifact_set_binding_missing",
+        "error": "'artifactSetSha256'"
+      }
+    },
+    "intent.dimensionalAuthority": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.materialAuthority": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.processAuthority": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.standardsApplicabilityAndEditionResolved": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.materialAndFastenerPropertySourcesBound": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.assemblyConfigurationAndInterfaceAuthority": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.safetyRegulatoryAndRiskApplicabilityResolved": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.currentStandardsLedger": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "intent.noRetiredSoleAuthority": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "inventory.design": {
+      "status": "fail",
+      "evidence": {
+        "missing": [
+          "analysisEquationInputOutputMarginTrace",
+          "analysisInputUnitsAndProvenance",
+          "analysisRecomputedFromDeclaredInputs",
+          "assemblyServiceAndToolClearance",
+          "bearingLife",
+          "criticalLoadPathCoverage",
+          "detailProof",
+          "factorOfSafety",
+          "failureModesAndResidualRiskControls",
+          "fastenerPreloadSlipAndCapacity",
+          "fatigueApplicabilityAndResult",
+          "fitAndMatingInterfaces",
+          "jointBearingAndEdgeChecks",
+          "loadCasesAndServiceConditions",
+          "loadCombinationAndAbnormalCaseCoverage",
+          "stiffness",
+          "strength",
+          "thermalEnvelope",
+          "toleranceStack"
+        ],
+        "extra": []
+      }
+    },
+    "design.constraintCompile": {
+      "status": "fail",
+      "evidence": {
+        "kind": "machine_report",
+        "expectedKind": "machine_report",
+        "path": "post_generation_evidence/review-only-evidence.json",
+        "exists": true,
+        "declaredSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "actualSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "hashPass": true,
+        "kindPass": true,
+        "jsonPointer": "/design/constraintCompile",
+        "expectedValue": true,
+        "actualValue": true,
+        "valuePass": true,
+        "reason": "artifact_set_binding_missing",
+        "error": "'artifactSetSha256'"
+      }
+    },
+    "design.detailProof": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.loadCasesAndServiceConditions": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.analysisInputUnitsAndProvenance": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.analysisRecomputedFromDeclaredInputs": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.criticalLoadPathCoverage": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.loadCombinationAndAbnormalCaseCoverage": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.analysisEquationInputOutputMarginTrace": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.strength": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.stiffness": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.fatigueApplicabilityAndResult": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.factorOfSafety": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.jointBearingAndEdgeChecks": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.fastenerPreloadSlipAndCapacity": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.bearingLife": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.thermalEnvelope": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.fitAndMatingInterfaces": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.toleranceStack": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.failureModesAndResidualRiskControls": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "design.assemblyServiceAndToolClearance": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "inventory.manufacturingDefinition": {
+      "status": "fail",
+      "evidence": {
+        "missing": [
+          "assemblyBomItemRevisionAndQuantityClosure",
+          "coatingDimensionalCompensation",
+          "criticalCharacteristicProcessCapabilityAndMeasurementMethod",
+          "fixturingFeasibility",
+          "gdandtDatumScheme",
+          "generalAndFeatureTolerances",
+          "inspectionPlan",
+          "materialCertificateRequirementAndIncomingInspection",
+          "materialConditionAndHeatTreatment",
+          "processAndFinish",
+          "stockAndPrimaryProcess",
+          "surfaceRoughness",
+          "threadsStandardPartsAndFastenerDefinition",
+          "toolAccessibility",
+          "undefinedEdgesDeburrAndSharpEdgeControl"
+        ],
+        "extra": []
+      }
+    },
+    "manufacturingDefinition.materialDesignation": {
+      "status": "fail",
+      "evidence": {
+        "kind": "machine_report",
+        "expectedKind": "machine_report",
+        "path": "post_generation_evidence/review-only-evidence.json",
+        "exists": true,
+        "declaredSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "actualSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "hashPass": true,
+        "kindPass": true,
+        "jsonPointer": "/definition/materialDesignationPresent",
+        "expectedValue": true,
+        "actualValue": true,
+        "valuePass": true,
+        "reason": "artifact_set_binding_missing",
+        "error": "'artifactSetSha256'"
+      }
+    },
+    "manufacturingDefinition.materialConditionAndHeatTreatment": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.materialCertificateRequirementAndIncomingInspection": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.generalAndFeatureTolerances": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.gdandtDatumScheme": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.surfaceRoughness": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.stockAndPrimaryProcess": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.fixturingFeasibility": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.toolAccessibility": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.coatingDimensionalCompensation": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.processAndFinish": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.threadsStandardPartsAndFastenerDefinition": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "manufacturingDefinition.inspectionPlan": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "inventory.verification": {
+      "status": "fail",
+      "evidence": {
+        "missing": [
+          "derivedOnlyOrCustomPropertyMaterialEvidenceCount",
+          "drawingFeatureBoundDimensionsDatumsFcfsFitsAndRoughness",
+          "drawingModelInspectionCharacteristicParity",
+          "drawingVisualLegibilityCollisionScaleAndSheetClosure",
+          "inspectionCharacteristicTrace",
+          "manufacturingDrawingSourceHashBinding",
+          "massAndMaterialReadback",
+          "modelDrawingInspectionRevisionAndConfigurationIdentity",
+          "nativeCadSourceHashBinding",
+          "nativeMaterialDatabaseAssignmentAndReadback",
+          "nativeMaterialIdentityPersistence",
+          "neutralStepSourceHashBinding"
+        ],
+        "extra": []
+      }
+    },
+    "verification.drawingCompleteness": {
+      "status": "fail",
+      "evidence": {
+        "kind": "machine_report",
+        "expectedKind": "machine_report",
+        "path": "post_generation_evidence/review-only-evidence.json",
+        "exists": true,
+        "declaredSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "actualSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "hashPass": true,
+        "kindPass": true,
+        "jsonPointer": "/verification/drawingCompleteness",
+        "expectedValue": true,
+        "actualValue": false,
+        "valuePass": false,
+        "reason": "rule_owned_expected_value_mismatch"
+      }
+    },
+    "verification.drawingFeatureBoundDimensionsDatumsFcfsFitsAndRoughness": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.drawingVisualLegibilityCollisionScaleAndSheetClosure": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.drawingModelInspectionCharacteristicParity": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.modelDrawingInspectionRevisionAndConfigurationIdentity": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.inspectionCharacteristicTrace": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.massAndMaterialReadback": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.nativeMaterialIdentityPersistence": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.nativeMaterialDatabaseAssignmentAndReadback": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.derivedOnlyOrCustomPropertyMaterialEvidenceCount": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.nativeCadSourceHashBinding": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.neutralStepSourceHashBinding": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "verification.manufacturingDrawingSourceHashBinding": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "inventory.host": {
+      "status": "fail",
+      "evidence": {
+        "missing": [
+          "nativeDrawingAssociativitySaveReopen",
+          "nativeSourceSaveHash",
+          "semanticAnnotationPersistence",
+          "topologyPersistence"
+        ],
+        "extra": []
+      }
+    },
+    "host.nativeCadSaveReopen": {
+      "status": "fail",
+      "evidence": {
+        "kind": "native_host_report",
+        "expectedKind": "native_host_report",
+        "path": "post_generation_evidence/review-only-evidence.json",
+        "exists": true,
+        "declaredSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "actualSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "hashPass": true,
+        "kindPass": true,
+        "jsonPointer": "/host/nativeCadSaveReopenByArtifactId",
+        "expectedValue": {
+          "predicate": "artifact_true_map",
+          "artifactSelector": {
+            "kind": "native_cad",
+            "subjectTypes": [
+              "manufactured_part",
+              "mechanical_assembly"
+            ]
+          },
+          "requiredTrueByArtifactId": {
+            "sifc-220-native-cad": true
+          }
+        },
+        "actualValue": {
+          "sifc-220-native-cad": true
+        },
+        "valuePass": true,
+        "reason": "artifact_set_binding_missing",
+        "error": "'artifactSetSha256'"
+      }
+    },
+    "host.nativeSourceSaveHash": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "host.nativeDrawingAssociativitySaveReopen": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "host.semanticAnnotationPersistence": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "host.topologyPersistence": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "inventory.release": {
+      "status": "fail",
+      "evidence": {
+        "missing": [
+          "approvalRecordIdentifierPresent",
+          "recordedApprovalSignaturePresent",
+          "reviewScopeMatchesArtifactSet",
+          "reviewerCredentialPresent",
+          "reviewerIdentityPresent"
+        ],
+        "extra": []
+      }
+    },
+    "release.manufacturingReviewRecorded": {
+      "status": "fail",
+      "evidence": {
+        "kind": "review_release",
+        "expectedKind": "review_release",
+        "path": "post_generation_evidence/review-only-evidence.json",
+        "exists": true,
+        "declaredSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "actualSha256": "7449c3c0f942c48bc56d61198fe6124bf41d3a9b7caafb5c6f3079e62fa5ba09",
+        "hashPass": true,
+        "kindPass": true,
+        "reason": "recorded_approval_metadata_missing",
+        "error": "'reviewer'"
+      }
+    },
+    "release.reviewerIdentityPresent": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "release.reviewerCredentialPresent": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "release.reviewScopeMatchesArtifactSet": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "release.approvalRecordIdentifierPresent": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    },
+    "release.recordedApprovalSignaturePresent": {
+      "status": "fail",
+      "evidence": {
+        "reason": "missing_required_gate"
+      }
+    }
+  },
+  "failedGates": [
+    "artifacts.expectedClosureHashesSubjectsKindsAndUniqueness",
+    "inventory.intent",
+    "intent.wholeIntent",
+    "intent.dimensionalAuthority",
+    "intent.materialAuthority",
+    "intent.processAuthority",
+    "intent.standardsApplicabilityAndEditionResolved",
+    "intent.materialAndFastenerPropertySourcesBound",
+    "intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority",
+    "intent.assemblyConfigurationAndInterfaceAuthority",
+    "intent.safetyRegulatoryAndRiskApplicabilityResolved",
+    "intent.currentStandardsLedger",
+    "intent.noRetiredSoleAuthority",
+    "inventory.design",
+    "design.constraintCompile",
+    "design.detailProof",
+    "design.loadCasesAndServiceConditions",
+    "design.analysisInputUnitsAndProvenance",
+    "design.analysisRecomputedFromDeclaredInputs",
+    "design.criticalLoadPathCoverage",
+    "design.loadCombinationAndAbnormalCaseCoverage",
+    "design.analysisEquationInputOutputMarginTrace",
+    "design.strength",
+    "design.stiffness",
+    "design.fatigueApplicabilityAndResult",
+    "design.factorOfSafety",
+    "design.jointBearingAndEdgeChecks",
+    "design.fastenerPreloadSlipAndCapacity",
+    "design.bearingLife",
+    "design.thermalEnvelope",
+    "design.fitAndMatingInterfaces",
+    "design.toleranceStack",
+    "design.failureModesAndResidualRiskControls",
+    "design.assemblyServiceAndToolClearance",
+    "inventory.manufacturingDefinition",
+    "manufacturingDefinition.materialDesignation",
+    "manufacturingDefinition.materialConditionAndHeatTreatment",
+    "manufacturingDefinition.materialCertificateRequirementAndIncomingInspection",
+    "manufacturingDefinition.generalAndFeatureTolerances",
+    "manufacturingDefinition.gdandtDatumScheme",
+    "manufacturingDefinition.surfaceRoughness",
+    "manufacturingDefinition.stockAndPrimaryProcess",
+    "manufacturingDefinition.fixturingFeasibility",
+    "manufacturingDefinition.toolAccessibility",
+    "manufacturingDefinition.coatingDimensionalCompensation",
+    "manufacturingDefinition.processAndFinish",
+    "manufacturingDefinition.threadsStandardPartsAndFastenerDefinition",
+    "manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl",
+    "manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure",
+    "manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod",
+    "manufacturingDefinition.inspectionPlan",
+    "inventory.verification",
+    "verification.drawingCompleteness",
+    "verification.drawingFeatureBoundDimensionsDatumsFcfsFitsAndRoughness",
+    "verification.drawingVisualLegibilityCollisionScaleAndSheetClosure",
+    "verification.drawingModelInspectionCharacteristicParity",
+    "verification.modelDrawingInspectionRevisionAndConfigurationIdentity",
+    "verification.inspectionCharacteristicTrace",
+    "verification.massAndMaterialReadback",
+    "verification.nativeMaterialIdentityPersistence",
+    "verification.nativeMaterialDatabaseAssignmentAndReadback",
+    "verification.derivedOnlyOrCustomPropertyMaterialEvidenceCount",
+    "verification.nativeCadSourceHashBinding",
+    "verification.neutralStepSourceHashBinding",
+    "verification.manufacturingDrawingSourceHashBinding",
+    "inventory.host",
+    "host.nativeCadSaveReopen",
+    "host.nativeSourceSaveHash",
+    "host.nativeDrawingAssociativitySaveReopen",
+    "host.semanticAnnotationPersistence",
+    "host.topologyPersistence",
+    "inventory.release",
+    "release.manufacturingReviewRecorded",
+    "release.reviewerIdentityPresent",
+    "release.reviewerCredentialPresent",
+    "release.reviewScopeMatchesArtifactSet",
+    "release.approvalRecordIdentifierPresent",
+    "release.recordedApprovalSignaturePresent"
+  ],
+  "evidenceContractFailedGates": [
+    "artifacts.expectedClosureHashesSubjectsKindsAndUniqueness",
+    "inventory.intent",
+    "intent.wholeIntent",
+    "intent.dimensionalAuthority",
+    "intent.materialAuthority",
+    "intent.processAuthority",
+    "intent.standardsApplicabilityAndEditionResolved",
+    "intent.materialAndFastenerPropertySourcesBound",
+    "intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority",
+    "intent.assemblyConfigurationAndInterfaceAuthority",
+    "intent.safetyRegulatoryAndRiskApplicabilityResolved",
+    "intent.currentStandardsLedger",
+    "intent.noRetiredSoleAuthority",
+    "inventory.design",
+    "design.constraintCompile",
+    "design.detailProof",
+    "design.loadCasesAndServiceConditions",
+    "design.analysisInputUnitsAndProvenance",
+    "design.analysisRecomputedFromDeclaredInputs",
+    "design.criticalLoadPathCoverage",
+    "design.loadCombinationAndAbnormalCaseCoverage",
+    "design.analysisEquationInputOutputMarginTrace",
+    "design.strength",
+    "design.stiffness",
+    "design.fatigueApplicabilityAndResult",
+    "design.factorOfSafety",
+    "design.jointBearingAndEdgeChecks",
+    "design.fastenerPreloadSlipAndCapacity",
+    "design.bearingLife",
+    "design.thermalEnvelope",
+    "design.fitAndMatingInterfaces",
+    "design.toleranceStack",
+    "design.failureModesAndResidualRiskControls",
+    "design.assemblyServiceAndToolClearance",
+    "inventory.manufacturingDefinition",
+    "manufacturingDefinition.materialDesignation",
+    "manufacturingDefinition.materialConditionAndHeatTreatment",
+    "manufacturingDefinition.materialCertificateRequirementAndIncomingInspection",
+    "manufacturingDefinition.generalAndFeatureTolerances",
+    "manufacturingDefinition.gdandtDatumScheme",
+    "manufacturingDefinition.surfaceRoughness",
+    "manufacturingDefinition.stockAndPrimaryProcess",
+    "manufacturingDefinition.fixturingFeasibility",
+    "manufacturingDefinition.toolAccessibility",
+    "manufacturingDefinition.coatingDimensionalCompensation",
+    "manufacturingDefinition.processAndFinish",
+    "manufacturingDefinition.threadsStandardPartsAndFastenerDefinition",
+    "manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl",
+    "manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure",
+    "manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod",
+    "manufacturingDefinition.inspectionPlan",
+    "inventory.verification",
+    "verification.drawingCompleteness",
+    "verification.drawingFeatureBoundDimensionsDatumsFcfsFitsAndRoughness",
+    "verification.drawingVisualLegibilityCollisionScaleAndSheetClosure",
+    "verification.drawingModelInspectionCharacteristicParity",
+    "verification.modelDrawingInspectionRevisionAndConfigurationIdentity",
+    "verification.inspectionCharacteristicTrace",
+    "verification.massAndMaterialReadback",
+    "verification.nativeMaterialIdentityPersistence",
+    "verification.nativeMaterialDatabaseAssignmentAndReadback",
+    "verification.derivedOnlyOrCustomPropertyMaterialEvidenceCount",
+    "verification.nativeCadSourceHashBinding",
+    "verification.neutralStepSourceHashBinding",
+    "verification.manufacturingDrawingSourceHashBinding",
+    "inventory.host",
+    "host.nativeCadSaveReopen",
+    "host.nativeSourceSaveHash",
+    "host.nativeDrawingAssociativitySaveReopen",
+    "host.semanticAnnotationPersistence",
+    "host.topologyPersistence"
+  ],
+  "recordedApprovalEvidenceFailedGates": [
+    "inventory.release",
+    "release.manufacturingReviewRecorded",
+    "release.reviewerIdentityPresent",
+    "release.reviewerCredentialPresent",
+    "release.reviewScopeMatchesArtifactSet",
+    "release.approvalRecordIdentifierPresent",
+    "release.recordedApprovalSignaturePresent"
+  ],
+  "candidateArtifacts": [
+    {
+      "artifactId": "sifc-220-native-cad",
+      "partId": "SIFC-220-REV-A",
+      "kind": "native_cad",
+      "path": "model3d_native_r2/SIFC_220_REV_A.SLDPRT",
+      "revision": "A",
+      "sha256": "bd94dbc6bf58783d403e080a0e96cc481263f92a9f9d53c92c33b5b415664535"
+    },
+    {
+      "artifactId": "sifc-220-neutral-step",
+      "partId": "SIFC-220-REV-A",
+      "kind": "neutral_step",
+      "path": "model3d_native_r2/SIFC_220_REV_A.step",
+      "revision": "A",
+      "sha256": "93c677a4be8bdba0d986a37aba3ed96e5bb8d14274998ad5435cdab82dd78f8a"
+    },
+    {
+      "artifactId": "sifc-220-controlled-drawing",
+      "partId": "SIFC-220-REV-A",
+      "kind": "manufacturing_drawing",
+      "path": "drawing2d_final/SIFC_220_REV_A_DRAWING.dxf",
+      "revision": "A",
+      "sha256": "8a8c8f877c51830debf93c00f4c6d98c9e7d7216bfa65e928406577507cbcc55"
+    }
+  ],
+  "technicalReviewArtifacts": [],
+  "exposedArtifacts": [],
+  "rootCauseLessons": [
+    {
+      "ruleId": "PROD-G013",
+      "symptom": "71 non-compensatory evidence-contract gates lack valid evidence.",
+      "rootCause": "Engineering, manufacturing, native-host or exact artifact-closure evidence was not completely bound to the canonical rules and artifact set.",
+      "correction": "Correct every failed evidence-contract gate and regenerate evidence hashes; do not substitute a score, waiver, archive-only shortcut or passed=true.",
+      "preventionRule": "PROD-G013: one failed non-release evidence-contract gate blocks evidence-contract-ready status; only the canonical inventory owns expected values.",
+      "failedGates": [
+        "artifacts.expectedClosureHashesSubjectsKindsAndUniqueness",
+        "inventory.intent",
+        "intent.wholeIntent",
+        "intent.dimensionalAuthority",
+        "intent.materialAuthority",
+        "intent.processAuthority",
+        "intent.standardsApplicabilityAndEditionResolved",
+        "intent.materialAndFastenerPropertySourcesBound",
+        "intent.operatingEnvelopeDutyCycleAndDesignLifeAuthority",
+        "intent.assemblyConfigurationAndInterfaceAuthority",
+        "intent.safetyRegulatoryAndRiskApplicabilityResolved",
+        "intent.currentStandardsLedger",
+        "intent.noRetiredSoleAuthority",
+        "inventory.design",
+        "design.constraintCompile",
+        "design.detailProof",
+        "design.loadCasesAndServiceConditions",
+        "design.analysisInputUnitsAndProvenance",
+        "design.analysisRecomputedFromDeclaredInputs",
+        "design.criticalLoadPathCoverage",
+        "design.loadCombinationAndAbnormalCaseCoverage",
+        "design.analysisEquationInputOutputMarginTrace",
+        "design.strength",
+        "design.stiffness",
+        "design.fatigueApplicabilityAndResult",
+        "design.factorOfSafety",
+        "design.jointBearingAndEdgeChecks",
+        "design.fastenerPreloadSlipAndCapacity",
+        "design.bearingLife",
+        "design.thermalEnvelope",
+        "design.fitAndMatingInterfaces",
+        "design.toleranceStack",
+        "design.failureModesAndResidualRiskControls",
+        "design.assemblyServiceAndToolClearance",
+        "inventory.manufacturingDefinition",
+        "manufacturingDefinition.materialDesignation",
+        "manufacturingDefinition.materialConditionAndHeatTreatment",
+        "manufacturingDefinition.materialCertificateRequirementAndIncomingInspection",
+        "manufacturingDefinition.generalAndFeatureTolerances",
+        "manufacturingDefinition.gdandtDatumScheme",
+        "manufacturingDefinition.surfaceRoughness",
+        "manufacturingDefinition.stockAndPrimaryProcess",
+        "manufacturingDefinition.fixturingFeasibility",
+        "manufacturingDefinition.toolAccessibility",
+        "manufacturingDefinition.coatingDimensionalCompensation",
+        "manufacturingDefinition.processAndFinish",
+        "manufacturingDefinition.threadsStandardPartsAndFastenerDefinition",
+        "manufacturingDefinition.undefinedEdgesDeburrAndSharpEdgeControl",
+        "manufacturingDefinition.assemblyBomItemRevisionAndQuantityClosure",
+        "manufacturingDefinition.criticalCharacteristicProcessCapabilityAndMeasurementMethod",
+        "manufacturingDefinition.inspectionPlan",
+        "inventory.verification",
+        "verification.drawingCompleteness",
+        "verification.drawingFeatureBoundDimensionsDatumsFcfsFitsAndRoughness",
+        "verification.drawingVisualLegibilityCollisionScaleAndSheetClosure",
+        "verification.drawingModelInspectionCharacteristicParity",
+        "verification.modelDrawingInspectionRevisionAndConfigurationIdentity",
+        "verification.inspectionCharacteristicTrace",
+        "verification.massAndMaterialReadback",
+        "verification.nativeMaterialIdentityPersistence",
+        "verification.nativeMaterialDatabaseAssignmentAndReadback",
+        "verification.derivedOnlyOrCustomPropertyMaterialEvidenceCount",
+        "verification.nativeCadSourceHashBinding",
+        "verification.neutralStepSourceHashBinding",
+        "verification.manufacturingDrawingSourceHashBinding",
+        "inventory.host",
+        "host.nativeCadSaveReopen",
+        "host.nativeSourceSaveHash",
+        "host.nativeDrawingAssociativitySaveReopen",
+        "host.semanticAnnotationPersistence",
+        "host.topologyPersistence"
+      ]
+    }
+  ],
+  "rules": {
+    "path": "rules/production_readiness_rules.json",
+    "sha256": "24b290546948d8061dc5631771051ae2310fc6f6e8ed30b0c8b3c740b76635c2",
+    "profile": "mechanicalManufacturingProfileV3"
+  },
+  "contractSchema": {
+    "path": "rules/production_readiness_contract_v3.schema.json",
+    "sha256": "22f24bdfad26b6c94a9468abd20b0896922b07fb0bc38bb865a882ecd85e5d9b"
+  },
+  "safetyLocks": {
+    "reviewOnly": true,
+    "accepted": false,
+    "ruleEnabled": false,
+    "packagingGated": true,
+    "comparativeSuperiorityClaimAllowed": false
+  }
+}

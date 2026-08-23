@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-EXISTING-LESSON-SOURCE-HASH-STALE: aicad_lesson_harvester existing bundle hash closure. The merge rejected existing lesson 9 because tests/test_modifier_ui_v2.py changed during the current corrective work.

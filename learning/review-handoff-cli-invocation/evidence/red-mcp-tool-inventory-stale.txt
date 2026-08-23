@@ -1,0 +1,11 @@
+Root suite command:
+python -B -m unittest discover -s tests -v
+
+Exit code: 1
+Failed check: test_mcp_handshake_tool_listing_and_call
+Unexpected actual tools:
+- aicad_get_review_handoff_schema
+- aicad_validate_review_handoff
+- aicad_apply_review_handoff
+
+Root suite summary: Ran 169 tests; FAILED (failures=1, errors=1)

@@ -1,0 +1,1 @@
+Reproduce FAIL-SIFC-PLAYWRIGHT-FILE-PROTOCOL-BLOCKED: Playwright local reviewer navigation. Playwright blocked navigation to file:///C:/Users/Public/AICADReview/.../review.html.

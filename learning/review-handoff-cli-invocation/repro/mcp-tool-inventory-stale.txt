@@ -1,0 +1,8 @@
+Command:
+python -B -m unittest discover -s tests -p "test_agent_plugin.py" -v
+
+Failing check:
+AgentPluginTests.test_mcp_handshake_tool_listing_and_call
+
+Minimal mutation:
+Add three handoff MCP tools to the runtime TOOLS list without adding them to the exact expected inventory test.

@@ -149,9 +149,26 @@ static int check_protocol(void)
 
     frame.header.command = (uint8_t)MW_CMD_GESTURE_EVENT;
     frame.header.sequence = 2U;
-    frame.header.payload_length = 1U;
+    frame.header.payload_length = 2U;
     frame.ciphertext[0] = (uint8_t)MW_GESTURE_CIRCLE_CW;
     frame.ciphertext[1] = UINT8_C(82);
+    CHECK(guard.gesture_payload_profile ==
+          MW_GESTURE_PAYLOAD_PROFILE_UNSUPPORTED);
+    CHECK(!mw_protocol_accept_and_decrypt(
+        &guard,
+        &frame,
+        MW_DIRECTION_WAND_TO_RECEIVER,
+        1050U,
+        host_noncrypto_decrypt,
+        NULL,
+        host_commit_high_water,
+        &persistence,
+        plaintext));
+    CHECK(guard.receive_high_water == 1U);
+    CHECK(mw_replay_guard_set_gesture_profile(
+        &guard, MW_GESTURE_PAYLOAD_PROFILE_LEGACY_V1));
+
+    frame.header.payload_length = 1U;
     CHECK(!mw_protocol_accept_and_decrypt(
         &guard,
         &frame,
@@ -222,6 +239,75 @@ static int check_state_machine(void)
     return 0;
 }
 
+static int check_renewed_pulse_deadlines(void)
+{
+    mw_state_machine_t receiver;
+    uint32_t now_ms;
+
+    mw_state_machine_init(&receiver, MW_ROLE_RECEIVER);
+    mw_state_machine_boot_complete(&receiver, true);
+    CHECK(mw_state_machine_receiver_command(
+        &receiver, MW_CMD_ARM_LEASE, 0U, UINT32_C(1000)));
+    CHECK(mw_state_machine_receiver_command(
+        &receiver, MW_CMD_PULSE_LOW_SIDE, 200U, UINT32_C(1000)));
+    CHECK(receiver.output_deadline_active);
+    CHECK(receiver.output_deadline_ms == UINT32_C(1200));
+
+    for (now_ms = UINT32_C(1025); now_ms < UINT32_C(1200);
+         now_ms += MW_ARM_LEASE_REFRESH_MS) {
+        mw_state_machine_tick(&receiver, now_ms);
+        CHECK(receiver.outputs.low_side_active);
+        CHECK(receiver.state == MW_STATE_COMMAND_PENDING);
+        CHECK(mw_state_machine_receiver_command(
+            &receiver, MW_CMD_ARM_LEASE, 0U, now_ms));
+        CHECK(receiver.state == MW_STATE_COMMAND_PENDING);
+        CHECK(receiver.output_deadline_ms == UINT32_C(1200));
+    }
+    mw_state_machine_tick(&receiver, UINT32_C(1200));
+    CHECK(mw_state_machine_outputs_safe(&receiver));
+    CHECK(!receiver.output_deadline_active);
+    CHECK(receiver.state == MW_STATE_ARMED);
+
+    CHECK(mw_state_machine_receiver_command(
+        &receiver, MW_CMD_ARM_LEASE, 0U, UINT32_C(1200)));
+    CHECK(mw_state_machine_receiver_command(
+        &receiver, MW_CMD_PULSE_ISOLATED_OC, 500U, UINT32_C(1200)));
+    CHECK(receiver.output_deadline_ms == UINT32_C(1700));
+    for (now_ms = UINT32_C(1225); now_ms < UINT32_C(1700);
+         now_ms += MW_ARM_LEASE_REFRESH_MS) {
+        mw_state_machine_tick(&receiver, now_ms);
+        CHECK(receiver.outputs.isolated_oc_active);
+        CHECK(receiver.state == MW_STATE_COMMAND_PENDING);
+        CHECK(mw_state_machine_receiver_command(
+            &receiver, MW_CMD_ARM_LEASE, 0U, now_ms));
+        CHECK(receiver.state == MW_STATE_COMMAND_PENDING);
+        CHECK(receiver.output_deadline_ms == UINT32_C(1700));
+    }
+    mw_state_machine_tick(&receiver, UINT32_C(1700));
+    CHECK(mw_state_machine_outputs_safe(&receiver));
+    CHECK(receiver.state == MW_STATE_ARMED);
+
+    mw_state_machine_init(&receiver, MW_ROLE_RECEIVER);
+    mw_state_machine_boot_complete(&receiver, true);
+    now_ms = UINT32_MAX - UINT32_C(99);
+    CHECK(mw_state_machine_receiver_command(
+        &receiver, MW_CMD_ARM_LEASE, 0U, now_ms));
+    CHECK(mw_state_machine_receiver_command(
+        &receiver, MW_CMD_PULSE_LOW_SIDE, 100U, now_ms));
+    CHECK(receiver.output_deadline_ms == 0U);
+    CHECK(receiver.output_deadline_active);
+    mw_state_machine_tick(&receiver, UINT32_MAX);
+    CHECK(receiver.outputs.low_side_active);
+    CHECK(mw_state_machine_receiver_command(
+        &receiver, MW_CMD_ARM_LEASE, 0U, UINT32_MAX));
+    CHECK(receiver.state == MW_STATE_COMMAND_PENDING);
+    mw_state_machine_tick(&receiver, 0U);
+    CHECK(mw_state_machine_outputs_safe(&receiver));
+    CHECK(!receiver.output_deadline_active);
+    CHECK(receiver.state == MW_STATE_ARMED);
+    return 0;
+}
+
 static int check_board_pin_authority(void)
 {
     CHECK(MW_HAPTIC_EN_GPIO_PORT == 0U);
@@ -249,6 +335,7 @@ int main(void)
     CHECK(check_board_pin_authority() == 0);
     CHECK(check_protocol() == 0);
     CHECK(check_state_machine() == 0);
+    CHECK(check_renewed_pulse_deadlines() == 0);
     CHECK(check_gesture_rejection() == 0);
     (void)puts("host review checks passed; no target/crypto claim");
     return 0;

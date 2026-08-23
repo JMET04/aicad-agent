@@ -1,0 +1,849 @@
+{
+  "errors": [
+    "System.InvalidOperationException: F004 sketch is not fully constrained; status=2; segment_statuses=[3,3,2,3]; point_statuses=[3,3,3,2,2]; relation_count=9\r\n   在 AiCad.SolidWorksHost.Program.ExecuteFeature(SldWorks app, ModelDoc2 model, HostPlan plan, FeaturePlan featurePlan, IDictionary`2 features)\r\n   在 AiCad.SolidWorksHost.Program.Main(String[] args)"
+  ],
+  "features": [
+    {
+      "actual_volume_delta_mm3": 792000,
+      "after": {
+        "bbox_mm": [
+          -110,
+          -90,
+          0,
+          110,
+          90,
+          20
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 95200,
+        "volume_mm3": 792000
+      },
+      "before": {
+        "bbox_mm": null,
+        "body_fault_count": 0,
+        "solid_body_count": 0,
+        "surface_area_mm2": 0,
+        "volume_mm3": 0
+      },
+      "checks": [
+        "PASS:volume_before",
+        "PASS:feature_error_code",
+        "PASS:sketch_fully_constrained",
+        "PASS:body_valid",
+        "PASS:support_plane_not_applicable",
+        "PASS:solid_body_count",
+        "PASS:volume_after",
+        "PASS:volume_delta",
+        "PASS:bbox",
+        "PASS:persistent_reference",
+        "PASS:native_topology_required_refs"
+      ],
+      "expected_volume_after_mm3": 792000,
+      "explicit_center_dimension_count": 0,
+      "explicit_center_relation_count": 0,
+      "explicit_radius_dimension_count": 0,
+      "feature_error_code": 0,
+      "feature_warning": false,
+      "id": "F001",
+      "native_topology": [
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEADABzZ0xpbmVIYW5kbGUAAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.edge.1",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -110,
+            -90,
+            110,
+            -90,
+            0
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEADABzZ0xpbmVIYW5kbGUBAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.edge.2",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            110,
+            -90,
+            110,
+            90,
+            0
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEADABzZ0xpbmVIYW5kbGUCAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.edge.3",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            110,
+            90,
+            -110,
+            90,
+            0
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAEkAAAD\/\/wEADABzZ0xpbmVIYW5kbGUDAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|profile.edge.4",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -110,
+            90,
+            -110,
+            -90,
+            0
+          ]
+        },
+        {
+          "classification": "opposite_planar_face",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAASvuGagQAAAAMgAAABYAIAFMAAABK+4ZqAQAAAAyAAAAFgAgAUwAAAEr7hmoCAAAADIAAAAWACABTAAAASvuGagMAAAAAAAAAAAAAAAAAOEoAAAAAAAAAAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.opposite",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -110,
+            -90,
+            20,
+            110,
+            90,
+            20
+          ]
+        },
+        {
+          "classification": "rectangle_side_top",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagMAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAAAAAAAAAAADgAAABYAIAFMAAABK+4ZqBAAAAAyAAAAFgAgAUwAAAEr7hmoBAAAAAAAAAAOAAAAFgAgAUwAAAEr7hmoCAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.side.3",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -110,
+            90,
+            0,
+            110,
+            90,
+            20
+          ]
+        },
+        {
+          "classification": "rectangle_side_right",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagIAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAAAAAAAAAAADgAAABYAIAFMAAABK+4ZqAwAAAAyAAAAFgAgAUwAAAEr7hmoBAAAAAAAAAAOAAAAFgAgAUwAAAEr7hmoBAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.side.2",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            110,
+            -90,
+            0,
+            110,
+            90,
+            20
+          ]
+        },
+        {
+          "classification": "rectangle_side_bottom",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAAAAAAAAAAADgAAABYAIAFMAAABK+4ZqAgAAAAyAAAAFgAgAUwAAAEr7hmoBAAAAAAAAAAOAAAAFgAgAUwAAAEr7hmoEAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.side.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -110,
+            -90,
+            0,
+            110,
+            -90,
+            20
+          ]
+        },
+        {
+          "classification": "rectangle_side_left",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagQAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAAAAAAAAAAADgAAABYAIAFMAAABK+4ZqAQAAAAyAAAAFgAgAUwAAAEr7hmoBAAAAAAAAAAOAAAAFgAgAUwAAAEr7hmoDAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.face.side.4",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -110,
+            -90,
+            0,
+            -110,
+            90,
+            20
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAASvuGagQAAAAMgAAABYAIAFMAAABK+4ZqAwAAAAyAAAAFgAgAUwAAAEr7hmoBAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.opposite.4",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -110,
+            90,
+            20,
+            -110,
+            -90,
+            20
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAASvuGagEAAAAMgAAABYAIAFMAAABK+4ZqBAAAAAyAAAAFgAgAUwAAAEr7hmoCAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -110,
+            -90,
+            20,
+            110,
+            -90,
+            20
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAASvuGagIAAAAMgAAABYAIAFMAAABK+4ZqAQAAAAyAAAAFgAgAUwAAAEr7hmoDAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.opposite.2",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            110,
+            -90,
+            20,
+            110,
+            90,
+            20
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAASvuGagMAAAAMgAAABYAIAFMAAABK+4ZqAgAAAAyAAAAFgAgAUwAAAEr7hmoEAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.opposite.3",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            110,
+            90,
+            20,
+            -110,
+            90,
+            20
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagQAAAADgAAABYAIAFMAAABK+4ZqAwAAAP\/\/AQAUAG1vRW5kRmFjZVN1cmZJZFJlcF9jAAAFgAgAUwAAAEr7hmoBAAAAAAAAAA6AAAAFgAgAUwAAAEr7hmoAAAAAAAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.vertical.4",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -110,
+            90,
+            20,
+            -110,
+            90,
+            0
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagMAAAADgAAABYAIAFMAAABK+4ZqAgAAAP\/\/AQAUAG1vRW5kRmFjZVN1cmZJZFJlcF9jAAAFgAgAUwAAAEr7hmoBAAAAAAAAAA6AAAAFgAgAUwAAAEr7hmoAAAAAAAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.vertical.3",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            110,
+            90,
+            20,
+            110,
+            90,
+            0
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagIAAAADgAAABYAIAFMAAABK+4ZqAQAAAP\/\/AQAUAG1vRW5kRmFjZVN1cmZJZFJlcF9jAAAFgAgAUwAAAEr7hmoBAAAAAAAAAA6AAAAFgAgAUwAAAEr7hmoAAAAAAAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.vertical.2",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            110,
+            -90,
+            20,
+            110,
+            -90,
+            0
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFwBtb0Zyb21Ta3RFbnRTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAADgAAABYAIAFMAAABK+4ZqBAAAAP\/\/AQAUAG1vRW5kRmFjZVN1cmZJZFJlcF9jAAAFgAgAUwAAAEr7hmoBAAAAAAAAAA6AAAAFgAgAUwAAAEr7hmoAAAAAAAAAAAAAAAAAAAAAOEoAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F001|feature.edge.vertical.1",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            -110,
+            -90,
+            20,
+            -110,
+            -90,
+            0
+          ]
+        }
+      ],
+      "passed": true,
+      "persistent_reference_base64": null,
+      "persistent_reference_resolved": false,
+      "persistent_reference_status": 0,
+      "profile_segment_count": 4,
+      "purpose": "220 x 180 x 20 datum-A mounting base",
+      "selected_support_plane_z_mm": null,
+      "sketch_autodim_status": 0,
+      "sketch_constraint_status": 3,
+      "sketch_name": "AICAD_SKETCH_F001",
+      "support_face_selection_method": null,
+      "support_feature": null,
+      "type": "base_extrude",
+      "used_fixed_fallback": false
+    },
+    {
+      "actual_volume_delta_mm3": 477836.24261100753,
+      "after": {
+        "bbox_mm": [
+          -110,
+          -90,
+          0,
+          110,
+          90,
+          55.999999999999993
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 109902.65361880022,
+        "volume_mm3": 1269836.2426110075
+      },
+      "before": {
+        "bbox_mm": [
+          -110,
+          -90,
+          0,
+          110,
+          90,
+          20
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 95200,
+        "volume_mm3": 792000
+      },
+      "checks": [
+        "PASS:volume_before",
+        "PASS:feature_error_code",
+        "PASS:sketch_fully_constrained",
+        "PASS:body_valid",
+        "PASS:support_plane_feature_and_z",
+        "PASS:solid_body_count",
+        "PASS:volume_after",
+        "PASS:volume_delta",
+        "PASS:bbox",
+        "PASS:persistent_reference",
+        "PASS:native_topology_required_refs"
+      ],
+      "expected_volume_after_mm3": 1269836.2426110082,
+      "explicit_center_dimension_count": 0,
+      "explicit_center_relation_count": 1,
+      "explicit_radius_dimension_count": 1,
+      "feature_error_code": 0,
+      "feature_warning": false,
+      "id": "F002",
+      "native_topology": [
+        {
+          "classification": "ordered_profile_circle",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFQAAAD\/\/wEACwBzZ0FyY0hhbmRsZQAA\/\/\/\/\/wAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|profile.circle.1",
+          "required": true,
+          "semantic_geometry_type": "circle",
+          "signature_mm": [
+            0,
+            0,
+            20,
+            65
+          ]
+        },
+        {
+          "classification": "opposite_circular_face",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAADAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAWwAAAEv7hmoBAAAAAAAAAAAAAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAAWACABbAAAAS\/uGagEAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAAAA4SgAAAAAAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.face.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -65,
+            -65,
+            55.999999999999993,
+            65,
+            65,
+            55.999999999999993
+          ]
+        },
+        {
+          "classification": "opposite_circular_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAWwAAAEv7hmoBAAAAAAAAAAAAAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAAWACABbAAAAS\/uGagEAAAD\/\/\/\/\/AAAAAAyAAAAFgAgAWwAAAEv7hmoBAAAA\/\/\/\/\/wAAAAAMgAAABYAIAFsAAABL+4ZqAQAAAP\/\/\/\/8AAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.circle.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "circle",
+          "signature_mm": [
+            0,
+            0,
+            55.999999999999993,
+            65
+          ]
+        },
+        {
+          "classification": "cylindrical_face",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAFAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAWwAAAEv7hmoBAAAA\/\/\/\/\/wAAAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAAWACABbAAAAS\/uGagEAAAAAAAAAAAAAAAAA\/\/8BABQAbW9FbmRGYWNlU3VyZklkUmVwX2MAAAWACABTAAAASvuGagEAAAAAAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F002|feature.face.cylindrical.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            -65,
+            -65,
+            20,
+            65,
+            65,
+            55.999999999999993
+          ]
+        }
+      ],
+      "passed": true,
+      "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAASvuGagQAAAAMgAAABYAIAFMAAABK+4ZqAQAAAAyAAAAFgAgAUwAAAEr7hmoCAAAADIAAAAWACABTAAAASvuGagMAAAAAAAAAAAAAAAAAOEoAAAAAAAAAAAAA",
+      "persistent_reference_resolved": true,
+      "persistent_reference_status": 0,
+      "profile_segment_count": 1,
+      "purpose": "diameter 130 dual-bearing housing boss",
+      "selected_support_plane_z_mm": 20,
+      "sketch_autodim_status": 0,
+      "sketch_constraint_status": 3,
+      "sketch_name": "AICAD_SKETCH_F002",
+      "support_face_selection_method": "named_feature_exact_z",
+      "support_feature": "F001",
+      "type": "boss_extrude",
+      "used_fixed_fallback": false
+    },
+    {
+      "actual_volume_delta_mm3": 6476.3481051861309,
+      "after": {
+        "bbox_mm": [
+          -110,
+          -90,
+          0,
+          110,
+          90,
+          55.999999999999993
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 110208.08456647341,
+        "volume_mm3": 1276312.5907161937
+      },
+      "before": {
+        "bbox_mm": [
+          -110,
+          -90,
+          0,
+          110,
+          90,
+          55.999999999999993
+        ],
+        "body_fault_count": 0,
+        "solid_body_count": 1,
+        "surface_area_mm2": 109902.65361880022,
+        "volume_mm3": 1269836.2426110075
+      },
+      "checks": [
+        "PASS:volume_before",
+        "PASS:feature_error_code",
+        "PASS:sketch_fully_constrained",
+        "PASS:body_valid",
+        "PASS:support_plane_feature_and_z",
+        "PASS:solid_body_count",
+        "PASS:volume_after",
+        "PASS:volume_delta",
+        "PASS:bbox",
+        "PASS:persistent_reference",
+        "PASS:native_topology_required_refs"
+      ],
+      "expected_volume_after_mm3": 1276312.5907161941,
+      "explicit_center_dimension_count": 0,
+      "explicit_center_relation_count": 0,
+      "explicit_radius_dimension_count": 0,
+      "feature_error_code": 0,
+      "feature_warning": false,
+      "id": "F003",
+      "native_topology": [
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFwAAAD\/\/wEADABzZ0xpbmVIYW5kbGUAAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|profile.edge.1",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            27,
+            -36,
+            69,
+            -36,
+            20
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFwAAAD\/\/wEADABzZ0xpbmVIYW5kbGUBAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|profile.edge.2",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            69,
+            -36,
+            69,
+            36,
+            20
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFwAAAD\/\/wEADABzZ0xpbmVIYW5kbGUCAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|profile.edge.3",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            69,
+            36,
+            27,
+            36,
+            20
+          ]
+        },
+        {
+          "classification": "ordered_rectangle_profile_edge",
+          "custom_property_name": null,
+          "native_object_type": "SketchSegment",
+          "persistent_reference_base64": "OEoAAAYAAAD\/\/v8AAAAAAFwAAAD\/\/wEADABzZ0xpbmVIYW5kbGUDAP\/\/\/\/8AAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|profile.edge.4",
+          "required": true,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            27,
+            36,
+            27,
+            -36,
+            20
+          ]
+        },
+        {
+          "classification": "opposite_planar_face",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoBAAAAAAAAAAAAAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAAWACABbAAAAS\/uGagEAAAD\/\/\/\/\/AAAAAAyAAAAFgAgAZgAAAEz7hmoBAAAA\/\/\/\/\/wAAAAAMgAAABYAIAGYAAABM+4ZqAgAAAP\/\/\/\/8AAAAADIAAAAWACABmAAAATPuGagMAAAD\/\/\/\/\/AAAAAAAAAAAAAAAAAAA4SgAAAAAAAAAAAAA=",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.face.opposite",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            54.120236510939236,
+            -36,
+            32,
+            69,
+            36,
+            32
+          ]
+        },
+        {
+          "classification": "rectangle_side_right",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoCAAAA\/\/\/\/\/wAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAQAAAAAAAAADgAAABYAIAGYAAABM+4ZqAwAAAP\/\/\/\/8AAAAA\/\/8BABgAbW9FbmRGYWNlM0ludFN1cmZJZFJlcF9jAAAFgAgAZgAAAEz7hmoBAAAAAAAAAAAAAAADgAAABYAIAGYAAABM+4ZqAQAAAP\/\/\/\/8AAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.face.side.2",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            69,
+            -36,
+            20,
+            69,
+            36,
+            32
+          ]
+        },
+        {
+          "classification": "rectangle_side_top",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoDAAAA\/\/\/\/\/wAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAQAAAAAAAAADgAAABYAIAFsAAABL+4ZqAQAAAP\/\/\/\/8AAAAA\/\/8BABgAbW9FbmRGYWNlM0ludFN1cmZJZFJlcF9jAAAFgAgAZgAAAEz7hmoBAAAAAAAAAAAAAAADgAAABYAIAGYAAABM+4ZqAgAAAP\/\/\/\/8AAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.face.side.3",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            54.120236510939236,
+            36,
+            20,
+            69,
+            36,
+            32
+          ]
+        },
+        {
+          "classification": "rectangle_side_bottom",
+          "custom_property_name": null,
+          "native_object_type": "Face2",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoBAAAA\/\/\/\/\/wAAAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAAWACABmAAAATPuGagEAAAAAAAAAAAAAAAOAAAAFgAgAWwAAAEv7hmoBAAAA\/\/\/\/\/wAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAQAAAAAAAAADgAAABYAIAGYAAABM+4ZqAgAAAP\/\/\/\/8AAAAAAAAAAAAAAAAAADhKAAAAAAAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.face.side.1",
+          "required": false,
+          "semantic_geometry_type": "face",
+          "signature_mm": [
+            54.120236510939236,
+            -36,
+            20,
+            69,
+            -36,
+            32
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoBAAAAAAAAAAAAAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAAWACABmAAAATPuGagEAAAD\/\/\/\/\/AAAAAAyAAAAFgAgAWwAAAEv7hmoBAAAA\/\/\/\/\/wAAAAAMgAAABYAIAGYAAABM+4ZqAgAAAP\/\/\/\/8AAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.edge.opposite.1",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            54.120236510939236,
+            -36,
+            32,
+            69,
+            -36,
+            32
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoBAAAAAAAAAAAAAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAAWACABmAAAATPuGagIAAAD\/\/\/\/\/AAAAAAyAAAAFgAgAZgAAAEz7hmoBAAAA\/\/\/\/\/wAAAAAMgAAABYAIAGYAAABM+4ZqAwAAAP\/\/\/\/8AAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.edge.opposite.2",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            69,
+            -36,
+            32,
+            69,
+            36,
+            32
+          ]
+        },
+        {
+          "classification": "opposite_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGABtb0VuZEZhY2UzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoBAAAAAAAAAAAAAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAAWACABmAAAATPuGagMAAAD\/\/\/\/\/AAAAAAyAAAAFgAgAZgAAAEz7hmoCAAAA\/\/\/\/\/wAAAAAMgAAABYAIAFsAAABL+4ZqAQAAAP\/\/\/\/8AAAAAAAAAAAAAAAA4SgAAAAAAAA==",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.edge.opposite.3",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            69,
+            36,
+            32,
+            54.120236510939236,
+            36,
+            32
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoDAAAA\/\/\/\/\/wAAAAADgAAABYAIAGYAAABM+4ZqAgAAAP\/\/\/\/8AAAAA\/\/8BABgAbW9FbmRGYWNlM0ludFN1cmZJZFJlcF9jAAAFgAgAZgAAAEz7hmoBAAAAAAAAAAAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAQAAAAAAAAAAAAAAAAAAADhKAAAAAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.edge.vertical.3",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            69,
+            36,
+            32,
+            69,
+            36,
+            20
+          ]
+        },
+        {
+          "classification": "vertical_rectangle_edge",
+          "custom_property_name": null,
+          "native_object_type": "Edge",
+          "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRWRnZVJlZl9jAQAAAAAAAAAEAAAAAAMAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAGwBtb0Zyb21Ta3RFbnQzSW50U3VyZklkUmVwX2MAAP\/\/AQAGAG1vRlJfY\/\/\/AQANAG1vRXh0T2JqZWN0X2P\/\/wEAEQBtb0NTdHJpbmdIYW5kbGVfY\/\/+\/wAJgP\/+\/wP2lvZOMQACAABB+4Zq\/\/7\/AP\/+\/wD\/\/v8AAAAAAAAAAAAAAAAAAAADAAAA\/\/7\/AtiepIsAAAAAAAAAAAAAAAAAAAAAZgAAAEz7hmoCAAAA\/\/\/\/\/wAAAAADgAAABYAIAGYAAABM+4ZqAQAAAP\/\/\/\/8AAAAA\/\/8BABgAbW9FbmRGYWNlM0ludFN1cmZJZFJlcF9jAAAFgAgAZgAAAEz7hmoBAAAAAAAAAAAAAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAABYAIAFMAAABK+4ZqAQAAAAAAAAAAAAAAAAAAADhKAAAAAAAA",
+          "persistent_reference_resolved": true,
+          "persistent_reference_status": 0,
+          "reference_key": "F003|feature.edge.vertical.2",
+          "required": false,
+          "semantic_geometry_type": "line",
+          "signature_mm": [
+            69,
+            -36,
+            32,
+            69,
+            -36,
+            20
+          ]
+        }
+      ],
+      "passed": true,
+      "persistent_reference_base64": "OEoAAAMAAAD\/\/v8AAAAAAP\/\/AQALAG1vRmFjZVJlZl9jAQAAAAAAAAAGAAAAAAIAAAAAAAB9w5QlrUmyVH3DlCWtSbJUAAD\/\/wEAFABtb0VuZEZhY2VTdXJmSWRSZXBfYwAA\/\/8BAAYAbW9GUl9j\/\/8BAA0AbW9FeHRPYmplY3RfY\/\/\/AQARAG1vQ1N0cmluZ0hhbmRsZV9j\/\/7\/AAmA\/\/7\/A\/aW9k4xAAIAAEH7hmr\/\/v8A\/\/7\/AP\/+\/wAAAAAAAAAAAAAAAAAAAAMAAAD\/\/v8C2J6kiwAAAAAAAAAAAAAAAAAAAABTAAAASvuGagEAAAAAAAAA\/\/8BABcAbW9Gcm9tU2t0RW50U3VyZklkUmVwX2MAAAWACABTAAAASvuGagQAAAAMgAAABYAIAFMAAABK+4ZqAQAAAAyAAAAFgAgAUwAAAEr7hmoCAAAADIAAAAWACABTAAAASvuGagMAAAAAAAAAAAAAAAAAOEoAAAAAAAAAAAAA",
+      "persistent_reference_resolved": true,
+      "persistent_reference_status": 0,
+      "profile_segment_count": 4,
+      "purpose": "right vertical stiffness rib pad",
+      "selected_support_plane_z_mm": 20,
+      "sketch_autodim_status": 0,
+      "sketch_constraint_status": 3,
+      "sketch_name": "AICAD_SKETCH_F003",
+      "support_face_selection_method": "named_feature_exact_z",
+      "support_feature": "F001",
+      "type": "boss_extrude",
+      "used_fixed_fallback": false
+    }
+  ],
+  "final_state": null,
+  "native_topology_reference_count": 0,
+  "output_sldprt": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_native\\SIFC_220_REV_A.SLDPRT",
+  "output_step": "D:\\CAD绘制插件\\github-release\\aicad-agent\\runs\\complex_servo_indexer_v116_20260820\\model3d_native\\SIFC_220_REV_A.step",
+  "protocol": "AICAD_SOLIDWORKS_REPORT_2",
+  "required_native_topology_reference_count": 0,
+  "sldprt_save_errors": 0,
+  "sldprt_save_warnings": 0,
+  "solidworks_revision": "34.0.0",
+  "source_sha256": "5d214292944aa0603b537248e3d9bbd9ed64936cede5545178bb51b3e3bf4e84",
+  "status": "failed",
+  "step_save_errors": 0,
+  "step_save_warnings": 0,
+  "unresolved_required_native_topology_reference_count": 0
+}

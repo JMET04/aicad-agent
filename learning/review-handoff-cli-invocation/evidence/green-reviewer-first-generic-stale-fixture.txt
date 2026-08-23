@@ -1,0 +1,3 @@
+GREEN: ReviewerFirstOpenPolicyTests.test_generic_request_blocks_native_file
+The contract-complete fixture launches the reviewer, blocks the supplied native file without explicit intent, and returns explicit_native_cad_request_required.
+

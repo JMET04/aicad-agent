@@ -1,0 +1,6 @@
+Command:
+python -B -m unittest discover -s agent-plugin/aicad-agent/tests -p "test_review_handoff_rules.py" -v
+
+Exit code: 0
+Ran 1 test in 0.347s
+OK

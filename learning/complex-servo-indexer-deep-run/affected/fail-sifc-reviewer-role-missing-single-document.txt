@@ -1,0 +1,1 @@
+Corrected outcome for FAIL-SIFC-REVIEWER-ROLE-MISSING-SINGLE-DOCUMENT: Emit single_document modifier mode, role and document-scoped selection attributes on every non-document-set reviewer. Safety locks remain reviewOnly=true, accepted=false, ruleEnabled=false and packagingGated=true.
