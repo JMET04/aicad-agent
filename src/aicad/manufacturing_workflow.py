@@ -390,6 +390,8 @@ def build_manufacturing_release_package(
             "toolSteelCutAuthorized": False,
             "massProductionAuthorized": False,
             "externalProfessionalSignoffRequired": True,
+            "procurementPreflightRequired": True,
+            "purchaseAuthorized": False,
         }
         candidate_path = directory / f"{stem}.digital-manufacturing-candidate.json"
         _atomic_text(candidate_path, json.dumps(candidate_manifest, ensure_ascii=False, indent=2) + "\n")
@@ -422,6 +424,8 @@ def build_manufacturing_release_package(
             "massProductionAuthorized": False,
             "externalProfessionalSignoffRequired": True,
             "safetyLocks": report["safetyLocks"],
+            "procurementPreflightRequired": True,
+            "purchaseAuthorized": False,
         }
         manifest_path = directory / f"{stem}.factory-handoff-candidate.json"
         _atomic_text(manifest_path, json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
@@ -458,6 +462,8 @@ def build_manufacturing_release_package(
         "artifactDisposition": report["artifactDisposition"],
         "artifactClosureSha256": report["artifactClosureSha256"],
         "handoffArtifactClosureSha256": report["handoffArtifactClosureSha256"],
+        "procurementPreflightRequired": True,
+        "purchaseAuthorized": False,
         "validation": report,
         "reviewHtml": str(review_path),
         "files": [str(path) for path in files],

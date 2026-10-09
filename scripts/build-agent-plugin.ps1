@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = 'release',
-    [string]$Version = '1.17.2',
+    [string]$Version = '1.18.0',
     [switch]$IncludeSolidWorksInterop
 )
 
@@ -181,7 +181,7 @@ $releaseManifest = [ordered]@{
         plan3dSchema = '1.0'
         viewPackageSchema = '1.1'
     }
-    releaseDate = '2026-08-22'
+    releaseDate = '2026-10-09'
     license = 'MIT'
     repository = 'https://github.com/JMET04/aicad-agent'
     apiKeyRequired = $false
@@ -198,6 +198,7 @@ $releaseManifest = [ordered]@{
     }
     sourceInputs = Get-SourceInputEntries -RepositoryRoot $root -Files (Get-CanonicalSourceInputFiles -RepositoryRoot $root -IncludeInterop ([bool]$IncludeSolidWorksInterop))
     tools = @(
+        'aicad_validate_procurement_preflight',
         'aicad_capabilities', 'aicad_get_plan_schema',
         'aicad_get_engineering_preflight_schema', 'aicad_get_engineering_preflight_template', 'aicad_validate_engineering_preflight',
         'aicad_get_architecture_detail_contract_schema', 'aicad_validate_architecture_detail_contract', 'aicad_generate',
@@ -266,6 +267,7 @@ $releaseManifest = [ordered]@{
         'continuous-learning tools never authenticate approvers, grant promotion eligibility, mutate authoritative rules/tests or installed plugins, or unlock readiness/authorization'
     )
     validationCommands = @(
+        'python scripts/aicad_agent.py procurement-preflight --contract <procurement.json> --evidence-root <evidence-root>',
         'PYTHONDONTWRITEBYTECODE=1 python -B -m unittest discover -s tests -v',
         'PYTHONDONTWRITEBYTECODE=1 python -B -m unittest discover -s agent-plugin/aicad-agent/tests -v',
         'python agent-plugin/aicad-agent/scripts/aicad_agent.py capabilities',

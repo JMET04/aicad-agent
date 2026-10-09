@@ -21,11 +21,12 @@ from .manufacturing_workflow import (
     write_manufacturing_release_review,
 )
 from .provider import generate_plan_with_usage
+from .procurement_api import validate_procurement_value
 from .review_launch import REVIEW_LAUNCH_MODES, launch_review
 from .settings import config_path, get_api_key, load_config, save_config, set_api_key
 
 
-VERSION = "1.17.2"
+VERSION = "1.18.0"
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -59,6 +60,9 @@ def _parser() -> argparse.ArgumentParser:
 
     subparsers.add_parser("experience-context-schema", help="print the strict experience-recall context schema")
     subparsers.add_parser("review-coverage-schema", help="print the evidence-bearing review coverage schema")
+    procurement = subparsers.add_parser("procurement-preflight", help="read-only whole-deliverable cost, budget and function-evidence check; never orders")
+    procurement.add_argument("contract", type=Path)
+    procurement.add_argument("--evidence-root", type=Path)
     registry = subparsers.add_parser("domain-registry", help="print the controlled engineering domain registry")
     registry.add_argument("--rules-root", type=Path)
     subparsers.add_parser("civil-review-schema", help="print the source-bound civil review-candidate schema")
@@ -340,6 +344,10 @@ def main(argv: list[str] | None = None) -> int:
             path = _schema_path("aicad-experience-context.schema.json")
             print(json.dumps({"ok": True, "schema": _load_json_object(path, "experience context schema"), "path": str(path.resolve())}, ensure_ascii=False))
             return 0
+        if args.command == "procurement-preflight":
+            payload = validate_procurement_value(str(args.contract), args.evidence_root)
+            print(json.dumps(payload, ensure_ascii=False))
+            return 0 if payload["orderPreflightPassed"] else 2
         if args.command == "review-coverage-schema":
             path = _schema_path("aicad-review-coverage-ledger.schema.json")
             print(json.dumps({"ok": True, "schema": _load_json_object(path, "review coverage schema"), "path": str(path.resolve())}, ensure_ascii=False))

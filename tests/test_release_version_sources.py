@@ -9,8 +9,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.17.2"
-PREVIOUS_VERSION = "1.17.1"
+EXPECTED_VERSION = "1.18.0"
+PREVIOUS_VERSION = "1.17.2"
 
 
 def _python_assignment(relative: str, name: str) -> str | None:
@@ -74,25 +74,25 @@ class ReleaseVersionSourceTests(unittest.TestCase):
 
     def test_ci_and_public_documentation_are_pinned_to_current_release(self) -> None:
         workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
-        self.assertIn("-Version 1.17.2", workflow)
-        self.assertIn("aicad-agent-1.17.2.zip", workflow)
+        self.assertIn("-Version 1.18.0", workflow)
+        self.assertIn("aicad-agent-1.18.0.zip", workflow)
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         plugin_readme = (ROOT / "agent-plugin/aicad-agent/README.md").read_text(
             encoding="utf-8"
         )
-        self.assertTrue(readme.startswith("# aicad-agent 1.17.2\n"))
-        self.assertTrue(plugin_readme.startswith("# aicad-agent 1.17.2\n"))
-        root_notes = (ROOT / "docs/RELEASE_NOTES_v1.17.2.md").read_bytes()
+        self.assertTrue(readme.startswith("# aicad-agent 1.18.0\n"))
+        self.assertTrue(plugin_readme.startswith("# aicad-agent 1.18.0\n"))
+        root_notes = (ROOT / "docs/RELEASE_NOTES_v1.18.0.md").read_bytes()
         plugin_notes = (
-            ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.17.2.md"
+            ROOT / "agent-plugin/aicad-agent/docs/RELEASE_NOTES_v1.18.0.md"
         ).read_bytes()
         self.assertEqual(root_notes, plugin_notes)
-        self.assertIn(b"# aicad-agent 1.17.2", root_notes)
-        self.assertIn(b"Release date: 2026-08-22", root_notes)
+        self.assertIn(b"# aicad-agent 1.18.0", root_notes)
+        self.assertIn(b"Release date: 2026-10-09", root_notes)
         overview = (ROOT / "docs/PRODUCT_OVERVIEW.zh-CN.md").read_text(
             encoding="utf-8"
         )
-        self.assertIn("RELEASE_NOTES_v1.17.2.md", overview)
+        self.assertIn("RELEASE_NOTES_v1.18.0.md", overview)
 
         install_surfaces = (
             "README.md",
