@@ -51,6 +51,7 @@ try:
         validate_manufacturing_release_review_html,
     )
     from aicad.provider import ProviderError, generate_plan, generate_plan_with_usage
+    from aicad.procurement_api import validate_procurement_value
     from aicad.reference_rebuild import build_reference_reconstruction, validate_reference_rebuild
     from aicad.review_handoff import apply_review_handoff, validate_review_handoff
     from aicad.review_launch import REVIEW_LAUNCH_MODES, launch_review, open_review_request
@@ -61,7 +62,7 @@ except ImportError as exc:  # pragma: no cover - exercised by packaged smoke tes
     raise SystemExit(f"AICAD runtime is missing or incomplete: {exc}")
 
 
-AGENT_API_VERSION = "1.17.2"
+AGENT_API_VERSION = "1.18.0"
 SAFE_NAME = re.compile(r"[^A-Za-z0-9_-]+")
 
 
@@ -316,6 +317,20 @@ def capabilities() -> dict[str, Any]:
             "tool_steel_cut_authorized": False,
             "mass_production_authorized": False,
             "automatic_production_acceptance": False,
+            "procurement_preflight_required_before_external_action": True,
+            "purchase_authorized": False,
+        },
+        "procurement_preflight": {
+            "available": True,
+            "tool": "aicad_validate_procurement_preflight",
+            "schema": str(_runtime_file("schema", "aicad-procurement-preflight.schema.json").resolve()),
+            "whole_deliverable_inventory": True,
+            "unknown_cost_is_zero": False,
+            "free_pcb_waives_system_cost": False,
+            "test_levels": ["host_logic", "analog_simulation", "fit_analysis", "hardware_measurement"],
+            "native_drc_proves_function": False,
+            "external_human_and_supplier_authenticity_required": True,
+            "can_order_pay_or_consume_coupon": False,
         },
         "engineering_normative_preflight": {
             "available": True,
@@ -1019,6 +1034,17 @@ def build_solidworks_part(
 
 TOOLS: list[dict[str, Any]] = [
     {
+        "name": "aicad_validate_procurement_preflight",
+        "description": "Read-only whole-deliverable cost/MOQ/stock/tax/shipping, bound budget acceptance, qualified substitutions and functional-evidence check. Blocks incomplete, stale, over-budget or stopped projects. A pass never authorizes purchase or proves hardware.",
+        "inputSchema": {
+            "type": "object", "additionalProperties": False, "required": ["contract"],
+            "properties": {
+                "contract": {"description": "Procurement contract object, JSON string or UTF-8 file path"},
+                "evidence_root": {"type": "string", "description": "Controlled evidence root; file contract defaults to parent"},
+            },
+        },
+    },
+    {
         "name": "aicad_capabilities",
         "description": "Discover supported CAD entities, constraints, artifacts, providers, and hard invariants before planning.",
         "inputSchema": {"type": "object", "additionalProperties": False, "properties": {}},
@@ -1430,6 +1456,8 @@ TOOLS: list[dict[str, Any]] = [
 
 
 def _dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+    if name == "aicad_validate_procurement_preflight":
+        return validate_procurement_value(arguments.get("contract"), arguments.get("evidence_root"))
     if name == "aicad_capabilities":
         return capabilities()
     if name == "aicad_get_manufacturing_release_schema":
@@ -1733,6 +1761,9 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("domain-registry")
     commands.add_parser("civil-review-schema")
     commands.add_parser("manufacturing-release-schema")
+    procurement_parser = commands.add_parser("procurement-preflight")
+    procurement_parser.add_argument("--contract", required=True)
+    procurement_parser.add_argument("--evidence-root")
     manufacturing_validate_parser = commands.add_parser("manufacturing-release-validate")
     manufacturing_validate_parser.add_argument("--package", required=True)
     manufacturing_validate_parser.add_argument("--evidence-root")
@@ -1877,6 +1908,7 @@ def main(argv: list[str] | None = None) -> int:
         "domain-registry": get_engineering_domain_registry,
         "civil-review-schema": get_civil_review_candidate_schema,
         "manufacturing-release-schema": get_manufacturing_release_schema,
+        "procurement-preflight": lambda: validate_procurement_value(args.contract, args.evidence_root),
         "manufacturing-release-validate": lambda: validate_manufacturing_release_value(
             args.package, args.evidence_root
         ),
@@ -1923,6 +1955,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         payload = actions[args.command]()
         print(json.dumps(payload, ensure_ascii=False))
+        if args.command == "procurement-preflight" and payload.get("orderPreflightPassed") is not True:
+            return 2
         return 0
     except Exception as exc:
         print(json.dumps(_error_payload(exc), ensure_ascii=False), file=sys.stderr)

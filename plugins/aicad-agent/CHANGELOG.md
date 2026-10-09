@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 1.18.0 - 2026-10-09
+
+- Added read-only whole-deliverable procurement preflight across Python, CLI and MCP: complete costs, MOQ/stock/freshness, frozen native design, qualified replacements and scope-bound budget acceptance.
+- Added source-bound measurable function scenarios, separate host/analog/fit/hardware evidence, direct frozen Kconfig checks, and stopped-project blocking. No purchase/payment/coupon or real-hardware authorization is granted.
+- Documented the cost-before-fabrication incident and the independent 30-test firmware host rerun; actual disabled radio/audio/calibration gates remain explicit functional gaps.
+- Added behavioral regressions and kept manufacturing candidate, human authorization, supplier truth, CAM and first-article acceptance distinct.
+
 ## 1.17.2 - 2026-08-22
 
 - Published the cross-domain system contract, deterministic QA and public manufacturing-release schema/API/CLI/MCP/reviewer capability under immutable version 1.17.2.
