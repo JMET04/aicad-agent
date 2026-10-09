@@ -1,6 +1,6 @@
 {
   "name": "aicad-agent",
-  "version": "1.17.2",
+  "version": "1.18.0",
   "description": "Agent-native 2D/3D engineering review across mechanical, electronics, packaging, architecture, civil, and steel/structural workflows, with hash-closed mechanical and PCB manufacturing candidates.",
   "author": {
     "name": "AI CAD Constraint Project"
@@ -76,7 +76,8 @@
       "Hash-closed mechanical and PCB manufacturing release candidates",
       "Same-page actual 2D/3D factory review",
       "Supplier-confirmed factory handoff gating",
-      "Controlled hash-bound failure-to-lesson learning loop"
+      "Controlled hash-bound failure-to-lesson learning loop",
+      "Whole-deliverable cost, budget and functional-evidence procurement preflight"
     ],
     "defaultPrompt": [
       "Open the CAD modifier so I can inspect and change exact model geometry.",

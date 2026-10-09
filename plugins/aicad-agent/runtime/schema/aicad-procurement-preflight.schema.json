@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aicad-procurement-preflight.schema.json",
+  "title": "Read-only whole-deliverable procurement preflight",
+  "description": "Runtime also validates referenced evidence, quantities, costs, freshness and exact source bindings. This schema grants no purchase or manufacturing authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "projectId", "projectState", "action", "design", "inventory", "quotes", "tests", "approval"],
+  "properties": {
+    "schema": {"const": "aicad_procurement_preflight_v1"},
+    "projectId": {"type": "string", "minLength": 1},
+    "projectState": {"enum": ["active", "paused", "terminated"]},
+    "action": {"enum": ["submit_order", "buy_components", "pay", "consume_coupon"]},
+    "design": {"type": "array", "minItems": 1, "items": {"allOf": [{"$ref": "#/$defs/artifact"}], "required": ["id"]}},
+    "inventory": {"$ref": "#/$defs/artifact"},
+    "quotes": {"type": "array", "items": {"$ref": "#/$defs/quote"}},
+    "tests": {"type": "array", "items": {"type": "object", "required": ["scenarioId", "evidence"], "properties": {"scenarioId": {"type": "string"}, "evidence": {"$ref": "#/$defs/artifact"}}}},
+    "approval": {"$ref": "#/$defs/artifact"}
+  },
+  "$defs": {
+    "artifact": {"type": "object", "required": ["path", "size", "sha256"], "properties": {"id": {"type": "string"}, "path": {"type": "string", "minLength": 1}, "size": {"type": "integer", "minimum": 0}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}},
+    "quote": {
+      "type": "object", "additionalProperties": false,
+      "required": ["itemId", "mpn", "status", "stock", "purchaseQty", "moq", "multiple", "unitCny", "taxIncluded", "quotedAt", "validUntil", "source", "qualification", "evidence"],
+      "properties": {
+        "itemId": {"type": "string", "minLength": 1}, "mpn": {"type": "string"},
+        "status": {"enum": ["in_stock", "owned"]}, "stock": {"type": "integer", "minimum": 0},
+        "purchaseQty": {"type": "integer", "minimum": 1}, "moq": {"type": "integer", "minimum": 1}, "multiple": {"type": "integer", "minimum": 1},
+        "unitCny": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?$"}, "taxIncluded": {"const": true},
+        "quotedAt": {"type": "string", "format": "date-time"}, "validUntil": {"type": "string", "format": "date-time"},
+        "source": {"type": "string", "minLength": 1}, "qualification": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/artifact"}]},
+        "evidence": {"$ref": "#/$defs/artifact"}
+      }
+    }
+  }
+}
