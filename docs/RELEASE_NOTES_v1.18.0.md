@@ -2,6 +2,8 @@
 
 Release date: 2026-10-09
 
+状态：验证候选，未发布稳定Release。打包插件220项测试中218通过、2跳过，源/包闭包检查通过；完整仓库398项测试仍有历史项目证据哈希不一致和可选CAD依赖缺失（8个失败、3个错误、11个跳过），未修改或删除这些历史测试来绕过失败。因此不自动合并或授予稳定发行状态。
+
 ## 制造前成本与可用性门禁
 
 - 新增只读MCP `aicad_validate_procurement_preflight`、源CLI和打包CLI `procurement-preflight`。

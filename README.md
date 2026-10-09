@@ -1,5 +1,7 @@
 # aicad-agent 1.18.0
 
+> 当前1.18.0是待审阅的发布候选，不是已发布的稳定Release。独立插件包验证与220项测试（218通过、2跳过）已通过；全仓历史项目测试仍有证据哈希与可选CAD依赖问题。不要把以下正式版本安装步骤当成已发行的证明。
+
 一个面向 Agent 的确定性 CAD 约束、审查与修改插件。你可以直接用自然语言告诉 Codex 要画什么、参考什么、哪些尺寸必须准确；插件负责把要求转换为逐实体计划、数学约束、CAD 文件、交互修改器和可审计验证结果。
 
 **默认不需要 API Key。** 当前 Codex Agent 负责理解任务，本地插件负责约束验证、编译、审查和宿主适配。
@@ -20,7 +22,7 @@ v1.18.0新增[整套成本与可用性采购前检查](agent-plugin/aicad-agent/
 | [四领域工程展示](showcase/README.md) | 建筑、钢结构、机械和 PCB 的预览、交互审查与验证材料 |
 | [v1.15.0 标准化重生成证据](showcase/standardized-regeneration-v1.15.0/README.md) | 新机械包与受阻电子包、预览、精确哈希和工程边界 |
 | [安装和使用指南](docs/INSTALL.zh-CN.md) | Marketplace、Release ZIP、首次使用和更新流程 |
-| [v1.18.0 Release](https://github.com/JMET04/aicad-agent/releases/tag/v1.18.0) | 发布说明、插件 ZIP 与 SHA256SUMS |
+| [v1.18.0 验证候选](dist/aicad-agent-1.18.0.zip) | 待审阅插件 ZIP；不是稳定Release |
 
 ![aicad-agent 多视图修改器：点击线、点、圆查看模型数值](docs/images/modifier-measurements-v3.png)
 
